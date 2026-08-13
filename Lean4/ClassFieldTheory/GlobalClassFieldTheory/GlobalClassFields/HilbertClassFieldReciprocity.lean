@@ -1,0 +1,13 @@
+import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.Transport
+import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.BigActual
+import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallActual
+import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.BigOriginal
+import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallOriginal
+
+/-!
+# Reciprocity for the actual Hilbert class fields
+
+This compatibility facade exports the generic transport core and the
+independently compiled big/small, realized-base/original-base reciprocity
+specializations.
+-/

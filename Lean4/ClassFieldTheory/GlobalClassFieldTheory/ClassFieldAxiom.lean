@@ -1,0 +1,17 @@
+import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient
+import GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
+import GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitSubgroup
+import GlobalClassFieldTheory.ClassFieldAxiom.KummerLocalNormContainment
+import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection
+import GlobalClassFieldTheory.ClassFieldAxiom.SUnitLocalPowerMap
+import GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitNormContainment
+import GlobalClassFieldTheory.ClassFieldAxiom.HasseNormPrinciple
+import GlobalClassFieldTheory.ClassFieldAxiom.SupportedIdelePowerLocalUnitQuotient
+
+/-!
+# The global class-field axiom and its arithmetic consequences
+
+This aggregate exports the cyclic idele-class norm-index calculation, the
+Hasse norm principle, and the rational idele-class formation.
+-/

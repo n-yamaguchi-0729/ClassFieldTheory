@@ -1,0 +1,42 @@
+import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
+
+/-!
+# Named value of closed finite-index reciprocity
+
+The expanded inverse norm-residue expression is kept behind one reducible
+value provider.  Public evaluation statements can therefore mention the
+selected class-field instance tower once while remaining definitionally
+equivalent to the historical formula.
+-/
+
+open scoped Classical IsMulCommutative NumberField
+
+noncomputable section
+
+namespace GlobalClassFieldTheory
+namespace GlobalClassFields
+
+open Reciprocity
+
+variable {K : Type} [Field K] [NumberField K]
+
+/-- The quotient value prescribed by inverse global norm-residue reciprocity
+for a Galois element of the selected closed finite-index class field. -/
+noncomputable abbrev closedFiniteIndexClassFieldReciprocityValue
+    (H : Subgroup (IdeleClassGroup K))
+    (hclosed : IsClosed (H : Set (IdeleClassGroup K)))
+    [H.FiniteIndex]
+    (σ : Gal((closedFiniteIndexClassField
+      (K := K) H hclosed) / K)) :
+    IdeleClassGroup K ⧸ H :=
+  QuotientGroup.quotientMulEquivOfEq
+      (closedFiniteIndexClassField_ideleClassNorm_range
+        (K := K) H hclosed)
+    (Additive.toMul
+      ((globalNormResidueEquiv K
+          (closedFiniteIndexClassField
+            (K := K) H hclosed)).symm
+        (Additive.ofMul σ)))
+
+end GlobalClassFields
+end GlobalClassFieldTheory

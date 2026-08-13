@@ -1,0 +1,17 @@
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.Core
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.FiniteNormExtension
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.NormFormula
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.NormFormulaAbsoluteValue
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.NormFormulaCoefficients
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.NormFormulaExtension
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.NormFormulaIntegralClosure
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.UniqueExtensionCoefficients
+import ValuationTheory.AbsoluteValue.AlgebraicExtension.UniqueValuationSubring
+
+/-!
+# Algebraic extensions of absolute values
+
+Public aggregate for existence, uniqueness, norm formulas, and ramification
+properties of absolute values on algebraic field extensions.
+-/

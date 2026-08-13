@@ -1,0 +1,18 @@
+import LocalClassFieldTheory.Concrete.Finite.Existence.StandardDominatingExtension
+import LocalClassFieldTheory.Concrete.Finite.Existence.EqualCharacteristicDominatingExtension
+import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered
+import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered.Unramified
+import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered.AbstractUnramified
+import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered.Compositum
+import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered.StandardCompositum
+import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered.EqualCharacteristicStandardCompositum
+import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered.FiniteAbelian
+import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered.EqualCharacteristic
+
+/-!
+# Filtered finite local reciprocity
+
+Public aggregate for the Artin principal-unit filtration, its comparison with
+upper ramification groups, and the characteristic-independent and
+equal-characteristic descent arguments for finite Abelian local extensions.
+-/

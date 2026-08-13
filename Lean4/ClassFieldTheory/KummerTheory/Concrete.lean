@@ -1,0 +1,39 @@
+import KummerTheory.Concrete.GaloisCohomology
+import KummerTheory.Concrete.CyclotomicField
+import KummerTheory.Concrete.Cyclotomic
+import KummerTheory.Concrete.CyclicExtension
+import KummerTheory.Concrete.RootCharacters
+import KummerTheory.Concrete.RadicalQuotient
+import KummerTheory.Concrete.FiniteCharacterEquiv
+import KummerTheory.Concrete.FiniteGaloisDual
+import KummerTheory.Concrete.FiniteGeneration
+import KummerTheory.Concrete.RadicalExtension
+import KummerTheory.Concrete.FiniteSupport
+import KummerTheory.Concrete.FiniteDualSeparation
+import KummerTheory.Concrete.RestrictedFinite
+import KummerTheory.Concrete.MaximalKummerSubgroup
+import KummerTheory.Concrete.InfiniteGeneration
+import KummerTheory.Concrete.ExtensionRoundTrip
+import KummerTheory.Concrete.InfiniteInverse
+import KummerTheory.Concrete.InfiniteContinuity
+import KummerTheory.Concrete.ContinuousCharacters
+import KummerTheory.Concrete.InfiniteCharacterEquiv
+import KummerTheory.Concrete.KummerCorrespondenceFormula
+import KummerTheory.Concrete.SUnitPreparation
+import KummerTheory.Concrete.LocalUnitKummerUnramified
+import KummerTheory.Concrete.LocalMaximalKummerExtension
+import KummerTheory.Concrete.SimpleExtension
+import KummerTheory.Concrete.SimpleExtensionNorm
+import KummerTheory.Concrete.FinitePlaceDecomposition
+import KummerTheory.Concrete.SimpleExtensionLocalBehavior
+import KummerTheory.Concrete.CyclotomicPrimeBaseChange
+import KummerTheory.Concrete.Correspondence
+import KummerTheory.Concrete.SUnitKummerUnramified
+
+/-!
+# Concrete Kummer theory
+
+Root characters, radical quotients, finite and infinite generation, the local
+unramified unit criterion, and the perfect Kummer pairing for actual field
+extensions.
+-/

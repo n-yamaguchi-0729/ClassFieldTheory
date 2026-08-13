@@ -1,0 +1,10 @@
+import AlgebraicNumberTheory.Completion.AdicCompletionComparison
+import AlgebraicNumberTheory.Completion.AdicCompletionMap
+import AlgebraicNumberTheory.Completion.ChosenLocalization
+import AlgebraicNumberTheory.Completion.Comparison
+import AlgebraicNumberTheory.Completion.ExtensionIndex
+import AlgebraicNumberTheory.Completion.IntegerRingComparison
+import AlgebraicNumberTheory.Completion.LocalizedValuation
+import AlgebraicNumberTheory.Completion.UnramifiedComparison
+
+/-! # Completions of number fields and their local comparisons -/

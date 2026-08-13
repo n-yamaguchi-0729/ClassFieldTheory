@@ -1,0 +1,10 @@
+import RamificationTheory.GaloisValuation.AbsoluteGalois.AbsoluteRamification
+import RamificationTheory.GaloisValuation.AbsoluteGalois.FiniteExtensionCorrespondence
+import RamificationTheory.GaloisValuation.AbsoluteGalois.FiniteLevelValuationRestriction
+import RamificationTheory.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
+
+/-!
+# Absolute Galois ramification
+
+Aggregate for the `RamificationTheory.GaloisValuation.AbsoluteGalois` folder.
+-/

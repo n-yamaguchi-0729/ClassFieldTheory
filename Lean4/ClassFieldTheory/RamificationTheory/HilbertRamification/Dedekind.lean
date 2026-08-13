@@ -1,0 +1,21 @@
+import RamificationTheory.HilbertRamification.Dedekind.Basic
+import RamificationTheory.HilbertRamification.Dedekind.Conjugation
+import RamificationTheory.HilbertRamification.Dedekind.ChosenInertiaCoverage
+import RamificationTheory.HilbertRamification.Dedekind.CompositumUnramified
+import RamificationTheory.HilbertRamification.Dedekind.FixedFields
+import RamificationTheory.HilbertRamification.Dedekind.FixedFieldUnramified
+import RamificationTheory.HilbertRamification.Dedekind.FixedFieldTower
+import RamificationTheory.HilbertRamification.Dedekind.InertiaGeneration
+import RamificationTheory.HilbertRamification.Dedekind.NumberFieldPrimes
+import RamificationTheory.HilbertRamification.Dedekind.OrbitCardinality
+import RamificationTheory.HilbertRamification.Dedekind.PadicValuationInertia
+import RamificationTheory.HilbertRamification.Dedekind.PrimeContractions
+import RamificationTheory.HilbertRamification.Dedekind.TowerInvariants
+import RamificationTheory.HilbertRamification.Dedekind.ValuedGalois
+
+/-!
+# Dedekind-domain decomposition and inertia
+
+Decomposition groups, inertia groups, fixed fields, and tower formulas for
+primes in finite Galois extensions of Dedekind domains.
+-/

@@ -1,0 +1,26 @@
+import AbstractClassFieldTheory.Degree.Fields
+import AbstractClassFieldTheory.Degree.Frobenius
+import AbstractClassFieldTheory.Degree.FrobeniusFixedField
+import AbstractClassFieldTheory.Degree.FrobeniusLift
+import AbstractClassFieldTheory.Degree.Indices
+import AbstractClassFieldTheory.Degree.Norm
+import AbstractClassFieldTheory.Degree.NormConjugation
+import AbstractClassFieldTheory.Degree.NormLaws
+import AbstractClassFieldTheory.Degree.PrimeElements
+import AbstractClassFieldTheory.Degree.ProfiniteInteger
+import AbstractClassFieldTheory.Degree.ProfiniteIntegerPrimeProduct
+import AbstractClassFieldTheory.Degree.ProfiniteIntegerUnits
+import AbstractClassFieldTheory.Degree.CyclotomicTorsionQuotient
+import AbstractClassFieldTheory.Degree.ProfiniteIntegerCore
+import AbstractClassFieldTheory.Degree.ProfiniteIntegerFiniteQuotient
+import AbstractClassFieldTheory.Degree.TopologicalGeneration
+import AbstractClassFieldTheory.Degree.Valuation
+import AbstractClassFieldTheory.Degree.ValuationLaws
+import AbstractClassFieldTheory.Degree.PadicCyclicClosure
+
+/-!
+# Degree and valuation data
+
+Focused aggregate for abstract fields, normalized degrees, Frobenius, norms, prime elements, and
+valuation laws used by class formations.
+-/

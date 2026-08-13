@@ -1,0 +1,15 @@
+import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
+import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.ConjugatePrimeNorm
+import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.CorrectionSum
+import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusPowerSumRelation
+import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.NormClassRelation
+import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.PrimeUnitDifferences
+import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FiniteStageCorrections
+import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.ReciprocityMapMul
+
+/-!
+# Multiplicativity of the abstract reciprocity map
+
+This aggregate exposes the construction proving that the abstract reciprocity
+map respects multiplication.
+-/

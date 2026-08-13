@@ -1,0 +1,20 @@
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceComparison
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceLocalGlobal
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceCharacter
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealSquare
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlacePositive
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRamification
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegativeRoot
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegativeUnit
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegative
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealComparison
+
+/-!
+# Global-place Hilbert symbols
+
+Public aggregate for the completed finite-place setup and infinite-place
+comparison.  The paused finite-place character comparison and product formula
+are intentionally not part of this active aggregate.
+-/

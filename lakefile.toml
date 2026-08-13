@@ -1,0 +1,49 @@
+name = "ClassFieldTheory"
+version = "1.0.0"
+buildDir = ".lake/build/default"
+keywords = ["math", "number-theory", "class-field-theory"]
+defaultTargets = ["ClassFieldTheory"]
+
+[leanOptions]
+pp.unicode.fun = true
+relaxedAutoImplicit = false
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.32.1"
+
+[[lean_lib]]
+name = "ClassFieldTheory"
+srcDir = "Lean4/ClassFieldTheory"
+leanOptions = {linter.missingDocs = true}
+globs = [
+  "ClassFieldTheory",
+  "AbstractClassFieldTheory",
+  "AbstractClassFieldTheory.+",
+  "AlgebraicNumberTheory",
+  "AlgebraicNumberTheory.+",
+  "CyclicCohomology",
+  "CyclicCohomology.+",
+  "HasseArf",
+  "GlobalClassFieldTheory",
+  "GlobalClassFieldTheory.+",
+  "GroupTheory",
+  "GroupTheory.+",
+  "KroneckerWeber",
+  "KroneckerWeber.+",
+  "KummerTheory",
+  "KummerTheory.+",
+  "LocalClassFieldTheory",
+  "LocalClassFieldTheory.+",
+  "LocalFieldTheory",
+  "LocalFieldTheory.+",
+  "LubinTate",
+  "LubinTate.+",
+  "RamificationTheory",
+  "RamificationTheory.+",
+  "Topology",
+  "ValuationTheory",
+  "ValuationTheory.+",
+]

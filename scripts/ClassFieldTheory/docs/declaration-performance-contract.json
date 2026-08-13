@@ -1,0 +1,479 @@
+{
+  "schema_version": 2,
+  "source_inventory": {
+    "module_count": 1349,
+    "modules_sha256": "47a3c848641007b1bc8e723b24d310a278126e20a0ec8405f3e8286db4ccc2a6"
+  },
+  "ceilings": {
+    "public_signature_letI_declarations": 1336,
+    "public_signature_letI_total": 3177,
+    "public_signature_heavy_target_total": 499,
+    "signature_body_duplicate_target_declarations": 187,
+    "signature_body_duplicate_target_total": 380,
+    "signature_body_duplicate_constructor_total": 127,
+    "container_payload_letI_declarations": 2,
+    "container_payload_letI_total": 2,
+    "container_payload_heavy_target_total": 0,
+    "declarations_over_100_lines": 360,
+    "declarations_over_150_lines": 135,
+    "declarations_over_200_lines": 46,
+    "max_declaration_span": 536,
+    "max_public_signature_letI": 17,
+    "max_duplicate_heavy_targets": 8,
+    "max_container_payload_letI": 1,
+    "broad_simp_total": 5864,
+    "change_total": 6076
+  },
+  "current_report": {
+    "public_signature_letI_declarations": 1336,
+    "public_signature_letI_total": 3177,
+    "public_signature_heavy_target_total": 499,
+    "signature_body_duplicate_target_declarations": 187,
+    "signature_body_duplicate_target_total": 380,
+    "signature_body_duplicate_constructor_total": 127,
+    "container_payload_letI_declarations": 2,
+    "container_payload_letI_total": 2,
+    "container_payload_heavy_target_total": 0,
+    "declarations_over_100_lines": 360,
+    "declarations_over_150_lines": 135,
+    "declarations_over_200_lines": 46,
+    "max_declaration_span": 536,
+    "max_public_signature_letI": 17,
+    "max_duplicate_heavy_targets": 8,
+    "max_container_payload_letI": 1,
+    "broad_simp_total": 5864,
+    "change_total": 6076
+  },
+  "hotspots": {
+    "declaration_spans": [
+      {
+        "module": "AbstractClassFieldTheory.Reciprocity.Construction.Universal",
+        "line": 74,
+        "name": "universalNormDescent_mem_finiteUnitNormRange",
+        "span": 536,
+        "signature_letI": 1,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 3
+      },
+      {
+        "module": "GlobalClassFieldTheory.ClassFieldAxiom.SUnitLocalPowerMap",
+        "line": 232,
+        "name": "sUnitLocalUnitPowerMap_sUnitKummerPrimeSet_surjective",
+        "span": 473,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 2
+      },
+      {
+        "module": "GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitNormContainment",
+        "line": 201,
+        "name": "principalIdelePowerLocalUnitSubgroup_eq_sUnitNthPowersInField_sUnitKummerPrimeSet",
+        "span": 459,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 5
+      },
+      {
+        "module": "AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.FixedSource",
+        "line": 118,
+        "name": "abstractReciprocity_cyclicTotallyRamified_fixedSource",
+        "span": 416,
+        "signature_letI": 1,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 3
+      },
+      {
+        "module": "GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.Conclusion",
+        "line": 28,
+        "name": "sUnitLocalPowerKernel_sUnitKummerPrimeSet_eq_comap_sUnitFiniteKummerRadical",
+        "span": 366,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 2
+      },
+      {
+        "module": "LocalFieldTheory.Padic.Cyclotomic.Unramified.ArithmeticFrobenius",
+        "line": 1265,
+        "name": "padicCyclotomicUnramified_valuationSubring_adjoin_eq_top",
+        "span": 335,
+        "signature_letI": 1,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 10
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.FamilyClassAxiom",
+        "line": 635,
+        "name": "localBlockFamily_herbrandQuotient_eq_product_localDegrees",
+        "span": 327,
+        "signature_letI": 13,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 1
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction",
+        "line": 384,
+        "name": "ambientEmbeddedNormResidueElement_norm_restriction",
+        "span": 315,
+        "signature_letI": 1,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport",
+        "line": 1437,
+        "name": "intrinsicFrobeniusFixedFieldEquivAmbientEmbeddedField",
+        "span": 307,
+        "signature_letI": 2,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeWitnessComparison",
+        "line": 321,
+        "name": "ambientEmbeddedPrimeWitness_symbol",
+        "span": 306,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      }
+    ],
+    "signature_towers": [
+      {
+        "module": "GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction",
+        "line": 200,
+        "name": "finitePlaceArtinMonoidHomOfExtension_apply",
+        "span": 77,
+        "signature_letI": 17,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction",
+        "line": 34,
+        "name": "equalCharacteristicTransportedLubinTateLocalUpperRamificationGroup_eq_restrictKer",
+        "span": 153,
+        "signature_letI": 15,
+        "duplicate_heavy_targets": 8,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "CyclicCohomology.Herbrand.PrincipalUnits.QuotientTower",
+        "line": 563,
+        "name": "integerUnitsModPrincipalUnitsSucc_herbrandQuotient_exact_multiplicative_of_isIntegralClosure",
+        "span": 97,
+        "signature_letI": 15,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "CyclicCohomology.Herbrand.PrincipalUnits.QuotientTower",
+        "line": 660,
+        "name": "integerUnitsModPrincipalUnitsSucc_herbrandQuotient_eq_one_of_isIntegralClosure",
+        "span": 78,
+        "signature_letI": 15,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusFixedField",
+        "line": 840,
+        "name": "intrinsicFrobeniusFixedFieldEquivAmbientFixedField_apply_val",
+        "span": 91,
+        "signature_letI": 14,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormStatement",
+        "line": 76,
+        "name": "rationalRelativeFixedFieldCosetActionStatement",
+        "span": 81,
+        "signature_letI": 13,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.FamilyClassAxiom",
+        "line": 635,
+        "name": "localBlockFamily_herbrandQuotient_eq_product_localDegrees",
+        "span": 327,
+        "signature_letI": 13,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 1
+      },
+      {
+        "module": "LubinTate.Padic.CompletedChangedStandardFrobenius",
+        "line": 32,
+        "name": "padicCompletedChangedUniformizerRelativeArtinCandidate_eq_inverseArithmeticFrobenius",
+        "span": 161,
+        "signature_letI": 12,
+        "duplicate_heavy_targets": 3,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "LubinTate.Padic.CompletedChangedStandardUnramified",
+        "line": 233,
+        "name": "padicCompletedStandardChangedCompositum_isUnramifiedValuedExtension",
+        "span": 109,
+        "signature_letI": 12,
+        "duplicate_heavy_targets": 3,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.LubinTateApplication.EqualCharacteristicTransportedLevelTower",
+        "line": 87,
+        "name": "equalCharacteristicTransportedLubinTateRestrictNormalHom_apply_val",
+        "span": 98,
+        "signature_letI": 12,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      }
+    ],
+    "duplicated_towers": [
+      {
+        "module": "LocalClassFieldTheory.Concrete.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction",
+        "line": 34,
+        "name": "equalCharacteristicTransportedLubinTateLocalUpperRamificationGroup_eq_restrictKer",
+        "span": 153,
+        "signature_letI": 15,
+        "duplicate_heavy_targets": 8,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerConjugation",
+        "line": 1079,
+        "name": "maximalAbelianSubextension_le_smallHilbertClassField_of_everywhereUnramified",
+        "span": 130,
+        "signature_letI": 8,
+        "duplicate_heavy_targets": 6,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.FinitePadicAuxiliaryField",
+        "line": 618,
+        "name": "numberFieldTowerFinitePadicAuxiliaryTopPlace_below",
+        "span": 128,
+        "signature_letI": 9,
+        "duplicate_heavy_targets": 6,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient",
+        "line": 828,
+        "name": "map_rationalFiniteNormSubgroup_eq_ordinaryIdeleClassNormRange_concrete",
+        "span": 87,
+        "signature_letI": 8,
+        "duplicate_heavy_targets": 6,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtensionAction",
+        "line": 649,
+        "name": "rationalAbstractExtensionIdeleClassEquiv_action",
+        "span": 79,
+        "signature_letI": 9,
+        "duplicate_heavy_targets": 6,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange",
+        "line": 25,
+        "name": "rationalFixedFieldInclusion_baseChange_eq_ideleClassExtension",
+        "span": 136,
+        "signature_letI": 7,
+        "duplicate_heavy_targets": 5,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtension",
+        "line": 91,
+        "name": "rationalAbstractExtensionIdeleClassEquiv",
+        "span": 82,
+        "signature_letI": 7,
+        "duplicate_heavy_targets": 5,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      },
+      {
+        "module": "LubinTate.FiniteLevel.LocalUpperRamification",
+        "line": 98,
+        "name": "standardLubinTateRealUpperRamificationGroup_eq_restrictKer",
+        "span": 154,
+        "signature_letI": 4,
+        "duplicate_heavy_targets": 4,
+        "container_payload_letI": 0,
+        "broad_simp": 5
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.LubinTateApplication.EqualCharacteristicTransportedArtinComparison",
+        "line": 37,
+        "name": "equalCharacteristicTransportedLubinTateArtinPrincipalUnitsImage_eq_restrictKer",
+        "span": 117,
+        "signature_letI": 10,
+        "duplicate_heavy_targets": 4,
+        "container_payload_letI": 0,
+        "broad_simp": 2
+      },
+      {
+        "module": "GlobalClassFieldTheory.Reciprocity.CyclotomicUnramifiedGeometricRestriction",
+        "line": 760,
+        "name": "abstractFixedFieldCyclotomicFiniteRestriction_infiniteGlobalArtinMonoidHom",
+        "span": 87,
+        "signature_letI": 8,
+        "duplicate_heavy_targets": 4,
+        "container_payload_letI": 0,
+        "broad_simp": 0
+      }
+    ],
+    "container_payload_towers": [
+      {
+        "module": "LocalFieldTheory.DiscreteValuationField.MixedCharacteristicStructure",
+        "line": 187,
+        "name": "FirstPrincipalUnitAlgebraicData",
+        "span": 22,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 1,
+        "broad_simp": 0
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom",
+        "line": 35,
+        "name": "UnitsTateCardinalityData",
+        "span": 14,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 1,
+        "broad_simp": 0
+      }
+    ],
+    "broad_simp": [
+      {
+        "module": "ValuationTheory.Henselian.MonicFactorization",
+        "line": 411,
+        "name": "exists_mixed_residual_minpoly_of_irreducible_roots_unequal",
+        "span": 267,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 18
+      },
+      {
+        "module": "KummerTheory.TameRamification.RadicalGeneration",
+        "line": 186,
+        "name": "exists_pow_eq_of_residue_eq_one_of_coprime",
+        "span": 181,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 13
+      },
+      {
+        "module": "ValuationTheory.DiscreteValuationField.AmbientUniformizer",
+        "line": 187,
+        "name": "isUniformizer_of_ambient_image_isUniformizer",
+        "span": 106,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 12
+      },
+      {
+        "module": "AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.ReciprocityMapMul",
+        "line": 43,
+        "name": "reciprocityMap_mul",
+        "span": 197,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 11
+      },
+      {
+        "module": "CyclicCohomology.Herbrand.HerbrandLowDegree.Cardinality",
+        "line": 353,
+        "name": "herbrand_exact_cardinality_identity",
+        "span": 171,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 11
+      },
+      {
+        "module": "AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder",
+        "line": 207,
+        "name": "conjugate_frobeniusFixedField_actionConjugate",
+        "span": 101,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 11
+      },
+      {
+        "module": "LocalFieldTheory.Padic.Cyclotomic.Unramified.ArithmeticFrobenius",
+        "line": 1265,
+        "name": "padicCyclotomicUnramified_valuationSubring_adjoin_eq_top",
+        "span": 335,
+        "signature_letI": 1,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 10
+      },
+      {
+        "module": "ValuationTheory.Henselian.PrimitiveFactorization",
+        "line": 97,
+        "name": "partition_primitive_irreducible_factors_along_coprime_reduction",
+        "span": 180,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 10
+      },
+      {
+        "module": "LocalFieldTheory.NonarchimedeanLocalField.UnramifiedFrobenius",
+        "line": 229,
+        "name": "arithmeticFrobeniusOfUnramifiedValuation_apply_primitiveRoot",
+        "span": 108,
+        "signature_letI": 0,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 10
+      },
+      {
+        "module": "LocalClassFieldTheory.Concrete.ClassFormation.NormalBasisRecursiveLifting",
+        "line": 48,
+        "name": "exists_chosenNormalBasisPrincipalUnit_fixed_is_tateNorm",
+        "span": 95,
+        "signature_letI": 1,
+        "duplicate_heavy_targets": 0,
+        "container_payload_letI": 0,
+        "broad_simp": 10
+      }
+    ]
+  }
+}

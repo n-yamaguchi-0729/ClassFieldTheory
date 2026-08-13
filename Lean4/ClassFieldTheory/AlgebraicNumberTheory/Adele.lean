@@ -1,0 +1,11 @@
+import AlgebraicNumberTheory.Adele.Coordinates
+import AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
+import AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
+import AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
+import AlgebraicNumberTheory.Adele.IntegralLocalFactor
+import AlgebraicNumberTheory.Adele.IntegralTensorSupport
+import AlgebraicNumberTheory.Adele.LocalComponents
+import AlgebraicNumberTheory.Adele.RestrictedAction
+import AlgebraicNumberTheory.Adele.RestrictedProduct
+
+/-! # Adelic coordinates and restricted products -/
