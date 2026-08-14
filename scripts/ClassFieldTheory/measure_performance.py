@@ -56,15 +56,14 @@ BENCHMARK_ROOTS = (
     "KummerTheory",
     "AbstractClassFieldTheory",
     "AlgebraicNumberTheory",
-    "LocalClassFieldTheory.Concrete",
-    "LocalClassFieldTheory.Concrete.LubinTateApplication",
     "LocalClassFieldTheory",
-    "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity",
-    "LocalClassFieldTheory.Concrete.Finite.Existence",
-    "LocalClassFieldTheory.Concrete.Finite.Conductor",
-    "LocalClassFieldTheory.Concrete.Finite.UnramifiedConductor",
-    "LocalClassFieldTheory.Concrete.Infinite",
-    "LocalClassFieldTheory.Concrete.Kummer",
+    "LocalClassFieldTheory.LubinTateApplication",
+    "LocalClassFieldTheory.Finite.LocalReciprocity",
+    "LocalClassFieldTheory.Finite.Existence",
+    "LocalClassFieldTheory.Finite.Conductor",
+    "LocalClassFieldTheory.Finite.UnramifiedConductor",
+    "LocalClassFieldTheory.Infinite",
+    "LocalClassFieldTheory.Kummer",
     "HasseArf",
     "KroneckerWeber",
 )
@@ -72,13 +71,13 @@ BENCHMARK_ROOTS = (
 PUBLIC_CLEAN_ROOTS = (
     "ClassFieldTheory",
     "LocalClassFieldTheory",
-    "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity",
-    "LocalClassFieldTheory.Concrete.Finite.Existence",
-    "LocalClassFieldTheory.Concrete.Finite.Conductor",
-    "LocalClassFieldTheory.Concrete.Finite.UnramifiedConductor",
-    "LocalClassFieldTheory.Concrete.Infinite",
-    "LocalClassFieldTheory.Concrete.Kummer",
-    "LocalClassFieldTheory.Concrete.LubinTateApplication",
+    "LocalClassFieldTheory.Finite.LocalReciprocity",
+    "LocalClassFieldTheory.Finite.Existence",
+    "LocalClassFieldTheory.Finite.Conductor",
+    "LocalClassFieldTheory.Finite.UnramifiedConductor",
+    "LocalClassFieldTheory.Infinite",
+    "LocalClassFieldTheory.Kummer",
+    "LocalClassFieldTheory.LubinTateApplication",
     "HasseArf",
     "KroneckerWeber",
 )
@@ -163,7 +162,7 @@ def prepare_disposable_workspace(destination: Path) -> None:
             shutil.copy2(source, target)
     shutil.copy2(
         CANONICAL_ROOT,
-        target_tree / "ClassFieldTheory.lean",
+        destination / "Lean4" / "ClassFieldTheory.lean",
     )
     lake_dir = destination / ".lake"
     lake_dir.mkdir()

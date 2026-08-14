@@ -15,6 +15,10 @@ for:
 * the surjective `ZHat`-valued class-formation valuation and its
   concrete valuation data;
 * arithmetic global norm residue as a `ContinuousMulEquiv`;
+* maximal-abelian global reciprocity, its identity-component kernel, and the
+  infinite abelian class-field correspondence;
+* the all-place Hilbert product formula, general power-residue reciprocity
+  with explicit bad-place correction, and Gauss quadratic reciprocity;
 * the finite abelian class-field correspondence, ray class fields,
   conductors, ramification support, and the rational cyclotomic
   realization;

@@ -13,9 +13,6 @@ import AlgebraicNumberTheory.RayClass
 import AlgebraicNumberTheory.SeparableClosureEmbedding
 import AlgebraicNumberTheory.SUnit
 import AlgebraicNumberTheory.TensorProduct
-import GroupTheory
-import AlgebraicNumberTheory.FiniteAbelianCompositum
-import AlgebraicNumberTheory.CompositumEmbedding
 import AlgebraicNumberTheory.AdeleBaseChange
 
 /-!

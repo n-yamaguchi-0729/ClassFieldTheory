@@ -1,5 +1,5 @@
 import AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.Tensor
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
 import AlgebraicNumberTheory.Adele.RestrictedAction
 
 /-!

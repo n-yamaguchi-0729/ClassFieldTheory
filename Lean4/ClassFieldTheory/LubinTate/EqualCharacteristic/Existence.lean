@@ -8,5 +8,5 @@ import LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
 Public aggregate for the reusable Laurent-series model and its normalized
 uniformizer.  Transport of the exact norm-subgroup calculation to an arbitrary
 equal-characteristic local field uses finite local reciprocity and is exported
-by `LocalClassFieldTheory.Concrete.LubinTateApplication`.
+by `LocalClassFieldTheory.LubinTateApplication`.
 -/

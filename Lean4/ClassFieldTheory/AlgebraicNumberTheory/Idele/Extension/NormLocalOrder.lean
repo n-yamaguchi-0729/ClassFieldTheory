@@ -1,7 +1,7 @@
 import AlgebraicNumberTheory.Completion.AdicCompletionComparison
 import AlgebraicNumberTheory.Idele.IdealMap
 import AlgebraicNumberTheory.Idele.LocallyCompact
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.SeparableNormValuation
+import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormValuation
 import LocalFieldTheory.NonarchimedeanLocalField.NormalizedIntegerValuation
 import LocalFieldTheory.NonarchimedeanLocalField.ValuedTopology
 import ValuationTheory.DiscreteValuationField.FiniteExtension.Uniqueness

@@ -3,7 +3,7 @@
   "source_inventory": {
     "schema_version": 1,
     "module_count": 1349,
-    "modules_sha256": "47a3c848641007b1bc8e723b24d310a278126e20a0ec8405f3e8286db4ccc2a6",
+    "modules_sha256": "b476ae330352ecb9bb654600f1f365e474d35b6b203c1f540e78020194b1e484",
     "modules": [
       "ClassFieldTheory.lean",
       "AbstractClassFieldTheory.lean",
@@ -481,7 +481,9 @@
       "GlobalClassFieldTheory/Reciprocity/GlobalArtinFiniteSupportApproximation.lean",
       "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol.lean",
       "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol/Core.lean",
+      "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol/FinitePlaceCharacterComparison.lean",
       "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol/FinitePlaceComparison.lean",
+      "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol/FinitePlaceFiniteSupport.lean",
       "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol/FinitePlaceLocalGlobal.lean",
       "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol/InfinitePlace.lean",
       "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol/InfinitePlaceCharacter.lean",
@@ -496,6 +498,7 @@
       "GlobalClassFieldTheory/Reciprocity/GlobalNormResidueAbelianization.lean",
       "GlobalClassFieldTheory/Reciprocity/GlobalNormResidueAbelianizationNaturality.lean",
       "GlobalClassFieldTheory/Reciprocity/GlobalNormResidueNaturality.lean",
+      "GlobalClassFieldTheory/Reciprocity/HilbertProductFormula.lean",
       "GlobalClassFieldTheory/Reciprocity/IdeleClassDirectLimitAbstractFixedField.lean",
       "GlobalClassFieldTheory/Reciprocity/IdeleClassDirectLimitCore.lean",
       "GlobalClassFieldTheory/Reciprocity/IdeleClassDirectLimitExtension.lean",
@@ -526,6 +529,7 @@
       "GlobalClassFieldTheory/Reciprocity/MaximalAbelianKernel.lean",
       "GlobalClassFieldTheory/Reciprocity/NormQuotient.lean",
       "GlobalClassFieldTheory/Reciprocity/OnePlaceNormKernel.lean",
+      "GlobalClassFieldTheory/Reciprocity/PowerResidueReciprocity.lean",
       "GlobalClassFieldTheory/Reciprocity/ProductFormula.lean",
       "GlobalClassFieldTheory/Reciprocity/RationalCyclotomicArithmeticProduct.lean",
       "GlobalClassFieldTheory/Reciprocity/RationalCyclotomicCharacterRigidity.lean",
@@ -539,6 +543,7 @@
       "GlobalClassFieldTheory/Reciprocity/RationalCyclotomicZHatRigidity.lean",
       "GlobalClassFieldTheory/Reciprocity/RationalPrimeFactorization.lean",
       "GlobalClassFieldTheory/Reciprocity/RationalPrincipalLocalUnit.lean",
+      "GlobalClassFieldTheory/Reciprocity/RationalQuadraticPowerResidueReciprocity.lean",
       "GlobalClassFieldTheory/Reciprocity/TopologicalGlobalNormResidue.lean",
       "GlobalClassFieldTheory/Reciprocity/TopologicalGlobalNormResidueAbelianization.lean",
       "GroupTheory.lean",
@@ -639,205 +644,202 @@
       "KummerTheory/TameRamification/TameRadicalGeneration.lean",
       "KummerTheory/TameRamification/Tower.lean",
       "LocalClassFieldTheory.lean",
-      "LocalClassFieldTheory/Concrete.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/ArchimedeanHilbert90.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/ArchimedeanNormQuotient.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/CohomologyBridge.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/FieldUnitsHerbrand.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/FilteredLiftingSequence.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/Hilbert90.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/IntegerUnitsHerbrand.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Family.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Family/H0.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Family/HMinusOne.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Family/Instances.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/FamilyClassAxiom.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Induced.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/TensorNorm.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/Algebra.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/Cardinality.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/Cardinality/H0.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/Cardinality/HMinusOne.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/Cardinality/Quotient.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/Cardinality/Trivial.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/CompMulEquiv.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/Finite.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/Generator.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/LocalizedCompletionCohomology/HerbrandEquiv.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/Main.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisCohomology.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisFiniteQuotient.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisGaloisAction.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisGradedLifting.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisInfiniteProduct.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisRecursiveLifting.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/PrincipalUnitGraded.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/Valuation.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/ValuationHerbrand.lean",
-      "LocalClassFieldTheory/Concrete/ClassFormation/ValueGroupCohomology.lean",
-      "LocalClassFieldTheory/Concrete/Finite.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Conductor.lean",
-      "LocalClassFieldTheory/Concrete/Finite/CyclotomicNorm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/CyclotomicNorm/PrincipalUnits.lean",
-      "LocalClassFieldTheory/Concrete/Finite/CyclotomicNorm/StandardSubgroup.lean",
-      "LocalClassFieldTheory/Concrete/Finite/CyclotomicNorm/Unramified.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/CharacteristicZero.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/Classification.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/CyclotomicKummerDescent.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/EqualCharacteristic.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/EqualCharacteristicDominatingExtension.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/FiniteUnramifiedField.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/KummerNormOpen.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/LocalAbsoluteData.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/LubinTateUniformizerDiagonal.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/MaximalKummerNorm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/NormSubgroupOrderEmbedding.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/NormSubgroupSurjectivity.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/OrderReversal.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/StandardDominatingExtension.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/StandardLubinTate.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/StandardSubgroupIntersection.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/UnramifiedLubinTateDiagonal.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/UnramifiedNormContainment.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Existence/UnramifiedNormSubgroup.lean",
-      "LocalClassFieldTheory/Concrete/Finite/FilteredReciprocity.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/AbsoluteUnitsFixedField.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/AbstractFixedFieldNorm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/AbstractFixedFieldUnits.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/CompositumRestriction.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ConcreteReciprocityCanonical.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ConcreteReciprocityPrimeNorm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ConcreteReciprocityTransport.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ConjugationNaturality.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Core.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered/AbstractUnramified.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered/Compositum.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered/Core.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered/EqualCharacteristic.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered/EqualCharacteristicStandardCompositum.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered/FiniteAbelian.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered/StandardCompositum.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Filtered/Unramified.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FiniteAbstractFixedField.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FiniteExtensionClassFieldAxiom.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FiniteGaloisRealization.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FiniteResidueFinrankTransfer.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FiniteResidueFrobenius.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FiniteResidueValuationComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FiniteSubgroupResidueDegree.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldContinuousNaturality.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientNormResidue.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeNormTransport.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeSymbolSetup.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitness.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitnessComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/EmbeddedExtensionQuotient.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/EmbeddedInertiaComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/FixedFieldNormQuotient.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/FixedFieldSpecialization.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/IntrinsicBaseEquivalence.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/EmbeddedFrobeniusTransport.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/IntrinsicFrobeniusArtinComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/IntrinsicFrobeniusClosure.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/IntrinsicFrobeniusFixedField.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/IntrinsicFrobeniusQuotientTransport.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/NormRestriction.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/PrimeComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldLocalData.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldNormResidueNaturality.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldRelativeNorm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/GaloisExtensionQuotient.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/GeneralTowerNaturality.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/HenselianValuationBase.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/IntermediateFieldNormResidueNaturality.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/IntrinsicAbsoluteData.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/LocalClassFieldAxiom.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/LocalHenselianValuation.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/LocalResidueDatum.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/Main.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/NormResidue.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/NormResidueNaturality.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ResidueAbsoluteDegree.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ResidueAbsoluteFrobenius.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ResidueActionIndex.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ResidueAlgebraicClosureDegree.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ResidueAlgebraicallyClosed.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/ResidueDatum.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/SemilinearNaturality.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/SeparableFixedFieldNorm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/SeparableNormProduct.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/SeparableNormValuation.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/SeparableUnitsNorm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/TateTransport.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/TopologicalReciprocity.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/UnramifiedComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/UnramifiedNormComparison.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/UnramifiedNormalization.lean",
-      "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/UnramifiedReciprocity.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/Cohomology.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/Norm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/PrincipalUnits.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/PrincipalUnits/Basic.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/PrincipalUnits/Lift.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/PrincipalUnits/NormSide.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/PrincipalUnits/Trace.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/ResidueNorm.lean",
-      "LocalClassFieldTheory/Concrete/Finite/Unramified/Uniformizer.lean",
-      "LocalClassFieldTheory/Concrete/Finite/UnramifiedConductor.lean",
-      "LocalClassFieldTheory/Concrete/Infinite.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/AbsoluteArtin.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/AbsoluteFiniteQuotientTransitions.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/AbsoluteFiniteQuotients.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/AbsoluteGaloisAbelianization.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/AbstractProfiniteCompletionComparison.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/FiniteAbelianQuotientKernels.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/FiniteReciprocityDiagram.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/LocalMultiplicativeCompletion.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/ProfiniteCompletion.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/ProfiniteCompletionCriteria.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/ProfiniteLocalReciprocity.lean",
-      "LocalClassFieldTheory/Concrete/Infinite/TopologicalAbelianizationCongr.lean",
-      "LocalClassFieldTheory/Concrete/Kummer.lean",
-      "LocalClassFieldTheory/Concrete/Kummer/LocalHilbertPairing.lean",
-      "LocalClassFieldTheory/Concrete/Kummer/LocalHilbertPairingNondegeneracy.lean",
-      "LocalClassFieldTheory/Concrete/Kummer/LocalHilbertSymbol.lean",
-      "LocalClassFieldTheory/Concrete/Kummer/LocalHilbertSymbolLaws.lean",
-      "LocalClassFieldTheory/Concrete/Kummer/MaximalLocalKummerPairing.lean",
-      "LocalClassFieldTheory/Concrete/Kummer/PowerResidueTameFormula.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/EqualCharacteristicRealFilteredComparison.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/EqualCharacteristicTransportedArtinComparison.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/EqualCharacteristicTransportedFixedFieldComparison.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/EqualCharacteristicTransportedLevelTower.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/EqualCharacteristicTransportedRealFilteredComparison.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/EqualCharacteristicTransportedUpperRamification.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/EqualCharacteristicTransportedUpperRestriction.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/EqualCharacteristicUpperFiltration.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/Filtered.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/LaurentPrincipalUnitTransport.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/LubinTateTransport.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/NormIndex.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/NormSubgroup.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/PadicMultiplicativeArtinComparison.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/StandardArtinComparison.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/StandardFilteredArtinComparison.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/StandardFixedFieldComparison.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/StandardNormIndex.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/StandardNormSubgroupExact.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/StandardSubgroupIndex.lean",
-      "LocalClassFieldTheory/Concrete/LubinTateApplication/TransportedNormSubgroupExact.lean",
+      "LocalClassFieldTheory/ClassFormation.lean",
+      "LocalClassFieldTheory/ClassFormation/ArchimedeanHilbert90.lean",
+      "LocalClassFieldTheory/ClassFormation/ArchimedeanNormQuotient.lean",
+      "LocalClassFieldTheory/ClassFormation/CohomologyBridge.lean",
+      "LocalClassFieldTheory/ClassFormation/FieldUnitsHerbrand.lean",
+      "LocalClassFieldTheory/ClassFormation/FilteredLiftingSequence.lean",
+      "LocalClassFieldTheory/ClassFormation/Hilbert90.lean",
+      "LocalClassFieldTheory/ClassFormation/IntegerUnitsHerbrand.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks/Family.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks/Family/H0.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks/Family/HMinusOne.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks/Family/Instances.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks/FamilyClassAxiom.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks/Induced.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalBlocks/TensorNorm.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/Algebra.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/Cardinality.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/Cardinality/H0.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/Cardinality/HMinusOne.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/Cardinality/Quotient.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/Cardinality/Trivial.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/CompMulEquiv.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/Finite.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/Generator.lean",
+      "LocalClassFieldTheory/ClassFormation/LocalizedCompletionCohomology/HerbrandEquiv.lean",
+      "LocalClassFieldTheory/ClassFormation/Main.lean",
+      "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
+      "LocalClassFieldTheory/ClassFormation/NormalBasisCohomology.lean",
+      "LocalClassFieldTheory/ClassFormation/NormalBasisFiniteQuotient.lean",
+      "LocalClassFieldTheory/ClassFormation/NormalBasisGaloisAction.lean",
+      "LocalClassFieldTheory/ClassFormation/NormalBasisGradedLifting.lean",
+      "LocalClassFieldTheory/ClassFormation/NormalBasisInfiniteProduct.lean",
+      "LocalClassFieldTheory/ClassFormation/NormalBasisRecursiveLifting.lean",
+      "LocalClassFieldTheory/ClassFormation/PrincipalUnitGraded.lean",
+      "LocalClassFieldTheory/ClassFormation/Valuation.lean",
+      "LocalClassFieldTheory/ClassFormation/ValuationHerbrand.lean",
+      "LocalClassFieldTheory/ClassFormation/ValueGroupCohomology.lean",
+      "LocalClassFieldTheory/Finite.lean",
+      "LocalClassFieldTheory/Finite/Conductor.lean",
+      "LocalClassFieldTheory/Finite/CyclotomicNorm.lean",
+      "LocalClassFieldTheory/Finite/CyclotomicNorm/PrincipalUnits.lean",
+      "LocalClassFieldTheory/Finite/CyclotomicNorm/StandardSubgroup.lean",
+      "LocalClassFieldTheory/Finite/CyclotomicNorm/Unramified.lean",
+      "LocalClassFieldTheory/Finite/Existence.lean",
+      "LocalClassFieldTheory/Finite/Existence/CharacteristicZero.lean",
+      "LocalClassFieldTheory/Finite/Existence/Classification.lean",
+      "LocalClassFieldTheory/Finite/Existence/CyclotomicKummerDescent.lean",
+      "LocalClassFieldTheory/Finite/Existence/EqualCharacteristic.lean",
+      "LocalClassFieldTheory/Finite/Existence/EqualCharacteristicDominatingExtension.lean",
+      "LocalClassFieldTheory/Finite/Existence/FiniteUnramifiedField.lean",
+      "LocalClassFieldTheory/Finite/Existence/KummerNormOpen.lean",
+      "LocalClassFieldTheory/Finite/Existence/LocalAbsoluteData.lean",
+      "LocalClassFieldTheory/Finite/Existence/LubinTateUniformizerDiagonal.lean",
+      "LocalClassFieldTheory/Finite/Existence/MaximalKummerNorm.lean",
+      "LocalClassFieldTheory/Finite/Existence/NormSubgroupOrderEmbedding.lean",
+      "LocalClassFieldTheory/Finite/Existence/NormSubgroupSurjectivity.lean",
+      "LocalClassFieldTheory/Finite/Existence/OrderReversal.lean",
+      "LocalClassFieldTheory/Finite/Existence/StandardDominatingExtension.lean",
+      "LocalClassFieldTheory/Finite/Existence/StandardLubinTate.lean",
+      "LocalClassFieldTheory/Finite/Existence/StandardSubgroupIntersection.lean",
+      "LocalClassFieldTheory/Finite/Existence/UnramifiedLubinTateDiagonal.lean",
+      "LocalClassFieldTheory/Finite/Existence/UnramifiedNormContainment.lean",
+      "LocalClassFieldTheory/Finite/Existence/UnramifiedNormSubgroup.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/AbsoluteUnitsFixedField.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/AbstractFixedFieldNorm.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/AbstractFixedFieldUnits.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/CompositumRestriction.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ConcreteReciprocityCanonical.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ConcreteReciprocityPrimeNorm.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ConcreteReciprocityTransport.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ConjugationNaturality.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Core.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered/AbstractUnramified.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered/Compositum.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered/Core.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered/EqualCharacteristic.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered/EqualCharacteristicStandardCompositum.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered/FiniteAbelian.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered/StandardCompositum.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Filtered/Unramified.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FiniteAbstractFixedField.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FiniteExtensionClassFieldAxiom.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FiniteGaloisRealization.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FiniteResidueFinrankTransfer.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FiniteResidueFrobenius.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FiniteResidueValuationComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FiniteSubgroupResidueDegree.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldContinuousNaturality.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientNormResidue.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeNormTransport.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeSymbolSetup.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitness.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitnessComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/EmbeddedExtensionQuotient.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/EmbeddedInertiaComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/FixedFieldNormQuotient.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/FixedFieldSpecialization.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/BaseComparison/IntrinsicBaseEquivalence.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/EmbeddedFrobeniusTransport.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/IntrinsicFrobeniusArtinComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/IntrinsicFrobeniusClosure.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/IntrinsicFrobeniusFixedField.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/IntrinsicFrobeniusQuotientTransport.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/NormRestriction.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/PrimeComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldLocalData.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldNormResidueNaturality.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldRelativeNorm.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/GaloisExtensionQuotient.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/GeneralTowerNaturality.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/HenselianValuationBase.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/IntermediateFieldNormResidueNaturality.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/IntrinsicAbsoluteData.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/LocalClassFieldAxiom.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/LocalHenselianValuation.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/LocalResidueDatum.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/Main.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/NormResidue.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/NormResidueNaturality.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ResidueAbsoluteDegree.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ResidueAbsoluteFrobenius.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ResidueActionIndex.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ResidueAlgebraicClosureDegree.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ResidueAlgebraicallyClosed.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/ResidueDatum.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/SemilinearNaturality.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/SeparableFixedFieldNorm.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/SeparableNormProduct.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/SeparableNormValuation.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/SeparableUnitsNorm.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/TateTransport.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/TopologicalReciprocity.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/UnramifiedComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/UnramifiedNormComparison.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/UnramifiedNormalization.lean",
+      "LocalClassFieldTheory/Finite/LocalReciprocity/UnramifiedReciprocity.lean",
+      "LocalClassFieldTheory/Finite/Unramified.lean",
+      "LocalClassFieldTheory/Finite/Unramified/Cohomology.lean",
+      "LocalClassFieldTheory/Finite/Unramified/Norm.lean",
+      "LocalClassFieldTheory/Finite/Unramified/PrincipalUnits.lean",
+      "LocalClassFieldTheory/Finite/Unramified/PrincipalUnits/Basic.lean",
+      "LocalClassFieldTheory/Finite/Unramified/PrincipalUnits/Lift.lean",
+      "LocalClassFieldTheory/Finite/Unramified/PrincipalUnits/NormSide.lean",
+      "LocalClassFieldTheory/Finite/Unramified/PrincipalUnits/Trace.lean",
+      "LocalClassFieldTheory/Finite/Unramified/ResidueNorm.lean",
+      "LocalClassFieldTheory/Finite/Unramified/Uniformizer.lean",
+      "LocalClassFieldTheory/Finite/UnramifiedConductor.lean",
+      "LocalClassFieldTheory/Infinite.lean",
+      "LocalClassFieldTheory/Infinite/AbsoluteArtin.lean",
+      "LocalClassFieldTheory/Infinite/AbsoluteFiniteQuotientTransitions.lean",
+      "LocalClassFieldTheory/Infinite/AbsoluteFiniteQuotients.lean",
+      "LocalClassFieldTheory/Infinite/AbsoluteGaloisAbelianization.lean",
+      "LocalClassFieldTheory/Infinite/AbstractProfiniteCompletionComparison.lean",
+      "LocalClassFieldTheory/Infinite/FiniteAbelianQuotientKernels.lean",
+      "LocalClassFieldTheory/Infinite/FiniteReciprocityDiagram.lean",
+      "LocalClassFieldTheory/Infinite/LocalMultiplicativeCompletion.lean",
+      "LocalClassFieldTheory/Infinite/ProfiniteCompletion.lean",
+      "LocalClassFieldTheory/Infinite/ProfiniteCompletionCriteria.lean",
+      "LocalClassFieldTheory/Infinite/ProfiniteLocalReciprocity.lean",
+      "LocalClassFieldTheory/Infinite/TopologicalAbelianizationCongr.lean",
+      "LocalClassFieldTheory/Kummer.lean",
+      "LocalClassFieldTheory/Kummer/LocalHilbertPairing.lean",
+      "LocalClassFieldTheory/Kummer/LocalHilbertPairingNondegeneracy.lean",
+      "LocalClassFieldTheory/Kummer/LocalHilbertSymbol.lean",
+      "LocalClassFieldTheory/Kummer/LocalHilbertSymbolLaws.lean",
+      "LocalClassFieldTheory/Kummer/MaximalLocalKummerPairing.lean",
+      "LocalClassFieldTheory/Kummer/PowerResidueTameFormula.lean",
+      "LocalClassFieldTheory/LubinTateApplication.lean",
+      "LocalClassFieldTheory/LubinTateApplication/EqualCharacteristicRealFilteredComparison.lean",
+      "LocalClassFieldTheory/LubinTateApplication/EqualCharacteristicTransportedArtinComparison.lean",
+      "LocalClassFieldTheory/LubinTateApplication/EqualCharacteristicTransportedFixedFieldComparison.lean",
+      "LocalClassFieldTheory/LubinTateApplication/EqualCharacteristicTransportedLevelTower.lean",
+      "LocalClassFieldTheory/LubinTateApplication/EqualCharacteristicTransportedRealFilteredComparison.lean",
+      "LocalClassFieldTheory/LubinTateApplication/EqualCharacteristicTransportedUpperRamification.lean",
+      "LocalClassFieldTheory/LubinTateApplication/EqualCharacteristicTransportedUpperRestriction.lean",
+      "LocalClassFieldTheory/LubinTateApplication/EqualCharacteristicUpperFiltration.lean",
+      "LocalClassFieldTheory/LubinTateApplication/LaurentPrincipalUnitTransport.lean",
+      "LocalClassFieldTheory/LubinTateApplication/LubinTateTransport.lean",
+      "LocalClassFieldTheory/LubinTateApplication/NormIndex.lean",
+      "LocalClassFieldTheory/LubinTateApplication/NormSubgroup.lean",
+      "LocalClassFieldTheory/LubinTateApplication/PadicMultiplicativeArtinComparison.lean",
+      "LocalClassFieldTheory/LubinTateApplication/StandardArtinComparison.lean",
+      "LocalClassFieldTheory/LubinTateApplication/StandardFilteredArtinComparison.lean",
+      "LocalClassFieldTheory/LubinTateApplication/StandardFixedFieldComparison.lean",
+      "LocalClassFieldTheory/LubinTateApplication/StandardNormIndex.lean",
+      "LocalClassFieldTheory/LubinTateApplication/StandardNormSubgroupExact.lean",
+      "LocalClassFieldTheory/LubinTateApplication/StandardSubgroupIndex.lean",
+      "LocalClassFieldTheory/LubinTateApplication/TransportedNormSubgroupExact.lean",
       "LocalFieldTheory.lean",
       "LocalFieldTheory/Analytic.lean",
       "LocalFieldTheory/Analytic/Arithmetic.lean",
@@ -1264,7 +1266,6 @@
       "ValuationTheory/AbsoluteValue/AlgebraicExtension/UniqueExtensionCoefficients.lean",
       "ValuationTheory/AbsoluteValue/AlgebraicExtension/UniqueValuationSubring.lean",
       "ValuationTheory/AbsoluteValue/AlgebraicLocalization.lean",
-      "ValuationTheory/AbsoluteValue/ArithmeticExtensions.lean",
       "ValuationTheory/AbsoluteValue/Completeness.lean",
       "ValuationTheory/AbsoluteValue/Completion.lean",
       "ValuationTheory/AbsoluteValue/ExponentialValuation.lean",
@@ -1316,7 +1317,6 @@
       "ValuationTheory/DiscreteValuationField/ValuationTransport.lean",
       "ValuationTheory/HenselLemma.lean",
       "ValuationTheory/Henselian.lean",
-      "ValuationTheory/Henselian/Arithmetic.lean",
       "ValuationTheory/Henselian/Complete.lean",
       "ValuationTheory/Henselian/Core.lean",
       "ValuationTheory/Henselian/Factorization.lean",
@@ -2684,7 +2684,7 @@
     {
       "name": "LocalClassFieldTheory.ambientEmbeddedPrimeSymbolProperty",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeSymbolSetup.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeSymbolSetup.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2704,7 +2704,7 @@
     {
       "name": "LocalClassFieldTheory.ambientEmbeddedPrimeTarget",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitness.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitness.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2724,7 +2724,7 @@
     {
       "name": "LocalClassFieldTheory.ambientEmbeddedPrimeTarget_eq",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitnessComparison.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitnessComparison.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2733,7 +2733,7 @@
     {
       "name": "LocalClassFieldTheory.ambientEmbeddedPrimeTransportValue_eq_target_of_symbol",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeSymbolSetup.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeSymbolSetup.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2742,7 +2742,7 @@
     {
       "name": "LocalClassFieldTheory.ambientEmbeddedPrimeWitness",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitness.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitness.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2759,7 +2759,7 @@
     {
       "name": "LocalClassFieldTheory.ambientEmbeddedPrimeWitness_formula",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitness.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitness.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2768,7 +2768,7 @@
     {
       "name": "LocalClassFieldTheory.ambientEmbeddedPrimeWitness_local",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitnessComparison.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitnessComparison.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2777,7 +2777,7 @@
     {
       "name": "LocalClassFieldTheory.ambientEmbeddedPrimeWitness_symbol",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitnessComparison.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeWitnessComparison.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2786,7 +2786,7 @@
     {
       "name": "LocalClassFieldTheory.chosenFilteredLiftCorrectionSequence",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/FilteredLiftingSequence.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/FilteredLiftingSequence.lean",
       "uses": [
         "Classical.choice"
       ],
@@ -2802,7 +2802,7 @@
     {
       "name": "LocalClassFieldTheory.chosenFilteredLiftCorrectionSequence_mem",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/FilteredLiftingSequence.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/FilteredLiftingSequence.lean",
       "uses": [
         "Classical.choice"
       ],
@@ -2811,7 +2811,7 @@
     {
       "name": "LocalClassFieldTheory.chosenFilteredLiftStateSequence",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/FilteredLiftingSequence.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/FilteredLiftingSequence.lean",
       "uses": [
         "Classical.choice"
       ],
@@ -2827,7 +2827,7 @@
     {
       "name": "LocalClassFieldTheory.chosenFilteredLiftStateSequence_equation",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/FilteredLiftingSequence.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/FilteredLiftingSequence.lean",
       "uses": [
         "Classical.choice"
       ],
@@ -2836,7 +2836,7 @@
     {
       "name": "LocalClassFieldTheory.chosenFilteredLiftStateSequence_succ",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/FilteredLiftingSequence.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/FilteredLiftingSequence.lean",
       "uses": [
         "Classical.choice"
       ],
@@ -2845,7 +2845,7 @@
     {
       "name": "LocalClassFieldTheory.chosenMaximalKummerGaloisEquivPowerQuotient",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/Existence/MaximalKummerNorm.lean",
+      "file": "LocalClassFieldTheory/Finite/Existence/MaximalKummerNorm.lean",
       "uses": [
         "Classical.choice"
       ],
@@ -2861,7 +2861,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormQuotientEquivZModResidueFinrank_of_fieldPrincipalUnits_zero_le",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/UnramifiedConductor.lean",
+      "file": "LocalClassFieldTheory/Finite/UnramifiedConductor.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2877,7 +2877,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisIntegerLatticeUniformizerSubmodule_map_equivFun",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2886,7 +2886,7 @@
     {
       "name": "LocalClassFieldTheory.chosenPrincipalUnitsNormOfUnramifiedValuationOfIsIntegralClosureApproxCorrection",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/Unramified/PrincipalUnits/Lift.lean",
+      "file": "LocalClassFieldTheory/Finite/Unramified/PrincipalUnits/Lift.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2902,7 +2902,7 @@
     {
       "name": "LocalClassFieldTheory.chosenValuationOneUnitOfRingEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeNormTransport.lean",
+      "file": "LocalClassFieldTheory/Finite/LocalReciprocity/FixedFieldIntrinsicReciprocity/AmbientPrimeNormTransport.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -2918,7 +2918,7 @@
     {
       "name": "LocalClassFieldTheory.completionProductUnitsEquivRightCosets_apply_coe",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -2927,7 +2927,7 @@
     {
       "name": "LocalClassFieldTheory.inducedRightCosetCoordinates",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -2944,7 +2944,7 @@
     {
       "name": "LocalClassFieldTheory.inducedRightCosetCoordinates_apply",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -2953,7 +2953,7 @@
     {
       "name": "LocalClassFieldTheory.localConductorExponent",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/Conductor.lean",
+      "file": "LocalClassFieldTheory/Finite/Conductor.lean",
       "uses": [
         "Nat.find"
       ],
@@ -2973,7 +2973,7 @@
     {
       "name": "LocalClassFieldTheory.localTensorUnitsEquivLocalPlaceBlock_apply_out_coe",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -2982,7 +2982,7 @@
     {
       "name": "LocalClassFieldTheory.localTensorUnitsEquivLocalPlaceBlock_eq_orbitHom_apply",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -2991,7 +2991,7 @@
     {
       "name": "LocalClassFieldTheory.lubinTateUniformizerDiagonalAutomorphism",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/Existence/LubinTateUniformizerDiagonal.lean",
+      "file": "LocalClassFieldTheory/Finite/Existence/LubinTateUniformizerDiagonal.lean",
       "uses": [
         "Classical.choose"
       ],
@@ -3011,7 +3011,7 @@
     {
       "name": "LocalClassFieldTheory.openFiniteQuotientProductMapMonoidHom_continuous",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/Infinite/ProfiniteCompletion.lean",
+      "file": "LocalClassFieldTheory/Infinite/ProfiniteCompletion.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3020,7 +3020,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetCoefficient",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3037,7 +3037,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetCoefficient_mul_out",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3046,7 +3046,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetCompletionAlgEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/TensorNorm.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/TensorNorm.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3063,7 +3063,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetCompletionUnitsEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3080,7 +3080,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetCompletionUnitsEquiv_apply_coe",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3089,7 +3089,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetExtension",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3110,7 +3110,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetExtensionEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3131,7 +3131,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetExtensionEquiv_apply",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -3140,7 +3140,7 @@
     {
       "name": "LocalClassFieldTheory.rightCosetExtension_eq_of_mk",
       "kind": "theorem",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/Tensor.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/Tensor.lean",
       "uses": [
         "Quotient.out"
       ],
@@ -5151,7 +5151,7 @@
     {
       "name": "LocalClassFieldTheory.Kummer.chosenSimpleKummerNormResidueAutomorphism",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Kummer/LocalHilbertSymbol.lean",
+      "file": "LocalClassFieldTheory/Kummer/LocalHilbertSymbol.lean",
       "depends_on": [
         "KummerTheory.chosenSimpleKummerExtension"
       ],
@@ -5171,7 +5171,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisCoordinateMaximalSubmodule",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [],
       "detection": [
         "name_marker",
@@ -5191,7 +5191,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisCoordinateQuotPiLinearEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "LocalClassFieldTheory.chosenNormalBasisCoordinateMaximalSubmodule"
       ],
@@ -5211,7 +5211,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisIntegerLatticeBasis",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisIntegerLattice"
       ],
@@ -5231,7 +5231,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisIntegerLatticeMulPowLinearEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenBaseUniformizerPowSubmodule",
         "CyclicCohomology.chosenNormalBasisIntegerLattice",
@@ -5255,7 +5255,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisIntegerLatticeMulPowLinearMap",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenBaseUniformizerPowSubmodule",
         "CyclicCohomology.chosenNormalBasisIntegerLattice",
@@ -5280,7 +5280,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisIntegerLatticeQuotCoordinateQuotLinearEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisIntegerLattice",
         "LocalClassFieldTheory.chosenNormalBasisCoordinateMaximalSubmodule",
@@ -5306,7 +5306,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisIntegerLatticeUniformizerSubmodule",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenBaseUniformizerPowSubmodule",
         "CyclicCohomology.chosenNormalBasisIntegerLattice"
@@ -5328,7 +5328,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisIntegerUnitsQuotMulDistribMulAction",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisGaloisAction.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasisGaloisAction.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisPrincipalUnitSet"
       ],
@@ -5348,7 +5348,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisIntegerUnitsQuotientMap",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisGaloisAction.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasisGaloisAction.lean",
       "depends_on": [],
       "detection": [
         "name_marker",
@@ -5368,7 +5368,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisLatticeSuccQuotRightRegularAddEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisLatticeSuccQuot",
         "LocalClassFieldTheory.chosenNormalBasisCoordinateQuotPiLinearEquiv",
@@ -5396,7 +5396,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisLatticeSuccQuotToIntegerLatticeQuotLinearEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisIntegerLattice",
         "CyclicCohomology.chosenNormalBasisLatticeSuccQuot",
@@ -5426,7 +5426,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisPiResidueInverseIndexAddEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [],
       "detection": [
         "name_marker",
@@ -5446,7 +5446,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisPrincipalUnitCorrectionProduct",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisInfiniteProduct.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasisInfiniteProduct.lean",
       "depends_on": [],
       "detection": [
         "name_marker",
@@ -5466,7 +5466,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisPrincipalUnitSequenceAsPrincipalUnits",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisInfiniteProduct.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasisInfiniteProduct.lean",
       "depends_on": [
         "CyclicCohomology.chosenBaseUniformizerPowSubmodule",
         "CyclicCohomology.chosenNormalBasisIntegerLattice",
@@ -5490,7 +5490,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisPrincipalUnitSubgroupInclusion",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisGaloisAction.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasisGaloisAction.lean",
       "depends_on": [],
       "detection": [
         "name_marker",
@@ -5510,7 +5510,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisGaloisAction.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasisGaloisAction.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisPrincipalUnitSet"
       ],
@@ -5530,7 +5530,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisPrincipalUnitSuccQuotMulDistribMulAction",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasisGradedLifting.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasisGradedLifting.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisPrincipalUnitSet",
         "CyclicCohomology.chosenNormalBasisPrincipalUnitSuccQuot",
@@ -5556,7 +5556,7 @@
     {
       "name": "LocalClassFieldTheory.chosenNormalBasisPrincipalUnitSuccQuotMulEquivLatticeSuccQuot",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/PrincipalUnitGraded.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/PrincipalUnitGraded.lean",
       "depends_on": [
         "CyclicCohomology.chosenBaseUniformizerPowSubmodule",
         "CyclicCohomology.chosenNormalBasisIntegerLattice",
@@ -5586,7 +5586,7 @@
     {
       "name": "LocalClassFieldTheory.chosenPrincipalUnitsNormOfUnramifiedValuationOfIsIntegralClosureApproxCorrectionSeq",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/Finite/Unramified/PrincipalUnits/Lift.lean",
+      "file": "LocalClassFieldTheory/Finite/Unramified/PrincipalUnits/Lift.lean",
       "depends_on": [],
       "detection": [
         "name_marker",
@@ -5606,7 +5606,7 @@
     {
       "name": "LocalClassFieldTheory.galoisGroupChosenNormalBasisIntegerLatticeLinearEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisIntegerLattice"
       ],
@@ -5626,7 +5626,7 @@
     {
       "name": "LocalClassFieldTheory.galoisGroupChosenNormalBasisIntegerLatticeQuotLinearEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisIntegerLattice",
         "LocalClassFieldTheory.chosenNormalBasisIntegerLatticeUniformizerSubmodule",
@@ -5650,7 +5650,7 @@
     {
       "name": "LocalClassFieldTheory.galoisGroupChosenNormalBasisLatticeSuccQuotAddEquiv",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisLatticeSuccQuot",
         "LocalClassFieldTheory.chosenNormalBasisLatticeSuccQuotToIntegerLatticeQuotLinearEquiv",
@@ -5674,7 +5674,7 @@
     {
       "name": "LocalClassFieldTheory.galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/NormalBasis.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/NormalBasis.lean",
       "depends_on": [
         "CyclicCohomology.chosenNormalBasisLatticeSuccQuot",
         "LocalClassFieldTheory.chosenNormalBasisIntegerLatticeUniformizerSubmodule",
@@ -5700,7 +5700,7 @@
     {
       "name": "LocalClassFieldTheory.localTensorUnitsEquivChosenCoordinates",
       "kind": "def",
-      "file": "LocalClassFieldTheory/Concrete/ClassFormation/LocalBlocks/TensorNorm.lean",
+      "file": "LocalClassFieldTheory/ClassFormation/LocalBlocks/TensorNorm.lean",
       "depends_on": [],
       "detection": [
         "name_marker",

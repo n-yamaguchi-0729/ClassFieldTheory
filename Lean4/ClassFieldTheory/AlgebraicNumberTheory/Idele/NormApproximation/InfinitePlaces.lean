@@ -1,4 +1,4 @@
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.TensorNorm
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.TensorNorm
 import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
 import AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
 import AlgebraicNumberTheory.RayClass.Approximation

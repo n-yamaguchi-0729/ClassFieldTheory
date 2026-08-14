@@ -1,0 +1,33 @@
+import ValuationTheory
+import GroupTheory
+import LocalFieldTheory
+import RamificationTheory
+import LubinTate
+import CyclicCohomology
+import KummerTheory
+import AbstractClassFieldTheory
+import AlgebraicNumberTheory
+import LocalClassFieldTheory
+import KroneckerWeber
+import HasseArf
+import GlobalClassFieldTheory
+
+/-!
+# Class field theory
+
+This is the canonical entry point for the class field theory library.
+Its import closure is the complete production-library inventory.  Compile-time
+API, instance-coherence, and normal-form checks are maintained outside the
+published production library, so downstream users acquire production code only.
+
+The library contains local class field theory and global class field theory
+for number fields, including the Hilbert product formula, general
+power-residue reciprocity, and Gauss quadratic reciprocity, together with the
+Hasse--Arf and Kronecker--Weber theorems. Shared valuation, ramification,
+cohomology, Kummer, local-field, and Lubin--Tate infrastructure lives beside
+those theories rather than under a theorem-specific directory.
+
+For a smaller production dependency closure, import
+`LocalClassFieldTheory`, `GlobalClassFieldTheory`, `HasseArf`, or
+`KroneckerWeber` directly.
+-/

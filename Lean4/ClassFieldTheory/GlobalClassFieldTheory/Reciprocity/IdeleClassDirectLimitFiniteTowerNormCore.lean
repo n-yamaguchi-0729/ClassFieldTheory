@@ -1,5 +1,5 @@
 import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtensionNorm
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldRelativeNorm
+import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldRelativeNorm
 
 /-!
 # Core comparisons for finite-tower idèle-class norms

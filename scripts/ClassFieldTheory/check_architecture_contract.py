@@ -58,6 +58,7 @@ class PhysicalDirectoryFacts:
 
 CANONICAL_SUBSYSTEM_IMPORTS = (
     "ValuationTheory",
+    "GroupTheory",
     "LocalFieldTheory",
     "RamificationTheory",
     "LubinTate",
@@ -74,7 +75,10 @@ CANONICAL_SUBSYSTEM_IMPORTS = (
 CANONICAL_IMPORTS = CANONICAL_SUBSYSTEM_IMPORTS
 
 PRODUCTION_LIBRARY_NAME = "ClassFieldTheory"
-PRODUCTION_LIBRARY_SRC_DIR = "Lean4/ClassFieldTheory"
+PRODUCTION_LIBRARY_SRC_DIR = "Lean4"
+EXPECTED_PRODUCTION_LIBRARY_GLOBS = ("ClassFieldTheory",)
+PRODUCTION_CORE_LIBRARY_NAME = "ClassFieldTheoryCore"
+PRODUCTION_CORE_LIBRARY_SRC_DIR = "Lean4/ClassFieldTheory"
 
 PUBLIC_ROOTS = (
     "ClassFieldTheory",
@@ -87,13 +91,13 @@ PUBLIC_ROOTS = (
     "AbstractClassFieldTheory",
     "AlgebraicNumberTheory",
     "LocalClassFieldTheory",
-    "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity",
-    "LocalClassFieldTheory.Concrete.Finite.Existence",
-    "LocalClassFieldTheory.Concrete.Finite.Conductor",
-    "LocalClassFieldTheory.Concrete.Finite.UnramifiedConductor",
-    "LocalClassFieldTheory.Concrete.Infinite",
-    "LocalClassFieldTheory.Concrete.Kummer",
-    "LocalClassFieldTheory.Concrete.LubinTateApplication",
+    "LocalClassFieldTheory.Finite.LocalReciprocity",
+    "LocalClassFieldTheory.Finite.Existence",
+    "LocalClassFieldTheory.Finite.Conductor",
+    "LocalClassFieldTheory.Finite.UnramifiedConductor",
+    "LocalClassFieldTheory.Infinite",
+    "LocalClassFieldTheory.Kummer",
+    "LocalClassFieldTheory.LubinTateApplication",
     "HasseArf",
     "KroneckerWeber",
     "GlobalClassFieldTheory",
@@ -112,10 +116,14 @@ IMPORT_RE = re.compile(r"^\s*import\s+([A-Za-z0-9_'.]+)\s*$", re.MULTILINE)
 
 
 def module_name(path: Path) -> str:
-    return source_relative_path(path.with_suffix("")).replace("/", ".")
+    return Path(source_relative_path(path)).with_suffix("").as_posix().replace(
+        "/", "."
+    )
 
 
 def module_path(module: str) -> Path:
+    if module == "ClassFieldTheory":
+        return CANONICAL_ROOT
     return LEAN_ROOT / Path(*module.split(".")).with_suffix(".lean")
 
 
@@ -235,6 +243,7 @@ def check_lake_topology(
         return matches[0]
 
     production = unique_library(PRODUCTION_LIBRARY_NAME)
+    production_core = unique_library(PRODUCTION_CORE_LIBRARY_NAME)
     if production is not None:
         if production.get("srcDir") != PRODUCTION_LIBRARY_SRC_DIR:
             errors.append(
@@ -242,21 +251,54 @@ def check_lake_topology(
                 f"{production.get('srcDir')!r}; expected "
                 f"{PRODUCTION_LIBRARY_SRC_DIR!r}"
             )
+        raw_production_globs = production.get("globs")
+        actual_production_globs = (
+            tuple(raw_production_globs)
+            if isinstance(raw_production_globs, list)
+            and all(isinstance(glob, str) for glob in raw_production_globs)
+            else None
+        )
+        if actual_production_globs != EXPECTED_PRODUCTION_LIBRARY_GLOBS:
+            errors.append(
+                f"Lake library {PRODUCTION_LIBRARY_NAME} globs are "
+                f"{actual_production_globs!r}; expected "
+                f"{EXPECTED_PRODUCTION_LIBRARY_GLOBS!r}"
+            )
         check_lake_glob_exact_cover(
             PRODUCTION_LIBRARY_NAME,
-            production.get("globs"),
+            raw_production_globs,
+            CANONICAL_ROOT.parent,
+            {module_name(CANONICAL_ROOT)},
+            errors,
+        )
+    if production_core is not None:
+        if production_core.get("srcDir") != PRODUCTION_CORE_LIBRARY_SRC_DIR:
+            errors.append(
+                f"Lake library {PRODUCTION_CORE_LIBRARY_NAME} srcDir is "
+                f"{production_core.get('srcDir')!r}; expected "
+                f"{PRODUCTION_CORE_LIBRARY_SRC_DIR!r}"
+            )
+        check_lake_glob_exact_cover(
+            PRODUCTION_CORE_LIBRARY_NAME,
+            production_core.get("globs"),
             LEAN_ROOT,
-            {module_name(path) for path in production_files},
+            {
+                module_name(path)
+                for path in production_files
+                if path != CANONICAL_ROOT
+            },
             errors,
         )
     extra_libraries = [
         library.get("name")
         for library in libraries
-        if library.get("name") != PRODUCTION_LIBRARY_NAME
+        if library.get("name")
+        not in {PRODUCTION_LIBRARY_NAME, PRODUCTION_CORE_LIBRARY_NAME}
     ]
     if extra_libraries:
         errors.append(
-            "public Lake configuration must define only the production library; "
+            "public Lake configuration must define only the production root and "
+            "core ownership libraries; "
             f"extra entries: {extra_libraries!r}"
         )
 
@@ -474,6 +516,8 @@ def check_physical_layout(root: Path, errors: list[str]) -> None:
 def source_directories(files: list[Path]) -> list[tuple[str, ...]]:
     directories: set[tuple[str, ...]] = set()
     for path in files:
+        if path == CANONICAL_ROOT:
+            continue
         relative = path.relative_to(LEAN_ROOT)
         for depth in range(1, len(relative.parts)):
             directories.add(relative.parts[:depth])

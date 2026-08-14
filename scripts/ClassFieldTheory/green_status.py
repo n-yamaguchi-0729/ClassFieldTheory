@@ -30,10 +30,13 @@ TOOLS_DIR = SCRIPT_DIR.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
 from _lean_tool_common import import_modules, repo_root  # noqa: E402
+from source_layout import (  # noqa: E402
+    contract_source_files,
+    source_relative_path,
+)
 
 
 ROOT = repo_root()
-SOURCE_ROOT = ROOT / "Lean4" / "ClassFieldTheory"
 DEFAULT_LAKE = Path(shutil.which("lake") or "lake")
 OUT_OF_DATE_ERROR = "error: target is out-of-date and needs to be rebuilt"
 BUILDING_RE = re.compile(r"\bBuilding\s+(?P<module>[^\s]+)\s*$")
@@ -103,6 +106,39 @@ def module_source_files(root: Path) -> tuple[Path, ...]:
             if is_module_source_path(root, path)
         )
     )
+
+
+def production_source_files() -> tuple[Path, ...]:
+    """Return the canonical outer root and every production-subtree module."""
+
+    return tuple(path.resolve() for path in contract_source_files())
+
+
+def production_module_name(path: Path) -> str:
+    """Return the Lean module name of one production source."""
+
+    return Path(source_relative_path(path)).with_suffix("").as_posix().replace(
+        "/", "."
+    )
+
+
+def production_source_tree_matches(
+    paths: Collection[Path],
+    snapshot: tuple[tuple[str, int, int], ...],
+) -> bool:
+    """Check the split root/subtree production inventory and metadata."""
+
+    expected = tuple(sorted(path.resolve() for path in paths))
+    try:
+        current = tuple(sorted(production_source_files()))
+    except FileNotFoundError:
+        return False
+    if current != expected:
+        return False
+    try:
+        return source_snapshot(current) == snapshot
+    except LakeProbeError:
+        return False
 
 
 def source_tree_matches(
@@ -318,10 +354,9 @@ def run_self_tests() -> None:
         source_root, Path("/elsewhere/Probe.lean")
     )
 
-    lake = Path("/lake")
-    command = lake_no_build_command(lake, {"B", "A"})
+    command = lake_no_build_command(Path("/lake"), {"B", "A"})
     assert command == [
-        str(lake),
+        "/lake",
         "--no-build",
         "build",
         "+A:olean",
@@ -401,10 +436,10 @@ def main() -> int:
             "--build-dir must match lakefile.toml for authoritative trace "
             f"probing: expected {configured}, got {build_dir}"
         )
-    files = list(module_source_files(SOURCE_ROOT))
+    files = list(production_source_files())
     source_state = source_snapshot(files)
     module_by_file = {
-        path: path.relative_to(SOURCE_ROOT).with_suffix("").as_posix().replace("/", ".")
+        path: production_module_name(path)
         for path in files
     }
     file_by_module = {module: path for path, module in module_by_file.items()}
@@ -425,7 +460,7 @@ def main() -> int:
     except (LakeProbeError, ValueError) as error:
         print(f"green-status: FAILED: {error}", file=sys.stderr)
         return 2
-    if not source_tree_matches(SOURCE_ROOT, files, source_state):
+    if not production_source_tree_matches(files, source_state):
         print(
             "green-status: FAILED: Lean sources changed during the Lake trace "
             "probe; retry for a coherent snapshot",

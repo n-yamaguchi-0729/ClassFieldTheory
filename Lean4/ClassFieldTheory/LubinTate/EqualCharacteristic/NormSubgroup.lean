@@ -19,5 +19,5 @@ Public aggregate for higher-unit norms, containment of the standard subgroup
 in the finite-level norm subgroup, and the corresponding finite quotient
 calculation.  The exact norm-subgroup equality, which uses finite local
 reciprocity, is exported by
-`LocalClassFieldTheory.Concrete.LubinTateApplication`.
+`LocalClassFieldTheory.LubinTateApplication`.
 -/

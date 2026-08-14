@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "path": "GlobalClassFieldTheory/Reciprocity/GlobalHilbertSymbol/FinitePlaceCharacterComparison.lean",
+      "declaration": "GlobalClassFieldTheory.Reciprocity.finitePlaceKummerCommonRootAction_eq_global",
+      "option": "maxHeartbeats",
+      "value": 4000000,
+      "reason": "The global localized Artin-action comparison elaborates the reviewed algebraic-localization instance tower."
+    }
+  ]
+}

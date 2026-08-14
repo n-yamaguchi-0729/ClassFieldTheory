@@ -1,5 +1,5 @@
 import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Conjugation
-import LocalClassFieldTheory.Concrete.Kummer.LocalHilbertSymbol
+import LocalClassFieldTheory.Kummer.LocalHilbertSymbol
 import Mathlib.FieldTheory.KummerExtension
 
 /-!

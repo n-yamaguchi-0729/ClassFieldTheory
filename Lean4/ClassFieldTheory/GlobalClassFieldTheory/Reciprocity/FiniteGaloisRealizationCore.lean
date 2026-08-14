@@ -2,7 +2,7 @@ import AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
 import AlgebraicNumberTheory.Galois.FixedFieldLattice
 import GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
 import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison
+import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison
 import ValuationTheory.Completion.AbsoluteValueExtensions
 
 /-!

@@ -1,5 +1,5 @@
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.Filtered.FiniteAbelian
+import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered
+import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelian
 import RamificationTheory.LocalField
 
 /-!

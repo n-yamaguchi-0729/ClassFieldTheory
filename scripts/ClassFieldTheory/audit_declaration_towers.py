@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Audit declaration-level elaboration risks without invoking Lean.
 
-The scanner covers every source owned by ``Lean4/ClassFieldTheory`` and keeps
-four costs separate:
+The scanner covers ``Lean4/ClassFieldTheory.lean`` and every source below
+``Lean4/ClassFieldTheory/`` and keeps four costs separate:
 
 * local-instance towers embedded in public declaration signatures;
 * the same heavy instance target rebuilt in the declaration body;

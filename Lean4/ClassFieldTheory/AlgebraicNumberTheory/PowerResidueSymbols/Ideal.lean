@@ -292,6 +292,29 @@ theorem idealPrimeMultiplicity_eq_zero_of_not_dvd
   exact hP
     ((Associates.count_ne_zero_iff_dvd hI P.irreducible).mp hne)
 
+/-- The finite set of height-one primes dividing a nonzero denominator ideal.
+
+Naming this set keeps every finite-product presentation on the same subtype,
+instead of asking typeclass inference to reconstruct definitionally equal
+subtypes from separate predicate expressions. -/
+def idealPrimeDivisors (I : Ideal (𝓞 K)) :
+    Set (HeightOneSpectrum (𝓞 K)) :=
+  {P | P.asIdeal ∣ I}
+
+omit [NumberField K] in
+/-- Membership in the named prime-divisor set is ordinary ideal divisibility. -/
+@[simp]
+theorem mem_idealPrimeDivisors
+    (I : Ideal (𝓞 K)) (P : HeightOneSpectrum (𝓞 K)) :
+    P ∈ idealPrimeDivisors K I ↔ P.asIdeal ∣ I :=
+  Iff.rfl
+
+/-- The prime divisors of a nonzero ideal form a finite set. -/
+theorem idealPrimeDivisors_finite
+    (I : Ideal (𝓞 K)) (hI : I ≠ 0) :
+    (idealPrimeDivisors K I).Finite :=
+  Ideal.finite_factors hI
+
 /-- **Ideal power residue symbol.**  For `I = ∏ P ^ v_P(I)`, define
 
 `(a/I) = ∏ (a/P) ^ v_P(I)`.
@@ -309,16 +332,14 @@ noncomputable def idealPowerResidueSymbol
       ∀ P : HeightOneSpectrum (𝓞 K),
         P.asIdeal ∣ I → a ∉ P.asIdeal) :
     rootsOfUnity (n : ℕ) (𝓞 K) := by
-  letI : Finite
-      {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I} :=
-    Ideal.finite_factors hI
   letI : Fintype
-      {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I} :=
-    Fintype.ofFinite _
+      (idealPrimeDivisors K I) :=
+    (idealPrimeDivisors_finite K I hI).fintype
   exact
-    ∏ P : {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I},
+    ∏ P : idealPrimeDivisors K I,
       primeIdealPowerResidueSymbol K P.1 n hmu
-          (hcoprime P.1 P.2) a (ha P.1 P.2) ^
+          (hcoprime P.1 ((mem_idealPrimeDivisors K I P.1).mp P.2)) a
+          (ha P.1 ((mem_idealPrimeDivisors K I P.1).mp P.2)) ^
         idealPrimeMultiplicity K P.1 I
 
 /-- The prime-by-prime factor of the ideal power-residue symbol, extended
@@ -451,21 +472,19 @@ theorem idealPowerResidueSymbol_eq_finprod
       ∏ᶠ P : HeightOneSpectrum (𝓞 K),
         idealPowerResidueFactor K I n hmu a hcoprime ha P := by
   classical
-  letI : Finite
-      {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I} :=
-    Ideal.finite_factors hI
   letI : Fintype
-      {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I} :=
-    Fintype.ofFinite _
+      (idealPrimeDivisors K I) :=
+    (idealPrimeDivisors_finite K I hI).fintype
   calc
     idealPowerResidueSymbol K I hI n hmu a hcoprime ha =
-        ∏ P : {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I},
+        ∏ P : idealPrimeDivisors K I,
           idealPowerResidueFactor K I n hmu a hcoprime ha P := by
             unfold idealPowerResidueSymbol
             apply Finset.prod_congr rfl
             intro P _
-            simp [idealPowerResidueFactor, P.2]
-    _ = ∏ᶠ P : {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I},
+            have hP := (mem_idealPrimeDivisors K I P.1).mp P.2
+            simp [idealPowerResidueFactor, hP]
+    _ = ∏ᶠ P : idealPrimeDivisors K I,
           idealPowerResidueFactor K I n hmu a hcoprime ha P :=
       (finprod_eq_prod_of_fintype _).symm
     _ = ∏ᶠ (P : HeightOneSpectrum (𝓞 K))
@@ -534,16 +553,14 @@ theorem idealPowerResidueSymbol_eq_prod
     (ha :
       ∀ P : HeightOneSpectrum (𝓞 K),
         P.asIdeal ∣ I → a ∉ P.asIdeal) :
-    letI : Finite
-        {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I} :=
-      Ideal.finite_factors hI
     letI : Fintype
-        {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I} :=
-      Fintype.ofFinite _
+        (idealPrimeDivisors K I) :=
+      (idealPrimeDivisors_finite K I hI).fintype
     idealPowerResidueSymbol K I hI n hmu a hcoprime ha =
-      ∏ P : {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I},
+      ∏ P : idealPrimeDivisors K I,
         primeIdealPowerResidueSymbol K P.1 n hmu
-            (hcoprime P.1 P.2) a (ha P.1 P.2) ^
+            (hcoprime P.1 ((mem_idealPrimeDivisors K I P.1).mp P.2)) a
+            (ha P.1 ((mem_idealPrimeDivisors K I P.1).mp P.2)) ^
           idealPrimeMultiplicity K P.1 I :=
   rfl
 
@@ -568,12 +585,9 @@ theorem idealPowerResidueSymbol_mul
       idealPowerResidueSymbol K I hI n hmu a hcoprime ha *
         idealPowerResidueSymbol K I hI n hmu b hcoprime hb := by
   classical
-  letI : Finite
-      {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I} :=
-    Ideal.finite_factors hI
   letI : Fintype
-      {P : HeightOneSpectrum (𝓞 K) // P.asIdeal ∣ I} :=
-    Fintype.ofFinite _
+      (idealPrimeDivisors K I) :=
+    (idealPrimeDivisors_finite K I hI).fintype
   unfold idealPowerResidueSymbol
   rw [← Finset.prod_mul_distrib]
   apply Finset.prod_congr rfl

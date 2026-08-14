@@ -1,7 +1,7 @@
 import GlobalClassFieldTheory.GlobalClassFields.SUnitKummerNormCore
 import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 import KummerTheory.Concrete.SUnitKummerUnramified
-import LocalClassFieldTheory.Concrete.LubinTateApplication.StandardSubgroupIndex
+import LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
 
 /-!
 # Exact norm realization by the full S-unit Kummer extension

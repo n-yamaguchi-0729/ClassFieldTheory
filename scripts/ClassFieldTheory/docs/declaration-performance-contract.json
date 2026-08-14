@@ -2,11 +2,11 @@
   "schema_version": 2,
   "source_inventory": {
     "module_count": 1349,
-    "modules_sha256": "47a3c848641007b1bc8e723b24d310a278126e20a0ec8405f3e8286db4ccc2a6"
+    "modules_sha256": "b476ae330352ecb9bb654600f1f365e474d35b6b203c1f540e78020194b1e484"
   },
   "ceilings": {
-    "public_signature_letI_declarations": 1336,
-    "public_signature_letI_total": 3177,
+    "public_signature_letI_declarations": 1353,
+    "public_signature_letI_total": 3208,
     "public_signature_heavy_target_total": 499,
     "signature_body_duplicate_target_declarations": 187,
     "signature_body_duplicate_target_total": 380,
@@ -14,19 +14,19 @@
     "container_payload_letI_declarations": 2,
     "container_payload_letI_total": 2,
     "container_payload_heavy_target_total": 0,
-    "declarations_over_100_lines": 360,
-    "declarations_over_150_lines": 135,
+    "declarations_over_100_lines": 365,
+    "declarations_over_150_lines": 136,
     "declarations_over_200_lines": 46,
     "max_declaration_span": 536,
     "max_public_signature_letI": 17,
     "max_duplicate_heavy_targets": 8,
     "max_container_payload_letI": 1,
-    "broad_simp_total": 5864,
-    "change_total": 6076
+    "broad_simp_total": 5893,
+    "change_total": 6161
   },
   "current_report": {
-    "public_signature_letI_declarations": 1336,
-    "public_signature_letI_total": 3177,
+    "public_signature_letI_declarations": 1353,
+    "public_signature_letI_total": 3208,
     "public_signature_heavy_target_total": 499,
     "signature_body_duplicate_target_declarations": 187,
     "signature_body_duplicate_target_total": 380,
@@ -34,15 +34,15 @@
     "container_payload_letI_declarations": 2,
     "container_payload_letI_total": 2,
     "container_payload_heavy_target_total": 0,
-    "declarations_over_100_lines": 360,
-    "declarations_over_150_lines": 135,
+    "declarations_over_100_lines": 365,
+    "declarations_over_150_lines": 136,
     "declarations_over_200_lines": 46,
     "max_declaration_span": 536,
     "max_public_signature_letI": 17,
     "max_duplicate_heavy_targets": 8,
     "max_container_payload_letI": 1,
-    "broad_simp_total": 5864,
-    "change_total": 6076
+    "broad_simp_total": 5893,
+    "change_total": 6161
   },
   "hotspots": {
     "declaration_spans": [
@@ -107,7 +107,7 @@
         "broad_simp": 10
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.FamilyClassAxiom",
+        "module": "LocalClassFieldTheory.ClassFormation.LocalBlocks.FamilyClassAxiom",
         "line": 635,
         "name": "localBlockFamily_herbrandQuotient_eq_product_localDegrees",
         "span": 327,
@@ -117,7 +117,7 @@
         "broad_simp": 1
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction",
+        "module": "LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction",
         "line": 384,
         "name": "ambientEmbeddedNormResidueElement_norm_restriction",
         "span": 315,
@@ -127,7 +127,7 @@
         "broad_simp": 0
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport",
+        "module": "LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport",
         "line": 1437,
         "name": "intrinsicFrobeniusFixedFieldEquivAmbientEmbeddedField",
         "span": 307,
@@ -137,7 +137,7 @@
         "broad_simp": 0
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeWitnessComparison",
+        "module": "LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeWitnessComparison",
         "line": 321,
         "name": "ambientEmbeddedPrimeWitness_symbol",
         "span": 306,
@@ -159,7 +159,7 @@
         "broad_simp": 0
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction",
+        "module": "LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction",
         "line": 34,
         "name": "equalCharacteristicTransportedLubinTateLocalUpperRamificationGroup_eq_restrictKer",
         "span": 153,
@@ -189,7 +189,7 @@
         "broad_simp": 0
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusFixedField",
+        "module": "LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusFixedField",
         "line": 840,
         "name": "intrinsicFrobeniusFixedFieldEquivAmbientFixedField_apply_val",
         "span": 91,
@@ -209,7 +209,7 @@
         "broad_simp": 0
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.FamilyClassAxiom",
+        "module": "LocalClassFieldTheory.ClassFormation.LocalBlocks.FamilyClassAxiom",
         "line": 635,
         "name": "localBlockFamily_herbrandQuotient_eq_product_localDegrees",
         "span": 327,
@@ -239,7 +239,7 @@
         "broad_simp": 0
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.LubinTateApplication.EqualCharacteristicTransportedLevelTower",
+        "module": "LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedLevelTower",
         "line": 87,
         "name": "equalCharacteristicTransportedLubinTateRestrictNormalHom_apply_val",
         "span": 98,
@@ -251,7 +251,7 @@
     ],
     "duplicated_towers": [
       {
-        "module": "LocalClassFieldTheory.Concrete.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction",
+        "module": "LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction",
         "line": 34,
         "name": "equalCharacteristicTransportedLubinTateLocalUpperRamificationGroup_eq_restrictKer",
         "span": 153,
@@ -331,7 +331,7 @@
         "broad_simp": 5
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.LubinTateApplication.EqualCharacteristicTransportedArtinComparison",
+        "module": "LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedArtinComparison",
         "line": 37,
         "name": "equalCharacteristicTransportedLubinTateArtinPrincipalUnitsImage_eq_restrictKer",
         "span": 117,
@@ -363,7 +363,7 @@
         "broad_simp": 0
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom",
+        "module": "LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom",
         "line": 35,
         "name": "UnitsTateCardinalityData",
         "span": 14,
@@ -465,7 +465,7 @@
         "broad_simp": 10
       },
       {
-        "module": "LocalClassFieldTheory.Concrete.ClassFormation.NormalBasisRecursiveLifting",
+        "module": "LocalClassFieldTheory.ClassFormation.NormalBasisRecursiveLifting",
         "line": 48,
         "name": "exists_chosenNormalBasisPrincipalUnit_fixed_is_tateNorm",
         "span": 95,

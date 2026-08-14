@@ -1,4 +1,4 @@
-import LocalClassFieldTheory.Concrete.ClassFormation.ArchimedeanNormQuotient
+import LocalClassFieldTheory.ClassFormation.ArchimedeanNormQuotient
 import AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
 import AlgebraicNumberTheory.Idele.Cohomology.Decomposition
 

@@ -35,6 +35,9 @@ import GlobalClassFieldTheory.Reciprocity.NormQuotient
 import GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
 import GlobalClassFieldTheory.Reciprocity.GlobalArtinFiniteSupportApproximation
 import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol
+import GlobalClassFieldTheory.Reciprocity.HilbertProductFormula
+import GlobalClassFieldTheory.Reciprocity.PowerResidueReciprocity
+import GlobalClassFieldTheory.Reciprocity.RationalQuadraticPowerResidueReciprocity
 import GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
 import GlobalClassFieldTheory.Reciprocity.ProductFormula
 import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicCharacterRigidity
@@ -77,5 +80,8 @@ import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicArithmeticProduct
 This public root exports global Artin maps, cyclotomic comparisons, local norm
 kernels, the principal-idèle product formula, the concrete cyclotomic
 idèle-class valuation, local--global compatibility, and the descended global
-norm-residue homomorphism with its actual norm-range kernel.
+norm-residue homomorphism with its actual norm-range kernel.  It also exports
+the finite- and infinite-place Kummer-character comparison, the all-place
+Hilbert product formula, general power-residue reciprocity with explicit
+bad-place correction, and Gauss quadratic reciprocity over `ℚ`.
 -/

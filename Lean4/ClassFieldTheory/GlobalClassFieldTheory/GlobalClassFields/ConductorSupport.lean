@@ -15,7 +15,7 @@ There are two source statements in the ramification criterion:
   local conductor exponent is nonzero.
 
 The local conductor criterion itself is public in
-`LocalClassFieldTheory.Concrete.Finite.UnramifiedConductor`.  The global
+`LocalClassFieldTheory.Finite.UnramifiedConductor`.  The global
 reciprocity identity `N(C_L) ∩ K_vˣ = N(L_vˣ)` identifies the two
 exponents for a global extension, yielding the global conductor-support
 corollary.

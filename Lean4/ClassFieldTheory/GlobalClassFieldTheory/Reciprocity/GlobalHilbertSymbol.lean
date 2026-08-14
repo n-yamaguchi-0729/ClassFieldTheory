@@ -1,6 +1,8 @@
 import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
 import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceComparison
 import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceLocalGlobal
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
+import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceFiniteSupport
 import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
 import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceCharacter
 import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealSquare
@@ -14,7 +16,6 @@ import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealC
 /-!
 # Global-place Hilbert symbols
 
-Public aggregate for the completed finite-place setup and infinite-place
-comparison.  The paused finite-place character comparison and product formula
-are intentionally not part of this active aggregate.
+Public aggregate for the finite-place Kummer character comparison, finite
+support of the Hilbert factors, and the infinite-place comparison.
 -/

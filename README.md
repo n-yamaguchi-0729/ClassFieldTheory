@@ -3,12 +3,41 @@
 [![Lean](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-This repository publishes the unified `ClassFieldTheory` Lean library. Its
-reader-facing import is:
+The production sources live under `Lean4/ClassFieldTheory`.  The canonical
+entrypoint is `Lean4/ClassFieldTheory.lean`, so the reader-facing import is:
 
 ```lean
 import ClassFieldTheory
 ```
+
+## Main-theorem guide
+
+`import ClassFieldTheory` exposes everything below.  For a smaller dependency
+closure, use the focused import in the middle column.  Every declaration in
+this table is an active production declaration; planned APIs are deliberately
+not listed.
+
+| Topic | Focused import | Headline declarations |
+| --- | --- | --- |
+| Finite local reciprocity | `LocalClassFieldTheory.Finite.LocalReciprocity` | `LocalClassFieldTheory.localReciprocityEquiv`<br>`LocalClassFieldTheory.localArtinMap_ker` |
+| Finite local existence | `LocalClassFieldTheory.Finite.Existence` | `LocalClassFieldTheory.finiteAbelianNormSubgroupOrderIso` |
+| Absolute and profinite local reciprocity | `LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity` | `LocalClassFieldTheory.absoluteLocalArtinMap`<br>`LocalClassFieldTheory.profiniteLocalReciprocity` |
+| Profinite-completion comparison | `LocalClassFieldTheory.Infinite.AbstractProfiniteCompletionComparison` | `LocalClassFieldTheory.topologicalProfiniteCompletion_compare_abstract` |
+| Finite global reciprocity | `GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization` | `GlobalClassFieldTheory.Reciprocity.arithmeticGlobalReciprocityAbelianizationContinuousMulEquiv` |
+| Maximal-abelian global reciprocity | `GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel` | `GlobalClassFieldTheory.Reciprocity.maximalAbelianGlobalArtin_surjective`<br>`GlobalClassFieldTheory.Reciprocity.maximalAbelianGlobalArtin_ker` |
+| Infinite abelian class-field correspondence | `GlobalClassFieldTheory.GlobalClassFields.InfiniteAbelianClassFieldCorrespondence` | `GlobalClassFieldTheory.GlobalClassFields.infiniteAbelianClassFieldCorrespondence` |
+| Class-field existence | `GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldOriginalField` | `GlobalClassFieldTheory.GlobalClassFields.closedFiniteIndexClassField_ideleClassNorm_range` |
+| Ray class fields and full conductors | `GlobalClassFieldTheory.GlobalClassFields.FullConductorRayClassField` | `GlobalClassFieldTheory.GlobalClassFields.nonempty_algHom_to_rayClassField_iff_fullConductor_le` |
+| Finite conductor and ramification | `GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness` | `GlobalClassFieldTheory.GlobalClassFields.ideleClassNorm_narrowFiniteConductor_eq_normDefiningModulus`<br>`GlobalClassFieldTheory.GlobalClassFields.ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces` |
+| Norm limitation | `GlobalClassFieldTheory.GlobalClassFields.NormLimitation` | `GlobalClassFieldTheory.GlobalClassFields.normLimitation` |
+| Cyclic Hasse norm theorem | `GlobalClassFieldTheory.ClassFieldAxiom.HasseNormPrinciple` | `GlobalClassFieldTheory.ClassFieldAxiom.hasseNormPrinciple_cyclic` |
+| Hilbert class field and principal ideal theorem | `GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertPrincipalization` | `GlobalClassFieldTheory.IdealClassFieldTheory.allIdealsBecomePrincipalInSmallHilbertClassField` |
+| Local Kummer and Hilbert pairing | `LocalClassFieldTheory.Kummer` | `LocalClassFieldTheory.Kummer.localHilbertPairing_nondegenerate`<br>`LocalClassFieldTheory.Kummer.localHilbertSymbol_tame_formula` |
+| Global Hilbert product formula | `GlobalClassFieldTheory.Reciprocity.HilbertProductFormula` | `GlobalClassFieldTheory.Reciprocity.globalHilbertProduct_principal`<br>`GlobalClassFieldTheory.Reciprocity.hilbertSymbol_allPlaces_product_eq_one` |
+| Power-residue reciprocity with bad-place correction | `GlobalClassFieldTheory.Reciprocity.PowerResidueReciprocity` | `GlobalClassFieldTheory.Reciprocity.powerResidueBadFinitePlaces`<br>`GlobalClassFieldTheory.Reciprocity.idealPowerResidueSymbol_reciprocity_with_bad_place_correction` |
+| Gauss quadratic reciprocity from global CFT | `GlobalClassFieldTheory.Reciprocity.RationalQuadraticPowerResidueReciprocity` | `GlobalClassFieldTheory.Reciprocity.gaussReciprocity_nat_from_powerResidueReciprocity`<br>`GlobalClassFieldTheory.Reciprocity.gaussReciprocity_nat_from_powerResidueReciprocity_eq_mathlib` |
+| Hasse--Arf | `HasseArf` | `HasseArf.isLocalUpperRamificationJump_int` |
+| Local and global Kronecker--Weber | `KroneckerWeber` | `KroneckerWeber.exists_localCyclotomicEmbedding`<br>`KroneckerWeber.exists_cyclotomicEmbedding` |
 
 The root is a complete import closure, not a sample or a hand-maintained list of
 headline files. The architecture contract checks that every production module
@@ -23,8 +52,8 @@ modules owned by this library are internal; imports from `Progress`, `Legacy`,
 or any other project source tree are rejected by the architecture contract.
 
 Production modules contain no `#check`, `#print`, `#lint`, `#synth`, or
-`example` directives. Public documentation and architecture are checked
-directly by the source-independent validation suite.
+`example` directives.  The validation suite checks the published production
+root directly.
 
 ## Public entrypoints
 
@@ -43,9 +72,9 @@ import GlobalClassFieldTheory.MainStatements
 
 Focused users should import the semantic owner aggregate directly. For
 example, finite local reciprocity is owned by
-`LocalClassFieldTheory.Concrete.Finite.LocalReciprocity`, finite local
-existence by `LocalClassFieldTheory.Concrete.Finite.Existence`, and local
-Kummer theory by `LocalClassFieldTheory.Concrete.Kummer`.
+`LocalClassFieldTheory.Finite.LocalReciprocity`, finite local existence by
+`LocalClassFieldTheory.Finite.Existence`, and local Kummer theory by
+`LocalClassFieldTheory.Kummer`.
 
 ## Implemented scope
 
@@ -61,20 +90,31 @@ The library connects the following layers with concrete Lean constructions:
 - the infinite global Artin homomorphism for arbitrary abelian Galois
   extensions, its continuous descent to the idèle class group, dense image,
   and surjectivity;
+- maximal-abelian global reciprocity, with kernel equal to the idèle-class
+  identity component, and the infinite abelian class-field correspondence;
 - the exact kernel of the local Hilbert-symbol character and the induced
   injection from the corresponding norm quotient;
 - the maximal finite Kummer pairing, packaged as a multiplicative character
   in its radical variable;
+- finite-place global/local Hilbert-character comparison, finite support, and
+  the all-place Hilbert product formula;
+- general ideal power-residue reciprocity with an explicit product of infinite
+  and exponent-prime Hilbert factors as its bad-place correction;
+- Gauss quadratic reciprocity over `ℚ`, including the evaluated dyadic
+  correction and an equality with Mathlib's independent theorem;
 - full ray moduli with a finite part and a selected set of real places;
 - ray and Hilbert class fields inside a fixed separable closure, including
   literal monotonicity of the selected subfields;
-- narrow finite conductors on conductorial subgroups, the exact criterion for
-  removing one real place from a defining modulus, local conductor comparison,
-  finite ramification support, and conductor lattice laws;
+- full and narrow finite conductors on conductorial subgroups, the exact
+  ray-class-field embedding criterion, the criterion for removing one real
+  place from a defining modulus, local conductor comparison, finite
+  ramification support, and conductor lattice laws;
 - ideal Artin maps, decomposition laws, unramified splitting, and the principal
   ideal theorem;
+- norm limitation for arbitrary finite number-field extensions;
 - the cyclic Hasse norm theorem;
-- Hasse--Arf and local/global Kronecker--Weber.
+- Hasse--Arf, local/global Kronecker--Weber, and the comparison from the
+  topological profinite completion to the abstract open-finite-quotient limit.
 
 The concrete global theory currently concerns number fields. It does not claim
 an implementation of global function-field class field theory.
@@ -130,27 +170,11 @@ valuation-localization, and completion results remain in their semantic owner
 libraries. The `KroneckerWeber` aggregate exposes the production cyclotomic
 construction and final local-to-global argument.
 
-## Deliberate extension frontier
+## Scope boundary
 
-The finite number-field theory above is implemented. The principal mathematical
-extensions that are not yet claimed are:
-
-- maximal-abelian infinite global reciprocity beyond the existing surjective
-  idèle-class Artin homomorphisms: the maximal-abelian object, the kernel
-  theorem, and the infinite correspondence;
-- finite-place global/local Hilbert-character comparison, finite support, and
-  the all-place global product formula;
-- general power-residue reciprocity derived from the Hilbert-symbol package;
-- the norm limitation theorem for arbitrary finite extensions;
-- the minimal full conductor whose infinite part records real-to-complex
-  ramification, beyond the implemented one-real-place removal criterion;
-- a full comparison equivalence between the project `ZHat` ring model and the
-  general profinite additive completion.
-
-These are tracked with dependency order and acceptance criteria in
-[`CURRENT_STATUS.md`](CURRENT_STATUS.md). A declaration occurring in an
-intermediate construction is not presented here as completion of one of these
-larger endpoints.
+The number-field results listed above, including general power-residue
+reciprocity and its Gauss specialization, are active production results. The
+library does not claim global function-field class field theory.
 
 ## Ownership and public design
 
@@ -184,9 +208,9 @@ From the repository root, build the production library with:
 lake build ClassFieldTheory
 ```
 
-Bare `lake build` builds the production library, which is the repository's
-default target. The canonical build uses ordinary Lake output, and warnings
-are fixed at their cause rather than hidden.
+The repository's default target is `ClassFieldTheory`.  The canonical build
+uses ordinary Lake output; warnings are fixed at their cause rather than
+hidden.
 
 The validation suite is:
 
@@ -202,10 +226,7 @@ choice-boundary, and performance checks. Source-level `set_option`, `sorry`,
 `admit`, new `axiom` declarations, `nolint`, and warning suppression are not
 accepted as repairs.
 
-[`CURRENT_STATUS.md`](CURRENT_STATUS.md) is the only live authority for exact
-green counts, active validation, build evidence, known performance debt, and
-the ordered extension roadmap. This README intentionally contains no dated
-green snapshot.
+This README intentionally contains no dated green snapshot.
 
 ## License
 

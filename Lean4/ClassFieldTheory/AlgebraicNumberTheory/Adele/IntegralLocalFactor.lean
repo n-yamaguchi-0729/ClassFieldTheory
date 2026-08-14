@@ -1,6 +1,6 @@
 import AlgebraicNumberTheory.Adele.IntegralTensorSupport
 import AlgebraicNumberTheory.Adele.RestrictedAction
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.Tensor
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
 import Mathlib.Algebra.Group.Pi.Units
 import Mathlib.Algebra.Group.Submonoid.Units
 

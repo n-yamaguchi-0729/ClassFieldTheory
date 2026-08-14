@@ -1,7 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
 import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
 import GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.AbstractFixedFieldUnits
+import LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
 
 /-!
 # The rational idele-class formation

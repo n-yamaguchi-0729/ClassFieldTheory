@@ -1,5 +1,5 @@
 import AlgebraicNumberTheory.Adele.RestrictedAction
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.Tensor
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
 import Mathlib.NumberTheory.NumberField.Completion.LiesOverInstances
 
 /-!

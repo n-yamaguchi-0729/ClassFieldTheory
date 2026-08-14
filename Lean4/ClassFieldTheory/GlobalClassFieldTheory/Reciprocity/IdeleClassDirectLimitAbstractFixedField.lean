@@ -1,5 +1,5 @@
 import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFixedPoints
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.AbstractFixedFieldNorm
+import LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldNorm
 
 /-!
 # Abstract fixed fields in the rational idele-class representation

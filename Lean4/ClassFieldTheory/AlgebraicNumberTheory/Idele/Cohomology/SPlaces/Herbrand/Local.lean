@@ -1,4 +1,4 @@
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.FamilyClassAxiom
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.FamilyClassAxiom
 import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.LocalBlocks
 import AlgebraicNumberTheory.Completion.ChosenLocalization
 

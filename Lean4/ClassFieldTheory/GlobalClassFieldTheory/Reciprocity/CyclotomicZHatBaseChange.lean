@@ -2,7 +2,7 @@ import GlobalClassFieldTheory.Reciprocity.CyclotomicTorsionFixedField
 import AbstractClassFieldTheory.Degree.ProfiniteInteger
 import AlgebraicNumberTheory.Galois.InfiniteBaseChange
 import AlgebraicNumberTheory.SeparableClosureEmbedding
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FiniteAbstractFixedField
+import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.IntermediateField.Algebraic
 import Mathlib.FieldTheory.Normal.Closure

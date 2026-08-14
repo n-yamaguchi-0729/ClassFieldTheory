@@ -1,7 +1,7 @@
 import AlgebraicNumberTheory.Idele.PrincipalCore
 import CyclicCohomology.Herbrand.HerbrandLowDegree.EquivariantEquiv
 import AlgebraicNumberTheory.Idele.Cohomology.Herbrand
-import LocalClassFieldTheory.Concrete.ClassFormation.Valuation
+import LocalClassFieldTheory.ClassFormation.Valuation
 
 /-!
 # Principal ideles and their Galois module structure

@@ -21,6 +21,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 WORKSPACE = HERE.parents[1]
 LEAN_ROOT = WORKSPACE / "Lean4" / "ClassFieldTheory"
+CANONICAL_ROOT = WORKSPACE / "Lean4" / "ClassFieldTheory.lean"
 SCRIPT_DOCS_ROOT = HERE
 
 
@@ -139,9 +140,18 @@ def lean_comment_fragments(path: Path, source: str) -> list[DocumentationFragmen
     return fragments
 
 
+def owned_lean_files(lean_root: Path) -> list[Path]:
+    """Return the split canonical root and production-subtree sources."""
+
+    paths = list(lean_root.rglob("*.lean"))
+    if lean_root.resolve() == LEAN_ROOT.resolve() and CANONICAL_ROOT.is_file():
+        paths.append(CANONICAL_ROOT)
+    return sorted(paths)
+
+
 def maintained_fragments(lean_root: Path, script_docs_root: Path) -> list[DocumentationFragment]:
     fragments: list[DocumentationFragment] = []
-    for path in sorted(lean_root.rglob("*.lean")):
+    for path in owned_lean_files(lean_root):
         fragments.extend(lean_comment_fragments(path, path.read_text(encoding="utf-8")))
     document_paths = sorted(lean_root.rglob("*.md"))
     document_paths += sorted(script_docs_root.rglob("*.md"))
@@ -174,7 +184,7 @@ def violations(
             match = pattern.search(fragment.text)
             if match:
                 prose_violations.append((fragment, label, match.group(0)))
-    missing = [path for path in sorted(lean_root.rglob("*.lean")) if module_docstring_missing(path)]
+    missing = [path for path in owned_lean_files(lean_root) if module_docstring_missing(path)]
     return prose_violations, missing
 
 
@@ -232,7 +242,7 @@ def main() -> int:
             file=sys.stderr,
         )
         return 1
-    module_count = sum(1 for _ in LEAN_ROOT.rglob("*.lean"))
+    module_count = len(owned_lean_files(LEAN_ROOT))
     print(f"documentation contract: OK: {module_count} documented modules")
     return 0
 

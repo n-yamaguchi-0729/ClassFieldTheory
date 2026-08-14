@@ -1,4 +1,3 @@
-import ValuationTheory.Henselian.Arithmetic
 import ValuationTheory.Henselian.Complete
 import ValuationTheory.Henselian.Core
 import ValuationTheory.Henselian.Factorization

@@ -1,14 +1,24 @@
 # Class Field Theory maintenance tools
 
-These tools cover the production library below `Lean4/ClassFieldTheory/`.
-The library includes local and global class field theory, Hasse--Arf,
-Kronecker--Weber, and their shared infrastructure.
+These tools cover the canonical production root `Lean4/ClassFieldTheory.lean`
+and every module below `Lean4/ClassFieldTheory/`.  Lake uses a core ownership
+library for the nested source tree and keeps `ClassFieldTheory` as the only
+reader-facing/default target; this filesystem split introduces no Lean facade.
+The published repository contains production sources only.  The library
+includes local and global class field theory, Hasse--Arf, Kronecker--Weber,
+and their shared infrastructure.
 
 Run the source-independent static contract:
 
 ```text
 python3 scripts/ClassFieldTheory/check_public_contracts.py
 ```
+
+`check_source_policy.py` rejects proof escapes, unsafe or partial
+declarations, lint suppression, and source-level option changes.  The only
+exception mechanism is a theorem-scoped `maxHeartbeats` entry frozen by path,
+fully-qualified declaration name, and value in
+`docs/heartbeat-allowlist.json`; stale or unreviewed entries fail closed.
 
 The static contracts are platform-independent. Maintenance runners that invoke
 Lake or inspect active processes (`build_targets.py`,
@@ -29,8 +39,8 @@ Supporting theorem names are intentionally not bulk-filled with generated
 prose. Public clients import semantic owner aggregates directly; the
 production tree does not maintain a parallel import-only API hierarchy.
 
-The architecture part treats `ClassFieldTheory.lean` as the complete library
-entrypoint. Its internal import closure must equal the exact production
+The architecture part treats `Lean4/ClassFieldTheory.lean` as the complete
+library entrypoint. Its internal import closure must equal the exact production
 inventory; unresolved local imports, self-imports, and cycles are
 rejected, and the import-cycle count must be zero. Direct external imports are
 restricted to `Mathlib`; imports from every other project source tree are
@@ -65,9 +75,8 @@ addition to this direct-import requirement.
 
 The checker also walks the physical source tree independently of the Lean
 import graph.  It ignores `.lake`, `__pycache__`, and hidden cache directories;
-rejects empty directories and directories with exactly one direct `.lean`
-file; and rejects a directory with no direct Lean file and exactly one direct
-child directory.  Nonempty documentation- or asset-only directories are
+rejects empty directories and rejects a directory with no direct Lean file and
+exactly one direct child directory. Nonempty documentation- or asset-only directories are
 allowed and recorded in the physical-layout metrics.
 
 ## Choice audit
@@ -163,7 +172,7 @@ Every Lean source is also capped at 3000 physical lines, so theorem-specific
 files must be split along mathematical boundaries instead of hidden behind a
 large generated facade. Module-size metrics separately use nonblank code lines
 after removing nested Lean comments.
-The schema-2 reviewed baseline records exact source ownership, import-graph and
+The schema-4 reviewed baseline records exact source ownership, import-graph and
 directory-aggregation facts, plus per-file, syntax-count, and
 public-import-closure ceilings.  It deliberately does not encode the former
 LCFT-only directory split.  Graph and aggregation gates run even with

@@ -1,6 +1,6 @@
 import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.Tensor
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.GeneralTowerNaturality
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
 
 /-!
 # Conjugation of finite-place Artin homomorphisms

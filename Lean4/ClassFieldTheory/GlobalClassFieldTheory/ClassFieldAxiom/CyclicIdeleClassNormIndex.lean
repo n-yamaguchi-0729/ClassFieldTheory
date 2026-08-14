@@ -7,8 +7,8 @@ import KummerTheory.Concrete.CyclotomicPrimeBaseChange
 import AlgebraicNumberTheory.Galois.CyclicPrimeDegreeSubextension
 import GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
 import AlgebraicNumberTheory.Ramification.Splitting.PrimeOrderFixedField
-import LocalClassFieldTheory.Concrete.ClassFormation.CohomologyBridge
-import LocalClassFieldTheory.Concrete.ClassFormation.Hilbert90
+import LocalClassFieldTheory.ClassFormation.CohomologyBridge
+import LocalClassFieldTheory.ClassFormation.Hilbert90
 import CyclicCohomology.Herbrand.HerbrandLowDegree.TateComparison
 
 /-!

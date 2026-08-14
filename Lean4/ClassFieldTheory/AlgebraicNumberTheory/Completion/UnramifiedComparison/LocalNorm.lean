@@ -1,5 +1,5 @@
 import AlgebraicNumberTheory.Completion.ChosenLocalization
-import LocalClassFieldTheory.Concrete.Finite.Unramified.Norm
+import LocalClassFieldTheory.Finite.Unramified.Norm
 
 /-!
 # Local norms at an unramified chosen finite place

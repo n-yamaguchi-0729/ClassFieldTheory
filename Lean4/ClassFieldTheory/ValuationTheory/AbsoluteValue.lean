@@ -1,6 +1,5 @@
 import ValuationTheory.AbsoluteValue.AlgebraicExtension
 import ValuationTheory.AbsoluteValue.AlgebraicLocalization
-import ValuationTheory.AbsoluteValue.ArithmeticExtensions
 import ValuationTheory.AbsoluteValue.Completeness
 import ValuationTheory.AbsoluteValue.Completion
 import ValuationTheory.AbsoluteValue.ExponentialValuation

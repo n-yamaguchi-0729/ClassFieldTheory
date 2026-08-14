@@ -15,11 +15,10 @@ scope = "leanprover-community"
 rev = "v4.32.1"
 
 [[lean_lib]]
-name = "ClassFieldTheory"
+name = "ClassFieldTheoryCore"
 srcDir = "Lean4/ClassFieldTheory"
 leanOptions = {linter.missingDocs = true}
 globs = [
-  "ClassFieldTheory",
   "AbstractClassFieldTheory",
   "AbstractClassFieldTheory.+",
   "AlgebraicNumberTheory",
@@ -47,3 +46,9 @@ globs = [
   "ValuationTheory",
   "ValuationTheory.+",
 ]
+
+[[lean_lib]]
+name = "ClassFieldTheory"
+srcDir = "Lean4"
+leanOptions = {linter.missingDocs = true}
+globs = ["ClassFieldTheory"]

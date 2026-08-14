@@ -1,5 +1,5 @@
 import AlgebraicNumberTheory.Completion.LocalizedValuation
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.Tensor
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
 
 /-!
 # Transporting integer rings across finite-place cosets

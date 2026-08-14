@@ -1,5 +1,5 @@
 import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.CrossLocalRestriction
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
+import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
 
 /-!
 # Norm--restriction for finite-place Artin homomorphisms

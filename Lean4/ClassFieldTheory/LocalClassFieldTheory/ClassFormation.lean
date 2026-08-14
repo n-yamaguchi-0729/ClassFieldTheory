@@ -1,0 +1,28 @@
+import LocalClassFieldTheory.ClassFormation.CohomologyBridge
+import LocalClassFieldTheory.ClassFormation.FieldUnitsHerbrand
+import LocalClassFieldTheory.ClassFormation.FilteredLiftingSequence
+import LocalClassFieldTheory.ClassFormation.Hilbert90
+import LocalClassFieldTheory.ClassFormation.IntegerUnitsHerbrand
+import LocalClassFieldTheory.ClassFormation.Main
+import LocalClassFieldTheory.ClassFormation.NormalBasis
+import LocalClassFieldTheory.ClassFormation.NormalBasisCohomology
+import LocalClassFieldTheory.ClassFormation.NormalBasisFiniteQuotient
+import LocalClassFieldTheory.ClassFormation.NormalBasisGaloisAction
+import LocalClassFieldTheory.ClassFormation.NormalBasisGradedLifting
+import LocalClassFieldTheory.ClassFormation.NormalBasisInfiniteProduct
+import LocalClassFieldTheory.ClassFormation.NormalBasisRecursiveLifting
+import LocalClassFieldTheory.ClassFormation.PrincipalUnitGraded
+import LocalClassFieldTheory.ClassFormation.Valuation
+import LocalClassFieldTheory.ClassFormation.ValuationHerbrand
+import LocalClassFieldTheory.ClassFormation.ValueGroupCohomology
+import LocalClassFieldTheory.ClassFormation.ArchimedeanNormQuotient
+import LocalClassFieldTheory.ClassFormation.LocalBlocks
+import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
+import LocalClassFieldTheory.ClassFormation.ArchimedeanHilbert90
+
+/-!
+# The local class formation
+
+Public aggregate for the normal-basis, unit-filtration, valuation, and
+cohomology calculations establishing the local class-field axiom.
+-/

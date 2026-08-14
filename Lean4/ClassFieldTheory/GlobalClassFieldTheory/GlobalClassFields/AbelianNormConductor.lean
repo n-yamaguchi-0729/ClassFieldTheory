@@ -1,5 +1,5 @@
 import AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
-import LocalClassFieldTheory.Concrete.Finite.UnramifiedConductor
+import LocalClassFieldTheory.Finite.UnramifiedConductor
 import GlobalClassFieldTheory.GlobalClassFields.NormConductor
 
 /-!

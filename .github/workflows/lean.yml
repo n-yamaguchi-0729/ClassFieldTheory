@@ -21,17 +21,9 @@ jobs:
       LEAN_NUM_THREADS: "1"
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - name: Reject proof escapes and warning suppression
+      - name: Check source policy
         shell: bash
-        run: |
-          if rg -n --glob '*.lean' '^\s*(set_option|sorry|admit|axiom)\b|\bnolint\b' Lean4/ClassFieldTheory; then
-            echo "Prohibited Lean command found." >&2
-            exit 1
-          fi
-          if rg -n --glob '*.lean' '^\s*(#check|#print|#lint|#synth|example)\b' Lean4/ClassFieldTheory; then
-            echo "Production-only Lean command found." >&2
-            exit 1
-          fi
+        run: python3 -B scripts/ClassFieldTheory/check_source_policy.py
       - name: Check static public contracts
         run: python3 -B scripts/ClassFieldTheory/check_public_contracts.py
       - name: Build ClassFieldTheory with warnings as errors

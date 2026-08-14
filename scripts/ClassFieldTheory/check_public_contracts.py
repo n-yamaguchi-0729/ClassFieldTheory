@@ -19,6 +19,11 @@ WORKSPACE = HERE.parents[1]
 def main() -> int:
     checks = (
         (
+            "source policy checker self-test",
+            [HERE / "check_source_policy.py", "--self-test"],
+        ),
+        ("source policy", [HERE / "check_source_policy.py"]),
+        (
             "documentation checker self-test",
             [HERE / "check_documentation_contract.py", "--self-test"],
         ),
@@ -45,7 +50,7 @@ def main() -> int:
         ),
         (
             "architecture",
-            [HERE / "check_architecture_contract.py", "--skip-baseline"],
+            [HERE / "check_architecture_contract.py"],
         ),
         ("choice checker self-test", [HERE / "check_choice_contract.py", "--self-test"]),
         ("choice contract", [HERE / "check_choice_contract.py"]),

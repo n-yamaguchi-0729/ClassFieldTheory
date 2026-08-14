@@ -6,7 +6,7 @@ import AlgebraicNumberTheory.Idele.Extension.NormProperties
 import CyclicCohomology.Herbrand.HerbrandLowDegree.Cardinality
 import CyclicCohomology.Herbrand.HerbrandLowDegree.TateComparison
 import CyclicCohomology.TateH0.Main
-import LocalClassFieldTheory.Concrete.ClassFormation.CohomologyBridge
+import LocalClassFieldTheory.ClassFormation.CohomologyBridge
 
 /-!
 # The Hasse norm principle: the concrete local-global map

@@ -1,6 +1,6 @@
 import AlgebraicNumberTheory.RayClass.Approximation
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalizedCompletionCohomology
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.TopologicalReciprocity
+import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
+import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
 import ValuationTheory.Completion.ExtensionFactorClassification
 
 /-!

@@ -15,7 +15,7 @@ Public aggregate for the equal-characteristic Lubin--Tate construction.  It
 includes the Laurent-series model, finite and completed Lubin--Tate levels,
 and the Frobenius and theta constructions.  The local-class-field-theory
 norm-subgroup calculation and its transport live in
-`LocalClassFieldTheory.Concrete.LubinTateApplication`.
+`LocalClassFieldTheory.LubinTateApplication`.
 
 Each mathematical stage has a reader-facing aggregate below
 `LubinTate.EqualCharacteristic`; declarations remain in the matching

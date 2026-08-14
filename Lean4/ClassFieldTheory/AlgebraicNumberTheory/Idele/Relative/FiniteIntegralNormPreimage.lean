@@ -1,6 +1,6 @@
 import AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
 import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.SeparableNormValuation
+import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormValuation
 
 /-!
 # Integral finite-place preimages of local tensor norms

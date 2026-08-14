@@ -1,0 +1,31 @@
+import LocalClassFieldTheory.Finite.Existence.CharacteristicZero
+import LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
+import LocalClassFieldTheory.Finite.Existence.Classification
+import LocalClassFieldTheory.Finite.Existence.CyclotomicKummerDescent
+import LocalClassFieldTheory.Finite.Existence.KummerNormOpen
+import LocalClassFieldTheory.Finite.Existence.LocalAbsoluteData
+import LocalClassFieldTheory.Finite.Existence.MaximalKummerNorm
+import LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+import LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+import LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
+import LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
+import LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+import LocalClassFieldTheory.Finite.Existence.NormSubgroupSurjectivity
+import LocalClassFieldTheory.Finite.Existence.OrderReversal
+import LocalClassFieldTheory.Finite.Existence.StandardDominatingExtension
+import LocalClassFieldTheory.Finite.Existence.EqualCharacteristicDominatingExtension
+import LocalClassFieldTheory.Finite.Existence.UnramifiedLubinTateDiagonal
+import LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
+import LocalClassFieldTheory.Finite.Existence.LubinTateUniformizerDiagonal
+
+/-!
+# Finite local existence theorem
+
+The ordinary norm-subgroup assignment is an order embedding into the
+opposite poset of native open finite-index subgroups.  Kummer theory in
+characteristic zero and transported Lubin--Tate levels in positive
+characteristic prove the existing characteristic-specific order
+isomorphisms.  The canonical standard Lubin--Tate construction now also
+provides a characteristic-independent finite abelian factor with its exact
+norm subgroup.
+-/

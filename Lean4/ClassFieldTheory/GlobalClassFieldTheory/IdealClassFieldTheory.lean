@@ -1,5 +1,3 @@
-import GroupTheory.Transfer.RelativeAugmentation
-import GroupTheory.Transfer.Witt
 import GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
 import GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
 import GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient

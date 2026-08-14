@@ -1,5 +1,5 @@
 import AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.FiniteAbstractFixedField
+import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
 import Mathlib.FieldTheory.Galois.Abelian
 
 /-!

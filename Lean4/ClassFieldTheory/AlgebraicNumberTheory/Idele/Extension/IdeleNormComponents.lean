@@ -1,6 +1,6 @@
 import AlgebraicNumberTheory.Idele.Extension.IdeleNorm
 import AlgebraicNumberTheory.Idele.Extension.LocalNorm
-import LocalClassFieldTheory.Concrete.ClassFormation.ArchimedeanNormQuotient
+import LocalClassFieldTheory.ClassFormation.ArchimedeanNormQuotient
 import AlgebraicNumberTheory.Completion.AdicCompletionComparison
 
 /-!

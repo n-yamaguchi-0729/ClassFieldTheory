@@ -1,7 +1,7 @@
 import AlgebraicNumberTheory.Completion.Comparison
 import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalizedCompletionCohomology
-import LocalClassFieldTheory.Concrete.Finite.LocalReciprocity.NormResidue
+import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
+import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
 
 /-!
 # Construction of finite-place Artin homomorphisms

@@ -19,8 +19,8 @@ from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
-import shutil
 import signal
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -38,11 +38,12 @@ from green_status import (  # noqa: E402
     LakeProbeError,
     classify_modules,
     configured_build_dir,
+    production_module_name,
+    production_source_files,
+    production_source_tree_matches,
     source_snapshot,
-    source_tree_matches,
     trace_status,
 )
-from source_layout import LEAN_ROOT  # noqa: E402
 
 
 ROOT = repo_root()
@@ -103,13 +104,10 @@ class ExclusiveLock:
 def collect_state(
     build_dir: Path, *, lake: Path, probe_timeout: float
 ) -> LibraryState:
-    sources = sorted(LEAN_ROOT.rglob("*.lean"))
+    sources = list(production_source_files())
     source_state = source_snapshot(sources)
     files = {
-        path.relative_to(LEAN_ROOT)
-        .with_suffix("")
-        .as_posix()
-        .replace("/", "."): path
+        production_module_name(path): path
         for path in sources
     }
     modules = set(files)
@@ -134,7 +132,7 @@ def collect_state(
         lake=lake,
         timeout=probe_timeout,
     )
-    if not source_tree_matches(LEAN_ROOT, sources, source_state):
+    if not production_source_tree_matches(sources, source_state):
         raise LakeProbeError(
             "Lean sources changed during the Lake trace probe; retry for a "
             "coherent frontier snapshot"
@@ -260,11 +258,10 @@ def run_self_tests() -> None:
     assert green == {"A"}
     assert no_green == {"B", "C", "D"}
     assert frontier == ("B", "D")
-    lake = Path("/lake")
-    assert lake_build_command(lake, "A.B") == [
+    assert lake_build_command(Path("/lake"), "A.B") == [
         "/usr/bin/env",
         "LEAN_NUM_THREADS=1",
-        str(lake),
+        "/lake",
         "build",
         "+A.B:olean",
     ]

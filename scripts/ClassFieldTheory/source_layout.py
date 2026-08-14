@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Shared paths for the Class Field Theory maintenance scripts.
 
-``Lean4/ClassFieldTheory/`` is the single source root of the library and
-``Lean4/ClassFieldTheory/ClassFieldTheory.lean`` is its canonical root module.
-The source tree now deliberately includes local class field theory, Hasse--Arf,
-Kronecker--Weber, and their shared infrastructure.  Discovering every Lean
-file below that source root keeps the maintenance tools correct as future
-global class field theory modules are added.
+``Lean4/ClassFieldTheory.lean`` is the canonical root module.  Its production
+modules live below ``Lean4/ClassFieldTheory/``.  That source tree deliberately
+includes local class field theory, Hasse--Arf, Kronecker--Weber, and their
+shared infrastructure.  Discovering the outer root together with every Lean
+file below the production subtree keeps the maintenance tools correct as
+future global class field theory modules are added.
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ SCRIPT_ROOT = Path(__file__).resolve().parent
 WORKSPACE_ROOT = SCRIPT_ROOT.parents[1]
 REPOSITORY_LEAN_ROOT = WORKSPACE_ROOT / "Lean4"
 LEAN_ROOT = REPOSITORY_LEAN_ROOT / "ClassFieldTheory"
-CANONICAL_ROOT = LEAN_ROOT / "ClassFieldTheory.lean"
+CANONICAL_ROOT = REPOSITORY_LEAN_ROOT / "ClassFieldTheory.lean"
 DOCS_ROOT = SCRIPT_ROOT / "docs"
 
 
@@ -55,6 +55,8 @@ def contract_source_files() -> list[Path]:
 def source_relative_path(path: Path) -> str:
     """Return a stable contract path for a library-owned source."""
 
+    if path == CANONICAL_ROOT:
+        return CANONICAL_ROOT.name
     return path.relative_to(LEAN_ROOT).as_posix()
 
 
@@ -182,11 +184,9 @@ def source_code_sha256(files: list[Path] | None = None) -> str:
 
 
 def module_source_entries() -> Iterator[Path]:
-    """Yield existing top-level files/directories needed by a source-only copy."""
+    """Yield production-subtree entries needed by a source-only copy."""
 
     for entry in sorted(LEAN_ROOT.iterdir(), key=lambda path: path.name):
-        if entry == CANONICAL_ROOT:
-            continue
         if entry.is_file() and entry.suffix == ".lean":
             yield entry
         elif entry.is_dir() and any(entry.rglob("*.lean")):

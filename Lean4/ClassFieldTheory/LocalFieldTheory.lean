@@ -4,7 +4,6 @@ import LocalFieldTheory.DiscreteValuationField
 import LocalFieldTheory.NonarchimedeanLocalField
 import LocalFieldTheory.Padic
 import LocalFieldTheory.Unramified
-import ValuationTheory.Topology.Models
 import LocalFieldTheory.NormUnits
 
 /-!

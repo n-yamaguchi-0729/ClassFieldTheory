@@ -1,4 +1,4 @@
-import LocalClassFieldTheory.Concrete.Kummer.LocalHilbertSymbol
+import LocalClassFieldTheory.Kummer.LocalHilbertSymbol
 import GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
 import GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
 

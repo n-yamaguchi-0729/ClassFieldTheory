@@ -1,4 +1,8 @@
-import LocalClassFieldTheory.Concrete
+import LocalClassFieldTheory.ClassFormation
+import LocalClassFieldTheory.Finite
+import LocalClassFieldTheory.Infinite
+import LocalClassFieldTheory.Kummer
+import LocalClassFieldTheory.LubinTateApplication
 
 /-!
 # Local class field theory
@@ -8,11 +12,14 @@ It reaches every supported implementation layer and no examples or contract
 tests. Clients that need a smaller dependency closure should import the
 semantic owner aggregate for the result they use:
 
-- `LocalClassFieldTheory.Concrete.Finite.LocalReciprocity` for finite reciprocity;
-- `LocalClassFieldTheory.Concrete.Finite.Existence` for finite existence;
-- `LocalClassFieldTheory.Concrete.Infinite` for absolute and profinite reciprocity;
-- `LocalClassFieldTheory.Concrete.Kummer` for the local Kummer pairing;
-- `LocalClassFieldTheory.Concrete.LubinTateApplication` for Lubin--Tate applications.
+- `LocalClassFieldTheory.Finite.LocalReciprocity` for finite reciprocity;
+- `LocalClassFieldTheory.Finite.Existence` for finite existence;
+- `LocalClassFieldTheory.Infinite` for absolute and profinite reciprocity;
+- `LocalClassFieldTheory.Kummer` for the local Kummer pairing;
+- `LocalClassFieldTheory.LubinTateApplication` for Lubin--Tate applications.
+
+Examples and contract tests are maintained outside the published production
+library.
 
 The principal declarations live in the `LocalClassFieldTheory` namespace.
 The abstract class-formation layer uses the `ClassFormation` namespace.

@@ -1,4 +1,4 @@
-import LocalClassFieldTheory.Concrete.ClassFormation.ArchimedeanNormQuotient
+import LocalClassFieldTheory.ClassFormation.ArchimedeanNormQuotient
 import AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
 import AlgebraicNumberTheory.Idele.Extension.LocalComponent
 

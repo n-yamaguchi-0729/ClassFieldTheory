@@ -1,8 +1,8 @@
 import AlgebraicNumberTheory.Idele.SPlaces
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.Tensor
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalBlocks.Family
-import LocalClassFieldTheory.Concrete.ClassFormation.LocalizedCompletionCohomology
-import LocalClassFieldTheory.Concrete.Finite.Unramified.Cohomology
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import LocalClassFieldTheory.ClassFormation.LocalBlocks.Family
+import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
+import LocalClassFieldTheory.Finite.Unramified.Cohomology
 
 /-!
 # Finite-support decompositions of actual ideles

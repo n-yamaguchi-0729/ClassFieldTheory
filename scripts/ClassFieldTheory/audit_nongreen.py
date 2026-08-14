@@ -22,19 +22,19 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 TOOLS_DIR = SCRIPT_DIR.parent
 sys.path.insert(0, str(TOOLS_DIR))
 
-from _lean_tool_common import import_modules, repo_root  # noqa: E402
+from _lean_tool_common import import_modules  # noqa: E402
 from green_status import (  # noqa: E402
     DEFAULT_LAKE,
     LakeProbeError,
     configured_build_dir,
+    production_module_name,
+    production_source_files,
+    production_source_tree_matches,
     source_snapshot,
-    source_tree_matches,
     trace_status,
 )
 
 
-ROOT = repo_root()
-SOURCE_ROOT = ROOT / "Lean4" / "ClassFieldTheory"
 DECLARATION_RE = re.compile(
     r"^\s*(?:(?:@\[[^\]]*\])\s*)*"
     r"(?:(?:private|protected|noncomputable|unsafe|partial|scoped|local)\s+)*"
@@ -102,10 +102,10 @@ def main() -> int:
             "--build-dir must match lakefile.toml for authoritative trace "
             f"probing: expected {configured}, got {build_dir}"
         )
-    files = sorted(path.resolve() for path in SOURCE_ROOT.rglob("*.lean"))
+    files = list(production_source_files())
     source_state = source_snapshot(files)
     file_by_module = {
-        path.relative_to(SOURCE_ROOT).with_suffix("").as_posix().replace("/", "."): path
+        production_module_name(path): path
         for path in files
     }
     imports: dict[str, set[str]] = {}
@@ -193,7 +193,7 @@ def main() -> int:
     metrics_by_module = {
         module: source_metrics(path) for module, path in file_by_module.items()
     }
-    if not source_tree_matches(SOURCE_ROOT, files, source_state):
+    if not production_source_tree_matches(files, source_state):
         print(
             "nongreen-audit: FAILED: Lean sources changed during the audit; "
             "retry for a coherent snapshot",

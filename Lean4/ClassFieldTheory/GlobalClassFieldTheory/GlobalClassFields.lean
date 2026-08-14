@@ -1,5 +1,3 @@
-import AbstractClassFieldTheory.Reciprocity.ClassField
-import KroneckerWeber.RayClassComparison
 import GlobalClassFieldTheory.GlobalClassFields.ClassFieldRealization
 import GlobalClassFieldTheory.GlobalClassFields.Conductor
 import GlobalClassFieldTheory.GlobalClassFields.ConductorLocalComparison
