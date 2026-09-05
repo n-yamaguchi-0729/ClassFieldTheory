@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectBracketAtCompletedLevel
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusContinuity
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaFirstIdentity
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectBracketAtCompletedLevel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusContinuity
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaFirstIdentity
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: Frobenius fixes the direct theta value

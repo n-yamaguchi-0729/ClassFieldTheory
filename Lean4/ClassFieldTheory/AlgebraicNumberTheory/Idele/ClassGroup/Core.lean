@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.IdealMap
-import AlgebraicNumberTheory.Idele.Principal
-import AlgebraicNumberTheory.Idele.ClassGroup.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Principal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.BaseChange
+
+set_option autoImplicit false
 
 /-!
 # The ordinary ideal class group as an idele quotient

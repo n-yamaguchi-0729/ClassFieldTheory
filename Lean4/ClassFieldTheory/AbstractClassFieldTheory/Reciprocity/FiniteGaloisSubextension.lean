@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FiniteNormQuotient
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FiniteNormQuotient
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -302,7 +304,7 @@ def baseChange (M : FiniteGaloisSubextension K) (L : ClosedSubgroup G)
       change (x : G) ∈ L ⊓ M.field ↔ (x : G) ∈ M.field
       exact ⟨fun hx => hx.2, fun hx => ⟨x.property, hx⟩⟩
     rw [heq]
-    letI : (extensionSubgroup K M.field M.below).Normal := M.normal
+    let : (extensionSubgroup K M.field M.below).Normal := M.normal
     infer_instance
   finite := by
     let f : L.toSubgroup →* K.toSubgroup := Subgroup.inclusion hLK
@@ -314,8 +316,8 @@ def baseChange (M : FiniteGaloisSubextension K) (L : ClosedSubgroup G)
       rw [mem_extensionSubgroup_iff]
       change (x : G) ∈ L ⊓ M.field ↔ (x : G) ∈ M.field
       exact ⟨fun hx => hx.2, fun hx => ⟨x.property, hx⟩⟩
-    letI : Finite (K.toSubgroup ⧸ E) := M.finite
-    letI : E.Normal := M.normal
+    let : Finite (K.toSubgroup ⧸ E) := M.finite
+    let : E.Normal := M.normal
     have hE0 : E.index ≠ 0 := Subgroup.index_ne_zero_of_finite
     have hrel0 : E.relIndex f.range ≠ 0 := by
       intro hzero
@@ -365,8 +367,8 @@ def compositum (L₁ L₂ : FiniteGaloisSubextension K) :
       · rintro ⟨h₁, h₂⟩
         exact ⟨h₁, h₂⟩
     rw [heq]
-    letI : (extensionSubgroup K L₁.field L₁.below).Normal := L₁.normal
-    letI : (extensionSubgroup K L₂.field L₂.below).Normal := L₂.normal
+    let : (extensionSubgroup K L₁.field L₁.below).Normal := L₁.normal
+    let : (extensionSubgroup K L₂.field L₂.below).Normal := L₂.normal
     infer_instance
   finite := by
     have heq : extensionSubgroup K (L₁.field ⊓ L₂.field)
@@ -380,10 +382,10 @@ def compositum (L₁ L₂ : FiniteGaloisSubextension K) :
         exact ⟨hk.1, hk.2⟩
       · rintro ⟨h₁, h₂⟩
         exact ⟨h₁, h₂⟩
-    letI : (extensionSubgroup K L₁.field L₁.below).FiniteIndex :=
+    let : (extensionSubgroup K L₁.field L₁.below).FiniteIndex :=
       @Subgroup.finiteIndex_of_finite_quotient K.toSubgroup _
         (extensionSubgroup K L₁.field L₁.below) L₁.finite
-    letI : (extensionSubgroup K L₂.field L₂.below).FiniteIndex :=
+    let : (extensionSubgroup K L₂.field L₂.below).FiniteIndex :=
       @Subgroup.finiteIndex_of_finite_quotient K.toSubgroup _
         (extensionSubgroup K L₂.field L₂.below) L₂.finite
     rw [heq]
@@ -423,9 +425,9 @@ theorem finiteNormSubgroup_compositum_le_left
       finiteNormSubgroup A K L₁.field L₁.below := by
   let P := L₁.compositum L₂
   let hPL₁ := L₁.compositum_le_left L₂
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K P.field P.below) := P.finite
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K L₁.field L₁.below) := L₁.finite
   have hPKindex : P.field.toSubgroup.relIndex K.toSubgroup ≠ 0 := by
     rw [Subgroup.relIndex]
@@ -436,7 +438,7 @@ theorem finiteNormSubgroup_compositum_le_left
       P.field.toSubgroup L₁.field.toSubgroup K.toSubgroup hPL₁ L₁.below
     rw [hzero, zero_mul] at hmul
     exact hPKindex hmul.symm
-  letI hPLfinite : Finite (L₁.field.toSubgroup ⧸
+  let hPLfinite : Finite (L₁.field.toSubgroup ⧸
       extensionSubgroup L₁.field P.field hPL₁) := by
     apply Nat.finite_of_card_ne_zero
     change (extensionSubgroup L₁.field P.field hPL₁).index ≠ 0

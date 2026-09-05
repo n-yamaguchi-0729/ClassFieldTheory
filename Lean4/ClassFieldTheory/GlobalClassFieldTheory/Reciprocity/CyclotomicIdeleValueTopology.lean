@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleValue
-import GlobalClassFieldTheory.Reciprocity.CyclotomicNormOneCorrection
-import AlgebraicNumberTheory.Idele.NormTopology.Continuity
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleValue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicNormOneCorrection
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.Continuity
+
+set_option autoImplicit false
 
 /-!
 # Topology of the rational cyclotomic idele value

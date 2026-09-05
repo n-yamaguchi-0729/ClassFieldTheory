@@ -1,6 +1,12 @@
-import LubinTate.Padic.MultiplicativeEvaluation.CompletedCoefficientEvaluation
-import LubinTate.Padic.ChangedUniformizerIntertwiner
-import LubinTate.Padic.MultiplicativeIntertwiner
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.CompletedCoefficientEvaluation
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.CompletedSeries
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.DefectCorrection
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.IntertwinerConstruction
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.ScalarCompatibility
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.ScalarEndomorphisms
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeIntertwiner
+
+set_option autoImplicit false
 
 /-!
 # Completed standard and multiplicative scalar endomorphisms
@@ -154,8 +160,8 @@ theorem padicCompletedStandardScalarEndomorphism_mul
   calc
     padicCompletedStandardScalarEndomorphism p (a * b) =
         PowerSeries.map f (PowerSeries.subst B A) := by
-      rw [padicCompletedStandardScalarEndomorphism,
-        standardLubinTateEndomorphism_mul]
+      exact congrArg (PowerSeries.map f)
+        (standardLubinTateEndomorphism_mul hπ a b)
     _ =
         PowerSeries.subst (PowerSeries.map f B)
           (PowerSeries.map f A) := by
@@ -280,8 +286,11 @@ theorem padicCompletedStandardScalarEndomorphism_one
     (p : ℕ) [Fact p.Prime] :
     padicCompletedStandardScalarEndomorphism p 1 =
       PowerSeries.X := by
-  rw [padicCompletedStandardScalarEndomorphism,
-    standardLubinTateEndomorphism_one, PowerSeries.map_X]
+  exact (congrArg
+    (PowerSeries.map (padicValuationSubringToCompletedUnramifiedWittRing p))
+    (standardLubinTateEndomorphism_one
+      (padicMultiplicativeLubinTateSeries_isUniformizer p))).trans
+    (PowerSeries.map_X _)
 
 /-- The standard uniformizer acts by the defining standard Lubin--Tate
 series after completed coefficient extension. -/
@@ -294,8 +303,10 @@ theorem padicCompletedStandardScalarEndomorphism_uniformizer
         (standardLubinTateSeries
           (padicMultiplicativeLubinTateSeries_isUniformizer p)
           ).toPowerSeries := by
-  rw [padicCompletedStandardScalarEndomorphism,
-    SameUniformizer.standardLubinTateEndomorphism_uniformizer]
+  exact congrArg
+    (PowerSeries.map (padicValuationSubringToCompletedUnramifiedWittRing p))
+    (SameUniformizer.standardLubinTateEndomorphism_uniformizer
+      (padicMultiplicativeLubinTateSeries_isUniformizer p))
 
 /-- The completed analytic action of scalar `1` fixes its input. -/
 @[simp]

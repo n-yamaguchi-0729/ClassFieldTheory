@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldSurjective
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldSurjective
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: the standard level is the higher-unit fixed field

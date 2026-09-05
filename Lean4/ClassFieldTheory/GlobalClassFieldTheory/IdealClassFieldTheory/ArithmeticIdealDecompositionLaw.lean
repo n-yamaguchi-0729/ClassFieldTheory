@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealArtin
-import GlobalClassFieldTheory.IdealClassFieldTheory.IdealDecompositionLaw
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealArtin
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealDecompositionLaw
+
+set_option autoImplicit false
 
 /-!
 # Arithmetic ideal Artin symbols and unramified decomposition

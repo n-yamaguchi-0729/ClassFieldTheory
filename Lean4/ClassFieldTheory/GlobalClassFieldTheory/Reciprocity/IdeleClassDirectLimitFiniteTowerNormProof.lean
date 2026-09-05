@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormStatement
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormStatement
+
+set_option autoImplicit false
 
 /-!
 # Proof of ordinary norm comparison in finite towers of rational fixed fields

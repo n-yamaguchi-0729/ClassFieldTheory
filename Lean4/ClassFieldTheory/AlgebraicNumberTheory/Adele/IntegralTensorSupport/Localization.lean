@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+
+set_option autoImplicit false
 
 /-!
 # Localization of the relative integral lattice

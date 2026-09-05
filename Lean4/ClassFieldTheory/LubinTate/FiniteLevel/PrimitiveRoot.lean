@@ -1,7 +1,9 @@
-import LubinTate.FiniteLevel.PrimitiveEisenstein
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveEisenstein
 import Mathlib.FieldTheory.IsSepClosed
 import Mathlib.RingTheory.Polynomial.GaussLemma
 import Mathlib.SetTheory.Cardinal.Finite
+
+set_option autoImplicit false
 
 /-!
 # Primitive roots and standard Lubin--Tate level fields
@@ -102,9 +104,9 @@ theorem standardLubinTatePrimitivePolynomialOverField_irreducible
     {F : LocalField.{u, v} K} {π : F.valuationSubring}
     (hπ : F.toCompleteDVF.valuation.IsUniformizer (π : K)) (n : ℕ) :
     Irreducible (standardLubinTatePrimitivePolynomialOverField F π n) := by
-  letI : IsFractionRing F.valuationSubring K :=
+  let : IsFractionRing F.valuationSubring K :=
     F.toCompleteDVF.toDVF.valuationSubring_isFractionRing
-  letI : IsIntegrallyClosed F.valuationSubring :=
+  let : IsIntegrallyClosed F.valuationSubring :=
     F.toCompleteDVF.toDVF.valuationSubring_isIntegrallyClosed
   exact
     (standardLubinTatePrimitivePolynomial_monic F π n).irreducible_iff_irreducible_map_fraction_map.mp
@@ -116,7 +118,7 @@ theorem residueFieldNatCard_sub_one_cast_ne_zero
     ((Nat.card F.residueField - 1 : ℕ) : K) ≠ 0 := by
   have hcard :
       (Nat.card F.residueField : F.residueField) = 0 := by
-    letI := Fintype.ofFinite F.residueField
+    let := Fintype.ofFinite F.residueField
     rw [Nat.card_eq_fintype_card, Nat.cast_card_eq_zero]
   have hres :
       ((Nat.card F.residueField - 1 : ℕ) : F.residueField) ≠ 0 := by

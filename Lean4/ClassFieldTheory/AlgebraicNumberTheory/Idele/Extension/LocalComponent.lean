@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.Extension.GaloisNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisNorm
+
+set_option autoImplicit false
 
 /-!
 # Local components of relative adeles and ideles

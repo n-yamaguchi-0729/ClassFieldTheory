@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.CrossLocalRestriction
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.CrossLocalRestriction
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
+
+set_option autoImplicit false
 
 /-!
 # Norm--restriction for finite-place Artin homomorphisms
@@ -135,9 +137,9 @@ private theorem finitePlaceArtinConcreteNormUnits
   let concreteBaseMap :
       v.adicCompletion K →+* W.adicCompletion K' :=
     finitePlaceAdicCompletionMap K K' v ⟨W, hW⟩
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
+  let : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
     concreteBaseMap.toAlgebra
-  letI : Algebra C D :=
+  let : Algebra C D :=
     (finitePlaceArtinRelativeCompletionRingHom
       (K := K) (K' := K') v W hW).toAlgebra
   have hBaseMap (y : C) :
@@ -285,32 +287,32 @@ private theorem finitePlaceArtinCompletionHasExtension
   let concreteBaseMap :
       v.adicCompletion K →+* W.adicCompletion K' :=
     finitePlaceAdicCompletionMap K K' v ⟨W, hW⟩
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
+  let : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
     concreteBaseMap.toAlgebra
-  letI : Algebra C D :=
+  let : Algebra C D :=
     (finitePlaceArtinRelativeCompletionRingHom
       (K := K) (K' := K') v W hW).toAlgebra
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     NumberField.HeightOneSpectrum.isNonarchimedean_adicAbv K v
-  letI : IsUltrametricDist C :=
+  let : IsUltrametricDist C :=
     finitePlaceArtinCompletionIsUltrametricDist vK hvKna
-  letI : Valued C ℝ≥0 :=
+  let : Valued C ℝ≥0 :=
     finitePlaceArtinCompletionValued vK hvKna
   let vC : Valuation C ℝ≥0 := Valued.v
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceArtinCompletionValuativeRel vK hvKna
-  letI : vC.Compatible :=
+  let : vC.Compatible :=
     Valuation.Compatible.ofValuation vC
   let hvK'na : IsNonarchimedean (vK' : K' → ℝ) :=
     NumberField.HeightOneSpectrum.isNonarchimedean_adicAbv K' W
-  letI : IsUltrametricDist D :=
+  let : IsUltrametricDist D :=
     finitePlaceArtinCompletionIsUltrametricDist vK' hvK'na
-  letI : Valued D ℝ≥0 :=
+  let : Valued D ℝ≥0 :=
     finitePlaceArtinCompletionValued vK' hvK'na
   let vD : Valuation D ℝ≥0 := Valued.v
-  letI : ValuativeRel D :=
+  let : ValuativeRel D :=
     finitePlaceArtinCompletionValuativeRel vK' hvK'na
-  letI : vD.Compatible :=
+  let : vD.Compatible :=
     Valuation.Compatible.ofValuation vD
   exact
     finitePlaceArtinHasExtension_of_norm
@@ -658,31 +660,31 @@ private theorem finitePlaceNormRawArtin_naturality
   let D := finitePlaceNormCompletion K' W
   let E := finitePlaceNormLocalizedCompletion K L v w
   let E' := finitePlaceNormLocalizedCompletion K' L' W w'
-  letI : Algebra C D :=
+  let : Algebra C D :=
     (finitePlaceArtinRelativeCompletionRingHom
       (K := K) (K' := K') v W hW).toAlgebra
-  letI : ContinuousSMul C D :=
+  let : ContinuousSMul C D :=
     continuousSMul_of_algebraMap C D <|
       finitePlaceArtinRelativeCompletionRingHom_continuous
         (K := K) (K' := K') v W hW
-  letI : FiniteDimensional C D :=
+  let : FiniteDimensional C D :=
     FiniteDimensional.of_locallyCompactSpace C
-  letI : CharZero C :=
+  let : CharZero C :=
     charZero_of_injective_algebraMap
       (algebraMap K C).injective
-  letI : Algebra.IsIntegral C D :=
+  let : Algebra.IsIntegral C D :=
     Algebra.IsIntegral.of_finite C D
-  letI : Algebra.IsSeparable C D :=
+  let : Algebra.IsSeparable C D :=
     Algebra.IsSeparable.of_integral C D
-  letI : Algebra E E' :=
+  let : Algebra E E' :=
     (finitePlaceArtinLocalizedCompletionRingHom
       (K := K) (L := L) (K' := K') (L' := L')
       v W w w' hcentres).toAlgebra
-  letI : Algebra C E' :=
+  let : Algebra C E' :=
     ((algebraMap D E').comp (algebraMap C D)).toAlgebra
-  letI : IsScalarTower C D E' :=
+  let : IsScalarTower C D E' :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : IsScalarTower C E E' :=
+  let : IsScalarTower C E E' :=
     IsScalarTower.of_algebraMap_eq' <| by
       apply RingHom.ext
       intro x
@@ -690,14 +692,14 @@ private theorem finitePlaceNormRawArtin_naturality
         finitePlaceArtinLocalizedCompletion_towerPoint
           (K := K) (L := L) (K' := K') (L' := L')
           v W hW w w' hcentres x
-  letI :
+  let :
       (ValuativeRel.valuation C).HasExtension
         (ValuativeRel.valuation D) :=
     finitePlaceArtinCompletionHasExtension
       (K := K) (K' := K') v W hW
-  letI hGaloisE : IsGalois C E :=
+  let hGaloisE : IsGalois C E :=
     (inferInstance : IsAbelianGalois C E).toIsGalois
-  letI : Normal C E := hGaloisE.to_normal
+  let : Normal C E := hGaloisE.to_normal
   unfold finitePlaceNormUpperRawArtin
   unfold finitePlaceNormLowerRawArtin
   change
@@ -852,10 +854,10 @@ theorem finitePlaceLocalArtinMonoidHom_norm_restriction
   let eDUnits :
       Dˣ ≃* (W.adicCompletion K')ˣ :=
     finitePlaceCompletionUnitsContinuousMulEquiv W
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
+  let : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
     (finitePlaceAdicCompletionMap
       K K' v ⟨W, hW⟩).toAlgebra
-  letI : Algebra C D :=
+  let : Algebra C D :=
     (finitePlaceArtinRelativeCompletionRingHom
       (K := K) (K' := K') v W hW).toAlgebra
   calc
@@ -940,8 +942,8 @@ theorem
         (K := K) (L := L) v w).comp
         (LocalFieldTheory.normUnits
           (v.adicCompletion K) (W.adicCompletion K')) := by
-  letI : NumberField L := NumberField.of_module_finite K L
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
+  let : NumberField L := NumberField.of_module_finite K L
+  let : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
     (finitePlaceAdicCompletionMap
       K K' v ⟨W, hW⟩).toAlgebra
   let globalRestriction :
@@ -1049,7 +1051,7 @@ theorem chosenFinitePlaceArtinMonoidHom_norm_restriction
         (K := K) (L := L) v).comp
         (LocalFieldTheory.normUnits
           (v.adicCompletion K) (W.adicCompletion K')) := by
-  letI : NumberField L := NumberField.of_module_finite K L
+  let : NumberField L := NumberField.of_module_finite K L
   dsimp only
   let v :=
     finitePlaceBelow (K := K) W
@@ -1099,7 +1101,7 @@ theorem chosenFinitePlaceArtinMonoidHom_norm_restriction
     simpa only [
       finitePlaceExtensionEquivAbove_coe
     ] using h
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
+  let : Algebra (v.adicCompletion K) (W.adicCompletion K') :=
     (finitePlaceAdicCompletionMap
       K K' v ⟨W, rfl⟩).toAlgebra
   calc

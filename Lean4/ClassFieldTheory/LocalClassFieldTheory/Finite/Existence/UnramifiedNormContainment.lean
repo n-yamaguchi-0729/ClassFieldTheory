@@ -1,9 +1,11 @@
-import AbstractClassFieldTheory.Reciprocity.ValuationContinuity
-import LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.LocalHenselianValuation
-import LocalClassFieldTheory.Finite.LocalReciprocity.LocalResidueDatum
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ValuationContinuity
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.LocalHenselianValuation
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.LocalResidueDatum
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+
+set_option autoImplicit false
 
 /-!
 # The unramified norm containment
@@ -61,7 +63,7 @@ private theorem valuationAt_baseField_coe
   simp at hdivided
   change v.dividedAt (FiniteAbstractField.base G) x = v.toAddMonoidHom x
   rw [hdivided]
-  letI : Finite ((baseField G).toSubgroup ⧸
+  let : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) (baseField G) le_rfl) := by
     simpa [FiniteAbstractField.base] using (FiniteAbstractField.base G).finite
   change v.toAddMonoidHom
@@ -102,14 +104,14 @@ theorem finiteUnramifiedNormSubgroup_map_le_unramifiedNormSubgroup
     exact h
   dsimp only
 
-  letI hUfinite : Finite
+  let hUfinite : Finite
       (K₀.toSubgroup ⧸ extensionSubgroup K₀ U.field U.below) :=
     U.finite
-  letI hK₀finite : Finite
+  let hK₀finite : Finite
       ((baseField G).toSubgroup ⧸
         extensionSubgroup (baseField G) K₀ (le_baseField K₀)) :=
     Kfinite.finite
-  letI hUabsoluteFinite : Finite
+  let hUabsoluteFinite : Finite
       ((baseField G).toSubgroup ⧸
         extensionSubgroup (baseField G) U.field
           (le_baseField U.field)) :=

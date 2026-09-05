@@ -1,4 +1,6 @@
-import LubinTate.Padic.CompletedPrimitiveAction
+import ClassFieldTheory.LubinTate.Padic.CompletedPrimitiveAction
+
+set_option autoImplicit false
 
 /-!
 # Frobenius lifts on completed p-adic Lubin--Tate levels

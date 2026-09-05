@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegativeRoot
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegativeRoot
+
+set_option autoImplicit false
 
 /-!
 # Negative units and the real infinite-place Artin map

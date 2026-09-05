@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityDefinition
-import AbstractClassFieldTheory.Reciprocity.Construction.FiniteIntermediateCompositum
-import AbstractClassFieldTheory.Degree.NormConjugation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityDefinition
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FiniteIntermediateCompositum
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.NormConjugation
+
+set_option autoImplicit false
 
 universe u
 
@@ -364,7 +366,7 @@ private theorem relativeNorm_normalizingAction (D : DegreeData G) (A : Rep ℤ G
     extensionSubgroup (D.maximalUnramifiedField K)
       (D.maximalUnramifiedField L) (D.maximalUnramifiedField_mono hLK)
   let e := D.inertiaConjugationCosetEquiv K L hLK k
-  letI := Fintype.ofFinite R
+  let := Fintype.ofFinite R
   simp only [relativeNorm_apply_coe, relativeNormValue]
   calc
     ∑ r : R, relativeCosetAction A (D.maximalUnramifiedField K)
@@ -678,10 +680,10 @@ private theorem kernelPowerCosetMap_bijective (D : DegreeData G)
   let Γ : Subgroup Q := (D.frobeniusClosure K L hLK σ).toSubgroup
   let n := D.frobeniusExponent K L hLK σ
   let j := D.extensionDegreeKernelRestriction K L hLK
-  letI : Finite H :=
+  let : Finite H :=
     Finite.of_injective j
       (D.extensionDegreeKernelRestriction_injective K L hLK)
-  letI : Finite (Q ⧸ Γ) := by
+  let : Finite (Q ⧸ Γ) := by
     simpa [Q, Γ] using D.frobeniusFixedField_finiteIndex K L hLK σ
   have hΓmap : Γ.map dQ.toMonoidHom =
       (D.frobeniusClosureDegree K L hLK σ).toMonoidHom.range := by
@@ -932,7 +934,7 @@ private theorem relativeCosetAction_frobeniusNormIdentityCosetEquiv
       (QuotientGroup.mk (kφ * kIK)) = _
   rw [relativeCosetAction_mk]
   have hr : r = QuotientGroup.mk kI := (Quotient.out_eq' r).symm
-  rw [hr, relativeCosetAction_mk, fixedFieldInclusion_coe]
+  rw [hr, relativeCosetAction_mk]
   change A.ρ (kφ.1 * kI.1) a.1 = A.ρ kφ.1 (A.ρ kI.1 a.1)
   rw [map_mul]
   rfl
@@ -1056,12 +1058,12 @@ theorem frobeniusNormIdentity_norm_eq_powerSum_norm (D : DegreeData G) (A : Rep 
               (D.maximalUnramifiedField L)
               (D.fieldInertia_le_frobeniusFixedField K L hLK σ) a))) :
           ambientFixedAddSubgroup A (D.maximalUnramifiedField L)) : A.V) := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field (D.frobeniusFixedField K L hLK σ)
           (D.frobeniusFixedField_le K L hLK σ)) :=
     D.frobeniusFixedField_finite K L hLK σ
-  letI : Finite
+  let : Finite
       ((D.maximalUnramifiedField K.field).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K.field)
           (D.maximalUnramifiedField L)
@@ -1080,8 +1082,8 @@ theorem frobeniusNormIdentity_norm_eq_powerSum_norm (D : DegreeData G) (A : Rep 
     (D.maximalUnramifiedField L) (D.maximalUnramifiedField_mono hLK)
     (relativeNorm A (D.maximalUnramifiedField K.field)
       (D.maximalUnramifiedField L) (D.maximalUnramifiedField_mono hLK) aI)
-  letI := Fintype.ofFinite R
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite R
+  let := Fintype.ofFinite
     (K.field.toSubgroup ⧸
       extensionSubgroup K.field (D.frobeniusFixedField K L hLK σ)
         (D.frobeniusFixedField_le K L hLK σ))
@@ -1147,7 +1149,7 @@ theorem frobeniusNormIdentity_norm_powerSum_eq_powerSum_norm (D : DegreeData G)
             (D.maximalUnramifiedField L) (D.maximalUnramifiedField_mono hLK)
             a)) : ambientFixedAddSubgroup A (D.maximalUnramifiedField L)) :
         A.V) := by
-  letI : Finite
+  let : Finite
       ((D.maximalUnramifiedField K).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K)
           (D.maximalUnramifiedField L)
@@ -1232,12 +1234,12 @@ theorem frobeniusNormIdentities (D : DegreeData G) (A : Rep ℤ G)
         (D.maximalUnramifiedField K.field)) : A.V) =
       ((D.frobeniusPowerSum A K.field L hLK φ.1 n b :
         ambientFixedAddSubgroup A (D.maximalUnramifiedField L)) : A.V)) := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field (D.frobeniusFixedField K L hLK σ)
           (D.frobeniusFixedField_le K L hLK σ)) :=
     D.frobeniusFixedField_finite K L hLK σ
-  letI : Finite
+  let : Finite
       ((D.maximalUnramifiedField K.field).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K.field)
           (D.maximalUnramifiedField L)

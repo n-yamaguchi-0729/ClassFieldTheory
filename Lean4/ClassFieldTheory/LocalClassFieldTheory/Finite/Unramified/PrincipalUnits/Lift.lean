@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Trace
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Trace
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Lift` Lean module. -/
 
 noncomputable section

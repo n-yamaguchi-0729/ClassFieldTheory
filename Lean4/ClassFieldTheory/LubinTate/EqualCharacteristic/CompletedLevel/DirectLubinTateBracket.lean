@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Theta.ThetaFirstIdentity
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaFirstIdentity
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the standard equal-characteristic Lubin--Tate bracket

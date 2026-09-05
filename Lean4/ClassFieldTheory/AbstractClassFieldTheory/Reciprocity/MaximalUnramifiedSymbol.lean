@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainTransfer
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainTransfer
+
+set_option autoImplicit false
 
 /-!
 # Abstract reciprocity: the maximal-unramified symbol
@@ -56,7 +58,8 @@ theorem maximalUnramifiedExtensionRestriction_mk
         (QuotientGroup.mk k) =
       L.extensionQuotientMk k := by
   apply L.extensionQuotientMulEquiv.injective
-  simp [maximalUnramifiedExtensionRestriction]
+  exact (L.extensionQuotientMulEquiv.apply_symm_apply
+    (QuotientGroup.mk k)).trans (L.extensionQuotientMk_apply k).symm
 
 /-- Restriction sends the maximal-unramified Frobenius to the arithmetic
 Frobenius of every finite unramified quotient. -/
@@ -146,7 +149,7 @@ private theorem finiteUnramifiedDegreeHom_killsExtension
         (L.toFiniteAbstractExtension.degree : ℕ)
         L.toFiniteAbstractExtension.degree.property).comp
         (D.normalizedDegree K)).toMonoidHom).ker := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) :=
     L.finite
@@ -390,7 +393,7 @@ theorem canonicalUnramifiedReciprocity_degree_of_generator
       (finiteUnramifiedDegreeEquiv D (K.toFiniteResidueAbstractField D)
         L hUnramified
         q.toMul).toAdd := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   intro hUnramified r hr q
@@ -420,10 +423,15 @@ theorem canonicalUnramifiedReciprocity_degree_of_generator
     change v.canonicalValueReduction
         (L.toFiniteAbstractFieldExtension.degree : ℕ)
         _ (v.valuationAt K (v.chosenPrimeElement K)) = _
-    rw [v.valuationAt_chosenPrimeElement, v.canonicalValueReduction_one]
-    exact congrArg Multiplicative.toAdd
-      (finiteUnramifiedDegreeEquiv_unramifiedFrobenius D
-        KR L hUnramified).symm
+    exact (congrArg
+      (v.canonicalValueReduction (L.toFiniteAbstractFieldExtension.degree : ℕ)
+        L.toFiniteAbstractFieldExtension.degree.property)
+      (v.valuationAt_chosenPrimeElement K)).trans <|
+      (v.canonicalValueReduction_one (L.toFiniteAbstractFieldExtension.degree : ℕ)
+        L.toFiniteAbstractFieldExtension.degree.property).trans <|
+        congrArg Multiplicative.toAdd
+          (finiteUnramifiedDegreeEquiv_unramifiedFrobenius D
+            KR L hUnramified).symm
   have hqmem : q ∈ AddSubgroup.zmultiples g := by
     rw [show AddSubgroup.zmultiples g = ⊤ from
       D.unramifiedFrobenius_zmultiples_eq_top
@@ -458,8 +466,9 @@ theorem maximalUnramifiedNormResidue_degree
         (K.toFiniteResidueAbstractField D)).toAdditive.symm
         ((v.valueGroup).subtype (v.valuationAt K a))) =
     (v.valuationAt K a : ZHat)
-  rw [AddEquiv.apply_symm_apply]
-  rfl
+  exact (D.maximalUnramifiedDegreeEquiv
+    (K.toFiniteResidueAbstractField D)).toAdditive.apply_symm_apply
+      ((v.valueGroup).subtype (v.valuationAt K a))
 
 /-- The maximal-unramified symbol is literally the profinite power
 `φ_K ^ v_K(a)`. -/
@@ -524,7 +533,7 @@ theorem maximalUnramifiedNormResidueSymbol_finiteReciprocity_of_generator
           (K.toFiniteResidueAbstractField D) L hUnramified
           (maximalUnramifiedNormResidueSymbol v K a).toMul)) =
       finiteNormClass A K.field L.field L.below a := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   intro hUnramified r hr a
@@ -564,7 +573,7 @@ theorem maximalUnramifiedNormResidueSymbol_finiteRestriction_of_generator
         (finiteUnramifiedRestriction D
           (K.toFiniteResidueAbstractField D) L hUnramified
           (maximalUnramifiedNormResidueSymbol v K a).toMul) := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   intro hUnramified r hr a

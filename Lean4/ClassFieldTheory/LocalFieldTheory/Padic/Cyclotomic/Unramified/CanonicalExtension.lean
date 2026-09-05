@@ -1,14 +1,24 @@
-import LocalFieldTheory.Padic.Cyclotomic.Unramified.ArithmeticFrobenius
-import KummerTheory.TameRamification.Tower
-import LocalFieldTheory.Unramified.Definitions
-import ValuationTheory.DiscreteValuationField.FiniteIntegralClosure
-import ValuationTheory.AbsoluteValue.AlgebraicExtension.FiniteNormExtension
-import ValuationTheory.AbsoluteValue.AlgebraicExtension
-import ValuationTheory.AbsoluteValue.ExponentialValuation
-import ValuationTheory.Henselian.Complete
-import ValuationTheory.LocalRingEquiv
-import LocalFieldTheory.DiscreteValuationField.PadicField
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.Unramified.ArithmeticFrobenius
+import ValuedFieldTheory.LocalField.Unramified.RamificationIndexTower
+import ValuedFieldTheory.LocalField.Unramified.Definitions
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.FiniteNormExtension
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.Core
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormula
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaAbsoluteValue
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaCoefficients
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaExtension
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaIntegralClosure
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueExtensionCoefficients
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueValuationSubring
+import ValuedFieldTheory.Valuation.AbsoluteValue.ExponentialValuation
+import ValuedFieldTheory.Valuation.Henselian.Complete
+import ValuedFieldTheory.Valuation.LocalRingEquiv
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
 import Mathlib.Analysis.Normed.Unbundled.RingSeminorm
+
+set_option autoImplicit false
 
 /-!
 # The canonical valuation on the unramified extension of `ℚ_p`
@@ -261,9 +271,9 @@ theorem padicCyclotomic_finrank_prime_pow_sub_one
     Module.finrank ℚ_[p] L = f := by
   let v := padicFieldExponentialValuation p
   let e := padicCyclotomicUnramified_padicExponentialResidueFieldEquivZMod p
-  letI : Finite (padicCyclotomicUnramifiedResidueField v) :=
+  let : Finite (padicCyclotomicUnramifiedResidueField v) :=
     Finite.of_equiv (ZMod p) e.symm.toEquiv
-  letI : Fintype (padicCyclotomicUnramifiedResidueField v) := Fintype.ofFinite _
+  let : Fintype (padicCyclotomicUnramifiedResidueField v) := Fintype.ofFinite _
   have hk : Fintype.card (padicCyclotomicUnramifiedResidueField v) = p ^ 1 := by
     simpa [v] using padicCyclotomicUnramified_padicExponentialResidueField_card p
   let hcop : p.Coprime (p ^ f - 1) := prime_coprime_pow_sub_one p f hf
@@ -374,7 +384,7 @@ theorem padicCyclotomicUnramified_padicFiniteExtensionAbsoluteValue_comp_algHom
   let w : AbsoluteValue E ℝ :=
     (padicFiniteExtensionAbsoluteValue p D).comp
       (f := i.toRingHom) i.injective
-  letI : Algebra.IsAlgebraic ℚ_[p] E :=
+  let : Algebra.IsAlgebraic ℚ_[p] E :=
     Algebra.IsAlgebraic.of_finite ℚ_[p] E
   have hwExt : ∀ x : ℚ_[p], w (algebraMap ℚ_[p] E x) = v x := by
     intro x
@@ -431,7 +441,7 @@ theorem padicCyclotomicUnramified_padicFiniteExtensionValuationSubring_comap_alg
         (padicFiniteExtensionAbsoluteValue p E)
         (padicFiniteExtensionAbsoluteValue_nonarchimedean p E) := by
   let iAlg : Algebra E D := i.toRingHom.toAlgebra
-  letI : Algebra E D := iAlg
+  let : Algebra E D := iAlg
   have hExt : ∀ x : E,
       padicFiniteExtensionAbsoluteValue p D
           (algebraMap E D x) =
@@ -525,7 +535,7 @@ theorem padicCyclotomicUnramified_padicFiniteExtensionValuationSubring_eq_integr
       (integralClosure
         (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).valuationSubring
         L).toSubring := by
-  letI : Algebra.IsAlgebraic ℚ_[p] L := Algebra.IsAlgebraic.of_finite ℚ_[p] L
+  let : Algebra.IsAlgebraic ℚ_[p] L := Algebra.IsAlgebraic.of_finite ℚ_[p] L
   have hclosure :=
     exponentialValuationSubring_eq_integralClosure_of_henselian
       (padicFieldExponentialValuation p)
@@ -603,7 +613,7 @@ noncomputable def padicCyclotomicUnramified_padicFiniteExtensionValuationSubring
         (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).valuationSubring
         L).toSubring :=
     by
-      letI : IsIntegralClosure T
+      let : IsIntegralClosure T
           (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).valuation.valuationSubring L := by
         change IsIntegralClosure target.valuationSubring
           (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).valuationSubring L
@@ -658,9 +668,9 @@ theorem padicCyclotomic_finiteUnramified_of_coprime
       (padicFiniteExtensionExponentialValuation_extends p L) := by
   let v := padicFieldExponentialValuation p
   let e := padicCyclotomicUnramified_padicExponentialResidueFieldEquivZMod p
-  letI : Finite (padicCyclotomicUnramifiedResidueField v) :=
+  let : Finite (padicCyclotomicUnramifiedResidueField v) :=
     Finite.of_equiv (ZMod p) e.symm.toEquiv
-  letI : Fintype (padicCyclotomicUnramifiedResidueField v) := Fintype.ofFinite _
+  let : Fintype (padicCyclotomicUnramifiedResidueField v) := Fintype.ofFinite _
   have hk : Fintype.card (padicCyclotomicUnramifiedResidueField v) = p ^ 1 := by
     simpa [v] using padicCyclotomicUnramified_padicExponentialResidueField_card p
   exact padicCyclotomicUnramified_finiteUnramifiedExtension
@@ -713,18 +723,18 @@ theorem padicCyclotomic_ramificationIndex_eq_one_prime_pow_sub_one
     padicCyclotomicUnramified_padicExponentialValuationSubringEquivCompleteDVF p
   let eTarget : W ≃+* target.valuationSubring :=
     padicCyclotomicUnramified_padicFiniteExtensionValuationSubringEquiv p L target
-  letI : IsDiscreteValuationRing base.valuationSubring :=
+  let : IsDiscreteValuationRing base.valuationSubring :=
     base.valuationSubring_isDiscreteValuationRing
-  letI : IsDiscreteValuationRing target.valuationSubring :=
+  let : IsDiscreteValuationRing target.valuationSubring :=
     target.valuationSubring_isDiscreteValuationRing
-  letI : IsDiscreteValuationRing V :=
+  let : IsDiscreteValuationRing V :=
     IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing eBase.symm
-  letI : IsDiscreteValuationRing W :=
+  let : IsDiscreteValuationRing W :=
     IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing eTarget.symm
-  letI : IsLocalHom iExponential :=
+  let : IsLocalHom iExponential :=
     exponentialValuationRingMap_isLocalHom v w
       (padicFiniteExtensionExponentialValuation_extends p L)
-  letI : Algebra V W := iExponential.toAlgebra
+  let : Algebra V W := iExponential.toAlgebra
   have hvdisc : LubinTate.Valuations.DiscreteExponentialValuation v :=
     discreteExponentialValuation_of_isDiscreteValuationRing v
   have hUnramified : FiniteUnramifiedExtension v w
@@ -818,21 +828,21 @@ theorem padicCyclotomicUnramified_padic_isFiniteUnramified_prime_pow_sub_one
       (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).toDVF
       target.toDVF := by
   let base := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p
-  letI : Algebra.IsSeparable ℚ_[p] L := by infer_instance
-  letI : IsScalarTower base.valuationSubring target.valuationSubring L := by
+  let : Algebra.IsSeparable ℚ_[p] L := by infer_instance
+  let : IsScalarTower base.valuationSubring target.valuationSubring L := by
     apply IsScalarTower.of_algebraMap_eq
     intro x
     rfl
-  letI : Module.Finite base.valuationSubring target.valuationSubring :=
+  let : Module.Finite base.valuationSubring target.valuationSubring :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.moduleFinite_target_valuationSubring_of_finite_separable
       base target
-  letI : FiniteDimensional base.residueField target.residueField :=
+  let : FiniteDimensional base.residueField target.residueField :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.residueField_finiteDimensional_of_moduleFinite
       base target
-  letI : Finite base.residueField := by
+  let : Finite base.residueField := by
     simpa [base] using
       LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF_residueField_finite p
-  letI : PerfectField base.residueField := by infer_instance
+  let : PerfectField base.residueField := by infer_instance
   have hresidueSeparable :
       Algebra.IsSeparable base.residueField target.residueField := by
     infer_instance
@@ -866,13 +876,13 @@ theorem exists_padicCyclotomic_completeDVF_isFiniteUnramified_degree_eq
             ValuationTheory.DiscreteValuationField.ValuedExtension.degree
               (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).toDVF
               target.toDVF = f := by
-  letI : Algebra.IsSeparable ℚ_[p] L := by infer_instance
+  let : Algebra.IsSeparable ℚ_[p] L := by infer_instance
   let base := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p
   obtain ⟨target, hExt, hTarget, _hfundamental⟩ :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.exists_integralClosure_standard_fundamental_identity
       (K := ℚ_[p]) (L := L) base
-  letI : base.valuation.HasExtension target.valuation := hExt
-  letI : IsIntegralClosure target.valuationSubring base.valuationSubring L := hTarget
+  let : base.valuation.HasExtension target.valuation := hExt
+  let : IsIntegralClosure target.valuationSubring base.valuationSubring L := hTarget
   refine ⟨target, hExt, hTarget, ?_, ?_⟩
   · exact padicCyclotomicUnramified_padic_isFiniteUnramified_prime_pow_sub_one
       p f hf hζ hζgen target

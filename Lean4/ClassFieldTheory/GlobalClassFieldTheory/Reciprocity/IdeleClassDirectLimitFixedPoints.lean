@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFixedPointDescent
-import KummerTheory.Abstract.KummerDelta
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFixedPointDescent
+import GaloisCohomology.Kummer.Abstract.KummerDelta
+
+set_option autoImplicit false
 
 /-!
 # Fixed points of the rational idele-class direct limit
@@ -107,7 +109,7 @@ theorem rationalIntermediateIdeleClassToDirectLimit_conjugation
     rationalNormalClosure E
   let hEN : E ≤ (N : IntermediateField ℚ (SeparableClosure ℚ)) :=
     IntermediateField.le_normalClosure E
-  letI : SMul
+  let : SMul
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)
       (RelativeIdeleGroup.ClassGroup ℚ N) :=
     (rationalAbsoluteGaloisIdeleClassAction
@@ -187,15 +189,15 @@ theorem rationalIntermediateIdeleClassToDirectLimit_ambientAlgEquiv
       (K := ℚ) (L := E)).symm c
   let cF : RelativeIdeleGroup.ClassGroup ℚ F :=
     relativeIdeleClassCongr (K := ℚ) e cE
-  letI : MulDistribMulAction
+  let : MulDistribMulAction
       (U ≃ₐ[ℚ] U)
       (RelativeIdeleGroup.ClassGroup ℚ U) :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction ℚ U
-  letI : SMul
+  let : SMul
       (U ≃ₐ[ℚ] U)
       (RelativeIdeleGroup.ClassGroup ℚ U) :=
     (RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction ℚ U).toSMul
-  letI : SMul
+  let : SMul
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)
       (RelativeIdeleGroup.ClassGroup ℚ U) :=
     (rationalAbsoluteGaloisIdeleClassAction U).toSMul
@@ -366,7 +368,7 @@ theorem rationalIntermediateIdeleClassToDirectLimit_fixed
     rationalNormalClosure K
   let hKN : K ≤ (N : IntermediateField ℚ (SeparableClosure ℚ)) :=
     IntermediateField.le_normalClosure K
-  letI : SMul
+  let : SMul
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)
       (RelativeIdeleGroup.ClassGroup ℚ N) :=
     (rationalAbsoluteGaloisIdeleClassAction

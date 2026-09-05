@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldNorm
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteResidueFinrankTransfer
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteResidueFinrankTransfer
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -35,53 +37,51 @@ noncomputable def localHenselianValuation
       norm_range := ?_ }
   intro F
   let H := F.field
-  letI := F.finite
+  let := F.finite
   let E := abstractFixedField K (SeparableClosure K) H
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional K (SeparableClosure K) H F.finite
 
-  letI : UniformSpace K := IsTopologicalAddGroup.rightUniformSpace K
-  letI : IsUniformAddGroup K := isUniformAddGroup_of_addCommGroup
-  letI : Valued K (ValuativeRel.ValueGroupWithZero K) := inferInstance
-  letI : (Valued.v : Valuation K
+  let : UniformSpace K := IsTopologicalAddGroup.rightUniformSpace K
+  let : IsUniformAddGroup K := isUniformAddGroup_of_addCommGroup
+  let : (Valued.v : Valuation K
       (ValuativeRel.ValueGroupWithZero K)).RankOne :=
     { hom' := ValuativeRel.IsRankLeOne.nonempty.some.emb (R := K) |>.comp
         MonoidWithZeroHom.ValueGroup₀.embedding
       strictMono' := ValuativeRel.IsRankLeOne.nonempty.some.strictMono.comp
         MonoidWithZeroHom.ValueGroup₀.embedding_strictMono }
-  letI : NontriviallyNormedField K :=
+  let : NontriviallyNormedField K :=
     Valued.toNontriviallyNormedField
       (L := K) (Γ₀ := ValuativeRel.ValueGroupWithZero K)
-  letI : CompleteSpace K := inferInstance
 
-  letI : NontriviallyNormedField E :=
+  let : NontriviallyNormedField E :=
     spectralNorm.nontriviallyNormedField K E
-  letI : NormedSpace K E := spectralNorm.normedSpace K E
-  letI : CompleteSpace E := spectralNorm.completeSpace K E
-  letI : LocallyCompactSpace E :=
+  let : NormedSpace K E := spectralNorm.normedSpace K E
+  let : CompleteSpace E := spectralNorm.completeSpace K E
+  let : LocallyCompactSpace E :=
     LocallyCompactSpace.of_finiteDimensional_of_complete K E
-  letI : IsUltrametricDist E :=
+  let : IsUltrametricDist E :=
     ⟨fun x y z => by
       change ‖x - z‖ ≤ max ‖x - y‖ ‖y - z‖
       rw [← sub_add_sub_cancel x y z]
       exact isNonarchimedean_spectralNorm
         (K := K) (L := E) (x - y) (y - z)⟩
-  letI : Valued E ℝ≥0 := NormedField.toValued
+  let : Valued E ℝ≥0 := NormedField.toValued
   let vE : Valuation E ℝ≥0 := Valued.v
-  letI : vE.IsNontrivial :=
+  let : vE.IsNontrivial :=
     (inferInstance : (NormedField.valuation (K := E)).IsNontrivial)
-  letI : ValuativeRel E := ValuativeRel.ofValuation vE
-  letI : vE.Compatible := Valuation.Compatible.ofValuation vE
-  letI : ValuativeRel.IsNontrivial E :=
+  let : ValuativeRel E := ValuativeRel.ofValuation vE
+  let : vE.Compatible := Valuation.Compatible.ofValuation vE
+  let : ValuativeRel.IsNontrivial E :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vE).2 inferInstance
-  letI : IsValuativeTopology E :=
+  let : IsValuativeTopology E :=
     isValuativeTopology_of_valued_ofValuation E ℝ≥0
-  letI : IsNonarchimedeanLocalField E :=
+  let : IsNonarchimedeanLocalField E :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
 
-  letI : (ValuativeRel.valuation K).HasExtension
+  let : (ValuativeRel.valuation K).HasExtension
       (ValuativeRel.valuation E) := by
     apply Valuation.HasExtension.ofComapInteger
     ext x
@@ -93,7 +93,7 @@ noncomputable def localHenselianValuation
     rw [spectralNorm_extends]
     exact Valued.toNormedField.norm_le_one_iff
 
-  letI : Algebra.IsIntegral 𝒪[K] 𝒪[E] := ⟨by
+  let : Algebra.IsIntegral 𝒪[K] 𝒪[E] := ⟨by
     intro y
     have hyv : vE (y : E) ≤ 1 := by
       apply (vE.vle_one_iff).1
@@ -138,7 +138,7 @@ noncomputable def localHenselianValuation
       change Polynomial.aeval (y : E) p = 0
       rwa [Polynomial.aeval_map_algebraMap K (y : E) p] at hmaproot⟩
 
-  letI : Algebra.IsIntegral
+  let : Algebra.IsIntegral
       (ValuativeRel.valuation K).valuationSubring
       (ValuativeRel.valuation E).valuationSubring := by
     change Algebra.IsIntegral 𝒪[K] 𝒪[E]
@@ -148,7 +148,7 @@ noncomputable def localHenselianValuation
       (ValuativeRel.valuation K).valuationSubring E :=
     ValuationTheory.DiscreteValuationField.Valuation.valuationSubring_isIntegralClosure_of_isIntegral
       (ValuativeRel.valuation K) (ValuativeRel.valuation E)
-  letI : IsIntegralClosure 𝒪[E] 𝒪[K] E := by
+  let : IsIntegralClosure 𝒪[E] 𝒪[K] E := by
     change IsIntegralClosure
       (ValuativeRel.valuation E).valuationSubring
       (ValuativeRel.valuation K).valuationSubring E

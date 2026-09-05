@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import KummerTheory.Concrete.LocalMaximalKummerExtension
-import LocalFieldTheory.NonarchimedeanLocalField.PowerClassFiniteness
-import LocalClassFieldTheory.Finite.LocalReciprocity.Main
+import GaloisCohomology.Kummer.Concrete.LocalMaximalKummerExtension
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassFiniteness
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Main
+
+set_option autoImplicit false
 
 /-!
 # Norm group of the maximal Kummer extension
@@ -82,15 +84,15 @@ theorem powMonoidHom_range_le_maximalKummerNormSubgroup
     (powMonoidHom (n : ℕ) : Kˣ →* Kˣ).range ≤ localNormSubgroup K E := by
   let Delta := KummerTheory.maximalKummerSubgroup K n
   let E := kummerRadicalExtension (K := K) (Omega := Omega) n Delta.1
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     kummerRadicalExtension_isGalois (K := K) (Omega := Omega) n Delta.1
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     KummerTheory.maximalKummerRadicalExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu
-  letI : IsMulCommutative Gal(E/K) :=
+  let : IsMulCommutative Gal(E/K) :=
     kummerRadicalExtension_isMulCommutative
       (K := K) (Omega := Omega) n hmu Delta.1
-  letI : CommGroup Gal(E/K) :=
+  let : CommGroup Gal(E/K) :=
     CommGroup.mk (fun a b => IsMulCommutative.is_comm.comm a b)
   have habExponent :
       ∀ a : Abelianization (Gal(E / K)), a ^ (n : ℕ) = 1 := by
@@ -120,19 +122,19 @@ theorem maximalKummerNormSubgroup_eq_powMonoidHom_range
   let E := kummerRadicalExtension (K := K) (Omega := Omega) n Delta.1
   let P := (powMonoidHom (n : ℕ) : Kˣ →* Kˣ).range
   let N := localNormSubgroup K E
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     kummerRadicalExtension_isGalois (K := K) (Omega := Omega) n Delta.1
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     KummerTheory.maximalKummerRadicalExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu
-  letI : Finite (Kˣ ⧸ P) :=
+  let : Finite (Kˣ ⧸ P) :=
     LocalFieldTheory.finite_nthPowerQuotient_of_natCast_ne_zero
       K (n : ℕ) hnK
-  letI : P.FiniteIndex := P.finiteIndex_of_finite_quotient
+  let : P.FiniteIndex := P.finiteIndex_of_finite_quotient
   have hle : P ≤ N :=
     powMonoidHom_range_le_maximalKummerNormSubgroup
       (K := K) (Omega := Omega) n hnK hmu
-  letI : Finite (NormQuotient K E) :=
+  let : Finite (NormQuotient K E) :=
     Finite.of_equiv (Kˣ ⧸ P)
       (maximalKummerNormQuotientEquivPowerQuotient
         (K := K) (Omega := Omega) n hnK hmu).symm.toEquiv

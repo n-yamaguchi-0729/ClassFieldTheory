@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceCharacter
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealSquare
-import KummerTheory.Concrete.SimpleExtensionLocalBehavior
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceCharacter
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealSquare
+import ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
+
+set_option autoImplicit false
 
 /-!
 # The positive-radicand real infinite-place branch
@@ -33,11 +35,11 @@ theorem infinitePlaceKummerRootCharacter_eq_one_of_real_of_radical_pos
     (hb : 0 < InfinitePlace.embedding_of_isReal hv (b : K)) :
     infinitePlaceKummerRootCharacter K n hnK hmu v a b = 1 := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L := NumberField.of_module_finite K L
+  let : NumberField L := NumberField.of_module_finite K L
   let a_v : v.Completionˣ :=
     Units.map (algebraMap K v.Completion).toMonoidHom a
   have hbSquare :

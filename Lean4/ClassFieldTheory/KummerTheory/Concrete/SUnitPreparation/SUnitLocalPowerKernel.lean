@@ -1,5 +1,7 @@
-import KummerTheory.Concrete.SUnitPreparation.SUnitPowerQuotient
-import AlgebraicNumberTheory.RayClass.Approximation
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.SUnitPowerQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Approximation
+
+set_option autoImplicit false
 
 /-!
 # The local-power kernel of S-units

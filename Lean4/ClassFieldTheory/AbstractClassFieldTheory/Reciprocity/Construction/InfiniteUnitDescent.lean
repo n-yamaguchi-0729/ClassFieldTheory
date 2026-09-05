@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FixedTowerUnitDescent
-import AbstractClassFieldTheory.Reciprocity.Construction.FiniteFieldUnitMaps
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FixedTowerUnitDescent
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FiniteFieldUnitMaps
+
+set_option autoImplicit false
 
 universe u v
 
@@ -80,7 +82,7 @@ theorem descend_maximalUnramified_fixed_unit_of_finiteSupport
     D.descend_maximalUnramified_fixed_of_finiteSupport
       A (K.toFiniteResidueAbstractField D) L hLK φ hφ
         P aI aP.1 hsupport hfixed
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field P.field P.below) :=
     P.finite
   let EP := P.toFiniteAbstractFieldExtension K
@@ -157,26 +159,26 @@ noncomputable def infiniteUnitAddSubgroup
     rcases ha with ⟨M, u, hu⟩
     rcases hb with ⟨N, w, hw⟩
     let P := M.compositum N
-    letI hPfinite : Finite
+    let hPfinite : Finite
         (K.field.toSubgroup ⧸ extensionSubgroup K.field P.field P.below) :=
       P.finite
     let hPM : P.field.toSubgroup ≤ M.field.toSubgroup := M.compositum_le_left N
     let hPN : P.field.toSubgroup ≤ N.field.toSubgroup := M.compositum_le_right N
-    letI hPMfinite : Finite
+    let hPMfinite : Finite
         (M.field.toSubgroup ⧸ extensionSubgroup M.field P.field hPM) :=
       FiniteIntermediateField.finite_extension_of_le
         P.below M.below hPM
-    letI hPNfinite : Finite
+    let hPNfinite : Finite
         (N.field.toSubgroup ⧸ extensionSubgroup N.field P.field hPN) :=
       FiniteIntermediateField.finite_extension_of_le
         P.below N.below hPN
-    letI : Finite
+    let : Finite
         ((M.toFiniteAbstractField K).field.toSubgroup ⧸
           extensionSubgroup (M.toFiniteAbstractField K).field P.field hPM) := by
       change Finite
         (M.field.toSubgroup ⧸ extensionSubgroup M.field P.field hPM)
       exact hPMfinite
-    letI : Finite
+    let : Finite
         ((N.toFiniteAbstractField K).field.toSubgroup ⧸
           extensionSubgroup (N.toFiniteAbstractField K).field P.field hPN) := by
       change Finite
@@ -249,19 +251,19 @@ theorem frobeniusQuotientAction_mem_infiniteUnitAddSubgroup
         (D.maximalUnramifiedField_le_of_le hLK) := by
   let E := D.maximalUnramifiedField L
   let hEK := D.maximalUnramifiedField_le_of_le hLK
-  letI hEnormal : (extensionSubgroup K.field E hEK).Normal :=
+  let hEnormal : (extensionSubgroup K.field E hEK).Normal :=
     D.extensionSubgroup_maximalUnramifiedField_normal K.field L hLK
   rcases ha with ⟨M, u, hu⟩
   let R := M.galoisRefinement
   have hRM : R.field.toSubgroup ≤ M.field.toSubgroup :=
     M.galoisRefinement_le_field
-  letI hRfinite : Finite
+  let hRfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field R.field R.below) :=
     R.finite
-  letI hRMfinite : Finite
+  let hRMfinite : Finite
       (M.field.toSubgroup ⧸ extensionSubgroup M.field R.field hRM) :=
     FiniteIntermediateField.finite_extension_of_le R.below M.below hRM
-  letI : Finite
+  let : Finite
       ((M.toFiniteAbstractField K).field.toSubgroup ⧸
         extensionSubgroup (M.toFiniteAbstractField K).field R.field hRM) := by
     change Finite
@@ -341,7 +343,7 @@ theorem maximalUnramifiedNorm_mem_infiniteUnitAddSubgroup
           (D.maximalUnramifiedField L) (D.maximalUnramifiedField_mono hLK) a)
       ∈ v.infiniteUnitAddSubgroup (D.maximalUnramifiedField L) K
         (D.maximalUnramifiedField_le_of_le hLK) := by
-  letI : Finite
+  let : Finite
       ((D.maximalUnramifiedField K.field).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K.field)
           (D.maximalUnramifiedField L)
@@ -351,7 +353,7 @@ theorem maximalUnramifiedNorm_mem_infiniteUnitAddSubgroup
   let E := D.maximalUnramifiedField L
   let hEI := D.maximalUnramifiedField_mono hLK
   let N := relativeNorm A I E hEI
-  letI : Fintype (I.toSubgroup ⧸ extensionSubgroup I E hEI) :=
+  let : Fintype (I.toSubgroup ⧸ extensionSubgroup I E hEI) :=
     Fintype.ofFinite _
   let qK (q : I.toSubgroup ⧸ extensionSubgroup I E hEI) :
       K.field.toSubgroup ⧸ D.extensionInertiaWithin K.field L hLK :=
@@ -439,7 +441,7 @@ theorem descend_maximalUnramifiedNorm_unit
         (D.maximalUnramifiedField_le K.field) aK.1 =
         relativeNorm A (D.maximalUnramifiedField K.field)
           (D.maximalUnramifiedField L) (D.maximalUnramifiedField_mono hLK) a := by
-  letI : Finite
+  let : Finite
       ((D.maximalUnramifiedField K.field).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K.field)
           (D.maximalUnramifiedField L)
@@ -450,7 +452,7 @@ theorem descend_maximalUnramifiedNorm_unit
   let hEI := D.maximalUnramifiedField_mono hLK
   let N := relativeNorm A I E hEI
   let J := fixedFieldInclusion A I E hEI
-  letI hEnormal : (extensionSubgroup K.field E
+  let hEnormal : (extensionSubgroup K.field E
       (D.maximalUnramifiedField_le_of_le hLK)).Normal :=
     D.extensionSubgroup_maximalUnramifiedField_normal K.field L hLK
   have hmem : J (N a) ∈ v.infiniteUnitAddSubgroup E K
@@ -460,22 +462,22 @@ theorem descend_maximalUnramifiedNorm_unit
   let R := Q.galoisRefinement
   let hRQ : R.field.toSubgroup ≤ Q.field.toSubgroup :=
     Q.galoisRefinement_le_field
-  letI hQabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hQabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) Q.field (le_baseField Q.field)) :=
     Q.absoluteFinite
-  letI hRfinite : Finite
+  let hRfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field R.field R.below) :=
     R.finite
-  letI hRQfinite : Finite
+  let hRQfinite : Finite
       (Q.field.toSubgroup ⧸ extensionSubgroup Q.field R.field hRQ) :=
     FiniteIntermediateField.finite_extension_of_le R.below Q.below hRQ
-  letI : Finite
+  let : Finite
       ((Q.toFiniteAbstractField K).field.toSubgroup ⧸
         extensionSubgroup (Q.toFiniteAbstractField K).field R.field hRQ) := by
     change Finite
       (Q.field.toSubgroup ⧸ extensionSubgroup Q.field R.field hRQ)
     exact hRQfinite
-  letI hRnormal : (extensionSubgroup K.field R.field R.below).Normal :=
+  let hRnormal : (extensionSubgroup K.field R.field R.below).Normal :=
     FiniteIntermediateField.galoisRefinement_normal Q
   let EQR : FiniteAbstractFieldExtension G :=
     FiniteAbstractFieldExtension.ofInclusion

@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.NormalBasisRecursiveLifting
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.NormalBasisRecursiveLifting
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open CyclicCohomology
@@ -48,7 +50,7 @@ theorem exists_chosenNormalBasisPrincipalUnit_herbrand_subsingleton
   intro n hn V hV
   have hc0n : c0 ≤ n := le_trans (le_max_left c0 cm) hn
   have hcmn : cm ≤ n := le_trans (le_max_right c0 cm) hn
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
     K L n V hV
   have hfixed : fixedSubgroup (Gal(L / K)) V ≤
       tateNormSubgroup (Gal(L / K)) V := by

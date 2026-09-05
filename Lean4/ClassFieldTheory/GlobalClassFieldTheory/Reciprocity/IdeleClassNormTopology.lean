@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.NormTopology
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+
+set_option autoImplicit false
 
 /-!
 # The norm topology and the ordinary idele-class topology
@@ -21,6 +23,16 @@ namespace Reciprocity
 
 open ClassFormation
 open LocalClassFieldTheory
+
+/-- Use the canonical quotient group structure before elaborating additive
+norm-subgroup maps. -/
+@[instance_reducible]
+private noncomputable def normTopologyIdeleClassCommGroup
+    (F : Type) [Field F] [NumberField F] :
+    CommGroup (IdeleClassGroup F) :=
+  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
+
+attribute [local instance] normTopologyIdeleClassCommGroup
 
 /-- The transport of an abstract fixed-part subgroup to the ordinary
 idele-class group of the corresponding rational fixed field. -/
@@ -166,37 +178,20 @@ private theorem rationalOrdinaryIdeleClassNormRange_isOpen
       (((_root_.ideleClassNorm F E).range.toAddSubgroup :
         AddSubgroup (Additive (IdeleClassGroup F))) :
         Set (Additive (IdeleClassGroup F))) := by
-  let F := abstractFixedField ℚ (SeparableClosure ℚ) K
-  let E :=
-    abstractRelativeFixedField ℚ (SeparableClosure ℚ) L.below
-  letI : Finite
-      (K.toSubgroup ⧸
-        CyclicCohomology.extensionSubgroup K L.field L.below) :=
-    L.finite
-  letI :
-      (CyclicCohomology.extensionSubgroup
-        K L.field L.below).Normal :=
-    L.normal
-  letI : FiniteDimensional ℚ F :=
-    abstractFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K hKfinite
-  letI : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K L.field L.below hKfinite L.finite
-  letI : IsScalarTower ℚ F E :=
-    IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional ℚ E :=
-    FiniteDimensional.trans ℚ F E
-  letI : NumberField F := NumberField.of_module_finite ℚ F
-  letI : NumberField E := NumberField.of_module_finite ℚ E
-  letI : IsGalois F E :=
+  intro F E
+  let : NumberField F := by
+    let : FiniteDimensional ℚ F :=
+      abstractFixedField_finiteDimensional
+        ℚ (SeparableClosure ℚ) K hKfinite
+    exact NumberField.of_module_finite ℚ F
+  let : NumberField E := by
+    let : FiniteDimensional F E :=
+      abstractRelativeFixedField_finiteDimensional
+        ℚ (SeparableClosure ℚ) K L.field L.below hKfinite L.finite
+    exact NumberField.of_module_finite F E
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       ℚ (SeparableClosure ℚ) K L.field L.below L.normal
-  change
-    IsOpen
-      (((_root_.ideleClassNorm F E).range :
-        Subgroup (IdeleClassGroup F)) :
-        Set (IdeleClassGroup F))
   exact
     GlobalClassFields.ideleClassNorm_range_isOpen
       (K := F) (L := E)
@@ -231,20 +226,25 @@ theorem rationalNormOpenSubgroup_isOpen
           (hKfinite := hKfinite) K H :
         AddSubgroup (Additive (IdeleClassGroup F))) :
         Set (Additive (IdeleClassGroup F))) := by
-  let F := abstractFixedField ℚ (SeparableClosure ℚ) K
-  letI : FiniteDimensional ℚ F :=
-    abstractFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K hKfinite
-  letI : NumberField F := NumberField.of_module_finite ℚ F
-  let eK := rationalAbstractFixedFieldIdeleClassEquivFixed K
+  intro F
+  let : NumberField F := by
+    let : FiniteDimensional ℚ F :=
+      abstractFixedField_finiteDimensional
+        ℚ (SeparableClosure ℚ) K hKfinite
+    exact NumberField.of_module_finite ℚ F
+  let eK :
+      Additive (IdeleClassGroup F) ≃+
+        KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K :=
+    rationalAbstractFixedFieldIdeleClassEquivFixed K
   rcases
       rationalNormOpenSubgroup_exists_finiteNormSubgroup K H hH with
     ⟨L, hLH⟩
-  letI : Finite
+  let : Finite
       (K.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup K L.field L.below) :=
     L.finite
-  letI :
+  let :
       (CyclicCohomology.extensionSubgroup
         K L.field L.below).Normal :=
     L.normal

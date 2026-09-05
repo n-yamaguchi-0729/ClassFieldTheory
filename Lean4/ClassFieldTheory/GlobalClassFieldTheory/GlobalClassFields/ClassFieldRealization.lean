@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
 import Mathlib.FieldTheory.Galois.Abelian
+
+set_option autoImplicit false
 
 /-!
 # Concrete realization of finite abelian subextensions
@@ -110,7 +112,7 @@ noncomputable instance
       (abstractRelativeFixedField k Ω L.below) := by
   let F := abstractFixedField k Ω K
   let E := abstractRelativeFixedField k Ω L.below
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       k Ω K L.field L.below L.normal
   let e : L.extensionQuotient ≃* Gal(E / F) :=

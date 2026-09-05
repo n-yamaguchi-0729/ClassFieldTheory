@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.IntermediateExtension
-import AbstractClassFieldTheory.Reciprocity.Core
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.IntermediateExtension
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Core
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -82,13 +84,13 @@ theorem intermediateNormMap_finiteNormClass (A : Rep ℤ G)
       finiteNormClass A K L.field L.below
         (relativeNorm A K (L.intermediateField S)
           (L.intermediateField_le_base S) a) := by
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K L.field L.below) := L.finite
-  letI : Finite ((L.intermediateField S).toSubgroup ⧸
+  let : Finite ((L.intermediateField S).toSubgroup ⧸
       extensionSubgroup (L.intermediateField S) L.field
         (L.field_le_intermediateField S)) :=
     L.extension_over_intermediate_finite S
-  letI : Finite (K.toSubgroup ⧸ extensionSubgroup K
+  let : Finite (K.toSubgroup ⧸ extensionSubgroup K
       (L.intermediateField S) (L.intermediateField_le_base S)) :=
     L.intermediateField_finite S
   exact finiteReciprocityNaturalityNormMap_finiteNormClass A K
@@ -140,13 +142,13 @@ theorem intermediateNormQuotientInclusion_finiteNormClass (A : Rep ℤ G)
         (L.field_le_intermediateField S)
         (fixedFieldInclusion A K (L.intermediateField S)
           (L.intermediateField_le_base S) a) := by
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K L.field L.below) := L.finite
-  letI : (extensionSubgroup K L.field L.below).Normal := L.normal
-  letI : (extensionSubgroup (L.intermediateField S) L.field
+  let : (extensionSubgroup K L.field L.below).Normal := L.normal
+  let : (extensionSubgroup (L.intermediateField S) L.field
       (L.field_le_intermediateField S)).Normal :=
     L.extensionSubgroup_over_intermediate_normal S
-  letI : Finite ((L.intermediateField S).toSubgroup ⧸
+  let : Finite ((L.intermediateField S).toSubgroup ⧸
       extensionSubgroup (L.intermediateField S) L.field
         (L.field_le_intermediateField S)) :=
     L.extension_over_intermediate_finite S
@@ -171,18 +173,18 @@ theorem intermediateNormMap_comp_inclusion (A : Rep ℤ G)
     L.intermediateNormMap A S
         (L.intermediateNormQuotientInclusion A S q) =
       ((L.intermediateFiniteAbstractExtension S).degree : ℕ) • q := by
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K L.field L.below) := L.finite
   intro q
-  letI : (extensionSubgroup K L.field L.below).Normal := L.normal
-  letI : (extensionSubgroup (L.intermediateField S) L.field
+  let : (extensionSubgroup K L.field L.below).Normal := L.normal
+  let : (extensionSubgroup (L.intermediateField S) L.field
       (L.field_le_intermediateField S)).Normal :=
     L.extensionSubgroup_over_intermediate_normal S
-  letI : Finite ((L.intermediateField S).toSubgroup ⧸
+  let : Finite ((L.intermediateField S).toSubgroup ⧸
       extensionSubgroup (L.intermediateField S) L.field
         (L.field_le_intermediateField S)) :=
     L.extension_over_intermediate_finite S
-  letI : Finite (K.toSubgroup ⧸ extensionSubgroup K
+  let : Finite (K.toSubgroup ⧸ extensionSubgroup K
       (L.intermediateField S) (L.intermediateField_le_base S)) :=
     L.intermediateField_finite S
   refine FiniteNormQuotient.induction_on A K L.field L.below q ?_
@@ -433,13 +435,12 @@ theorem exists_cyclicIntermediateFields
           (K.toSubgroup ⧸ extensionSubgroup K
             (L.intermediateField (MonoidHom.ker (f i)))
             (L.intermediateField_le_base (MonoidHom.ker (f i))))) := by
-  let quotientGroup : Group L.extensionQuotient := inferInstance
-  letI : CommGroup L.extensionQuotient :=
-    { quotientGroup with mul_comm := fun a b => IsMulCommutative.is_comm.comm a b }
+  let : CommGroup L.extensionQuotient :=
+    open scoped IsMulCommutative in inferInstance
   obtain ⟨I, hI, m, hm, f, hf, hfaithful⟩ :=
     finiteCommGroup_exists_jointlyFaithful_cyclic_factors
       L.extensionQuotient
-  letI : Fintype I := hI
+  let : Fintype I := hI
   refine ⟨I, hI, m, hm, f, hf, hfaithful, ?_, ?_⟩
   · intro i
     let e : L.extensionQuotient ⧸ MonoidHom.ker (f i) ≃*
@@ -626,23 +627,23 @@ theorem maximalUnramified_normMap_injective
   let M := L.intermediateField S
   let hLM := L.field_le_intermediateField S
   let hMK := L.intermediateField_le_base S
-  letI : (extensionSubgroup K L.field (hLM.trans hMK)).Normal := by
+  let : (extensionSubgroup K L.field (hLM.trans hMK)).Normal := by
     simpa only using L.normal
-  letI : (extensionSubgroup K M hMK).Normal :=
+  let : (extensionSubgroup K M hMK).Normal :=
     L.intermediateField_normal S inferInstance
-  letI : Finite
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L.field (hLM.trans hMK)) := by
     simpa only using L.finite
-  letI : Finite
+  let : Finite
       (M.toSubgroup ⧸ extensionSubgroup M L.field hLM) :=
     L.extension_over_intermediate_finite S
-  letI : Finite
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K M hMK) :=
     L.intermediateField_finite S
-  letI : IsCyclic
+  let : IsCyclic
       (M.toSubgroup ⧸ extensionSubgroup M L.field hLM) :=
     L.lowerQuotient_isCyclic S
-  letI : IsCyclic
+  let : IsCyclic
       (K.toSubgroup ⧸ extensionSubgroup K M hMK) :=
     L.upperQuotient_isCyclic S
   obtain ⟨gKL, hgKL⟩ := IsCyclic.exists_generator

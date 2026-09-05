@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
 import Mathlib.Algebra.Group.Subgroup.Pointwise
 import Mathlib.Topology.Algebra.Group.Pointwise
+
+set_option autoImplicit false
 
 /-!
 # Finite abelian extensions in abstract reciprocity
@@ -163,10 +165,10 @@ def baseChange (M : FiniteAbelianSubextension K)
   commutative := by
     let P :=
       M.toFiniteGaloisExtension.baseChange L hLK
-    letI :
+    let :
         (extensionSubgroup K M.field M.below).Normal :=
       M.normal
-    letI :
+    let :
         (extensionSubgroup L P.field P.below).Normal :=
       P.normal
     refine ⟨⟨?_⟩⟩
@@ -210,9 +212,9 @@ def compositum (L₁ L₂ : FiniteAbelianSubextension K) :
   commutative := by
     let P := L₁.toFiniteGaloisExtension.compositum
       L₂.toFiniteGaloisExtension
-    letI : (extensionSubgroup K L₁.field L₁.below).Normal := L₁.normal
-    letI : (extensionSubgroup K L₂.field L₂.below).Normal := L₂.normal
-    letI : (extensionSubgroup K P.field P.below).Normal := P.normal
+    let : (extensionSubgroup K L₁.field L₁.below).Normal := L₁.normal
+    let : (extensionSubgroup K L₂.field L₂.below).Normal := L₂.normal
+    let : (extensionSubgroup K P.field P.below).Normal := P.normal
     refine ⟨⟨?_⟩⟩
     intro x y
     refine P.extensionQuotient_inductionOn
@@ -275,7 +277,7 @@ theorem field_le_normalizer (L₁ L₂ : FiniteAbelianSubextension K) :
   have hnormal :
       (L₂.field.toSubgroup.subgroupOf K.toSubgroup).Normal := by
     exact L₂.normal
-  letI : (L₂.field.toSubgroup.subgroupOf K.toSubgroup).Normal := hnormal
+  let : (L₂.field.toSubgroup.subgroupOf K.toSubgroup).Normal := hnormal
   exact L₁.below.trans
     (Subgroup.le_normalizer_of_normal_subgroupOf L₂.below)
 
@@ -316,15 +318,15 @@ def intersectionGalois (L₁ L₂ : FiniteAbelianSubextension K) :
   below := intersectionField_below L₁ L₂
   normal := by
     rw [extensionSubgroup_intersectionField]
-    letI : (extensionSubgroup K L₁.field L₁.below).Normal := L₁.normal
-    letI : (extensionSubgroup K L₂.field L₂.below).Normal := L₂.normal
+    let : (extensionSubgroup K L₁.field L₁.below).Normal := L₁.normal
+    let : (extensionSubgroup K L₂.field L₂.below).Normal := L₂.normal
     exact Subgroup.sup_normal _ _
   finite := by
     rw [extensionSubgroup_intersectionField]
-    letI : (extensionSubgroup K L₁.field L₁.below).FiniteIndex :=
+    let : (extensionSubgroup K L₁.field L₁.below).FiniteIndex :=
       @Subgroup.finiteIndex_of_finite_quotient K.toSubgroup _
         (extensionSubgroup K L₁.field L₁.below) L₁.finite
-    letI : (extensionSubgroup K L₁.field L₁.below ⊔
+    let : (extensionSubgroup K L₁.field L₁.below ⊔
         extensionSubgroup K L₂.field L₂.below).FiniteIndex :=
       Subgroup.finiteIndex_of_le le_sup_left
     exact Subgroup.finite_quotient_of_finiteIndex
@@ -335,9 +337,9 @@ def intersection (L₁ L₂ : FiniteAbelianSubextension K) :
   toFiniteGaloisExtension := intersectionGalois L₁ L₂
   commutative := by
     let P := intersectionGalois L₁ L₂
-    letI : (extensionSubgroup K L₁.field L₁.below).Normal := L₁.normal
-    letI : (extensionSubgroup K L₂.field L₂.below).Normal := L₂.normal
-    letI : (extensionSubgroup K P.field P.below).Normal := P.normal
+    let : (extensionSubgroup K L₁.field L₁.below).Normal := L₁.normal
+    let : (extensionSubgroup K L₂.field L₂.below).Normal := L₂.normal
+    let : (extensionSubgroup K P.field P.below).Normal := P.normal
     refine ⟨⟨?_⟩⟩
     intro x y
     refine P.extensionQuotient_inductionOn
@@ -415,11 +417,11 @@ an inclusion of fields gives the reverse inclusion of norm subgroups. -/
 theorem normSubgroup_antitone (A : Rep ℤ G)
     {L₁ L₂ : FiniteAbelianSubextension K} (h : L₁ ≤ L₂) :
     normSubgroup A L₂ ≤ normSubgroup A L₁ := by
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K L₂.field L₂.below) := L₂.finite
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K L₁.field L₁.below) := L₁.finite
-  letI hL₂L₁finite : Finite (L₁.field.toSubgroup ⧸
+  let hL₂L₁finite : Finite (L₁.field.toSubgroup ⧸
       extensionSubgroup L₁.field L₂.field h) :=
     FiniteGaloisSubextension.finite_extension_over_intermediate
       L₂.below L₁.below h

@@ -1,7 +1,14 @@
-import AlgebraicNumberTheory.Completion.AdicCompletionMap
-import AlgebraicNumberTheory.Completion.Comparison
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionMap
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.Comparison
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.IdeleSupport
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Localization
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.AbsoluteValue
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.FinitePlaceCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
 import Mathlib.NumberTheory.RamificationInertia.Valuation
+
+set_option autoImplicit false
 
 /-!
 # Comparing the exact-extension and concrete adic-completion maps
@@ -181,35 +188,35 @@ theorem finitePlaceAdicCompletionMap_moduleFinite
   let vK := HeightOneSpectrum.adicAbv K w
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial w
-  letI : Algebra
+  let : Algebra
       (w.adicCompletion K)
       ((finitePlaceExtensionEquivAbove
         (K := K) (L := L) w a).1.adicCompletion L) :=
     (finitePlaceAdicCompletionMap K L w
       (finitePlaceExtensionEquivAbove
         (K := K) (L := L) w a)).toAlgebra
-  letI : Module
+  let : Module
       (w.adicCompletion K)
       ((finitePlaceExtensionEquivAbove
         (K := K) (L := L) w a).1.adicCompletion L) :=
     Algebra.toModule
-  letI : Algebra (w.adicCompletion K) vK.Completion :=
+  let : Algebra (w.adicCompletion K) vK.Completion :=
     (relativeFinitePlaceCompletionAlgEquiv w).symm.toRingHom.toAlgebra
-  letI : Algebra vK.Completion a.1.Completion :=
+  let : Algebra vK.Completion a.1.Completion :=
     AbsoluteValue.completionAlgebra vK a.1 a.2
-  letI : Algebra (w.adicCompletion K) a.1.Completion :=
+  let : Algebra (w.adicCompletion K) a.1.Completion :=
     ((algebraMap vK.Completion a.1.Completion).comp
       (relativeFinitePlaceCompletionAlgEquiv w).symm.toRingHom).toAlgebra
-  letI : IsScalarTower
+  let : IsScalarTower
       (w.adicCompletion K) vK.Completion a.1.Completion :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : Module.Finite (w.adicCompletion K) vK.Completion :=
+  let : Module.Finite (w.adicCompletion K) vK.Completion :=
     Module.Finite.of_surjective
       (Algebra.linearMap (w.adicCompletion K) vK.Completion)
       (relativeFinitePlaceCompletionAlgEquiv w).symm.surjective
-  letI : Module.Finite vK.Completion a.1.Completion :=
+  let : Module.Finite vK.Completion a.1.Completion :=
     completionModuleFinite vK hvK a
-  letI : Module.Finite (w.adicCompletion K) a.1.Completion :=
+  let : Module.Finite (w.adicCompletion K) a.1.Completion :=
     Module.Finite.trans vK.Completion a.1.Completion
   let e :
       a.1.Completion ≃ₐ[w.adicCompletion K]
@@ -297,7 +304,7 @@ theorem finitePlaceExtensionAdicCompletionMap_valued
   let W :=
     finitePlaceExtensionCentre
       (K := K) (L := L) w a
-  letI : W.asIdeal.LiesOver w.asIdeal :=
+  let : W.asIdeal.LiesOver w.asIdeal :=
     finitePlaceExtensionCentre_liesOver
       (K := K) (L := L) w a
   by_cases hx : x = 0

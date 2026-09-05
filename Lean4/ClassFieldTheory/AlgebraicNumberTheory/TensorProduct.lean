@@ -2,6 +2,8 @@ import Mathlib.FieldTheory.LinearDisjoint
 import Mathlib.LinearAlgebra.Dimension.Constructions
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 
+set_option autoImplicit false
+
 /-!
 # Coprime tensor-product base change of a Galois extension
 
@@ -111,12 +113,12 @@ theorem tensorProduct_isGalois_of_finrank_coprime
         K M L hcoprime).toField
     IsGalois M (M ⊗[K] L) := by
   let N := M ⊗[K] L
-  letI : Field N :=
+  let : Field N :=
     (tensorProduct_isField_of_finrank_coprime
       K M L hcoprime).toField
   have hfinite : FiniteDimensional M N := by
     exact Module.Finite.of_restrictScalars_finite K M N
-  letI : FiniteDimensional M N := hfinite
+  let : FiniteDimensional M N := hfinite
   have hlow :
       Nat.card (L ≃ₐ[K] L) ≤
         Nat.card (N ≃ₐ[M] N) :=

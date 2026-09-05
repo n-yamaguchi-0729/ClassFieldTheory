@@ -1,15 +1,19 @@
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.NumberTheory.Cyclotomic.Basic
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
-import LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-import LocalClassFieldTheory.Finite.LocalReciprocity.LocalClassFieldAxiom
-import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
-import LocalFieldTheory.NonarchimedeanLocalField.StandardOpenSubgroups
-import LocalFieldTheory.NonarchimedeanLocalField.NormSubgroupFunctoriality
-import LocalClassFieldTheory.Finite.Existence.OrderReversal
-import LocalClassFieldTheory.Finite.CyclotomicNorm
-import KummerTheory.Concrete.CyclotomicField
-import RamificationTheory.HilbertRamification.PadicLocalization
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.LocalClassFieldAxiom
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormSubgroupFunctoriality
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
+import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.StandardSubgroup
+import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.Unramified
+import GaloisCohomology.Kummer.Concrete.CyclotomicField
+import ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
+
+set_option autoImplicit false
 
 /-!
 # Local cyclotomic embeddings for the global construction
@@ -44,7 +48,7 @@ theorem exists_pPowerCyclotomicEmbedding_of_padicPrime_mem_normSubgroup
         IsPrimitiveRoot ζ (p ^ n) ∧
           Algebra.adjoin ℚ_[p] ({ζ} : Set _) = ⊤ ∧
           Nonempty (L →ₐ[ℚ_[p]] CyclotomicField (p ^ n) ℚ_[p]) := by
-  letI : IsNonarchimedeanLocalField ℚ_[p] :=
+  let : IsNonarchimedeanLocalField ℚ_[p] :=
     { toIsValuativeTopology := padicIsValuativeTopology p
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
@@ -52,13 +56,13 @@ theorem exists_pPowerCyclotomicEmbedding_of_padicPrime_mem_normSubgroup
     exists_uniformizerPrincipalSubgroup_one_le_normSubgroup
       ℚ_[p] L (padicPrimeUnit p) hpNorm
   have hpnpos : 0 < p ^ n := pow_pos (Fact.out : Nat.Prime p).pos n
-  letI : NeZero (p ^ n) := ⟨Nat.ne_of_gt hpnpos⟩
+  let : NeZero (p ^ n) := ⟨Nat.ne_of_gt hpnpos⟩
   let C := CyclotomicField (p ^ n) ℚ_[p]
-  letI : IsCyclotomicExtension {p ^ n} ℚ_[p] C :=
+  let : IsCyclotomicExtension {p ^ n} ℚ_[p] C :=
     CyclotomicField.isCyclotomicExtension (p ^ n) ℚ_[p]
-  letI : FiniteDimensional ℚ_[p] C :=
+  let : FiniteDimensional ℚ_[p] C :=
     IsCyclotomicExtension.finiteDimensional {p ^ n} ℚ_[p] C
-  letI : IsAbelianGalois ℚ_[p] C :=
+  let : IsAbelianGalois ℚ_[p] C :=
     IsCyclotomicExtension.isAbelianGalois {p ^ n} ℚ_[p] C
   obtain ⟨ζ, hζ, hgen⟩ :=
     exists_primitiveRoot_adjoin_eq_top_cyclotomicField ℚ_[p] (p ^ n) hpnpos
@@ -99,7 +103,7 @@ theorem exists_structuredLocalCyclotomicEmbedding
           Nonempty
             (L →ₐ[ℚ_[p]]
               CyclotomicField ((p ^ f - 1) * p ^ n) ℚ_[p]) := by
-  letI : IsNonarchimedeanLocalField ℚ_[p] :=
+  let : IsNonarchimedeanLocalField ℚ_[p] :=
     { toIsValuativeTopology := padicIsValuativeTopology p
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
@@ -111,31 +115,31 @@ theorem exists_structuredLocalCyclotomicEmbedding
   have huPos : 0 < p ^ f - 1 := Nat.sub_pos_of_lt hpf
   have hrPos : 0 < p ^ n := pow_pos (Fact.out : Nat.Prime p).pos n
   have hmPos : 0 < (p ^ f - 1) * p ^ n := mul_pos huPos hrPos
-  letI : NeZero (p ^ f - 1) := ⟨huPos.ne'⟩
-  letI : NeZero (p ^ n) := ⟨hrPos.ne'⟩
-  letI : NeZero ((p ^ f - 1) * p ^ n) := ⟨hmPos.ne'⟩
+  let : NeZero (p ^ f - 1) := ⟨huPos.ne'⟩
+  let : NeZero (p ^ n) := ⟨hrPos.ne'⟩
+  let : NeZero ((p ^ f - 1) * p ^ n) := ⟨hmPos.ne'⟩
 
   let U := CyclotomicField (p ^ f - 1) ℚ_[p]
   let C := CyclotomicField (p ^ n) ℚ_[p]
   let D := CyclotomicField ((p ^ f - 1) * p ^ n) ℚ_[p]
-  letI : IsCyclotomicExtension {p ^ f - 1} ℚ_[p] U :=
+  let : IsCyclotomicExtension {p ^ f - 1} ℚ_[p] U :=
     CyclotomicField.isCyclotomicExtension (p ^ f - 1) ℚ_[p]
-  letI : IsCyclotomicExtension {p ^ n} ℚ_[p] C :=
+  let : IsCyclotomicExtension {p ^ n} ℚ_[p] C :=
     CyclotomicField.isCyclotomicExtension (p ^ n) ℚ_[p]
-  letI : IsCyclotomicExtension {(p ^ f - 1) * p ^ n} ℚ_[p] D :=
+  let : IsCyclotomicExtension {(p ^ f - 1) * p ^ n} ℚ_[p] D :=
     CyclotomicField.isCyclotomicExtension ((p ^ f - 1) * p ^ n) ℚ_[p]
-  letI : FiniteDimensional ℚ_[p] U :=
+  let : FiniteDimensional ℚ_[p] U :=
     IsCyclotomicExtension.finiteDimensional {p ^ f - 1} ℚ_[p] U
-  letI : FiniteDimensional ℚ_[p] C :=
+  let : FiniteDimensional ℚ_[p] C :=
     IsCyclotomicExtension.finiteDimensional {p ^ n} ℚ_[p] C
-  letI : FiniteDimensional ℚ_[p] D :=
+  let : FiniteDimensional ℚ_[p] D :=
     IsCyclotomicExtension.finiteDimensional
       {(p ^ f - 1) * p ^ n} ℚ_[p] D
-  letI : IsAbelianGalois ℚ_[p] U :=
+  let : IsAbelianGalois ℚ_[p] U :=
     IsCyclotomicExtension.isAbelianGalois {p ^ f - 1} ℚ_[p] U
-  letI : IsAbelianGalois ℚ_[p] C :=
+  let : IsAbelianGalois ℚ_[p] C :=
     IsCyclotomicExtension.isAbelianGalois {p ^ n} ℚ_[p] C
-  letI : IsAbelianGalois ℚ_[p] D :=
+  let : IsAbelianGalois ℚ_[p] D :=
     IsCyclotomicExtension.isAbelianGalois
       {(p ^ f - 1) * p ^ n} ℚ_[p] D
 
@@ -235,10 +239,10 @@ noncomputable def globalPadicLocalizationCyclotomicAlgHom
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
   letI hE : Field E := inferInstance
   letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p
+  let e := padicAbsoluteValueCompletionRingEquiv p
   letI : Algebra ℚ_[p] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
   exact E →ₐ[ℚ_[p]] CyclotomicField m ℚ_[p]
 
 /-- Structured version of the local cyclotomic-embedding assertion.  It
@@ -253,10 +257,10 @@ noncomputable def globalPadicLocalizationStructuredCyclotomicEmbeddingProperty
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
   letI hE : Field E := inferInstance
   letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p
+  let e := padicAbsoluteValueCompletionRingEquiv p
   letI hQpE : Algebra ℚ_[p] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
   exact ∃ f n : ℕ, 0 < f ∧ 1 ≤ n ∧
     Nonempty
       (E →ₐ[ℚ_[p]]
@@ -272,38 +276,38 @@ theorem globalPadicLocalization_structuredCyclotomicEmbedding
     (w : AbsoluteValueExtension (Rat.AbsoluteValue.padic p) L) :
     globalPadicLocalizationStructuredCyclotomicEmbeddingProperty p L w := by
   let vK := Rat.AbsoluteValue.padic p
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
-  letI : SMul ℚ w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
+  let : SMul ℚ w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
-  letI hE : Field E := inferInstance
-  letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p
-  letI hQpE : Algebra ℚ_[p] E :=
+  let hE : Field E := inferInstance
+  let hBaseE : Algebra vK.Completion E := inferInstance
+  let e := padicAbsoluteValueCompletionRingEquiv p
+  let hQpE : Algebra ℚ_[p] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
   change ∃ f n : ℕ, 0 < f ∧ 1 ≤ n ∧
     Nonempty
       (E →ₐ[ℚ_[p]]
         CyclotomicField ((p ^ f - 1) * p ^ n) ℚ_[p])
-  letI : Module.Finite vK.Completion E :=
+  let : Module.Finite vK.Completion E :=
     globalPadicLocalizationModuleFinite p L w
-  letI : IsAbelianGalois vK.Completion E :=
+  let : IsAbelianGalois vK.Completion E :=
     globalPadicLocalization_isAbelianGalois p L w
-  letI : Algebra ℚ_[p] vK.Completion := e.symm.toAlgHom.toAlgebra
-  letI : IsScalarTower ℚ_[p] vK.Completion E :=
+  let : Algebra ℚ_[p] vK.Completion := e.symm.toRingHom.toAlgebra
+  let : IsScalarTower ℚ_[p] vK.Completion E :=
     IsScalarTower.of_algebraMap_eq' (by
       ext x
-      rfl)
-  letI : Module.Finite ℚ_[p] vK.Completion :=
+      exact transportedAlgebraAlongRingEquiv_algebraMap e x)
+  let : Module.Finite ℚ_[p] vK.Completion :=
     FiniteDimensional.of_surjective
       (Algebra.linearMap ℚ_[p] vK.Completion) e.symm.surjective
-  letI : Module.Finite ℚ_[p] E :=
+  let : Module.Finite ℚ_[p] E :=
     Module.Finite.trans vK.Completion E
-  letI : IsGalois ℚ_[p] E := by
+  let : IsGalois ℚ_[p] E := by
     apply IsGalois.of_equiv_equiv
       (F := vK.Completion) (E := E) (M := ℚ_[p]) (N := E)
-      (f := e.toRingEquiv) (g := RingEquiv.refl E)
+      (f := e) (g := RingEquiv.refl E)
     apply RingHom.ext
     intro x
     simp only [RingHom.comp_apply]
@@ -327,7 +331,7 @@ theorem globalPadicLocalization_structuredCyclotomicEmbedding
           σ (@algebraMap ℚ_[p] E _ hE.toSemiring hQpE q) =
             @algebraMap ℚ_[p] E _ hE.toSemiring hQpE q
         exact σ.commutes q }
-  letI : IsAbelianGalois ℚ_[p] E :=
+  let : IsAbelianGalois ℚ_[p] E :=
     { is_comm.comm := fun σ τ ↦
         AlgEquiv.ext fun x ↦ by
           have h := DFunLike.congr_fun

@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.MaximalUnramifiedSymbol
-import AbstractClassFieldTheory.Reciprocity.Main
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.MaximalUnramifiedSymbol
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 /-!
 # Abstract reciprocity, maximal-unramified reciprocity
@@ -42,7 +44,7 @@ theorem maximalUnramifiedNormResidueSymbol_finiteRestriction
       (v.unramifiedReciprocityEquiv hAxiom
         K L.field L.below hUnramified).symm
         (finiteNormClass A K.field L.field L.below a) := by
-  letI : Finite (K.field.toSubgroup ⧸
+  let : Finite (K.field.toSubgroup ⧸
       extensionSubgroup K.field L.field L.below) := L.finite
   intro a
   exact (maximalUnramifiedNormResidueSymbol_finiteRestriction_of_generator v hAxiom
@@ -72,7 +74,7 @@ theorem normResidueSymbol_finiteNormClass_eq_maximalUnramifiedRestriction
           (DegreeData.finiteUnramifiedRestriction D
             (K.toFiniteResidueAbstractField D) L hUnramified
             (maximalUnramifiedNormResidueSymbol v K a).toMul)) := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   let hAxiom :=
@@ -103,10 +105,12 @@ theorem normResidueSymbol_finiteNormClass_eq_maximalUnramifiedRestriction
       _ = _ :=
         (v.unramifiedReciprocityEquiv hAxiom
           K L.field L.below hUnramified).apply_symm_apply _
-  rw [v.unramifiedReciprocityEquiv_apply] at hreciprocity
-  rw [← hreciprocity]
-  exact D.normResidueSymbol_finiteReciprocityHom
-    A v hcf K L q
+  have hfinite : D.finiteReciprocityHom A v hAxiom K L.field L.below
+        (Additive.ofMul q) = finiteNormClass A K.field L.field L.below a :=
+    (v.unramifiedReciprocityEquiv_apply hAxiom K L.field L.below hUnramified
+      (Additive.ofMul q)).symm.trans hreciprocity
+  exact (congrArg (D.normResidueSymbol A v hcf K L) hfinite.symm).trans
+    (D.normResidueSymbol_finiteReciprocityHom A v hcf K L q)
 
 end ValuationData
 

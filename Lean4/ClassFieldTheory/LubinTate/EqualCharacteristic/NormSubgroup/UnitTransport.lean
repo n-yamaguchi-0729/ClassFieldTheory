@@ -1,8 +1,10 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNorm
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnits
-import LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizerNormalization
-import LocalFieldTheory.NonarchimedeanLocalField.StandardOpenSubgroups
-import LocalFieldTheory.NonarchimedeanLocalField.UnitTopology
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNorm
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnits
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizerNormalization
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: power-series units as Laurent field units
@@ -128,7 +130,7 @@ theorem equalCharacteristicPowerSeriesUnitToLaurentFieldUnit_range
       equalCharacteristicLaurentValuativeRel F
     MonoidHom.range (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F) =
       LocalFieldTheory.localBaseUnitSubgroup F.residueField⸨X⸩ := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   let e := equalCharacteristicPowerSeriesUnitsEquivLaurentInteger
     F.residueField
@@ -152,7 +154,7 @@ theorem equalCharacteristicLubinTateHigherUnitSubgroup_map_toLaurentField_eq
     (equalCharacteristicLubinTateHigherUnitSubgroup F n).map
         (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F) =
       LocalFieldTheory.fieldPrincipalUnits F.residueField⸨X⸩ (n + 1) := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   simpa only [equalCharacteristicPowerSeriesUnitToLaurentFieldUnit,
     Subgroup.map_map] using

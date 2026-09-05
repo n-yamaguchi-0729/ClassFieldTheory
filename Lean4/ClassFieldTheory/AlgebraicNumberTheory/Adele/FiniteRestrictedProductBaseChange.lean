@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Completion.Comparison
-import AlgebraicNumberTheory.Adele.RestrictedProduct
-import AlgebraicNumberTheory.Idele.Relative.SPlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.Comparison
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedProduct
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.SPlaces
+
+set_option autoImplicit false
 
 /-!
 # Finite restricted products under scalar extension
@@ -92,23 +94,25 @@ theorem finitePlaceTensorUnitsEquivAboveAdic_apply_extension
             (K := K) (L := L) w u).toMulEquiv
         (finitePlaceLocalTensorDecompositionUnitsComponent
           (K := K) (L := L) w u x) := by
-  change
-    Equiv.piCongrLeft
-        (fun W : {W : HeightOneSpectrum (𝓞 L) //
-            finitePlaceBelow (K := K) W = w} =>
-          (W.1.adicCompletion L)ˣ)
-        (finitePlaceExtensionEquivAbove
-          (K := K) (L := L) w)
-        (fun u =>
-          Units.mapEquiv
-              (finitePlaceExtensionAdicCompletionRingEquiv
-                (K := K) (L := L) w u).toMulEquiv
-            (finitePlaceLocalTensorDecompositionUnitsEquiv
-              (K := K) (L := L) w x u))
-        (finitePlaceExtensionEquivAbove
-          (K := K) (L := L) w u) = _
-  rw [Equiv.piCongrLeft_apply_apply,
-    finitePlaceLocalTensorDecompositionUnitsEquiv_apply]
+  let P :=
+    fun W : {W : HeightOneSpectrum (𝓞 L) //
+        finitePlaceBelow (K := K) W = w} =>
+      (W.1.adicCompletion L)ˣ
+  let e := finitePlaceExtensionEquivAbove (K := K) (L := L) w
+  let f : ∀ a, P (e a) := fun a =>
+    Units.mapEquiv
+        (finitePlaceExtensionAdicCompletionRingEquiv
+          (K := K) (L := L) w a).toMulEquiv
+      (finitePlaceLocalTensorDecompositionUnitsEquiv
+        (K := K) (L := L) w x a)
+  exact
+    (Equiv.piCongrLeft_apply_apply P e f u).trans
+      (congrArg
+        (Units.mapEquiv
+          (finitePlaceExtensionAdicCompletionRingEquiv
+            (K := K) (L := L) w u).toMulEquiv)
+        (finitePlaceLocalTensorDecompositionUnitsEquiv_apply
+          (K := K) (L := L) w x u))
 
 /-- On a diagonal extension-field unit, the finite local
 relative-to-ordinary comparison is the ordinary diagonal embedding. -/
@@ -314,7 +318,7 @@ theorem eventually_finitePlace_iff_eventually_all_above
     apply Filter.eventually_cofinite.mpr
     apply himage.subset
     intro w hw
-    simp only [Set.mem_setOf_eq] at hw
+    simp only [Set.mem_ofPred_eq] at hw
     rw [Set.mem_image]
     push Not at hw
     rcases hw with ⟨W, hW⟩
@@ -323,7 +327,7 @@ theorem eventually_finitePlace_iff_eventually_all_above
     have hfibre (w : HeightOneSpectrum (𝓞 K)) :
         Finite {W : HeightOneSpectrum (𝓞 L) //
           finitePlaceBelow (K := K) W = w} := by
-      letI : Fintype
+      let : Fintype
           (AbsoluteValueExtension
             (HeightOneSpectrum.adicAbv K w) L) :=
         completionTensorDecomposition_extensionFintype

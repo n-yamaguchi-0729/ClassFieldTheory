@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.ResidueActionIndex
-import ValuationTheory.DiscreteValuationField.FiniteIntegralClosure
-import RamificationTheory.GaloisValuation.AbsoluteGalois.FiniteExtensionCorrespondence
-import LocalFieldTheory.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueActionIndex
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
+import ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.FiniteExtensionCorrespondence
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -112,24 +114,24 @@ theorem localSeparableValuationSubring_eq_of_hasExtension
   ext z
   let E : IntermediateField K (SeparableClosure K) :=
     IntermediateField.adjoin K ({z} : Set (SeparableClosure K))
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     IntermediateField.adjoin.finiteDimensional
       (Algebra.IsIntegral.isIntegral z)
-  letI : Algebra.IsSeparable K E := inferInstance
+  let : Algebra.IsSeparable K E := inferInstance
   obtain ⟨target, hExt, _hIntegralClosure, _hFundamental⟩ :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.exists_integralClosure_standard_fundamental_identity
       (K := K) (L := E) (localCompleteDVF K)
-  letI : (localCompleteDVF K).valuation.HasExtension target.valuation := hExt
-  letI : IsScalarTower (localCompleteDVF K).valuationSubring
+  let : (localCompleteDVF K).valuation.HasExtension target.valuation := hExt
+  let : IsScalarTower (localCompleteDVF K).valuationSubring
       target.valuationSubring E :=
     ValuationTheory.DiscreteValuationField.Valuation.valuationSubring_isScalarTower_of_hasExtension
       (localCompleteDVF K).valuation target.valuation
   let Ares := (localSeparableValuationSubring K).restrictIntermediateField E
   let Bres := B.restrictIntermediateField E
-  letI : (localCompleteDVF K).valuation.HasExtension Ares.valuation :=
+  let : (localCompleteDVF K).valuation.HasExtension Ares.valuation :=
     RamificationTheory.ValuationSubring.restrictIntermediateField_hasExtension
       (localCompleteDVF K).valuation (localSeparableValuationSubring K) E
-  letI : (localCompleteDVF K).valuation.HasExtension Bres.valuation :=
+  let : (localCompleteDVF K).valuation.HasExtension Bres.valuation :=
     RamificationTheory.ValuationSubring.restrictIntermediateField_hasExtension
       (localCompleteDVF K).valuation B E
   have hA : target.valuation.valuationSubring = Ares :=
@@ -153,7 +155,7 @@ theorem localSeparableDecompositionGroup_eq_top :
   intro sigma _hsigma
   change sigma • localSeparableValuationSubring K =
     localSeparableValuationSubring K
-  letI : (localCompleteDVF K).valuation.HasExtension
+  let : (localCompleteDVF K).valuation.HasExtension
       (sigma • localSeparableValuationSubring K).valuation :=
     RamificationTheory.ValuationSubring.smul_hasExtension
       (localCompleteDVF K).valuation (localSeparableValuationSubring K) sigma
@@ -240,7 +242,7 @@ theorem localBaseResidueEquivDecompositionResidue_algebraMap
 noncomputable instance localDecompositionResidueFinite :
     Finite (decompositionResidueField K
       (localSeparableValuationSubring K)) := by
-  haveI : Finite (localCompleteDVF K).residueField := by
+  have : Finite (localCompleteDVF K).residueField := by
     change Finite 𝓀[K]
     infer_instance
   exact Finite.of_equiv (localCompleteDVF K).residueField
@@ -260,29 +262,29 @@ instance localSelectedResidueIsAlgClosed :
   let B := localSeparableValuationSubring K
   let barI := valuationSubringComapResidueMap
     (F := SeparableClosure K) A
-  letI : Algebra (selectedResidueField B) (selectedResidueField A) :=
+  let : Algebra (selectedResidueField B) (selectedResidueField A) :=
     barI.toAlgebra
-  letI : IsPurelyInseparable (SeparableClosure K) (AlgebraicClosure K) :=
+  let : IsPurelyInseparable (SeparableClosure K) (AlgebraicClosure K) :=
     separableClosure.isPurelyInseparable K (AlgebraicClosure K)
-  letI : IsPurelyInseparable (selectedResidueField B)
+  let : IsPurelyInseparable (selectedResidueField B)
       (selectedResidueField A) :=
     valuationSubring_comap_residueField_isPurelyInseparable
       (F := SeparableClosure K) A
-  letI : PerfectField (decompositionResidueField K B) := inferInstance
-  letI : Algebra.IsAlgebraic (decompositionResidueField K B)
+  let : PerfectField (decompositionResidueField K B) := inferInstance
+  let : Algebra.IsAlgebraic (decompositionResidueField K B)
       (selectedResidueField B) := inferInstance
-  letI : PerfectField (selectedResidueField B) :=
+  let : PerfectField (selectedResidueField B) :=
     Algebra.IsAlgebraic.perfectField
       (K := decompositionResidueField K B)
       (L := selectedResidueField B)
-  letI : Algebra.IsSeparable (selectedResidueField B)
+  let : Algebra.IsSeparable (selectedResidueField B)
       (selectedResidueField A) := inferInstance
   have hsurjective : Function.Surjective barI :=
     IsPurelyInseparable.surjective_algebraMap_of_isSeparable
       (selectedResidueField B) (selectedResidueField A)
   let e : selectedResidueField B ≃+* selectedResidueField A :=
     RingEquiv.ofBijective barI ⟨barI.injective, hsurjective⟩
-  letI : IsAlgClosed (selectedResidueField A) :=
+  let : IsAlgClosed (selectedResidueField A) :=
     valuationSubring_residueField_isAlgClosed A
   exact IsAlgClosed.of_ringEquiv (selectedResidueField A)
     (selectedResidueField B) e.symm
@@ -323,18 +325,17 @@ private theorem localSeparableResidueAlgAction_continuous :
   rw [Filter.mem_map]
   rcases (krullTopology_mem_nhds_one_iff k Omega s).1 hs with
     ⟨E, hE, hEs⟩
-  letI : Algebra k E := E.algebra
-  letI : Module k E := Algebra.toModule
-  letI : FiniteDimensional k E := hE
-  letI : Finite E := Module.finite_of_finite
+  let : Algebra k E := E.algebra
+  let : FiniteDimensional k E := hE
+  let : Finite E := Module.finite_of_finite
     (decompositionResidueField K (localSeparableValuationSubring K))
-  letI : Fintype E := Fintype.ofFinite E
+  let : Fintype E := Fintype.ofFinite E
   let lifts : Finset (SeparableClosure K) :=
     Finset.univ.image (fun x : E =>
       ((localSelectedResidueLift K (x : Omega) : A) : SeparableClosure K))
   let F : IntermediateField K (SeparableClosure K) :=
     IntermediateField.adjoin K (lifts : Set (SeparableClosure K))
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     IntermediateField.finiteDimensional_adjoin (fun x _hx =>
       Algebra.IsIntegral.isIntegral x)
   refine (krullTopology_mem_nhds_one_iff K (SeparableClosure K)

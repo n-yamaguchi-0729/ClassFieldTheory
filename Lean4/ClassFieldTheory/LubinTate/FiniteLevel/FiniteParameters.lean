@@ -1,6 +1,8 @@
-import LubinTate.FiniteLevel.PrimitiveAction
-import LocalFieldTheory.DiscreteValuationField.PrincipalUnits
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveAction
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.Core
 import Mathlib.GroupTheory.Coset.Card
+
+set_option autoImplicit false
 
 /-!
 # Finite unit parameters for standard Lubin--Tate levels

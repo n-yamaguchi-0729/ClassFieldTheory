@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Infinite.AbsoluteArtin
-import LocalFieldTheory.NonarchimedeanLocalField.NormSubgroupFunctoriality
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteArtin
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormSubgroupFunctoriality
+
+set_option autoImplicit false
 
 /-!
 # Finite reciprocity as an isomorphism of diagrams
@@ -134,14 +136,14 @@ theorem absoluteFiniteNormSubgroup_mono
   let F := absoluteFiniteQuotientField K N
   let hEF : E ≤ F :=
     absoluteFiniteQuotientField_antitone (K := K) hNM
-  letI EAlgebra : Algebra E F :=
+  let EAlgebra : Algebra E F :=
     RingHom.toAlgebra (IntermediateField.inclusion hEF).toRingHom
-  letI : SMul E F :=
+  let : SMul E F :=
     @Algebra.toSMul _ _ _ _ EAlgebra
-  letI : Module E F :=
+  let : Module E F :=
     @Algebra.toModule _ _ _ _ EAlgebra
-  letI : IsScalarTower K E F := IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional E F := FiniteDimensional.right K E F
+  let : IsScalarTower K E F := IsScalarTower.of_algebraMap_eq' rfl
+  let : FiniteDimensional E F := FiniteDimensional.right K E F
   change localNormSubgroup K F ≤ localNormSubgroup K E
   exact LocalFieldTheory.normSubgroup_le_of_tower K E F
 
@@ -252,15 +254,25 @@ isomorphism from norm quotients to finite absolute Galois quotients. -/
 noncomputable def finiteArtinQuotientNaturalIso :
     normQuotientDiagram K ≅ absoluteFiniteQuotientDiagram K :=
   NatIso.ofComponents
-    (fun N => ProfiniteGrp.ContinuousMulEquiv.toProfiniteGrpIso
-      (absoluteFiniteArtinQuotientEquiv K N))
+    (fun N => by
+      let e :
+          ((normQuotientDiagram K).obj N : Type) ≃ₜ*
+            ((absoluteFiniteQuotientDiagram K).obj N : Type) :=
+        { (absoluteFiniteArtinQuotientEquiv K N) with
+          continuous_toFun := by
+            change Continuous (absoluteFiniteArtinQuotientEquiv K N)
+            exact (absoluteFiniteArtinQuotientEquiv K N).continuous
+          continuous_invFun := by
+            change Continuous (absoluteFiniteArtinQuotientEquiv K N).symm
+            exact (absoluteFiniteArtinQuotientEquiv K N).symm.continuous }
+      exact ProfiniteGrp.ContinuousMulEquiv.toProfiniteGrpIso e)
     (fun {N M} f => by
       apply ProfiniteGrp.hom_ext
       apply ContinuousMonoidHom.ext
       intro x
       refine QuotientGroup.induction_on x ?_
       intro a
-      simp only [ProfiniteGrp.comp_apply]
+      simp only
       change absoluteFiniteArtinQuotientEquiv K M
           (normQuotientTransition K (leOfHom f)
             (normClass K

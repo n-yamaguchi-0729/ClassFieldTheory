@@ -1,5 +1,7 @@
-import KroneckerWeber.GlobalCompositumLocalizationEmbedding
-import KroneckerWeber.GlobalPadicPrimePowInertiaBound
+import ClassFieldTheory.KroneckerWeber.GlobalCompositumLocalizationEmbedding
+import ClassFieldTheory.KroneckerWeber.GlobalPadicPrimePowInertiaBound
+
+set_option autoImplicit false
 
 /-!
 # The fixed-conductor local inertia bound for the auxiliary compositum

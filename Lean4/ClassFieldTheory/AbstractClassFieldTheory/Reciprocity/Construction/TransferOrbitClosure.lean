@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Degree.TopologicalGeneration
+import GaloisCohomology.ProfiniteIntegers.TopologicalGeneration
 import Mathlib.GroupTheory.Transfer
 import Mathlib.Topology.Algebra.Group.ClosedSubgroup
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -46,7 +48,7 @@ theorem closedSubgroupGenerated_pow_eq_inf_stabilizer
     change IsClosed ((fun y : Q => t⁻¹ * y * t) ⁻¹' (H : Set Q))
     simpa only [inv_inv] using
       hHclosed.preimage (IsTopologicalGroup.continuous_conj t⁻¹)
-  letI : V.FiniteIndex := by
+  let : V.FiniteIndex := by
     rw [Subgroup.finiteIndex_iff, hVeq,
       Subgroup.index_map_of_bijective (MulAut.conj t).bijective H]
     exact Subgroup.FiniteIndex.index_ne_zero

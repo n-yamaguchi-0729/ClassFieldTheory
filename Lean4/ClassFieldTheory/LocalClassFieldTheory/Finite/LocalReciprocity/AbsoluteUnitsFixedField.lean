@@ -1,6 +1,8 @@
-import RamificationTheory.GaloisValuation.ClosedFixingSubgroup
-import KummerTheory.Abstract.KummerDelta
+import ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
+import GaloisCohomology.Kummer.Abstract.KummerDelta
 import Mathlib.RepresentationTheory.Rep.Basic
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 

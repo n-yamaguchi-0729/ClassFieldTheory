@@ -1,19 +1,21 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
-import GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
-import GlobalClassFieldTheory.Reciprocity.HilbertProductFormula
-import AlgebraicNumberTheory.PowerResidueSymbols.Ideal
-import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormula
+import ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.Ideal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import LocalFieldTheory.DiscreteValuationField.PadicField
-import AlgebraicNumberTheory.QuadraticReciprocity
-import AlgebraicNumberTheory.RayClass.Rational
-import LocalClassFieldTheory.Kummer.PowerResidueTameFormula
-import LocalFieldTheory.NonarchimedeanLocalField.IdealQuotients
-import AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
-import ValuationTheory.Completion.ExtensionInvariants
-import KummerTheory.Concrete.SimpleExtensionLocalBehavior
-import KummerTheory.Concrete.SUnitPreparation.FiniteRadicalSupport
-import LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+import ClassFieldTheory.AlgebraicNumberTheory.QuadraticReciprocity
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+import ClassFieldTheory.LocalClassFieldTheory.Kummer.PowerResidueTameFormula
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ValuedFieldTheory.Valuation.Completion.ExtensionInvariants
+import ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.FiniteRadicalSupport
+import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
+
+set_option autoImplicit false
 
 /-!
 # Bad-place support and correction for power-residue reciprocity
@@ -49,7 +51,7 @@ private theorem canonicalValuation_eq_of_valuation_eq
     (v : Valuation R Γ) (x y : R) (hxy : v x = v y) :
     letI : ValuativeRel R := ValuativeRel.ofValuation v
     ValuativeRel.valuation R x = ValuativeRel.valuation R y := by
-  letI : ValuativeRel R := ValuativeRel.ofValuation v
+  let : ValuativeRel R := ValuativeRel.ofValuation v
   change
     ValuativeRel.ValueGroupWithZero.mk x 1 =
       ValuativeRel.ValueGroupWithZero.mk y 1
@@ -351,9 +353,9 @@ theorem finitePlaceHilbert_completionUnit_primeAvoidingIntegralFieldUnit
       integerUnitsToFieldUnits C
         (finitePlaceIntegralCompletionUnit K v x hx) := by
   let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   dsimp only
   apply Units.ext
@@ -531,7 +533,7 @@ theorem finitePlace_natCast_valuation_eq_one_of_not_mem_exponent
       finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
     ValuativeRel.valuation C ((n : ℕ) : C) = 1 := by
   dsimp only
-  letI : IsUltrametricDist
+  let : IsUltrametricDist
       (HeightOneSpectrum.adicAbv K v).Completion :=
     finitePlaceArtinCompletionIsUltrametricDist
       (HeightOneSpectrum.adicAbv K v)
@@ -558,7 +560,7 @@ theorem finitePlace_natCast_valuation_eq_one_of_not_mem_exponent
         (NumberField.FinitePlace.norm_eq_one_iff_notMem K v
           (((n : ℕ) : 𝓞 K))).2 hvNotMem
   let vCNorm := NormedField.valuation (K := C)
-  letI : vCNorm.Compatible := Valuation.Compatible.ofValuation vCNorm
+  let : vCNorm.Compatible := Valuation.Compatible.ofValuation vCNorm
   have hnCNorm : vCNorm ((n : ℕ) : C) = 1 := by
     change ‖((n : ℕ) : C)‖₊ = 1
     exact NNReal.eq (by simpa using hNorm)
@@ -701,12 +703,12 @@ private theorem finitePlaceLocalTamePowerResidueSymbol_residueValue_eq
   unfold finitePlacePrimeIdealPowerResidueFactorResidueValue
   dsimp only
   let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
-  letI : Field (𝓞 K ⧸ v.asIdeal) := Ideal.Quotient.field v.asIdeal
-  letI : Fintype (𝓞 K ⧸ v.asIdeal) := Fintype.ofFinite _
-  letI : Fintype 𝓀[C] := Fintype.ofFinite _
+  let : Field (𝓞 K ⧸ v.asIdeal) := Ideal.Quotient.field v.asIdeal
+  let : Fintype (𝓞 K ⧸ v.asIdeal) := Fintype.ofFinite _
+  let : Fintype 𝓀[C] := Fintype.ofFinite _
   let hnC := finitePlace_natCast_valuation_eq_one_of_not_mem_exponent K n v hv
   let hmuC := finitePlaceHilbert_primitiveRoots_nonempty K n hmu v
   have hnPrime :
@@ -742,9 +744,9 @@ private theorem finitePlaceLocalTamePowerResidueSymbolFieldValue_eq_primeIdealVa
       (finitePlacePrimeIdealPowerResidueFactorFieldValue
         K v n hmu hcoprime a ha) := by
   let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   let hnC :=
     finitePlace_natCast_valuation_eq_one_of_not_mem_exponent K n v hv
@@ -801,9 +803,9 @@ theorem finitePlaceHilbertSymbol_eq_primeIdealPowerResidueFactor_zpow
               K v n hmu hcoprime a ha) ^
         (-finitePlaceNormalizedValuation K v b) := by
   let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   let hnC :=
     finitePlace_natCast_valuation_eq_one_of_not_mem_exponent K n v hv
@@ -881,11 +883,11 @@ theorem finitePlaceNormalizedValuation_nonzeroIntegralFieldUnit
         (nonzeroIntegralFieldUnit K x hx) =
       -(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity K v (Ideal.span {x}) : ℤ) := by
   let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
-  letI : IsUltrametricDist C :=
+  let : IsUltrametricDist C :=
     finitePlaceArtinCompletionIsUltrametricDist
       (HeightOneSpectrum.adicAbv K v)
       (HeightOneSpectrum.isNonarchimedean_adicAbv K v)
@@ -1050,9 +1052,9 @@ theorem finitePlaceHilbertSymbol_skew
     finitePlaceHilbertSymbol K n hnK hmu v a b =
       (finitePlaceHilbertSymbol K n hnK hmu v b a)⁻¹ := by
   let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   apply nthRootsSubgroupMap_injective K C (n : ℕ)
   rw [map_inv,
@@ -1078,9 +1080,9 @@ theorem finitePlaceHilbertSymbol_integral_units_eq_one
         (nonzeroIntegralFieldUnit K a ha0)
         (nonzeroIntegralFieldUnit K b hb0) = 1 := by
   let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   apply nthRootsSubgroupMap_injective K C (n : ℕ)
   rw [map_one, finitePlaceHilbertSymbol_map_eq_localHilbertSymbol]
@@ -1269,11 +1271,11 @@ theorem finitePlaceHilbertSymbol_eq_one_of_not_mem_powerResidueBadFinitePlaces
       (v.valuation_eq_one_iff_notMem (K := K)
         (r := ((n : ℕ) : 𝓞 K))).2 hvnNotMem
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L := NumberField.of_module_finite K L
+  let : NumberField L := NumberField.of_module_finite K L
   have haIntegral :
       IdeleGroup.finiteComponent v (IdeleGroup.principalIdele K a) ∈
         (v.adicCompletionIntegers K).units := by
@@ -1725,9 +1727,38 @@ the corresponding integer class modulo `p`. -/
 theorem rationalPrimeResidueEquivZMod_mk
     (p : Nat.Primes) (a : 𝓞 ℚ) :
     rationalPrimeResidueEquivZMod p
-        (Ideal.Quotient.mk (RayClass.rationalPrime p).asIdeal a) =
+      (Ideal.Quotient.mk (RayClass.rationalPrime p).asIdeal a) =
       (Rat.ringOfIntegersEquiv a : ZMod p.1) := by
-  simp [rationalPrimeResidueEquivZMod]
+  rw [rationalPrimeResidueEquivZMod, RingEquiv.trans_apply]
+  have hmk
+      (hIJ :
+        Ideal.span {(p.1 : ℤ)} =
+          (RayClass.rationalPrime p).asIdeal.map
+            Rat.ringOfIntegersEquiv) :
+      Ideal.quotientEquiv
+          (RayClass.rationalPrime p).asIdeal
+          (Ideal.span {(p.1 : ℤ)})
+          Rat.ringOfIntegersEquiv hIJ
+          (Ideal.Quotient.mk (RayClass.rationalPrime p).asIdeal a) =
+        Ideal.Quotient.mk (Ideal.span {(p.1 : ℤ)})
+          (Rat.ringOfIntegersEquiv a) :=
+    Ideal.quotientEquiv_mk
+      (RayClass.rationalPrime p).asIdeal
+      (Ideal.span {(p.1 : ℤ)})
+      Rat.ringOfIntegersEquiv hIJ a
+  have hquot :
+      ((Int.quotientSpanNatEquivZMod p.1 :
+          (ℤ ⧸ Ideal.span {(p.1 : ℤ)}) →+* ZMod p.1).comp
+        (Ideal.Quotient.mk (Ideal.span {(p.1 : ℤ)}))) =
+        Int.castRingHom (ZMod p.1) :=
+    Int.quotientSpanNatEquivZMod_comp_Quotient_mk p.1
+  calc
+    _ = Int.quotientSpanNatEquivZMod p.1
+        (Ideal.Quotient.mk (Ideal.span {(p.1 : ℤ)})
+          (Rat.ringOfIntegersEquiv a)) :=
+      congrArg (Int.quotientSpanNatEquivZMod p.1) (hmk _)
+    _ = _ := congrArg
+      (fun f : ℤ →+* ZMod p.1 => f (Rat.ringOfIntegersEquiv a)) hquot
 
 /-- The absolute norm of the rational prime ideal attached to `p` is `p`.
 This follows from the explicit residue-field equivalence rather than from a
@@ -2149,7 +2180,7 @@ theorem prod_rationalPrincipalIdealPrimeDivisors_eq_prod_primeFactors
     (∏ P : idealPrimeDivisors ℚ (rationalPrincipalIdeal b), f P.1) =
       ∏ p : b.primeFactors,
         f ((rationalPrincipalIdealPrimeDivisorsEquiv b hb).symm p).1 := by
-  letI : Fintype
+  let : Fintype
       (idealPrimeDivisors ℚ (rationalPrincipalIdeal b)) :=
     (idealPrimeDivisors_finite ℚ (rationalPrincipalIdeal b)
       (rationalPrincipalIdeal_ne_zero b hb)).fintype
@@ -2175,7 +2206,7 @@ theorem prod_rationalPrincipalIdealPrimeDivisors_eq_prod_primeFactors_subtype
     (∏ P : idealPrimeDivisors ℚ (rationalPrincipalIdeal b), f P) =
       ∏ p : b.primeFactors,
         f ((rationalPrincipalIdealPrimeDivisorsEquiv b hb).symm p) := by
-  letI : Fintype
+  let : Fintype
       (idealPrimeDivisors ℚ (rationalPrincipalIdeal b)) :=
     (idealPrimeDivisors_finite ℚ (rationalPrincipalIdeal b)
       (rationalPrincipalIdeal_ne_zero b hb)).fintype
@@ -2312,7 +2343,7 @@ theorem rationalIdealPowerResidueSymbol_two_eq_jacobiSym
               b hbOdd P hP)
           (rationalPrincipalIdeal_numerator_not_mem_of_coprime a b hab)) =
       jacobiSym (Rat.ringOfIntegersEquiv a) b := by
-  letI : Fintype
+  let : Fintype
       (idealPrimeDivisors ℚ (rationalPrincipalIdeal b)) :=
     (idealPrimeDivisors_finite ℚ (rationalPrincipalIdeal b)
       (rationalPrincipalIdeal_ne_zero b hb)).fintype

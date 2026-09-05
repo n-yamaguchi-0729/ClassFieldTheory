@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
+
+set_option autoImplicit false
 
 /-!
 # Inclusion of the chosen integral induced block

@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.AbstractUnramified
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
-import LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
-import LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.AbstractUnramified
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+
+set_option autoImplicit false
 
 /-!
 # Filtered reciprocity for the standard finite abelian compositum
@@ -54,25 +56,25 @@ theorem standardLubinTateFiniteAbelianCompositum_filteredLocalReciprocity
     abstractFixedField K (SeparableClosure K) T.field
   let F :=
     abstractFixedField K (SeparableClosure K) P.field
-  letI : FiniteDimensional K E₁ :=
+  let : FiniteDimensional K E₁ :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H₁.field H₁.finite
-  letI : FiniteDimensional K E₂ :=
+  let : FiniteDimensional K E₂ :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) T.field
         (finiteAbelianSubextension_finite_over_absoluteBase K T)
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) P.field
         (finiteAbelianSubextension_finite_over_absoluteBase K P)
-  letI : IsAbelianGalois K E₁ :=
+  let : IsAbelianGalois K E₁ :=
     by
       change IsAbelianGalois K
         (abstractFixedField K (SeparableClosure K) U.field)
       exact finiteAbelianSubextension_fixedField_isAbelianGalois K U
-  letI : IsAbelianGalois K E₂ :=
+  let : IsAbelianGalois K E₂ :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K T
-  letI : IsAbelianGalois K F :=
+  let : IsAbelianGalois K F :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K P
   have hsup : E₁ ⊔ E₂ = F := by
     simpa only [E₁, E₂, F, H₁, U, T, P,

@@ -1,5 +1,11 @@
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity
-import GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.Transport
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.BigActual
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallActual
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.BigOriginal
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallOriginal
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+
+set_option autoImplicit false
 
 /-!
 # Arithmetic reciprocity for the actual Hilbert class fields
@@ -27,7 +33,7 @@ variable {K : Type} [Field K] [NumberField K]
 
 /-- Fix the commutative idèle-class instance path shared by the norm quotient
 and its transported literal quotient throughout this module. -/
-local instance (priority := 2000)
+local instance
     arithmeticHilbertClassFieldIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=

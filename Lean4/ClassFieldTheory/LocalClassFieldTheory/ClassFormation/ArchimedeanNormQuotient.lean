@@ -1,8 +1,10 @@
-import LocalClassFieldTheory.ClassFormation.ArchimedeanHilbert90
-import AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.ArchimedeanHilbert90
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
 import Mathlib.Data.Real.Sign
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
 import Mathlib.RingTheory.Complex
+
+set_option autoImplicit false
 
 /-!
 # The real/complex norm quotient
@@ -224,9 +226,9 @@ theorem herbrandH0_card_eq_one_of_group_card_eq_one
     [CommGroup A] [MulDistribMulAction G A]
     (hG : Nat.card G = 1) :
     Nat.card (HerbrandH0 G A) = 1 := by
-  letI : Subsingleton G :=
+  let : Subsingleton G :=
     (Nat.card_eq_one_iff_unique.mp hG).1
-  letI : Subsingleton (HerbrandH0 G A) :=
+  let : Subsingleton (HerbrandH0 G A) :=
     herbrandH0_subsingleton_of_fixed_le_tateNormSubgroup
       (G := G) (A := A) (by
         intro a ha
@@ -382,35 +384,46 @@ def absoluteCompletionNormQuotientEquivRealComplex
               (WithAbs.equiv v.1 y) := by
         rw [← AbsoluteValue.toCompletion_eq_algebraMap]
         simp
-      rw [hy, AbsoluteValue.completionMap_coe]
-      rw [show
-          (InfinitePlace.Completion.equiv w).symm
-              (AbsoluteValue.toCompletion w.1
-                (algebraMap K L (WithAbs.equiv v.1 y))) =
-            (((WithAbs.equiv w.1).symm
-                (algebraMap K L (WithAbs.equiv v.1 y)) :
-                  WithAbs w.1) : w.Completion) by rfl,
-        show
-          (InfinitePlace.Completion.equiv v).symm
-              (algebraMap K v.1.Completion
-                (WithAbs.equiv v.1 y)) =
-            (((WithAbs.equiv v.1).symm
-                (WithAbs.equiv v.1 y) :
-                  WithAbs v.1) : v.Completion) by rfl,
-        InfinitePlace.Completion.extensionEmbedding_coe,
-        InfinitePlace.Completion.extensionEmbedding_coe]
-      simp only [RingEquiv.apply_symm_apply]
+      have hmap :
+          AbsoluteValue.completionMap v.1 w.1
+              (infinitePlaceAbsoluteValueExtension v w hw).2
+              (y : v.1.Completion) =
+            AbsoluteValue.toCompletion w.1
+              (algebraMap K L (WithAbs.equiv v.1 y)) :=
+        (congrArg
+          (AbsoluteValue.completionMap v.1 w.1
+            (infinitePlaceAbsoluteValueExtension v w hw).2) hy).trans
+          (AbsoluteValue.completionMap_coe v.1 w.1
+            (infinitePlaceAbsoluteValueExtension v w hw).2
+            (WithAbs.equiv v.1 y))
+      have hwEmbedding :
+          InfinitePlace.Completion.extensionEmbedding w
+              ((InfinitePlace.Completion.equiv w).symm
+                (AbsoluteValue.toCompletion w.1
+                  (algebraMap K L (WithAbs.equiv v.1 y)))) =
+            w.embedding (algebraMap K L (WithAbs.equiv v.1 y)) :=
+        (InfinitePlace.Completion.extensionEmbedding_coe w
+          ((WithAbs.equiv w.1).symm
+            (algebraMap K L (WithAbs.equiv v.1 y)))).trans
+          (congrArg w.embedding
+            ((WithAbs.equiv w.1).apply_symm_apply
+              (algebraMap K L (WithAbs.equiv v.1 y))))
       exact
-        DFunLike.congr_fun hEmbedding
-          (WithAbs.equiv v.1 y)
+        (congrArg (fun z : w.1.Completion =>
+          InfinitePlace.Completion.extensionEmbedding w
+            ((InfinitePlace.Completion.equiv w).symm z)) hmap).trans
+          (hwEmbedding.trans
+            ((DFunLike.congr_fun hEmbedding (WithAbs.equiv v.1 y)).trans
+              (InfinitePlace.Completion.extensionEmbedding_coe v y).symm))
   exact
     normQuotientEquivOfRingEquiv
       (absoluteCompletionRingEquivReal v hv)
       (absoluteCompletionRingEquivComplex w hwc)
       (by
         ext x
-        simpa [absoluteCompletionRingEquivReal,
-          absoluteCompletionRingEquivComplex] using
+        exact
+          (InfinitePlace.Completion.extensionEmbeddingOfIsReal_apply hv
+            ((InfinitePlace.Completion.equiv v).symm x)).trans
             (hCompletionEmbedding x).symm)
 
 /-- The sign of a nonzero real number, regarded as an integral unit. -/
@@ -560,23 +573,23 @@ theorem infinitePlaceLocalHerbrandH0_card_eq_localDegree
       if w.IsUnramified K then 1 else 2 := by
   let u :=
     infinitePlaceAbsoluteValueExtension v w hw
-  letI hL :=
+  let hL :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) u.1
-  letI : SMul K u.1.Completion := hL.toSMul
-  letI : Algebra v.1.Completion u.1.Completion :=
+  let : SMul K u.1.Completion := hL.toSMul
+  let : Algebra v.1.Completion u.1.Completion :=
     AbsoluteValue.completionAlgebra v.1 u.1 u.2
-  letI := localizedCompletionGlobalAlgebra v.1 u
-  letI := localizedCompletionIsScalarTower v.1 u
-  letI : FiniteDimensional v.1.Completion
+  let := localizedCompletionGlobalAlgebra v.1 u
+  let := localizedCompletionIsScalarTower v.1 u
+  let : FiniteDimensional v.1.Completion
       (LocalizedCompletion v.1 u) :=
     localizedCompletionModuleFinite v.1 v.isNontrivial u
-  letI : IsGalois v.1.Completion
+  let : IsGalois v.1.Completion
       (LocalizedCompletion v.1 u) :=
     HilbertRamification.algebraicLocalization_isGalois v.1 u
-  letI : Fintype (absoluteValueDecompositionGroup K w.1) :=
+  let : Fintype (absoluteValueDecompositionGroup K w.1) :=
     Fintype.ofFinite _
-  letI : MulDistribMulAction
+  let : MulDistribMulAction
       (absoluteValueDecompositionGroup K w.1)
       (LocalizedCompletion v.1 u)ˣ :=
     decompositionGroupLocalUnitsAction
@@ -660,23 +673,23 @@ theorem infinitePlaceLocalClassAxiom_cards
         if w.IsUnramified K then 1 else 2 := by
   let u :=
     infinitePlaceAbsoluteValueExtension v w hw
-  letI hL :=
+  let hL :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) u.1
-  letI : SMul K u.1.Completion := hL.toSMul
-  letI : Algebra v.1.Completion u.1.Completion :=
+  let : SMul K u.1.Completion := hL.toSMul
+  let : Algebra v.1.Completion u.1.Completion :=
     AbsoluteValue.completionAlgebra v.1 u.1 u.2
-  letI := localizedCompletionGlobalAlgebra v.1 u
-  letI := localizedCompletionIsScalarTower v.1 u
-  letI : FiniteDimensional v.1.Completion
+  let := localizedCompletionGlobalAlgebra v.1 u
+  let := localizedCompletionIsScalarTower v.1 u
+  let : FiniteDimensional v.1.Completion
       (LocalizedCompletion v.1 u) :=
     localizedCompletionModuleFinite v.1 v.isNontrivial u
-  letI : IsGalois v.1.Completion
+  let : IsGalois v.1.Completion
       (LocalizedCompletion v.1 u) :=
     HilbertRamification.algebraicLocalization_isGalois v.1 u
-  letI : Fintype (absoluteValueDecompositionGroup K w.1) :=
+  let : Fintype (absoluteValueDecompositionGroup K w.1) :=
     Fintype.ofFinite _
-  letI : MulDistribMulAction
+  let : MulDistribMulAction
       (absoluteValueDecompositionGroup K w.1)
       (LocalizedCompletion v.1 u)ˣ :=
     decompositionGroupLocalUnitsAction
@@ -708,23 +721,23 @@ theorem infinitePlaceLocalHerbrandH0Finite
         (LocalizedCompletion v.1 u)ˣ) := by
   let u :=
     infinitePlaceAbsoluteValueExtension v w hw
-  letI hL :=
+  let hL :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) u.1
-  letI : SMul K u.1.Completion := hL.toSMul
-  letI : Algebra v.1.Completion u.1.Completion :=
+  let : SMul K u.1.Completion := hL.toSMul
+  let : Algebra v.1.Completion u.1.Completion :=
     AbsoluteValue.completionAlgebra v.1 u.1 u.2
-  letI := localizedCompletionGlobalAlgebra v.1 u
-  letI := localizedCompletionIsScalarTower v.1 u
-  letI : FiniteDimensional v.1.Completion
+  let := localizedCompletionGlobalAlgebra v.1 u
+  let := localizedCompletionIsScalarTower v.1 u
+  let : FiniteDimensional v.1.Completion
       (LocalizedCompletion v.1 u) :=
     localizedCompletionModuleFinite v.1 v.isNontrivial u
-  letI : IsGalois v.1.Completion
+  let : IsGalois v.1.Completion
       (LocalizedCompletion v.1 u) :=
     HilbertRamification.algebraicLocalization_isGalois v.1 u
-  letI : Fintype (absoluteValueDecompositionGroup K w.1) :=
+  let : Fintype (absoluteValueDecompositionGroup K w.1) :=
     Fintype.ofFinite _
-  letI : MulDistribMulAction
+  let : MulDistribMulAction
       (absoluteValueDecompositionGroup K w.1)
       (LocalizedCompletion v.1 u)ˣ :=
     decompositionGroupLocalUnitsAction
@@ -739,9 +752,9 @@ theorem infinitePlaceLocalHerbrandH0Finite
         Nat.card (absoluteValueDecompositionGroup K w.1) = 1 := by
       rw [absoluteValueDecompositionGroup_eq_infinitePlaceStabilizer w,
         InfinitePlace.card_stabilizer, if_pos hUnramified]
-    letI : Subsingleton (absoluteValueDecompositionGroup K w.1) :=
+    let : Subsingleton (absoluteValueDecompositionGroup K w.1) :=
       (Nat.card_eq_one_iff_unique.mp hGroup).1
-    letI :
+    let :
         Subsingleton
           (HerbrandH0
             (absoluteValueDecompositionGroup K w.1)
@@ -817,23 +830,23 @@ theorem infinitePlaceLocalHerbrandHMinusOneFinite
           σ hgen)) := by
   let u :=
     infinitePlaceAbsoluteValueExtension v w hw
-  letI hL :=
+  let hL :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) u.1
-  letI : SMul K u.1.Completion := hL.toSMul
-  letI : Algebra v.1.Completion u.1.Completion :=
+  let : SMul K u.1.Completion := hL.toSMul
+  let : Algebra v.1.Completion u.1.Completion :=
     AbsoluteValue.completionAlgebra v.1 u.1 u.2
-  letI := localizedCompletionGlobalAlgebra v.1 u
-  letI := localizedCompletionIsScalarTower v.1 u
-  letI : FiniteDimensional v.1.Completion
+  let := localizedCompletionGlobalAlgebra v.1 u
+  let := localizedCompletionIsScalarTower v.1 u
+  let : FiniteDimensional v.1.Completion
       (LocalizedCompletion v.1 u) :=
     localizedCompletionModuleFinite v.1 v.isNontrivial u
-  letI : IsGalois v.1.Completion
+  let : IsGalois v.1.Completion
       (LocalizedCompletion v.1 u) :=
     HilbertRamification.algebraicLocalization_isGalois v.1 u
-  letI : Fintype (absoluteValueDecompositionGroup K w.1) :=
+  let : Fintype (absoluteValueDecompositionGroup K w.1) :=
     Fintype.ofFinite _
-  letI : MulDistribMulAction
+  let : MulDistribMulAction
       (absoluteValueDecompositionGroup K w.1)
       (LocalizedCompletion v.1 u)ˣ :=
     decompositionGroupLocalUnitsAction
@@ -846,7 +859,7 @@ theorem infinitePlaceLocalHerbrandHMinusOneFinite
         (subgroupGeneratorOfGenerator
           (absoluteValueDecompositionGroup K w.1)
           σ hgen))
-  letI :
+  let :
       Subsingleton
         (HerbrandHMinusOne
           (absoluteValueDecompositionGroup K w.1)

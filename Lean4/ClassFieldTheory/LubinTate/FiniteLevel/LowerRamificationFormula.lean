@@ -1,6 +1,8 @@
-import LubinTate.FiniteLevel.PrimitiveDisplacement
-import LubinTate.FiniteLevel.GaloisParameterFiltration
-import LubinTate.FiniteLevel.LowerRamification
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveDisplacement
+import ClassFieldTheory.LubinTate.FiniteLevel.GaloisParameterFiltration
+import ClassFieldTheory.LubinTate.FiniteLevel.LowerRamification
+
+set_option autoImplicit false
 
 /-!
 # Explicit lower ramification groups of finite Lubin--Tate levels

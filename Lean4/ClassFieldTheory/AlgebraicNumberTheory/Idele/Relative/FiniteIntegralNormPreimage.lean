@@ -1,6 +1,20 @@
-import AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormValuation
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquivApply
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInclusion
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInducedSmul
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockTensorSmul
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.CompletionTransport
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Spine
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Action
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Equiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Inclusion
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.SeparableNormValuation
+
+set_option autoImplicit false
 
 /-!
 # Integral finite-place preimages of local tensor norms
@@ -56,9 +70,9 @@ theorem exists_finitePlaceCompletionIntegerUnit_of_unitsEquiv_eq
   let vK := HeightOneSpectrum.adicAbv K v₀
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K v₀
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     finitePlaceCompletionValued vK hvKna
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceCompletionValuativeRel vK hvKna
   rw [Submonoid.mem_units_iff] at hxUnit
   have hx₀norm :
@@ -175,10 +189,10 @@ theorem exists_absoluteValueCompletionIntegerUnit_of_localizedCompletion_norm_bo
         w.1.Completion) =
       ((y : LocalizedCompletion vK w) :
         w.1.Completion) := by
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let eW :=
     localizedCompletionEquivCompletion vK hvK w
@@ -483,20 +497,20 @@ theorem localTensorDetNorm_singleRelativeLocalTensorDecompositionIntegralUnit_eq
   classical
   let vK := HeightOneSpectrum.adicAbv K v₀
   let hvK := RayClass.adicAbv_isNontrivial v₀
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   dsimp only at hNorm
-  letI :=
+  let :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK
-  letI : ∀ u : AbsoluteValueExtension vK L,
+  let : ∀ u : AbsoluteValueExtension vK L,
       Algebra vK.Completion u.1.Completion :=
     fun u =>
       AbsoluteValue.completionAlgebra vK u.1 u.2
-  letI : ∀ u : AbsoluteValueExtension vK L,
+  let : ∀ u : AbsoluteValueExtension vK L,
       Module.Finite vK.Completion u.1.Completion :=
     fun u =>
       completionModuleFinite vK hvK u
@@ -567,85 +581,85 @@ private theorem exists_localizedCompletionNormPreimage_with_norm_bounds
     RayClass.adicAbv_isNontrivial v₀
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K v₀
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := LocalizedCompletion vK w
-  letI : FiniteDimensional vK.Completion E :=
+  let : FiniteDimensional vK.Completion E :=
     localizedCompletionModuleFinite vK hvK w
-  letI : IsGalois vK.Completion E :=
+  let : IsGalois vK.Completion E :=
     HilbertRamification.algebraicLocalization_isGalois vK w
-  letI : NontriviallyNormedField vK.Completion :=
+  let : NontriviallyNormedField vK.Completion :=
     absoluteValueExtension_completionNontriviallyNormedField vK hvK
-  letI : LocallyCompactSpace vK.Completion :=
+  let : LocallyCompactSpace vK.Completion :=
     AbsoluteValue.Completion.locallyCompactSpace
       (finitePlaceCompletionBaseMap_isometry v₀)
-  letI : IsUltrametricDist vK.Completion :=
+  let : IsUltrametricDist vK.Completion :=
     completionIsUltrametricDist vK hvKna
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     finitePlaceCompletionValued vK hvKna
   let vC : Valuation vK.Completion ℝ≥0 := Valued.v
-  letI : vC.IsNontrivial :=
+  let : vC.IsNontrivial :=
     (inferInstance :
       (NormedField.valuation (K := vK.Completion)).IsNontrivial)
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceCompletionValuativeRel vK hvKna
-  letI : vC.Compatible :=
+  let : vC.Compatible :=
     Valuation.Compatible.ofValuation vC
-  letI : ValuativeRel.IsNontrivial vK.Completion :=
+  let : ValuativeRel.IsNontrivial vK.Completion :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vC).2 inferInstance
   let vB := ValuativeRel.valuation vK.Completion
-  letI : vB.IsNontrivial := inferInstance
-  letI : IsValuativeTopology vK.Completion :=
+  let : vB.IsNontrivial := inferInstance
+  let : IsValuativeTopology vK.Completion :=
     isValuativeTopology_of_valued_ofValuation
       vK.Completion ℝ≥0
-  letI : IsNonarchimedeanLocalField vK.Completion :=
+  let : IsNonarchimedeanLocalField vK.Completion :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
-  letI : FiniteDimensional vK.Completion w.1.Completion :=
+  let : FiniteDimensional vK.Completion w.1.Completion :=
     completionModuleFinite vK hvK w
-  letI : ContinuousSMul vK.Completion w.1.Completion :=
+  let : ContinuousSMul vK.Completion w.1.Completion :=
     continuousSMul_of_algebraMap _ _
       (AbsoluteValue.completionMap_isometry vK w.1 w.2).continuous
-  letI : LocallyCompactSpace w.1.Completion :=
+  let : LocallyCompactSpace w.1.Completion :=
     LocallyCompactSpace.of_finiteDimensional_of_complete
       vK.Completion w.1.Completion
   let eE : E ≃ᵢ w.1.Completion :=
     { toEquiv :=
         (localizedCompletionEquivCompletion vK hvK w).toEquiv
       isometry_toFun := Isometry.of_dist_eq fun _ _ => rfl }
-  letI : LocallyCompactSpace E :=
+  let : LocallyCompactSpace E :=
     (eE.toHomeomorph.locallyCompactSpace_iff).2 inferInstance
-  letI : IsUltrametricDist E :=
+  let : IsUltrametricDist E :=
     localizedCompletionIsUltrametricDist vK w hvKna
-  letI : Valued E ℝ≥0 :=
+  let : Valued E ℝ≥0 :=
     localizedCompletionFinitePlaceValued vK w hvKna
-  letI : ValuativeRel E :=
+  let : ValuativeRel E :=
     localizedCompletionFinitePlaceValuativeRel vK w hvKna
   let vENorm : Valuation E ℝ≥0 := Valued.v
-  letI : vENorm.Compatible :=
+  let : vENorm.Compatible :=
     Valuation.Compatible.ofValuation vENorm
   let vE := ValuativeRel.valuation E
-  letI : Valuation.HasExtension vB vE :=
+  let : Valuation.HasExtension vB vE :=
     localizedCompletionValuationHasExtension vK w hvKna
-  letI : vE.IsNontrivial :=
+  let : vE.IsNontrivial :=
     Valuation.IsNontrivial.of_hasExtension vB vE
-  letI : ValuativeRel.IsNontrivial E :=
+  let : ValuativeRel.IsNontrivial E :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vE).2 inferInstance
-  letI : IsValuativeTopology E :=
+  let : IsValuativeTopology E :=
     isValuativeTopology_of_valued_ofValuation E ℝ≥0
-  letI : IsNonarchimedeanLocalField E :=
+  let : IsNonarchimedeanLocalField E :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
-  letI : Algebra 𝒪[vK.Completion] E :=
+  let : Algebra 𝒪[vK.Completion] E :=
     Algebra.ofSubsemiring 𝒪[vK.Completion]
-  letI : IsIntegralClosure 𝒪[E] 𝒪[vK.Completion] E :=
+  let : IsIntegralClosure 𝒪[E] 𝒪[vK.Completion] E :=
     localizedCompletionIsIntegralClosureWithExtension
       vK w hvK hvKna
-  letI : Module.Finite 𝒪[vK.Completion] 𝒪[E] :=
+  let : Module.Finite 𝒪[vK.Completion] 𝒪[E] :=
     integerRing_moduleFinite_of_isIntegralClosure
       vK.Completion E
   let e :=
@@ -746,9 +760,9 @@ private theorem exists_singleFinitePlaceIntegralUnit_norm_eq
     RayClass.adicAbv_isNontrivial v₀
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K v₀
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := LocalizedCompletion vK w
   obtain ⟨x₀, y, hy, hx₀val, hyNorm, hyInvNorm⟩ :=
@@ -809,9 +823,9 @@ theorem exists_localTensorDecompositionIntegralUnit_localTensorNorm_eq
     RayClass.adicAbv_isNontrivial v₀
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K v₀
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   obtain ⟨x₀, yWO, hNorm, hx₀val⟩ :=
     exists_singleFinitePlaceIntegralUnit_norm_eq

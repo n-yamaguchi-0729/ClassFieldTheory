@@ -1,8 +1,15 @@
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport
-import AlgebraicNumberTheory.Adele.RestrictedAction
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.IdeleSupport
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Localization
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.AbsoluteValue
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.FinitePlaceCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedAction
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
 import Mathlib.Algebra.Group.Pi.Units
 import Mathlib.Algebra.Group.Submonoid.Units
+
+set_option autoImplicit false
 
 /-!
 # Integral finite local factors of the relative idele group
@@ -241,7 +248,7 @@ theorem finitePlaceLocalTensorDecompositionComponent_scalarTensorConjugation
   let vK := HeightOneSpectrum.adicAbv K w
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial w
-  letI : ∀ u : AbsoluteValueExtension vK L,
+  let : ∀ u : AbsoluteValueExtension vK L,
       Algebra vK.Completion u.1.Completion :=
     fun u =>
       AbsoluteValue.completionAlgebra vK u.1 u.2
@@ -316,7 +323,7 @@ theorem relativeLocalTensorDecompositionIntegralUnitAt_smul
       (A := w.adicCompletion K)
     RelativeLocalTensorDecompositionIntegralUnitAt
       (K := K) (L := L) w (σ • x) := by
-  letI := scalarTensorUnitsAction
+  let := scalarTensorUnitsAction
     (K := K) (L := L)
     (A := w.adicCompletion K)
   constructor

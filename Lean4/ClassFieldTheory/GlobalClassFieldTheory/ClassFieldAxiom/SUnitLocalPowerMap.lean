@@ -1,9 +1,17 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlaceCompletionInstances
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection
-import AlgebraicNumberTheory.Idele.Principal
-import LocalFieldTheory.DiscreteValuationField.FieldUnitPowerIndexFormulas
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlaceCompletionInstances
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.FinitePlaceDecomposition
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.RestrictionKernel
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.BasePlaceSelection
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.CoordinatePlaces
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.PrimeSet
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.DecompositionFields
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.Conclusion
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Principal
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitPowerIndexFormulas
 import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.GroupTheory.Index
+
+set_option autoImplicit false
 
 /-!
 # S-unit localization modulo local powers
@@ -270,8 +278,17 @@ theorem sUnitLocalUnitPowerMap_sUnitKummerPrimeSet_surjective
     (sUnitKummerPrimeSet_disjoint_enlargeByFiniteKummerRadicalSupport
       (K := K) (Omega := Omega) E n hmu
       p v hp hv hn r eG S).symm
-  let f :=
+  let LocalPowerTarget : Type :=
+    ∀ w : T,
+      (w.1.adicCompletionIntegers K)ˣ ⧸
+        (powMonoidHom (n : ℕ) :
+          (w.1.adicCompletionIntegers K)ˣ →*
+            (w.1.adicCompletionIntegers K)ˣ).range
+  let f : SUnitGroup (K := K) S' →* LocalPowerTarget :=
     sUnitLocalUnitPowerMap (K := K) n S' T hST
+  let rangeF : Subgroup LocalPowerTarget :=
+    MonoidHom.range
+      (G := SUnitGroup (K := K) S') (N := LocalPowerTarget) f
   let SU : Subgroup Kˣ :=
     SUnitGroup (K := K) S'
   let Delta : Subgroup SU :=
@@ -399,7 +416,7 @@ theorem sUnitLocalUnitPowerMap_sUnitKummerPrimeSet_surjective
         D.RadicalQuotient :=
     (QuotientGroup.quotientMulEquivOfEq hden).trans
       D.radicalQuotientMulEquiv.symm
-  letI : CommGroup Gal(E/K) := by
+  let : CommGroup Gal(E/K) := by
     infer_instance
   have hexponentE :
       ∀ sigma : Gal(E/K), sigma ^ (n : ℕ) = 1 :=
@@ -514,10 +531,11 @@ theorem sUnitLocalUnitPowerMap_sUnitKummerPrimeSet_surjective
       sUnitLocalUnitPowerMap_ker
         (K := K) n S' T hST
   have hRangeCard :
-      Nat.card f.range =
+      Nat.card rangeF =
         (n : ℕ) ^
           (totalPlaceCard (K := K) S' - r) := by
-    rw [← Subgroup.index_ker f, hfker]
+    rw [← Subgroup.index_ker
+      (G := SUnitGroup (K := K) S') (G' := LocalPowerTarget) f, hfker]
     exact hDeltaIndex
   have hLocalCard
       (w : T) :
@@ -532,7 +550,7 @@ theorem sUnitLocalUnitPowerMap_sUnitKummerPrimeSet_surjective
         (Valued.v :
           Valuation (w.1.adicCompletion K)
             (WithZero (Multiplicative ℤ)))
-    letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+    let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
     have hnu : Function.Surjective
         (Valued.v :
           Valuation (w.1.adicCompletion K)
@@ -579,7 +597,7 @@ theorem sUnitLocalUnitPowerMap_sUnitKummerPrimeSet_surjective
         F.valuation_natCast_lt_one_iff_residueCharacteristic_dvd]
       rw [hnuNF]
       exact lt_irrefl 1
-    letI :
+    let :
         Fact
           (Nat.Coprime (n : ℕ)
             F.residueCharacteristic) :=
@@ -588,12 +606,7 @@ theorem sUnitLocalUnitPowerMap_sUnitKummerPrimeSet_surjective
     let eValuationSubringUnits :
         F.valuationSubringˣ ≃*
           (w.1.adicCompletionIntegers K)ˣ := by
-      dsimp only [F, HeightOneSpectrum.adicCompletionIntegers]
-      unfold
-        LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
-      unfold
-        LocalFieldTheory.DiscreteValuationField.LocalField.coherentWithZeroMultiplicativeIntGroup
-      exact MulEquiv.refl _
+      exact MulEquiv.refl ((w.1.adicCompletionIntegers K)ˣ)
     have hindexPackaged :
         Nat.card
             (F.valuationSubringˣ ⧸
@@ -692,14 +705,16 @@ theorem sUnitLocalUnitPowerMap_sUnitKummerPrimeSet_surjective
             (totalPlaceCard (K := K) S' - r) := by
         rw [hTcard]
         rfl
-  letI : Finite f.range :=
+  let : Finite rangeF :=
     Nat.finite_of_card_ne_zero (by
       rw [hRangeCard]
       exact pow_ne_zero _ n.ne_zero)
   have hRangeTop :
-      f.range = ⊤ :=
-    Subgroup.eq_top_of_card_eq f.range
+      rangeF = ⊤ :=
+    Subgroup.eq_top_of_card_eq rangeF
       (hRangeCard.trans hTargetCard.symm)
-  exact MonoidHom.range_eq_top.mp hRangeTop
+  exact
+    (MonoidHom.range_eq_top
+      (G := SUnitGroup (K := K) S') (N := LocalPowerTarget) (f := f)).mp hRangeTop
 
 end GlobalClassFieldTheory.ClassFieldAxiom

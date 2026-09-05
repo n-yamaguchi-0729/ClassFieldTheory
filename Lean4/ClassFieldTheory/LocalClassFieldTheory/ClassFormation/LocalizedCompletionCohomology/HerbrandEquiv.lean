@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
+
+set_option autoImplicit false
 
 /-!
 # Low-degree Herbrand equivalences for a localized completion

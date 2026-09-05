@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Extension.NormProperties
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormProperties
 import Mathlib.LinearAlgebra.Basis.VectorSpace
+
+set_option autoImplicit false
 
 /-!
 # Idele classes in finite extensions

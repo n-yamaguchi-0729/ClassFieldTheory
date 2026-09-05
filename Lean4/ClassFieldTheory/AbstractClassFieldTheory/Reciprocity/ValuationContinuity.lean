@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Degree.FrobeniusFixedField
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import AbstractClassFieldTheory.Reciprocity.NormTopology
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusFixedField
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
+
+set_option autoImplicit false
 
 /-!
 # Continuity of the normalized valuation
@@ -152,8 +154,8 @@ def finiteUnramifiedExtension (D : DegreeData G) [IsTopologicalGroup G]
   normal := inferInstance
   finite := by
     rw [extensionSubgroup_unramifiedExtensionOfDegree D K f hf]
-    letI : NeZero f := ⟨Nat.ne_of_gt hf⟩
-    letI : Finite (Multiplicative (ZMod f)) := by
+    let : NeZero f := ⟨Nat.ne_of_gt hf⟩
+    let : Finite (Multiplicative (ZMod f)) := by
       change Finite (ZMod f)
       infer_instance
     let q := (unramifiedDegreeHom D K f hf).toMonoidHom
@@ -181,7 +183,7 @@ def finiteUnramifiedAbelianExtension (D : DegreeData G) [IsTopologicalGroup G]
     (f : ℕ) (hf : 0 < f) : FiniteAbelianSubextension K.field where
   toFiniteGaloisExtension := finiteUnramifiedExtension D K f hf
   commutative := by
-    letI :
+    let :
         (extensionSubgroup K.field
           (D.finiteUnramifiedExtension K f hf).field
           (D.finiteUnramifiedExtension K f hf).below).Normal :=
@@ -254,8 +256,8 @@ theorem finiteUnramifiedExtension_degree (D : DegreeData G)
     [IsTopologicalGroup G] (K : FiniteResidueAbstractField D)
     (f : ℕ) (hf : 0 < f) :
     (((finiteUnramifiedExtension D K f hf).toFiniteAbstractExtension.degree : ℕ)) = f := by
-  letI : NeZero f := ⟨hf.ne'⟩
-  letI : Fintype (ZMod f) := ZMod.fintype f
+  let : NeZero f := ⟨hf.ne'⟩
+  let : Fintype (ZMod f) := ZMod.fintype f
   let q := (unramifiedDegreeHom D K f hf).toMonoidHom
   rw [← (finiteUnramifiedExtension D K f hf).toFiniteAbstractExtension.extensionSubgroup_index_eq_degree]
   change (extensionSubgroup K.field
@@ -325,7 +327,7 @@ theorem exists_nsmul_mem_of_valueGroup_mem_nhds
   have hone : (1 : ZHatMul) ∈ Wm := by
     change (0 : ZHat) ∈ W₀
     exact hzero
-  letI : TotallyDisconnectedSpace ZHatMul := by
+  let : TotallyDisconnectedSpace ZHatMul := by
     change TotallyDisconnectedSpace ZHat
     infer_instance
   obtain ⟨H, hHWm⟩ :=
@@ -333,7 +335,7 @@ theorem exists_nsmul_mem_of_valueGroup_mem_nhds
       (G := ZHatMul) hWmOpen hone
   let HAdd : AddSubgroup ZHat :=
     Subgroup.toAddSubgroup' (H : Subgroup ZHatMul)
-  letI : Finite (ZHatMul ⧸ (H : Subgroup ZHatMul)) :=
+  let : Finite (ZHatMul ⧸ (H : Subgroup ZHatMul)) :=
     Subgroup.quotient_finite_of_isOpen (H : Subgroup ZHatMul)
       H.toOpenSubgroup.isOpen'
   have hindex : HAdd.index ≠ 0 := by
@@ -363,9 +365,9 @@ theorem normTopology_valuation_continuous
     (K : FiniteAbstractField G) :
     IsContinuousFromNormTopology A K.field (v.valuationAt K) := by
   unfold IsContinuousFromNormTopology
-  letI : TopologicalSpace (ambientFixedAddSubgroup A K.field) :=
+  let : TopologicalSpace (ambientFixedAddSubgroup A K.field) :=
     normTopology A K.field
-  letI : IsTopologicalAddGroup (ambientFixedAddSubgroup A K.field) :=
+  let : IsTopologicalAddGroup (ambientFixedAddSubgroup A K.field) :=
     (normFilterBasis A K.field).isTopologicalAddGroup
   apply continuous_of_continuousAt_zero (v.valuationAt K)
   rw [ContinuousAt, map_zero]
@@ -376,9 +378,9 @@ theorem normTopology_valuation_continuous
     K.toFiniteResidueAbstractField D
   let L : FiniteGaloisSubextension K.field :=
     DegreeData.finiteUnramifiedExtension D Kresidue f hf
-  letI hLfinite : Finite
+  let hLfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L.field L.below) := L.finite
-  letI hLabsoluteFinite : Finite ((baseField G).toSubgroup ⧸
+  let hLabsoluteFinite : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) L.field (le_baseField L.field)) :=
     relativeTowerQuotientFinite (baseField G) K.field L.field L.below
       (le_baseField K.field)

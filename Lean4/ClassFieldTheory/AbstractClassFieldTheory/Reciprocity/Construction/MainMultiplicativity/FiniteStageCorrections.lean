@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.PrimeUnitDifferences
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.PrimeUnitDifferences
+
+set_option autoImplicit false
 
 /-!
 # Finite-stage correction terms for reciprocity multiplicativity
@@ -92,9 +94,9 @@ theorem frobeniusPowerSum_alternating_mem_infiniteUnitAddSubgroup
       (D.maximalUnramifiedField_le_of_le hLK) := by
   dsimp only
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
   let σ₃ := σ₁ * σ₂
@@ -237,9 +239,9 @@ theorem frobeniusCorrectionTerms_mem_infiniteUnitAddSubgroup
       (D.maximalUnramifiedField_le_of_le hLK) := by
   dsimp only
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
   let σ₃ := σ₁ * σ₂

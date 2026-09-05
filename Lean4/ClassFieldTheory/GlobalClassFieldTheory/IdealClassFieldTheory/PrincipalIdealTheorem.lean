@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Extension.IdealClass
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
 import Mathlib.RingTheory.ClassGroup.ExtendedHom
+
+set_option autoImplicit false
 
 /-!
 # The principal ideal theorem
@@ -19,6 +21,14 @@ namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
 open NumberField
+
+/-- Canonical class-group commutativity supplies normality for the quotient. -/
+private theorem principalIdealTheoremClassGroupIsMulCommutative
+    (F : Type*) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] principalIdealTheoremClassGroupIsMulCommutative
 
 section SmallHilbertIdeleExtension
 

@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.RayClass.Narrow
-import AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 import Mathlib.NumberTheory.NumberField.ClassNumber
-import GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
+
+set_option autoImplicit false
 
 /-!
 # The small Hilbert class field
@@ -12,7 +14,7 @@ quotient is canonically the ordinary ideal class group; consequently its
 order is the class number.
 -/
 
-open scoped NumberField
+open scoped NumberField IsMulCommutative
 
 noncomputable section
 
@@ -22,6 +24,13 @@ namespace GlobalClassFields
 open NumberField
 
 variable {K : Type*} [Field K] [NumberField K]
+
+/-- Fix the canonical commutative idèle-class structure used by the Hilbert
+class-field quotients in this module. -/
+local instance smallHilbertClassFieldIdeleClassGroupIsMulCommutative
+    {F : Type*} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- The norm subgroup defining the small Hilbert class field.  The
 principal subgroup is included before passing to the idele class group so
@@ -88,7 +97,7 @@ theorem smallHilbertClassFieldNormSubgroup_isClosed :
 /-- The small-Hilbert norm subgroup has finite index. -/
 instance smallHilbertClassFieldNormSubgroupFiniteIndex :
     (smallHilbertClassFieldNormSubgroup (K := K)).FiniteIndex := by
-  letI : Finite
+  let : Finite
       (IdeleClassGroup K ⧸
         smallHilbertClassFieldNormSubgroup (K := K)) :=
     Finite.of_equiv (ClassGroup (𝓞 K))
@@ -161,9 +170,15 @@ noncomputable def
     (bigHilbertClassFieldNormSubgroup (K := K))
     (smallHilbertClassFieldNormSubgroup (K := K))
     (MonoidHom.id _)
-    (fun _ hx =>
-      bigHilbertClassFieldNormSubgroup_le_smallHilbertClassFieldNormSubgroup
-        (K := K) hx)
+    (show
+      bigHilbertClassFieldNormSubgroup (K := K) ≤
+        Subgroup.comap (MonoidHom.id _)
+          (smallHilbertClassFieldNormSubgroup (K := K)) from by
+      intro x hx
+      change x ∈ smallHilbertClassFieldNormSubgroup (K := K)
+      exact
+        bigHilbertClassFieldNormSubgroup_le_smallHilbertClassFieldNormSubgroup
+          (K := K) hx)
 
 /-- The big-to-small Hilbert quotient transition sends the class of an
 idele class to the same class modulo the larger norm subgroup. -/
@@ -205,16 +220,7 @@ theorem
         (QuotientGroup.mk'
           (bigHilbertClassFieldNormSubgroup (K := K)))
         (smallHilbertClassFieldNormSubgroup (K := K)) := by
-  change
-    MonoidHom.ker
-        (QuotientGroup.map
-          (bigHilbertClassFieldNormSubgroup (K := K))
-          (smallHilbertClassFieldNormSubgroup (K := K))
-          (MonoidHom.id _)
-          (fun _ hx =>
-            bigHilbertClassFieldNormSubgroup_le_smallHilbertClassFieldNormSubgroup
-              (K := K) hx)) =
-      _
+  unfold bigHilbertClassFieldQuotientToSmallHilbertClassFieldQuotient
   rw [QuotientGroup.ker_map, Subgroup.comap_id]
 
 /-- The order of the small-Hilbert reciprocity quotient divides the

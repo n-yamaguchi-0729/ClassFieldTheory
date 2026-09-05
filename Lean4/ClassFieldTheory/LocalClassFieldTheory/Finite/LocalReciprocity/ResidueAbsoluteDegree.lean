@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAbsoluteFrobenius
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAbsoluteFrobenius
 import Mathlib.FieldTheory.AbsoluteGaloisGroup
 import Mathlib.FieldTheory.Galois.Infinite
 import Mathlib.FieldTheory.IsSepClosed
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -89,12 +91,12 @@ theorem residueAbsoluteFrobenius_algebraicClosure_injective :
   apply Multiplicative.ext
   apply ZHat.ext
   intro n hn
-  letI : NeZero n := ⟨Nat.ne_of_gt hn⟩
+  let : NeZero n := ⟨Nat.ne_of_gt hn⟩
   let E := finiteResidueGaloisIntermediateField k n
   have hrestriction := congrArg (AlgEquiv.restrictNormalHom E) hzw
   rw [restrictNormalHom_residueAbsoluteFrobenius (z := z) (E := E),
     restrictNormalHom_residueAbsoluteFrobenius (z := w) (E := E)] at hrestriction
-  letI : Finite E := Module.finite_of_finite k
+  let : Finite E := Module.finite_of_finite k
   change finiteResidueFrobeniusFromZHat k E z =
     finiteResidueFrobeniusFromZHat k E w at hrestriction
   rw [finiteResidueFrobeniusFromZHat_apply,
@@ -245,8 +247,10 @@ theorem residueAbsoluteDegree_frobenius :
         (FiniteField.frobeniusAlgEquivOfAlgebraic k (AlgebraicClosure k))) =
     (residueAbsoluteFrobeniusEquiv k)
       (Multiplicative.ofAdd (1 : ZHat))
-  rw [(residueAbsoluteFrobeniusEquiv k).apply_symm_apply]
-  exact (residueAbsoluteFrobenius_one k (AlgebraicClosure k)).symm
+  exact ((residueAbsoluteFrobeniusEquiv k).apply_symm_apply
+    (show Field.absoluteGaloisGroup k from
+      FiniteField.frobeniusAlgEquivOfAlgebraic k (AlgebraicClosure k))).trans
+    (residueAbsoluteFrobenius_one k (AlgebraicClosure k)).symm
 
 /-- On every finite Galois residue subextension, the absolute degree of an
 automorphism is exactly its canonical Frobenius exponent.  This is the
@@ -284,7 +288,7 @@ theorem finiteResidueFrobeniusExponentHom_degree_coordinate
           (zHatReduction (Module.finrank k E) Module.finrank_pos
             (residueAbsoluteDegree k sigma).toAdd)) =
       AlgEquiv.restrictNormalHom E sigma := by
-  letI : Finite E := Module.finite_of_finite k
+  let : Finite E := Module.finite_of_finite k
   exact finiteResidueFrobeniusIntermediate_residueAbsoluteDegree k sigma E
 
 /-- Equivalently, the inverse finite Frobenius coordinate of a restriction
@@ -298,7 +302,7 @@ theorem finiteResidueFrobeniusExponentEquiv_symm_restrict
       Multiplicative.ofAdd
         (zHatReduction (Module.finrank k E) Module.finrank_pos
           (residueAbsoluteDegree k sigma).toAdd) := by
-  letI : Finite E := Module.finite_of_finite k
+  let : Finite E := Module.finite_of_finite k
   apply (finiteResidueFrobeniusExponentEquiv k E).injective
   rw [(finiteResidueFrobeniusExponentEquiv k E).apply_symm_apply]
   exact (finiteResidueFrobeniusExponentHom_degree_coordinate k sigma E).symm

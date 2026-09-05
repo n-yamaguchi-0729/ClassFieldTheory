@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Infinite.ProfiniteCompletion
-import LocalFieldTheory.NonarchimedeanLocalField.MultiplicativeDecomposition
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.MultiplicativeDecomposition
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic
+
+set_option autoImplicit false
 
 /-!
 # The profinite completion of a local multiplicative group
@@ -100,8 +102,8 @@ theorem exists_openFiniteIndexNormalSubgroup_not_mem_localMultiplicativeGroup
         ({ux}ᶜ : Set (LocalFieldTheory.localUnits_profinite K)) := hN hunit
     exact hnot (by rfl)
   · let n : ℕ := valuationExponent.natAbs + 1
-    letI : TopologicalSpace (Multiplicative (ZMod n)) := ⊥
-    letI : DiscreteTopology (Multiplicative (ZMod n)) := ⟨rfl⟩
+    let : TopologicalSpace (Multiplicative (ZMod n)) := ⊥
+    let : DiscreteTopology (Multiplicative (ZMod n)) := ⟨rfl⟩
     let valuationMod : Kˣ →ₜ* Multiplicative (ZMod n) :=
       valuationModContinuousMonoidHom K n
     let H : OpenFiniteIndexNormalSubgroup Kˣ :=

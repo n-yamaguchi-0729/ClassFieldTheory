@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.GlobalClassFields.CyclicRayClassMaximality
-import AlgebraicNumberTheory.Idele.FinitePrime
-import GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
-import GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicRayClassMaximality
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
+
+set_option autoImplicit false
 
 /-!
 # Prime classes at the narrow finite norm conductor
@@ -35,7 +37,7 @@ variable
 -- Reuse the normality witness embedded in the imported ideal-Artin maps.
 -- Without it, every occurrence of the norm quotient repeats an expensive
 -- unsuccessful instance search and builds a non-definitional witness.
-attribute [local instance 1000]
+attribute [local instance]
   IdealClassFieldTheory.ideleClassSubgroupNormal
 
 /-- The class of the normalized one-place prime idèle in the ray class

@@ -1,6 +1,10 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.CompositumRestriction
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import RamificationTheory.LocalField
+import ValuedFieldTheory.Ramification.GaloisValuation.CompositumRestriction
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+import ValuedFieldTheory.Ramification.LocalField.Core
+import ValuedFieldTheory.Ramification.LocalField.BaseChange
+import ValuedFieldTheory.Ramification.LocalField.Unramified
+
+set_option autoImplicit false
 
 /-!
 # Filtered reciprocity for a compositum

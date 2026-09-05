@@ -1,5 +1,14 @@
-import AlgebraicNumberTheory.RayClass.Topology
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.ArchimedeanPowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlaceCompletionInstances
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.LocalResidueArithmetic
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlacePowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.NormContainment
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedIdeleIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedPrincipalQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.PrimePowerKummerIndex
+
+set_option autoImplicit false
 
 /-!
 # Power congruence subgroups inside finite-index idele-class subgroups
@@ -163,7 +172,10 @@ theorem ideleClassPowerLocalUnitSubgroup_le_closedFiniteIndexSubgroup
   have hbPowH : q (b ^ (n : ℕ)) ∈ H := by
     change q (b ^ H.index) ∈ H
     rw [map_pow]
-    exact Subgroup.pow_index_mem H (q b)
+    let : IsMulCommutative (IdeleClassGroup K) :=
+      ⟨⟨fun x y => mul_comm x y⟩⟩
+    let : H.Normal := H.normal_of_isMulCommutative
+    exact H.pow_index_mem (q b)
   have haDecomposition :
       a = b ^ (n : ℕ) * u := by
     dsimp only [u]

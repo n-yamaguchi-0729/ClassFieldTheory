@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.CompletionTransport
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
-import LocalClassFieldTheory.ClassFormation.Valuation
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.CompletionTransport
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Valuation
+
+set_option autoImplicit false
 
 /-!
 # Shared completion spine for integral local induction

@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.SplittingField.IsSplittingField
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+
+set_option autoImplicit false
 
 /-!
 # Towers of equal-characteristic Lubin--Tate level fields
@@ -102,9 +104,9 @@ theorem equalCharacteristicLubinTateLevelField_mono
       (equalCharacteristicLubinTatePrimitivePolynomial_irreducible F m)
       _ (equalCharacteristicLubinTatePrimitivePolynomial_monic F m)
     simpa [Polynomial.IsRoot, Polynomial.aeval_def] using hyp
-  letI : FiniteDimensional B E :=
+  let : FiniteDimensional B E :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI : IsGalois B E :=
+  let : IsGalois B E :=
     equalCharacteristicLubinTateLevelField_isGalois F n
   have hp_split_E : (p.map (algebraMap B E)).Splits := by
     rw [hp_minpoly]

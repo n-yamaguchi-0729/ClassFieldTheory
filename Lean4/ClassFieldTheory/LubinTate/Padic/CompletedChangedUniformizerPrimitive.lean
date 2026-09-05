@@ -1,5 +1,7 @@
 import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
-import LubinTate.Padic.CompletedPrimitiveAction
+import ClassFieldTheory.LubinTate.Padic.CompletedPrimitiveAction
+
+set_option autoImplicit false
 
 /-!
 # Primitive changed-uniformizer points in the completed p-adic level
@@ -173,9 +175,10 @@ theorem padicChangedCompletedUniformizer_isUniformizer
   have huE : IsUnit uE :=
     u.isUnit.map (padicCompletedUnramifiedIntegerMap p)
   apply hπ.of_associated
-  simpa only [πu, standardLubinTateChangedUniformizer,
-    map_mul, πE, uE] using
-    (associated_unit_mul_right πE uE huE)
+  have hmul : padicCompletedUnramifiedIntegerMap p πu = uE * πE :=
+    map_mul (padicCompletedUnramifiedIntegerMap p)
+      (u : (padicLocalField p).valuationSubring) π
+  exact hmul.symm ▸ (associated_unit_mul_right πE uE huE)
 
 /-- The integral changed primitive polynomial is weakly Eisenstein after
 base change to the completed-unramified valuation ring. -/

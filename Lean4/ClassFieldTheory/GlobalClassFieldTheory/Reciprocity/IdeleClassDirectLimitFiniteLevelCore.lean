@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitCore
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
-import RamificationTheory.GaloisValuation.ClosedFixingSubgroup
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitCore
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
 import Mathlib.GroupTheory.QuotientGroup.Defs
+
+set_option autoImplicit false
 
 /-!
 # Finite levels of the rational idele-class direct limit
@@ -20,15 +22,15 @@ namespace Reciprocity
 
 open CyclicCohomology
 
-attribute [local instance 1000]
+attribute [local instance]
   relativeAdeleRingIntermediateAlgebra
 
-local instance (priority := 1001) rationalIntermediateNumberField
+local instance rationalIntermediateNumberField
     (K : IntermediateField ℚ (SeparableClosure ℚ))
     [FiniteDimensional ℚ K] : NumberField K :=
   NumberField.of_module_finite ℚ K
 
-instance (priority := 1001) rationalTowerClassGroupCommGroup
+instance rationalTowerClassGroupCommGroup
     (K N : IntermediateField ℚ (SeparableClosure ℚ))
     [FiniteDimensional ℚ K] [FiniteDimensional ℚ N]
     [Algebra K N] [IsScalarTower ℚ K N] [FiniteDimensional K N] :
@@ -38,7 +40,7 @@ instance (priority := 1001) rationalTowerClassGroupCommGroup
     QuotientGroup.Quotient.commGroup
       (TowerRelativeIdeleGroup.principalSubgroup ℚ K N)
 
-instance (priority := 1001) rationalTowerClassGroupMul
+instance rationalTowerClassGroupMul
     (K N : IntermediateField ℚ (SeparableClosure ℚ))
     [FiniteDimensional ℚ K] [FiniteDimensional ℚ N]
     [Algebra K N] [IsScalarTower ℚ K N] [FiniteDimensional K N] :
@@ -122,8 +124,7 @@ theorem
         (rationalNormalClosure K)
         (RelativeIdeleGroup.classEmbedding (IntermediateField.inclusion (IntermediateField.le_normalClosure K)) c) := by
   simp only [rationalIntermediateIdeleClassToDirectLimit,
-    rationalIntermediateIdeleClassToNormalClosure,
-    MonoidHom.comp_apply]
+    rationalIntermediateIdeleClassToNormalClosure]
   change
     rationalRelativeIdeleClassToDirectLimit
         (rationalNormalClosure K)

@@ -1,8 +1,10 @@
-import LocalClassFieldTheory.Finite.Existence.MaximalKummerNorm
-import LocalClassFieldTheory.Finite.Existence.CyclotomicKummerDescent
-import LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-import AbstractClassFieldTheory.Reciprocity.NormTopology
-import LocalFieldTheory.GroupTheory.PowerIndex
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MaximalKummerNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.CyclotomicKummerDescent
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
+import ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
+
+set_option autoImplicit false
 
 /-!
 # Kummer criteria for openness in the norm topology
@@ -48,8 +50,8 @@ theorem finiteIndexSubgroup_isNormOpen_of_natCast_ne_zero
   obtain ⟨F, hnormF⟩ :=
     exists_finiteGalois_normSubgroup_le_powMonoidHom_range K n hnK'
   let E : IntermediateField K (SeparableClosure K) := F
-  letI : FiniteDimensional K E := F.finiteDimensional
-  letI : IsGalois K E := F.isGalois
+  let : FiniteDimensional K E := F.finiteDimensional
+  let : IsGalois K E := F.isGalois
   let L : FiniteGaloisSubextension B := {
     field := closedFixingSubgroup K (SeparableClosure K) E
     below := fixingSubgroupLeBase K (SeparableClosure K) E
@@ -123,10 +125,10 @@ theorem finiteIndexSubgroup_isNormOpen_of_primitiveRoots
   have hnK' : ((n : ℕ) : K) ≠ 0 := by simpa [n] using hnK
   have hmu' : (primitiveRoots (n : ℕ) K).Nonempty := by
     simpa [n] using hmu
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     kummerRadicalExtension_isGalois
       (K := K) (Omega := SeparableClosure K) n Delta.1
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     KummerTheory.maximalKummerRadicalExtension_finiteDimensional
       (K := K) (Omega := SeparableClosure K) n hnK' hmu'
   let L : FiniteGaloisSubextension B := {

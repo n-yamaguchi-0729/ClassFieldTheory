@@ -1,4 +1,6 @@
-import KroneckerWeber.Setup
+import ClassFieldTheory.KroneckerWeber.Setup
+
+set_option autoImplicit false
 
 /-!
 # The common local cyclotomic target
@@ -34,7 +36,7 @@ theorem kroneckerWeberLocalCompositumCoprimePart_coprime
     (p : Nat.Primes) :
     Nat.Coprime p.1
       (kroneckerWeberLocalCompositumCoprimePart (L := L) p) := by
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let : Fact p.1.Prime := ⟨p.2⟩
   rw [kroneckerWeberLocalCompositumCoprimePart]
   have hprimeTo : Nat.Coprime p.1
       (p.1 ^ kroneckerWeberLocalUnramifiedDegree (L := L) p - 1) := by

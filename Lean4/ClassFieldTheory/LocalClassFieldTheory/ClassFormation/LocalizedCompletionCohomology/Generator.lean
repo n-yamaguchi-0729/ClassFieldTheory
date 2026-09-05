@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+
+set_option autoImplicit false
 
 /-!
 # A generator of a localized finite Galois group
@@ -65,7 +67,7 @@ theorem localizedCompletionGaloisGenerator_generates
       τ ∈ Subgroup.zpowers
         (localizedCompletionGaloisGenerator
           vK hvK w σ hgen) := by
-  letI := localizedCompletionBaseAlgebra vK w
+  let := localizedCompletionBaseAlgebra vK w
   let H := absoluteValueDecompositionGroup K w.1
   let e :=
     decompositionGroupEquivAlgebraicLocalizationAut

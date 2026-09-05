@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.Existence.CyclotomicKummerDescent
-import LocalClassFieldTheory.Finite.Existence.NormSubgroupSurjectivity
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.CyclotomicKummerDescent
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupSurjectivity
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Local existence theorem in characteristic zero
@@ -34,8 +36,8 @@ theorem finiteAbelianNormSubgroupMap_surjective_of_charZero :
   obtain ⟨F, hnormF⟩ :=
     exists_finiteGalois_normSubgroup_le_powMonoidHom_range K n hnK
   let E : IntermediateField K (SeparableClosure K) := F
-  letI : FiniteDimensional K E := F.finiteDimensional
-  letI : IsGalois K E := F.isGalois
+  let : FiniteDimensional K E := F.finiteDimensional
+  let : IsGalois K E := F.isGalois
   apply finiteIndexSubgroup_isNormOpen_of_normSubgroup_le K E H
   intro x hx
   have hxPower : x ∈ (powMonoidHom H.index : Kˣ →* Kˣ).range := by

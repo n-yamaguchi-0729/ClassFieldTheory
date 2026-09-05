@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.CyclotomicUnramifiedGeometricRestriction
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidueNaturality
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicUnramifiedGeometricRestriction
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueNaturality
+
+set_option autoImplicit false
 
 /-!
 # Cyclotomic unramified local--global compatibility
@@ -25,7 +27,7 @@ private def composeMonoidHom
     (f : M →* N) (g : N →* P) : M →* P :=
   g.comp f
 
-attribute [local instance 2000]
+attribute [local instance]
   rationalSeparableClosureAlgebra
   naturalityAbstractFixedFieldBaseQuotientFinite
   naturalityAbstractFixedFieldRelativeQuotientFinite
@@ -38,7 +40,7 @@ attribute [local instance 2000]
   naturalityAbstractRelativeFixedFieldIsAbelianGalois
 
 @[reducible]
-noncomputable local instance (priority := 3000)
+noncomputable local instance
     abstractFixedFieldFiniteIdeleGroupGroup
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)) :
@@ -55,7 +57,7 @@ noncomputable local instance (priority := 3000)
           ℚ (SeparableClosure ℚ) H.field))ˣ)
 
 @[reducible]
-noncomputable local instance (priority := 3000)
+noncomputable local instance
     abstractFixedFieldIdeleGroupGroup
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)) :
@@ -66,7 +68,7 @@ noncomputable local instance (priority := 3000)
   Prod.instGroup
 
 @[reducible]
-noncomputable local instance (priority := 3000)
+noncomputable local instance
     abstractFixedFieldIdeleClassGroupGroup
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)) :
@@ -97,19 +99,19 @@ private theorem
       finiteDimensional :=
         j.equivFieldRange.toLinearEquiv.finiteDimensional
       isGalois := IsGalois.of_algEquiv j.equivFieldRange }
-  letI _ : FiniteDimensional K G := G.finiteDimensional
-  letI _ : NumberField G :=
+  let _ : FiniteDimensional K G := G.finiteDimensional
+  let _ : NumberField G :=
     NumberField.of_module_finite K G
-  letI _ : IsAbelianGalois K G :=
+  let _ : IsAbelianGalois K G :=
     IsAbelianGalois.of_algHom G.toIntermediateField.val
-  letI _ : Algebra E G :=
+  let _ : Algebra E G :=
     j.equivFieldRange.toRingHom.toAlgebra
-  letI _ : SMul E G := Algebra.toSMul
-  letI _ : IsScalarTower K E G :=
+  let _ : SMul E G := Algebra.toSMul
+  let _ : IsScalarTower K E G :=
     IsScalarTower.of_algHom j.equivFieldRange.toAlgHom
-  letI _ : IsScalarTower K G Ω :=
+  let _ : IsScalarTower K G Ω :=
     IntermediateField.isScalarTower_mid G.toIntermediateField
-  letI _ : IsScalarTower E G Ω :=
+  let _ : IsScalarTower E G Ω :=
     IsScalarTower.of_algebraMap_eq fun _ => rfl
   have hProjection :
       AlgEquiv.restrictNormalHom G
@@ -183,20 +185,20 @@ private theorem
     LocalClassFieldTheory.abstractRelativeFixedField
       ℚ (SeparableClosure ℚ)
       (rationalCyclotomicFieldInertia_le H.field)
-  letI fNumberField : NumberField F :=
+  let fNumberField : NumberField F :=
     cyclotomicUnramifiedGeometricBaseNumberField H
-  letI eNumberField : NumberField E :=
+  let eNumberField : NumberField E :=
     cyclotomicUnramifiedGeometricRelativeNumberField H L
-  letI fEAlgebra : Algebra F E := E.algebra'
-  letI fUAlgebra : Algebra F U := U.algebra'
-  letI fEIsAbelianGalois : IsAbelianGalois F E :=
+  let fEAlgebra : Algebra F E := E.algebra'
+  let fUAlgebra : Algebra F U := U.algebra'
+  let fEIsAbelianGalois : IsAbelianGalois F E :=
     cyclotomicUnramifiedGeometricRelativeIsAbelianGalois H L
-  letI fUIsAbelianGalois : IsAbelianGalois F U :=
+  let fUIsAbelianGalois : IsAbelianGalois F U :=
     cyclotomicUnramifiedGeometricMaximalIsAbelianGalois H
-  letI eUAlgebra : Algebra E U :=
+  let eUAlgebra : Algebra E U :=
     abstractFixedFieldCyclotomicFiniteUnramifiedInclusionAlgebra
       H L hUnramified
-  letI fEUTower : @IsScalarTower F E U
+  let fEUTower : @IsScalarTower F E U
       Algebra.toSMul Algebra.toSMul Algebra.toSMul :=
     IsScalarTower.of_algHom
       (abstractFixedFieldCyclotomicFiniteUnramifiedInclusion
@@ -262,7 +264,6 @@ private theorem
   dsimp only
   apply MonoidHom.ext
   intro x
-  simp only [MonoidHom.comp_apply]
   exact
     abstractFixedFieldCyclotomicIdeleClassArtinMonoidHom_mk
       H (IdeleGroup.finitePlaceIdele v x)
@@ -316,7 +317,7 @@ theorem
     LocalClassFieldTheory.abstractRelativeFixedField
       ℚ (SeparableClosure ℚ)
       (rationalCyclotomicFieldInertia_le H.field)
-  letI fUIsAbelianGalois : IsAbelianGalois F U :=
+  let fUIsAbelianGalois : IsAbelianGalois F U :=
     abstractFixedFieldCyclotomic_isAbelianGalois H
   let finiteIdele := IdeleGroup.finitePlaceIdele v
   let finiteIdeleClass := IdeleGroup.finitePlaceIdeleClass v

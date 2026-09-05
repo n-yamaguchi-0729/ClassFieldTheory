@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.BaseChange
-import AlgebraicNumberTheory.Completion.AdicCompletionComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
+
+set_option autoImplicit false
 
 /-!
 # Scalar extension from relative to ordinary adeles
@@ -88,20 +90,17 @@ theorem finitePlaceTensorRingEquivAboveAdic_apply_extension
           (K := K) (L := L) w u
         (finitePlaceLocalTensorDecompositionComponent
           (K := K) (L := L) w u x) := by
-  simp [finitePlaceTensorRingEquivAboveAdic,
-    finitePlaceLocalTensorDecompositionComponent,
-    finitePlaceExtensionAdicCompletionRingEquiv]
-  change
-    Equiv.piCongrLeft
-        (fun W : {W : HeightOneSpectrum (𝓞 L) //
-            finitePlaceBelow (K := K) W = w} =>
-          W.1.adicCompletion L)
-        (finitePlaceExtensionEquivAbove
-          (K := K) (L := L) w)
-        _ (finitePlaceExtensionEquivAbove
-          (K := K) (L := L) w u) = _
-  rw [Equiv.piCongrLeft_apply_apply]
-  rfl
+  let P :=
+    fun W : {W : HeightOneSpectrum (𝓞 L) //
+        finitePlaceBelow (K := K) W = w} =>
+      W.1.adicCompletion L
+  let e := finitePlaceExtensionEquivAbove (K := K) (L := L) w
+  let f : ∀ a, P (e a) := fun a =>
+    finitePlaceExtensionAdicCompletionRingEquiv
+        (K := K) (L := L) w a
+      (finitePlaceLocalTensorDecompositionComponent
+        (K := K) (L := L) w a x)
+  exact Equiv.piCongrLeft_apply_apply P e f u
 
 /-- On a pure tensor, the finite-place relative-to-ordinary comparison
 is the canonical completion map on the local coefficient multiplied by
@@ -218,7 +217,7 @@ theorem infinitePlaceTensorRingEquivAbove_tmul
       NumberField.LiesOver.completionMap
           (v := w) (w := W.1) a *
         algebraMap L W.1.Completion x := by
-  letI : W.1.1.LiesOver w.1 :=
+  let : W.1.1.LiesOver w.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) W.2⟩
   rw [infinitePlaceTensorRingEquivAbove_apply]
   change
@@ -876,7 +875,7 @@ theorem relativeAdeleBaseChangeRingEquiv_infiniteComponent_tmul
           (v := v) (w := W) (a.1 v) *
         algebraMap L W.Completion x := by
   let v := infinitePlaceBelow (K := K) W
-  letI : W.1.LiesOver v.1 := ⟨rfl⟩
+  let : W.1.LiesOver v.1 := ⟨rfl⟩
   change
     infinitePlaceTensorRingEquivAbove
         (K := K) (L := L) v

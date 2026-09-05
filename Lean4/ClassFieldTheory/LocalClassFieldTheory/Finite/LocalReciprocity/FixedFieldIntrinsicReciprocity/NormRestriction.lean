@@ -1,5 +1,7 @@
 import Mathlib.GroupTheory.Abelianization.Defs
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeComparison
+
+set_option autoImplicit false
 
 /-!
 # Norm--restriction for local Artin maps
@@ -278,7 +280,7 @@ theorem AmbientEmbeddedFixedFieldPresentation.fixedFieldNormResidueTransport
     lower.baseEquiv
   let FUpper :=
     abstractFixedField K (SeparableClosure K) H'
-  letI : Algebra FLower FUpper :=
+  let : Algebra FLower FUpper :=
     RingHom.toAlgebra
       (IntermediateField.inclusion
         (abstractFixedField_le K (SeparableClosure K) hH'H))
@@ -414,9 +416,9 @@ theorem ambientEmbeddedNormResidueElement_norm_restriction
       ambientEmbeddedNormResidueElement K K L
         (j.comp (IsScalarTower.toAlgHom K L L')) eLower
         (normUnits K K' a) := by
-  letI : FiniteDimensional K L' :=
+  let : FiniteDimensional K L' :=
     FiniteDimensional.trans K K' L'
-  letI : Algebra.IsSeparable K L' :=
+  let : Algebra.IsSeparable K L' :=
     Algebra.IsSeparable.trans K K' L'
   let iUpper : K' →ₐ[K] SeparableClosure K :=
     j.comp (IsScalarTower.toAlgHom K K' L')
@@ -470,33 +472,33 @@ theorem ambientEmbeddedNormResidueElement_norm_restriction
         hRangeJJ
   let hJH : J.toSubgroup ≤ H.toSubgroup := lower.extension.below
   let hJ'H' : J'.toSubgroup ≤ H'.toSubgroup := upper.extension.below
-  letI hJnormal :
+  let hJnormal :
       (extensionSubgroup H J hJH).Normal :=
     lower.extension.normal
-  letI hJfinite : Finite
+  let hJfinite : Finite
       (H.toSubgroup ⧸ extensionSubgroup H J hJH) :=
     lower.extension.finite
-  letI hJ'normal :
+  let hJ'normal :
       (extensionSubgroup H' J' hJ'H').Normal :=
     upper.extension.normal
-  letI hJ'finite : Finite
+  let hJ'finite : Finite
       (H'.toSubgroup ⧸ extensionSubgroup H' J' hJ'H') :=
     upper.extension.finite
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
           (baseField Gal(SeparableClosure K / K))
           H (le_baseField H)) :=
     lower.base.finite
-  letI hH'absolute : Finite
+  let hH'absolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
           (baseField Gal(SeparableClosure K / K))
           H' (le_baseField H')) :=
     upper.base.finite
-  letI hH'finite : Finite
+  let hH'finite : Finite
       (H.toSubgroup ⧸ extensionSubgroup H H' hH'H) := by
     let inclusion :=
       Subgroup.quotientSubgroupOfEmbeddingOfLE
@@ -718,9 +720,9 @@ theorem abelianLocalArtinMonoidHom_norm_restriction
         (normUnits K K') := by
   apply MonoidHom.ext
   intro a
-  letI : FiniteDimensional K L' :=
+  let : FiniteDimensional K L' :=
     FiniteDimensional.trans K K' L'
-  letI : Algebra.IsSeparable K L' :=
+  let : Algebra.IsSeparable K L' :=
     Algebra.IsSeparable.trans K K' L'
   let j : L' →ₐ[K] SeparableClosure K :=
     IsSepClosed.lift

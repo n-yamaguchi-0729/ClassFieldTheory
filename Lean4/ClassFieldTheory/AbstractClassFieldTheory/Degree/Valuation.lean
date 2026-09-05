@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Degree.FrobeniusLift
-import AbstractClassFieldTheory.Degree.Norm
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Norm
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -271,8 +273,9 @@ theorem dividedAt_mem_valueGroup (v : ValuationData D A)
   change zHatDivide (K.residueDegree D : ℕ)
       (K.residueDegree D).property
         (v.normCompositeAtInResidueImage K a) ∈ v.valueGroup
-  rw [hzSubtype, zHatDivide_zHatMulNat]
-  exact hzZ
+  rw [hzSubtype]
+  exact (zHatDivide_zHatMulNat (K.residueDegree D : ℕ)
+    (K.residueDegree D).property z).symm ▸ hzZ
 
 /-- The normalized valuation `v_K = (1/f_K) v ∘ N_{K|k}`, with the exact
 codomain `Z` from the valuation-quotient axiom. -/
@@ -309,7 +312,9 @@ theorem normalizedValuation_surjective (v : ValuationData D A)
     change v.normCompositeAt K a =
       zHatMulNat (K.residueDegree D : ℕ) z.1
     exact ha
-  rw [hsub, zHatDivide_zHatMulNat]
+  rw [hsub]
+  exact zHatDivide_zHatMulNat (K.residueDegree D : ℕ)
+    (K.residueDegree D).property z.1
 
 end ValuationData
 

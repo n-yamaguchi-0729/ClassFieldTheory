@@ -1,5 +1,7 @@
-import LubinTate.FormalModule.StandardFormalGroup
-import LubinTate.Padic.MultiplicativeSeries
+import ClassFieldTheory.LubinTate.FormalModule.StandardFormalGroup
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeSeries
+
+set_option autoImplicit false
 
 /-!
 # Comparing the standard and multiplicative Lubin--Tate series over `ℚ_p`
@@ -77,7 +79,6 @@ theorem padicStandardToMultiplicativeIntertwiner_functionalEquation
         (padicStandardToMultiplicativeIntertwiner p) := by
   have h :=
     padicStandardToMultiplicativeIntertwiner_intertwines p
-  rw [Intertwines] at h
   calc
     PowerSeries.subst
         (padicStandardToMultiplicativeIntertwiner p)
@@ -251,7 +252,6 @@ theorem padicMultiplicativeToStandardIntertwiner_functionalEquation
         (padicMultiplicativeToStandardIntertwiner p) := by
   have h :=
     padicMultiplicativeToStandardIntertwiner_intertwines p
-  rw [Intertwines] at h
   calc
     PowerSeries.subst
         (padicMultiplicativeToStandardIntertwiner p)

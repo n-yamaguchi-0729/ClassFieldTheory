@@ -1,0 +1,13 @@
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.Coordinates
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralLocalFactor
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.All
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.LocalComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedAction
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedProduct
+
+set_option autoImplicit false
+
+/-! # Adelic coordinates and restricted products -/

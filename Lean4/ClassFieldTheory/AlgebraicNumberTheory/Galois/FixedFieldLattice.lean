@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fixed fields and subgroup lattice operations
 

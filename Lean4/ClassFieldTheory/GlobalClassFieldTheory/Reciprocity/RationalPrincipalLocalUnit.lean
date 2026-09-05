@@ -1,9 +1,18 @@
-import GlobalClassFieldTheory.Reciprocity.RationalPrimeFactorization
-import AlgebraicNumberTheory.Idele.ClassGroup
-import LocalFieldTheory.DiscreteValuationField.PadicField
-import LocalFieldTheory.DiscreteValuationField.FieldUnitDecomposition
-import LubinTate.FiniteLevel.ChangedUniformizer
-import LubinTate.Padic.MultiplicativeSeries
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalPrimeFactorization
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormalClosureNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitDecomposition
+import ClassFieldTheory.LubinTate.FiniteLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeSeries
+
+set_option autoImplicit false
 
 /-!
 # The ramified local unit of a rational principal idele
@@ -275,8 +284,9 @@ theorem rationalPadicFieldUnit_uniformizerUnitPart
     LubinTate.standardLubinTateBaseUniformizerUnit hπ
   apply
     LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup.valuationSubringUnitFieldUnitHom_injective
-  rw [
-    LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup.valuationSubringUnitFieldUnitHom_fieldUnitUniformizerUnitPart]
+  refine
+    (LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup.valuationSubringUnitFieldUnitHom_fieldUnitUniformizerUnitPart
+      F.toCompleteDVF hπ X).trans ?_
   change
     X * ϖ ^
         (-((LocalFieldTheory.DiscreteValuationField.CompleteDVF.uniformizerValueExponent

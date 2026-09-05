@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Extension.BaseChange
-import ValuationTheory.Completion.DegreeNormTrace
-import ValuationTheory.Completion.FiniteProductNormTrace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.BaseChange
+import ValuedFieldTheory.Valuation.Completion.DegreeNormTrace
+import ValuedFieldTheory.Valuation.Completion.FiniteProductNormTrace
+
+set_option autoImplicit false
 
 /-!
 # Local components of the idele norm
@@ -51,17 +53,17 @@ theorem localNorm_eq_prod
           (completionTensorDecomposition_left
             (K := K) (L := L) vK hvK z w) := by
   classical
-  letI :=
+  let :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK
-  letI : ∀ w : AbsoluteValueExtension vK L,
+  let : ∀ w : AbsoluteValueExtension vK L,
       Algebra vK.Completion w.1.Completion :=
     fun w ↦ AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w : AbsoluteValueExtension vK L,
+  let : ∀ w : AbsoluteValueExtension vK L,
       Module.Free vK.Completion w.1.Completion :=
     fun w ↦ Module.Free.of_divisionRing
       vK.Completion w.1.Completion
-  letI : ∀ w : AbsoluteValueExtension vK L,
+  let : ∀ w : AbsoluteValueExtension vK L,
       Module.Finite vK.Completion w.1.Completion :=
     fun w ↦ completionModuleFinite vK hvK w
   let e :=

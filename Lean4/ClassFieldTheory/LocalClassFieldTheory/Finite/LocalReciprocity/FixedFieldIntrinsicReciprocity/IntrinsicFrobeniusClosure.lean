@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusQuotientTransport
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusQuotientTransport
+
+set_option autoImplicit false
 
 /-!
 # Intrinsic Frobenius closure comparison
@@ -71,22 +73,22 @@ theorem intrinsicFixedFieldFrobeniusClosure_mem_iff
                 K H J hJH e)) : Subgroup _) := by
   dsimp only
   let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
   let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : NontriviallyNormedField F :=
+  let : NontriviallyNormedField F :=
     finiteExtensionSpectralNormedField K F
-  letI : ValuativeRel F :=
+  let : ValuativeRel F :=
     finiteExtensionSpectralValuativeRel K F
-  letI : IsNonarchimedeanLocalField F :=
+  let : IsNonarchimedeanLocalField F :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K F
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       K (SeparableClosure K) H.field J hJH hJnormal
   let i : E →ₐ[F] SeparableClosure F :=
@@ -172,22 +174,22 @@ theorem ambientFixedFieldFrobeniusClosure_mem_iff
                 K H J hJH)) : Subgroup _) := by
   dsimp only
   let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
   let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : NontriviallyNormedField F :=
+  let : NontriviallyNormedField F :=
     finiteExtensionSpectralNormedField K F
-  letI : ValuativeRel F :=
+  let : ValuativeRel F :=
     finiteExtensionSpectralValuativeRel K F
-  letI : IsNonarchimedeanLocalField F :=
+  let : IsNonarchimedeanLocalField F :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K F
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       K (SeparableClosure K) H.field J hJH hJnormal
   let RH :=

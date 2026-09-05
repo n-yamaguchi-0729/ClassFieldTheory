@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.LowerRamificationFormula
-import LubinTate.FiniteLevel.UpperRamification
+import ClassFieldTheory.LubinTate.FiniteLevel.LowerRamificationFormula
+import ClassFieldTheory.LubinTate.FiniteLevel.UpperRamification
+
+set_option autoImplicit false
 
 /-!
 # Herbrand formula for finite Lubin--Tate levels

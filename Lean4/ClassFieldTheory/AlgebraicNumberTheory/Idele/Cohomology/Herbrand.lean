@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.Extension.GaloisDescent
-import AlgebraicNumberTheory.Idele.Extension.GaloisNorm
-import CyclicCohomology.Herbrand.Permutation.Module
-import CyclicCohomology.Herbrand.HerbrandFiniteness
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisDescent
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisNorm
+import GaloisCohomology.Cyclic.Herbrand.Permutation.Module
+import GaloisCohomology.Cyclic.Herbrand.HerbrandFiniteness
+
+set_option autoImplicit false
 
 /-!
 # Herbrand cohomology of the relative idele class group
@@ -390,6 +392,12 @@ noncomputable def ideleClassHerbrandHMinusOneEquiv
     (G := L ≃ₐ[K] L)
     (A := RelativeIdeleGroup.ClassGroup K L) σ
 
+section NormQuotientIdentification
+
+local instance ideleClassNormQuotient_baseIsMulCommutative :
+    IsMulCommutative (IdeleClassGroup K) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
 /-- The degree-zero Tate group of the actual idele class group is the
 class-norm quotient `C_K / N_{L/K} C_L`. -/
 noncomputable def ideleClassHerbrandH0EquivNormQuotient :
@@ -422,6 +430,8 @@ theorem ideleClassNorm_index_eq_herbrandH0_card :
     (Nat.card_congr
       (ideleClassHerbrandH0EquivNormQuotient
         K L).toEquiv).symm
+
+end NormQuotientIdentification
 
 omit [NumberField L] [FiniteDimensional K L] [IsGalois K L] in
 /-- Exactness at `I_L` of `Lˣ → I_L → C_L`. -/

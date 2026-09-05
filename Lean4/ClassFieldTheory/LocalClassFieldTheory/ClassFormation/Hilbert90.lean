@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import CyclicCohomology.GaloisCohomology
+import GaloisCohomology.Cyclic.GaloisCohomology
+
+set_option autoImplicit false
 /-!
 Provides the public declarations in the
 `LocalClassFieldTheory.ClassFormation.Hilbert90` Lean module.

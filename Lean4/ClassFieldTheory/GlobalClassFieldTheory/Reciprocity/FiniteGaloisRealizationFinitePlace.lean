@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationCore
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationCore
+
+set_option autoImplicit false
 
 /-!
 # Finite places in the compatible Galois realization
@@ -83,15 +85,15 @@ theorem
       K L v w).1
         (algebraMap L (SeparableClosure ℚ) x) =
       w.1 x := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ L (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopScalarTower L
-  letI : Algebra.IsAlgebraic L (SeparableClosure ℚ) :=
+  let : Algebra.IsAlgebraic L (SeparableClosure ℚ) :=
     Algebra.IsAlgebraic.tower_top (K := ℚ) L
   exact
     AbsoluteValueExtension.extendToAlgebraicallyClosed_algebraMap
@@ -117,11 +119,11 @@ theorem
         (f := algebraMap L (SeparableClosure ℚ))
         (algebraMap L (SeparableClosure ℚ)).injective =
       w.1 := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   ext x
   exact

@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Degree.PrimeElements
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.PrimeElements
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 universe u
 

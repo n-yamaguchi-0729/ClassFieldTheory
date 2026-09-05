@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.TensorProduct
+import ClassFieldTheory.AlgebraicNumberTheory.TensorProduct
 import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
+
+set_option autoImplicit false
 
 /-!
 # Prime cyclotomic base change
@@ -36,11 +38,11 @@ theorem cyclotomicField_finrank_le_totient
     (m : ℕ) (hm : 0 < m) :
     Module.finrank F (CyclotomicField m F) ≤
       Nat.totient m := by
-  letI : NeZero m := ⟨hm.ne'⟩
+  let : NeZero m := ⟨hm.ne'⟩
   let C := CyclotomicField m F
-  letI : IsCyclotomicExtension {m} F C :=
+  let : IsCyclotomicExtension {m} F C :=
     CyclotomicField.isCyclotomicExtension m F
-  letI : FiniteDimensional F C :=
+  let : FiniteDimensional F C :=
     IsCyclotomicExtension.finiteDimensional {m} F C
   obtain ⟨ζ, hζ⟩ :=
     (CyclotomicField.isCyclotomicExtension m F).exists_isPrimitiveRoot
@@ -113,7 +115,7 @@ strictly smaller than the prime `p`. -/
 theorem primeCyclotomicBase_finrank_lt
     (p : ℕ) (hp : p.Prime) :
     Module.finrank K (PrimeCyclotomicBase K p) < p := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
+  let : NeZero p := ⟨hp.ne_zero⟩
   have hle :
       Module.finrank K (PrimeCyclotomicBase K p) ≤
         Nat.totient p :=
@@ -181,10 +183,10 @@ theorem primeCyclotomicPushout_finrank
         (PrimeCyclotomicBase K p)
         (PrimeCyclotomicPushout K L p) =
       p := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
-  letI : Field (PrimeCyclotomicPushout K L p) :=
+  let : NeZero p := ⟨hp.ne_zero⟩
+  let : Field (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushoutField K L p hp hdegree
-  letI : Algebra
+  let : Algebra
       (PrimeCyclotomicBase K p)
       (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushoutAlgebra K L p hp hdegree
@@ -204,10 +206,10 @@ theorem primeCyclotomicPushout_isGalois
     IsGalois
       (PrimeCyclotomicBase K p)
       (PrimeCyclotomicPushout K L p) := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
-  letI : Field (PrimeCyclotomicPushout K L p) :=
+  let : NeZero p := ⟨hp.ne_zero⟩
+  let : Field (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushoutField K L p hp hdegree
-  letI : Algebra
+  let : Algebra
       (PrimeCyclotomicBase K p)
       (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushoutAlgebra K L p hp hdegree
@@ -230,10 +232,10 @@ theorem primeCyclotomicPushout_numberField
         (PrimeCyclotomicPushout K L p) :=
       primeCyclotomicPushoutAlgebra K L p hp hdegree
     NumberField (PrimeCyclotomicPushout K L p) := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
-  letI : Field (PrimeCyclotomicPushout K L p) :=
+  let : NeZero p := ⟨hp.ne_zero⟩
+  let : Field (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushoutField K L p hp hdegree
-  letI : Algebra
+  let : Algebra
       (PrimeCyclotomicBase K p)
       (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushoutAlgebra K L p hp hdegree
@@ -246,7 +248,7 @@ theorem primeCyclotomicPushout_numberField
 theorem primeCyclotomicBase_primitiveRoots_nonempty
     (p : ℕ) (hp : p.Prime) :
     (primitiveRoots p (PrimeCyclotomicBase K p)).Nonempty := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
+  let : NeZero p := ⟨hp.ne_zero⟩
   obtain ⟨ζ, hζ⟩ :=
     (CyclotomicField.isCyclotomicExtension p K).exists_isPrimitiveRoot
       (Set.mem_singleton p) hp.ne_zero
@@ -273,19 +275,19 @@ theorem primeCyclotomicPushout_isCyclic
       (PrimeCyclotomicPushout K L p ≃ₐ[
         PrimeCyclotomicBase K p]
         PrimeCyclotomicPushout K L p) := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
-  letI : Field (PrimeCyclotomicPushout K L p) :=
+  let : NeZero p := ⟨hp.ne_zero⟩
+  let : Field (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushoutField K L p hp hdegree
-  letI : Algebra
+  let : Algebra
       (PrimeCyclotomicBase K p)
       (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushoutAlgebra K L p hp hdegree
-  letI : IsGalois
+  let : IsGalois
       (PrimeCyclotomicBase K p)
       (PrimeCyclotomicPushout K L p) :=
     primeCyclotomicPushout_isGalois
       K L p hp hdegree
-  letI : Fact p.Prime := ⟨hp⟩
+  let : Fact p.Prime := ⟨hp⟩
   exact
     isCyclic_of_prime_card (p := p) (by
       rw [IsGalois.card_aut_eq_finrank,

@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
+
+set_option autoImplicit false
 
 /-!
 # Comparison of the big and small Hilbert class fields
@@ -21,8 +23,16 @@ open NumberField
 
 variable {K : Type*} [Field K] [NumberField K]
 
+/-- Fix the canonical commutativity needed for Hilbert norm-subgroup
+quotients in this module. -/
+private theorem hilbertClassFieldComparison_ideleClassGroupIsMulCommutative :
+    IsMulCommutative (IdeleClassGroup K) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] hilbertClassFieldComparison_ideleClassGroupIsMulCommutative
+
 /-- Keep the real-sign quotient normality instance stable across declarations. -/
-local instance (priority := 2000)
+local instance
     hilbertClassFieldComparison_realSignGroupIsMulCommutative :
     IsMulCommutative (RayClass.realSignGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩

@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveAction
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: finite parameters for the Lubin--Tate action

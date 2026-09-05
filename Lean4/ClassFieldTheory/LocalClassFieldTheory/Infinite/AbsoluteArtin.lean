@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotientTransitions
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotientTransitions
+
+set_option autoImplicit false
 
 /-!
 # The absolute local Artin map from compatible finite quotients
@@ -145,7 +147,7 @@ noncomputable def absoluteFiniteArtinLimitMap :
     apply continuous_induced_rng.mpr
     apply continuous_pi
     intro N
-    letI : DiscreteTopology
+    let : DiscreteTopology
         (localAbsoluteAbelianProfinite K ⧸ N.toSubgroup) :=
       QuotientGroup.discreteTopology N.isOpen'
     let q :

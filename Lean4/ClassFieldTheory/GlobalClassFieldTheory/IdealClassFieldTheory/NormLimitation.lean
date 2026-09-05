@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationCore
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationCore
+
+set_option autoImplicit false
 
 /-!
 # Ideal and ray consequences of norm limitation
@@ -16,6 +18,13 @@ noncomputable section
 
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
+
+private theorem normLimitationIdeleClassIsMulCommutative
+    {F : Type} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] normLimitationIdeleClassIsMulCommutative
 
 variable
     (K L : Type)
@@ -45,7 +54,17 @@ theorem rayNormSubgroup_eq_rayClassToNormQuotient_ker
       (rayClassToNormQuotient m
         ((_root_.ideleClassNorm K L).range) hm).ker := by
   unfold rayNormSubgroup rayClassToNormQuotient
-  rw [QuotientGroup.ker_map, Subgroup.comap_id]
+  let N := RayClass.Modulus.congruenceSubgroup m
+  let M := (_root_.ideleClassNorm K L).range
+  change
+    Subgroup.map (QuotientGroup.mk' N) M =
+      (QuotientGroup.map N M (MonoidHom.id (IdeleClassGroup K)) _).ker
+  symm
+  simpa only [Subgroup.comap_id] using
+    (QuotientGroup.ker_map (N := N) M
+      (MonoidHom.id (IdeleClassGroup K))
+      (show N ≤ Subgroup.comap (MonoidHom.id (IdeleClassGroup K)) M from
+        by simpa only [N, M, Subgroup.comap_id] using hm))
 
 /-- Ideal norm limitation: for every defining modulus, the genuine ideal
 norm group of a finite extension equals that of its maximal abelian

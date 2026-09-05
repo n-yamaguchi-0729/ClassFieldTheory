@@ -1,9 +1,11 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.ConjugatePrimeNorm
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusPowerSumRelation
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.NormClassRelation
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FiniteStageCorrections
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.CorrectionSum
-import AbstractClassFieldTheory.Reciprocity.Construction.ChosenDegreeOneFrobenius
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.ConjugatePrimeNorm
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusPowerSumRelation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.NormClassRelation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FiniteStageCorrections
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.CorrectionSum
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.ChosenDegreeOneFrobenius
+
+set_option autoImplicit false
 
 /-!
 # Multiplicativity of the abstract reciprocity map
@@ -55,9 +57,9 @@ theorem reciprocityMap_mul
       D.reciprocityMap A v K L hLK sigma1 +
         D.reciprocityMap A v K L hLK sigma2 := by
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
   let phi := D.chosenDegreeOneFrobeniusElement KR L hLK
@@ -74,28 +76,28 @@ theorem reciprocityMap_mul
   let hS2K := D.frobeniusFixedField_le KR L hLK sigma2
   let hS3K := D.frobeniusFixedField_le KR L hLK sigma3
   let hS4K := D.frobeniusFixedField_le KR L hLK sigma4
-  letI hS1finite : Finite
+  let hS1finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S1 hS1K) :=
     D.frobeniusFixedField_finite KR L hLK sigma1
-  letI hS2finite : Finite
+  let hS2finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S2 hS2K) :=
     D.frobeniusFixedField_finite KR L hLK sigma2
-  letI hS3finite : Finite
+  let hS3finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S3 hS3K) :=
     D.frobeniusFixedField_finite KR L hLK sigma3
-  letI hS4finite : Finite
+  let hS4finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S4 hS4K) :=
     D.frobeniusFixedField_finite KR L hLK sigma4
-  letI hS1absolute : Finite ((baseField G).toSubgroup ⧸
+  let hS1absolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S1 (le_baseField S1)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK sigma1
-  letI hS2absolute : Finite ((baseField G).toSubgroup ⧸
+  let hS2absolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S2 (le_baseField S2)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK sigma2
-  letI hS3absolute : Finite ((baseField G).toSubgroup ⧸
+  let hS3absolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S3 (le_baseField S3)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK sigma3
-  letI hS4absolute : Finite ((baseField G).toSubgroup ⧸
+  let hS4absolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S4 (le_baseField S4)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK sigma4
   let Sigma1 : FiniteAbstractField G := ⟨S1, hS1absolute⟩
@@ -200,7 +202,7 @@ theorem reciprocityMap_mul
           E, S1, S3, S4, pi1, pi3] using hraw]
     simpa only [tau, uiU, correction, B,
       D.frobeniusQuotientRepresentation_apply] using hdiff
-  letI hIfinite : Finite
+  let hIfinite : Finite
       (I.toSubgroup ⧸ extensionSubgroup I E hEI) :=
     D.maximalUnramifiedExtension_finite KR.field L hLK
   obtain ⟨aK, haKdescend, haKunitNorm⟩ :=

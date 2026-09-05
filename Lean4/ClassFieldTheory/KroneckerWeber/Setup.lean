@@ -1,11 +1,13 @@
-import ValuationTheory.AbsoluteValue.AlgebraicLocalization
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
 import Mathlib.FieldTheory.Galois.GaloisClosure
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import AlgebraicNumberTheory.FiniteAbelianCompositum
-import AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
-import KroneckerWeber.LocalCyclotomicEmbedding
-import RamificationTheory.HilbertRamification.Dedekind.Basic
+import ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
+import ClassFieldTheory.KroneckerWeber.LocalCyclotomicEmbedding
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+
+set_option autoImplicit false
 
 /-!
 # Setup for the global Kronecker--Weber theorem
@@ -59,7 +61,7 @@ theorem mem_kroneckerWeberRamifiedPrimes_iff
         ¬ Algebra.IsUnramifiedAt ℤ w.asIdeal := by
   classical
   simp only [kroneckerWeberRamifiedPrimes, Finset.mem_image,
-    Set.Finite.mem_toFinset, Set.mem_setOf_eq]
+    Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
   constructor
   · rintro ⟨v, hv, rfl⟩
     simpa using hv
@@ -73,9 +75,25 @@ constructed by pulling the absolute value on an algebraic closure of the
 completion back along a chosen embedding. -/
 noncomputable def kroneckerWeberPadicExtension
     (p : ℕ) [Fact p.Prime] :
-    AbsoluteValueExtension (Rat.AbsoluteValue.padic p) L := by
+  AbsoluteValueExtension (Rat.AbsoluteValue.padic p) L := by
+  let vK := Rat.AbsoluteValue.padic p
+  letI : Algebra ℚ ℚ := Algebra.id ℚ
+  let hWith : Algebra ℚ (WithAbs vK) :=
+    WithAbs.instAlgebra _
+  let hUniform : UniformContinuousConstSMul ℚ (WithAbs vK) :=
+    WithAbs.instUniformContinuousConstSMulReal _
+  let hBase : Algebra ℚ vK.Completion :=
+    @UniformSpace.Completion.algebra
+      (WithAbs vK) _ _ _ _ ℚ _ hWith hUniform
+  let hClosure : Algebra ℚ
+      (absoluteValueExtension_algebraicCompletionClosure vK) :=
+    @AlgebraicClosure.instAlgebra vK.Completion _ ℚ _ hBase
+  let : Algebra ℚ vK.Completion := hBase
+  let : Algebra ℚ
+      (absoluteValueExtension_algebraicCompletionClosure vK) :=
+    hClosure
   exact pullbackAbsoluteValueExtension
-    (Rat.AbsoluteValue.padic p)
+    vK
     (padicAbsoluteValue_isNontrivial p)
     IsSepClosed.lift
 
@@ -95,10 +113,10 @@ noncomputable def kroneckerWeberLocalCyclotomicEmbeddingProperty
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
   letI hE : Field E := inferInstance
   letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p.1
+  let e := padicAbsoluteValueCompletionRingEquiv p.1
   letI hQpE : Algebra ℚ_[p.1] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p.1] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
   exact Nonempty
     (E →ₐ[ℚ_[p.1]]
       CyclotomicField ((p.1 ^ f - 1) * p.1 ^ n) ℚ_[p.1])
@@ -150,7 +168,7 @@ noncomputable def kroneckerWeberLocalRamificationExponent
     (p : Nat.Primes) : ℕ :=
   (kroneckerWeberLocalCyclotomicData (L := L) p).ramificationExponent
 
-include L hNF hLab in
+include L hNF in
 /-- The chosen prime-to-`p` residue degree is positive. -/
 theorem kroneckerWeberLocalUnramifiedDegree_pos
     (p : Nat.Primes) :
@@ -158,7 +176,7 @@ theorem kroneckerWeberLocalUnramifiedDegree_pos
   (kroneckerWeberLocalCyclotomicData
     (L := L) p).unramifiedDegree_pos
 
-include L hNF hLab in
+include L hNF in
 /-- The actual local cyclotomic embedding selected together with the two
 local exponents. -/
 theorem kroneckerWeberLocalCyclotomicEmbedding
@@ -183,7 +201,7 @@ noncomputable def kroneckerWeberConductorCoprimePart
   ∏ q ∈ (kroneckerWeberRamifiedPrimes (L := L)).erase p,
     q.1 ^ kroneckerWeberLocalRamificationExponent (L := L) q
 
-include L hNF hLab in
+include L hNF in
 /-- At a ramified prime `p`, the conductor candidate splits into its chosen
 `p`-primary order and the product supported at the other ramified primes. -/
 theorem kroneckerWeberConductorCandidate_eq_primePower_mul_coprimePart
@@ -197,7 +215,7 @@ theorem kroneckerWeberConductorCandidate_eq_primePower_mul_coprimePart
     kroneckerWeberConductorCoprimePart]
   exact (Finset.mul_prod_erase _ _ hp).symm
 
-include L hNF hLab in
+include L hNF in
 /-- The complementary factor really is prime to `p`; this is the arithmetic
 input which makes it part of the unramified factor in the local cyclotomic
 field used in the global construction. -/
@@ -214,7 +232,7 @@ theorem kroneckerWeberConductorCoprimePart_coprime
     (Subtype.coe_ne_coe.mpr
       (Ne.symm (Finset.ne_of_mem_erase hq)))
 
-include L hNF hLab in
+include L hNF in
 /-- The constructed global cyclotomic order is nonzero. -/
 theorem kroneckerWeberConductorCandidate_pos :
     0 < kroneckerWeberConductorCandidate (L := L) := by

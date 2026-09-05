@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Conjugation
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Conjugation
+
+set_option autoImplicit false
 
 /-!
 # Restriction in a finite-place Artin tower
@@ -214,22 +216,22 @@ theorem finitePlaceRestrictedLocalizedCompletionAlgHom_toAlgebraicLocalization
   let wE :=
     restrictFinitePlaceExtension
       (K := K) (L := L) (E := E) v wL
-  letI hEK :=
+  let hEK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) wE.1
-  letI : SMul K wE.1.Completion := hEK.toSMul
-  letI : Algebra vK.Completion wE.1.Completion :=
+  let : SMul K wE.1.Completion := hEK.toSMul
+  let : Algebra vK.Completion wE.1.Completion :=
     AbsoluteValue.completionAlgebra vK wE.1 wE.2
-  letI hLK :=
+  let hLK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) wL.1
-  letI : SMul K wL.1.Completion := hLK.toSMul
-  letI : Algebra vK.Completion wL.1.Completion :=
+  let : SMul K wL.1.Completion := hLK.toSMul
+  let : Algebra vK.Completion wL.1.Completion :=
     AbsoluteValue.completionAlgebra vK wL.1 wL.2
   let hwEL : AbsoluteValue.Extends wE.1 wL.1 := by
     intro z
     rfl
-  letI : Algebra wE.1.Completion wL.1.Completion :=
+  let : Algebra wE.1.Completion wL.1.Completion :=
     AbsoluteValue.completionAlgebra wE.1 wL.1 hwEL
   let LL := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK wL
   let eL :
@@ -309,35 +311,35 @@ theorem decompositionGroupEquivAlgebraicLocalizationAut_restrict_of_commutes
             ((eDE.symm
               (AlgEquiv.restrictNormalHom EL tauL)).1 :
                 E ≃ₐ[K] E) := by
-  letI hEK :=
+  let hEK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) wE.1
-  letI : SMul K wE.1.Completion := hEK.toSMul
-  letI : Algebra vK.Completion wE.1.Completion :=
+  let : SMul K wE.1.Completion := hEK.toSMul
+  let : Algebra vK.Completion wE.1.Completion :=
     AbsoluteValue.completionAlgebra vK wE.1 wE.2
-  letI hLK :=
+  let hLK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) wL.1
-  letI : SMul K wL.1.Completion := hLK.toSMul
-  letI : Algebra vK.Completion wL.1.Completion :=
+  let : SMul K wL.1.Completion := hLK.toSMul
+  let : Algebra vK.Completion wL.1.Completion :=
     AbsoluteValue.completionAlgebra vK wL.1 wL.2
   let EL := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK wE
   let LL := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK wL
   change
     ∀ localizationEmbedding : EL →ₐ[vK.Completion] LL, _
   intro localizationEmbedding
-  letI hELL : Algebra EL LL :=
+  let hELL : Algebra EL LL :=
     localizationEmbedding.toRingHom.toAlgebra
-  letI : SMul EL LL := hELL.toSMul
-  letI : IsScalarTower vK.Completion EL LL :=
+  let : SMul EL LL := hELL.toSMul
+  let : IsScalarTower vK.Completion EL LL :=
     IsScalarTower.of_algebraMap_eq' (by
       apply RingHom.ext
       intro x
       exact (localizationEmbedding.commutes x).symm)
-  letI : FiniteDimensional vK.Completion EL :=
+  let : FiniteDimensional vK.Completion EL :=
     AlgebraicNumberTheory.Valuations.localizedCompletionModuleFinite
       vK hvK wE
-  letI : IsAbelianGalois vK.Completion EL :=
+  let : IsAbelianGalois vK.Completion EL :=
     LocalClassFieldTheory.localizedCompletion_isAbelianGalois
       vK hvK wE
   let eDE :
@@ -644,39 +646,39 @@ theorem finitePlaceLocalArtinMonoidHom_restrict_tower
       (K := K) (L := L) (E := E) v wL
   let EL := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK wE
   let LL := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK wL
-  letI : Algebra vK.Completion EL :=
+  let : Algebra vK.Completion EL :=
     finitePlaceLocalArtinLocalizedAlgebra (K := K) (L := E) v wE
-  letI : Algebra vK.Completion LL :=
+  let : Algebra vK.Completion LL :=
     finitePlaceLocalArtinLocalizedAlgebra (K := K) (L := L) v wL
   let localizationAlgHom :=
     finitePlaceRestrictedLocalizedCompletionAlgHom
       (K := K) (L := L) (E := E) v wL
-  letI hELL : Algebra EL LL :=
+  let hELL : Algebra EL LL :=
     localizationAlgHom.toRingHom.toAlgebra
-  letI : SMul EL LL := hELL.toSMul
-  letI : IsScalarTower vK.Completion EL LL :=
+  let : SMul EL LL := hELL.toSMul
+  let : IsScalarTower vK.Completion EL LL :=
     IsScalarTower.of_algebraMap_eq' (by
       apply RingHom.ext
       intro x
       exact (localizationAlgHom.commutes x).symm)
-  letI : FiniteDimensional vK.Completion EL :=
+  let : FiniteDimensional vK.Completion EL :=
     finitePlaceLocalArtinFiniteDimensional (K := K) (L := E) v wE
-  letI : IsAbelianGalois vK.Completion EL :=
+  let : IsAbelianGalois vK.Completion EL :=
     finitePlaceLocalArtinIsAbelianGalois (K := K) (L := E) v wE
       (inferInstance : FiniteDimensional K E)
-  letI hGaloisEL : IsGalois vK.Completion EL :=
+  let hGaloisEL : IsGalois vK.Completion EL :=
     (inferInstance :
       IsAbelianGalois vK.Completion EL).toIsGalois
-  letI : Normal vK.Completion EL :=
+  let : Normal vK.Completion EL :=
     hGaloisEL.to_normal
-  letI : FiniteDimensional vK.Completion LL :=
+  let : FiniteDimensional vK.Completion LL :=
     finitePlaceLocalArtinFiniteDimensional (K := K) (L := L) v wL
-  letI : IsAbelianGalois vK.Completion LL :=
+  let : IsAbelianGalois vK.Completion LL :=
     finitePlaceLocalArtinIsAbelianGalois (K := K) (L := L) v wL
       (inferInstance : FiniteDimensional K L)
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField vK.Completion :=
+  let : IsNonarchimedeanLocalField vK.Completion :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   let eK :
       vK.Completionˣ ≃* (v.adicCompletion K)ˣ :=

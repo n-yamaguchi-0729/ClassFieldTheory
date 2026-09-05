@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.Tower
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+
+set_option autoImplicit false
 
 /-!
 # A prime-degree intermediate field of a finite cyclic extension
@@ -159,10 +161,10 @@ theorem cyclicPrimeDegreeIntermediate_finrank
   let M :=
     cyclicPrimeDegreeIntermediate
       (K := K) (L := L) hdegree
-  letI : P.Normal :=
+  let : P.Normal :=
     cyclicPrimeDegreeSubgroup_normal
       (K := K) (L := L) hdegree
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     cyclicPrimeDegreeIntermediate_isGalois
       (K := K) (L := L) hdegree
   calc
@@ -212,7 +214,7 @@ noncomputable instance cyclicPrimeDegreeIntermediate_base_isCyclic
   let P :=
     cyclicPrimeDegreeSubgroup
       (K := K) (L := L) hdegree
-  letI : P.Normal :=
+  let : P.Normal :=
     cyclicPrimeDegreeSubgroup_normal
       (K := K) (L := L) hdegree
   exact

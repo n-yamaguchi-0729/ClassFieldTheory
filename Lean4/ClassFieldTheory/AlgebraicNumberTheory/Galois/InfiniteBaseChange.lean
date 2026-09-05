@@ -2,6 +2,8 @@ import Mathlib.FieldTheory.Galois.GaloisClosure
 import Mathlib.FieldTheory.Normal.Basic
 import Mathlib.FieldTheory.SeparableClosure
 
+set_option autoImplicit false
+
 /-!
 # Infinite Galois base change from finite layers
 
@@ -109,7 +111,7 @@ theorem isGalois_extendScalars_sup_of_forall_finiteGalois
       IntermediateField.extendScalars (F := A)
         (E := A ⊔ IntermediateField.lift E.toIntermediateField)
         le_sup_left
-  letI : ∀ E : FiniteGaloisIntermediateField R B,
+  let : ∀ E : FiniteGaloisIntermediateField R B,
       IsGalois A (finiteLayer E) :=
     fun E => by
       simpa only [finiteLayer] using hG E

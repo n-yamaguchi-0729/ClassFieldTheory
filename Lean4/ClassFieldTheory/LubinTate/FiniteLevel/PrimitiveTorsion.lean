@@ -1,4 +1,6 @@
-import LubinTate.FiniteLevel.PrimitiveRoot
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveRoot
+
+set_option autoImplicit false
 
 /-!
 # Primitive Lubin--Tate torsion points

@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.RayClass.Rational
-import GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
-import KummerTheory.Concrete.Cyclotomic.RationalCyclotomicField
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+import GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicField
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+
+set_option autoImplicit false
 
 /-!
 # Unramified finite places of rational cyclotomic levels
@@ -65,15 +67,15 @@ theorem rationalCyclotomicLevel_isUnramifiedAt_chosenFinitePlaceCentre
       (K := ℚ) (L := L) v
       (chosenFinitePlaceExtension (L := L) v)
   change Algebra.IsUnramifiedAt (𝓞 ℚ) W.asIdeal
-  letI hWv : W.asIdeal.LiesOver v.asIdeal :=
+  let hWv : W.asIdeal.LiesOver v.asIdeal :=
     finitePlaceExtensionCentre_liesOver
       (K := ℚ) (L := L) v
       (chosenFinitePlaceExtension (L := L) v)
-  letI hvq :
+  let hvq :
       v.asIdeal.LiesOver (Ideal.span {(q.1 : ℤ)}) := by
     dsimp only [v]
     exact rationalPrime_liesOver_integerSpan q
-  letI hWq :
+  let hWq :
       W.asIdeal.LiesOver (Ideal.span {(q.1 : ℤ)}) :=
     Ideal.LiesOver.trans W.asIdeal v.asIdeal
       (Ideal.span {(q.1 : ℤ)})

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
-import AlgebraicNumberTheory.NormalClosure
-import AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
+
+set_option autoImplicit false
 
 /-!
 # Scalar extension from relative to ordinary ideles
@@ -77,7 +79,7 @@ theorem infinitePlaceCompletionMap_self_apply
         (infinitePlaceBelow_self (K := K) W)⟩
     NumberField.LiesOver.completionMap
         (v := W) (w := W) x = x := by
-  letI : W.1.LiesOver W.1 :=
+  let : W.1.LiesOver W.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1)
       (infinitePlaceBelow_self (K := K) W)⟩
   refine InfinitePlace.Completion.induction_on W x ?_ ?_
@@ -136,12 +138,12 @@ theorem infinitePlaceCompletionMap_comp_apply
     infinitePlaceBelow (K := M) W
   let v :=
     infinitePlaceBelow (K := K) W
-  letI : V.1.LiesOver v.1 :=
+  let : V.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1)
       (infinitePlaceBelow_infinitePlaceBelow
         (K := K) (M := M) (L := L) W)⟩
-  letI : W.1.LiesOver V.1 := ⟨rfl⟩
-  letI : W.1.LiesOver v.1 := ⟨rfl⟩
+  let : W.1.LiesOver V.1 := ⟨rfl⟩
+  let : W.1.LiesOver v.1 := ⟨rfl⟩
   refine InfinitePlace.Completion.induction_on v x ?_ ?_
   · exact isClosed_eq
       ((NumberField.LiesOver.continuous_completionMap
@@ -240,12 +242,12 @@ noncomputable def infinitePlaceAboveEquivExtension
     let M := finiteNormalClosure K L
     let e : L →ₐ[K] M :=
       finiteNormalClosureEmbedding K L
-    letI : Algebra L M :=
+    let : Algebra L M :=
       e.toRingHom.toAlgebra
-    letI : IsScalarTower K L M :=
+    let : IsScalarTower K L M :=
       IsScalarTower.of_algebraMap_eq'
         e.comp_algebraMap.symm
-    letI : FiniteDimensional L M :=
+    let : FiniteDimensional L M :=
       FiniteDimensional.right K L M
     let hu : u.1.IsNontrivial :=
       u.isNontrivial w.isNontrivial
@@ -405,8 +407,7 @@ theorem infinitePlaceTensorUnitsEquivAbove_localFieldIdeleInclusion
         x := by
   rw [infinitePlaceTensorUnitsEquivAbove_apply]
   apply Units.ext
-  simp only [Units.coe_map, Units.coe_mapEquiv,
-    localTensorUnitsEquivCompletionProduct_apply_coe]
+  simp only [Units.coe_map]
   change
     (InfinitePlace.Completion.equiv W.1).symm
         (completionTensorDecomposition_left

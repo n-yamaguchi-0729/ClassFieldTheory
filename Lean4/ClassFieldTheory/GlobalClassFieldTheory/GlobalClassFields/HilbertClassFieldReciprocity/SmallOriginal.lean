@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallActual
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldOverOriginalBase
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallActual
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldOverOriginalBase
+
+set_option autoImplicit false
 
 /-!
 # Small Hilbert reciprocity over the original number field
@@ -20,7 +22,7 @@ open Reciprocity
 
 variable {K : Type} [Field K] [NumberField K]
 
-local instance (priority := 2000)
+local instance
     smallHilbertClassFieldReciprocityOverOriginalIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=

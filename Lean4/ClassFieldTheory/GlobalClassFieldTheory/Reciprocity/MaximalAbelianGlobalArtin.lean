@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Galois.AbsoluteAbelianization
-import GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtinDescent
-import GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtinSurjectivity
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteAbelianization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtinDescent
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtinSurjectivity
+
+set_option autoImplicit false
 
 /-!
 # Global Artin map for the maximal abelian extension
@@ -48,7 +50,7 @@ theorem maximalAbelianGlobalArtin_finiteProjection
         (maximalAbelianGlobalArtin K
           (QuotientGroup.mk' (IdeleGroup.principalSubgroup K) a)) =
       globalArtinMonoidHom (K := K) (L := E) a := by
-  letI : NumberField E := NumberField.of_module_finite K E
+  let : NumberField E := NumberField.of_module_finite K E
   rw [maximalAbelianGlobalArtin_mk]
   exact
     restrictNormalHom_infiniteGlobalArtinMonoidHom

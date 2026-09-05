@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalPrimeFactor
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicZHatRigidity
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalPrimeFactor
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicZHatRigidity
+
+set_option autoImplicit false
 
 /-!
 # The rational cyclotomic principal-idele product formula
@@ -23,14 +25,35 @@ namespace Reciprocity
 local instance (p : Nat.Primes) : Fact p.1.Prime :=
   ⟨p.2⟩
 
-noncomputable local instance (priority := 2000)
+local instance rationalCyclotomicPrincipalProductPrimePowerNumberField
+    (p : Nat.Primes) (k : ℕ) :
+    NumberField (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  KummerTheory.rationalCyclotomicLevel_numberField
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicPrincipalProductPrimePowerFiniteDimensional
+    (p : Nat.Primes) (k : ℕ) :
+    FiniteDimensional ℚ (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  rationalCyclotomicPrincipalPrimeLevelFiniteDimensional
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicPrincipalProductPrimePowerIsAbelianGalois
+    (p : Nat.Primes) (k : ℕ) :
+    IsAbelianGalois ℚ (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  rationalCyclotomicLevelIsAbelianGalois
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+noncomputable local instance
     rationalCyclotomicPrincipalProductLevelFiniteDimensional
     (m : ℕ+) :
     FiniteDimensional ℚ
       (KummerTheory.rationalCyclotomicLevel m) :=
   rationalCyclotomicPrincipalPrimeLevelFiniteDimensional m
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     rationalCyclotomicPrincipalProductLevelIsAbelianGalois
     (m : ℕ+) :
     IsAbelianGalois ℚ

@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.Abelianization.Defs
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeWitnessComparison
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeWitnessComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+
+set_option autoImplicit false
 
 /-!
 # Ambient prime comparison
@@ -67,9 +69,7 @@ theorem
       ambientEmbeddedNormResidueAbelianElement K F E j e x := by
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   let H₀ :=
     closedFixingSubgroup K (SeparableClosure K)
@@ -85,13 +85,13 @@ theorem
     intro y hy
     rcases hy with ⟨z, rfl⟩
     exact ⟨algebraMap F E z, rfl⟩
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
-  letI hTargetFinite : Finite
+  let hTargetFinite : Finite
       (H₀.toSubgroup ⧸ extensionSubgroup H₀ J₀ hJH) :=
     ambientEmbeddedExtensionQuotient_finite K F E j e
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -208,9 +208,7 @@ theorem
       (localArtinMonoidHom F E a)
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   let jF : E →ₐ[F] SeparableClosure K :=
     { j with commutes' := fun y => rfl }

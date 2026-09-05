@@ -1,9 +1,11 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
-import GlobalClassFieldTheory.GlobalClassFields.AbelianLocalConductorComparison
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicFinitePlaceArtin
-import KroneckerWeber.RayClassComparison
-import KummerTheory.Concrete.Cyclotomic.RationalCyclotomicCharacterEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianLocalConductorComparison
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicFinitePlaceArtin
+import ClassFieldTheory.KroneckerWeber.RayClassComparison
+import GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicCharacterEquiv
+
+set_option autoImplicit false
 
 /-!
 # Rational cyclotomic ray norm groups
@@ -42,7 +44,7 @@ open LubinTate
 local instance (q : Nat.Primes) : Fact q.1.Prime :=
   ⟨q.2⟩
 
-attribute [local instance 2000]
+attribute [local instance]
   rationalCyclotomicPrincipalPrimeLevelFiniteDimensional
   rationalCyclotomicPrincipalPrimeLevelIsAbelianGalois
 
@@ -122,8 +124,13 @@ private theorem rationalRayNorm_fieldUnitsMap_integerUnits
         (padicIntEquivValuationSubring q.1
           ((rationalFinitePlaceCompletionIntegerRingEquivPadicInt q)
             ((u : 𝒪[F]ˣ) : 𝒪[F]))) := by
-        rw [PadicInt.algebraMap_apply,
-          ValuationSubring.algebraMap_apply]
+        change
+          (((rationalFinitePlaceCompletionIntegerRingEquivPadicInt q)
+              ((u : 𝒪[F]ˣ) : 𝒪[F]) : ℤ_[q.1]) : ℚ_[q.1]) =
+            ((padicIntEquivValuationSubring q.1
+              ((rationalFinitePlaceCompletionIntegerRingEquivPadicInt q)
+                ((u : 𝒪[F]ˣ) : 𝒪[F])) :
+                (padicDVRValuation q.1).valuationSubring) : ℚ_[q.1])
         exact
           (padicIntEquivValuationSubring_coe q.1
             ((rationalFinitePlaceCompletionIntegerRingEquivPadicInt q)
@@ -197,10 +204,10 @@ theorem
 
 section PrimePowerCalculation
 
-attribute [local instance 2000]
+attribute [local instance]
   rationalCyclotomicPrincipalPrimePadicLevelFiniteDimensional
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     rationalCyclotomicRayNormPadicLevelIsAbelianGalois
     (q : Nat.Primes) (n : ℕ) :
     IsAbelianGalois ℚ_[q.1]
@@ -377,28 +384,65 @@ dependent field and instance data later in the full-level coordinate proof. -/
 private theorem
     rationalPrimePowerChosenFinitePlaceArtin_eq_one_of_mem_localHigherUnitGroup_pos
     (q : Nat.Primes) (k : ℕ) (hk : k ≠ 0)
+    (mp : ℕ+) (hmp : (mp : ℕ) = q.1 ^ k)
     (x : ((RayClass.rationalPrime q).adicCompletion ℚ)ˣ)
     (hx :
       x ∈ RayClass.localHigherUnitGroup
         (RayClass.rationalPrime q) k) :
     chosenFinitePlaceArtinMonoidHom
         (K := ℚ)
-        (L :=
-          KummerTheory.rationalCyclotomicLevel
-            ⟨q.1 ^ k, pow_pos q.2.pos k⟩)
+        (L := KummerTheory.rationalCyclotomicLevel mp)
         (RayClass.rationalPrime q) x = 1 := by
   obtain ⟨n, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hk
   have hlevel :
-      (⟨q.1 ^ n.succ, pow_pos q.2.pos n.succ⟩ : ℕ+) =
-        rationalCyclotomicPrincipalPrimeModulus q n := by
+      mp = rationalCyclotomicPrincipalPrimeModulus q n := by
     apply Subtype.ext
-    rfl
-  rw [hlevel]
+    exact hmp
+  subst mp
   exact
     rationalPrimePowerChosenFinitePlaceArtin_eq_one_of_mem_localHigherUnitGroup
       q n x hx
 
+/-- A valuation-zero input away from a named cyclotomic level has trivial
+chosen Artin value.  Keeping the level as a positive-natural variable makes
+the instance owner identical on both sides of the imported calculation. -/
+private theorem rationalCyclotomicRayNormAwayChosenFinitePlaceArtin_eq_one
+    (mp : ℕ+) (q : Nat.Primes)
+    (hq : ¬ q.1 ∣ (mp : ℕ))
+    (x : ((RayClass.rationalPrime q).adicCompletion ℚ)ˣ)
+    (hzero : rationalCyclotomicArtinLocalExponent q x = 0) :
+    chosenFinitePlaceArtinMonoidHom
+        (K := ℚ)
+        (L := KummerTheory.rationalCyclotomicLevel mp)
+        (RayClass.rationalPrime q) x = 1 := by
+  exact
+    chosenFinitePlaceArtinMonoidHom_eq_one_of_not_dvd_of_localExponent_eq_zero
+      mp q hq x hzero
+
 end PrimePowerCalculation
+
+/-- Membership in a rational local higher-unit group forces the normalized
+cyclotomic Artin exponent to vanish.  This boundary keeps the completion and
+valuation expansion out of the full cyclotomic-coordinate calculation. -/
+private theorem
+    rationalCyclotomicRayNormLocalExponent_eq_zero_of_mem_localHigherUnitGroup
+    (q : Nat.Primes) (n : ℕ)
+    (x : ((RayClass.rationalPrime q).adicCompletion ℚ)ˣ)
+    (hx :
+      x ∈ RayClass.localHigherUnitGroup
+        (RayClass.rationalPrime q) n) :
+    rationalCyclotomicArtinLocalExponent q x = 0 := by
+  change
+    IsNonarchimedeanLocalField.valuationMap
+        (HeightOneSpectrum.adicAbv ℚ
+          (RayClass.rationalPrime q)).Completion
+        (Additive.ofMul
+          ((finitePlaceCompletionUnitsContinuousMulEquiv
+            (RayClass.rationalPrime q)).symm x)) =
+      0
+  exact
+    _root_.GlobalClassFieldTheory.GlobalClassFields.finitePlaceCompletion_valuationMap_eq_zero_of_mem_localHigherUnitGroup
+      (K := ℚ) (RayClass.rationalPrime q) n x hx
 
 /-- The rational ray-class higher-unit group at `q` consists of actual
 local norms from the chosen completion of the genuine cyclotomic level. -/
@@ -423,12 +467,12 @@ theorem
     simpa only [RayClass.rationalFiniteModulus_apply,
       RayClass.natGenerator_rationalPrime] using hxMod
   let L := KummerTheory.rationalCyclotomicLevel m
-  letI : IsCyclotomicExtension {(m : ℕ)} ℚ L := by
+  let : IsCyclotomicExtension {(m : ℕ)} ℚ L := by
     simpa only [L] using
       KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension m
-  letI : FiniteDimensional ℚ L :=
+  let : FiniteDimensional ℚ L :=
     rationalCyclotomicLevelFiniteDimensional m
-  letI : IsAbelianGalois ℚ L :=
+  let : IsAbelianGalois ℚ L :=
     rationalCyclotomicLevelIsAbelianGalois m
   let σ : Gal(L / ℚ) :=
     chosenFinitePlaceArtinMonoidHom
@@ -452,7 +496,12 @@ theorem
     (p.2.factorization_pos_of_dvd m.ne_zero hpDvd).ne'
   have hpow : p.1 ^ k ∣ (m : ℕ) :=
     (p.2.pow_dvd_iff_le_factorization m.2.ne').2 le_rfl
-  have hAwayDvd (hpq : p ≠ q) : ¬ q.1 ∣ p.1 ^ k := by
+  let mp : ℕ+ :=
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+  let P := KummerTheory.rationalCyclotomicLevel mp
+  have hmp : (mp : ℕ) = p.1 ^ k := rfl
+  have hAwayDvd (hpq : p ≠ q) : ¬ q.1 ∣ (mp : ℕ) := by
+    change ¬ q.1 ∣ p.1 ^ k
     have hqNotDvdP : ¬ q.1 ∣ p.1 := by
       intro hqp
       rcases (Nat.dvd_prime p.2).1 hqp with hqOne | hqpEq
@@ -461,97 +510,67 @@ theorem
     have hqCoprimeP : Nat.Coprime q.1 p.1 :=
       q.2.coprime_iff_not_dvd.mpr hqNotDvdP
     exact q.2.coprime_iff_not_dvd.mp (hqCoprimeP.pow_right k)
-  letI : IsCyclotomicExtension {p.1 ^ k} ℚ
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
-    KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
-      ⟨p.1 ^ k, pow_pos p.2.pos k⟩
-  letI : FiniteDimensional ℚ
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
-    rationalCyclotomicLevelFiniteDimensional
-      ⟨p.1 ^ k, pow_pos p.2.pos k⟩
-  letI : IsAbelianGalois ℚ
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
-    rationalCyclotomicLevelIsAbelianGalois
-      ⟨p.1 ^ k, pow_pos p.2.pos k⟩
-  have hFL :
-      KummerTheory.rationalCyclotomicLevel
-          ⟨p.1 ^ k, pow_pos p.2.pos k⟩ ≤
-        L :=
-    KummerTheory.rationalCyclotomicLevel_mono hpow
-  let algFL : Algebra
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) L :=
+  let : NumberField P :=
+    KummerTheory.rationalCyclotomicLevel_numberField mp
+  let : IsCyclotomicExtension {p.1 ^ k} ℚ P := by
+    rw [← hmp]
+    simpa only [P] using
+      KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension mp
+  let : FiniteDimensional ℚ P :=
+    rationalCyclotomicLevelFiniteDimensional mp
+  let : IsAbelianGalois ℚ P :=
+    rationalCyclotomicLevelIsAbelianGalois mp
+  let χ : Gal(P / ℚ) ≃* (ZMod (p.1 ^ k))ˣ :=
+    IsCyclotomicExtension.Rat.galEquivZMod
+      (p.1 ^ k) P
+  have hFL : P ≤ L := by
+    simpa only [P] using
+      (KummerTheory.rationalCyclotomicLevel_mono
+        (m := mp) (n := m) hpow)
+  let algFL : Algebra P L :=
     RingHom.toAlgebra
       (IntermediateField.inclusion hFL).toRingHom
-  letI : SMul
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) L :=
-    @Algebra.toSMul
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) L _ _ algFL
-  letI : Algebra
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) L := algFL
-  letI : IsScalarTower ℚ
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) L :=
+  let : SMul P L :=
+    @Algebra.toSMul P L _ _ algFL
+  let : Algebra P L := algFL
+  let : IsScalarTower ℚ P L :=
     IsScalarTower.of_algHom (IntermediateField.inclusion hFL)
   have hrestrict :
-      σ.restrictNormal
-          (KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩) =
+      σ.restrictNormal P =
         chosenFinitePlaceArtinMonoidHom
           (K := ℚ)
-          (L := KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (L := KummerTheory.rationalCyclotomicLevel mp)
           (RayClass.rationalPrime q) x := by
     change
       (AlgEquiv.restrictNormalHom
-          (KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩))
+          (KummerTheory.rationalCyclotomicLevel mp))
           (chosenFinitePlaceArtinMonoidHom
             (K := ℚ) (L := L) (RayClass.rationalPrime q) x) =
         chosenFinitePlaceArtinMonoidHom
           (K := ℚ)
-          (L := KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (L := KummerTheory.rationalCyclotomicLevel mp)
           (RayClass.rationalPrime q) x
     exact
       DFunLike.congr_fun
         (chosenFinitePlaceArtinMonoidHom_restrict_tower
           (K := ℚ) (L := L)
-          (E := KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (E := KummerTheory.rationalCyclotomicLevel mp)
           (RayClass.rationalPrime q))
         x
-  have hcharacterRestrict :=
-    congrArg
-      (fun τ : Gal(
-          KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩ / ℚ) =>
-        IsCyclotomicExtension.Rat.galEquivZMod
-          (p.1 ^ k)
-          (KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩) τ)
-      hrestrict
+  have hcharacterRestrict :
+      χ (σ.restrictNormal P) =
+        χ (chosenFinitePlaceArtinMonoidHom
+            (K := ℚ)
+            (L := KummerTheory.rationalCyclotomicLevel mp)
+            (RayClass.rationalPrime q) x) :=
+    congrArg χ hrestrict
   have hprojection :
       ZMod.unitsMap hpow
           (IsCyclotomicExtension.Rat.galEquivZMod
             (m : ℕ) L σ) =
-        IsCyclotomicExtension.Rat.galEquivZMod
-          (p.1 ^ k)
-          (KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
-          (σ.restrictNormal
-            (KummerTheory.rationalCyclotomicLevel
-              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)) :=
+        χ (σ.restrictNormal P) :=
     (IsCyclotomicExtension.Rat.galEquivZMod_restrictNormal_apply
-      (m : ℕ) L
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+      (m : ℕ) L P
       hpow σ).symm
   have hcoordinate :
       ZMod.unitsMap hpow
@@ -561,57 +580,51 @@ theorem
     refine hprojection.trans ?_
     by_cases hpq : p = q
     · subst q
-      have hArtin :=
-        rationalPrimePowerChosenFinitePlaceArtin_eq_one_of_mem_localHigherUnitGroup_pos
-          p k hkNe x hx
       have hArtinF :
           chosenFinitePlaceArtinMonoidHom
               (K := ℚ)
-              (L := KummerTheory.rationalCyclotomicLevel
-                ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+              (L := KummerTheory.rationalCyclotomicLevel mp)
               (RayClass.rationalPrime p) x = 1 := by
-        exact hArtin
-      have hArtinCharacter :=
-        congrArg
-          (IsCyclotomicExtension.Rat.galEquivZMod
-            (p.1 ^ k)
-            (KummerTheory.rationalCyclotomicLevel
-              ⟨p.1 ^ k, pow_pos p.2.pos k⟩))
-          hArtinF
-      exact hcharacterRestrict.trans (by
-        simpa only [map_one] using hArtinCharacter)
-    · have hzero : rationalCyclotomicArtinLocalExponent q x = 0 := by
-        change
-          IsNonarchimedeanLocalField.valuationMap
-              (HeightOneSpectrum.adicAbv ℚ
-                (RayClass.rationalPrime q)).Completion
-              (Additive.ofMul
-                ((finitePlaceCompletionUnitsContinuousMulEquiv
-                  (RayClass.rationalPrime q)).symm x)) =
-            0
         exact
-          _root_.GlobalClassFieldTheory.GlobalClassFields.finitePlaceCompletion_valuationMap_eq_zero_of_mem_localHigherUnitGroup
-            (K := ℚ) (RayClass.rationalPrime q)
-            ((m : ℕ).factorization q.1) x hx
-      have hArtin :=
-        chosenFinitePlaceArtinMonoidHom_eq_one_of_not_dvd_of_localExponent_eq_zero
-          ⟨p.1 ^ k, pow_pos p.2.pos k⟩ q (hAwayDvd hpq) x hzero
+          rationalPrimePowerChosenFinitePlaceArtin_eq_one_of_mem_localHigherUnitGroup_pos
+            p k hkNe mp hmp x hx
+      have hArtinCharacter :
+          χ (chosenFinitePlaceArtinMonoidHom
+                (K := ℚ)
+                (L := KummerTheory.rationalCyclotomicLevel mp)
+                (RayClass.rationalPrime p) x) = 1 := by
+        calc
+          χ (chosenFinitePlaceArtinMonoidHom
+              (K := ℚ)
+              (L := KummerTheory.rationalCyclotomicLevel mp)
+              (RayClass.rationalPrime p) x) =
+              χ 1 := congrArg χ hArtinF
+          _ = 1 := χ.map_one
+      exact hcharacterRestrict.trans hArtinCharacter
+    · have hzero : rationalCyclotomicArtinLocalExponent q x = 0 :=
+        rationalCyclotomicRayNormLocalExponent_eq_zero_of_mem_localHigherUnitGroup
+          q ((m : ℕ).factorization q.1) x hx
       have hArtinF :
           chosenFinitePlaceArtinMonoidHom
               (K := ℚ)
-              (L := KummerTheory.rationalCyclotomicLevel
-                ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+              (L := KummerTheory.rationalCyclotomicLevel mp)
               (RayClass.rationalPrime q) x = 1 := by
-        exact hArtin
-      have hArtinCharacter :=
-        congrArg
-          (IsCyclotomicExtension.Rat.galEquivZMod
-            (p.1 ^ k)
-            (KummerTheory.rationalCyclotomicLevel
-              ⟨p.1 ^ k, pow_pos p.2.pos k⟩))
-          hArtinF
-      exact hcharacterRestrict.trans (by
-        simpa only [map_one] using hArtinCharacter)
+        exact
+          rationalCyclotomicRayNormAwayChosenFinitePlaceArtin_eq_one
+            mp q (hAwayDvd hpq) x hzero
+      have hArtinCharacter :
+          χ (chosenFinitePlaceArtinMonoidHom
+                (K := ℚ)
+                (L := KummerTheory.rationalCyclotomicLevel mp)
+                (RayClass.rationalPrime q) x) = 1 := by
+        calc
+          χ (chosenFinitePlaceArtinMonoidHom
+              (K := ℚ)
+              (L := KummerTheory.rationalCyclotomicLevel mp)
+              (RayClass.rationalPrime q) x) =
+              χ 1 := congrArg χ hArtinF
+          _ = 1 := χ.map_one
+      exact hcharacterRestrict.trans hArtinCharacter
   have heval (z : ZMod (m : ℕ)) :
       e z r =
         ZMod.castHom hpow (ZMod (p.1 ^ k)) z := by
@@ -665,11 +678,12 @@ genuine idèle-class norm range from the actual cyclotomic level `ℚ(μ_m)`. -/
 theorem
     rationalCongruenceSubgroup_le_rationalCyclotomicLevelIdeleClassNormRange
     (m : ℕ) (hm : m ≠ 0) :
+    let mp : ℕ+ := ⟨m, Nat.pos_of_ne_zero hm⟩
     RayClass.Modulus.congruenceSubgroup
         (RayClass.rationalModulus m) ≤
       (_root_.ideleClassNorm ℚ
-        (KummerTheory.rationalCyclotomicLevel
-          ⟨m, Nat.pos_of_ne_zero hm⟩)).range := by
+        (KummerTheory.rationalCyclotomicLevel mp)).range := by
+  dsimp only
   let mp : ℕ+ := ⟨m, Nat.pos_of_ne_zero hm⟩
   let L := KummerTheory.rationalCyclotomicLevel mp
   have hlocal :
@@ -714,15 +728,16 @@ level is exactly the rational ray congruence subgroup modulo `(m)`. -/
 theorem
     rationalCyclotomicLevel_ideleClassNorm_range_eq_rationalCongruenceSubgroup
     (m : ℕ) (hm : m ≠ 0) :
+    let mp : ℕ+ := ⟨m, Nat.pos_of_ne_zero hm⟩
     (_root_.ideleClassNorm ℚ
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨m, Nat.pos_of_ne_zero hm⟩)).range =
+      (KummerTheory.rationalCyclotomicLevel mp)).range =
       RayClass.Modulus.congruenceSubgroup
         (RayClass.rationalModulus m) := by
-  letI : NeZero m := ⟨hm⟩
+  dsimp only
+  let : NeZero m := ⟨hm⟩
   let mp : ℕ+ := ⟨m, Nat.pos_of_ne_zero hm⟩
   let L := KummerTheory.rationalCyclotomicLevel mp
-  letI : IsCyclotomicExtension {m} ℚ
+  let : IsCyclotomicExtension {m} ℚ
       (KummerTheory.rationalCyclotomicLevel
         ⟨m, Nat.pos_of_ne_zero hm⟩) :=
     KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
@@ -778,13 +793,13 @@ theorem
   let mp : ℕ+ := ⟨m, Nat.pos_of_ne_zero hm⟩
   let L := KummerTheory.rationalCyclotomicLevel mp
   let C := CyclotomicField m ℚ
-  letI : NeZero m := ⟨hm⟩
-  letI : IsCyclotomicExtension {m} ℚ
+  let : NeZero m := ⟨hm⟩
+  let : IsCyclotomicExtension {m} ℚ
       (KummerTheory.rationalCyclotomicLevel
         ⟨m, Nat.pos_of_ne_zero hm⟩) :=
     KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
       ⟨m, Nat.pos_of_ne_zero hm⟩
-  letI : IsCyclotomicExtension {m} ℚ C :=
+  let : IsCyclotomicExtension {m} ℚ C :=
     CyclotomicField.isCyclotomicExtension m ℚ
   let e : L ≃ₐ[ℚ] C :=
     IsCyclotomicExtension.algEquiv {m} ℚ L C

@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.PrincipalTopology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalTopology
 import Mathlib.RingTheory.Ideal.Quotient.Operations
+
+set_option autoImplicit false
 
 /-!
 # Finite ray-modulus data
@@ -80,7 +82,7 @@ theorem localHigherUnitGroup_zero
           (v.adicCompletionIntegers K)) ^ 0)).toMonoidHom
         ((v.adicCompletionIntegers K).toSubmonoid.unitsEquivUnitsType y) =
       1
-    letI : Subsingleton
+    let : Subsingleton
         ((v.adicCompletionIntegers K) ⧸
           (IsLocalRing.maximalIdeal
             (v.adicCompletionIntegers K)) ^ 0) :=

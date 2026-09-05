@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.FinitePrime
-import AlgebraicNumberTheory.RayClass.Ideal
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
-import GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
+
+set_option autoImplicit false
 
 /-!
 # Prime idèles and ideal ray classes
@@ -20,6 +22,13 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField IsDedekindDomain IdeleGroup
+
+private theorem rayClassPrimeIdeleClassGroupIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] rayClassPrimeIdeleClassGroupIsMulCommutative
 
 variable {K : Type} [Field K] [NumberField K]
 
@@ -212,7 +221,13 @@ theorem bigHilbertIdealFrobeniusClass_eq_bigHilbertFrobeniusClass
           (K := K))
         v (by simp) =
       bigHilbertFrobeniusClass v := by
-  rw [idealFrobeniusClass_eq_finitePrimeIdeleClass]
+  have hm :
+      (RayClass.Modulus.narrowOfFinite
+        (0 : RayClass.FiniteModulus K)).congruenceSubgroup ≤
+          bigHilbertClassFieldNormSubgroup (K := K) := by
+    simpa only [IsDefiningModulus] using
+      (bigHilbertClassFieldNormSubgroup_isDefiningModulus (K := K))
+  rw [idealFrobeniusClass_eq_finitePrimeIdeleClass (hm := hm)]
   apply
     (bigHilbertClassFieldQuotientEquivNarrowClassGroup
       (K := K)).injective
@@ -279,7 +294,12 @@ theorem smallHilbertIdealFrobeniusClass_eq_smallHilbertFrobeniusClass
           (K := K))
         v (by simp) =
       IdealClassFieldTheory.smallHilbertFrobeniusClass v := by
-  rw [idealFrobeniusClass_eq_finitePrimeIdeleClass]
+  have hm :
+      (0 : RayClass.Modulus K).congruenceSubgroup ≤
+        smallHilbertClassFieldNormSubgroup (K := K) := by
+    simpa only [IsDefiningModulus] using
+      (smallHilbertClassFieldNormSubgroup_isDefiningModulus (K := K))
+  rw [idealFrobeniusClass_eq_finitePrimeIdeleClass (hm := hm)]
   apply
     (smallHilbertClassFieldQuotientEquivClassGroup
       (K := K)).injective

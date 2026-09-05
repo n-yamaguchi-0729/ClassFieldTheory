@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
-import LocalFieldTheory.DiscreteValuationField.RamificationIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationIdeal
 import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
+
+set_option autoImplicit false
 
 /-!
 # From completed to ideal-theoretic unramifiedness
@@ -59,7 +61,7 @@ theorem chosenFinitePlace_integralUniformizer_map_isUniformizer
   let E :=
     ChosenFinitePlaceLocalizedCompletion
       (K := K) (L := L) v
-  letI :
+  let :
       IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
         vK.Completion E := by
     simpa [ChosenFinitePlaceIsUnramified] using hunram
@@ -306,16 +308,16 @@ theorem isUnramifiedAt_of_chosenFinitePlaceIsUnramified
   let W :=
     finitePlaceExtensionCentre
       (K := K) (L := L) v w
-  letI : W.asIdeal.LiesOver v.asIdeal :=
+  let : W.asIdeal.LiesOver v.asIdeal :=
     finitePlaceExtensionCentre_liesOver
       (K := K) (L := L) v w
   have hBasePrime :
       W.asIdeal.under (𝓞 K) ≠ ⊥ := by
     rw [← W.asIdeal.over_def v.asIdeal]
     exact v.ne_bot
-  letI : Finite ((𝓞 K) ⧸ W.asIdeal.under (𝓞 K)) :=
+  let : Finite ((𝓞 K) ⧸ W.asIdeal.under (𝓞 K)) :=
     Ring.HasFiniteQuotients.finiteQuotient hBasePrime
-  letI :
+  let :
       PerfectField
         (W.asIdeal.under (𝓞 K)).ResidueField :=
     PerfectField.ofFinite
@@ -342,18 +344,18 @@ theorem
   let W :=
     finitePlaceExtensionCentre
       (K := K) (L := L) v w
-  letI : Finite (L ≃ₐ[K] L) :=
+  let : Finite (L ≃ₐ[K] L) :=
     IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-  letI :
+  let :
       IsGaloisGroup
         (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
     IsGaloisGroup.of_isFractionRing
       (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) K L
-  letI : P.asIdeal.LiesOver v.asIdeal := by
+  let : P.asIdeal.LiesOver v.asIdeal := by
     constructor
     have h := congrArg HeightOneSpectrum.asIdeal hP
     simpa only [finitePlaceBelow_asIdeal] using h.symm
-  letI : W.asIdeal.LiesOver v.asIdeal :=
+  let : W.asIdeal.LiesOver v.asIdeal :=
     finitePlaceExtensionCentre_liesOver
       (K := K) (L := L) v w
   have hChosen :
@@ -362,7 +364,7 @@ theorem
       (K := K) (L := L) v hunram
   have hChosenRamification :
       W.asIdeal.ramificationIdx (𝓞 K) = 1 := by
-    letI : Algebra.IsUnramifiedAt (𝓞 K) W.asIdeal :=
+    let : Algebra.IsUnramifiedAt (𝓞 K) W.asIdeal :=
       hChosen
     exact Ideal.ramificationIdx_eq_one W.asIdeal (𝓞 K)
   have hRamification :
@@ -374,9 +376,9 @@ theorem
       W.asIdeal.under (𝓞 K) ≠ ⊥ := by
     rw [← W.asIdeal.over_def v.asIdeal]
     exact v.ne_bot
-  letI : Finite ((𝓞 K) ⧸ W.asIdeal.under (𝓞 K)) :=
+  let : Finite ((𝓞 K) ⧸ W.asIdeal.under (𝓞 K)) :=
     Ring.HasFiniteQuotients.finiteQuotient hWBasePrime
-  letI :
+  let :
       PerfectField
         (W.asIdeal.under (𝓞 K)).ResidueField :=
     PerfectField.ofFinite
@@ -384,9 +386,9 @@ theorem
       P.asIdeal.under (𝓞 K) ≠ ⊥ := by
     rw [← P.asIdeal.over_def v.asIdeal]
     exact v.ne_bot
-  letI : Finite ((𝓞 K) ⧸ P.asIdeal.under (𝓞 K)) :=
+  let : Finite ((𝓞 K) ⧸ P.asIdeal.under (𝓞 K)) :=
     Ring.HasFiniteQuotients.finiteQuotient hPBasePrime
-  letI :
+  let :
       PerfectField
         (P.asIdeal.under (𝓞 K)).ResidueField :=
     PerfectField.ofFinite

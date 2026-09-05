@@ -1,6 +1,8 @@
-import LubinTate.FormalModule.RecursiveIntertwiner
-import LubinTate.FormalModule.StandardSeries
+import ClassFieldTheory.LubinTate.FormalModule.RecursiveIntertwiner
+import ClassFieldTheory.LubinTate.FormalModule.StandardSeries
 import Mathlib.RingTheory.FormalGroup.Basic
+
+set_option autoImplicit false
 
 /-!
 # The standard Lubin--Tate formal group

@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.FinitePadicCyclicData
-import GlobalClassFieldTheory.GlobalClassFields.ClassFieldRealization
-import GlobalClassFieldTheory.Reciprocity.CyclotomicUnramifiedLocalGlobalCompatibility
-import AlgebraicNumberTheory.Idele.Extension.OnePlaceBaseNorm
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.FinitePadicCyclicData
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClassFieldRealization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicUnramifiedLocalGlobalCompatibility
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.OnePlaceBaseNorm
+
+set_option autoImplicit false
 
 /-!
 # The finite p-adic auxiliary field
@@ -35,7 +37,7 @@ variable
 local instance (p : Nat.Primes) : Fact p.1.Prime :=
   ⟨p.2⟩
 
-attribute [local instance 2000]
+attribute [local instance]
   rationalSeparableClosureAlgebra
 
 local instance finitePadicAuxiliaryExtensionNormal :
@@ -399,10 +401,10 @@ theorem numberFieldTowerFinitePadicAuxiliaryBase_isGalois
   let FB :=
     LocalClassFieldTheory.abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) hSH
-  letI auxiliaryBaseAlgebra : Algebra B FB :=
+  let auxiliaryBaseAlgebra : Algebra B FB :=
     (LocalClassFieldTheory.abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) hSH).algebra
-  letI auxiliaryBaseGalois : IsGalois B FB :=
+  let auxiliaryBaseGalois : IsGalois B FB :=
     LocalClassFieldTheory.abstractRelativeFixedField_isGalois
       ℚ (SeparableClosure ℚ) H S hSH
       (numberFieldTowerFinitePadicCyclicFixedSubgroup_extension_normal
@@ -689,7 +691,7 @@ theorem
   let E :=
     LocalClassFieldTheory.abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) P.below
-  letI hHfinite : Finite
+  let hHfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         extensionSubgroup
@@ -698,26 +700,26 @@ theorem
           S (le_baseField S)) :=
     (numberFieldTowerFinitePadicAuxiliaryAbstractField
       (K := K) (L := L) p τ hτ).finite
-  letI hPfinite : Finite
+  let hPfinite : Finite
       (S.toSubgroup ⧸
         extensionSubgroup S P.field P.below) :=
     P.finite
-  letI auxiliaryBaseFiniteDimensional : FiniteDimensional ℚ F :=
+  let auxiliaryBaseFiniteDimensional : FiniteDimensional ℚ F :=
     LocalClassFieldTheory.abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) S hHfinite
-  letI auxiliaryTopFiniteDimensional : FiniteDimensional F E :=
+  let auxiliaryTopFiniteDimensional : FiniteDimensional F E :=
     LocalClassFieldTheory.abstractRelativeFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ)
       S P.field P.below hHfinite hPfinite
-  letI auxiliaryScalarTower : IsScalarTower ℚ F E :=
+  let auxiliaryScalarTower : IsScalarTower ℚ F E :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI auxiliaryAbsoluteFiniteDimensional : FiniteDimensional ℚ E :=
+  let auxiliaryAbsoluteFiniteDimensional : FiniteDimensional ℚ E :=
     FiniteDimensional.trans ℚ F E
-  letI auxiliaryBaseNumberField : NumberField F :=
+  let auxiliaryBaseNumberField : NumberField F :=
     NumberField.of_module_finite ℚ F
-  letI auxiliaryTopNumberField : NumberField E :=
+  let auxiliaryTopNumberField : NumberField E :=
     NumberField.of_module_finite ℚ E
-  letI auxiliaryOriginalBaseAlgebra : Algebra K F :=
+  let auxiliaryOriginalBaseAlgebra : Algebra K F :=
     numberFieldTowerFinitePadicAuxiliary_baseAlgebra
       (K := K) (L := L) p τ
   let wF :=
@@ -761,7 +763,7 @@ private opaque
         (numberFieldTowerFinitePlaceExtensionToSeparableClosure
           K L v (chosenFinitePlaceExtension (L := L) v)).1
             (τ.1 (x : SeparableClosure ℚ)) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
   dsimp only
   intro x
@@ -800,7 +802,7 @@ private opaque numberFieldTowerFinitePadicAuxiliaryAutomorphism_mem_topPlaceDeco
     let σE := numberFieldTowerFinitePadicAuxiliaryAutomorphism
       (K := K) (L := L) p τ
     σE ∈ absoluteValueDecompositionGroup F wE.1 := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
   dsimp only at hdecomposition ⊢
   let S :=
@@ -897,7 +899,7 @@ private opaque numberFieldTowerFinitePadicAuxiliaryTopDecompositionGroup_eq_chos
   let E :=
     LocalClassFieldTheory.abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) P.below
-  letI hHfinite : Finite
+  let hHfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         extensionSubgroup
@@ -905,22 +907,22 @@ private opaque numberFieldTowerFinitePadicAuxiliaryTopDecompositionGroup_eq_chos
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
           S (le_baseField S)) :=
     H.finite
-  letI hPfinite : Finite
+  let hPfinite : Finite
       (S.toSubgroup ⧸ extensionSubgroup S P.field P.below) :=
     P.finite
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     LocalClassFieldTheory.abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) S hHfinite
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     LocalClassFieldTheory.abstractRelativeFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) S P.field P.below hHfinite hPfinite
-  letI : IsScalarTower ℚ F E := IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional ℚ E := FiniteDimensional.trans ℚ F E
-  letI : NumberField F := NumberField.of_module_finite ℚ F
-  letI : NumberField E := NumberField.of_module_finite ℚ E
-  letI : IsAbelianGalois F E :=
+  let : IsScalarTower ℚ F E := IsScalarTower.of_algebraMap_eq' rfl
+  let : FiniteDimensional ℚ E := FiniteDimensional.trans ℚ F E
+  let : NumberField F := NumberField.of_module_finite ℚ F
+  let : NumberField E := NumberField.of_module_finite ℚ E
+  let : IsAbelianGalois F E :=
     GlobalClassFields.finiteAbelianSubextensionAbstractRelativeFixedFieldIsAbelianGalois P
-  letI : Algebra K F :=
+  let : Algebra K F :=
     numberFieldTowerFinitePadicAuxiliary_baseAlgebra
       (K := K) (L := L) p τ
   let wF :=
@@ -1043,9 +1045,6 @@ opaque numberFieldTowerFinitePadicAuxiliaryLocalGlobalRepresentative
           numberFieldTowerExtensionQuotientEquivGaloisGroup K L
             (numberFieldTowerFiniteQuotientCoordinate
               (K := K) (L := L) τ)} := by
-  letI : Algebra K (SeparableClosure ℚ) :=
-    numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI := numberFieldTowerExtensionSubgroup_normal K L
   let H :=
     numberFieldTowerFinitePadicAuxiliaryAbstractField
       (K := K) (L := L) p τ hτ
@@ -1072,34 +1071,24 @@ opaque numberFieldTowerFinitePadicAuxiliaryLocalGlobalRepresentative
   letI hPfinite : Finite
       (S.toSubgroup ⧸ extensionSubgroup S P.field P.below) :=
     P.finite
-  letI auxiliaryBaseFiniteDimensional : FiniteDimensional ℚ F :=
-    LocalClassFieldTheory.abstractFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) S hHfinite
-  letI auxiliaryTopFiniteDimensional : FiniteDimensional F E :=
-    LocalClassFieldTheory.abstractRelativeFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ)
-      S P.field P.below hHfinite hPfinite
-  letI auxiliaryScalarTower : IsScalarTower ℚ F E :=
-    IsScalarTower.of_algebraMap_eq' rfl
-  letI auxiliaryAbsoluteFiniteDimensional : FiniteDimensional ℚ E :=
-    FiniteDimensional.trans ℚ F E
-  letI auxiliaryBaseNumberField : NumberField F :=
-    NumberField.of_module_finite ℚ F
-  letI auxiliaryTopNumberField : NumberField E :=
-    NumberField.of_module_finite ℚ E
+  letI auxiliaryBaseNumberField : NumberField F := by
+    let : FiniteDimensional ℚ F :=
+      LocalClassFieldTheory.abstractFixedField_finiteDimensional
+        ℚ (SeparableClosure ℚ) S hHfinite
+    exact NumberField.of_module_finite ℚ F
+  letI auxiliaryTopNumberField : NumberField E := by
+    let : FiniteDimensional F E :=
+      LocalClassFieldTheory.abstractRelativeFixedField_finiteDimensional
+        ℚ (SeparableClosure ℚ)
+        S P.field P.below hHfinite hPfinite
+    exact NumberField.of_module_finite F E
   letI auxiliaryAbelianGalois : IsAbelianGalois F E :=
     GlobalClassFields.finiteAbelianSubextensionAbstractRelativeFixedFieldIsAbelianGalois P
   letI auxiliaryOriginalBaseAlgebra : Algebra K F :=
     numberFieldTowerFinitePadicAuxiliary_baseAlgebra
       (K := K) (L := L) p τ
-  letI auxiliaryBaseRatScalarTower : IsScalarTower ℚ K F :=
-    numberFieldTowerFinitePadicAuxiliary_baseRatScalarTower
-      (K := K) (L := L) p τ
   letI auxiliaryOriginalTopAlgebra : Algebra L E :=
     numberFieldTowerFinitePadicAuxiliary_topAlgebra
-      (K := K) (L := L) p τ
-  letI auxiliaryTopRatScalarTower : IsScalarTower ℚ L E :=
-    numberFieldTowerFinitePadicAuxiliary_topRatScalarTower
       (K := K) (L := L) p τ
   letI auxiliaryOriginalBaseTopAlgebra : Algebra K E :=
     numberFieldTowerFinitePadicAuxiliary_originalBaseTopAlgebra
@@ -1110,10 +1099,11 @@ opaque numberFieldTowerFinitePadicAuxiliaryLocalGlobalRepresentative
   letI auxiliaryBaseTopScalarTower : IsScalarTower K F E :=
     numberFieldTowerFinitePadicAuxiliary_baseTopScalarTower
       (K := K) (L := L) p τ
-  letI auxiliaryOriginalBaseFiniteDimensional : FiniteDimensional K F :=
-    FiniteDimensional.right ℚ K F
   letI auxiliaryOriginalBaseGalois : IsGalois K F :=
     numberFieldTowerFinitePadicAuxiliaryBase_isGalois
+      (K := K) (L := L) p τ
+  let auxiliaryOriginalTopAlgHom : L →ₐ[ℚ] E :=
+    numberFieldTowerFinitePadicAuxiliaryTopEmbedding
       (K := K) (L := L) p τ
   let wF :=
     numberFieldTowerFinitePadicAuxiliaryBasePlaceExtension
@@ -1200,17 +1190,10 @@ opaque numberFieldTowerFinitePadicAuxiliaryLocalGlobalRepresentative
   let j : E →ₐ[ℚ] SeparableClosure ℚ :=
     E.val.restrictScalars ℚ
   have hjLower :
-      j.comp (IsScalarTower.toAlgHom ℚ L E) =
+      j.comp auxiliaryOriginalTopAlgHom =
         AlgebraicNumberTheory.numberFieldSeparableClosureEmbedding L := by
     apply AlgHom.ext
     intro a
-    dsimp only [j]
-    simp only [
-      AlgHom.comp_apply, AlgHom.restrictScalars_apply,
-      IsScalarTower.coe_toAlgHom']
-    rw [show algebraMap L E =
-      (numberFieldTowerFinitePadicAuxiliaryTopEmbedding
-        (K := K) (L := L) p τ).toRingHom from rfl]
     exact
       numberFieldTowerFinitePadicAuxiliaryTopEmbedding_coe
         (K := K) (L := L) p τ a
@@ -1252,7 +1235,7 @@ opaque numberFieldTowerFinitePadicAuxiliaryLocalGlobalRepresentative
               (IdeleGroup.finitePlaceIdeleClass V y)) :=
         congrArg (globalNormResidueMonoidHom K L) hnormClass.symm
       _ = globalNormResidueMonoidHomOfEmbedding K L
-          (j.comp (IsScalarTower.toAlgHom ℚ L E))
+          (j.comp auxiliaryOriginalTopAlgHom)
           (_root_.ideleClassNorm K F
             (IdeleGroup.finitePlaceIdeleClass V y)) := by
         rw [hjLower,
@@ -1306,11 +1289,11 @@ theorem exists_numberFieldTowerFinitePadicLift_of_finitePlace
         numberFieldTowerBaseSubgroupPadicCyclotomicDegree
             (K := K) (L := L) p τ =
           (Multiplicative.ofAdd (1 : ℤ_[p.1])) ^ n := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   obtain ⟨τΩ, hτΩrestrict, n, hn, hτΩdegree⟩ :=
     exists_finitePlaceSeparableClosureLift_with_positivePadicCyclotomicDegree
@@ -1659,8 +1642,6 @@ theorem
       numberFieldTowerFinitePadicCyclicFixedField
             (K := K) (L := L) p τ ⊔
         rationalCyclotomicPadicField p := by
-  letI : Algebra ℚ (SeparableClosure ℚ) :=
-    DivisionRing.toRatAlgebra
   let S :=
     numberFieldTowerFinitePadicCyclicFixedSubgroup
       (K := K) (L := L) p τ
@@ -1669,7 +1650,8 @@ theorem
   let F :=
     numberFieldTowerFinitePadicCyclicFixedField
       (K := K) (L := L) p τ
-  let C :=
+  let C : @IntermediateField ℚ (SeparableClosure ℚ) _ _
+      rationalSeparableClosureAlgebra :=
     rationalCyclotomicPadicField p
   have hfixing :
       (F ⊔ C).fixingSubgroup ≤
@@ -1685,9 +1667,9 @@ theorem
       numberFieldTowerFinitePadicCyclicFixedSubgroup_inf_absolutePadicKernel_le_topSubgroup
         (K := K) (L := L) p τ n hn hdegree hprimary
     refine ⟨hσ.1, ?_⟩
-    letI : Algebra ℚ rationalCyclotomicZHatField :=
+    let : Algebra ℚ rationalCyclotomicZHatField :=
       rationalCyclotomicZHatField.algebra'
-    letI : @Normal ℚ rationalCyclotomicZHatField _ _
+    let : @Normal ℚ rationalCyclotomicZHatField _ _
         rationalCyclotomicZHatField.algebra' :=
       rationalCyclotomicZHatField_normal
     let E :=
@@ -1775,11 +1757,11 @@ theorem exists_finitePlaceCyclotomicAuxiliaryFixedField
         numberFieldTowerBaseSubgroupPadicCyclotomicDegree
             (K := K) (L := L) p τ =
           (Multiplicative.ofAdd (1 : ℤ_[p.1])) ^ n := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   obtain
       ⟨τ, hτσ, hτdecomposition, hτdegree,
@@ -1858,11 +1840,11 @@ theorem exists_finitePlacePrimaryCyclotomicAuxiliaryFixedField
         numberFieldTowerBaseSubgroupPadicCyclotomicDegree
             (K := K) (L := L) p τ =
           (Multiplicative.ofAdd (1 : ℤ_[p.1])) ^ n := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   obtain
       ⟨τ, hτσ, hτdecomposition, hτdegree,

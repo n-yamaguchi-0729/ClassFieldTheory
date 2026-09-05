@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FiniteFieldUnitMaps
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FiniteFieldUnitMaps
+
+set_option autoImplicit false
 
 universe u v
 
@@ -88,9 +90,15 @@ theorem fixedTowerCorrection_coe
           ∑ i ∈ s,
             ((v.frobeniusFixedFieldUnitAction K L hLK σn
                 (τ i) (hτσn i) (uBarᵢ i)).1 - (uBarᵢ i).1) := by
-  apply Subtype.ext
-  simp [fixedTowerCorrection,
-    ValuationData.frobeniusFixedFieldUnitAction]
+  let inclusion :=
+    (v.unitAddSubgroup (D.frobeniusFixedAbstractField K L hLK σn)).subtype
+  change inclusion (v.fixedTowerCorrection K L hLK σn s φ hφσn
+    τ hτσn uBar uBarᵢ) =
+      inclusion (v.frobeniusFixedFieldUnitAction K L hLK σn φ hφσn uBar) -
+        inclusion uBar - ∑ i ∈ s,
+          (inclusion (v.frobeniusFixedFieldUnitAction K L hLK σn
+            (τ i) (hτσn i) (uBarᵢ i)) - inclusion (uBarᵢ i))
+  simp only [fixedTowerCorrection, map_sub, map_sum]
 
 /-- Applying the lower norm to the correction term gives zero.  This is
 the norm calculation immediately before the use of H⁻¹ = 0. -/

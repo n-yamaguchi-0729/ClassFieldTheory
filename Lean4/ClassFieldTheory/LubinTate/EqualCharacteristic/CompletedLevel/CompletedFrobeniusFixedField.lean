@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusBaseEquiv
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaFrobeniusFixed
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectTargetLevelEmbedding
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusBaseEquiv
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaFrobeniusFixed
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectTargetLevelEmbedding
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the fixed field of the prescribed completed lift

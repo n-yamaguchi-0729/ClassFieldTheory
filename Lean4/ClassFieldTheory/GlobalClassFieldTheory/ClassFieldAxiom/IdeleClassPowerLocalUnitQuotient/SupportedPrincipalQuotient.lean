@@ -1,8 +1,10 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.ArchimedeanPowerIndex
-import GlobalClassFieldTheory.ClassFieldAxiom.SupportedIdelePowerLocalUnitQuotient
-import AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.ArchimedeanPowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SupportedIdelePowerLocalUnitQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
 import Mathlib.Algebra.Group.Equiv.Basic
 import Mathlib.Algebra.Group.Subgroup.Ker
+
+set_option autoImplicit false
 
 /-!
 # Supported principal ideles and the idele-class quotient
@@ -233,6 +235,12 @@ def supportedIdeleClassPowerDenominator
   supportedIdelePowerLocalUnitSubgroup (K := K) n S T ⊔
     supportedPrincipalIdeleSubgroup (K := K) S T
 
+section SupportedClassQuotient
+
+local instance supportedClassQuotient_isMulCommutative :
+    IsMulCommutative (IdeleClassGroup K) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
 /-- The natural map from supported ideles to
 `C_K/C_K(S,T)`. -/
 def supportedIdeleToClassPowerQuotient
@@ -420,6 +428,8 @@ theorem card_ideleClassPowerLocalUnitQuotient_eq_supported
   Nat.card_congr
     (supportedIdeleClassPowerQuotientEquiv
       (K := K) n S T hLarge).symm.toEquiv
+
+end SupportedClassQuotient
 
 /-- The cardinal identity furnished by the supported exact sequence:
 

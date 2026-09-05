@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.RayClass.Rational
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+
+set_option autoImplicit false
 
 /-!
 # Prime factorization of a nonzero rational number
@@ -546,7 +548,7 @@ theorem padicIntUnitOfRat_rationalPrimeUnit_factorization
               (coprime_of_mem_rationalPrimeFactorizationSupport_erase
                 x p q.2)) ^
             padicValRat q.1 (x : ℚ) := by
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let : Fact p.1.Prime := ⟨p.2⟩
   have hQ :=
     congrArg (algebraMap ℚ ℚ_[p.1])
       (rationalPrimeUnit_factorization x p)

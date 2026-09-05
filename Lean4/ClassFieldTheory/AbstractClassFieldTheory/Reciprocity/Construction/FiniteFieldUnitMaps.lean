@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusFixedFieldTower
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusClosureCommutation
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusFixedFieldAction
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusFixedFieldTower
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusClosureCommutation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusFixedFieldAction
+
+set_option autoImplicit false
 
 universe u v
 
@@ -111,7 +113,9 @@ theorem valuationAt_frobeniusFixedFieldAction
       (D.frobeniusFixedFieldAction A K L hLK σ q hq a).1
     calc
       bT.1 = bC.1 := hbTcoe
-      _ = A.ρ k.1 a.1 := by simp [bC, k]
+      _ = A.ρ k.1 a.1 :=
+        (conjugateFixedElement_coe A TF.field k.1⁻¹ a).trans
+          (congrArg (fun s : G => A.ρ s a.1) (inv_inv k.1))
       _ = (D.frobeniusFixedFieldAction A K L hLK σ q hq a).1 := by rfl
   calc
     v.valuationAt TF (D.frobeniusFixedFieldAction A K L hLK σ q hq a) =
@@ -138,9 +142,10 @@ noncomputable def frobeniusFixedFieldUnitAction
     v.unitAddSubgroup (D.frobeniusFixedAbstractField K L hLK σ) →+
       v.unitAddSubgroup (D.frobeniusFixedAbstractField K L hLK σ) where
   toFun u := ⟨D.frobeniusFixedFieldAction A K L hLK σ q hq u.1, by
-    rw [v.mem_unitAddSubgroup_iff,
-      v.valuationAt_frobeniusFixedFieldAction K L hLK σ q hq u.1]
-    exact u.2⟩
+    exact (v.mem_unitAddSubgroup_iff
+      (D.frobeniusFixedAbstractField K L hLK σ)
+      (D.frobeniusFixedFieldAction A K L hLK σ q hq u.1)).2
+        ((v.valuationAt_frobeniusFixedFieldAction K L hLK σ q hq u.1).trans u.2)⟩
   map_zero' := by apply Subtype.ext; exact map_zero _
   map_add' _ _ := by apply Subtype.ext; exact map_add _ _ _
 

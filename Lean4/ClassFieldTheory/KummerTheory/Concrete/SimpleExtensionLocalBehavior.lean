@@ -1,11 +1,35 @@
-import KummerTheory.Concrete.SimpleExtension
-import KummerTheory.Concrete.FinitePlaceDecomposition
-import AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
-import AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced
-import AlgebraicNumberTheory.Completion.UnramifiedComparison
-import KummerTheory.Concrete.LocalUnitKummerUnramified
+import GaloisCohomology.Kummer.Concrete.SimpleExtension
+import ClassFieldTheory.KummerTheory.Concrete.FinitePlaceDecomposition
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Finite
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.H0
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.HMinusOne
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Quotient
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquivApply
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInclusion
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInducedSmul
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockTensorSmul
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.CompletionTransport
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Spine
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Action
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Equiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Inclusion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
+import GaloisCohomology.Kummer.Concrete.LocalUnitKummerUnramified
+
+set_option autoImplicit false
 
 /-!
 # Unramified finite places in simple Kummer extensions
@@ -95,52 +119,52 @@ theorem
     RayClass.adicAbv_isNontrivial v
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K v
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
   let C := vK.Completion
   let F := LocalizedCompletion vK w
-  letI : FiniteDimensional C F :=
+  let : FiniteDimensional C F :=
     localizedCompletionModuleFinite vK hvK w
-  letI : IsGalois C F :=
+  let : IsGalois C F :=
     HilbertRamification.algebraicLocalization_isGalois vK w
-  letI : NontriviallyNormedField C :=
+  let : NontriviallyNormedField C :=
     absoluteValueExtension_completionNontriviallyNormedField vK hvK
-  letI : LocallyCompactSpace C :=
+  let : LocallyCompactSpace C :=
     AbsoluteValue.Completion.locallyCompactSpace
       (finitePlaceCompletionBaseMap_isometry v)
-  letI : IsUltrametricDist C :=
+  let : IsUltrametricDist C :=
     completionIsUltrametricDist vK hvKna
-  letI : Valued C ℝ≥0 :=
+  let : Valued C ℝ≥0 :=
     finitePlaceCompletionValued vK hvKna
   let vCNorm : Valuation C ℝ≥0 := Valued.v
-  letI : vCNorm.IsNontrivial :=
+  let : vCNorm.IsNontrivial :=
     (inferInstance :
       (NormedField.valuation (K := C)).IsNontrivial)
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceCompletionValuativeRel vK hvKna
-  letI : vCNorm.Compatible :=
+  let : vCNorm.Compatible :=
     Valuation.Compatible.ofValuation vCNorm
-  letI : ValuativeRel.IsNontrivial C :=
+  let : ValuativeRel.IsNontrivial C :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vCNorm).2
       inferInstance
   let vC := ValuativeRel.valuation C
-  letI : vC.IsNontrivial := inferInstance
-  letI : IsValuativeTopology C :=
+  let : vC.IsNontrivial := inferInstance
+  let : IsValuativeTopology C :=
     isValuativeTopology_of_valued_ofValuation C ℝ≥0
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
-  letI : FiniteDimensional C w.1.Completion :=
+  let : FiniteDimensional C w.1.Completion :=
     completionModuleFinite vK hvK w
-  letI : ContinuousSMul C w.1.Completion :=
+  let : ContinuousSMul C w.1.Completion :=
     continuousSMul_of_algebraMap _ _
       (AbsoluteValue.completionMap_isometry vK w.1 w.2).continuous
-  letI : LocallyCompactSpace w.1.Completion :=
+  let : LocallyCompactSpace w.1.Completion :=
     LocallyCompactSpace.of_finiteDimensional_of_complete
       C w.1.Completion
   let eCompletion : F ≃ᵢ w.1.Completion :=
@@ -148,42 +172,42 @@ theorem
         (localizedCompletionEquivCompletion
           vK hvK w).toEquiv
       isometry_toFun := Isometry.of_dist_eq fun _ _ => rfl }
-  letI : LocallyCompactSpace F :=
+  let : LocallyCompactSpace F :=
     (eCompletion.toHomeomorph.locallyCompactSpace_iff).2
       inferInstance
-  letI : IsUltrametricDist F :=
+  let : IsUltrametricDist F :=
     localizedCompletionIsUltrametricDist
       vK w hvKna
-  letI : Valued F ℝ≥0 :=
+  let : Valued F ℝ≥0 :=
     localizedCompletionFinitePlaceValued
       vK w hvKna
-  letI : ValuativeRel F :=
+  let : ValuativeRel F :=
     localizedCompletionFinitePlaceValuativeRel
       vK w hvKna
   let vFNorm : Valuation F ℝ≥0 := Valued.v
-  letI : vFNorm.Compatible :=
+  let : vFNorm.Compatible :=
     Valuation.Compatible.ofValuation vFNorm
   let vF := ValuativeRel.valuation F
-  letI : Valuation.HasExtension vC vF :=
+  let : Valuation.HasExtension vC vF :=
     localizedCompletionValuationHasExtension
       vK w hvKna
-  letI : vF.IsNontrivial :=
+  let : vF.IsNontrivial :=
     valuativeRelExtension_isNontrivial (C := C) (F := F)
-  letI : ValuativeRel.IsNontrivial F :=
+  let : ValuativeRel.IsNontrivial F :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vF).2
       inferInstance
-  letI : IsValuativeTopology F :=
+  let : IsValuativeTopology F :=
     isValuativeTopology_of_valued_ofValuation F ℝ≥0
-  letI : IsNonarchimedeanLocalField F :=
+  let : IsNonarchimedeanLocalField F :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
-  letI : Algebra 𝒪[C] F :=
+  let : Algebra 𝒪[C] F :=
     Algebra.ofSubsemiring 𝒪[C]
-  letI :=
+  let :=
     localizedCompletionIsIntegralClosureWithExtension
       vK w hvK hvKna
-  letI : Module.Finite 𝒪[C] 𝒪[F] :=
+  let : Module.Finite 𝒪[C] 𝒪[F] :=
     integerRing_moduleFinite_of_isIntegralClosure C F
 
   have hbAbv : vK (b : K) = 1 := by
@@ -293,11 +317,11 @@ theorem
     ChosenFinitePlaceIsUnramified
       (K := K) (L := L) v := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L :=
+  let : NumberField L :=
     NumberField.of_module_finite K L
   let beta : Lˣ :=
     chosenSimpleKummerRootUnit K n hnK b
@@ -334,11 +358,11 @@ theorem
       finitePlaceBelow (K := K) P = v →
         Algebra.IsUnramifiedAt (𝓞 K) P.asIdeal := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let _ : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let _ : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L :=
+  let _ : NumberField L :=
     NumberField.of_module_finite K L
   have hunram :
       ChosenFinitePlaceIsUnramified
@@ -379,9 +403,9 @@ theorem
     FinitePlaceSplitsCompletely
       (K := K) (L := E) v := by
   let E := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   let beta : Eˣ :=
     chosenSimpleKummerRootUnit K n hnK b
@@ -445,23 +469,23 @@ theorem
     infiniteTensorNormSubgroup
       (K := K) (L := E) w = ⊤ := by
   let E := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   let vK : AbsoluteValue K ℝ := w.1
   let hvK : vK.IsNontrivial := w.isNontrivial
   let u : AbsoluteValueExtension vK E :=
     pullbackAbsoluteValueExtension
       vK hvK IsAlgClosed.lift
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) u.1
-  letI : SMul K u.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion u.1.Completion :=
+  let : SMul K u.1.Completion := hK.toSMul
+  let : Algebra vK.Completion u.1.Completion :=
     AbsoluteValue.completionAlgebra vK u.1 u.2
-  letI := localizedCompletionGlobalAlgebra vK u
-  letI := localizedCompletionIsScalarTower vK u
+  let := localizedCompletionGlobalAlgebra vK u
+  let := localizedCompletionIsScalarTower vK u
   let C := vK.Completion
   let F := LocalizedCompletion vK u
   let eK : w.Completion ≃+* C :=
@@ -469,9 +493,9 @@ theorem
       (K := K) w).toRingEquiv
   let eC : w.Completionˣ ≃* Cˣ :=
     Units.mapEquiv eK.toMulEquiv
-  letI : FiniteDimensional C F :=
+  let : FiniteDimensional C F :=
     localizedCompletionModuleFinite vK hvK u
-  letI : IsGalois C F :=
+  let : IsGalois C F :=
     HilbertRamification.algebraicLocalization_isGalois vK u
   let beta : Eˣ :=
     chosenSimpleKummerRootUnit K n hnK b
@@ -557,7 +581,7 @@ theorem
       _ = 1 := by
         rw [hD]
         simp
-  letI : Module.Free C F :=
+  let : Module.Free C F :=
     Module.Free.of_divisionRing C F
   have hNormTop :
       localNormSubgroup C F = ⊤ := by

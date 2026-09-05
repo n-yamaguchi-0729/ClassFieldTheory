@@ -1,5 +1,7 @@
 import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
-import AlgebraicNumberTheory.FiniteAbelianCompositum
+import ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
+
+set_option autoImplicit false
 
 /-!
 # Embedding a finite Galois compositum into a common field
@@ -145,8 +147,8 @@ theorem exists_finiteGaloisCompositumEmbeddingOfEmbeddings_left_eq
   let B : IntermediateField K T := i.fieldRange
   let eF : L ≃ₐ[K] A := AlgEquiv.ofInjectiveField f
   let eI : L ≃ₐ[K] B := AlgEquiv.ofInjectiveField i
-  letI : FiniteDimensional K A := eF.toLinearEquiv.finiteDimensional
-  letI : IsGalois K A := IsGalois.of_algEquiv eF
+  let : FiniteDimensional K A := eF.toLinearEquiv.finiteDimensional
+  let : IsGalois K A := IsGalois.of_algEquiv eF
   let gA : A →ₐ[K] T := i.comp eF.symm.toAlgHom
   have hgA_range : gA.fieldRange = B := by
     apply le_antisymm
@@ -167,12 +169,12 @@ theorem exists_finiteGaloisCompositumEmbeddingOfEmbeddings_left_eq
 
   let A₀ : IntermediateField K M := i₀.fieldRange
   let e₀ : L ≃ₐ[K] A₀ := AlgEquiv.ofInjectiveField i₀
-  letI : FiniteDimensional K A₀ := e₀.toLinearEquiv.finiteDimensional
-  letI : IsGalois K A₀ := IsGalois.of_algEquiv e₀
-  letI hA₀M : Algebra A₀ M := A₀.val.toRingHom.toAlgebra
-  letI : SMul A₀ M := hA₀M.toSMul
-  letI : Module A₀ M := hA₀M.toModule
-  letI : IsScalarTower K A₀ M :=
+  let : FiniteDimensional K A₀ := e₀.toLinearEquiv.finiteDimensional
+  let : IsGalois K A₀ := IsGalois.of_algEquiv e₀
+  let hA₀M : Algebra A₀ M := A₀.val.toRingHom.toAlgebra
+  let : SMul A₀ M := hA₀M.toSMul
+  let : Module A₀ M := hA₀M.toModule
+  let : IsScalarTower K A₀ M :=
     IsScalarTower.of_algebraMap_eq' (by
       ext x
       change (((algebraMap K M x : M) : SeparableClosure K) :

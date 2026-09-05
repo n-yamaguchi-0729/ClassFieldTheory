@@ -1,5 +1,7 @@
-import KummerTheory.Concrete.SimpleExtension
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+import GaloisCohomology.Kummer.Concrete.SimpleExtension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+
+set_option autoImplicit false
 
 /-!
 # Local Hilbert symbols
@@ -163,9 +165,9 @@ theorem chosenSimpleKummerNormResidueAutomorphism_ker
       LocalFieldTheory.localNormSubgroup K
         (chosenSimpleKummerExtension K n hnK b) := by
   let E := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   change (abelianLocalArtinMonoidHom K E).ker =
     LocalFieldTheory.localNormSubgroup K E

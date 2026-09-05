@@ -1,5 +1,7 @@
 import Mathlib.NumberTheory.NumberField.Discriminant.Different
 
+set_option autoImplicit false
+
 /-!
 # No nontrivial everywhere-unramified extension of ℚ
 
@@ -31,7 +33,7 @@ theorem numberField_finrank_eq_one_of_forall_isUnramifiedAt
     by_contra hne
     obtain ⟨P, hPmax, hle⟩ := Ideal.exists_le_maximal
       (differentIdeal ℤ (𝓞 K)) hne
-    letI : P.IsPrime := hPmax.isPrime
+    let : P.IsPrime := hPmax.isPrime
     have hdvd : P ∣ differentIdeal ℤ (𝓞 K) :=
       Ideal.dvd_iff_le.mpr hle
     have hramified : ¬ Algebra.IsUnramifiedAt ℤ P :=

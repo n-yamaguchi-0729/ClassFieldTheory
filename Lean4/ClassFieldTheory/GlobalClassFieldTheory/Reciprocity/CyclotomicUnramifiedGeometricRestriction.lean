@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.CyclotomicUnramifiedRestriction
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicUnramifiedRestriction
+
+set_option autoImplicit false
 
 /-!
 # Geometric restriction from the cyclotomic unramified field
@@ -27,7 +29,7 @@ open KummerTheory
 open LocalClassFieldTheory
 
 @[reducible]
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricRationalSeparableClosureAlgebra :
     Algebra ℚ (SeparableClosure ℚ) :=
   DivisionRing.toRatAlgebra
@@ -54,7 +56,7 @@ local instance cyclotomicUnramifiedGeometricRelativeQuotientFinite
           H.field L.field L.below) :=
   L.finite
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricBaseFiniteDimensional
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)) :
@@ -63,7 +65,7 @@ noncomputable local instance (priority := 2000)
   abstractFixedField_finiteDimensional
     ℚ (SeparableClosure ℚ) H.field H.finite
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricRelativeFiniteDimensional
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
@@ -74,7 +76,7 @@ noncomputable local instance (priority := 2000)
         ℚ (SeparableClosure ℚ) L.below) :=
   finiteAbelianSubextensionAbstractRelativeFixedFieldFiniteDimensional L
 
-local instance (priority := 2000)
+local instance
     cyclotomicUnramifiedGeometricRelativeScalarTower
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
@@ -85,7 +87,7 @@ local instance (priority := 2000)
         ℚ (SeparableClosure ℚ) L.below) :=
   IsScalarTower.of_algebraMap_eq' rfl
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricRelativeAbsoluteFiniteDimensional
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
@@ -98,7 +100,7 @@ noncomputable local instance (priority := 2000)
     (abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) L.below)
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricBaseNumberField
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)) :
@@ -107,7 +109,7 @@ noncomputable local instance (priority := 2000)
   NumberField.of_module_finite ℚ
     (abstractFixedField ℚ (SeparableClosure ℚ) H.field)
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricRelativeNumberField
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
@@ -119,7 +121,7 @@ noncomputable local instance (priority := 2000)
     (abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) L.below)
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricRelativeIsAbelianGalois
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
@@ -130,7 +132,7 @@ noncomputable local instance (priority := 2000)
         ℚ (SeparableClosure ℚ) L.below) :=
   finiteAbelianSubextensionAbstractRelativeFixedFieldIsAbelianGalois L
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricRelativeNormal
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
@@ -142,7 +144,7 @@ noncomputable local instance (priority := 2000)
   (cyclotomicUnramifiedGeometricRelativeIsAbelianGalois
     H L).toIsGalois.to_normal
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicUnramifiedGeometricMaximalIsAbelianGalois
     (H : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)) :
@@ -296,10 +298,10 @@ theorem
     abstractRelativeFixedField
       ℚ (SeparableClosure ℚ)
       (rationalCyclotomicFieldInertia_le H.field)
-  letI _ : Algebra E U :=
+  let _ : Algebra E U :=
     abstractFixedFieldCyclotomicFiniteUnramifiedInclusionAlgebra
       H L hUnramified
-  letI _ : SMul E U :=
+  let _ : SMul E U :=
     abstractFixedFieldCyclotomicFiniteUnramifiedInclusionSMul
       H L hUnramified
   exact IsScalarTower.of_algHom
@@ -437,8 +439,9 @@ private theorem cyclotomicUnramifiedGeometricRestriction_quotientFormula
       abstractFixedFieldCyclotomicGalEquivZHat H
           (qMax (qInertia.symm (qInertia (qMax.symm σ)))) =
         degreeEquiv (qInertia (qMax.symm σ)) at hCoordinate
-    rw [qInertia.symm_apply_apply, qMax.apply_symm_apply] at hCoordinate
-    exact hCoordinate
+    rw [qInertia.symm_apply_apply] at hCoordinate
+    exact (congrArg (abstractFixedFieldCyclotomicGalEquivZHat H)
+      (qMax.apply_symm_apply σ)).symm.trans hCoordinate
   rw [hCoordinate', degreeEquiv.symm_apply_apply]
 
 /-- The quotient-defined restriction to a finite unramified
@@ -484,10 +487,10 @@ theorem
   let U :=
     abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) hI
-  letI _ : Algebra E U :=
+  let _ : Algebra E U :=
     abstractFixedFieldCyclotomicFiniteUnramifiedInclusionAlgebra
       H L hUnramified
-  letI _ : @IsScalarTower F E U
+  let _ : @IsScalarTower F E U
       Algebra.toSMul Algebra.toSMul Algebra.toSMul :=
     IsScalarTower.of_algHom
       (abstractFixedFieldCyclotomicFiniteUnramifiedInclusion
@@ -581,19 +584,19 @@ private theorem
       finiteDimensional :=
         j.equivFieldRange.toLinearEquiv.finiteDimensional
       isGalois := IsGalois.of_algEquiv j.equivFieldRange }
-  letI _ : FiniteDimensional K G := G.finiteDimensional
-  letI _ : NumberField G :=
+  let _ : FiniteDimensional K G := G.finiteDimensional
+  let _ : NumberField G :=
     NumberField.of_module_finite K G
-  letI _ : IsAbelianGalois K G :=
+  let _ : IsAbelianGalois K G :=
     IsAbelianGalois.of_algHom G.toIntermediateField.val
-  letI _ : Algebra E G :=
+  let _ : Algebra E G :=
     j.equivFieldRange.toRingHom.toAlgebra
-  letI _ : SMul E G := Algebra.toSMul
-  letI _ : IsScalarTower K E G :=
+  let _ : SMul E G := Algebra.toSMul
+  let _ : IsScalarTower K E G :=
     IsScalarTower.of_algHom j.equivFieldRange.toAlgHom
-  letI _ : IsScalarTower K G Ω :=
+  let _ : IsScalarTower K G Ω :=
     IntermediateField.isScalarTower_mid G.toIntermediateField
-  letI _ : IsScalarTower E G Ω :=
+  let _ : IsScalarTower E G Ω :=
     IsScalarTower.of_algebraMap_eq fun _ => rfl
   have hProjection :
       AlgEquiv.restrictNormalHom G
@@ -704,20 +707,20 @@ private theorem
     abstractRelativeFixedField
       ℚ (SeparableClosure ℚ)
       (rationalCyclotomicFieldInertia_le H.field)
-  letI fNumberField : NumberField F :=
+  let fNumberField : NumberField F :=
     cyclotomicUnramifiedGeometricBaseNumberField H
-  letI eNumberField : NumberField E :=
+  let eNumberField : NumberField E :=
     cyclotomicUnramifiedGeometricRelativeNumberField H L
-  letI fEAlgebra : Algebra F E := E.algebra'
-  letI fUAlgebra : Algebra F U := U.algebra'
-  letI fEIsAbelianGalois : IsAbelianGalois F E :=
+  let fEAlgebra : Algebra F E := E.algebra'
+  let fUAlgebra : Algebra F U := U.algebra'
+  let fEIsAbelianGalois : IsAbelianGalois F E :=
     cyclotomicUnramifiedGeometricRelativeIsAbelianGalois H L
-  letI fUIsAbelianGalois : IsAbelianGalois F U :=
+  let fUIsAbelianGalois : IsAbelianGalois F U :=
     cyclotomicUnramifiedGeometricMaximalIsAbelianGalois H
-  letI eUAlgebra : Algebra E U :=
+  let eUAlgebra : Algebra E U :=
     abstractFixedFieldCyclotomicFiniteUnramifiedInclusionAlgebra
       H L hUnramified
-  letI fEUTower : @IsScalarTower F E U
+  let fEUTower : @IsScalarTower F E U
       Algebra.toSMul Algebra.toSMul Algebra.toSMul :=
     IsScalarTower.of_algHom
       (abstractFixedFieldCyclotomicFiniteUnramifiedInclusion
@@ -808,20 +811,20 @@ theorem
     abstractRelativeFixedField
       ℚ (SeparableClosure ℚ)
       (rationalCyclotomicFieldInertia_le H.field)
-  letI fNumberField : NumberField F :=
+  let fNumberField : NumberField F :=
     cyclotomicUnramifiedGeometricBaseNumberField H
-  letI eNumberField : NumberField E :=
+  let eNumberField : NumberField E :=
     cyclotomicUnramifiedGeometricRelativeNumberField H L
-  letI fEAlgebra : Algebra F E := E.algebra'
-  letI fUAlgebra : Algebra F U := U.algebra'
-  letI fEIsAbelianGalois : IsAbelianGalois F E :=
+  let fEAlgebra : Algebra F E := E.algebra'
+  let fUAlgebra : Algebra F U := U.algebra'
+  let fEIsAbelianGalois : IsAbelianGalois F E :=
     cyclotomicUnramifiedGeometricRelativeIsAbelianGalois H L
-  letI fUIsAbelianGalois : IsAbelianGalois F U :=
+  let fUIsAbelianGalois : IsAbelianGalois F U :=
     cyclotomicUnramifiedGeometricMaximalIsAbelianGalois H
-  letI eUAlgebra : Algebra E U :=
+  let eUAlgebra : Algebra E U :=
     abstractFixedFieldCyclotomicFiniteUnramifiedInclusionAlgebra
       H L hUnramified
-  letI fEUTower : @IsScalarTower F E U
+  let fEUTower : @IsScalarTower F E U
       Algebra.toSMul Algebra.toSMul Algebra.toSMul :=
     IsScalarTower.of_algHom
       (abstractFixedFieldCyclotomicFiniteUnramifiedInclusion

@@ -1,0 +1,33 @@
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.CharacteristicZero
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.CyclotomicKummerDescent
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristicDominatingExtension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.KummerNormOpen
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.LocalAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.LubinTateUniformizerDiagonal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MaximalKummerNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupSurjectivity
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardDominatingExtension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedLubinTateDiagonal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+
+set_option autoImplicit false
+
+/-!
+# Finite local existence theorem
+
+The ordinary norm-subgroup assignment is an order embedding into the
+opposite poset of native open finite-index subgroups.  Kummer theory in
+characteristic zero and transported Lubin--Tate levels in positive
+characteristic prove the existing characteristic-specific order
+isomorphisms.  The canonical standard Lubin--Tate construction now also
+provides a characteristic-independent finite abelian factor with its exact
+norm subgroup.
+-/

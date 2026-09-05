@@ -1,8 +1,12 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.StandardCompositum
-import LocalClassFieldTheory.Finite.Existence.StandardDominatingExtension
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
-import RamificationTheory.LocalField
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.StandardCompositum
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardDominatingExtension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
+import ValuedFieldTheory.Ramification.LocalField.Core
+import ValuedFieldTheory.Ramification.LocalField.BaseChange
+import ValuedFieldTheory.Ramification.LocalField.Unramified
+
+set_option autoImplicit false
 
 /-!
 # Filtered reciprocity for arbitrary finite abelian local extensions
@@ -40,11 +44,11 @@ theorem finiteAbelian_filteredLocalReciprocity
   let P := standardLubinTateFiniteAbelianCompositum K d n hd
   let F :=
     abstractFixedField K (SeparableClosure K) P.field
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) P.field
         (finiteAbelianSubextension_finite_over_absoluteBase K P)
-  letI : IsAbelianGalois K F :=
+  let : IsAbelianGalois K F :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K P
   let i : L →ₐ[K] F := hEmbed.some
   let j : L →ₐ[K] SeparableClosure K := F.val.comp i
@@ -55,9 +59,9 @@ theorem finiteAbelian_filteredLocalReciprocity
     exact (i y).property
   let e : L ≃ₐ[K] E :=
     AlgEquiv.ofInjectiveField j
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     e.toLinearEquiv.finiteDimensional
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     IsAbelianGalois.of_algHom (IntermediateField.inclusion hEF)
   have hcover :
       ∀ s : ℝ, 0 ≤ s →

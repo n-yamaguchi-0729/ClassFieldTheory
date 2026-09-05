@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+
+set_option autoImplicit false
 
 /-!
 # Small Hilbert norm subgroups and everywhere-unramified extensions
@@ -34,7 +36,7 @@ variable
     [FiniteDimensional K L] [IsGalois K L]
 
 /-- Keep norm-range quotient normality out of exported declaration types. -/
-local instance (priority := 2000)
+local instance
     smallHilbertNormCharacterization_ideleClassGroupIsMulCommutative :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
@@ -52,7 +54,7 @@ theorem
   obtain ⟨w, hw⟩ :=
     InfinitePlace.comap_surjective
       (K := L) v
-  letI : w.1.LiesOver v.1 :=
+  let : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
   rw [
     _root_.infiniteTensorNormSubgroup_eq_localNormSubgroup
@@ -72,7 +74,7 @@ theorem
       (x : v.Completion)
   rw [
     Algebra.norm_algebraMap,
-    InfinitePlace.Completion.finrank_eq_one_of_isUnramified
+    InfinitePlace.IsUnramified.finrank_eq_one
       v (w.isUnramified K),
     pow_one]
 
@@ -274,7 +276,18 @@ theorem
           (smallHilbertClassFieldNormSubgroup (K := K)))
         ((_root_.ideleClassNorm K L).range) := by
   unfold smallHilbertClassFieldQuotientToIdeleClassNormQuotient
-  rw [QuotientGroup.ker_map, Subgroup.comap_id]
+  exact
+    (QuotientGroup.ker_map
+      (N := smallHilbertClassFieldNormSubgroup (K := K))
+      ((_root_.ideleClassNorm K L).range)
+      (MonoidHom.id (IdeleClassGroup K))
+      (fun _ hx =>
+        smallHilbertClassFieldNormSubgroup_le_ideleClassNorm_range_of_everywhereUnramified
+          (K := K) (L := L) hunramifiedFinite hx)).trans
+      (congrArg
+        (Subgroup.map
+          (QuotientGroup.mk' (smallHilbertClassFieldNormSubgroup (K := K))))
+        (Subgroup.comap_id ((_root_.ideleClassNorm K L).range)))
 
 /-- Quotienting the small-Hilbert reciprocity quotient by the image of
 the actual norm subgroup recovers the actual norm quotient. -/

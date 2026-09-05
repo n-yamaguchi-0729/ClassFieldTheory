@@ -1,9 +1,9 @@
-import AlgebraicNumberTheory.Idele.Relative.Support
-import AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import ValuationTheory.AbsoluteValue.AlgebraicExtension.RamificationInvariants
-import ValuationTheory.AbsoluteValue.ExponentialValuation
-import ValuationTheory.Henselian.Complete
-import ValuationTheory.Completion.TensorProductDecomposition
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.Support
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+import ValuedFieldTheory.Valuation.AbsoluteValue.ExponentialValuation
+import ValuedFieldTheory.Valuation.Henselian.Complete
+import ValuedFieldTheory.Valuation.Completion.TensorProductDecomposition
 import Mathlib.Algebra.Module.Torsion.Basic
 import Mathlib.LinearAlgebra.Basis.SMul
 import Mathlib.RingTheory.Algebraic.Integral
@@ -12,6 +12,8 @@ import Mathlib.RingTheory.Discriminant
 import Mathlib.RingTheory.Localization.Finiteness
 import Mathlib.RingTheory.Valuation.LocalSubring
 import Mathlib.RingTheory.Valuation.ValuationSubring
+
+set_option autoImplicit false
 
 /-!
 # Integral lattices for the relative tensor basis
@@ -113,10 +115,10 @@ theorem absoluteValue_le_one_of_isIntegral
   let ν : Valuation F NNReal :=
     realAbsoluteValueValuation vF hvF
   let V : ValuationSubring F := ν.valuationSubring
-  letI : IsIntegrallyClosedIn V F :=
+  let : IsIntegrallyClosedIn V F :=
     (isIntegrallyClosed_iff_isIntegrallyClosedIn F).1
       inferInstance
-  letI : IsScalarTower ℤ V F :=
+  let : IsScalarTower ℤ V F :=
     IsScalarTower.of_algebraMap_eq fun n => by
       simp
   have hxV : IsIntegral V x :=
@@ -184,11 +186,11 @@ theorem isIntegral_over_baseCompletionIntegers_of_mem
     absoluteValueExponentialValuation aC haC
   let vb :=
     absoluteValueExponentialValuation bC hbC
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : Module.Finite vK.Completion w.1.Completion :=
+  let : Module.Finite vK.Completion w.1.Completion :=
     completionModuleFinite vK hvK0 w
-  letI : Algebra.IsAlgebraic vK.Completion w.1.Completion :=
+  let : Algebra.IsAlgebraic vK.Completion w.1.Completion :=
     Algebra.IsAlgebraic.of_finite vK.Completion w.1.Completion
   have hVaAbs :
       LubinTate.Valuations.exponentialValuationSubringAsValuationSubring va =

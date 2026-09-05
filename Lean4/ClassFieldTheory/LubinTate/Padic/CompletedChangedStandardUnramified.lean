@@ -1,12 +1,14 @@
-import LocalFieldTheory.DiscreteValuationField.PadicValuationComparison
-import LocalFieldTheory.DiscreteValuationField.RamificationAddVal
-import LocalFieldTheory.NonarchimedeanLocalField.FiniteUnramified
-import LocalFieldTheory.NonarchimedeanLocalField.FiniteExtensionTopology
-import LubinTate.Padic.CompletedChangedStandardFixedField
-import LubinTate.Padic.CompletedPrimitiveUniformizer
-import ValuationTheory.DiscreteValuationField.AmbientUniformizer
-import ValuationTheory.DiscreteValuationField.ChevalleyExtension
-import ValuationTheory.DiscreteValuationField.FiniteExtension.Uniqueness
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicValuationComparison
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationAddVal
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionTopology
+import ClassFieldTheory.LubinTate.Padic.CompletedChangedStandardFixedField
+import ClassFieldTheory.LubinTate.Padic.CompletedPrimitiveUniformizer
+import ValuedFieldTheory.Valuation.DiscreteValuationField.AmbientUniformizer
+import ValuedFieldTheory.Valuation.DiscreteValuationField.ChevalleyExtension
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
+
+set_option autoImplicit false
 
 /-!
 # The completed standard/changed compositum is unramified over the changed field
@@ -43,13 +45,13 @@ theorem
       finiteExtensionSpectralNormedField ℚ_[p] D
     letI : ValuativeRel D :=
       finiteExtensionSpectralValuativeRel ℚ_[p] D
-    letI : IsNonarchimedeanLocalField D :=
+    let : IsNonarchimedeanLocalField D :=
       finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
     letI : NontriviallyNormedField M :=
       finiteExtensionSpectralNormedField ℚ_[p] M
     letI : ValuativeRel M :=
       finiteExtensionSpectralValuativeRel ℚ_[p] M
-    letI : IsNonarchimedeanLocalField M :=
+    let : IsNonarchimedeanLocalField M :=
       finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
     (localCompleteDVF D).valuation.IsUniformizer
         (padicCompletedChangedUniformizerPrimeElement p u n : D) ∧
@@ -64,43 +66,43 @@ theorem
   let canonicalBase := localCompleteDVF ℚ_[p]
   let coefficient := padicCompletedUnramifiedCompleteDVF p
   let ambient := padicCompletedLevelCompleteDVF p n
-  letI : NontriviallyNormedField D :=
+  let : NontriviallyNormedField D :=
     finiteExtensionSpectralNormedField ℚ_[p] D
-  letI : ValuativeRel D :=
+  let : ValuativeRel D :=
     finiteExtensionSpectralValuativeRel ℚ_[p] D
-  letI : IsNonarchimedeanLocalField D :=
+  let : IsNonarchimedeanLocalField D :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField ℚ_[p] M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel ℚ_[p] M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-  letI :
+  let :
       Valuation.HasExtension (ValuativeRel.valuation ℚ_[p])
         (ValuativeRel.valuation D) :=
     finiteExtensionSpectralValuation_hasExtension ℚ_[p] D
-  letI :
+  let :
       Valuation.HasExtension (ValuativeRel.valuation ℚ_[p])
         (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension ℚ_[p] M
-  letI :
+  let :
       canonicalBase.valuation.HasExtension
         (localCompleteDVF D).valuation :=
     localCompleteDVFValuation_hasExtension ℚ_[p] D
-  letI :
+  let :
       canonicalBase.valuation.HasExtension
         (localCompleteDVF M).valuation :=
     localCompleteDVFValuation_hasExtension ℚ_[p] M
-  letI : padicBase.valuation.HasExtension coefficient.valuation :=
+  let : padicBase.valuation.HasExtension coefficient.valuation :=
     padicCompletedUnramifiedValuation_hasExtension p
-  letI : coefficient.valuation.HasExtension ambient.valuation :=
+  let : coefficient.valuation.HasExtension ambient.valuation :=
     padicCompletedLevelCompleteDVF_hasExtension p n
-  letI : padicBase.valuation.HasExtension ambient.valuation :=
+  let : padicBase.valuation.HasExtension ambient.valuation :=
     ValuationTheory.DiscreteValuationField.Valuation.hasExtension_trans
       padicBase.valuation coefficient.valuation
       ambient.valuation
-  letI : canonicalBase.valuation.HasExtension ambient.valuation :=
+  let : canonicalBase.valuation.HasExtension ambient.valuation :=
     localCompleteDVFValuation_hasExtension_of_padicLocalField
       p ambient.valuation
   let inclusionD : D →+* E := D.val.toRingHom
@@ -109,7 +111,7 @@ theorem
         algebraMap ℚ_[p] E := by
     ext x
     exact D.val.commutes x
-  letI :
+  let :
       canonicalBase.valuation.HasExtension
         (ambient.valuation.comap inclusionD) :=
     hasExtension_comap_of_algebraMap_compatible
@@ -120,7 +122,7 @@ theorem
         algebraMap ℚ_[p] E := by
     ext x
     exact M.val.commutes x
-  letI :
+  let :
       canonicalBase.valuation.HasExtension
         (ambient.valuation.comap inclusionM) :=
     hasExtension_comap_of_algebraMap_compatible
@@ -167,19 +169,19 @@ theorem
       finiteExtensionSpectralNormedField ℚ_[p] D
     letI : ValuativeRel D :=
       finiteExtensionSpectralValuativeRel ℚ_[p] D
-    letI : IsNonarchimedeanLocalField D :=
+    let : IsNonarchimedeanLocalField D :=
       finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
     letI : NontriviallyNormedField M :=
       finiteExtensionSpectralNormedField ℚ_[p] M
     letI : ValuativeRel M :=
       finiteExtensionSpectralValuativeRel ℚ_[p] M
-    letI : IsNonarchimedeanLocalField M :=
+    let : IsNonarchimedeanLocalField M :=
       finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-    letI :
+    let :
         Valuation.HasExtension (ValuativeRel.valuation D)
           (ValuativeRel.valuation M) :=
       finiteExtensionSpectralValuation_hasExtension_of_tower ℚ_[p] D M
-    letI :
+    let :
         (localCompleteDVF D).valuation.HasExtension
           (localCompleteDVF M).valuation :=
       localCompleteDVFValuation_hasExtension D M
@@ -187,23 +189,23 @@ theorem
       (localCompleteDVF M).toDVF = 1 := by
   let D := padicCompletedChangedUniformizerFixedField p u n
   let M := padicCompletedStandardChangedCompositum p u n
-  letI : NontriviallyNormedField D :=
+  let : NontriviallyNormedField D :=
     finiteExtensionSpectralNormedField ℚ_[p] D
-  letI : ValuativeRel D :=
+  let : ValuativeRel D :=
     finiteExtensionSpectralValuativeRel ℚ_[p] D
-  letI : IsNonarchimedeanLocalField D :=
+  let : IsNonarchimedeanLocalField D :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField ℚ_[p] M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel ℚ_[p] M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-  letI :
+  let :
       Valuation.HasExtension (ValuativeRel.valuation D)
         (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension_of_tower ℚ_[p] D M
-  letI :
+  let :
       (localCompleteDVF D).valuation.HasExtension
         (localCompleteDVF M).valuation :=
     localCompleteDVFValuation_hasExtension D M
@@ -236,36 +238,36 @@ theorem
     (u : (padicLocalField p).valuationSubringˣ) (n : ℕ) :
     let D := padicCompletedChangedUniformizerFixedField p u n
     let M := padicCompletedStandardChangedCompositum p u n
-    letI : FiniteDimensional D M :=
+    let : FiniteDimensional D M :=
       FiniteDimensional.right ℚ_[p] D M
-    letI : Algebra.IsSeparable D M :=
+    let : Algebra.IsSeparable D M :=
       Algebra.isSeparable_tower_top_of_isSeparable
         (F := ℚ_[p]) (L := D) (E := M)
     letI : NontriviallyNormedField D :=
       finiteExtensionSpectralNormedField ℚ_[p] D
     letI : ValuativeRel D :=
       finiteExtensionSpectralValuativeRel ℚ_[p] D
-    letI : IsNonarchimedeanLocalField D :=
+    let : IsNonarchimedeanLocalField D :=
       finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
     letI : NontriviallyNormedField M :=
       finiteExtensionSpectralNormedField ℚ_[p] M
     letI : ValuativeRel M :=
       finiteExtensionSpectralValuativeRel ℚ_[p] M
-    letI : IsNonarchimedeanLocalField M :=
+    let : IsNonarchimedeanLocalField M :=
       finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-    letI :
+    let :
         Valuation.HasExtension (ValuativeRel.valuation D)
           (ValuativeRel.valuation M) :=
       finiteExtensionSpectralValuation_hasExtension_of_tower ℚ_[p] D M
-    letI :
+    let :
         (localCompleteDVF D).valuation.HasExtension
           (localCompleteDVF M).valuation :=
       localCompleteDVFValuation_hasExtension D M
-    letI :
+    let :
         IsScalarTower (localCompleteDVF D).valuationSubring
           (localCompleteDVF M).valuationSubring M :=
       IsScalarTower.of_algebraMap_eq' rfl
-    letI :
+    let :
         Module.Finite (ValuativeRel.valuation D).integer
           (ValuativeRel.valuation M).integer := by
       change
@@ -278,36 +280,36 @@ theorem
       D M := by
   let D := padicCompletedChangedUniformizerFixedField p u n
   let M := padicCompletedStandardChangedCompositum p u n
-  letI : FiniteDimensional D M :=
+  let : FiniteDimensional D M :=
     FiniteDimensional.right ℚ_[p] D M
-  letI : Algebra.IsSeparable D M :=
+  let : Algebra.IsSeparable D M :=
     Algebra.isSeparable_tower_top_of_isSeparable
       (F := ℚ_[p]) (L := D) (E := M)
-  letI : NontriviallyNormedField D :=
+  let : NontriviallyNormedField D :=
     finiteExtensionSpectralNormedField ℚ_[p] D
-  letI : ValuativeRel D :=
+  let : ValuativeRel D :=
     finiteExtensionSpectralValuativeRel ℚ_[p] D
-  letI : IsNonarchimedeanLocalField D :=
+  let : IsNonarchimedeanLocalField D :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField ℚ_[p] M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel ℚ_[p] M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-  letI :
+  let :
       Valuation.HasExtension (ValuativeRel.valuation D)
         (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension_of_tower ℚ_[p] D M
-  letI :
+  let :
       (localCompleteDVF D).valuation.HasExtension
         (localCompleteDVF M).valuation :=
     localCompleteDVFValuation_hasExtension D M
-  letI :
+  let :
       IsScalarTower (localCompleteDVF D).valuationSubring
         (localCompleteDVF M).valuationSubring M :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI :
+  let :
       Module.Finite (ValuativeRel.valuation D).integer
         (ValuativeRel.valuation M).integer := by
     change
@@ -318,7 +320,7 @@ theorem
         (localCompleteDVF D) (localCompleteDVF M)
   let base := localCompleteDVF D
   let target := localCompleteDVF M
-  letI :
+  let :
       Module.IsTorsionFree base.valuationSubring target.valuationSubring :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.moduleIsTorsionFree_target_valuationSubring_of_finite_separable
       base target

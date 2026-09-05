@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Reduction
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
 import Mathlib.GroupTheory.Nilpotent
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -52,6 +54,10 @@ theorem abstractReciprocity_sylow_lowerQuotient_isPGroup
   exact P.isPGroup'.of_equiv
     (L.lowerQuotientEquiv (P : Subgroup L.extensionQuotient)).symm
 
+section SylowSolvability
+
+local notation "IsSolvable" => Group.IsSolvable
+
 /-- Consequently, the actual extension `L/M` cut out by a Sylow subgroup
 is solvable.  Mathlib proves this by the standard chain
 finite `p`-group `\Rightarrow` nilpotent `\Rightarrow` solvable. -/
@@ -64,7 +70,7 @@ theorem abstractReciprocity_sylow_lowerQuotient_isSolvable
           (L.intermediateField (P : Subgroup L.extensionQuotient)) L.field
           (L.field_le_intermediateField
             (P : Subgroup L.extensionQuotient))) := by
-  letI : Finite
+  let : Finite
       ((L.intermediateField (P : Subgroup L.extensionQuotient)).toSubgroup ⧸
         extensionSubgroup
           (L.intermediateField (P : Subgroup L.extensionQuotient)) L.field
@@ -72,14 +78,21 @@ theorem abstractReciprocity_sylow_lowerQuotient_isSolvable
             (P : Subgroup L.extensionQuotient))) :=
     L.extension_over_intermediate_finite
       (P : Subgroup L.extensionQuotient)
-  letI : Group.IsNilpotent
+  let : Group.IsNilpotent
       ((L.intermediateField (P : Subgroup L.extensionQuotient)).toSubgroup ⧸
         extensionSubgroup
           (L.intermediateField (P : Subgroup L.extensionQuotient)) L.field
           (L.field_le_intermediateField
             (P : Subgroup L.extensionQuotient))) :=
     (L.abstractReciprocity_sylow_lowerQuotient_isPGroup P).isNilpotent
+  change Group.IsSolvable
+    ((L.intermediateField (P : Subgroup L.extensionQuotient)).toSubgroup ⧸
+      extensionSubgroup
+        (L.intermediateField (P : Subgroup L.extensionQuotient)) L.field
+        (L.field_le_intermediateField (P : Subgroup L.extensionQuotient)))
   infer_instance
+
+end SylowSolvability
 
 /-- The degree of the actual fixed field `M = L^P` over `K` is the index
 of `P` in `G(L/K)`.  No normality of `P`, and hence none of `M/K`, is

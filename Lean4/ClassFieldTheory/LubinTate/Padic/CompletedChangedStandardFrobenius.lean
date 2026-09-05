@@ -1,5 +1,7 @@
-import LubinTate.Padic.CompletedChangedStandardResidue
-import LubinTate.Padic.CompletedResidueFrobenius
+import ClassFieldTheory.LubinTate.Padic.CompletedChangedStandardResidue
+import ClassFieldTheory.LubinTate.Padic.CompletedResidueFrobenius
+
+set_option autoImplicit false
 
 /-!
 # Frobenius orientation in the completed standard/changed compositum
@@ -35,39 +37,39 @@ theorem
     (u : (padicLocalField p).valuationSubringˣ) (n : ℕ) :
     let D := padicCompletedChangedUniformizerFixedField p u n
     let M := padicCompletedStandardChangedCompositum p u n
-    letI : FiniteDimensional D M :=
+    let : FiniteDimensional D M :=
       FiniteDimensional.right ℚ_[p] D M
-    letI : IsGalois D M :=
+    let : IsGalois D M :=
       IsGalois.tower_top_of_isGalois ℚ_[p] D M
     letI : NontriviallyNormedField D :=
       finiteExtensionSpectralNormedField ℚ_[p] D
     letI : ValuativeRel D :=
       finiteExtensionSpectralValuativeRel ℚ_[p] D
-    letI : IsNonarchimedeanLocalField D :=
+    let : IsNonarchimedeanLocalField D :=
       finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
     letI : NontriviallyNormedField M :=
       finiteExtensionSpectralNormedField ℚ_[p] M
     letI : ValuativeRel M :=
       finiteExtensionSpectralValuativeRel ℚ_[p] M
-    letI : IsNonarchimedeanLocalField M :=
+    let : IsNonarchimedeanLocalField M :=
       finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-    letI :
+    let :
         Valuation.HasExtension (ValuativeRel.valuation D)
           (ValuativeRel.valuation M) :=
       finiteExtensionSpectralValuation_hasExtension_of_tower
         ℚ_[p] D M
-    letI :
+    let :
         Module.Finite
           (ValuativeRel.valuation D).integer
           (ValuativeRel.valuation M).integer :=
       integerRing_moduleFinite_of_finite_separable D M
-    letI :
+    let :
         IsIntegralClosure
           (ValuativeRel.valuation M).integer
           (ValuativeRel.valuation D).integer M :=
       padicCompletedStandardChangedCompositum_integerRing_isIntegralClosure
         p u n
-    letI :
+    let :
         IsNonarchimedeanLocalField.IsUnramifiedValuedExtension D M :=
       padicCompletedStandardChangedCompositum_isUnramifiedValuedExtension
         p u n
@@ -75,39 +77,39 @@ theorem
       (arithmeticFrobeniusOfUnramifiedValuation D M)⁻¹ := by
   let D := padicCompletedChangedUniformizerFixedField p u n
   let M := padicCompletedStandardChangedCompositum p u n
-  letI : FiniteDimensional D M :=
+  let : FiniteDimensional D M :=
     FiniteDimensional.right ℚ_[p] D M
-  letI : IsGalois D M :=
+  let : IsGalois D M :=
     IsGalois.tower_top_of_isGalois ℚ_[p] D M
-  letI : NontriviallyNormedField D :=
+  let : NontriviallyNormedField D :=
     finiteExtensionSpectralNormedField ℚ_[p] D
-  letI : ValuativeRel D :=
+  let : ValuativeRel D :=
     finiteExtensionSpectralValuativeRel ℚ_[p] D
-  letI : IsNonarchimedeanLocalField D :=
+  let : IsNonarchimedeanLocalField D :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField ℚ_[p] M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel ℚ_[p] M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-  letI :
+  let :
       Valuation.HasExtension (ValuativeRel.valuation D)
         (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension_of_tower
       ℚ_[p] D M
-  letI :
+  let :
       Module.Finite
         (ValuativeRel.valuation D).integer
         (ValuativeRel.valuation M).integer :=
     integerRing_moduleFinite_of_finite_separable D M
-  letI :
+  let :
       IsIntegralClosure
         (ValuativeRel.valuation M).integer
         (ValuativeRel.valuation D).integer M :=
     padicCompletedStandardChangedCompositum_integerRing_isIntegralClosure
       p u n
-  letI :
+  let :
       IsNonarchimedeanLocalField.IsUnramifiedValuedExtension D M :=
     padicCompletedStandardChangedCompositum_isUnramifiedValuedExtension
       p u n

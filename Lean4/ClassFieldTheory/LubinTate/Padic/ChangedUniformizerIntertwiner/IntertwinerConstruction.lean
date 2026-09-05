@@ -1,4 +1,6 @@
-import LubinTate.Padic.ChangedUniformizerIntertwiner.DefectCorrection
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.DefectCorrection
+
+set_option autoImplicit false
 
 /-!
 # Changed-uniformizer intertwiner construction

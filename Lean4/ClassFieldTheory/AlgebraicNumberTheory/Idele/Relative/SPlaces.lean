@@ -1,6 +1,13 @@
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport
-import AlgebraicNumberTheory.Adele.IntegralLocalFactor
-import CyclicCohomology.Herbrand.HerbrandLowDegree.Product
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.IdeleSupport
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Localization
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.AbsoluteValue
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.FinitePlaceCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralLocalFactor
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Product
+
+set_option autoImplicit false
 
 /-!
 # Finite-place support for relative ideles
@@ -604,7 +611,7 @@ noncomputable def
         ⟨σ • (z : RelativeIdeleGroup K L), by
           rw [mem_relativeIdeleLocalTensorDecompositionSupportedSubgroup_iff]
           intro w hw
-          letI :=
+          let :=
             scalarTensorUnitsAction
               (K := K) (L := L)
               (A := w.adicCompletion K)
@@ -746,15 +753,15 @@ theorem relativeIdeleSupportedComponents_smul
         (K := K) (L := L) S (σ • z) =
       σ • relativeIdeleSupportedComponents
         (K := K) (L := L) S z := by
-  letI :=
+  let :=
     relativeIdeleLocalTensorDecompositionSupportedSubgroupAction
       (K := K) (L := L) S
-  letI :=
+  let :=
     relativeIdeleSPlaceFactorsAction
       (K := K) (L := L) S
   apply Prod.ext
   · funext w
-    letI :=
+    let :=
       scalarTensorUnitsAction
         (K := K) (L := L) (A := w.Completion)
     exact
@@ -762,7 +769,7 @@ theorem relativeIdeleSupportedComponents_smul
         (K := K) (L := L) w σ z
   · apply Prod.ext
     · funext w
-      letI :=
+      let :=
         scalarTensorUnitsAction
           (K := K) (L := L)
           (A := w.1.adicCompletion K)
@@ -771,7 +778,7 @@ theorem relativeIdeleSupportedComponents_smul
           (K := K) (L := L) w.1 σ z
     · funext w
       apply Subtype.ext
-      letI :=
+      let :=
         scalarTensorUnitsAction
           (K := K) (L := L)
           (A := w.1.adicCompletion K)

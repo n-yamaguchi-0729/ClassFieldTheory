@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.SeparableClosurePadicLift
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.SeparableClosurePadicLift
+
+set_option autoImplicit false
 
 /-!
 # Finite p-adic cyclic data for local-global Artin compatibility
@@ -118,9 +120,9 @@ theorem rationalSeparableClosurePadicCyclotomicDegree_ker
     (rationalSeparableClosurePadicCyclotomicDegree
         p).toMonoidHom.ker =
       (rationalCyclotomicPadicField p).fixingSubgroup := by
-  letI : Algebra ℚ rationalCyclotomicZHatField :=
+  let : Algebra ℚ rationalCyclotomicZHatField :=
     rationalCyclotomicZHatField.algebra'
-  letI : @Normal ℚ rationalCyclotomicZHatField _ _
+  let : @Normal ℚ rationalCyclotomicZHatField _ _
       rationalCyclotomicZHatField.algebra' :=
     rationalCyclotomicZHatField_normal
   let E :=
@@ -419,11 +421,11 @@ theorem numberFieldTowerFinitePadicCyclicPreimage_isOpen
   let degree :=
     numberFieldTowerFinitePadicImageDegree
       (K := K) (L := L) p
-  letI : CompactSpace P.toSubgroup :=
+  let : CompactSpace P.toSubgroup :=
     isCompact_iff_compactSpace.mp P.isClosed'.isCompact
   let γ : P.toSubgroup :=
     rangeRestriction τ
-  letI finiteDegreeKernel : Finite degree.toMonoidHom.ker :=
+  let finiteDegreeKernel : Finite degree.toMonoidHom.ker :=
     numberFieldTowerFinitePadicImageDegree_ker_finite
       (K := K) (L := L) p
   have hγ : degree γ ≠ 1 := by
@@ -498,12 +500,12 @@ theorem numberFieldTowerFinitePadicCyclicImageDegree_injective
   let degree :=
     numberFieldTowerFinitePadicImageDegree
       (K := K) (L := L) p
-  letI extensionSubgroupClosed : IsClosed (N : Set H.toSubgroup) :=
+  let extensionSubgroupClosed : IsClosed (N : Set H.toSubgroup) :=
     extensionSubgroup_isClosed H T
       (numberFieldTowerTopSubgroup_le_baseSubgroup K L)
-  letI extensionSubgroupFiniteIndex : N.FiniteIndex :=
+  let extensionSubgroupFiniteIndex : N.FiniteIndex :=
     N.finiteIndex_of_finite_quotient
-  letI quotientDiscreteTopology : DiscreteTopology Q :=
+  let quotientDiscreteTopology : DiscreteTopology Q :=
     QuotientGroup.discreteTopology
       (N.isOpen_of_isClosed_of_finiteIndex
         extensionSubgroupClosed)
@@ -911,9 +913,9 @@ theorem
     (numberFieldTowerFinitePadicAuxiliaryCompositumSubextension
         (K := K) (L := L) p τ).toFiniteGaloisExtension.IsUnramified
       rationalCyclotomicDegreeData := by
-  letI : Algebra ℚ rationalCyclotomicZHatField :=
+  let : Algebra ℚ rationalCyclotomicZHatField :=
     rationalCyclotomicZHatField.algebra'
-  letI : @Normal ℚ rationalCyclotomicZHatField _ _
+  let : @Normal ℚ rationalCyclotomicZHatField _ _
       rationalCyclotomicZHatField.algebra' :=
     rationalCyclotomicZHatField_normal
   let S :=

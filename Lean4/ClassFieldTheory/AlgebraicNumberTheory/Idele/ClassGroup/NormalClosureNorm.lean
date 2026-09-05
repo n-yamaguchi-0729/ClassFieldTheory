@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.NormalClosure
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
-import AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+
+set_option autoImplicit false
 
 /-!
 # Idèle-class norms from a finite normal closure
@@ -34,13 +36,17 @@ theorem finiteNormalClosure_ideleClassNorm_range_le_source :
     (_root_.ideleClassNorm K (finiteNormalClosure K L)).range ≤
       (_root_.ideleClassNorm K L).range := by
   let N := finiteNormalClosure K L
-  letI : Algebra (finiteNormalClosureOriginalField K L) N :=
+  let : Algebra (finiteNormalClosureOriginalField K L) N :=
     (finiteNormalClosureOriginalField K L).val.toRingHom.toAlgebra
-  letI : IsScalarTower K (finiteNormalClosureOriginalField K L) N :=
+  let : IsScalarTower K (finiteNormalClosureOriginalField K L) N :=
     by infer_instance
-  letI : FiniteDimensional (finiteNormalClosureOriginalField K L) N :=
+  let : FiniteDimensional (finiteNormalClosureOriginalField K L) N :=
     FiniteDimensional.right K (finiteNormalClosureOriginalField K L) N
-  letI : Group
+  let : IsMulCommutative
+      (RelativeIdeleGroup K
+        (finiteNormalClosureOriginalField K L)) :=
+    ⟨⟨fun a b => mul_comm a b⟩⟩
+  let : Group
       (RelativeIdeleGroup.ClassGroup K
         (finiteNormalClosureOriginalField K L)) :=
     QuotientGroup.Quotient.group
@@ -55,8 +61,13 @@ theorem finiteNormalClosure_ideleClassNorm_range_le_source :
       ordinaryIdeleClassNorm_range_eq_relative
         (K := K) (L := finiteNormalClosureOriginalField K L)
     _ = (RelativeIdeleGroup.classNorm K L).range :=
-      ideleClassNorm_range_algEquiv
-        (K := K) (finiteNormalClosureOriginalFieldEquiv K L)
+      (ideleClassNorm_range_algEquiv
+        (K := K) (L := L)
+        (M := finiteNormalClosureOriginalField K L)
+        (finiteNormalClosureOriginalFieldEquiv K L) :
+          (RelativeIdeleGroup.classNorm K
+            (finiteNormalClosureOriginalField K L)).range =
+            (RelativeIdeleGroup.classNorm K L).range)
     _ = (_root_.ideleClassNorm K L).range :=
       (ordinaryIdeleClassNorm_range_eq_relative
         (K := K) (L := L)).symm

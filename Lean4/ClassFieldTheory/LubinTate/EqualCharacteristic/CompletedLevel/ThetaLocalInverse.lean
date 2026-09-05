@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.ThetaAtCompletedLevel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ThetaAtCompletedLevel
 import Mathlib.Topology.Algebra.InfiniteSum.Nonarchimedean
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: local injectivity of theta

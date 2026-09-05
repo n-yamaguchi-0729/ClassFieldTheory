@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.Kummer.LocalHilbertSymbol
+import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
+
+set_option autoImplicit false
 
 /-!
 # The maximal local Kummer pairing

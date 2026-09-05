@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.HasseNormPrinciple
-import GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
-import GlobalClassFieldTheory.Reciprocity.GlobalArtin
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.HasseNormPrinciple
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+
+set_option autoImplicit false
 
 /-!
 # Finite-support reduction for the global Artin map
@@ -28,6 +30,14 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
+/-- Supply the canonical commutativity used by the finite-support norm quotient. -/
+private theorem artinFiniteSupportIdeleClassIsMulCommutative
+    {F : Type} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] artinFiniteSupportIdeleClassIsMulCommutative
+
 variable
     {K L : Type}
     [Field K] [NumberField K]
@@ -52,8 +62,10 @@ theorem mem_globalArtinFiniteSupport_iff
       chosenFinitePlaceArtinMonoidHom
           (K := K) (L := L) v
           (IdeleGroup.finiteComponent v a) ≠ 1 := by
-  simp only [globalArtinFiniteSupport, Set.Finite.mem_toFinset]
-  rfl
+  unfold globalArtinFiniteSupport
+  exact
+    (finitePlaceArtinFactors_hasFiniteMulSupport
+      (K := K) (L := L) a).mem_toFinset
 
 /-- The finite-support Artin approximation of an idele.  It is the
 product of the one-place ideles carrying all infinite components and the

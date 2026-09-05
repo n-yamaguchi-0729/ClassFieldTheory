@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteLevelCore
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteLevelCore
+
+set_option autoImplicit false
 
 /-!
 # Tensor comparison and injectivity at finite rational levels
@@ -18,10 +20,10 @@ namespace Reciprocity
 
 open CyclicCohomology
 
-attribute [local instance 1000]
+attribute [local instance]
   relativeAdeleRingIntermediateAlgebra
 
-local instance (priority := 1001) rationalFiniteLevelEndpointNumberField
+local instance rationalFiniteLevelEndpointNumberField
     (K : IntermediateField ℚ (SeparableClosure ℚ))
     [FiniteDimensional ℚ K] : NumberField K :=
   NumberField.of_module_finite ℚ K
@@ -41,11 +43,11 @@ theorem rationalRelativeAdeleEmbedding_unflatten
     towerRelativeAdeleUnflatten ℚ K N
         (RelativeIdeleGroup.adeleEmbedding (IntermediateField.inclusion hKN) a) =
       a ⊗ₜ[K] (1 : N) := by
-  letI : Algebra K N :=
+  let : Algebra K N :=
     (IntermediateField.inclusion hKN).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ K N :=
+  let : IsScalarTower ℚ K N :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     FiniteDimensional.right ℚ K N
   have hflatten :
       towerRelativeAdeleFlatten ℚ K N
@@ -95,13 +97,13 @@ theorem rationalRelativeIdeleEmbedding_unflatten
           (relativeAdeleRingIntermediateAlgebra ℚ K)
           (smulCommClass_self K (RelativeAdeleRing ℚ K))).toRingHom a :
         TowerRelativeIdeleGroup ℚ K N) := by
-  letI : Algebra K N :=
+  let : Algebra K N :=
     (IntermediateField.inclusion hKN).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ K N :=
+  let : IsScalarTower ℚ K N :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     FiniteDimensional.right ℚ K N
-  letI : Algebra K (RelativeAdeleRing ℚ K) :=
+  let : Algebra K (RelativeAdeleRing ℚ K) :=
     relativeAdeleRingIntermediateAlgebra ℚ K
   apply Units.ext
   exact
@@ -128,11 +130,11 @@ theorem
       RelativeIdeleGroup.classInclusion K N
         (_root_.relativeIdeleClassBaseChangeMulEquiv
           (K := ℚ) (L := K) c) := by
-  letI : Algebra K N :=
+  let : Algebra K N :=
     (IntermediateField.inclusion hKN).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ K N :=
+  let : IsScalarTower ℚ K N :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     FiniteDimensional.right ℚ K N
   refine QuotientGroup.induction_on c ?_
   intro a
@@ -163,11 +165,11 @@ theorem rationalRelativeIdeleClassEmbedding_injective
     (hKN : K ≤ N) :
     Function.Injective
       (RelativeIdeleGroup.classEmbedding (IntermediateField.inclusion hKN)) := by
-  letI : Algebra K N :=
+  let : Algebra K N :=
     (IntermediateField.inclusion hKN).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ K N :=
+  let : IsScalarTower ℚ K N :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     FiniteDimensional.right ℚ K N
   intro a b hab
   have htransport :=

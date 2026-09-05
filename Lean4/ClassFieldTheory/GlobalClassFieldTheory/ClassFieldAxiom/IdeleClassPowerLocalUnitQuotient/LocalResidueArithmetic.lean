@@ -1,9 +1,11 @@
-import AlgebraicNumberTheory.Idele.LocallyCompact
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlaceCompletionInstances
-import LocalFieldTheory.DiscreteValuationField.FieldUnitPowerIndexFormulas
-import LocalFieldTheory.Padic.PrincipalUnits
-import ValuationTheory.ValuedAdicComplete
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlaceCompletionInstances
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitPowerIndexFormulas
+import ValuedFieldTheory.LocalField.Padic.PrincipalUnits
+import ValuedFieldTheory.Valuation.ValuedAdicComplete
 import Mathlib.NumberTheory.NumberField.ProductFormula
+
+set_option autoImplicit false
 
 /-!
 # Residue arithmetic for finite-place power indices
@@ -64,17 +66,17 @@ theorem ramificationIndexOfWithZeroValuation_eq_extensionRamificationIndex
     LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
       ν
   let p := F.residueCharacteristic
-  letI :
+  let :
       LocalFieldTheory.DiscreteValuationField.LocalField.MixedQPadicContext
         F :=
     LocalFieldTheory.DiscreteValuationField.LocalField.mixedQPadicContext
       F
-  letI : Fact p.Prime :=
+  let : Fact p.Prime :=
     ⟨F.residueCharacteristic_prime⟩
   let base :=
     LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p
   let target := F.toCompleteDVF
-  letI :
+  let :
       (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation p).IsRankOneDiscrete :=
     (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).instCompleteDiscrete.isRankOneDiscrete
   let ϖ : base.valuationSubring :=
@@ -139,7 +141,13 @@ theorem ramificationIndexOfWithZeroValuation_eq_extensionRamificationIndex
           WithZero.exp (-1 : ℤ) ^
             ValuationTheory.DiscreteValuationField.ValuedExtension.ramificationIndex
               base.toDVF target.toDVF := by
-        simpa [base, target, ϖ, p] using hval
+        have himage :
+            ((ValuationTheory.DiscreteValuationField.ValuedExtension.integerMap
+                base.toDVF target.toDVF ϖ : target.valuationSubring) : E) =
+              (p : E) := by
+          change algebraMap ℚ_[p] E (p : ℚ_[p]) = (p : E)
+          exact map_natCast _ _
+        exact (congrArg ν himage).symm.trans hval
       _ =
           WithZero.exp
             (ValuationTheory.DiscreteValuationField.ValuedExtension.ramificationIndex
@@ -200,7 +208,7 @@ theorem card_localField_residueField_eq_pow_residueDegree
     LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
       ν
   let p := F.residueCharacteristic
-  letI :
+  let :
       LocalFieldTheory.DiscreteValuationField.LocalField.MixedQPadicContext
         F :=
     LocalFieldTheory.DiscreteValuationField.LocalField.mixedQPadicContext
@@ -208,7 +216,7 @@ theorem card_localField_residueField_eq_pow_residueDegree
   let base :=
     LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p
   let target := F.toCompleteDVF
-  letI : Finite base.residueField :=
+  let : Finite base.residueField :=
     LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF_residueField_finite p
   change
     Nat.card target.residueField =
@@ -261,7 +269,7 @@ theorem finrank_qp_eq_ramificationIndex_mul_residueDegree
   let F :=
     LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
       ν
-  letI :
+  let :
       LocalFieldTheory.DiscreteValuationField.LocalField.MixedQPadicContext
         F :=
     LocalFieldTheory.DiscreteValuationField.LocalField.mixedQPadicContext
@@ -308,7 +316,7 @@ theorem absNorm_eq_residueCharacteristic_pow_residueDegree
   let F :=
     LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
       ν
-  letI :
+  let :
       LocalFieldTheory.DiscreteValuationField.LocalField.MixedQPadicContext
         F :=
     LocalFieldTheory.DiscreteValuationField.LocalField.mixedQPadicContext

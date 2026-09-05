@@ -1,7 +1,17 @@
-import AlgebraicNumberTheory.RayClass.Approximation
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
-import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
-import ValuationTheory.Completion.ExtensionFactorClassification
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Approximation
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Finite
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.H0
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.HMinusOne
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Quotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+import ValuedFieldTheory.Valuation.Completion.ExtensionFactorClassification
+
+set_option autoImplicit false
 
 /-!
 # Weak approximation for actual local norm quotients
@@ -214,49 +224,49 @@ theorem chosenFinitePlaceLocalNormSubgroup_isOpen
   let w := chosenFinitePlaceExtension (L := L) v
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
   let E := LocalizedCompletion vK w
-  letI : FiniteDimensional vK.Completion E :=
+  let : FiniteDimensional vK.Completion E :=
     localizedCompletionModuleFinite vK hvK w
-  letI : IsGalois vK.Completion E :=
+  let : IsGalois vK.Completion E :=
     HilbertRamification.algebraicLocalization_isGalois vK w
-  letI : NontriviallyNormedField vK.Completion :=
+  let : NontriviallyNormedField vK.Completion :=
     absoluteValueExtension_completionNontriviallyNormedField
       vK hvK
-  letI : LocallyCompactSpace vK.Completion :=
+  let : LocallyCompactSpace vK.Completion :=
     AbsoluteValue.Completion.locallyCompactSpace
       (finitePlaceCompletionBaseMap_isometry v)
-  letI : IsUltrametricDist vK.Completion :=
+  let : IsUltrametricDist vK.Completion :=
     IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
       (AbsoluteValue.completionAbsoluteValue_isNonarchimedean
         vK
         (NumberField.HeightOneSpectrum.isNonarchimedean_adicAbv
           K v))
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     NormedField.toValued
   let vC : Valuation vK.Completion ℝ≥0 := Valued.v
-  letI : vC.IsNontrivial :=
+  let : vC.IsNontrivial :=
     (inferInstance :
       (NormedField.valuation
         (K := vK.Completion)).IsNontrivial)
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     ValuativeRel.ofValuation vC
-  letI : vC.Compatible :=
+  let : vC.Compatible :=
     Valuation.Compatible.ofValuation vC
-  letI : ValuativeRel.IsNontrivial vK.Completion :=
+  let : ValuativeRel.IsNontrivial vK.Completion :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vC).2
       inferInstance
-  letI : IsValuativeTopology vK.Completion :=
+  let : IsValuativeTopology vK.Completion :=
     isValuativeTopology_of_valued_ofValuation
       vK.Completion ℝ≥0
-  letI : IsNonarchimedeanLocalField vK.Completion :=
+  let : IsNonarchimedeanLocalField vK.Completion :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
@@ -289,11 +299,11 @@ noncomputable def ChosenFinitePlaceIntrinsicNormQuotient
   let vK :=
     NumberField.HeightOneSpectrum.adicAbv K v
   let w := chosenFinitePlaceExtension (L := L) v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   exact
     NormQuotient vK.Completion
@@ -319,11 +329,11 @@ noncomputable def chosenFinitePlaceNormQuotientEquiv
   let vK :=
     NumberField.HeightOneSpectrum.adicAbv K v
   let w := chosenFinitePlaceExtension (L := L) v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := LocalizedCompletion vK w
   let e :
@@ -350,11 +360,11 @@ theorem chosenFinitePlaceNormQuotientEquiv_normClass
     let vK :=
       NumberField.HeightOneSpectrum.adicAbv K v
     let w := chosenFinitePlaceExtension (L := L) v
-    letI hK :=
+    let hK :=
       AbsoluteValue.extensionCompletionAlgebra
         (K := K) w.1
-    letI : SMul K w.1.Completion := hK.toSMul
-    letI : Algebra vK.Completion w.1.Completion :=
+    let : SMul K w.1.Completion := hK.toSMul
+    let : Algebra vK.Completion w.1.Completion :=
       AbsoluteValue.completionAlgebra vK w.1 w.2
     chosenFinitePlaceNormQuotientEquiv
         (K := K) (L := L) v
@@ -367,11 +377,11 @@ theorem chosenFinitePlaceNormQuotientEquiv_normClass
   let vK :=
     NumberField.HeightOneSpectrum.adicAbv K v
   let w := chosenFinitePlaceExtension (L := L) v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   rfl
 

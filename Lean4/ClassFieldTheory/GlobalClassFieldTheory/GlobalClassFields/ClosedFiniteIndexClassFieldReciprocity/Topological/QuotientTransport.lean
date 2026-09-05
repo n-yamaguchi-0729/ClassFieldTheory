@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
+
+set_option autoImplicit false
 
 /-!
 # Continuous transport between equal quotient groups

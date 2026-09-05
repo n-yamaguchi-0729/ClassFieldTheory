@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldConstruction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldConstruction
+
+set_option autoImplicit false
 
 /-!
 # Norm range over the canonical fixed-field base

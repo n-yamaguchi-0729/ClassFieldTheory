@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
-import AlgebraicNumberTheory.Adele.RestrictedAction
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedAction
+
+set_option autoImplicit false
 
 /-!
 # Finite-place tensor factors as induced local blocks
@@ -72,11 +74,11 @@ theorem finitePlaceLocalTensorUnitsEquiv_smul
         (K := K) (L := L) v (σ • z) =
       σ • finitePlaceLocalTensorUnitsEquiv
         (K := K) (L := L) v z := by
-  letI :=
+  let :=
     localTensorUnitsAction
       (K := K) (L := L)
       (HeightOneSpectrum.adicAbv K v)
-  letI :=
+  let :=
     scalarTensorUnitsAction
       (K := K) (L := L)
       (A := v.adicCompletion K)
@@ -106,11 +108,11 @@ theorem finitePlaceLocalTensorUnitsEquiv_symm_smul
       σ •
         (finitePlaceLocalTensorUnitsEquiv
           (K := K) (L := L) v).symm z := by
-  letI :=
+  let :=
     localTensorUnitsAction
       (K := K) (L := L)
       (HeightOneSpectrum.adicAbv K v)
-  letI :=
+  let :=
     scalarTensorUnitsAction
       (K := K) (L := L)
       (A := v.adicCompletion K)

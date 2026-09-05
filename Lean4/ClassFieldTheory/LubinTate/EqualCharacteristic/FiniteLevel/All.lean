@@ -1,0 +1,22 @@
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.AmbientDivisionTorsion
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.DivisionPolynomial
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FreeRankOne
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAbelian
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.UnitQuotientGalois
+
+set_option autoImplicit false
+
+/-!
+# Finite Lubin--Tate levels in equal characteristic
+
+Public aggregate for division torsion, finite level fields, and their Galois
+and norm structure.
+-/

@@ -1,9 +1,11 @@
-import AlgebraicNumberTheory.SeparableClosureEmbedding
-import LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
-import LocalFieldTheory.NonarchimedeanLocalField.StandardOpenSubgroups
-import LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+import ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+
+set_option autoImplicit false
 
 /-!
 # Field-facing order reversal for finite abelian extensions
@@ -61,9 +63,9 @@ theorem map_finiteAbelianAbstractExtension_normSubgroup_eq
         (intrinsicAbsoluteUnits K)).map
       (baseUnitsEquivGaloisAmbientFixed K (SeparableClosure K)).symm.toAddMonoidHom =
       additiveNormSubgroup K L := by
-  letI : FiniteDimensional K (AlgHom.fieldRange i) :=
+  let : FiniteDimensional K (AlgHom.fieldRange i) :=
     (AlgEquiv.ofInjectiveField i).toLinearEquiv.finiteDimensional
-  letI : IsGalois K (AlgHom.fieldRange i) :=
+  let : IsGalois K (AlgHom.fieldRange i) :=
     IsGalois.of_algEquiv (AlgEquiv.ofInjectiveField i)
   rw [show additiveNormSubgroup K L =
       additiveNormSubgroup K (AlgHom.fieldRange i) by
@@ -130,20 +132,20 @@ theorem exists_uniformizerPrincipalSubgroup_le_normSubgroup
     ∃ d n : ℕ, 0 < d ∧ 1 ≤ n ∧
       LocalFieldTheory.uniformizerPrincipalSubgroup K ϖ d n ≤
         localNormSubgroup K L := by
-  letI : Finite (Gal(L / K)) := by
+  let : Finite (Gal(L / K)) := by
     apply Nat.finite_of_card_ne_zero
     rw [IsGalois.card_aut_eq_finrank K L]
     exact Nat.ne_of_gt Module.finrank_pos
-  letI : Finite (Abelianization (Gal(L / K))) :=
+  let : Finite (Abelianization (Gal(L / K))) :=
     Finite.of_surjective Abelianization.of QuotientGroup.mk_surjective
-  letI : Finite (NormQuotient K L) :=
+  let : Finite (NormQuotient K L) :=
     Finite.of_equiv
       (Abelianization (Gal(L / K)))
       (abelianizationEquivNormQuotient K L).toEquiv
-  letI : Finite (Kˣ ⧸ localNormSubgroup K L) := by
+  let : Finite (Kˣ ⧸ localNormSubgroup K L) := by
     change Finite (NormQuotient K L)
     infer_instance
-  letI : (localNormSubgroup K L).FiniteIndex :=
+  let : (localNormSubgroup K L).FiniteIndex :=
     Subgroup.finiteIndex_of_finite_quotient
   obtain ⟨n, hn, hUn⟩ :=
     LocalFieldTheory.exists_fieldPrincipalUnits_le_of_isOpen K (localNormSubgroup K L)

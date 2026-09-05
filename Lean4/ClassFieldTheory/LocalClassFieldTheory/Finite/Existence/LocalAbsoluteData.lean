@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.Main
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Main
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+
+set_option autoImplicit false
 
 /-!
 # Absolute data for finite local existence
@@ -81,7 +83,7 @@ theorem abstractFixedField_isGalois_of_base_normal
         h ∈ H.toSubgroup → g ∈ B.toSubgroup →
           g * h * g⁻¹ ∈ H.toSubgroup :=
     (Subgroup.normal_subgroupOf_iff (le_baseField H)).1 hrelative
-  letI : H.toSubgroup.Normal :=
+  let : H.toSubgroup.Normal :=
     { conj_mem := fun h hh g => hconj h g hh (by simp [B, baseField]) }
   apply (InfiniteGalois.normal_iff_isGalois
     (abstractFixedField K (SeparableClosure K) H)).1

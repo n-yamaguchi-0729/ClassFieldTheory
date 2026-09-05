@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.LubinTateApplication.StandardNormIndex
-import LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
-import LubinTate.FiniteLevel.HigherUnitLevelEquiv
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormIndex
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
+import ClassFieldTheory.LubinTate.FiniteLevel.HigherUnitLevelEquiv
+
+set_option autoImplicit false
 
 /-!
 # The norm subgroup of a standard Lubin--Tate level

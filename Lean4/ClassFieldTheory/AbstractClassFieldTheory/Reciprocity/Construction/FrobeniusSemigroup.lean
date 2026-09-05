@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Degree.FrobeniusFixedField
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusFixedField
+
+set_option autoImplicit false
 
 namespace ClassFormation
 

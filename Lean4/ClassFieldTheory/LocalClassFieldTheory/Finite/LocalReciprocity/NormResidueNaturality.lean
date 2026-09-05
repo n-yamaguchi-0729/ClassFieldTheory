@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntermediateFieldNormResidueNaturality
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntermediateFieldNormResidueNaturality
+
+set_option autoImplicit false
 
 /-!
 # Restriction naturality of the actual abelian local Artin map

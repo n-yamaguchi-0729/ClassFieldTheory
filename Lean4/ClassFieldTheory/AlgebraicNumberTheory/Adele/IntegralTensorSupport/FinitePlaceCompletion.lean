@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+
+set_option autoImplicit false
 
 /-!
 # Finite-place completion maps for relative tensor factors
@@ -312,16 +314,16 @@ theorem isIntegral_trace_tensor_of_components
       (Algebra.trace vK.Completion
         (vK.Completion ⊗[K] L) x) := by
   classical
-  letI : Fintype (AbsoluteValueExtension vK L) :=
+  let : Fintype (AbsoluteValueExtension vK L) :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK0
-  letI : ∀ w : AbsoluteValueExtension vK L,
+  let : ∀ w : AbsoluteValueExtension vK L,
       Algebra vK.Completion w.1.Completion :=
     fun w => AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w : AbsoluteValueExtension vK L,
+  let : ∀ w : AbsoluteValueExtension vK L,
       Module.Finite vK.Completion w.1.Completion :=
     fun w => completionModuleFinite vK hvK0 w
-  letI : ∀ w : AbsoluteValueExtension vK L,
+  let : ∀ w : AbsoluteValueExtension vK L,
       Module.Free vK.Completion w.1.Completion :=
     fun w => Module.Free.of_divisionRing
       vK.Completion w.1.Completion

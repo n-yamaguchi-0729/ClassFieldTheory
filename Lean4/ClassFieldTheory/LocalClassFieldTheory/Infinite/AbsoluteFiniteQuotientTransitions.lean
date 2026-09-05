@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotients
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotients
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Transition maps between absolute finite quotients
@@ -98,36 +100,33 @@ theorem absoluteFiniteQuotientEquiv_transition
       (absoluteFiniteQuotientTransition hNM
         (QuotientGroup.mk
           (QuotientGroup.mk σ : localAbsoluteAbelianProfinite K)))
-  rw [absoluteFiniteQuotientEquiv_mk_mk,
-    absoluteFiniteQuotientTransition_mk,
-    absoluteFiniteQuotientEquiv_mk_mk]
-  apply AlgEquiv.ext
-  intro y
-  apply Subtype.ext
-  calc
-    _ = (absoluteFiniteQuotientField K N).val
-        ((AlgEquiv.restrictNormalHom
-          (absoluteFiniteQuotientField K N) σ)
-            (IntermediateField.inclusion
-              (absoluteFiniteQuotientField_antitone hNM) y)) :=
-      intermediateFieldRestrictNormalHom_apply_val
+  let r := intermediateFieldRestrictNormalHom
+    (absoluteFiniteQuotientField K M)
+    (absoluteFiniteQuotientField K N)
+    (absoluteFiniteQuotientField_antitone hNM)
+  have hrestrict :
+      r (AlgEquiv.restrictNormalHom (absoluteFiniteQuotientField K N) σ) =
+        AlgEquiv.restrictNormalHom (absoluteFiniteQuotientField K M) σ := by
+    apply AlgEquiv.ext
+    intro y
+    apply Subtype.ext
+    exact (intermediateFieldRestrictNormalHom_apply_val
         (absoluteFiniteQuotientField K M)
         (absoluteFiniteQuotientField K N)
         (absoluteFiniteQuotientField_antitone hNM)
         (AlgEquiv.restrictNormalHom
-          (absoluteFiniteQuotientField K N) σ) y
-    _ = σ ((absoluteFiniteQuotientField K N).val
-        (IntermediateField.inclusion
-          (absoluteFiniteQuotientField_antitone hNM) y)) :=
-      AlgEquiv.restrictNormal_commutes σ
+          (absoluteFiniteQuotientField K N) σ) y).trans
+      ((AlgEquiv.restrictNormal_commutes σ
         (absoluteFiniteQuotientField K N)
         (IntermediateField.inclusion
-          (absoluteFiniteQuotientField_antitone hNM) y)
-    _ = σ ((absoluteFiniteQuotientField K M).val y) := by rfl
-    _ = (absoluteFiniteQuotientField K M).val
-        ((AlgEquiv.restrictNormalHom
-          (absoluteFiniteQuotientField K M) σ) y) :=
-      (AlgEquiv.restrictNormal_commutes σ
-        (absoluteFiniteQuotientField K M) y).symm
+          (absoluteFiniteQuotientField_antitone hNM) y)).trans
+        (AlgEquiv.restrictNormal_commutes σ
+          (absoluteFiniteQuotientField K M) y).symm)
+  have hright := (congrArg (absoluteFiniteQuotientEquiv K M)
+      (absoluteFiniteQuotientTransition_mk hNM
+        (QuotientGroup.mk σ : localAbsoluteAbelianProfinite K))).trans
+    (absoluteFiniteQuotientEquiv_mk_mk K M σ)
+  exact (congrArg r (absoluteFiniteQuotientEquiv_mk_mk K N σ)).trans
+    (hrestrict.trans hright.symm)
 
 end LocalClassFieldTheory

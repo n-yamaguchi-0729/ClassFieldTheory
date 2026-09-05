@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Degree.Valuation
-import AbstractClassFieldTheory.Degree.NormLaws
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.NormLaws
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -61,10 +63,6 @@ theorem DegreeData.FiniteResidueAbstractField.residueDegree_conjugate
     {G : Type*} [Group G] [TopologicalSpace G] {D : DegreeData G}
     [ContinuousMul G] (K : DegreeData.FiniteResidueAbstractField D) (σ : G) :
     (K.conjugate σ).residueDegree = K.residueDegree := by
-  letI : Finite (D.residueQuotient K.field) := K.finiteResidueQuotient
-  letI : Finite
-      (D.residueQuotient (conjugateClosedSubgroup K.field σ)) :=
-    (K.conjugate σ).finiteResidueQuotient
   apply PNat.eq
   change Nat.card
       (D.residueQuotient (conjugateClosedSubgroup K.field σ)) =
@@ -95,11 +93,6 @@ theorem FiniteAbstractField.residueDegree_conjugate
     [ContinuousMul G] (K : FiniteAbstractField G)
     (D : DegreeData G) (σ : G) :
     (K.conjugate σ).residueDegree D = K.residueDegree D := by
-  letI : Finite (D.residueQuotient K.field) :=
-    (K.toFiniteResidueAbstractField D).finiteResidueQuotient
-  letI : Finite
-      (D.residueQuotient (conjugateClosedSubgroup K.field σ)) :=
-    ((K.conjugate σ).toFiniteResidueAbstractField D).finiteResidueQuotient
   apply PNat.eq
   change Nat.card
       (D.residueQuotient (conjugateClosedSubgroup K.field σ)) =
@@ -122,7 +115,7 @@ theorem normalizedValuation_conjugate [ContinuousMul G]
     v.valuationAt (K.conjugate σ)
         (conjugateFixedElement A K.field σ a) =
       v.valuationAt K a := by
-  letI : Finite ((baseField G).toSubgroup ⧸
+  let : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) (conjugateClosedSubgroup K.field σ)
         (le_baseField (conjugateClosedSubgroup K.field σ))) :=
     (K.conjugate σ).finite

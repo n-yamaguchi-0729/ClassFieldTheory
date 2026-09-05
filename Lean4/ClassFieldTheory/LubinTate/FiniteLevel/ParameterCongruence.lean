@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.DivisionPolynomial
+import ClassFieldTheory.LubinTate.FiniteLevel.DivisionPolynomial
 import Mathlib.RingTheory.Ideal.Quotient.Operations
+
+set_option autoImplicit false
 
 /-!
 # Parameter congruences for standard Lubin--Tate polynomials

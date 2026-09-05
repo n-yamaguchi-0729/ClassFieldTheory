@@ -1,6 +1,15 @@
-import AlgebraicNumberTheory.Idele.ClassGroup
-import AlgebraicNumberTheory.Idele.SPlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormalClosureNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SPlaces
 import Mathlib.NumberTheory.NumberField.ClassNumber
+
+set_option autoImplicit false
 
 /-!
 # A sufficiently large finite set of places

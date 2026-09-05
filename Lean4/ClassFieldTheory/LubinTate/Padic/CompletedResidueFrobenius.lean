@@ -1,5 +1,7 @@
-import LubinTate.Padic.CompletedPrimitiveUniformizer
-import LubinTate.Padic.CompletedFrobeniusEvaluation
+import ClassFieldTheory.LubinTate.Padic.CompletedPrimitiveUniformizer
+import ClassFieldTheory.LubinTate.Padic.CompletedFrobeniusEvaluation
+
+set_option autoImplicit false
 
 /-!
 # Residue Frobenius on completed p-adic Lubin--Tate levels
@@ -31,7 +33,7 @@ theorem padicCompletedLevel_residueDegree_eq_one
   let base := padicCompletedUnramifiedCompleteDVF p
   let target := padicCompletedLevelCompleteDVF p n
   let E := padicCompletedLevelField p n
-  letI : IsScalarTower base.valuationSubring
+  let : IsScalarTower base.valuationSubring
       target.valuationSubring E :=
     IsScalarTower.of_algebraMap_eq' rfl
   exact
@@ -51,10 +53,10 @@ theorem padicCompletedLevel_residueField_finrank_eq_one
   let base := padicCompletedUnramifiedCompleteDVF p
   let target := padicCompletedLevelCompleteDVF p n
   let E := padicCompletedLevelField p n
-  letI : IsScalarTower base.valuationSubring
+  let : IsScalarTower base.valuationSubring
       target.valuationSubring E :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : target.maximalIdeal.LiesOver base.maximalIdeal :=
+  let : target.maximalIdeal.LiesOver base.maximalIdeal :=
     maximalIdeal_liesOver base target
   have hfinrank :
       residueDegree base.toDVF target.toDVF =

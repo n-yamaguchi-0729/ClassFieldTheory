@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.LevelAutomorphisms
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelAutomorphisms
 import Mathlib.FieldTheory.Galois.Abelian
+
+set_option autoImplicit false
 
 /-!
 # Abelian standard Lubin--Tate level fields

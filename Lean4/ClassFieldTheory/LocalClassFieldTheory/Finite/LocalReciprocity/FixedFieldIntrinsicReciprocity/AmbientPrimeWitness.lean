@@ -1,6 +1,8 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientNormResidue
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeNormTransport
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientNormResidue
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeNormTransport
+
+set_option autoImplicit false
 
 /-!
 # Ambient prime witnesses
@@ -76,8 +78,6 @@ noncomputable def ambientEmbeddedPrimeWitness
     (z : Abelianization Gal(E / F)) : Fˣ := by
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -189,11 +189,17 @@ noncomputable def ambientEmbeddedPrimeWitness
         rho ∈ (AlgHom.fieldRange i).fixingSubgroup at hrhoH
       rw [IntermediateField.mem_fixingSubgroup_iff] at hrhoH
       exact hrhoH (i x) ⟨x, rfl⟩)
-  letI : Algebra F LH :=
-    iLH.toRingHom.toAlgebra
-  let phi :=
-    intrinsicFrobeniusFixedFieldEquivAmbientEmbeddedField
-      K F E j e sigma
+  let phi : LF ≃+* LH := by
+    letI : Algebra F LH := iLH.toRingHom.toAlgebra
+    exact
+      (intrinsicFrobeniusFixedFieldEquivAmbientEmbeddedField
+        K F E j e sigma).toRingEquiv
+  have hphi (x : LF) :
+      ((phi x : LH) : SeparableClosure K) =
+        e (x : SeparableClosure F) := by
+    exact
+      intrinsicFrobeniusFixedFieldEquivAmbientEmbeddedField_apply_val
+        K F E j e sigma x
   letI : FiniteDimensional F LF :=
     abstractFixedField_finiteDimensional
       F (SeparableClosure F) SF hSFabsolute
@@ -211,14 +217,15 @@ noncomputable def ambientEmbeddedPrimeWitness
       K (SeparableClosure K) SH hSHabsolute
   let iH : LH →ₐ[K] SeparableClosure K :=
     LH.val.restrictScalars K
-  letI : IsScalarTower K LH (SeparableClosure K) :=
-    IsScalarTower.of_algebraMap_eq' (by
-      apply RingHom.ext
-      intro x
-      exact (iH.commutes x).symm)
-  letI : Algebra.IsSeparable K LH :=
-    Algebra.isSeparable_tower_bot_of_isSeparable
-      K LH (SeparableClosure K)
+  letI : Algebra.IsSeparable K LH := by
+    let : IsScalarTower K LH (SeparableClosure K) :=
+      IsScalarTower.of_algebraMap_eq' (by
+        apply RingHom.ext
+        intro x
+        exact (iH.commutes x).symm)
+    exact
+      Algebra.isSeparable_tower_bot_of_isSeparable
+        K LH (SeparableClosure K)
   letI : NontriviallyNormedField LH :=
     finiteExtensionSpectralNormedField K LH
   letI : ValuativeRel LH :=
@@ -236,10 +243,7 @@ noncomputable def ambientEmbeddedPrimeWitness
         F K LF LH LF.val iH e.toRingEquiv
         (localSeparableValuationSubring_eq_comap_finiteExtensionEquiv
           K F i e)
-        phi.toRingEquiv
-        (fun y =>
-          intrinsicFrobeniusFixedFieldEquivAmbientEmbeddedField_apply_val
-            K F E j e sigma y)
+        phi hphi
         x
   let pF :=
     chosenValuationOneUnitOfRingEquiv LF LH phi hmem
@@ -459,8 +463,6 @@ noncomputable def ambientEmbeddedPrimeTarget
     Abelianization Gal(E / F) := by
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   let jF : E →ₐ[F] SeparableClosure K :=

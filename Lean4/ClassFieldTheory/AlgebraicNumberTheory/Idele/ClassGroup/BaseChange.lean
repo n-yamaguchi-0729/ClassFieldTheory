@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.Tower
-import AlgebraicNumberTheory.Idele.Extension.LocalComponent
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalComponent
 import Mathlib.RingTheory.IsTensorProduct
+
+set_option autoImplicit false
 
 /-!
 # Base change of idele-class norms along a pushout square
@@ -39,6 +41,22 @@ variable
     [Algebra.IsPushout K M L N]
     [FiniteDimensional K M] [FiniteDimensional K L]
     [FiniteDimensional M N] [FiniteDimensional L N]
+
+-- These canonical commutativity proofs are local to the imported tower
+-- module; retain them here for the quotient-group instances.
+local instance (A B C : Type u) [Field A] [NumberField A]
+    [Field B] [Field C] [Algebra A B] [Algebra B C] :
+    IsMulCommutative (TowerRelativeIdeleGroup A B C) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+local instance (A B : Type u) [Field A] [NumberField A]
+    [Field B] [Algebra A B] :
+    IsMulCommutative (RelativeIdeleGroup.ClassGroup A B) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+local instance (A : Type u) [Field A] [NumberField A] :
+    IsMulCommutative (IdeleClassGroup A) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- The scalar extension of the one-step `K`-presentation of the
 relative adeles of `L` from the bottom adele ring to
@@ -111,10 +129,24 @@ theorem pushoutTowerAdeleInclusion_tmul
     pushoutTowerAdeleInclusion K M L N (a ⊗ₜ[K] x) =
       (a ⊗ₜ[K] (1 : M)) ⊗ₜ[M]
         algebraMap L N x := by
-  apply (pushoutTowerAdeleEquiv K M L N).injective
-  simp [pushoutTowerAdeleInclusion,
-    baseChangedRelativeAdeleMap,
-    pushoutTowerAdeleEquiv]
+  let : Algebra N (RelativeAdeleRing K M ⊗[M] N) :=
+    Algebra.TensorProduct.rightAlgebra
+  let : Algebra L (RelativeAdeleRing K M ⊗[K] L) :=
+    Algebra.TensorProduct.rightAlgebra
+  have : Algebra.IsPushout K L M N :=
+    Algebra.IsPushout.symm
+      (inferInstance : Algebra.IsPushout K M L N)
+  change
+    Algebra.TensorProduct.commRight M N (RelativeAdeleRing K M)
+        ((Algebra.IsPushout.cancelBaseChangeAlg
+          K L M N (RelativeAdeleRing K M)).symm
+          ((Algebra.TensorProduct.commRight
+            K L (RelativeAdeleRing K M)).symm
+            ((a ⊗ₜ[K] (1 : M)) ⊗ₜ[K] x))) =
+      (a ⊗ₜ[K] (1 : M)) ⊗ₜ[M] algebraMap L N x
+  simp only [Algebra.TensorProduct.commRight_symm_tmul,
+    Algebra.IsPushout.cancelBaseChangeAlg_symm_tmul,
+    Algebra.TensorProduct.commRight_tmul]
 
 /-- Inclusion on unit groups induced by a pushout square of fields. -/
 def pushoutTowerIdeleInclusion :

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Adele.RestrictedAction
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedAction
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
 import Mathlib.NumberTheory.NumberField.Completion.LiesOverInstances
+
+set_option autoImplicit false
 
 /-!
 # Archimedean relative-idele factors as induced local blocks
@@ -60,12 +62,12 @@ theorem infinitePlaceCompletionAlgEquiv_algebraMap
       RingHom.comp
         (infinitePlaceCompletionAlgEquiv w).toRingEquiv
         (algebraMap v.Completion w.Completion) := by
-  letI : w.1.LiesOver v.1 :=
+  let : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
   let u : AbsoluteValueExtension v.1 L :=
     ⟨w.1, fun x =>
       congrArg (fun q : InfinitePlace K => q.1 x) hw⟩
-  letI : Algebra v.1.Completion u.1.Completion :=
+  let : Algebra v.1.Completion u.1.Completion :=
     AbsoluteValue.completionAlgebra v.1 u.1 u.2
   ext x
   refine InfinitePlace.Completion.induction_on v x ?_ ?_
@@ -158,9 +160,9 @@ theorem infinitePlaceLocalTensorUnitsEquiv_smul
         (K := K) (L := L) w (σ • z) =
       σ • infinitePlaceLocalTensorUnitsEquiv
         (K := K) (L := L) w z := by
-  letI := scalarTensorUnitsAction
+  let := scalarTensorUnitsAction
     (K := K) (L := L) (A := w.Completion)
-  letI := localTensorUnitsAction
+  let := localTensorUnitsAction
     (K := K) (L := L) w.1
   apply Units.ext
   exact infinitePlaceLocalTensorAlgEquiv_conjugation
@@ -262,7 +264,7 @@ theorem
       σ •
         infinitePlaceTensorUnitsEquivLocalPlaceBlock
           (K := K) (L := L) w hw u z := by
-  letI :=
+  let :=
     decompositionGroupLocalUnitsAction w.1 hw u
   have hsource :
       infinitePlaceLocalTensorUnitsEquiv

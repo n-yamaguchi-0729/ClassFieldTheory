@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
-import KroneckerWeber.RationalRayClassFieldCyclotomic
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import ClassFieldTheory.KroneckerWeber.RationalRayClassFieldCyclotomic
+
+set_option autoImplicit false
 
 /-!
 # Arithmetic reciprocity for rational cyclotomic ray class fields
@@ -63,6 +65,13 @@ variable (m : ℕ) [NeZero m]
 local instance : NeZero (m : ℚ) :=
   ⟨by exact_mod_cast (NeZero.ne m)⟩
 
+noncomputable local instance :
+    NumberField
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨m, NeZero.pos m⟩) :=
+  KummerTheory.rationalCyclotomicLevel_numberField
+    ⟨m, NeZero.pos m⟩
+
 noncomputable local instance
     rationalCyclotomicArithmeticLevelIsCyclotomicExtension :
     IsCyclotomicExtension {m} ℚ
@@ -103,9 +112,25 @@ theorem
         (IdeleGroup.finitePlaceIdeleClass
           (RayClass.rationalPrime q)
           (rationalPrimeArithmeticFrobeniusLocalInput q)) := by
-  rw [arithmeticGlobalNormResidueMonoidHom_apply,
-    ← map_inv, ← map_inv,
-    ← rationalPrimeArithmeticFrobeniusLocalInput_eq_inv_uniformizer]
+  let n : ℕ+ := ⟨m, NeZero.pos m⟩
+  let g : IdeleClassGroup ℚ →*
+      Gal(KummerTheory.rationalCyclotomicLevel n / ℚ) :=
+    globalNormResidueMonoidHom ℚ (KummerTheory.rationalCyclotomicLevel n)
+  let i : ((RayClass.rationalPrime q).adicCompletion ℚ)ˣ →*
+      IdeleClassGroup ℚ :=
+    IdeleGroup.finitePlaceIdeleClass (RayClass.rationalPrime q)
+  let u : ((RayClass.rationalPrime q).adicCompletion ℚ)ˣ :=
+    rationalPrimeUniformizerLocalInput q
+  calc
+    arithmeticGlobalNormResidueMonoidHom
+        ℚ (KummerTheory.rationalCyclotomicLevel n) (i u) =
+        (g (i u))⁻¹ :=
+      arithmeticGlobalNormResidueMonoidHom_apply
+        ℚ (KummerTheory.rationalCyclotomicLevel n) (i u)
+    _ = g (i (u⁻¹)) := (map_inv (g.comp i) u).symm
+    _ = g (i (rationalPrimeArithmeticFrobeniusLocalInput q)) :=
+      congrArg (g.comp i)
+        (rationalPrimeArithmeticFrobeniusLocalInput_eq_inv_uniformizer q).symm
 
 /-- At `q ∤ m`, the arithmetic global norm-residue symbol of the
 ordinary one-place uniformizer is arithmetic Frobenius `ζ ↦ ζ ^ q`. -/

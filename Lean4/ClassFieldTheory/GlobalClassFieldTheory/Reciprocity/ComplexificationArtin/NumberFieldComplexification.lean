@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RationalComplexification
-import AlgebraicNumberTheory.SeparableClosureEmbedding
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RationalComplexification
+import ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
 import Mathlib.FieldTheory.Galois.Abelian
+
+set_option autoImplicit false
 
 /-!
 # Complexification of a number field
@@ -17,7 +19,7 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
-attribute [local instance 2000]
+attribute [local instance]
   rationalComplexificationCyclotomicField_isAbelianGalois
 
 private def rationalComplexificationAmbientField :
@@ -44,14 +46,14 @@ def numberFieldComplexification :
     rationalComplexificationAmbientField
 
 @[reducible]
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldComplexificationRationalAlgebra :
     Algebra ℚ (numberFieldComplexification F) :=
   (numberFieldComplexification F).algebra'
 
 noncomputable instance numberFieldComplexification_finiteDimensional :
     FiniteDimensional ℚ (numberFieldComplexification F) := by
-  letI :
+  let :
       FiniteDimensional ℚ
         rationalComplexificationAmbientField :=
     rationalComplexificationAmbientEquiv.toLinearEquiv.finiteDimensional
@@ -149,13 +151,13 @@ private def numberFieldComplexificationCyclotomicLayer :
       le_sup_right)
 
 @[reducible]
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldComplexificationBaseLayerRationalAlgebra :
     Algebra ℚ (numberFieldComplexificationBaseLayer F) :=
   (numberFieldComplexificationBaseLayer F).algebra'
 
 @[reducible]
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldComplexificationCyclotomicLayerRationalAlgebra :
     Algebra ℚ (numberFieldComplexificationCyclotomicLayer F) :=
   (numberFieldComplexificationCyclotomicLayer F).algebra'
@@ -163,13 +165,13 @@ noncomputable local instance (priority := 2000)
 private noncomputable def numberFieldComplexificationBaseEquiv :
     F ≃ₐ[ℚ] numberFieldComplexificationBaseLayer F :=
   (numberFieldSeparableClosureEmbedding F).equivFieldRange.trans
-    (IntermediateField.restrict_algEquiv le_sup_left)
+    (IntermediateField.restrictAlgEquiv le_sup_left)
 
 private noncomputable def numberFieldComplexificationCyclotomicEquiv :
     rationalComplexificationCyclotomicField ≃ₐ[ℚ]
       numberFieldComplexificationCyclotomicLayer F :=
   rationalComplexificationAmbientEquiv.trans
-    (IntermediateField.restrict_algEquiv le_sup_right)
+    (IntermediateField.restrictAlgEquiv le_sup_right)
 
 private noncomputable local instance
     numberFieldComplexificationCyclotomicLayer_isAbelianGalois :
@@ -178,13 +180,13 @@ private noncomputable local instance
   IsAbelianGalois.of_algHom
     (numberFieldComplexificationCyclotomicEquiv F).symm.toAlgHom
 
-private noncomputable local instance (priority := 2000)
+private noncomputable local instance
     numberFieldComplexificationCyclotomicLayer_isGalois :
     IsGalois ℚ (numberFieldComplexificationCyclotomicLayer F) :=
   (numberFieldComplexificationCyclotomicLayer_isAbelianGalois
     F).toIsGalois
 
-private noncomputable local instance (priority := 2000)
+private noncomputable local instance
     numberFieldComplexificationCyclotomicLayer_normal :
     Normal ℚ (numberFieldComplexificationCyclotomicLayer F) :=
   (numberFieldComplexificationCyclotomicLayer_isGalois
@@ -270,9 +272,9 @@ private noncomputable def numberFieldComplexificationLayerRestriction :
 private theorem numberFieldComplexificationLayerRestriction_injective :
     Function.Injective
       (numberFieldComplexificationLayerRestriction F) := by
-  letI : IsGalois ℚ (numberFieldComplexificationCyclotomicLayer F) :=
+  let : IsGalois ℚ (numberFieldComplexificationCyclotomicLayer F) :=
     numberFieldComplexificationCyclotomicLayer_isGalois F
-  letI : Normal ℚ (numberFieldComplexificationCyclotomicLayer F) :=
+  let : Normal ℚ (numberFieldComplexificationCyclotomicLayer F) :=
     numberFieldComplexificationCyclotomicLayer_normal F
   exact
     IntermediateField.restrictRestrictAlgEquivMapHom_injective
@@ -292,9 +294,9 @@ private theorem numberFieldComplexificationRestriction_commutes
         (numberFieldComplexificationRestriction F σ) =
       numberFieldComplexificationLayerRestriction F
         (numberFieldComplexificationChangeBase F σ) := by
-  letI : IsGalois ℚ (numberFieldComplexificationCyclotomicLayer F) :=
+  let : IsGalois ℚ (numberFieldComplexificationCyclotomicLayer F) :=
     numberFieldComplexificationCyclotomicLayer_isGalois F
-  letI : Normal ℚ (numberFieldComplexificationCyclotomicLayer F) :=
+  let : Normal ℚ (numberFieldComplexificationCyclotomicLayer F) :=
     numberFieldComplexificationCyclotomicLayer_normal F
   apply AlgEquiv.ext
   intro x
@@ -379,15 +381,15 @@ theorem numberFieldComplexificationRestriction_injective :
 
 noncomputable instance numberFieldComplexification_isAbelianGalois :
     IsAbelianGalois F (numberFieldComplexification F) := by
-  letI : IsGalois ℚ (numberFieldComplexificationCyclotomicLayer F) :=
+  let : IsGalois ℚ (numberFieldComplexificationCyclotomicLayer F) :=
     numberFieldComplexificationCyclotomicLayer_isGalois F
-  letI : IsGalois (numberFieldComplexificationBaseLayer F)
+  let : IsGalois (numberFieldComplexificationBaseLayer F)
       (numberFieldComplexification F) :=
     IsGalois.sup_right
       (numberFieldComplexificationCyclotomicLayer F)
       (numberFieldComplexificationBaseLayer F)
       (numberFieldComplexificationLayers_sup F)
-  letI : IsGalois F (numberFieldComplexification F) :=
+  let : IsGalois F (numberFieldComplexification F) :=
     IsGalois.of_equiv_equiv
       (F := numberFieldComplexificationBaseLayer F)
       (E := numberFieldComplexification F)

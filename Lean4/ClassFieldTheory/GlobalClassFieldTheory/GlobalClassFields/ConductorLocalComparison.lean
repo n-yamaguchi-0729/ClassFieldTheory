@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.Conductor
-import AlgebraicNumberTheory.RayClass.LocalConductor
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.Conductor
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.LocalConductor
+
+set_option autoImplicit false
 
 /-!
 # Narrow finite and local conductor exponents
@@ -111,7 +113,7 @@ theorem replaceFiniteExponent_definingModulus
     let b : IdeleGroup K := a * s⁻¹
     have hav :
         a.2 v ∈ RayClass.localHigherUnitGroup v n := by
-      simpa [m'] using ha'.2 v
+      simpa [m', RayClass.Modulus.replaceFinitePart] using ha'.2 v
     have hsH : q s ∈ H := by
       apply hn
       exact ⟨a.2 v, hav, rfl⟩
@@ -151,7 +153,7 @@ theorem replaceFiniteExponent_definingModulus
           exact Subgroup.one_mem _
         · have haw := ha'.2 w
           have hupdate : (m'.finitePart w) = m.finitePart w := by
-            simp [m', hw]
+            simp [m', RayClass.Modulus.replaceFinitePart, hw]
           rw [hupdate] at haw
           change IdeleGroup.finiteComponent w b ∈
             RayClass.localHigherUnitGroup w (m.finitePart w)
@@ -206,7 +208,7 @@ theorem narrowFiniteConductorExponent_eq_narrowFiniteLocalConductorExponent
         (H.narrowFiniteLocalConductorExponent v) hlocal
     have hle :=
       H.narrowFiniteConductorExponent_le hupdate v
-    simpa [m] using hle
+    simpa [m, RayClass.Modulus.replaceFinitePart] using hle
   · obtain ⟨m, hm, hmv⟩ :=
       H.narrowFiniteConductorExponent_spec v
     have hlocal :
@@ -262,11 +264,11 @@ theorem exists_definingModulus_finitePart_agrees_on_finset
       refine ⟨m', hm', ?_, ?_⟩
       · intro w hw
         rcases Finset.mem_insert.mp hw with rfl | hws
-        · simp [m']
+        · simp [m', RayClass.Modulus.replaceFinitePart]
         · by_cases hwv : w = v
           · subst w
-            simp [m']
-          · simpa [m', hwv] using hmOn w hws
+            simp [m', RayClass.Modulus.replaceFinitePart]
+          · simpa [m', RayClass.Modulus.replaceFinitePart, hwv] using hmOn w hws
       · intro w hw
         have hwv : w ≠ v := by
           intro hwv
@@ -275,7 +277,7 @@ theorem exists_definingModulus_finitePart_agrees_on_finset
         have hws : w ∉ s := by
           intro hws
           exact hw (Finset.mem_insert_of_mem hws)
-        simpa [m', hwv] using hmOff w hws
+        simpa [m', RayClass.Modulus.replaceFinitePart, hwv] using hmOff w hws
 
 /-- A defining full modulus can be chosen whose finite part is exactly the
 narrow finite conductor. -/

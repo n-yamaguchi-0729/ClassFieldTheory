@@ -1,8 +1,10 @@
-import AbstractClassFieldTheory.Degree.TopologicalGeneration
+import GaloisCohomology.ProfiniteIntegers.TopologicalGeneration
 import Mathlib.GroupTheory.DoubleCoset
 import Mathlib.GroupTheory.GroupAction.Quotient
 import Mathlib.Topology.Algebra.Group.ClosedSubgroup
 import Mathlib.Topology.Algebra.Group.SubmonoidClosure
+
+set_option autoImplicit false
 
 /-!
 # Orbit quotients and double-coset geometry

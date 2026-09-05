@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicFinitePlaceArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicFinitePlaceArtin
 import Mathlib.Algebra.BigOperators.Finprod
+
+set_option autoImplicit false
 
 /-!
 # Away-from-p factors of a rational cyclotomic principal idele
@@ -29,14 +31,43 @@ local instance (q : Nat.Primes) : Fact q.1.Prime :=
 local instance (m : ℕ+) : NeZero (m : ℕ) :=
   ⟨m.ne_zero⟩
 
-noncomputable local instance (priority := 2000)
+local instance rationalCyclotomicPrincipalPrimePowerNumberField
+    (p : Nat.Primes) (k : ℕ) :
+    NumberField (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  KummerTheory.rationalCyclotomicLevel_numberField
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicPrincipalPrimePowerFiniteDimensional
+    (p : Nat.Primes) (k : ℕ) :
+    FiniteDimensional ℚ (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  rationalCyclotomicPrincipalPrimeLevelFiniteDimensional
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicPrincipalPrimePowerIsGalois
+    (p : Nat.Primes) (k : ℕ) :
+    IsGalois ℚ (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  KummerTheory.rationalCyclotomicLevel_isGalois
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicPrincipalPrimePowerIsAbelianGalois
+    (p : Nat.Primes) (k : ℕ) :
+    IsAbelianGalois ℚ (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  IsAbelianGalois.of_algHom
+    (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩).val
+
+noncomputable local instance
     rationalCyclotomicPrincipalLevelFiniteDimensional
     (m : ℕ+) :
     FiniteDimensional ℚ
       (KummerTheory.rationalCyclotomicLevel m) :=
   rationalCyclotomicPrincipalPrimeLevelFiniteDimensional m
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     rationalCyclotomicPrincipalLevelIsAbelianGalois
     (m : ℕ+) :
     IsAbelianGalois ℚ
@@ -179,75 +210,68 @@ theorem rationalCyclotomicPrincipalFinitePlaceCharacter_at_prime_succ_formula
           ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩
           ((Rat.HeightOneSpectrum.primesEquiv
             (R := 𝓞 ℚ)).symm p) := rfl
-  have hInput :
+  let localArtin : Gal(KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩ / ℚ) :=
+    finitePlaceLocalToGlobalMonoidHom
+      (K := ℚ)
+      (L := KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩)
+      ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p)
+      (rationalCyclotomicChosenFinitePlaceExtension
+        ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩
+        ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p))
+      (finitePlaceLocalArtinMonoidHom
+        (K := ℚ)
+        (L := KummerTheory.rationalCyclotomicLevel
+          ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩)
+        ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p)
+        (rationalCyclotomicChosenFinitePlaceExtension
+          ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩
+          ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p))
+        (IdeleGroup.finiteComponent
+          ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p)
+          (IdeleGroup.principalIdele ℚ x)))
+  let chosenArtin : Gal(KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩ / ℚ) :=
+    chosenFinitePlaceArtinMonoidHom
+      (K := ℚ)
+      (L := KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩)
+      ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p)
+      (IdeleGroup.finiteComponent
+        ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p)
+        (IdeleGroup.principalIdele ℚ x))
+  have hSpec :
       rationalCyclotomicPrincipalHeightOneArtinInput
           p (n + 1) x
           ((Rat.HeightOneSpectrum.primesEquiv
             (R := 𝓞 ℚ)).symm p) =
-        rationalCyclotomicPrincipalPrimeChosenArtin p n x := by
-    calc
-      rationalCyclotomicPrincipalHeightOneArtinInput
-          p (n + 1) x
-          ((Rat.HeightOneSpectrum.primesEquiv
-            (R := 𝓞 ℚ)).symm p) =
-          chosenFinitePlaceArtinMonoidHom
-            (K := ℚ)
-            (L := KummerTheory.rationalCyclotomicLevel
-              ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩)
-            ((Rat.HeightOneSpectrum.primesEquiv
-              (R := 𝓞 ℚ)).symm p)
-            (IdeleGroup.finiteComponent
-              ((Rat.HeightOneSpectrum.primesEquiv
-                (R := 𝓞 ℚ)).symm p)
-              (IdeleGroup.principalIdele ℚ x)) :=
-        rationalCyclotomicPrincipalHeightOneArtinInput_spec
-          p (n + 1) x
-          ((Rat.HeightOneSpectrum.primesEquiv
-            (R := 𝓞 ℚ)).symm p)
-      _ = finitePlaceLocalToGlobalMonoidHom
-            (K := ℚ)
-            (L := KummerTheory.rationalCyclotomicLevel
-              ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩)
-            ((Rat.HeightOneSpectrum.primesEquiv
-              (R := 𝓞 ℚ)).symm p)
-            (rationalCyclotomicChosenFinitePlaceExtension
-              ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩
-              ((Rat.HeightOneSpectrum.primesEquiv
-                (R := 𝓞 ℚ)).symm p))
-            (finitePlaceLocalArtinMonoidHom
-              (K := ℚ)
-              (L := KummerTheory.rationalCyclotomicLevel
-                ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩)
-              ((Rat.HeightOneSpectrum.primesEquiv
-                (R := 𝓞 ℚ)).symm p)
-              (rationalCyclotomicChosenFinitePlaceExtension
-                ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩
-                ((Rat.HeightOneSpectrum.primesEquiv
-                  (R := 𝓞 ℚ)).symm p))
-              (IdeleGroup.finiteComponent
-                ((Rat.HeightOneSpectrum.primesEquiv
-                  (R := 𝓞 ℚ)).symm p)
-                (IdeleGroup.principalIdele ℚ x))) :=
-        chosenFinitePlaceArtinMonoidHom_apply_factor_of_extension_eq
-          (K := ℚ)
-          (L := KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩)
-          ((Rat.HeightOneSpectrum.primesEquiv
-            (R := 𝓞 ℚ)).symm p)
-          (rationalCyclotomicChosenFinitePlaceExtension
-            ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩
-            ((Rat.HeightOneSpectrum.primesEquiv
-              (R := 𝓞 ℚ)).symm p))
-          hwChosen
-          (IdeleGroup.finiteComponent
-            ((Rat.HeightOneSpectrum.primesEquiv
-              (R := 𝓞 ℚ)).symm p)
-            (IdeleGroup.principalIdele ℚ x))
-      _ = rationalCyclotomicPrincipalPrimeChosenArtin p n x := by
-        simp only [rationalCyclotomicPrincipalPrimeChosenArtin,
-          rationalCyclotomicPrincipalPrimeModulus,
-          RayClass.rationalPrime]
-        rfl
+        chosenArtin := by
+    dsimp only [chosenArtin]
+    exact rationalCyclotomicPrincipalHeightOneArtinInput_spec
+      p (n + 1) x
+      ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p)
+  have hFactor : chosenArtin = localArtin := by
+    dsimp only [chosenArtin, localArtin]
+    exact chosenFinitePlaceArtinMonoidHom_apply_factor_of_extension_eq
+      (K := ℚ)
+      (L := KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩)
+      ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p)
+      (rationalCyclotomicChosenFinitePlaceExtension
+        ⟨p.1 ^ (n + 1), pow_pos p.2.pos (n + 1)⟩
+        ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p))
+      hwChosen
+      (IdeleGroup.finiteComponent
+        ((Rat.HeightOneSpectrum.primesEquiv (R := 𝓞 ℚ)).symm p)
+        (IdeleGroup.principalIdele ℚ x))
+  have hLocal :
+      localArtin = rationalCyclotomicPrincipalPrimeChosenArtin p n x := by
+    dsimp only [localArtin]
+    simp only [rationalCyclotomicPrincipalPrimeChosenArtin,
+      rationalCyclotomicPrincipalPrimeModulus, RayClass.rationalPrime]
+    rfl
+  have hInput := hSpec.trans (hFactor.trans hLocal)
   have hCharacter := congrArg
     (fun sigma : Gal(
         KummerTheory.rationalCyclotomicLevel
@@ -266,7 +290,12 @@ theorem rationalCyclotomicPrincipalFinitePlaceCharacter_at_prime_succ_formula
       rw [rationalCyclotomicPrincipalFinitePlaceCharacter_spec,
         rationalCyclotomicPrincipalHeightOneCharacter]
     _ = _ := hCharacter
-    _ = _ :=
+    _ = Units.map
+        (PadicInt.toZModPow (p := p.1) (n + 1)).toMonoidHom
+        (padicIntUnitOfRat p
+          (rationalPrimeUnit x p : ℚ)
+          (rationalPrimeUnit x p).ne_zero
+          (padicValRat_rationalPrimeUnit x p)) :=
       galEquivZMod_chosenFinitePlaceArtinMonoidHom_principal_at_prime p n x
 
 /-- A rational prime distinct from `p` does not divide any power

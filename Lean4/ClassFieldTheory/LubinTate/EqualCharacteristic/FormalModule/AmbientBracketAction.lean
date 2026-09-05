@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FormalModule.LubinTateAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateAction
+
+set_option autoImplicit false
 
 /-!
 # The finite Lubin–Tate bracket construction: Lubin--Tate brackets in an ambient extension field
@@ -114,7 +116,7 @@ theorem equalCharacteristicLubinTateAmbientPiEnd_coefficient_mul
     (a : F.residueField) (x : A) :
     equalCharacteristicLubinTateAmbientPiEnd F t (ι a * x) =
       ι a * equalCharacteristicLubinTateAmbientPiEnd F t x := by
-  letI : Fintype F.residueField := Fintype.ofFinite F.residueField
+  let : Fintype F.residueField := Fintype.ofFinite F.residueField
   rw [equalCharacteristicLubinTateAmbientPiEnd_apply,
     equalCharacteristicLubinTateAmbientPiEnd_apply, mul_pow, ← ι.map_pow]
   have ha : a ^ Nat.card F.residueField = a := by

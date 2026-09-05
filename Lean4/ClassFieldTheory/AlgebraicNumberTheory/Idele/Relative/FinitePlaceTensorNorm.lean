@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.TensorNorm
-import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import AlgebraicNumberTheory.Idele.Extension.LocalComponent
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.TensorNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalComponent
+
+set_option autoImplicit false
 
 /-!
 # Tensor norm images at actual finite places
@@ -170,14 +172,14 @@ theorem finitePlaceLocalTensorNorm_range_eq_chosenLocalNormSubgroup
   let w := chosenFinitePlaceExtension (L := L) v
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := LocalizedCompletion vK w
-  letI : Module.Finite vK.Completion E :=
+  let : Module.Finite vK.Completion E :=
     localizedCompletionModuleFinite vK hvK w
   rw [finitePlaceLocalTensorNorm_range_eq_transport
     (K := K) (L := L) v]

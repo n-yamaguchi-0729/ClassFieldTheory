@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
+
+set_option autoImplicit false
 
 /-!
 # The Frobenius power-sum relation for reciprocity multiplicativity

@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import LocalClassFieldTheory.Finite.LocalReciprocity.Core
-import RamificationTheory.LocalField.Unramified
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Core
+import ValuedFieldTheory.Ramification.LocalField.Unramified
+
+set_option autoImplicit false
 
 /-!
 # Artin filtrations of unramified local extensions

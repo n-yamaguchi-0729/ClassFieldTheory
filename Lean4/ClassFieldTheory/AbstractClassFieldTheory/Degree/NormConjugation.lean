@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Degree.NormLaws
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.NormLaws
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -249,20 +251,23 @@ theorem relativeNorm_conjugate_apply
         (conjugateFixedElement A L s a) =
       conjugateFixedElement A K s (relativeNorm A K L hLK a) := by
   let hConj := conjugateClosedSubgroup_mono hLK s
-  letI hConjFinite : Finite ((conjugateClosedSubgroup K s).toSubgroup ⧸
-      extensionSubgroup (conjugateClosedSubgroup K s)
-        (conjugateClosedSubgroup L s) hConj) :=
-    finite_conjugateExtension K L hLK s
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K L hLK)
-  letI := Fintype.ofFinite
-    ((conjugateClosedSubgroup K s).toSubgroup ⧸
-      extensionSubgroup (conjugateClosedSubgroup K s)
-        (conjugateClosedSubgroup L s) hConj)
   let e := relativeConjugateCosetEquiv K L hLK s
+  let conjugateFintype : Fintype
+      ((conjugateClosedSubgroup K s).toSubgroup ⧸
+        extensionSubgroup (conjugateClosedSubgroup K s)
+          (conjugateClosedSubgroup L s) hConj) :=
+    Fintype.ofEquiv (K.toSubgroup ⧸ extensionSubgroup K L hLK) e
+  have hconjugateFintype : Fintype.ofFinite
+      ((conjugateClosedSubgroup K s).toSubgroup ⧸
+        extensionSubgroup (conjugateClosedSubgroup K s)
+          (conjugateClosedSubgroup L s) hConj) = conjugateFintype :=
+    Subsingleton.elim _ _
   apply Subtype.ext
   simp only [relativeNorm_apply_coe, relativeNormValue,
     conjugateFixedElement_coe]
+  rw [hconjugateFintype]
   calc
     ∑ q, relativeCosetAction A (conjugateClosedSubgroup K s)
         (conjugateClosedSubgroup L s) hConj

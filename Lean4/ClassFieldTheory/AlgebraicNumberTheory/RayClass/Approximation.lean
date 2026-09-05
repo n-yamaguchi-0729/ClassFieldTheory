@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.RayClass.Ideal
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+
+set_option autoImplicit false
 
 /-!
 # Multiplicative weak approximation for ideles
@@ -47,7 +49,7 @@ theorem modulusOfFinset_support
     (modulusOfFinset S).finitePart.support = S := by
   classical
   ext v
-  simp [modulusOfFinset]
+  simp [modulusOfFinset, RayClass.Modulus.ofFinite]
 
 /-- The product of the prescribed finite local cosets and harmless
 nonzero cosets at the infinite places.  The latter ensure that the global
@@ -411,7 +413,8 @@ theorem finiteIdeleOfFinset_apply_mem
     (v : ↥S) :
     finiteIdeleOfFinset S a v.1 = a v := by
   classical
-  simp [finiteIdeleOfFinset, v.2]
+  change (if hv : v.1 ∈ S then a ⟨v.1, hv⟩ else 1) = a v
+  exact dif_pos v.2
 
 @[simp]
 theorem finiteIdeleOfFinset_apply_notMem
@@ -420,7 +423,9 @@ theorem finiteIdeleOfFinset_apply_notMem
     (v : HeightOneSpectrum (𝓞 K)) (hv : v ∉ S) :
     finiteIdeleOfFinset S a v = 1 := by
   classical
-  simp [finiteIdeleOfFinset, hv]
+  change (if hmem : v ∈ S then a ⟨v, hmem⟩ else 1) =
+    (1 : (v.adicCompletion K)ˣ)
+  exact dif_neg hv
 
 /-- The idele whose prescribed finite components are `a` and whose other
 finite and all infinite components are `1`. -/

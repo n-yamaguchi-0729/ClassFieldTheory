@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbelianization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbelianization
 import Mathlib.FieldTheory.KrullTopology
 import Mathlib.Topology.Algebra.Group.Quotient
+
+set_option autoImplicit false
 
 /-!
 # Topological global reciprocity for finite Galois extensions
@@ -33,14 +35,14 @@ variable
     [FiniteDimensional K L] [IsGalois K L]
 
 /-- Keep quotient normality out of every exported declaration type. -/
-local instance (priority := 2000)
+local instance
     topologicalGlobalNormResidueAbelianization_ideleClassGroupIsMulCommutative :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- `Abelianization` is an opaque quotient alias, so install its native
 quotient topology explicitly before asking for topological properties. -/
-local instance (priority := 2000)
+local instance
     topologicalGlobalNormResidueAbelianization_galoisAbelianizationTopology :
     TopologicalSpace (Abelianization (Gal(L / K))) := by
   change
@@ -73,14 +75,14 @@ theorem finiteGaloisAbelianization_discreteTopology :
   apply QuotientGroup.discreteTopology
   exact isOpen_discrete _
 
-local instance (priority := 2000)
+local instance
     topologicalGlobalNormResidueAbelianization_normQuotientDiscreteTopology :
     DiscreteTopology
       (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) :=
   ideleClassNormAbelianizationQuotient_discreteTopology K L
 
-local instance (priority := 2000)
+local instance
     topologicalGlobalNormResidueAbelianization_galoisAbelianizationDiscreteTopology :
     DiscreteTopology (Abelianization (Gal(L / K))) :=
   finiteGaloisAbelianization_discreteTopology K L

@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Infinite.AbsoluteArtin
-import LocalClassFieldTheory.Infinite.ProfiniteCompletionCriteria
-import LocalClassFieldTheory.Finite.Existence.Classification
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteArtin
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletionCriteria
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Kernels attached to finite abelian subextensions
@@ -189,14 +191,14 @@ theorem separableAbsoluteLocalArtinMap_preimage_cofinal
   rcases finiteAbelianNormSubgroupMap_surjective K Hnative with ⟨L, hL⟩
   let E : IntermediateField K (SeparableClosure K) :=
     abstractFixedField K (SeparableClosure K) L.field
-  letI : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
+  let : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
       extensionSubgroup (baseField (intrinsicAbsoluteGalois K)) L.field
         (le_baseField L.field)) :=
     finiteAbelianSubextension_finite_over_absoluteBase K L
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) L.field inferInstance
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K L
   refine ⟨absoluteAbelianRestrictionKernel K E, ?_⟩
   change

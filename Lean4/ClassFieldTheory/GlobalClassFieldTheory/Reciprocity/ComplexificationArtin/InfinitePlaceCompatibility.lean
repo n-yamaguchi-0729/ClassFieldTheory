@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.OverextensionArtin
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidueNaturality
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.OverextensionArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueNaturality
+
+set_option autoImplicit false
 
 /-!
 # Infinite-place local-global Artin compatibility
@@ -26,7 +28,7 @@ variable
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
 
-local instance (priority := 2000)
+local instance
     infinitePlaceCompatibilityIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
@@ -343,7 +345,7 @@ noncomputable def
         (K := K) (L := L) v →ₐ[ℚ]
       SeparableClosure ℚ :=
   Classical.choose
-    (IsAlgClosed.surjective_restrictDomain_of_isAlgebraic
+    (IsAlgClosed.surjective_domRestrict_of_isAlgebraic
       (K := ℚ)
       (L := L)
       (E :=
@@ -359,10 +361,10 @@ theorem
     infinitePlaceComplexificationOverfieldSeparableClosureEmbedding_restrictDomain
     (v : InfinitePlace K) :
     (infinitePlaceComplexificationOverfieldSeparableClosureEmbedding
-      (K := K) (L := L) v).restrictDomain L =
+      (K := K) (L := L) v).domRestrict L =
         AlgebraicNumberTheory.numberFieldSeparableClosureEmbedding L :=
   Classical.choose_spec
-    (IsAlgClosed.surjective_restrictDomain_of_isAlgebraic
+    (IsAlgClosed.surjective_domRestrict_of_isAlgebraic
       (K := ℚ)
       (L := L)
       (E :=
@@ -594,7 +596,7 @@ theorem
       AlgebraicNumberTheory.numberFieldSeparableClosureEmbedding L := by
   simpa only [
     infinitePlaceComplexificationLowerSeparableClosureEmbedding,
-    AlgHom.restrictDomain] using
+    AlgHom.domRestrict] using
     infinitePlaceComplexificationOverfieldSeparableClosureEmbedding_restrictDomain
       (K := K) (L := L) v
 

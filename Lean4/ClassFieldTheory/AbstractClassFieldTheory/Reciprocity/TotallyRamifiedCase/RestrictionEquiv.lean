@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.RestrictionCosets
-import AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.FrobeniusLift
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.RestrictionCosets
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.FrobeniusLift
+
+set_option autoImplicit false
 
 /-!
 # The lower Galois group in the totally ramified auxiliary tower

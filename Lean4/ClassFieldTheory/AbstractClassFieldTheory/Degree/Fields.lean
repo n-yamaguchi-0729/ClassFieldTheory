@@ -1,7 +1,10 @@
-import CyclicCohomology.IntegralRepUniverse
-import CyclicCohomology.NormKernelVanishing
-import AbstractClassFieldTheory.Degree.Indices
-import AbstractClassFieldTheory.Degree.ProfiniteInteger
+import Mathlib.GroupTheory.QuotientGroup.Basic
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+import GaloisCohomology.Cyclic.NormKernelVanishing
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Indices
+import GaloisCohomology.ProfiniteIntegers.ProfiniteInteger
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -148,14 +151,9 @@ passing through a natural-valued subgroup index. -/
   rw [D.fieldImage_eq_map, baseField_toSubgroup,
     Subgroup.map_top_of_surjective _ D.degree_surjective]
   change Cardinal.mk (↥(⊤ : Subgroup ZHatMul) ⧸ ⊤) = 1
-  letI : Subsingleton (↥(⊤ : Subgroup ZHatMul) ⧸
-      (⊤ : Subgroup ↥(⊤ : Subgroup ZHatMul))) := by
-    constructor
-    intro x y
-    refine Quotient.inductionOn₂' x y ?_
-    intro a b
-    apply QuotientGroup.eq_iff_div_mem.mpr
-    simp
+  let : Subsingleton (↥(⊤ : Subgroup ZHatMul) ⧸
+      (⊤ : Subgroup ↥(⊤ : Subgroup ZHatMul))) :=
+    QuotientGroup.subsingleton_quotient_top
   exact Cardinal.mk_eq_one _
 
 /-- An abstract field together with finiteness of its actual degree-image
@@ -1109,14 +1107,14 @@ noncomputable def base (G : Type u) [Group G] [TopologicalSpace G] :
     FiniteAbstractField G where
   field := baseField G
   finite := by
-    letI : (extensionSubgroup (baseField G) (baseField G)
+    let : (extensionSubgroup (baseField G) (baseField G)
         (le_baseField (baseField G))).Normal := by
       rw [show extensionSubgroup (baseField G) (baseField G)
           (le_baseField (baseField G)) = ⊤ by
         ext x
         exact Iff.rfl]
       infer_instance
-    letI : Subsingleton
+    let : Subsingleton
         ((baseField G).toSubgroup ⧸
           extensionSubgroup (baseField G) (baseField G)
             (le_baseField (baseField G))) := by

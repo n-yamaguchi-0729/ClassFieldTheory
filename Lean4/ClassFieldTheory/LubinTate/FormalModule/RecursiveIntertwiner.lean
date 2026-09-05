@@ -1,5 +1,7 @@
-import LubinTate.FormalModule.DegreeStabilization
-import LubinTate.FormalModule.RecursiveCorrection
+import ClassFieldTheory.LubinTate.FormalModule.DegreeStabilization
+import ClassFieldTheory.LubinTate.FormalModule.RecursiveCorrection
+
+set_option autoImplicit false
 
 /-!
 # Finite-degree approximations to Lubin--Tate intertwiners

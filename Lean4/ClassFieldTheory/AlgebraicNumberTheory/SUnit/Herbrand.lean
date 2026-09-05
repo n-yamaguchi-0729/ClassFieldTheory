@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.SUnit.GaloisAction
-import AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
+import ClassFieldTheory.AlgebraicNumberTheory.SUnit.GaloisAction
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
 import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
+
+set_option autoImplicit false
 
 /-!
 # The Herbrand quotient of the global S-unit group
@@ -174,19 +176,19 @@ theorem sUnitFullLogMulHom_equivariant
       (x : SUnitGroup (K := L) S),
       sUnitFullLogMulHom L S (σ • x) =
         σ • sUnitFullLogMulHom L S x := by
-  letI sUnitAction :=
+  let sUnitAction :=
     sUnitMulDistribMulAction K L S hS
-  letI additiveSUnitAction :=
+  let additiveSUnitAction :=
     additiveSUnitDistribMulAction K L S hS
-  letI logPlaceAction :=
+  let logPlaceAction :=
     logPlaceMulAction K L S hS
-  letI fullLogSpaceAction :=
+  let fullLogSpaceAction :=
     fullLogSpaceDistribMulAction K L S hS
-  letI logHyperplaneAction :=
+  let logHyperplaneAction :=
     logHyperplaneDistribMulAction K L S hS
-  letI latticeAction :=
+  let latticeAction :=
     fullLogLatticeDistribMulAction K L S hS
-  letI multiplicativeLatticeAction :
+  let multiplicativeLatticeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (SUnitGroup.fullLogLattice (K := L) S)) :=
@@ -234,7 +236,7 @@ theorem sUnitTorsion_stable
           (SUnitGroup (K := L) S) →
         σ • x ∈ CommGroup.torsion
           (SUnitGroup (K := L) S) := by
-  letI sUnitAction :=
+  let sUnitAction :=
     sUnitMulDistribMulAction K L S hS
   intro σ x hx
   exact
@@ -580,35 +582,38 @@ theorem fullLogLatticeProdIntToExtended_equivariant
     ∀ (σ : L ≃ₐ[K] L)
       (z :
         SUnitGroup.fullLogLattice (K := L) S × ℤ),
-      fullLogLatticeProdIntToExtended L S (σ • z) =
-        σ • fullLogLatticeProdIntToExtended L S z := by
+      fullLogLatticeProdIntToExtended L S
+          (_productAction.toMulAction.toSemigroupAction.toSMul.smul
+            σ z) =
+        _extendedAction.toMulAction.toSemigroupAction.toSMul.smul
+          σ (fullLogLatticeProdIntToExtended L S z) := by
   dsimp only
   let ρ :=
     logPlacePermutationHom K L S hS
-  letI indexAction :
+  let indexAction :
       MulAction (L ≃ₐ[K] L)
         (SUnitGroup.LogPlace (K := L) S) :=
     permutationMulAction ρ
-  letI sUnitAction :=
+  let sUnitAction :=
     sUnitMulDistribMulAction K L S hS
-  letI additiveSUnitAction :=
+  let additiveSUnitAction :=
     additiveSUnitDistribMulAction K L S hS
-  letI logPlaceAction :=
+  let logPlaceAction :=
     logPlaceMulAction K L S hS
-  letI fullLogSpaceAction :=
+  let fullLogSpaceAction :=
     fullLogSpaceDistribMulAction K L S hS
-  letI logHyperplaneAction :=
+  let logHyperplaneAction :=
     logHyperplaneDistribMulAction K L S hS
-  letI fullLogLatticeAction :=
+  let fullLogLatticeAction :=
     fullLogLatticeDistribMulAction K L S hS
-  letI extendedAction :
+  let extendedAction :
       DistribMulAction (L ≃ₐ[K] L)
         (extendedFullLogLattice L S) :=
     completePermutationLatticeDistribMulAction
       ρ (extendedFullLogLattice L S)
       (extendedFullLogLattice_permutation_stable
         K L hS)
-  letI productAction :
+  let productAction :
       DistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup.fullLogLattice (K := L) S × ℤ) :=
     fullLogLatticeProdIntDistribMulAction K L S hS
@@ -743,35 +748,38 @@ theorem extendedFullLogLatticeEquivProdInt_equivariant
       fullLogLatticeProdIntDistribMulAction K L S hS
     ∀ (σ : L ≃ₐ[K] L)
       (x : extendedFullLogLattice L S),
-      extendedFullLogLatticeEquivProdInt L S (σ • x) =
-        σ • extendedFullLogLatticeEquivProdInt L S x := by
+      extendedFullLogLatticeEquivProdInt L S
+          (_extendedAction.toMulAction.toSemigroupAction.toSMul.smul
+            σ x) =
+        _productAction.toMulAction.toSemigroupAction.toSMul.smul
+          σ (extendedFullLogLatticeEquivProdInt L S x) := by
   dsimp only
   let ρ :=
     logPlacePermutationHom K L S hS
-  letI indexAction :
+  let indexAction :
       MulAction (L ≃ₐ[K] L)
         (SUnitGroup.LogPlace (K := L) S) :=
     permutationMulAction ρ
-  letI sUnitAction :=
+  let sUnitAction :=
     sUnitMulDistribMulAction K L S hS
-  letI additiveSUnitAction :=
+  let additiveSUnitAction :=
     additiveSUnitDistribMulAction K L S hS
-  letI logPlaceAction :=
+  let logPlaceAction :=
     logPlaceMulAction K L S hS
-  letI fullLogSpaceAction :=
+  let fullLogSpaceAction :=
     fullLogSpaceDistribMulAction K L S hS
-  letI logHyperplaneAction :=
+  let logHyperplaneAction :=
     logHyperplaneDistribMulAction K L S hS
-  letI fullLogLatticeAction :=
+  let fullLogLatticeAction :=
     fullLogLatticeDistribMulAction K L S hS
-  letI extendedAction :
+  let extendedAction :
       DistribMulAction (L ≃ₐ[K] L)
         (extendedFullLogLattice L S) :=
     completePermutationLatticeDistribMulAction
       ρ (extendedFullLogLattice L S)
       (extendedFullLogLattice_permutation_stable
         K L hS)
-  letI productAction :
+  let productAction :
       DistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup.fullLogLattice (K := L) S × ℤ) :=
     fullLogLatticeProdIntDistribMulAction K L S hS
@@ -783,8 +791,11 @@ theorem extendedFullLogLatticeEquivProdInt_equivariant
     fullLogLatticeProdIntToExtended_equivariant
       K L hS σ (e x)
   change
-    e.symm (σ • e x) =
-      σ • e.symm (e x) at hmap
+    e.symm
+        (productAction.toMulAction.toSemigroupAction.toSMul.smul
+          σ (e x)) =
+      extendedAction.toMulAction.toSemigroupAction.toSMul.smul
+        σ (e.symm (e x)) at hmap
   rw [e.symm_apply_apply, hmap,
     e.symm_apply_apply]
 
@@ -863,50 +874,61 @@ theorem extendedFullLogLatticeMulEquivProdInt_equivariant
       multiplicativeDistribMulAction
     ∀ (σ : L ≃ₐ[K] L)
       (x : Multiplicative (extendedFullLogLattice L S)),
-      extendedFullLogLatticeMulEquivProdInt L S (σ • x) =
-        σ • extendedFullLogLatticeMulEquivProdInt L S x := by
+      extendedFullLogLatticeMulEquivProdInt L S
+          (_extendedMultiplicativeAction.toMulAction.toSemigroupAction.toSMul.smul
+            σ x) =
+        _productMultiplicativeAction.toMulAction.toSemigroupAction.toSMul.smul
+          σ (extendedFullLogLatticeMulEquivProdInt L S x) := by
   dsimp only
   let ρ :=
     logPlacePermutationHom K L S hS
-  letI indexAction :
+  let indexAction :
       MulAction (L ≃ₐ[K] L)
         (SUnitGroup.LogPlace (K := L) S) :=
     permutationMulAction ρ
-  letI sUnitAction :=
+  let sUnitAction :=
     sUnitMulDistribMulAction K L S hS
-  letI additiveSUnitAction :=
+  let additiveSUnitAction :=
     additiveSUnitDistribMulAction K L S hS
-  letI logPlaceAction :=
+  let logPlaceAction :=
     logPlaceMulAction K L S hS
-  letI fullLogSpaceAction :=
+  let fullLogSpaceAction :=
     fullLogSpaceDistribMulAction K L S hS
-  letI logHyperplaneAction :=
+  let logHyperplaneAction :=
     logHyperplaneDistribMulAction K L S hS
-  letI fullLogLatticeAction :=
+  let fullLogLatticeAction :=
     fullLogLatticeDistribMulAction K L S hS
-  letI extendedAction :
+  let extendedAction :
       DistribMulAction (L ≃ₐ[K] L)
         (extendedFullLogLattice L S) :=
     completePermutationLatticeDistribMulAction
       ρ (extendedFullLogLattice L S)
       (extendedFullLogLattice_permutation_stable
         K L hS)
-  letI extendedMultiplicativeAction :
+  let extendedMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (extendedFullLogLattice L S)) :=
     multiplicativeDistribMulAction
-  letI productAction :
+  let productAction :
       DistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup.fullLogLattice (K := L) S × ℤ) :=
     fullLogLatticeProdIntDistribMulAction K L S hS
-  letI productMultiplicativeAction :
+  let productMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (SUnitGroup.fullLogLattice (K := L) S × ℤ)) :=
     multiplicativeDistribMulAction
   intro σ x
   apply Multiplicative.toAdd.injective
+  change
+    extendedFullLogLatticeEquivProdInt L S
+        (extendedAction.toMulAction.toSemigroupAction.toSMul.smul
+          σ (Multiplicative.toAdd x)) =
+      productAction.toMulAction.toSemigroupAction.toSMul.smul
+        σ
+        (extendedFullLogLatticeEquivProdInt L S
+          (Multiplicative.toAdd x))
   exact
     extendedFullLogLatticeEquivProdInt_equivariant
       K L hS σ (Multiplicative.toAdd x)
@@ -940,18 +962,18 @@ theorem fullLogLatticeProdIntIncl_equivariant
           (SUnitGroup.fullLogLattice (K := L) S)),
       fullLogLatticeProdIntIncl L S (σ • z) =
         σ • fullLogLatticeProdIntIncl L S z := by
-  letI latticeAction :=
+  let latticeAction :=
     fullLogLatticeDistribMulAction K L S hS
-  letI latticeMultiplicativeAction :
+  let latticeMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (SUnitGroup.fullLogLattice (K := L) S)) :=
     multiplicativeDistribMulAction
-  letI productAction :
+  let productAction :
       DistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup.fullLogLattice (K := L) S × ℤ) :=
     fullLogLatticeProdIntDistribMulAction K L S hS
-  letI productMultiplicativeAction :
+  let productMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (SUnitGroup.fullLogLattice (K := L) S × ℤ)) :=
@@ -988,18 +1010,18 @@ theorem fullLogLatticeProdIntProj_equivariant
           (SUnitGroup.fullLogLattice (K := L) S × ℤ)),
       fullLogLatticeProdIntProj L S (σ • z) =
         σ • fullLogLatticeProdIntProj L S z := by
-  letI latticeAction :=
+  let latticeAction :=
     fullLogLatticeDistribMulAction K L S hS
-  letI productAction :
+  let productAction :
       DistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup.fullLogLattice (K := L) S × ℤ) :=
     fullLogLatticeProdIntDistribMulAction K L S hS
-  letI productMultiplicativeAction :
+  let productMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (SUnitGroup.fullLogLattice (K := L) S × ℤ)) :=
     multiplicativeDistribMulAction
-  letI integerAction :
+  let integerAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative ℤ) :=
     trivialIntMulDistribMulAction (L ≃ₐ[K] L)
@@ -1114,51 +1136,51 @@ theorem fullLogLattice_herbrandQuotient_eq_stabilizerProduct_div_card
   dsimp only
   let ρ :=
     logPlacePermutationHom K L S hS
-  letI indexAction :
+  let indexAction :
       MulAction (L ≃ₐ[K] L)
         (SUnitGroup.LogPlace (K := L) S) :=
     permutationMulAction ρ
-  letI latticeAction :
+  let latticeAction :
       DistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup.fullLogLattice (K := L) S) :=
     fullLogLatticeDistribMulAction K L S hS
-  letI latticeMultiplicativeAction :
+  let latticeMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (SUnitGroup.fullLogLattice (K := L) S)) :=
     multiplicativeDistribMulAction
-  letI productAction :
+  let productAction :
       DistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup.fullLogLattice (K := L) S × ℤ) :=
     fullLogLatticeProdIntDistribMulAction K L S hS
-  letI productMultiplicativeAction :
+  let productMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (SUnitGroup.fullLogLattice (K := L) S × ℤ)) :=
     multiplicativeDistribMulAction
-  letI integerAction :
+  let integerAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative ℤ) :=
     trivialIntMulDistribMulAction (L ≃ₐ[K] L)
-  letI extendedAction :
+  let extendedAction :
       DistribMulAction (L ≃ₐ[K] L)
         (extendedFullLogLattice L S) :=
     completePermutationLatticeDistribMulAction
       ρ (extendedFullLogLattice L S)
       (extendedFullLogLattice_permutation_stable
         K L hS)
-  letI extendedMultiplicativeAction :
+  let extendedMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (extendedFullLogLattice L S)) :=
     multiplicativeDistribMulAction
-  letI orbitFintype :
+  let orbitFintype :
       Fintype
         (MulAction.orbitRel.Quotient
           (L ≃ₐ[K] L)
           (SUnitGroup.LogPlace (K := L) S)) :=
     Fintype.ofFinite _
-  letI stabilizerFintype :
+  let stabilizerFintype :
       ∀ ω :
           MulAction.orbitRel.Quotient
             (L ≃ₐ[K] L)
@@ -1168,14 +1190,14 @@ theorem fullLogLattice_herbrandQuotient_eq_stabilizerProduct_div_card
   obtain ⟨hExtended, hExtendedValue⟩ :=
     extendedFullLogLattice_herbrandQuotient_eq_stabilizerProduct
       K L hS σ hgen
-  letI extendedH0Finite :
+  let extendedH0Finite :
       Finite
         (HerbrandH0
           (L ≃ₐ[K] L)
           (Multiplicative
             (extendedFullLogLattice L S))) :=
     hExtended.1
-  letI extendedHMinusOneFinite :
+  let extendedHMinusOneFinite :
       Finite
         (HerbrandHMinusOne
           (L ≃ₐ[K] L)
@@ -1198,14 +1220,14 @@ theorem fullLogLattice_herbrandQuotient_eq_stabilizerProduct_div_card
     ⟨herbrandH0Finite_of_equivariantMulEquiv e he,
       herbrandHMinusOneFinite_of_equivariantMulEquiv
         e he σ⟩
-  letI productH0Finite :
+  let productH0Finite :
       Finite
         (HerbrandH0
           (L ≃ₐ[K] L)
           (Multiplicative
             (SUnitGroup.fullLogLattice (K := L) S × ℤ))) :=
     hProduct.1
-  letI productHMinusOneFinite :
+  let productHMinusOneFinite :
       Finite
         (HerbrandHMinusOne
           (L ≃ₐ[K] L)
@@ -1217,12 +1239,12 @@ theorem fullLogLattice_herbrandQuotient_eq_stabilizerProduct_div_card
         (L ≃ₐ[K] L) (Multiplicative ℤ) σ :=
     ⟨trivialIntHerbrandH0Finite,
       trivialIntHerbrandHMinusOneFinite σ⟩
-  letI integerH0Finite :
+  let integerH0Finite :
       Finite
         (HerbrandH0
           (L ≃ₐ[K] L) (Multiplicative ℤ)) :=
     hInteger.1
-  letI integerHMinusOneFinite :
+  let integerHMinusOneFinite :
       Finite
         (HerbrandHMinusOne
           (L ≃ₐ[K] L) (Multiplicative ℤ) σ) :=
@@ -1237,14 +1259,14 @@ theorem fullLogLattice_herbrandQuotient_eq_stabilizerProduct_div_card
       (fullLogLatticeProdIntIncl_injective L S)
       (fullLogLatticeProdIntProj_surjective L S)
       σ hgen hProduct hInteger
-  letI latticeH0Finite :
+  let latticeH0Finite :
       Finite
         (HerbrandH0
           (L ≃ₐ[K] L)
           (Multiplicative
             (SUnitGroup.fullLogLattice (K := L) S))) :=
     hLattice.1
-  letI latticeHMinusOneFinite :
+  let latticeHMinusOneFinite :
       Finite
         (HerbrandHMinusOne
           (L ≃ₐ[K] L)
@@ -1384,37 +1406,37 @@ theorem sUnit_herbrandQuotient_eq_stabilizerProduct_div_card
   dsimp only
   let ρ :=
     logPlacePermutationHom K L S hS
-  letI indexAction :
+  let indexAction :
       MulAction (L ≃ₐ[K] L)
         (SUnitGroup.LogPlace (K := L) S) :=
     permutationMulAction ρ
-  letI sUnitAction :
+  let sUnitAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup (K := L) S) :=
     sUnitMulDistribMulAction K L S hS
-  letI latticeAction :
+  let latticeAction :
       DistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup.fullLogLattice (K := L) S) :=
     fullLogLatticeDistribMulAction K L S hS
-  letI latticeMultiplicativeAction :
+  let latticeMultiplicativeAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (Multiplicative
           (SUnitGroup.fullLogLattice (K := L) S)) :=
     multiplicativeDistribMulAction
-  letI orbitFintype :
+  let orbitFintype :
       Fintype
         (MulAction.orbitRel.Quotient
           (L ≃ₐ[K] L)
           (SUnitGroup.LogPlace (K := L) S)) :=
     Fintype.ofFinite _
-  letI stabilizerFintype :
+  let stabilizerFintype :
       ∀ ω :
           MulAction.orbitRel.Quotient
             (L ≃ₐ[K] L)
             (SUnitGroup.LogPlace (K := L) S),
         Fintype (permutationOrbitStabilizer ω) :=
     fun _ => Fintype.ofFinite _
-  letI torsionAction :
+  let torsionAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (CommGroup.torsion
           (SUnitGroup (K := L) S)) :=
@@ -1422,7 +1444,7 @@ theorem sUnit_herbrandQuotient_eq_stabilizerProduct_div_card
       (CommGroup.torsion
         (SUnitGroup (K := L) S))
       (sUnitTorsion_stable K L hS)
-  letI torsionFinite :
+  let torsionFinite :
       Finite
         (CommGroup.torsion
           (SUnitGroup (K := L) S)) :=
@@ -1430,14 +1452,14 @@ theorem sUnit_herbrandQuotient_eq_stabilizerProduct_div_card
   obtain ⟨hLattice, hLatticeValue⟩ :=
     fullLogLattice_herbrandQuotient_eq_stabilizerProduct_div_card
       K L hS σ hgen
-  letI latticeH0Finite :
+  let latticeH0Finite :
       Finite
         (HerbrandH0
           (L ≃ₐ[K] L)
           (Multiplicative
             (SUnitGroup.fullLogLattice (K := L) S))) :=
     hLattice.1
-  letI latticeHMinusOneFinite :
+  let latticeHMinusOneFinite :
       Finite
         (HerbrandHMinusOne
           (L ≃ₐ[K] L)
@@ -1450,14 +1472,14 @@ theorem sUnit_herbrandQuotient_eq_stabilizerProduct_div_card
         (CommGroup.torsion
           (SUnitGroup (K := L) S)) σ :=
     ⟨inferInstance, inferInstance⟩
-  letI torsionH0Finite :
+  let torsionH0Finite :
       Finite
         (HerbrandH0
           (L ≃ₐ[K] L)
           (CommGroup.torsion
             (SUnitGroup (K := L) S))) :=
     hTorsion.1
-  letI torsionHMinusOneFinite :
+  let torsionHMinusOneFinite :
       Finite
         (HerbrandHMinusOne
           (L ≃ₐ[K] L)
@@ -1479,13 +1501,13 @@ theorem sUnit_herbrandQuotient_eq_stabilizerProduct_div_card
         (SUnitGroup (K := L) S)).subtype_injective
       (sUnitFullLogMulHom_surjective L S)
       σ hgen hTorsion hLattice
-  letI sUnitH0Finite :
+  let sUnitH0Finite :
       Finite
         (HerbrandH0
           (L ≃ₐ[K] L)
           (SUnitGroup (K := L) S)) :=
     hSUnit.1
-  letI sUnitHMinusOneFinite :
+  let sUnitHMinusOneFinite :
       Finite
         (HerbrandHMinusOne
           (L ≃ₐ[K] L)
@@ -1571,7 +1593,7 @@ theorem finitePlace_stabilizer_eq_idealStabilizer
       finitePlaceMulAction K L
     MulAction.stabilizer (L ≃ₐ[K] L) P =
       MulAction.stabilizer (L ≃ₐ[K] L) P.asIdeal := by
-  letI finitePlaceAction :=
+  let finitePlaceAction :=
     finitePlaceMulAction K L
   ext σ
   simp only [MulAction.mem_stabilizer_iff]
@@ -1618,18 +1640,18 @@ theorem finitePlace_stabilizer_card_eq_localDegree
     Nat.card
         (MulAction.stabilizer (L ≃ₐ[K] L) P) =
       finiteLogPlaceLocalDegree K L P := by
-  letI finitePlaceAction :=
+  let finitePlaceAction :=
     finitePlaceMulAction K L
   rw [finitePlace_stabilizer_eq_idealStabilizer K L P]
   unfold finiteLogPlaceLocalDegree
   let p := P.asIdeal.under (𝓞 K)
   have hp : p ≠ ⊥ :=
     Ideal.under_ne_bot (𝓞 K) P.ne_bot
-  letI quotientFinite : Finite ((𝓞 K) ⧸ p) :=
+  let quotientFinite : Finite ((𝓞 K) ⧸ p) :=
     Ring.HasFiniteQuotients.finiteQuotient hp
-  letI residueFinite : Finite p.ResidueField :=
+  let residueFinite : Finite p.ResidueField :=
     inferInstance
-  letI residuePerfect : PerfectField p.ResidueField :=
+  let residuePerfect : PerfectField p.ResidueField :=
     inferInstance
   exact
     Ideal.card_stabilizer_eq p P.asIdeal
@@ -1646,9 +1668,9 @@ theorem stableFinitePlace_stabilizer_card_eq_localDegree
     Nat.card
         (MulAction.stabilizer (L ≃ₐ[K] L) v) =
       finiteLogPlaceLocalDegree K L v := by
-  letI stableAction :=
+  let stableAction :=
     stableFinitePlaceMulAction K L S hS
-  letI finitePlaceAction :=
+  let finitePlaceAction :=
     finitePlaceMulAction K L
   rw [show
     MulAction.stabilizer (L ≃ₐ[K] L) v =
@@ -1690,9 +1712,9 @@ theorem logPlace_stabilizer_card_eq_localDegree
     Nat.card
         (MulAction.stabilizer (L ≃ₐ[K] L) q) =
       logPlaceLocalDegree K L S q := by
-  letI stableAction :=
+  let stableAction :=
     stableFinitePlaceMulAction K L S hS
-  letI logPlaceAction :=
+  let logPlaceAction :=
     logPlaceMulAction K L S hS
   cases q with
   | inl w =>
@@ -1804,21 +1826,21 @@ theorem sUnit_herbrandQuotient_eq_localDegreeProduct_div_card
   dsimp only
   let ρ :=
     logPlacePermutationHom K L S hS
-  letI indexAction :
+  let indexAction :
       MulAction (L ≃ₐ[K] L)
         (SUnitGroup.LogPlace (K := L) S) :=
     permutationMulAction ρ
-  letI sUnitAction :
+  let sUnitAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup (K := L) S) :=
     sUnitMulDistribMulAction K L S hS
-  letI orbitFintype :
+  let orbitFintype :
       Fintype
         (MulAction.orbitRel.Quotient
           (L ≃ₐ[K] L)
           (SUnitGroup.LogPlace (K := L) S)) :=
     Fintype.ofFinite _
-  letI stabilizerFintype :
+  let stabilizerFintype :
       ∀ ω :
           MulAction.orbitRel.Quotient
             (L ≃ₐ[K] L)

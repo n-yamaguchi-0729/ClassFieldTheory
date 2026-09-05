@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldMaximalSubextension
-import GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerRealization
-import GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationSubextension
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitAbstractFixedField
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldMaximalSubextension
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerRealization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationSubextension
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitAbstractFixedField
+
+set_option autoImplicit false
 
 /-!
 # Unramifiedness of the two-stage small Hilbert tower
@@ -25,6 +27,15 @@ open KummerTheory
 open LocalClassFieldTheory
 open GlobalClassFields
 
+/-- Transitivity over a number field, with the relative module fixed by
+the given algebra before the concrete fixed-field carriers are inserted. -/
+private theorem smallHilbertTowerAbsoluteFiniteDimensionalOfRelative
+    (F N : Type) [Field F] [NumberField F] [Field N]
+    [Algebra ℚ N] [Algebra F N] [IsScalarTower ℚ F N]
+    [FiniteDimensional F N] :
+    FiniteDimensional ℚ N :=
+  FiniteDimensional.trans ℚ F N
+
 section SelectedTower
 
 variable (K : Type) [Field K] [NumberField K]
@@ -44,7 +55,7 @@ private noncomputable abbrev smallHilbertTowerFirstStageFiniteAbstractField :
   let L := smallHilbertClassFieldSubextension K
   { field := L.field
     finite := by
-      letI : Finite
+      let : Finite
           ((baseField
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
             CyclicCohomology.extensionSubgroup
@@ -52,7 +63,7 @@ private noncomputable abbrev smallHilbertTowerFirstStageFiniteAbstractField :
                 (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
               K₀.field (le_baseField K₀.field)) :=
         K₀.finite
-      letI : Finite
+      let : Finite
           (K₀.field.toSubgroup ⧸
             CyclicCohomology.extensionSubgroup
               K₀.field L.field L.below) :=
@@ -74,6 +85,44 @@ private noncomputable instance
             (smallHilbertClassFieldSubextension K).field)) :=
   (smallHilbertTowerFirstStageFiniteAbstractField K).finite
 
+/-- The relative algebra is the canonical algebra carried by the
+intermediate-field presentation of the selected top field. -/
+@[reducible]
+private noncomputable instance
+    smallHilbertTowerTopAlgebra :
+    Algebra
+      (smallHilbertClassField K)
+      (smallHilbertTowerTopField K) :=
+  (smallHilbertTowerTopField K).algebra
+
+/-- Freeze the scalar-action owner induced by the canonical relative
+algebra. -/
+@[reducible]
+private noncomputable def
+    smallHilbertTowerTopSMul :
+    SMul
+      (smallHilbertClassField K)
+      (smallHilbertTowerTopField K) :=
+  Algebra.toSMul (self := smallHilbertTowerTopAlgebra K)
+
+/-- Freeze the module owner induced by the same canonical relative
+algebra. -/
+@[reducible]
+private noncomputable def
+    smallHilbertTowerTopModule :
+    Module
+      (smallHilbertClassField K)
+      (smallHilbertTowerTopField K) :=
+  @Algebra.toModule
+    (smallHilbertClassField K)
+    (smallHilbertTowerTopField K)
+    _ _
+    (smallHilbertTowerTopAlgebra K)
+
+section
+
+attribute [local instance] smallHilbertTowerTopModule
+
 /-- The second selected stage is finite-dimensional over the first
 small Hilbert class field. -/
 noncomputable instance smallHilbertTowerTopFiniteDimensional :
@@ -83,19 +132,21 @@ noncomputable instance smallHilbertTowerTopFiniteDimensional :
   finiteAbelianSubextensionAbstractRelativeFixedFieldFiniteDimensional
     (smallHilbertTowerSecondSubextension K)
 
+end
+
 /-- The rational base, first small Hilbert class field, and second
 selected stage form the actual scalar tower. -/
 noncomputable instance smallHilbertTowerTopScalarTower :
     IsScalarTower ℚ
       (smallHilbertClassField K)
       (smallHilbertTowerTopField K) :=
-  IsScalarTower.of_algebraMap_eq' rfl
+  IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
 
 /-- The selected second stage is a finite extension of the rational
 field. -/
 noncomputable instance smallHilbertTowerTopAbsoluteFiniteDimensional :
     FiniteDimensional ℚ (smallHilbertTowerTopField K) :=
-  FiniteDimensional.trans ℚ
+  smallHilbertTowerAbsoluteFiniteDimensionalOfRelative
     (smallHilbertClassField K)
     (smallHilbertTowerTopField K)
 
@@ -174,7 +225,7 @@ theorem smallHilbertTower_maximalAbelianSubextension_eq_firstStage
   let T :=
     abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) P.below
-  letI hKfinite : Finite
+  let hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
@@ -182,41 +233,33 @@ theorem smallHilbertTower_maximalAbelianSubextension_eq_firstStage
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
           K₀.field (le_baseField K₀.field)) :=
     K₀.finite
-  letI hLfinite : Finite
+  let hLfinite : Finite
       (K₀.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           K₀.field L.field L.below) :=
     L.finite
-  letI hPfinite : Finite
+  let hPfinite : Finite
       (K₀.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           K₀.field P.field P.below) :=
     P.finite
-  letI : FiniteDimensional ℚ F :=
-    abstractFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K₀.field hKfinite
-  letI : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ)
-      K₀.field L.field L.below hKfinite hLfinite
-  letI : IsScalarTower ℚ F E :=
-    IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional ℚ E :=
-    FiniteDimensional.trans ℚ F E
-  letI : FiniteDimensional F T :=
-    abstractRelativeFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ)
-      K₀.field P.field P.below hKfinite hPfinite
-  letI : IsScalarTower ℚ F T :=
-    IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional ℚ T :=
-    FiniteDimensional.trans ℚ F T
-  letI : NumberField F :=
-    NumberField.of_module_finite ℚ F
-  letI : NumberField E :=
-    NumberField.of_module_finite ℚ E
-  letI : NumberField T :=
-    NumberField.of_module_finite ℚ T
+  let : NumberField F := by
+    let : FiniteDimensional ℚ F :=
+      abstractFixedField_finiteDimensional
+        ℚ (SeparableClosure ℚ) K₀.field hKfinite
+    exact NumberField.of_module_finite ℚ F
+  let : NumberField E := by
+    let : FiniteDimensional F E :=
+      abstractRelativeFixedField_finiteDimensional
+        ℚ (SeparableClosure ℚ)
+        K₀.field L.field L.below hKfinite hLfinite
+    exact NumberField.of_module_finite F E
+  let : NumberField T := by
+    let : FiniteDimensional F T :=
+      abstractRelativeFixedField_finiteDimensional
+        ℚ (SeparableClosure ℚ)
+        K₀.field P.field P.below hKfinite hPfinite
+    exact NumberField.of_module_finite F T
   have hPM : P.field = M.field := by
     simp only [
       P, smallHilbertTowerGaloisRealization,
@@ -232,10 +275,13 @@ theorem smallHilbertTower_maximalAbelianSubextension_eq_firstStage
     change x ∈ abstractFixedField ℚ (SeparableClosure ℚ) P.field
     exact
       (abstractFixedField_le ℚ (SeparableClosure ℚ) hPL) hx
-  letI hETAlgebra : Algebra E T :=
+  let hETAlgebra : Algebra E T :=
     (IntermediateField.inclusion hET).toRingHom.toAlgebra
-  letI : SMul E T := hETAlgebra.toSMul
-  letI hFETScalarTower : IsScalarTower F E T :=
+  let hFETScalarTower :
+      @IsScalarTower F E T
+        (Algebra.toSMul (R := F) (A := E))
+        hETAlgebra.toSMul
+        (Algebra.toSMul (R := F) (A := T)) :=
     IsScalarTower.of_algebraMap_eq' rfl
   have hFirst :
       IsEverywhereUnramified F E := by

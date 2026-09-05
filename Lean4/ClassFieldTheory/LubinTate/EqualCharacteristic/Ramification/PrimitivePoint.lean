@@ -1,15 +1,17 @@
-import LubinTate.EqualCharacteristic.Ramification.GaloisAction
-import LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
-import LubinTate.EqualCharacteristic.Existence.LaurentLocalField
-import LocalFieldTheory.DiscreteValuationField.RamificationAddVal
-import LocalFieldTheory.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
-import ValuationTheory.DiscreteValuationField.AddVal
-import ValuationTheory.DiscreteValuationField.Extensions
-import ValuationTheory.DiscreteValuationField.FiniteIntegralClosure
-import ValuationTheory.DiscreteValuationField.FiniteExtension.Uniqueness
-import RamificationTheory.HilbertRamification.RealLowerGroups
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.GaloisAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalField
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationAddVal
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+import ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+import ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
+import ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
 import Mathlib.RingTheory.Discriminant
 import Mathlib.RingTheory.Polynomial.Eisenstein.IsIntegral
+
+set_option autoImplicit false
 
 /-!
 # The chosen complete valuation and primitive Lubin--Tate point
@@ -170,9 +172,9 @@ theorem equalCharacteristicLubinTateBaseCompleteDVF_valuation_eq
       letI : ValuativeRel F.residueField⸨X⸩ :=
         equalCharacteristicLaurentValuativeRel F
       ValuativeRel.valuation F.residueField⸨X⸩ := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField F.residueField⸨X⸩ :=
+  let : IsNonarchimedeanLocalField F.residueField⸨X⸩ :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
   change
     (LocalFieldTheory.localCompleteDVF F.residueField⸨X⸩).valuation =
@@ -326,10 +328,10 @@ private theorem equalCharacteristicLubinTateLevelCompleteDVFData_exists
               ValuationTheory.DiscreteValuationField.ValuedExtension.residueDegree
                 (equalCharacteristicLubinTateBaseCompleteDVF F).toDVF
                 target.toDVF := by
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI : IsGalois F.residueField⸨X⸩
+  let : IsGalois F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_isGalois F n
   exact
@@ -459,7 +461,7 @@ theorem
     (n : ℕ) :
     (equalCharacteristicLubinTateLevelPowerBasis F n).gen ∈
       (equalCharacteristicLubinTateLevelCompleteDVF F n).valuation.valuationSubring := by
-  letI :
+  let :
       IsIntegralClosure
         (equalCharacteristicLubinTateLevelCompleteDVF F n).valuationSubring
         (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring
@@ -567,21 +569,21 @@ theorem equalCharacteristicLubinTatePrimitivePointInteger_adjoin_eq_top
           Set
             (equalCharacteristicLubinTateLevelCompleteDVF F n).valuationSubring) =
       ⊤ := by
-  letI :
+  let :
       FiniteDimensional F.residueField⸨X⸩
         (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI :
+  let :
       IsGalois F.residueField⸨X⸩
         (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_isGalois F n
-  letI :
+  let :
       IsScalarTower
         (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring
         (equalCharacteristicLubinTateLevelCompleteDVF F n).valuationSubring
         (equalCharacteristicLubinTateLevelField F n) :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI :
+  let :
       IsIntegralClosure
         (equalCharacteristicLubinTateLevelCompleteDVF F n).valuationSubring
         (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring
@@ -611,10 +613,10 @@ theorem
     ValuationTheory.DiscreteValuationField.ValuedExtension.HasUniqueValuationExtension.{0, 0, 0, 0, y}
       (base := equalCharacteristicLubinTateBaseCompleteDVF F)
       (target := equalCharacteristicLubinTateLevelCompleteDVF F n) := by
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI : IsGalois F.residueField⸨X⸩
+  let : IsGalois F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_isGalois F n
   exact
@@ -879,7 +881,7 @@ theorem equalCharacteristicLubinTatePrimitivePointInteger_addVal
     simpa using hcast
   have hvle :
       IsDiscreteValuationRing.addVal target.valuationSubring lambda ≤ 1 :=
-    (ENat.mul_le_mul_left_iff hdcoe (ENat.coe_ne_top d)).1 hmul_le
+    (ENat.mul_le_mul_left_iff hdcoe (ENat.natCast_ne_top d)).1 hmul_le
   have honele :
       1 ≤ IsDiscreteValuationRing.addVal target.valuationSubring lambda :=
     Order.one_le_iff_ne_zero.mpr hvne

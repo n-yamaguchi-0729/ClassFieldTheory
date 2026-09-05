@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import KummerTheory.Concrete.RootCharacters
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+import GaloisCohomology.Kummer.Concrete.RootCharacters
 import Mathlib.Algebra.Group.Hom.Basic
 import Mathlib.Algebra.Group.Subgroup.Ker
+
+set_option autoImplicit false
 
 /-!
 # Kummer radicals and finite-place decomposition fields
@@ -55,15 +57,15 @@ theorem
     (beta : L) ∈
       IntermediateField.fixedField
         (absoluteValueDecompositionGroup K w.1) := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
-  letI hK :=
+  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
   let C := vK.Completion
   let E := LocalizedCompletion vK w
   let toE :=
@@ -180,19 +182,19 @@ theorem
         IntermediateField.fixedField
           (absoluteValueDecompositionGroup K
             (chosenFinitePlaceExtension (L := L) v).1) := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   let vK := HeightOneSpectrum.adicAbv K v
   let w := chosenFinitePlaceExtension (L := L) v
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
   let C := vK.Completion
   let E := LocalizedCompletion vK w
   let toE :=

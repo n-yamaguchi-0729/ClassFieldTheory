@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Completion.AdicCompletionComparison
-import AlgebraicNumberTheory.Completion.ChosenLocalization
-import LocalFieldTheory.DiscreteValuationField.PadicField
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+
+set_option autoImplicit false
 
 /-!
 # Integer rings in the two finite-place completion models
@@ -123,7 +125,7 @@ theorem rationalFinitePlaceCompletion_residueField_card
   let p : Nat.Primes :=
     Rat.HeightOneSpectrum.primesEquiv
       (R := 𝓞 ℚ) v
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let : Fact p.1.Prime := ⟨p.2⟩
   let eIntegers :
       𝒪[ChosenFinitePlaceBaseCompletion (K := ℚ) v] ≃+*
         v.adicCompletionIntegers ℚ :=

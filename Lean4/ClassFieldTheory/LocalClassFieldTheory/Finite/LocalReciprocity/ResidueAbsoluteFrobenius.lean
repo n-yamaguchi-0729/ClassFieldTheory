@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteResidueFrobenius
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteResidueFrobenius
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -44,10 +46,10 @@ private def residueFrobeniusLimitPoint (z : ZHatMul) :
   property := by
     intro E F f
     algebraize [Subsemiring.inclusion <| leOfHom f.1]
-    haveI : IsScalarTower k F.unop E.unop :=
+    have : IsScalarTower k F.unop E.unop :=
       IsScalarTower.of_algebraMap_eq (congrFun rfl)
-    letI : Finite F.unop := Module.finite_of_finite k
-    letI : Finite E.unop := Module.finite_of_finite k
+    let : Finite F.unop := Module.finite_of_finite k
+    let : Finite E.unop := Module.finite_of_finite k
     change AlgEquiv.restrictNormalHom F.unop
         (finiteResidueFrobeniusFromZHat k E.unop z) =
       finiteResidueFrobeniusFromZHat k F.unop z
@@ -73,7 +75,7 @@ def residueFrobeniusToLimit :
           inferInstance (krullTopology k E.unop)
           (finiteResidueFrobeniusIntermediate k Omega E.unop) :=
       (finiteResidueFrobeniusIntermediate k Omega E.unop).continuous_toFun
-    letI (E : (FiniteGaloisIntermediateField k Omega)ᵒᵖ) :
+    let (E : (FiniteGaloisIntermediateField k Omega)ᵒᵖ) :
         TopologicalSpace (E.unop ≃ₐ[k] E.unop) :=
       ((InfiniteGalois.asProfiniteGaloisGroupFunctor k Omega).obj E).toProfinite.toTop.str
     apply Continuous.subtype_mk
@@ -124,7 +126,7 @@ theorem restrictNormalHom_residueAbsoluteFrobenius_one
           (Multiplicative.ofAdd (1 : ZHat))) =
       FiniteField.frobeniusAlgEquivOfAlgebraic k E := by
   rw [restrictNormalHom_residueAbsoluteFrobenius]
-  letI : Finite E := Module.finite_of_finite k
+  let : Finite E := Module.finite_of_finite k
   exact finiteResidueFrobeniusFromZHat_one k E
 
 /-- Arithmetic Frobenius on an algebraic Galois extension restricts to

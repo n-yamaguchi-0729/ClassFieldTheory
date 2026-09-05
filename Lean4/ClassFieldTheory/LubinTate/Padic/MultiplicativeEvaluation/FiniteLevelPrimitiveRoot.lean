@@ -1,7 +1,9 @@
-import LubinTate.Padic.MultiplicativeEvaluation.FiniteLevelEvaluation
-import LubinTate.FiniteLevel.LevelAbelian
-import ValuationTheory.LocalRingEquiv
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.FiniteLevelEvaluation
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
+import ValuedFieldTheory.Valuation.LocalRingEquiv
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+
+set_option autoImplicit false
 
 /-!
 # Primitive roots from finite p-adic Lubin--Tate levels
@@ -29,6 +31,7 @@ variable {K : Type u} [Field K]
 attribute [local instance]
   padicMultiplicativeLevelCoefficientUniformSpace
   padicMultiplicativeLevelTargetWithIdeal
+  padicMultiplicativeLevelTargetTopologicalSpace
   padicMultiplicativeLevelTargetCompleteSpace
   padicMultiplicativeLevelTargetT2Space
 
@@ -192,7 +195,6 @@ private theorem padicMultiplicativeScalarEndomorphism_nat
       Intertwines
         (padicMultiplicativeLubinTateSeries p)
         (padicMultiplicativeLubinTateSeries p) A := by
-    rw [Intertwines]
     change
       PowerSeries.subst A Eps =
         MvPowerSeries.subst
@@ -325,7 +327,11 @@ private theorem
           (standardLubinTateEndomorphismValue hπ n
             (m : (padicLocalField p).valuationSubring))
           (standardLubinTateEndomorphismValue hπ n 0) := by
-      rw [hdzero, standardLubinTateEndomorphismValue_zero]
+      exact congrArg
+        (standardLubinTateFormalAdd hπ n
+          (standardLubinTateEndomorphismValue hπ n
+            (m : (padicLocalField p).valuationSubring)))
+        (hdzero.trans (standardLubinTateEndomorphismValue_zero hπ n).symm)
     _ =
         standardLubinTateEndomorphismValue hπ n
           ((m : (padicLocalField p).valuationSubring) + 0) :=
@@ -348,11 +354,22 @@ private theorem padicStandardLubinTateSeries_eval_iterate
       standardLubinTatePrimitivePointIterateInteger
         (padicMultiplicativeLubinTateSeries_isUniformizer p) n (i + 1) := by
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
-  rw [← standardLubinTatePolynomial_toPowerSeries_eq_series hπ,
-    standardLubinTateLevelPowerSeriesEval_coe,
-    standardLubinTatePrimitivePointIterateInteger_succ,
-    standardLubinTatePolynomial_formula]
-  simp
+  let π : (padicLocalField p).valuationSubring :=
+    padicIntEquivValuationSubring p (p : ℤ_[p])
+  let x := standardLubinTatePrimitivePointIterateInteger hπ n i
+  have hpoly :
+      Polynomial.eval₂ (standardLubinTateLevelCoefficientHom hπ n) x
+          (standardLubinTatePolynomial (padicLocalField p) π) =
+        x ^ Nat.card (padicLocalField p).residueField +
+          standardLubinTateLevelCoefficientHom hπ n π * x := by
+    simp only [standardLubinTatePolynomial, Polynomial.eval₂_add,
+      Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_mul,
+      Polynomial.eval₂_C]
+  rw [← standardLubinTatePolynomial_toPowerSeries_eq_series hπ]
+  exact (standardLubinTateLevelPowerSeriesEval_coe hπ n x
+    (standardLubinTatePrimitivePointIterateInteger_hasEval hπ n i)
+    (standardLubinTatePolynomial (padicLocalField p) π)).trans
+      (hpoly.trans (standardLubinTatePrimitivePointIterateInteger_succ hπ n i).symm)
 
 private theorem
     padicStandardLubinTatePrimitivePointIterateInteger_ne_zero
@@ -365,7 +382,7 @@ private theorem
     standardLubinTatePrimitivePointIterateInteger_addVal
       (padicMultiplicativeLubinTateSeries_isUniformizer p) n n le_rfl
   rw [hzero, IsDiscreteValuationRing.addVal_zero] at hval
-  exact ENat.top_ne_coe _ hval
+  exact ENat.top_ne_natCast _ hval
 
 private theorem padicMultiplicativePrimitivePoint_pow_primePower
     (p : ℕ) [Fact p.Prime] (n i : ℕ) :
@@ -400,9 +417,23 @@ private theorem padicMultiplicativePrimitivePoint_pow_primePower
       1 + evalH (points i)
   induction i with
   | zero =>
-      simp [evalH, points, H,
-        padicMultiplicativePrimitivePoint,
-        standardLubinTatePrimitivePointEvaluation]
+      have hpacked : points 0 =
+          ⟨standardLubinTatePrimitivePointInteger hπ n,
+            standardLubinTatePrimitivePointInteger_hasEval hπ n⟩ :=
+        Subtype.ext (standardLubinTatePrimitivePointIterateInteger_zero hπ n)
+      have heval : evalH (points 0) =
+          evalH ⟨standardLubinTatePrimitivePointInteger hπ n,
+            standardLubinTatePrimitivePointInteger_hasEval hπ n⟩ :=
+        congrArg evalH hpacked
+      have hbase :
+          evalH ⟨standardLubinTatePrimitivePointInteger hπ n,
+            standardLubinTatePrimitivePointInteger_hasEval hπ n⟩ =
+            padicMultiplicativePrimitivePoint p n := by
+        simp only [evalH, H, padicMultiplicativePrimitivePoint,
+          standardLubinTatePrimitivePointEvaluation]
+      simpa only [pow_zero, pow_one] using
+        congrArg (fun z : (standardLubinTateLevelCompleteDVF hπ n).valuationSubring =>
+          1 + z) (heval.trans hbase).symm
   | succ i ih =>
       let Ebar := (standardLubinTateSeries hπ).toPowerSeries
       let mappedPoint :
@@ -559,7 +590,12 @@ private theorem padicMultiplicativePrimitiveRoot_unitAction
             ((1 + PowerSeries.X) ^ m - 1) := by
         rw [padicMultiplicativeScalarEndomorphism_nat]
       _ = (1 + zetaMinusOne) ^ m - 1 := by
-        simp
+        simp only [map_sub, map_pow, map_add, map_one]
+        exact congrArg
+          (fun z : (standardLubinTateLevelCompleteDVF hπ n).valuationSubring =>
+            (1 + z) ^ m - 1)
+          (standardLubinTateLevelPowerSeriesEval_X
+            hπ n zetaMinusOne hzetaMinusOne)
   have hrootInteger :
       1 +
           standardLubinTateLevelPowerSeriesEval hπ n
@@ -602,11 +638,18 @@ theorem padicMultiplicativePrimitiveRoot_galoisAction
       (padicLocalField p) hπ n
       (standardLubinTateUnitParameterClass
         (padicLocalField p) n u))⁻¹
-  letI : IsScalarTower
+  let : Algebra (padicLocalField p).valuationSubring target.valuationSubring :=
+    (standardLubinTateLevelCoefficientHom hπ n).toAlgebra
+  let : WithIdeal target.valuationSubring :=
+    padicMultiplicativeLevelTargetWithIdeal
+      (F := padicLocalField p)
+      (π := show (padicLocalField p).valuationSubring from
+        padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n
+  let : IsScalarTower
       (padicLocalField p).valuationSubring
       target.valuationSubring L :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : IsIntegralClosure
+  let : IsIntegralClosure
       target.valuationSubring
       (padicLocalField p).valuationSubring L :=
     standardLubinTateLevelCompleteDVF_isIntegralClosure hπ n
@@ -707,6 +750,16 @@ theorem padicMultiplicativePrimitiveRoot_galoisAction
         (standardLubinTateLevelCompleteDVF hπ n).valuationSubring
         _
         (standardLubinTateLevelCoefficientHom hπ n)
+  let : T2Space target.valuationSubring :=
+    padicMultiplicativeLevelTargetT2Space
+      (F := padicLocalField p)
+      (π := show (padicLocalField p).valuationSubring from
+        padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n
+  let : CompleteSpace target.valuationSubring :=
+    padicMultiplicativeLevelTargetCompleteSpace
+      (F := padicLocalField p)
+      (π := show (padicLocalField p).valuationSubring from
+        padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n
   have hcomp :=
     PowerSeries.comp_eval₂
       (R := (padicLocalField p).valuationSubring)

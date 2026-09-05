@@ -1,7 +1,9 @@
-import LocalFieldTheory.NonarchimedeanLocalField.NormSubgroupFunctoriality
-import LubinTate.EqualCharacteristic.NormSubgroup.UnitTransport
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldEquiv
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedNorm
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormSubgroupFunctoriality
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UnitTransport
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldEquiv
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedNorm
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: higher units are norms from the standard level
@@ -43,10 +45,10 @@ theorem
     (ha : a ∈ equalCharacteristicLubinTateHigherUnitSubgroup F n) :
     equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a ∈
       equalCharacteristicLubinTateNormSubgroup F n := by
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicCompletedFrobeniusFixedField F a n) :=
     FiniteDimensional.of_finrank_pos (by
       rw [equalCharacteristicCompletedFrobeniusFixedField_finrank]

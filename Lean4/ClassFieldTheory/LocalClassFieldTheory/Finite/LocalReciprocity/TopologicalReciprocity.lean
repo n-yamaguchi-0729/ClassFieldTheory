@@ -1,11 +1,13 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.Main
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom
-import LocalFieldTheory.NonarchimedeanLocalField.NormContinuity
-import LocalFieldTheory.NonarchimedeanLocalField.UnitTopology
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Main
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
 import Mathlib.FieldTheory.KrullTopology
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
 import Mathlib.Topology.Algebra.OpenSubgroup
+
+set_option autoImplicit false
 
 /-!
 # Topological finite local reciprocity
@@ -125,22 +127,22 @@ private theorem localNormSubgroup_isOpen_of_compatibleLocalField
   have hclosed : IsClosed (integerUnitNormSubgroup K L : Set Kˣ) :=
     hcompact.isClosed
 
-  letI : Finite (Gal(L / K)) := by
+  let : Finite (Gal(L / K)) := by
     apply Nat.finite_of_card_ne_zero
     rw [IsGalois.card_aut_eq_finrank K L]
     exact Nat.ne_of_gt Module.finrank_pos
-  letI : Finite (Abelianization (Gal(L / K))) :=
+  let : Finite (Abelianization (Gal(L / K))) :=
     Finite.of_surjective Abelianization.of QuotientGroup.mk_surjective
-  letI : Finite (NormQuotient K L) :=
+  let : Finite (NormQuotient K L) :=
     Finite.of_equiv
       (Abelianization (Gal(L / K)))
       (abelianizationEquivNormQuotient K L).toEquiv
-  letI : Finite (Kˣ ⧸ localNormSubgroup K L) := by
+  let : Finite (Kˣ ⧸ localNormSubgroup K L) := by
     change Finite (NormQuotient K L)
     infer_instance
-  letI : (localNormSubgroup K L).FiniteIndex :=
+  let : (localNormSubgroup K L).FiniteIndex :=
     Subgroup.finiteIndex_of_finite_quotient
-  letI : ((localNormSubgroup K L).subgroupOf
+  let : ((localNormSubgroup K L).subgroupOf
       (localBaseUnitSubgroup K)).FiniteIndex := inferInstance
 
   have hrelativeClosed :
@@ -207,51 +209,46 @@ theorem localNormSubgroup_isOpen
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
     IsOpen (localNormSubgroup K L : Set Kˣ) := by
-  letI : UniformSpace K := IsTopologicalAddGroup.rightUniformSpace K
-  letI : IsUniformAddGroup K := isUniformAddGroup_of_addCommGroup
-  letI : Valued K (ValuativeRel.ValueGroupWithZero K) := inferInstance
-  letI : (Valued.v : Valuation K
+  let : UniformSpace K := IsTopologicalAddGroup.rightUniformSpace K
+  let : IsUniformAddGroup K := isUniformAddGroup_of_addCommGroup
+  let : (Valued.v : Valuation K
       (ValuativeRel.ValueGroupWithZero K)).RankOne :=
     { hom' := ValuativeRel.IsRankLeOne.nonempty.some.emb (R := K) |>.comp
         MonoidWithZeroHom.ValueGroup₀.embedding
       strictMono' := ValuativeRel.IsRankLeOne.nonempty.some.strictMono.comp
         MonoidWithZeroHom.ValueGroup₀.embedding_strictMono }
-  letI : NontriviallyNormedField K :=
+  let : NontriviallyNormedField K :=
     Valued.toNontriviallyNormedField
       (L := K) (Γ₀ := ValuativeRel.ValueGroupWithZero K)
-  letI : CompleteSpace K := inferInstance
 
-  letI : NontriviallyNormedField L :=
+  let : NontriviallyNormedField L :=
     spectralNorm.nontriviallyNormedField K L
-  letI : NormedSpace K L := spectralNorm.normedSpace K L
-  letI : NormedAlgebra K L :=
-    { (inferInstance : Algebra K L) with
-      norm_smul_le := NormedSpace.norm_smul_le }
-  letI : CompleteSpace L := spectralNorm.completeSpace K L
-  letI : LocallyCompactSpace L :=
+  let : NormedAlgebra K L := spectralNorm.normedAlgebra K L
+  let : CompleteSpace L := spectralNorm.completeSpace K L
+  let : LocallyCompactSpace L :=
     LocallyCompactSpace.of_finiteDimensional_of_complete K L
-  letI : IsUltrametricDist L :=
+  let : IsUltrametricDist L :=
     ⟨fun x y z => by
       change ‖x - z‖ ≤ max ‖x - y‖ ‖y - z‖
       rw [← sub_add_sub_cancel x y z]
       exact isNonarchimedean_spectralNorm
         (K := K) (L := L) (x - y) (y - z)⟩
-  letI : Valued L ℝ≥0 := NormedField.toValued
+  let : Valued L ℝ≥0 := NormedField.toValued
   let vL : Valuation L ℝ≥0 := Valued.v
-  letI : vL.IsNontrivial :=
+  let : vL.IsNontrivial :=
     (inferInstance : (NormedField.valuation (K := L)).IsNontrivial)
-  letI : ValuativeRel L := ValuativeRel.ofValuation vL
-  letI : vL.Compatible := Valuation.Compatible.ofValuation vL
-  letI : ValuativeRel.IsNontrivial L :=
+  let : ValuativeRel L := ValuativeRel.ofValuation vL
+  let : vL.Compatible := Valuation.Compatible.ofValuation vL
+  let : ValuativeRel.IsNontrivial L :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vL).2 inferInstance
-  letI : IsValuativeTopology L :=
+  let : IsValuativeTopology L :=
     isValuativeTopology_of_valued_ofValuation L ℝ≥0
-  letI : IsNonarchimedeanLocalField L :=
+  let : IsNonarchimedeanLocalField L :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
 
-  letI : (ValuativeRel.valuation K).HasExtension
+  let : (ValuativeRel.valuation K).HasExtension
       (ValuativeRel.valuation L) := by
     apply Valuation.HasExtension.ofComapInteger
     ext x
@@ -263,7 +260,7 @@ theorem localNormSubgroup_isOpen
     rw [spectralNorm_extends]
     exact Valued.toNormedField.norm_le_one_iff
 
-  letI : Algebra.IsIntegral 𝒪[K] 𝒪[L] := ⟨by
+  let : Algebra.IsIntegral 𝒪[K] 𝒪[L] := ⟨by
     intro y
     apply IsIntegral.tower_bot
       (R := 𝒪[K]) (A := 𝒪[L]) (B := L)
@@ -306,7 +303,7 @@ theorem localNormSubgroup_isOpen
         exact minpoly.aeval K (y : L)
       rwa [Polynomial.aeval_map_algebraMap K (y : L) p] at hmaproot⟩
 
-  letI : Algebra.IsIntegral
+  let : Algebra.IsIntegral
       (ValuativeRel.valuation K).valuationSubring
       (ValuativeRel.valuation L).valuationSubring := by
     change Algebra.IsIntegral 𝒪[K] 𝒪[L]
@@ -316,7 +313,7 @@ theorem localNormSubgroup_isOpen
       (ValuativeRel.valuation K).valuationSubring L :=
     ValuationTheory.DiscreteValuationField.Valuation.valuationSubring_isIntegralClosure_of_isIntegral
       (ValuativeRel.valuation K) (ValuativeRel.valuation L)
-  letI : IsIntegralClosure 𝒪[L] 𝒪[K] L := by
+  let : IsIntegralClosure 𝒪[L] 𝒪[K] L := by
     change IsIntegralClosure
       (ValuativeRel.valuation L).valuationSubring
       (ValuativeRel.valuation K).valuationSubring L

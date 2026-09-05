@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FiniteIntermediateFieldCompositum
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FiniteIntermediateFieldCompositum
+
+set_option autoImplicit false
 
 universe u
 
@@ -80,7 +82,7 @@ theorem quotientPower_card_commutes_degreeZero (D : DegreeData G)
       (K.field.toSubgroup ⧸ extensionSubgroup K.field P.field P.below)
     q ^ n * τ = τ * q ^ n := by
   let R := K.field.toSubgroup ⧸ extensionSubgroup K.field P.field P.below
-  letI : Finite R := P.finite
+  let : Finite R := P.finite
   let n := Nat.card R
   let Q := K.field.toSubgroup ⧸ D.extensionInertiaWithin K.field L hLK
   let hIP : D.extensionInertiaWithin K.field L hLK ≤
@@ -220,8 +222,8 @@ theorem frobeniusPowerFixedField_le_finiteField (D : DegreeData G)
           exact QuotientGroup.map_mk' _ _ _ _ k
         rw [hcomp]
         exact continuous_quotient_mk' }
-  letI : Finite R := P.finite
-  letI : IsClosed
+  let : Finite R := P.finite
+  let : IsClosed
       (extensionSubgroup K.field P.field P.below : Set K.field.toSubgroup) :=
     extensionSubgroup_isClosed K.field P.field P.below
   have hrPpow : rP (φ.1 ^ n) = 1 := by
@@ -356,7 +358,7 @@ theorem frobeniusPowerFixedField_normal (D : DegreeData G)
   let hTS := D.frobeniusPowerFixedField_le K L hLK φ hφ n m hn hm
   let C := D.frobeniusClosure K L hLK σ
   let Cm := D.frobeniusClosure K L hLK σm
-  letI : CommGroup C := D.frobeniusClosureCommGroup K L hLK σ
+  let : CommGroup C := D.frobeniusClosureCommGroup K L hLK σ
   have hCmC : Cm.toSubgroup ≤ C.toSubgroup :=
     D.frobeniusClosure_power_mul_le K L hLK φ hφ n m hn hm
   constructor
@@ -455,7 +457,7 @@ theorem frobeniusPowerFixedField_finite (D : DegreeData G)
   let hSK := D.frobeniusFixedField_le K L hLK σ
   let hTK := D.frobeniusFixedField_le K L hLK σm
   let hTS := D.frobeniusPowerFixedField_le K L hLK φ hφ n m hn hm
-  letI hTKfinite : Finite
+  let hTKfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field T hTK) :=
     D.frobeniusFixedField_finite K L hLK σm
   exact FiniteIntermediateField.finite_extension_of_le hTK hSK hTS
@@ -589,7 +591,7 @@ theorem frobeniusPowerFixedField_quotientCard (D : DegreeData G)
   let T := D.frobeniusFixedField K L hLK σm
   let hTS := D.frobeniusPowerFixedField_le
     K L hLK φ hφ n m hn hm
-  letI : Finite (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
+  let : Finite (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
     D.frobeniusPowerFixedField_quotientFinite
       K L hLK φ hφ n m hn hm
   calc
@@ -641,7 +643,7 @@ theorem frobeniusPowerFixedField_generator (D : DegreeData G)
   let hTS := D.frobeniusPowerFixedField_le K L hLK φ hφ n m hn hm
   let hTSnormal : (extensionSubgroup S T hTS).Normal :=
     D.frobeniusPowerFixedField_normal K L hLK φ hφ n m hn hm
-  letI := hTSnormal
+  let := hTSnormal
   let k : K.field.toSubgroup := Quotient.out σ.1
   have hkσ :
       (QuotientGroup.mk k :
@@ -663,17 +665,17 @@ theorem frobeniusPowerFixedField_generator (D : DegreeData G)
     rw [← D.frobeniusFixedField_normalizedDegree_compatibility
       K L hLK σ s, hsClosure]
     exact D.fixedFieldNormalizedDegree_generator K L hLK σ
-  letI hTSfinite : Finite
+  let hTSfinite : Finite
       (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
     D.frobeniusPowerFixedField_finite K L hLK φ hφ n m hn hm
   have hTSunramified : (DegreeData.AbstractExtension.mk T S hTS).IsUnramified D :=
     D.frobeniusPowerFixedField_isUnramified
       K L hLK φ hφ n m hn hm
   let SR := D.frobeniusFixedResidueField K L hLK σ
-  letI : (extensionSubgroup SR.field T hTS).Normal := by
+  let : (extensionSubgroup SR.field T hTS).Normal := by
     change (extensionSubgroup S T hTS).Normal
     exact hTSnormal
-  letI : Finite
+  let : Finite
       (SR.field.toSubgroup ⧸ extensionSubgroup SR.field T hTS) := by
     change Finite (S.toSubgroup ⧸ extensionSubgroup S T hTS)
     exact hTSfinite

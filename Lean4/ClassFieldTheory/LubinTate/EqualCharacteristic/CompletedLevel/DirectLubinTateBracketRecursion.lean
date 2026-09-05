@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracket
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracket
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: recursion for the standard Lubin--Tate bracket
@@ -140,7 +142,7 @@ private theorem equalCharacteristicDirectBracketScalarCoefficient_succ_compariso
           equalCharacteristicDirectBracketScalarCoefficient a (j + 1) =
       equalCharacteristicDirectBracketScalarCoefficient a j -
         equalCharacteristicDirectBracketScalarCoefficient a j ^ Nat.card k := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   cases j with
   | zero =>
       simp [equalCharacteristicDirectBracketScalarCoefficient,

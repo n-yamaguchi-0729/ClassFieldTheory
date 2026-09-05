@@ -2,6 +2,8 @@ import Mathlib.FieldTheory.IsSepClosed
 import Mathlib.FieldTheory.KrullTopology
 import Mathlib.NumberTheory.NumberField.Basic
 
+set_option autoImplicit false
+
 /-!
 # Embeddings into a separable closure
 
@@ -28,10 +30,10 @@ theorem continuous_algEquiv_autCongr
   intro s hs
   rw [map_one, krullTopology_mem_nhds_one_iff] at hs
   obtain ⟨M, hMfinite, hMs⟩ := hs
-  letI : FiniteDimensional F M := hMfinite
+  let : FiniteDimensional F M := hMfinite
   let N : IntermediateField F E :=
     M.map e.symm.toAlgHom
-  letI : FiniteDimensional F N :=
+  let : FiniteDimensional F N :=
     (M.equivMap e.symm.toAlgHom).toLinearEquiv.finiteDimensional
   rw [krullTopology_mem_nhds_one_iff]
   refine ⟨N, inferInstance, ?_⟩

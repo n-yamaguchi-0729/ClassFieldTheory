@@ -1,5 +1,7 @@
-import KummerTheory.Concrete.RootCharacters
+import GaloisCohomology.Kummer.Concrete.RootCharacters
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+
+set_option autoImplicit false
 
 /-!
 # Hilbert symbols at infinite places

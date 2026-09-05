@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.PowerResidueReciprocity
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.PowerResidueReciprocity
+
+set_option autoImplicit false
 
 /-!
 # Rational quadratic reciprocity from global class field theory
@@ -14,6 +16,24 @@ noncomputable section
 
 namespace GlobalClassFieldTheory
 namespace Reciprocity
+
+-- Specializing the generic completion construction to `ℚ` must keep the
+-- `Algebra.id` owner fixed.  Otherwise the rational-field algebra path is
+-- underdetermined after the Lean 4.33 instance changes.
+@[reducible] noncomputable local instance
+    (v : HeightOneSpectrum (𝓞 ℚ)) :
+    Algebra ℚ (HeightOneSpectrum.adicAbv ℚ v).Completion := by
+  letI : Algebra ℚ ℚ := Algebra.id ℚ
+  let hWith : Algebra ℚ
+      (WithAbs (HeightOneSpectrum.adicAbv ℚ v)) :=
+    WithAbs.instAlgebra _
+  let hUniform : UniformContinuousConstSMul ℚ
+      (WithAbs (HeightOneSpectrum.adicAbv ℚ v)) :=
+    WithAbs.instUniformContinuousConstSMulReal _
+  exact
+    @UniformSpace.Completion.algebra
+      (WithAbs (HeightOneSpectrum.adicAbv ℚ v)) _ _ _ _
+      ℚ _ hWith hUniform
 
 open KummerTheory
 open AlgebraicNumberTheory.PowerResidueSymbols
@@ -173,7 +193,7 @@ theorem rationalTwoAdicSignedOddUnit_squareClass
     ∃ r : ℚ_[2]ˣ,
       rationalTwoAdicSignedOddUnit m hm = r ^ 2 ∨
         rationalTwoAdicSignedOddUnit m hm = five * r ^ 2 := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let q : ℤ := (-1 : ℤ) ^ (m / 2) * (m : ℤ)
   have hmInt : Odd (m : ℤ) := by exact_mod_cast hm
   have hqData : Odd q ∧ ∃ k : ℤ, q - 1 = 4 * k := by
@@ -431,8 +451,8 @@ private theorem localHilbertSymbol_pow_pow
 private theorem localQuadraticHilbertSymbol_square_left_eq_one
     (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F]
-    (h2F : ((2 : ℕ) : F) ≠ 0)
-    (hmu : (primitiveRoots 2 F).Nonempty)
+    (h2F : ((((2 : ℕ+) : ℕ)) : F) ≠ 0)
+    (hmu : (primitiveRoots (((2 : ℕ+) : ℕ)) F).Nonempty)
     (x y : Fˣ) :
     localHilbertSymbol F (2 : ℕ+) h2F hmu (x ^ 2) y = 1 := by
   rw [localHilbertSymbol_pow_left]
@@ -442,8 +462,8 @@ private theorem localQuadraticHilbertSymbol_square_left_eq_one
 private theorem localQuadraticHilbertSymbol_square_right_eq_one
     (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F]
-    (h2F : ((2 : ℕ) : F) ≠ 0)
-    (hmu : (primitiveRoots 2 F).Nonempty)
+    (h2F : ((((2 : ℕ+) : ℕ)) : F) ≠ 0)
+    (hmu : (primitiveRoots (((2 : ℕ+) : ℕ)) F).Nonempty)
     (x y : Fˣ) :
     localHilbertSymbol F (2 : ℕ+) h2F hmu x (y ^ 2) = 1 := by
   rw [localHilbertSymbol_pow_right]
@@ -453,8 +473,8 @@ private theorem localQuadraticHilbertSymbol_square_right_eq_one
 private theorem localQuadraticHilbertSymbol_value_sq_eq_one
     (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F]
-    (h2F : ((2 : ℕ) : F) ≠ 0)
-    (hmu : (primitiveRoots 2 F).Nonempty)
+    (h2F : ((((2 : ℕ+) : ℕ)) : F) ≠ 0)
+    (hmu : (primitiveRoots (((2 : ℕ+) : ℕ)) F).Nonempty)
     (x y : Fˣ) :
     localHilbertSymbol F (2 : ℕ+) h2F hmu x y ^ 2 = 1 := by
   apply Subtype.ext
@@ -463,8 +483,8 @@ private theorem localQuadraticHilbertSymbol_value_sq_eq_one
 private theorem localQuadraticHilbertSymbol_squareClass_formula
     (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F]
     [IsNonarchimedeanLocalField F]
-    (h2F : ((2 : ℕ) : F) ≠ 0)
-    (hmu : (primitiveRoots 2 F).Nonempty)
+    (h2F : ((((2 : ℕ+) : ℕ)) : F) ≠ 0)
+    (hmu : (primitiveRoots (((2 : ℕ+) : ℕ)) F).Nonempty)
     (q five a b r s : Fˣ) (ka kb : ℕ)
     (negRoot : nthRootsSubgroup F (((2 : ℕ+) : ℕ)))
     (hqq : localHilbertSymbol F (2 : ℕ+) h2F hmu q q = negRoot)
@@ -519,9 +539,9 @@ theorem rationalTwoAdicHilbert_negOne_five_eq_one :
   dsimp only
   let v₂ := RayClass.rationalPrime rationalTwoPrime
   let C := (HeightOneSpectrum.adicAbv ℚ v₂).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v₂
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v₂
   let h2C := finitePlaceHilbert_natCast_ne_zero ℚ (2 : ℕ+)
     (by norm_num) v₂
@@ -595,9 +615,9 @@ theorem rationalTwoAdicHilbert_five_five_eq_one :
   dsimp only
   let v₂ := RayClass.rationalPrime rationalTwoPrime
   let C := (HeightOneSpectrum.adicAbv ℚ v₂).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v₂
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v₂
   let h2C := finitePlaceHilbert_natCast_ne_zero ℚ (2 : ℕ+)
     (by norm_num) v₂
@@ -761,9 +781,9 @@ theorem rationalTwoAdicHilbert_negOne_negOne_eq_negOne :
   dsimp only
   let v₂ := RayClass.rationalPrime rationalTwoPrime
   let C := (HeightOneSpectrum.adicAbv ℚ v₂).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v₂
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v₂
   let hn : ((((2 : ℕ+) : ℕ)) : ℚ) ≠ 0 := by norm_num
   have hmap := finitePlaceHilbertSymbol_map_eq_localHilbertSymbol
@@ -838,9 +858,9 @@ theorem rationalTwoAdicHilbert_odd_eq_classicalSign
   dsimp only
   let v₂ := RayClass.rationalPrime rationalTwoPrime
   let C := (HeightOneSpectrum.adicAbv ℚ v₂).Completion
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v₂
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v₂
   let h2C := finitePlaceHilbert_natCast_ne_zero ℚ (2 : ℕ+)
     (by norm_num) v₂

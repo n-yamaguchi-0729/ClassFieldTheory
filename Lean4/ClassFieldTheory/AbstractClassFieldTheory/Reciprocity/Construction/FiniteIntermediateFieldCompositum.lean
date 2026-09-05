@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.CoreFrobeniusNorm
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.CoreFrobeniusNorm
+
+set_option autoImplicit false
 
 universe u v
 
@@ -39,7 +41,7 @@ noncomputable def quotientCard {E K : ClosedSubgroup G}
 /-- The finite quotient used in the descent construction has positive cardinality. -/
 theorem quotientCard_pos {E K : ClosedSubgroup G}
     (M : FiniteIntermediateField E K) : 0 < M.quotientCard := by
-  letI : Finite
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K M.field M.below) := M.finite
   exact Nat.card_pos
 

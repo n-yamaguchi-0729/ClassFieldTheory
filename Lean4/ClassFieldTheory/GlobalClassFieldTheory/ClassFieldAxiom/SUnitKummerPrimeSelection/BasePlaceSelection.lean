@@ -1,6 +1,8 @@
 import Mathlib.Combinatorics.Hall.Finite
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.RestrictionKernel
-import GlobalClassFieldTheory.Cohomology.CyclicPrimePowerFullDecomposition
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.RestrictionKernel
+import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.CyclicPrimePowerFullDecomposition
+
+set_option autoImplicit false
 
 /-!
 # Base-place selection for S-unit Kummer extensions
@@ -65,7 +67,7 @@ noncomputable def sUnitKummerCoordinateBasePlaceCandidates
         p v hp hv hn r eG S i)
   letI : NumberField Ni :=
     NumberField.of_module_finite K Ni
-  letI : IsGalois Ni N :=
+  let _ : IsGalois Ni N :=
     enlargedSUnitKummerCyclicFixedField_isGalois
       (K := K) (Omega := Omega) E n hmu
       (galois_pow_eq_one_of_equiv_pi_zmod
@@ -110,18 +112,18 @@ theorem sUnitKummerCoordinateBasePlaceCandidates_infinite
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
-  letI : NumberField N :=
+  let : NumberField N :=
     NumberField.of_module_finite K N
   let Ni :=
     sUnitKummerCoordinateFixedField
       (K := K) (Omega := Omega) E n hmu
       p v hp hv hn r eG S i
-  letI : NumberField Ni :=
+  let : NumberField Ni :=
     NumberField.of_module_finite K Ni
-  letI : IsGalois Ni N :=
+  let : IsGalois Ni N :=
     enlargedSUnitKummerCyclicFixedField_isGalois
       (K := K) (Omega := Omega) E n hmu
       (galois_pow_eq_one_of_equiv_pi_zmod
@@ -129,7 +131,7 @@ theorem sUnitKummerCoordinateBasePlaceCandidates_infinite
       (sUnitKummerKernelGenerator
         (K := K) (Omega := Omega) E n hmu
         p v hp hv hn r eG S i)
-  letI : IsCyclic (N ≃ₐ[Ni] N) :=
+  let : IsCyclic (N ≃ₐ[Ni] N) :=
     enlargedSUnitKummerCyclicFixedField_isCyclic
       (K := K) (Omega := Omega) E n hmu
       (galois_pow_eq_one_of_equiv_pi_zmod

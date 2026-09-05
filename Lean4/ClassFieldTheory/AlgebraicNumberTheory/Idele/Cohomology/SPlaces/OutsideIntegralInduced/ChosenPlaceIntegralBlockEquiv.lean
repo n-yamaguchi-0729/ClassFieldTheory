@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
-import AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
+
+set_option autoImplicit false
 
 /-!
 # The chosen integral tensor equivalence

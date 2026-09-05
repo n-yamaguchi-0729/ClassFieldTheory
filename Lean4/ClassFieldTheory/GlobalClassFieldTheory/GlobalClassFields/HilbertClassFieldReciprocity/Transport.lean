@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
+
+set_option autoImplicit false
 
 /-!
 # Generic transport core for Hilbert class-field reciprocity
@@ -24,7 +26,7 @@ theorem hilbertClassFieldReciprocityIdeleClassGroupIsMulCommutative
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
-local instance (priority := 2000)
+local instance
     hilbertClassFieldReciprocityIdeleClassGroupIsMulCommutativeLocal
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=

@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
+
+set_option autoImplicit false
 
 /-!
 # Semilinear naturality of finite local reciprocity
@@ -155,16 +157,16 @@ theorem abelianLocalArtinMonoidHom_semilinear_conjugation
         (abelianLocalArtinMonoidHom K L) =
       (abelianLocalArtinMonoidHom K' L').comp
         (Units.map eK.toMonoidHom) := by
-  letI : Algebra K K' := eK.toRingHom.toAlgebra
+  let : Algebra K K' := eK.toRingHom.toAlgebra
   change
     (ValuativeRel.valuation K).HasExtension
       (ValuativeRel.valuation K') at hExt
-  letI : Algebra K L' :=
+  let : Algebra K L' :=
     ((algebraMap K' L').comp eK.toRingHom).toAlgebra
-  letI : Algebra L L' := eL.toRingHom.toAlgebra
-  letI : IsScalarTower K K' L' :=
+  let : Algebra L L' := eL.toRingHom.toAlgebra
+  let : IsScalarTower K K' L' :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : IsScalarTower K L L' :=
+  let : IsScalarTower K L L' :=
     IsScalarTower.of_algebraMap_eq' (by
       apply RingHom.ext
       intro x
@@ -172,12 +174,12 @@ theorem abelianLocalArtinMonoidHom_semilinear_conjugation
   let eKAlg : K ≃ₐ[K] K' :=
     { eK with
       commutes' := fun _ => rfl }
-  letI : FiniteDimensional K K' :=
+  let : FiniteDimensional K K' :=
     FiniteDimensional.of_surjective
       eKAlg.toLinearMap eKAlg.surjective
-  letI : Algebra.IsSeparable K K' :=
+  let : Algebra.IsSeparable K K' :=
     AlgEquiv.Algebra.isSeparable eKAlg
-  letI :
+  let :
       (ValuativeRel.valuation K).HasExtension
         (ValuativeRel.valuation K') :=
     hExt

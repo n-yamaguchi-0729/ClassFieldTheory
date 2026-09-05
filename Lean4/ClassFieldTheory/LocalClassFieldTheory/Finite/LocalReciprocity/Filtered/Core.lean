@@ -1,7 +1,9 @@
 import Mathlib.Algebra.Order.Floor.Ring
-import LocalClassFieldTheory.Finite.Conductor
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
-import RamificationTheory.Filtration
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+import ValuedFieldTheory.Ramification.Filtration
+
+set_option autoImplicit false
 
 /-!
 # Filtered local reciprocity

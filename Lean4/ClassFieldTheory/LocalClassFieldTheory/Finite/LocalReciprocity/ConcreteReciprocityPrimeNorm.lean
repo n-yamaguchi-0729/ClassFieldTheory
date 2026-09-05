@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Concrete prime-norm evaluation
@@ -73,10 +75,10 @@ theorem concreteNormResidueSymbolOfEmbedding_apply_primeNorm
         (finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L i q) := by
   dsimp only at hx
   let BK := intrinsicFiniteAbstractBase K
-  letI hEfinite : Finite ((intrinsicAbstractBase K).toSubgroup ⧸
+  let hEfinite : Finite ((intrinsicAbstractBase K).toSubgroup ⧸
       extensionSubgroup (intrinsicAbstractBase K) (Eᵢ).field (Eᵢ).below) :=
     (Eᵢ).finite
-  letI hBKEfinite : Finite (BK.field.toSubgroup ⧸
+  let hBKEfinite : Finite (BK.field.toSubgroup ⧸
       extensionSubgroup BK.field (Eᵢ).field (Eᵢ).below) := by
     change Finite ((intrinsicAbstractBase K).toSubgroup ⧸
       extensionSubgroup (intrinsicAbstractBase K) (Eᵢ).field (Eᵢ).below)
@@ -85,7 +87,7 @@ theorem concreteNormResidueSymbolOfEmbedding_apply_primeNorm
   let S := D.frobeniusFixedField KR (Eᵢ).field (Eᵢ).below sigma
   let hSB := D.frobeniusFixedField_le
     KR (Eᵢ).field (Eᵢ).below sigma
-  letI hSBfinite : Finite ((intrinsicAbstractBase K).toSubgroup ⧸
+  let hSBfinite : Finite ((intrinsicAbstractBase K).toSubgroup ⧸
       extensionSubgroup (intrinsicAbstractBase K) S hSB) :=
     D.frobeniusFixedField_finite
       KR (Eᵢ).field (Eᵢ).below sigma

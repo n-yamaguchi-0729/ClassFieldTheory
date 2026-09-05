@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Degree.ValuationLaws
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.ValuationLaws
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -46,7 +48,7 @@ theorem relativeNorm_fixedFieldInclusion
         (fixedFieldInclusion A E.base E.field E.below a) =
       (E.degree : ℕ) • a := by
   apply Subtype.ext
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (E.base.toSubgroup ⧸ extensionSubgroup E.base E.field E.below)
   have hterm : ∀ q : E.base.toSubgroup ⧸
       extensionSubgroup E.base E.field E.below,
@@ -74,7 +76,7 @@ theorem relativeNorm_self
     (a : ambientFixedAddSubgroup A K) :
     relativeNorm A K K le_rfl a = a := by
   apply Subtype.ext
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K K le_rfl)
   have hterm : ∀ q : K.toSubgroup ⧸ extensionSubgroup K K le_rfl,
       relativeCosetAction A K K le_rfl a q = a.1 := by

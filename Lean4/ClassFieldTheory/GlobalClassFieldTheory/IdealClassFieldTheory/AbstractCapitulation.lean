@@ -1,9 +1,11 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainTransfer
-import AbstractClassFieldTheory.Reciprocity.Main
-import AbstractClassFieldTheory.Reciprocity.Reduction
-import GroupTheory.Transfer.Witt
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainTransfer
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
+import GaloisCohomology.GroupTheory.Transfer.Witt
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
+
+set_option autoImplicit false
 
 /-!
 # Transfer input for the principal ideal theorem
@@ -89,41 +91,27 @@ theorem commutatorIntermediateTransfer_eq_one
   let S := commutator M.extensionQuotient
   let hLM := M.field_le_intermediateField S
   let hMK := M.intermediateField_le_base S
-  letI : (extensionSubgroup (M.intermediateField S) M.field hLM).Normal :=
+  let : (extensionSubgroup (M.intermediateField S) M.field hLM).Normal :=
     M.extensionSubgroup_over_intermediate_normal S
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K M.field (hLM.trans hMK)) :=
     M.finite
   let H :=
     transferNormNaturalityIntermediateSubgroup
       K (M.intermediateField S) M.field hLM hMK
-  letI : H.FiniteIndex := Subgroup.finiteIndex_of_finite
-  letI : S.FiniteIndex :=
-    Subgroup.finiteIndex_of_finite
   let e :=
     transferNormNaturalityIntermediateQuotientEquiv
       K (M.intermediateField S) M.field hLM hMK
   have hH : H = S := by
     exact transferIntermediateSubgroup_eq_galoisCorrespondenceSubgroup M S
+  let hSFiniteIndex : S.FiniteIndex :=
+    Subgroup.finiteIndex_of_finite
+  let _ : S.FiniteIndex := hSFiniteIndex
+  let hHFiniteIndex : H.FiniteIndex :=
+    hH.symm ▸ hSFiniteIndex
+  let _ : H.FiniteIndex := hHFiniteIndex
   let c : H ≃* S :=
     MulEquiv.subgroupCongr hH
-  have hcongr :
-      c.abelianizationCongr.toMonoidHom.comp
-          (Abelianization.lift
-            (MonoidHom.transfer
-              (Abelianization.of : H →* Abelianization H))) =
-        Abelianization.lift
-          (MonoidHom.transfer
-            (Abelianization.of : S →* Abelianization S)) := by
-    change
-      (MulEquiv.subgroupCongr hH).abelianizationCongr.toMonoidHom.comp
-          (Abelianization.lift
-            (MonoidHom.transfer
-              (Abelianization.of : H →* Abelianization H))) =
-        Abelianization.lift
-          (MonoidHom.transfer
-            (Abelianization.of : S →* Abelianization S))
-    exact abelianization_transfer_congr_subgroup H S hH
   change
     e.symm.abelianizationCongr.toMonoidHom.comp
         (Abelianization.lift
@@ -131,48 +119,66 @@ theorem commutatorIntermediateTransfer_eq_one
             (Abelianization.of : H →*
               Abelianization H))) =
       1
-  apply MonoidHom.ext
-  intro a
-  change
-    e.symm.abelianizationCongr
+  have hresult :
+      e.symm.abelianizationCongr.toMonoidHom.comp
         (Abelianization.lift
           (MonoidHom.transfer
-            (Abelianization.of : H →*
-              Abelianization H)) a) =
-      1
-  rw [← abelianizationCongr_symm]
-  apply e.abelianizationCongr.injective
-  simp only [e.abelianizationCongr.apply_symm_apply, map_one]
-  apply c.abelianizationCongr.injective
-  simp only [map_one]
-  calc
-    c.abelianizationCongr
-        (Abelianization.lift
-          (MonoidHom.transfer
-            (Abelianization.of : H →*
-              Abelianization H)) a) =
-      Abelianization.lift
-          (MonoidHom.transfer
-            (Abelianization.of :
-              S →* Abelianization S)) a := by
-        change
-          c.abelianizationCongr.toMonoidHom
-              (Abelianization.lift
-                (MonoidHom.transfer
-                  (Abelianization.of : H →*
-                    Abelianization H)) a) =
-            Abelianization.lift
+            (Abelianization.of : H →* Abelianization H))) =
+        1 := by
+    have hcongr :
+        c.abelianizationCongr.toMonoidHom.comp
+            (Abelianization.lift
               (MonoidHom.transfer
-                (Abelianization.of :
-                  S →* Abelianization S)) a
-        exact DFunLike.congr_fun hcongr a
-    _ =
-        GroupTheory.Transfer.Witt.commutatorTransfer
-          (G := M.extensionQuotient) a := rfl
-    _ = 1 := by
-      rw [
-        GroupTheory.Transfer.Witt.commutatorTransfer_eq_one_of_finite_abelianization]
-      rfl
+                (Abelianization.of : H →* Abelianization H))) =
+          Abelianization.lift
+            (MonoidHom.transfer
+              (Abelianization.of : S →* Abelianization S)) := by
+      exact @abelianization_transfer_congr_subgroup
+        M.extensionQuotient inferInstance H S hH
+        hHFiniteIndex hSFiniteIndex
+    apply MonoidHom.ext
+    intro a
+    change
+      e.symm.abelianizationCongr
+          (Abelianization.lift
+            (MonoidHom.transfer
+              (Abelianization.of : H →*
+                Abelianization H)) a) =
+        1
+    rw [← abelianizationCongr_symm]
+    apply e.abelianizationCongr.injective
+    simp only [e.abelianizationCongr.apply_symm_apply, map_one]
+    apply c.abelianizationCongr.injective
+    simp only [map_one]
+    calc
+      c.abelianizationCongr
+          (Abelianization.lift
+            (MonoidHom.transfer
+              (Abelianization.of : H →*
+                Abelianization H)) a) =
+        Abelianization.lift
+            (MonoidHom.transfer
+              (Abelianization.of :
+                S →* Abelianization S)) a := by
+          change
+            c.abelianizationCongr.toMonoidHom
+                (Abelianization.lift
+                  (MonoidHom.transfer
+                    (Abelianization.of : H →*
+                      Abelianization H)) a) =
+              Abelianization.lift
+                (MonoidHom.transfer
+                  (Abelianization.of :
+                    S →* Abelianization S)) a
+          exact DFunLike.congr_fun hcongr a
+      _ =
+          GroupTheory.Transfer.Witt.commutatorTransfer
+            (G := M.extensionQuotient) a := rfl
+      _ = 1 := by
+        rw [
+          GroupTheory.Transfer.Witt.commutatorTransfer_eq_one_of_finite_abelianization]
+        rfl
+  exact hresult
 
 section AbstractCapitulation
 
@@ -206,28 +212,45 @@ theorem intermediateNormQuotientInclusion_commutator_eq_zero
   let S := commutator M.extensionQuotient
   let hLM := M.field_le_intermediateField S
   let hMK := M.intermediateField_le_base S
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field M.field M.below) :=
     M.finite
-  letI : (extensionSubgroup K.field M.field M.below).Normal :=
+  let : (extensionSubgroup K.field M.field M.below).Normal :=
     M.normal
-  letI : Finite
+  let : Finite
       ((M.intermediateField S).toSubgroup ⧸
         extensionSubgroup (M.intermediateField S) M.field hLM) :=
     M.extension_over_intermediate_finite S
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field (M.intermediateField S) hMK) :=
     M.intermediateField_finite S
-  letI :
+  let :
       (extensionSubgroup (M.intermediateField S) M.field hLM).Normal :=
     M.extensionSubgroup_over_intermediate_normal S
   let T : FiniteAbstractFieldExtension Γ :=
     FiniteAbstractFieldExtension.ofInclusion
       (M.intermediateField S) K hMK
+  let : Finite
+      (T.base.field.toSubgroup ⧸
+        extensionSubgroup T.base.field M.field (hLM.trans T.below)) := by
+    change Finite
+      (K.field.toSubgroup ⧸
+        extensionSubgroup K.field M.field M.below)
+    exact M.finite
+  let : (extensionSubgroup T.field.field M.field hLM).Normal := by
+    change (extensionSubgroup (M.intermediateField S) M.field hLM).Normal
+    exact M.extensionSubgroup_over_intermediate_normal S
   let E : FiniteGaloisSubextension T.base.field :=
     ⟨M.field, hLM.trans T.below, inferInstance, inferInstance⟩
+  let : Finite
+      (T.field.field.toSubgroup ⧸
+        extensionSubgroup T.field.field M.field hLM) := by
+    change Finite
+      ((M.intermediateField S).toSubgroup ⧸
+        extensionSubgroup (M.intermediateField S) M.field hLM)
+    exact M.extension_over_intermediate_finite S
   let E' : FiniteGaloisSubextension T.field.field :=
     ⟨M.field, hLM, inferInstance, inferInstance⟩
   have hnatural :=

@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
+
+set_option autoImplicit false
 
 /-!
 # Infinite abelian class-field correspondence

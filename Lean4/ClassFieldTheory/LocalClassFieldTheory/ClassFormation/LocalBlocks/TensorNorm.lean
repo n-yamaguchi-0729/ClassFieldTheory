@@ -1,7 +1,17 @@
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
-import AlgebraicNumberTheory.Idele.Extension.LocalNorm
-import LocalFieldTheory.NonarchimedeanLocalField.NormQuotient
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Finite
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.H0
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.HMinusOne
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Quotient
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalNorm
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+
+set_option autoImplicit false
 
 /-!
 # The norm image of a local tensor factor
@@ -123,21 +133,21 @@ theorem normUnits_rightCosetCompletionAlgEquiv
           (rightCosetCompletionAlgEquiv
             vK hvK w q).toMulEquiv z) =
       Units.map (Algebra.norm vK.Completion) z := by
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI :
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ :
       Algebra vK.Completion
         (rightCosetExtensionEquiv vK hvK w q).1.Completion :=
     AbsoluteValue.completionAlgebra vK
       (rightCosetExtensionEquiv vK hvK w q).1
       (rightCosetExtensionEquiv vK hvK w q).2
-  letI : Module.Finite vK.Completion
+  let _ : Module.Finite vK.Completion
       (rightCosetExtensionEquiv vK hvK w q).1.Completion :=
     completionModuleFinite vK hvK
       (rightCosetExtensionEquiv vK hvK w q)
-  letI : Module.Finite vK.Completion
+  let _ : Module.Finite vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionModuleFinite vK hvK w
   apply Units.ext
@@ -224,17 +234,17 @@ theorem normUnits_completionProductUnitsEquivRightCosets
           vK hvK w p q) =
       Units.map (Algebra.norm vK.Completion)
         (p (rightCosetExtensionEquiv vK hvK w q)) := by
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Algebra vK.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Module.Finite vK.Completion w'.1.Completion :=
     fun w' ↦ completionModuleFinite vK hvK w'
-  letI : Module.Finite vK.Completion
+  let _ : Module.Finite vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionModuleFinite vK hvK w
   rw [← normUnits_rightCosetCompletionAlgEquiv
@@ -268,20 +278,20 @@ theorem localTensorDetNorm_eq_prod_chosenCoordinates
           (localTensorUnitsEquivChosenCoordinates
             vK hvK w z q) := by
   classical
-  letI :=
+  let _ :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Algebra vK.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Module.Finite vK.Completion w'.1.Completion :=
     fun w' ↦ completionModuleFinite vK hvK w'
-  letI : Module.Finite vK.Completion
+  let _ : Module.Finite vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionModuleFinite vK hvK w
   apply Units.ext
@@ -354,20 +364,20 @@ theorem localTensorNormSubgroup_eq_localNormSubgroup
       localNormSubgroup vK.Completion
         (LocalizedCompletion vK w) := by
   classical
-  letI :=
+  let _ :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Algebra vK.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Module.Finite vK.Completion w'.1.Completion :=
     fun w' ↦ completionModuleFinite vK hvK w'
-  letI : Module.Finite vK.Completion
+  let _ : Module.Finite vK.Completion
       (LocalizedCompletion vK w) :=
       localizedCompletionModuleFinite vK hvK w
   ext x

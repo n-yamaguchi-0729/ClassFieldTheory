@@ -1,7 +1,9 @@
-import KroneckerWeber.GlobalCompositumValuationInertiaBound
-import RamificationTheory.HilbertRamification.Dedekind.PadicValuationInertia
-import KroneckerWeber.UnramifiedCompositumSupport
-import AlgebraicNumberTheory.Ramification.DegreeFromChosenPrimes
+import ClassFieldTheory.KroneckerWeber.GlobalCompositumValuationInertiaBound
+import ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.PadicValuationInertia
+import ClassFieldTheory.KroneckerWeber.UnramifiedCompositumSupport
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.DegreeFromChosenPrimes
+
+set_option autoImplicit false
 
 /-!
 # Global Kronecker--Weber
@@ -46,9 +48,9 @@ theorem kroneckerWeberCompositum_finrank_le_totient :
   let eCB : C ≃ₐ[ℚ] B :=
     AlgEquiv.ofInjectiveField
       (kroneckerWeberCompositumEmbeddingRight (L := L))
-  letI : IsAbelianGalois ℚ A :=
+  let _ : IsAbelianGalois ℚ A :=
     IsAbelianGalois.of_algHom eLA.symm.toAlgHom
-  letI : IsAbelianGalois ℚ B :=
+  let _ : IsAbelianGalois ℚ B :=
     IsAbelianGalois.of_algHom eCB.symm.toAlgHom
   have hsup : A ⊔ B = ⊤ := by
     change
@@ -70,9 +72,11 @@ theorem kroneckerWeberCompositum_finrank_le_totient :
       let wM :=
         kroneckerWeberGlobalCompositumCyclotomicPadicExtension
           (L := L) p hp
+      have hpPrime : (⟨p.1, Fact.out⟩ : Nat.Primes) = p :=
+        Subtype.ext rfl
       ⟨globalPadicPrimeIdeal p.1 M wM,
         globalPadicPrimeIdeal_isPrime p.1 M wM,
-        by simpa using globalPadicPrimeIdeal_liesOver p.1 M wM⟩
+        by simpa only [hpPrime] using globalPadicPrimeIdeal_liesOver p.1 M wM⟩
     else
       kroneckerWeberCompositumPrimeAbove (L := L) p
 
@@ -89,7 +93,7 @@ theorem kroneckerWeberCompositum_finrank_le_totient :
           (inertiaGroup (chosen p).1 (M ≃ₐ[ℚ] M)) ≤
         Nat.totient (p.1 ^ e p) := by
     intro p hp
-    letI : Fact p.1.Prime := ⟨p.2⟩
+    let _ : Fact p.1.Prime := ⟨p.2⟩
     let wM :=
       kroneckerWeberGlobalCompositumCyclotomicPadicExtension
         (L := L) p hp

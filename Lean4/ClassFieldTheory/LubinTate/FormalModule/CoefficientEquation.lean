@@ -1,4 +1,6 @@
-import LubinTate.FormalModule.Series
+import ClassFieldTheory.LubinTate.FormalModule.Series
+
+set_option autoImplicit false
 
 /-!
 # Coefficient equations for a fixed uniformizer

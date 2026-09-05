@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.PrimeComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.PrimeComparison
+
+set_option autoImplicit false
 
 /-!
 # Intrinsic Frobenius Artin comparison

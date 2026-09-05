@@ -1,7 +1,14 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
-import GlobalClassFieldTheory.Reciprocity.GlobalArtin
-import GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
-import GlobalClassFieldTheory.Reciprocity.ComplexificationArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RationalComplexification
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.InfinitePlaceOverfield
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.NumberFieldComplexification
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RamifiedOverextension
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.OverextensionArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.InfinitePlaceCompatibility
+
+set_option autoImplicit false
 
 /-!
 # Archimedean local-global compatibility of Artin homomorphisms
@@ -236,7 +243,7 @@ theorem neg_one_not_mem_infiniteTensorNormSubgroup_of_ramified
   have hw :
       w.comap (algebraMap K L) = v :=
     chosenInfinitePlaceAbove_comap (L := L) v
-  letI chosenInfinitePlaceLiesOver : w.1.LiesOver v.1 :=
+  let chosenInfinitePlaceLiesOver : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
   rw [infiniteTensorNormSubgroup_eq_localNormSubgroup
     (K := K) (L := L) v w hw]

@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
-import LocalFieldTheory.DiscreteValuationField.PolynomialRootProximity
-import RamificationTheory.HilbertRamification.ValuationKrasner
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PolynomialRootProximity
+import ValuedFieldTheory.Ramification.HilbertRamification.ValuationKrasner
+
+set_option autoImplicit false
 
 /-!
 # Valuation of primitive-point displacement

@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+
+set_option autoImplicit false
 
 /-!
 # The global norm-residue symbol for finite Galois extensions
@@ -32,7 +34,7 @@ variable
 /-- Idèle classes are commutative.  Keeping the mixin as a named local
 instance lets norm-range quotient types elaborate before entering a
 declaration body. -/
-local instance (priority := 2000)
+local instance
     globalNormResidueAbelianization_ideleClassGroupIsMulCommutative :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
@@ -89,19 +91,43 @@ private noncomputable def
           (numberFieldTowerTopSubgroup L)
           (numberFieldTowerTopSubgroup_le_baseSubgroup K L) ≃+
       Additive (Abelianization (Gal(L / K))) := by
-  letI hBaseFinite :=
+  let _ : Finite _ :=
     (numberFieldTowerReciprocityFiniteAbstractField K L).finite
-  letI hExtensionNormal :=
+  let _ :
+      (CyclicCohomology.extensionSubgroup
+        (numberFieldTowerBaseSubgroup K L)
+        (numberFieldTowerTopSubgroup L)
+        (numberFieldTowerTopSubgroup_le_baseSubgroup K L)).Normal :=
     numberFieldTowerExtensionSubgroup_normal K L
-  letI hRelativeFinite :=
+  let _ : Finite _ :=
     (numberFieldTowerFiniteGaloisSubextension K L).finite
+  letI : AddCommGroup
+      (FiniteNormQuotient rationalIdeleClassRepresentation
+        (numberFieldTowerBaseSubgroup K L)
+        (numberFieldTowerTopSubgroup L)
+        (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) :=
+    finiteNormQuotientAddCommGroup rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L)
   exact
-    (rationalCyclotomicDegreeData.normResidueSymbol
+    @AddEquiv.trans
+      (FiniteNormQuotient rationalIdeleClassRepresentation
+        (numberFieldTowerBaseSubgroup K L)
+        (numberFieldTowerTopSubgroup L)
+        (numberFieldTowerTopSubgroup_le_baseSubgroup K L))
+      (Additive
+        (Abelianization
+          (ClassFormation.FiniteGaloisSubextension.extensionQuotient
+            (numberFieldTowerFiniteGaloisSubextension K L))))
+      (Additive (Abelianization (Gal(L / K))))
+      inferInstance inferInstance inferInstance
+      (rationalCyclotomicDegreeData.normResidueSymbol
         rationalIdeleClassRepresentation
         rationalCyclotomicIdeleClassValuationData
         rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
         (numberFieldTowerReciprocityFiniteAbstractField K L)
-        (numberFieldTowerFiniteGaloisSubextension K L)).trans
+        (numberFieldTowerFiniteGaloisSubextension K L))
       (numberFieldTowerAbelianizedExtensionQuotientEquivGaloisAbelianization
         K L)
 
@@ -141,11 +167,11 @@ private theorem
           rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
           (numberFieldTowerReciprocityFiniteAbstractField K L)
           (numberFieldTowerFiniteGaloisSubextension K L) x) := by
-  letI hBaseFinite :=
+  let hBaseFinite :=
     (numberFieldTowerReciprocityFiniteAbstractField K L).finite
-  letI hExtensionNormal :=
+  let hExtensionNormal :=
     numberFieldTowerExtensionSubgroup_normal K L
-  letI hRelativeFinite :=
+  let hRelativeFinite :=
     (numberFieldTowerFiniteGaloisSubextension K L).finite
   rfl
 
@@ -195,11 +221,11 @@ theorem globalNormResidueAbelianizationEquiv_finiteReciprocityHom
       Additive.ofMul
         (Abelianization.of
           (numberFieldTowerExtensionQuotientEquivGaloisGroup K L q)) := by
-  letI hBaseFinite :=
+  let hBaseFinite :=
     (numberFieldTowerReciprocityFiniteAbstractField K L).finite
-  letI hExtensionNormal :=
+  let hExtensionNormal :=
     numberFieldTowerExtensionSubgroup_normal K L
-  letI hRelativeFinite :=
+  let hRelativeFinite :=
     (numberFieldTowerFiniteGaloisSubextension K L).finite
   let x :=
     rationalCyclotomicDegreeData.finiteReciprocityHom
@@ -501,10 +527,10 @@ private theorem
     numberFieldTowerReciprocityFiniteAbstractField F E
   let T :=
     numberFieldTowerFiniteGaloisSubextension F E
-  letI hBaseFinite := H.finite
-  letI hExtensionNormal :=
+  let hBaseFinite := H.finite
+  let hExtensionNormal :=
     numberFieldTowerExtensionSubgroup_normal F E
-  letI hRelativeFinite := T.finite
+  let hRelativeFinite := T.finite
   let hUnramified :=
     rationalCyclotomicIdeleClassValuationData.classFieldAxiom_implies_unramifiedUnitCohomology
       rationalIdeleClassRepresentation_satisfiesClassFieldAxiom

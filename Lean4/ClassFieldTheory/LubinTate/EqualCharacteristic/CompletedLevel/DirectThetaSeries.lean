@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Theta.ThetaSeries
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaSeries
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the direct-orientation theta series

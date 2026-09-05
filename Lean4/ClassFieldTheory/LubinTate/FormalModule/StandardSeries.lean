@@ -1,4 +1,6 @@
-import LubinTate.FormalModule.CoefficientEquation
+import ClassFieldTheory.LubinTate.FormalModule.CoefficientEquation
+
+set_option autoImplicit false
 
 /-!
 # The standard Lubin--Tate series

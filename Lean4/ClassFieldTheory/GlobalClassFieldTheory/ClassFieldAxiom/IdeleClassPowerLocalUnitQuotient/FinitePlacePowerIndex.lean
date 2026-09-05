@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.LocalResidueArithmetic
-import AlgebraicNumberTheory.Idele.LocallyCompact
-import LocalFieldTheory.DiscreteValuationField.FieldUnitPowerIndexFormulas
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.LocalResidueArithmetic
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitPowerIndexFormulas
 import Mathlib.NumberTheory.NumberField.ProductFormula
+
+set_option autoImplicit false
 
 /-!
 # Finite-place power indices
@@ -60,14 +62,14 @@ theorem card_finitePlace_nthPowerQuotient
     Valued.v
   let F :=
     LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation ν
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   have hν : Function.Surjective ν :=
     v₀.valuedAdicCompletion_surjective K
-  letI :
+  let :
       LocalFieldTheory.DiscreteValuationField.LocalField.MixedWithZeroValuationContext
         ν :=
     LocalFieldTheory.DiscreteValuationField.LocalField.mixedWithZeroValuationContext ν
-  letI :
+  let :
       Valued (v₀.adicCompletion K)
         (WithZero (Multiplicative ℤ)) :=
     Valued.mk' ν
@@ -83,7 +85,7 @@ theorem card_finitePlace_nthPowerQuotient
   let A :=
     ZMod (F.residueCharacteristic ^ a) ×
       (Fin d → ℤ_[F.residueCharacteristic])
-  letI : Finite
+  let : Finite
       (A ⧸ LocalFieldTheory.nsmulAddSubgroup A (n : ℕ)) := by
     infer_instance
   let emul : U ≃* Multiplicative A := by
@@ -94,7 +96,7 @@ theorem card_finitePlace_nthPowerQuotient
     letI : TopologicalSpace (v₀.adicCompletion K) :=
       direct.toTopologicalSpace
     exact e.symm.toMulEquiv
-  letI : Finite
+  let : Finite
       (U ⧸
         (powMonoidHom (n : ℕ) : U →* U).range) :=
     LocalFieldTheory.finite_nthPowerQuotient_of_mulEquiv
@@ -105,7 +107,7 @@ theorem card_finitePlace_nthPowerQuotient
       F.toCompleteDVF.valuation.IsUniformizer
         (π : v₀.adicCompletion K) :=
     Classical.choose_spec hex
-  letI : Finite
+  let : Finite
       ((v₀.adicCompletion K)ˣ ⧸
         (powMonoidHom (n : ℕ) :
           (v₀.adicCompletion K)ˣ →*
@@ -174,12 +176,12 @@ theorem finitePlaceNthPowerDefect_eq_absNorm_maxPowDividing
   let F :=
     LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
       ν
-  letI :
+  let :
       LocalFieldTheory.DiscreteValuationField.LocalField.MixedWithZeroValuationContext
         ν :=
     LocalFieldTheory.DiscreteValuationField.LocalField.mixedWithZeroValuationContext
       ν
-  letI :
+  let :
       Valued
         (v.adicCompletion K)
         (WithZero (Multiplicative ℤ)) :=

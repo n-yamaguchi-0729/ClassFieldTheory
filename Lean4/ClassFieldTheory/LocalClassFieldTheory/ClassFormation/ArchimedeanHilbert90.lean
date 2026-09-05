@@ -1,5 +1,15 @@
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
-import CyclicCohomology.GaloisCohomology
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Finite
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.H0
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.HMinusOne
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Quotient
+import GaloisCohomology.Cyclic.GaloisCohomology
+
+set_option autoImplicit false
 
 /-!
 # The Hilbert-90 half of the local class-field axiom at every place
@@ -56,23 +66,23 @@ theorem localHerbrandHMinusOne_subsingleton
         (subgroupGeneratorOfGenerator
           (absoluteValueDecompositionGroup K w.1)
           σ hgen)) := by
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : FiniteDimensional vK.Completion
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
+  let : FiniteDimensional vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionModuleFinite vK hvK w
-  letI : IsGalois vK.Completion
+  let : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     HilbertRamification.algebraicLocalization_isGalois vK w
-  letI : Fintype (absoluteValueDecompositionGroup K w.1) :=
+  let : Fintype (absoluteValueDecompositionGroup K w.1) :=
     Fintype.ofFinite _
-  letI :=
+  let :=
     decompositionGroupLocalUnitsAction vK hvK w
   let E :=
     localHerbrandHMinusOneEquivUnitsTateHminusOne
@@ -90,7 +100,7 @@ theorem localHerbrandHMinusOne_subsingleton
             (LocalizedCompletion vK w)) (-1)) :=
     hilbert90_unitsTateHminusOne_isZero
       vK.Completion (LocalizedCompletion vK w) g hg
-  letI :
+  let :
       Subsingleton
         (tateCohomology
           (Rep.ofAlgebraAutOnUnits vK.Completion
@@ -133,25 +143,25 @@ theorem localHerbrandHMinusOne_card_eq_one_of_absoluteValue
         (subgroupGeneratorOfGenerator
           (absoluteValueDecompositionGroup K w.1)
           σ hgen)) = 1 := by
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : FiniteDimensional vK.Completion
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
+  let : FiniteDimensional vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionModuleFinite vK hvK w
-  letI : IsGalois vK.Completion
+  let : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     HilbertRamification.algebraicLocalization_isGalois vK w
-  letI : Fintype (absoluteValueDecompositionGroup K w.1) :=
+  let : Fintype (absoluteValueDecompositionGroup K w.1) :=
     Fintype.ofFinite _
-  letI :=
+  let :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI :
+  let :
       Subsingleton
         (HerbrandHMinusOne
           (absoluteValueDecompositionGroup K w.1)

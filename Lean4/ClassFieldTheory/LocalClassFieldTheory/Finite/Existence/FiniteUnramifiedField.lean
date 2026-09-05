@@ -1,8 +1,10 @@
-import LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
-import LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedComparison
-import LocalFieldTheory.NonarchimedeanLocalField.FiniteExtensionTopology
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedComparison
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionTopology
+
+set_option autoImplicit false
 
 /-!
 # The standard finite unramified local extension
@@ -114,6 +116,7 @@ theorem localFiniteUnramifiedField_finrank
         (abstractFixedField K (SeparableClosure K)
           U.field).fixingSubgroup.index :=
       IntermediateField.finrank_eq_fixingSubgroup_index
+        (F := K) (SeparableClosure K)
         (abstractFixedField K (SeparableClosure K) U.field)
     _ = U.field.toSubgroup.index := by
       rw [InfiniteGalois.fixingSubgroup_fixedField U.field]

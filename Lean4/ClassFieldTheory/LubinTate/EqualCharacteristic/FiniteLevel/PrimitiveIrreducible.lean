@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.DivisionPolynomial
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.DivisionPolynomial
 import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
 import Mathlib.RingTheory.PowerSeries.Ideal
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: irreducibility of the equal-characteristic primitive polynomial
@@ -254,7 +256,7 @@ theorem powerSeries_X_notMem_span_X_sq
     refine ⟨a, ?_⟩
     apply mul_left_cancel₀ (PowerSeries.X_ne_zero (R := k))
     simpa [pow_two, mul_assoc] using ha.symm
-  exact PowerSeries.X_prime.not_unit hunit
+  exact PowerSeries.X_prime.not_isUnit hunit
 
 /-- The integral primitive polynomial is Eisenstein at `(T)`. -/
 theorem equalCharacteristicLubinTateIntegralPrimitivePolynomial_isEisensteinAt

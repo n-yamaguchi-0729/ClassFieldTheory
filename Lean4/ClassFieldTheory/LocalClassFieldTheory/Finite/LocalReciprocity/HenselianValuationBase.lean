@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormValuation
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.SeparableNormValuation
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory KummerTheory

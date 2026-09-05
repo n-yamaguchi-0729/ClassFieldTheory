@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Kummer.LocalHilbertSymbol
-import GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
-import GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
+import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
+
+set_option autoImplicit false
 
 /-!
 # The local--global norm-symbol bridge
@@ -21,6 +23,13 @@ noncomputable section
 
 namespace GlobalClassFieldTheory
 namespace Reciprocity
+
+private theorem productFormulaIdeleClassGroupIsMulCommutative
+    {F : Type} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] productFormulaIdeleClassGroupIsMulCommutative
 
 variable
     {K L : Type}
@@ -127,6 +136,8 @@ theorem finitePlaceGlobalSymbol_finiteLocalFamily
       chi
         (globalNormClassFromIdele K L
           (IdeleGroup.ideleOfFiniteLocalFamily S a)) := by
+  let : CommGroup (IdeleClassGroup K) :=
+    QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup K)
   rw [globalNormClass_finiteLocalFamily]
   rw [map_prod]
   rfl

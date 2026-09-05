@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldPowerBasis
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldPowerBasis
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: coefficient descent in the completed fixed field
@@ -118,8 +120,7 @@ theorem equalCharacteristicCompletedFrobenius_fixed_mem_adjoin_directTheta
         (k := F.residueField) (pb.basis.repr x i)).1 (hcoeff i) with
       ⟨c, hc⟩
     change algebraMap A E (pb.basis.repr x i) ∈ S
-    rw [← hc, ← IsScalarTower.algebraMap_apply
-      F.residueField⸨X⸩ A E]
+    rw [← hc]
     exact S.algebraMap_mem c
   · have hgen : pb.gen ∈ S := by
       rw [show pb.gen = y by

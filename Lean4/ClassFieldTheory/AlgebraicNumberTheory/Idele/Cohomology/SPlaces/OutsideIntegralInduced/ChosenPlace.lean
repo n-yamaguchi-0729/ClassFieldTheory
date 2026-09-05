@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlock
-import AlgebraicNumberTheory.Idele.Cohomology.Decomposition
-import CyclicCohomology.Herbrand.HerbrandLowDegree.EquivariantEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Decomposition
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.EquivariantEquiv
+
+set_option autoImplicit false
 
 /-!
 # Integral induced blocks at the chosen finite place
@@ -85,6 +87,12 @@ private theorem subsingleton_of_equiv_of_equiv
     eAB.injective
       (eBC.injective (@Subsingleton.elim C hC _ _))⟩
 
+/-- Forget multiplication using the dictionaries already present in the equivalence. -/
+private def underlyingEquivOfMulEquiv
+    {A B : Type*} {mulA : Mul A} {mulB : Mul B}
+    (e : @MulEquiv A B mulA mulB) : A ≃ B :=
+  e.toEquiv
+
 private theorem apply_of_zpowers_generator_map
     {G H : Type*} [Group G] [Group H]
     {P : H → Prop}
@@ -107,7 +115,7 @@ private theorem herbrandH0_subsingleton_of_action_and_group_equiv
         HerbrandH0 G A)
     (hH : Subsingleton (HerbrandH0 H A)) :
     Subsingleton X := by
-  letI : MulDistribMulAction G A :=
+  let : MulDistribMulAction G A :=
     MulDistribMulAction.compHom A eGroup.toMonoidHom
   let eChange :=
     herbrandH0CompMulEquiv (A := A) eGroup
@@ -127,7 +135,7 @@ private theorem herbrandHMinusOne_subsingleton_of_action_and_group_equiv
     (hH : Subsingleton
       (HerbrandHMinusOne H A (eGroup g))) :
     Subsingleton X := by
-  letI : MulDistribMulAction G A :=
+  let : MulDistribMulAction G A :=
     MulDistribMulAction.compHom A eGroup.toMonoidHom
   let eChange :=
     herbrandHMinusOneCompMulEquiv
@@ -165,14 +173,14 @@ private theorem
   let eLocal :=
     chosenFinitePlaceDecompositionGroupEquivProvider
       (K := K) (L := L) w₀
-  letI : MulDistribMulAction
+  let : MulDistribMulAction
       (Gal(E / vK.Completion)) 𝒪[E]ˣ :=
     chosenFinitePlaceLocalizedIntegerUnitsGaloisActionProvider
       (K := K) (L := L) w₀
-  letI : Fintype H :=
+  let : Fintype H :=
     chosenFinitePlaceDecompositionGroupFintypeProvider
       (K := K) (L := L) w₀
-  letI : MulDistribMulAction H 𝒪[E]ˣ :=
+  let : MulDistribMulAction H 𝒪[E]ˣ :=
     chosenFinitePlaceDecompositionGroupIntegerUnitsAction
       (K := K) (L := L) w₀
   let δ := subgroupGeneratorOfGenerator H σ hσ
@@ -208,11 +216,16 @@ private theorem
         (K := K) (L := L) w₀)
       (MulDistribMulAction.compHom 𝒪[E]ˣ eLocal.toMonoidHom)
       (MulEquiv.refl 𝒪[E]ˣ) hsmul δ
+  let eGroupH0 := herbrandH0CompMulEquiv (A := 𝒪[E]ˣ) eLocal
+  let eGroupHMinusOne :=
+    herbrandHMinusOneCompMulEquiv (A := 𝒪[E]ˣ) eLocal δ
   exact
-    ⟨herbrandH0_subsingleton_of_action_and_group_equiv
-        eLocal eActionH0 hlocal.1,
-      herbrandHMinusOne_subsingleton_of_action_and_group_equiv
-        eLocal δ eActionHMinusOne hlocal.2⟩
+    ⟨subsingleton_of_equiv_of_equiv
+        (underlyingEquivOfMulEquiv eActionH0)
+        (underlyingEquivOfMulEquiv eGroupH0) hlocal.1,
+      subsingleton_of_equiv_of_equiv
+        (underlyingEquivOfMulEquiv eActionHMinusOne)
+        (underlyingEquivOfMulEquiv eGroupHMinusOne) hlocal.2⟩
 
 omit [NumberField L] in
 /-- At an unramified chosen finite extension, the actual integral tensor
@@ -231,17 +244,17 @@ theorem
       (HerbrandH0 (L ≃ₐ[K] L)
         (relativeLocalTensorDecompositionIntegralUnitSubgroup
           (K := K) (L := L) w₀)) := by
-  letI :=
+  let :=
     relativeLocalTensorDecompositionIntegralUnitSubgroupAction
       (K := K) (L := L) w₀
   let E := ChosenFinitePlaceLocalizedCompletion
     (K := K) (L := L) w₀
   let H := absoluteValueDecompositionGroup K
     (chosenFinitePlaceExtension (L := L) w₀).1
-  letI : Fintype H :=
+  let : Fintype H :=
     chosenFinitePlaceDecompositionGroupFintypeProvider
       (K := K) (L := L) w₀
-  letI : MulDistribMulAction H 𝒪[E]ˣ :=
+  let : MulDistribMulAction H 𝒪[E]ˣ :=
     chosenFinitePlaceDecompositionGroupIntegerUnitsAction
       (K := K) (L := L) w₀
   have hdecomp :=
@@ -275,17 +288,17 @@ theorem
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (relativeLocalTensorDecompositionIntegralUnitSubgroup
           (K := K) (L := L) w₀) σ) := by
-  letI :=
+  let :=
     relativeLocalTensorDecompositionIntegralUnitSubgroupAction
       (K := K) (L := L) w₀
   let E := ChosenFinitePlaceLocalizedCompletion
     (K := K) (L := L) w₀
   let H := absoluteValueDecompositionGroup K
     (chosenFinitePlaceExtension (L := L) w₀).1
-  letI : Fintype H :=
+  let : Fintype H :=
     chosenFinitePlaceDecompositionGroupFintypeProvider
       (K := K) (L := L) w₀
-  letI : MulDistribMulAction H 𝒪[E]ˣ :=
+  let : MulDistribMulAction H 𝒪[E]ˣ :=
     chosenFinitePlaceDecompositionGroupIntegerUnitsAction
       (K := K) (L := L) w₀
   let δ := subgroupGeneratorOfGenerator H σ hσ

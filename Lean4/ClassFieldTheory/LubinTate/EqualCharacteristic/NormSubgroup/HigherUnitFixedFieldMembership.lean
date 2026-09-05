@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitLevelMapFixed
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitLevelMapFixed
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: the standard level lies in the higher-unit fixed field
@@ -20,17 +22,13 @@ noncomputable local instance equalCharacteristicHigherUnitMembershipBaseAlgebra
     (F : LocalField K) :
     Algebra F.residueField⸨X⸩
       (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  laurentSeriesCoefficientAlgebra
+  equalCharacteristicCompletedFrobeniusFixedBaseAlgebra F
 
 noncomputable local instance equalCharacteristicHigherUnitMembershipLevelAlgebra
     (F : LocalField K) (n : ℕ) :
     Algebra F.residueField⸨X⸩
       (equalCharacteristicCompletedLevelField F n) :=
-  RingHom.toAlgebra
-    ((algebraMap (equalCharacteristicCompletedUnramifiedField F.residueField)
-        (equalCharacteristicCompletedLevelField F n)).comp
-      (algebraMap F.residueField⸨X⸩
-        (equalCharacteristicCompletedUnramifiedField F.residueField)))
+  equalCharacteristicCompletedFrobeniusFixedLevelAlgebra F n
 
 local instance equalCharacteristicHigherUnitMembershipScalarTower
     (F : LocalField K) (n : ℕ) :

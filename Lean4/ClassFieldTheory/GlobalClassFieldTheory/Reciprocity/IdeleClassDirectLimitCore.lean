@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import CyclicCohomology.NormKernelVanishing
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import GaloisCohomology.Cyclic.NormKernelVanishing
 import Mathlib.Algebra.Colimit.DirectLimit
 import Mathlib.FieldTheory.Galois.Profinite
+
+set_option autoImplicit false
 
 /-!
 # The rational absolute idele-class direct limit

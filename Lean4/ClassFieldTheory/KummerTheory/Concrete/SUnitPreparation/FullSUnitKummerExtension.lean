@@ -1,5 +1,7 @@
-import KummerTheory.Concrete.SUnitPreparation.SUnitPowerQuotient
-import KummerTheory.Concrete.SUnitPreparation.PrimePowerKernelCoordinates
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.SUnitPowerQuotient
+import GaloisCohomology.Kummer.Concrete.SUnitPreparation.PrimePowerKernelCoordinates
+
+set_option autoImplicit false
 
 /-!
 # The full S-unit Kummer extension
@@ -139,15 +141,15 @@ theorem finite_fullSUnitKummerExtension_galois
     Finite
       Gal(fullSUnitKummerExtension
         (K := K) (Omega := Omega) n S/K) := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let _ : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   let E :=
     fullSUnitKummerExtension (K := K) (Omega := Omega) n S
   let Q :=
     KummerTheory.RestrictedRadicalQuotient
       n (fullSUnitKummerSubgroup (K := K) n S)
-  letI : Finite Q :=
+  let _ : Finite Q :=
     finite_fullSUnitRadicalQuotient (K := K) n S
-  letI : Finite (Q →* KummerTheory.nthRootsSubgroup E (n : ℕ)) :=
+  let _ : Finite (Q →* KummerTheory.nthRootsSubgroup E (n : ℕ)) :=
     Finite.of_injective
       (fun chi : Q →* KummerTheory.nthRootsSubgroup E (n : ℕ) =>
         (chi : Q → KummerTheory.nthRootsSubgroup E (n : ℕ)))
@@ -173,10 +175,10 @@ theorem fullSUnitKummerExtension_finiteDimensional
         (K := K) (Omega := Omega) n S) := by
   let E :=
     fullSUnitKummerExtension (K := K) (Omega := Omega) n S
-  letI : IsGalois K E :=
+  let _ : IsGalois K E :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S
-  letI : Finite Gal(E/K) :=
+  let _ : Finite Gal(E/K) :=
     finite_fullSUnitKummerExtension_galois
       (K := K) (Omega := Omega) n hn hmu S
   exact IsGalois.finiteDimensional_of_finite K E
@@ -202,10 +204,10 @@ theorem exists_finset_fullSUnitKummerRootSet_adjoin_eq
   let E :=
     fullSUnitKummerExtension
       (K := K) (Omega := Omega) n S
-  letI : IsGalois K E :=
+  let _ : IsGalois K E :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S
-  letI : FiniteDimensional K E :=
+  let _ : FiniteDimensional K E :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hn hmu S
   obtain ⟨theta, htheta⟩ :=
@@ -271,10 +273,10 @@ theorem exists_finset_fullSUnitKummerExtensionRoots_adjoin_eq_top
   let E :=
     fullSUnitKummerExtension
       (K := K) (Omega := Omega) n S
-  letI : IsGalois K E :=
+  let _ : IsGalois K E :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S
-  letI : FiniteDimensional K E :=
+  let _ : FiniteDimensional K E :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hn hmu S
   obtain ⟨theta, htheta⟩ :=
@@ -362,7 +364,7 @@ theorem card_fullSUnitKummerExtension_galois
         Gal(fullSUnitKummerExtension
           (K := K) (Omega := Omega) n S/K) =
       (n : ℕ) ^ totalPlaceCard (K := K) S := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let _ : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   let E :=
     fullSUnitKummerExtension (K := K) (Omega := Omega) n S
   let Q :=
@@ -527,10 +529,10 @@ theorem fullSUnitKummerExtension_galois_moduleFree
   let G :=
     Gal(fullSUnitKummerExtension
       (K := K) (Omega := Omega) n S/K)
-  letI : IsMulCommutative G :=
+  let _ : IsMulCommutative G :=
     KummerTheory.kummerRadicalExtension_isMulCommutative
       n hmu (fullSUnitKummerSubgroup (K := K) n S).1
-  letI : Module (ZMod (n : ℕ)) (Additive G) :=
+  let _ : Module (ZMod (n : ℕ)) (Additive G) :=
     additiveZModModuleOfPowEqOne (n : ℕ)
       (fullSUnitKummerExtension_galois_pow_eq_one
         (K := K) (Omega := Omega) n hmu S)

@@ -1,10 +1,12 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Frobenius.LaurentSeriesFrobenius
-import LubinTate.EqualCharacteristic.Frobenius.ContractingEquation
-import LubinTate.EqualCharacteristic.FormalModule.LubinTateAction
-import LubinTate.EqualCharacteristic.Frobenius.CoefficientFrobenius
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.LaurentSeriesFrobenius
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.ContractingEquation
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CoefficientFrobenius
 import Mathlib.FieldTheory.IsAlgClosed.Basic
 import Mathlib.RingTheory.PowerSeries.Basic
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the equal-characteristic theta construction: equal-characteristic theta coefficients

@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Completion.ChosenLocalization
-import LocalClassFieldTheory.Finite.Unramified.Norm
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
+
+set_option autoImplicit false
 
 /-!
 # Local norms at an unramified chosen finite place
@@ -38,7 +40,7 @@ theorem adicCompletionIntegerUnits_le_chosenFinitePlaceLocalNormSubgroup
   let E :=
     ChosenFinitePlaceLocalizedCompletion
       (K := K) (L := L) v₀
-  letI :
+  let :
       IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
         vK.Completion E := by
     simpa [ChosenFinitePlaceIsUnramified] using hunram

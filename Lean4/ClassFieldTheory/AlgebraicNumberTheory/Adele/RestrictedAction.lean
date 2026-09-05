@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Adele.RestrictedProduct
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedProduct
+
+set_option autoImplicit false
 
 /-!
 # Galois action on the restricted local product
@@ -194,7 +196,7 @@ theorem RelativeIdeleGroup.infiniteComponent_smul
         (K := K) (L := L) w (σ • z) =
       σ • RelativeIdeleGroup.infiniteComponent
         (K := K) (L := L) w z := by
-  letI := scalarTensorUnitsAction
+  let _ := scalarTensorUnitsAction
     (K := K) (L := L) (A := w.Completion)
   apply Units.ext
   exact relativeAdeleInfiniteComponent_conjugation
@@ -214,7 +216,7 @@ theorem RelativeIdeleGroup.finiteComponent_smul
         (K := K) (L := L) w (σ • z) =
       σ • RelativeIdeleGroup.finiteComponent
         (K := K) (L := L) w z := by
-  letI := scalarTensorUnitsAction
+  let _ := scalarTensorUnitsAction
     (K := K) (L := L)
     (A := w.adicCompletion K)
   apply Units.ext
@@ -277,10 +279,10 @@ theorem relativeIdeleMulEquivLocalData_smul
         (K := K) (L := L) (σ • z) =
       σ • relativeIdeleMulEquivLocalData
         (K := K) (L := L) z := by
-  letI :=
+  let _ :=
     relativeIdeleRestrictedMulDistribMulAction
       (K := K) (L := L)
-  letI :=
+  let _ :=
     relativeLocalIdeleDataMulDistribMulAction
       (K := K) (L := L)
   change
@@ -313,13 +315,13 @@ theorem RelativeLocalIdeleData.infinite_smul
       (K := K) (L := L) (A := w.Completion)
     (σ • a).infinite w =
       σ • a.infinite w := by
-  letI :=
+  let _ :=
     relativeIdeleRestrictedMulDistribMulAction
       (K := K) (L := L)
-  letI :=
+  let _ :=
     relativeLocalIdeleDataMulDistribMulAction
       (K := K) (L := L)
-  letI := scalarTensorUnitsAction
+  let _ := scalarTensorUnitsAction
     (K := K) (L := L) (A := w.Completion)
   change
     RelativeIdeleGroup.infiniteComponent
@@ -348,13 +350,13 @@ theorem RelativeLocalIdeleData.finite_smul
       (A := w.adicCompletion K)
     (σ • a).finite w =
       σ • a.finite w := by
-  letI :=
+  let _ :=
     relativeIdeleRestrictedMulDistribMulAction
       (K := K) (L := L)
-  letI :=
+  let _ :=
     relativeLocalIdeleDataMulDistribMulAction
       (K := K) (L := L)
-  letI := scalarTensorUnitsAction
+  let _ := scalarTensorUnitsAction
     (K := K) (L := L)
     (A := w.adicCompletion K)
   change

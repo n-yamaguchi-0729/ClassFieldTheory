@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.AbelianNormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianNormConductor
+
+set_option autoImplicit false
 
 /-!
 # Ramification support of abelian narrow finite norm conductors

@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleValue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleValue
+
+set_option autoImplicit false
 
 /-!
 # Principal ideles and the rational cyclotomic value
@@ -26,10 +28,37 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
+-- Keep the prime-power presentation visible to Lean 4.33's instance matcher.
+-- Both structures are the existing canonical cyclotomic-level instances.
+local instance rationalCyclotomicPrimePowerNumberField
+    (p : Nat.Primes) (k : ℕ) :
+    NumberField
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  KummerTheory.rationalCyclotomicLevel_numberField
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicPrimePowerIsGalois
+    (p : Nat.Primes) (k : ℕ) :
+    IsGalois ℚ
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  KummerTheory.rationalCyclotomicLevel_isGalois
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicPrimePowerIsAbelianGalois
+    (p : Nat.Primes) (k : ℕ) :
+  IsAbelianGalois ℚ
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  IsAbelianGalois.of_algHom
+    (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩).val
+
 local instance (p : Nat.Primes) : Fact p.1.Prime :=
   ⟨p.2⟩
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicPrincipalLevelIsAbelianGalois
     (m : ℕ+) :
     IsAbelianGalois ℚ
@@ -159,7 +188,7 @@ theorem finiteSubfieldOfRationalCyclotomicZHatField_mapsIntoLevel
     IntermediateField.equivMap
       (E : IntermediateField ℚ
         rationalCyclotomicZHatField) i
-  letI : FiniteDimensional ℚ F :=
+  let _ : FiniteDimensional ℚ F :=
     e.toLinearEquiv.finiteDimensional
   obtain ⟨n, hn⟩ :=
     finiteSubfieldOfRationalCyclotomicField_le_level F
@@ -190,7 +219,7 @@ theorem rationalCyclotomicZHatGlobalArtin_eq_fullRestriction
   apply Subtype.ext
   funext Eop
   let E := Eop.unop
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   let F :
       IntermediateField ℚ
@@ -201,9 +230,9 @@ theorem rationalCyclotomicZHatGlobalArtin_eq_fullRestriction
     IntermediateField.equivMap
       (E : IntermediateField ℚ
         rationalCyclotomicZHatField) i
-  letI : FiniteDimensional ℚ F :=
+  let _ : FiniteDimensional ℚ F :=
     e.toLinearEquiv.finiteDimensional
-  letI : NumberField F :=
+  let _ : NumberField F :=
     NumberField.of_module_finite ℚ F
   obtain ⟨n, hF⟩ :=
     finiteSubfieldOfRationalCyclotomicField_le_level F
@@ -214,33 +243,33 @@ theorem rationalCyclotomicZHatGlobalArtin_eq_fullRestriction
         KummerTheory.rationalCyclotomicLevel n
       finiteDimensional := inferInstance
       isGalois := inferInstance }
-  letI : NumberField N :=
+  let _ : NumberField N :=
     NumberField.of_module_finite ℚ N
-  letI : IsAbelianGalois ℚ N :=
+  let _ : IsAbelianGalois ℚ N :=
     IsAbelianGalois.of_algHom N.toIntermediateField.val
-  letI : IsAbelianGalois ℚ E :=
+  let : IsAbelianGalois ℚ E :=
     IsAbelianGalois.of_algHom
       (E : IntermediateField ℚ
         rationalCyclotomicZHatField).val
-  letI : IsAbelianGalois ℚ F :=
+  let _ : IsAbelianGalois ℚ F :=
     IsAbelianGalois.of_algHom e.symm.toAlgHom
   let algEF : Algebra E F :=
     e.toRingHom.toAlgebra
-  letI : SMul E F :=
+  let _ : SMul E F :=
     @Algebra.toSMul E F _ _ algEF
-  letI : Algebra E F := algEF
-  letI : Module E F := Algebra.toModule
-  letI : IsScalarTower ℚ E F :=
+  let _ : Algebra E F := algEF
+  let _ : Module E F := Algebra.toModule
+  let _ : IsScalarTower ℚ E F :=
     IsScalarTower.of_algebraMap_eq'
       e.toAlgHom.comp_algebraMap.symm
-  letI : FiniteDimensional E F :=
+  let _ : FiniteDimensional E F :=
     FiniteDimensional.right ℚ E F
   let algFN : Algebra F N :=
     (IntermediateField.inclusion hF).toRingHom.toAlgebra
-  letI : SMul F N :=
+  let _ : SMul F N :=
     @Algebra.toSMul F N _ _ algFN
-  letI : Algebra F N := algFN
-  letI : IsScalarTower ℚ F N :=
+  let _ : Algebra F N := algFN
+  let _ : IsScalarTower ℚ F N :=
     IsScalarTower.of_algebraMap_eq'
       (IntermediateField.inclusion hF).comp_algebraMap.symm
   have hfullLevel :
@@ -263,7 +292,7 @@ theorem rationalCyclotomicZHatGlobalArtin_eq_fullRestriction
         KummerTheory.rationalCyclotomicField :=
       IntermediateField.lift_le T
     let φ := IntermediateField.liftAlgEquiv T
-    letI : Normal ℚ T := by
+    let _ : Normal ℚ T := by
       dsimp only [T]
       exact
         KummerTheory.rationalCyclotomicTorsionFixedField_normal
@@ -589,13 +618,13 @@ theorem
     rationalCyclotomicZHatGlobalArtin
         (rationalIdeleArchimedeanPart a) =
       1 := by
-  letI
+  let _
       (E :
         FiniteGaloisIntermediateField
           ℚ rationalCyclotomicZHatField) :
       NumberField E :=
     NumberField.of_module_finite ℚ E
-  letI
+  let _
       (E :
         FiniteGaloisIntermediateField
           ℚ rationalCyclotomicZHatField) :
@@ -696,33 +725,25 @@ theorem rationalCyclotomicGlobalArtin_character_toZModPow
               ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
           a) := by
   rw [KummerTheory.rationalCyclotomicCharacterPrimeProduct_toZModPow]
+  let n : ℕ+ := ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+  let F := KummerTheory.rationalCyclotomicLevel n
   let E : FiniteGaloisIntermediateField
       ℚ KummerTheory.rationalCyclotomicField :=
-    { toIntermediateField :=
-        KummerTheory.rationalCyclotomicLevel
-          ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+    { toIntermediateField := F
       finiteDimensional := inferInstance
       isGalois := inferInstance }
-  letI : NumberField E :=
-    NumberField.of_module_finite ℚ E
-  letI : IsAbelianGalois ℚ E :=
+  let hE : NumberField E := NumberField.of_module_finite ℚ E
+  let : NumberField E := hE
+  let : IsAbelianGalois ℚ E :=
     IsAbelianGalois.of_algHom E.toIntermediateField.val
   have hrestriction :
       AlgEquiv.restrictNormalHom E
           (infiniteGlobalArtinMonoidHom
             ℚ KummerTheory.rationalCyclotomicField a) =
         globalArtinMonoidHom (K := ℚ) (L := E) a :=
-    restrictNormalHom_infiniteGlobalArtinMonoidHom
-      ℚ KummerTheory.rationalCyclotomicField a E
-  exact congrArg
-    (IsCyclotomicExtension.Rat.galEquivZMod
-      (p.1 ^ k)
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
-      (hK :=
-        KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
-          ⟨p.1 ^ k, pow_pos p.2.pos k⟩))
-    hrestriction
+    restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField
+      ℚ KummerTheory.rationalCyclotomicField a E hE
+  congr 1
 
 /-- After removing the archimedean component, the `p ^ k` coordinate
 of the full rational cyclotomic Artin character is the genuine finite
@@ -830,13 +851,17 @@ theorem
         chosenFinitePlaceArtinMonoidHom
           (K := ℚ) (L := E) v
           (IdeleGroup.finiteComponent v a) := by
-  letI : NumberField E :=
+  let hE : NumberField E :=
     NumberField.of_module_finite ℚ E
-  letI : IsAbelianGalois ℚ E :=
+  let hAbelian : IsAbelianGalois ℚ E :=
     IsAbelianGalois.of_algHom E.toIntermediateField.val
-  rw [
-    restrictNormalHom_rationalCyclotomicZHatGlobalArtin,
-    globalArtinMonoidHom_rationalIdeleFinitePart]
+  let _ : NumberField E := hE
+  let _ : IsAbelianGalois ℚ E := hAbelian
+  exact
+    (restrictNormalHom_rationalCyclotomicZHatGlobalArtin_of_structures
+      (rationalIdeleFinitePart a) E hE hAbelian).trans
+      (globalArtinMonoidHom_rationalIdeleFinitePart
+        (L := E) a)
 
 /-- The unnormalized value on a principal idele over a number field
 is the rational cyclotomic value of the finite part of its field-norm

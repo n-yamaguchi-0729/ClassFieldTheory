@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.CyclicRayClassMaximality
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicRayClassMaximality
+
+set_option autoImplicit false
 
 /-!
 # Uniqueness of maximal cyclic norm subgroups at a narrow finite conductor
@@ -18,6 +20,13 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
+
+private theorem cyclicConductorUniquenessIdeleClassIsMulCommutative
+    {F : Type} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] cyclicConductorUniquenessIdeleClassIsMulCommutative
 
 variable
     {K L M : Type}

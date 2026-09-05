@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.PrincipalCore
-import CyclicCohomology.Herbrand.HerbrandLowDegree.EquivariantEquiv
-import AlgebraicNumberTheory.Idele.Cohomology.Herbrand
-import LocalClassFieldTheory.ClassFormation.Valuation
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.EquivariantEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Valuation
+
+set_option autoImplicit false
 
 /-!
 # Principal ideles and their Galois module structure
@@ -60,11 +62,11 @@ theorem fieldUnitsEquivPrincipalIdeles_smul
       principalIdeleMulDistribMulAction K L
     fieldUnitsEquivPrincipalIdeles K L (σ • x) =
       σ • fieldUnitsEquivPrincipalIdeles K L x := by
-  letI :=
+  let _ :=
     galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let _ :=
     relativeIdeleMulDistribMulAction K L
-  letI :=
+  let _ :=
     principalIdeleMulDistribMulAction K L
   apply Subtype.ext
   change
@@ -138,16 +140,16 @@ theorem principalIdelesHerbrandQuotientDefined
     HerbrandQuotientDefined
       (L ≃ₐ[K] L)
       (RelativeIdeleGroup.principalSubgroup K L) σ := by
-  letI :=
+  let _ :=
     galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let _ :=
     relativeIdeleMulDistribMulAction K L
-  letI :=
+  let _ :=
     principalIdeleMulDistribMulAction K L
-  letI : Finite
+  let _ : Finite
       (HerbrandH0 (L ≃ₐ[K] L) Lˣ) :=
     h.1
-  letI : Finite
+  let _ : Finite
       (HerbrandHMinusOne
         (L ≃ₐ[K] L) Lˣ σ) :=
     h.2
@@ -187,16 +189,16 @@ theorem fieldUnits_herbrandQuotient_eq_principalIdeles
         _ _ _
         (principalIdeleMulDistribMulAction K L)
         σ hP.1 hP.2 := by
-  letI :=
+  let _ :=
     galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let _ :=
     relativeIdeleMulDistribMulAction K L
-  letI :=
+  let _ :=
     principalIdeleMulDistribMulAction K L
-  letI : Finite
+  let _ : Finite
       (HerbrandH0 (L ≃ₐ[K] L) Lˣ) :=
     h.1
-  letI : Finite
+  let _ : Finite
       (HerbrandHMinusOne
         (L ≃ₐ[K] L) Lˣ σ) :=
     h.2

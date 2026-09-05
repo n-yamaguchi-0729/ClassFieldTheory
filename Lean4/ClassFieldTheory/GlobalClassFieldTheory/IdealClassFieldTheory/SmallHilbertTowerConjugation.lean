@@ -1,12 +1,14 @@
-import AlgebraicNumberTheory.NumberField.EverywhereUnramifiedTower
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
-import GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldCorrespondence
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldNaturality
-import GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTower
-import GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.NumberField.EverywhereUnramifiedTower
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldCorrespondence
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldNaturality
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTower
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
+
+set_option autoImplicit false
 
 /-!
 # Conjugation of the small Hilbert class-field tower
@@ -216,7 +218,7 @@ theorem finiteNormSubgroup_map_conjugateFixed
         (conjugateClosedSubgroup K s)
         (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s) := by
-  letI : Finite
+  let : Finite
       ((conjugateClosedSubgroup K s).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           (conjugateClosedSubgroup K s)
@@ -399,7 +401,7 @@ theorem conjugateFiniteAbelianSubextensionOverBase_normSubgroup
     (conjugateFiniteAbelianSubextensionOverBase L M s).normSubgroup A =
       (M.normSubgroup A).map
         (stableBaseConjugationHom A L s) := by
-  letI : Finite
+  let : Finite
       (L.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           L.field M.field M.below) :=
@@ -618,7 +620,7 @@ theorem
     abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) L.below
   intro hunramifiedInfinite hunramifiedFinite
-  letI : IsUnramifiedAtInfinitePlaces F E :=
+  let : IsUnramifiedAtInfinitePlaces F E :=
     hunramifiedInfinite
   have hordinary :
       smallHilbertClassFieldNormSubgroup (K := F) ≤
@@ -693,6 +695,39 @@ noncomputable def smallHilbertBaseConjugationAutomorphism
         K.field L.field L.below)
       s⁻¹)).restrictScalars ℚ
 
+/-- The fixed-field automorphism used for stable conjugation is induced by
+the inverse ambient automorphism on underlying separable-closure elements. -/
+private theorem smallHilbertBaseConjugationAutomorphism_apply_val
+    (K : FiniteAbstractField
+      (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
+    (L : FiniteAbelianSubextension K.field)
+    (s : K.field.toSubgroup)
+    (x : abstractFixedField ℚ (SeparableClosure ℚ) L.field) :
+    ((smallHilbertBaseConjugationAutomorphism K L s x :
+        abstractFixedField ℚ (SeparableClosure ℚ) L.field) :
+      SeparableClosure ℚ) =
+      s.1⁻¹ (x : SeparableClosure ℚ) := by
+  let :
+      (CyclicCohomology.extensionSubgroup
+        K.field L.field L.below).Normal :=
+    L.normal
+  change
+    (((abstractExtensionQuotientEquivGaloisGroup
+        ℚ (SeparableClosure ℚ)
+        K.field L.field L.below L.normal
+        (QuotientGroup.mk'
+          (CyclicCohomology.extensionSubgroup
+            K.field L.field L.below)
+          s⁻¹)) x :
+      abstractRelativeFixedField
+        ℚ (SeparableClosure ℚ) L.below) :
+      SeparableClosure ℚ) =
+        s.1⁻¹ (x : SeparableClosure ℚ)
+  exact
+    (abstractExtensionQuotientEquivGaloisGroup_mk_apply_val
+      ℚ (SeparableClosure ℚ)
+      K.field L.field L.below L.normal s⁻¹ x).symm
+
 /-- On the actual fixed part of the rational idele-class formation,
 conjugation by an element of the lower base is ordinary idele-class
 transport along the induced automorphism of the upper fixed field. -/
@@ -730,7 +765,7 @@ theorem rationalSmallHilbertFixedPart_conjugation
   dsimp only
   let E :=
     abstractFixedField ℚ (SeparableClosure ℚ) L.field
-  letI hLfinite : Finite
+  let hLfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
@@ -738,59 +773,29 @@ theorem rationalSmallHilbertFixedPart_conjugation
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
           L.field (le_baseField L.field)) :=
     (L.toFiniteGaloisExtension.toFiniteAbstractFieldExtension).field.finite
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) L.field hLfinite
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   intro c
-  letI :
-      MulDistribMulAction (E ≃ₐ[ℚ] E)
-        (RelativeIdeleGroup.ClassGroup ℚ E) :=
-    RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction ℚ E
   let τ : E ≃ₐ[ℚ] E :=
     smallHilbertBaseConjugationAutomorphism K L s
-  let d : RelativeIdeleGroup.ClassGroup ℚ E :=
-    (_root_.relativeIdeleClassBaseChangeMulEquiv
-      (K := ℚ) (L := E)).symm (Additive.toMul c)
-  have hd :
-      _root_.relativeIdeleClassBaseChangeMulEquiv
-          (K := ℚ) (L := E) d =
-        Additive.toMul c :=
-    (_root_.relativeIdeleClassBaseChangeMulEquiv
-      (K := ℚ) (L := E)).apply_symm_apply
-        (Additive.toMul c)
   have hστ : ∀ x : E,
       ((τ x : E) : SeparableClosure ℚ) =
         s.1⁻¹ (x : SeparableClosure ℚ) := by
     intro x
-    letI :
-        (CyclicCohomology.extensionSubgroup
-          K.field L.field L.below).Normal :=
-      L.normal
-    change
-      (((abstractExtensionQuotientEquivGaloisGroup
-          ℚ (SeparableClosure ℚ)
-          K.field L.field L.below L.normal
-          (QuotientGroup.mk'
-            (CyclicCohomology.extensionSubgroup
-              K.field L.field L.below)
-            s⁻¹)) x :
-        abstractRelativeFixedField
-          ℚ (SeparableClosure ℚ) L.below) :
-        SeparableClosure ℚ) =
-          s.1⁻¹ (x : SeparableClosure ℚ)
-    exact
-      (abstractExtensionQuotientEquivGaloisGroup_mk_apply_val
-        ℚ (SeparableClosure ℚ)
-        K.field L.field L.below L.normal s⁻¹ x).symm
-  have haction :=
-    rationalIdeleClassEquivFixed_action_coe
-      E s.1⁻¹ τ hστ d
-  rw [
-    _root_.relativeIdeleClassBaseChangeMulEquiv_smul_congr
-      τ d,
-    hd] at haction
+    exact smallHilbertBaseConjugationAutomorphism_apply_val K L s x
+  let cτ : Additive (IdeleClassGroup E) :=
+    Additive.ofMul
+      (ideleClassCongr τ (Additive.toMul c))
+  have haction :
+      rationalIdeleClassRepresentation.ρ s.1⁻¹
+          (rationalIdeleClassEquivFixed E c).1 =
+        (rationalIdeleClassEquivFixed E cτ).1 := by
+    simpa only [cτ, ofMul_toMul] using
+      (rationalIdeleClassEquivFixed_ambientAlgEquiv
+        s.1⁻¹ τ hστ (Additive.toMul c))
   have hstable
       (a : ambientFixedAddSubgroup
         rationalIdeleClassRepresentation L.field) :
@@ -802,12 +807,20 @@ theorem rationalSmallHilbertFixedPart_conjugation
       rationalIdeleClassRepresentation.ρ s.1⁻¹ a.1 := by
     exact stableBaseConjugationHom_coe
       rationalIdeleClassRepresentation L s a
+  have hcoe (z : Additive (IdeleClassGroup E)) :
+      (rationalAbstractFixedFieldIdeleClassEquivFixed L.field
+          (hfinite := hLfinite) z).1 =
+        (rationalIdeleClassEquivFixed E z).1 :=
+    rationalAbstractFixedFieldIdeleClassEquivFixed_coe
+      L.field (hfinite := hLfinite) z
   apply Subtype.ext
-  simpa only [
-    hstable,
-    ofMul_toMul,
-    rationalAbstractFixedFieldIdeleClassEquivFixed_coe,
-    closedFixingSubgroup_abstractFixedField_eq] using haction
+  exact
+    (hstable
+      (rationalAbstractFixedFieldIdeleClassEquivFixed
+        L.field (hfinite := hLfinite) c)).trans
+      ((congrArg (rationalIdeleClassRepresentation.ρ s.1⁻¹)
+        (hcoe c)).trans
+        (haction.trans (hcoe cτ).symm))
 
 private theorem
     smallHilbertClassFieldNormSubgroup_toAddSubgroup_map_ideleClassCongr
@@ -857,7 +870,7 @@ private theorem rationalSmallHilbertFixedPart_conjugation_comp
   dsimp only
   let E :=
     abstractFixedField ℚ (SeparableClosure ℚ) L.field
-  letI hLfinite : Finite
+  let hLfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
@@ -865,10 +878,10 @@ private theorem rationalSmallHilbertFixedPart_conjugation_comp
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
           L.field (le_baseField L.field)) :=
     (L.toFiniteGaloisExtension.toFiniteAbstractFieldExtension).field.finite
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) L.field hLfinite
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   apply AddMonoidHom.ext
   intro c
@@ -917,7 +930,7 @@ private theorem
   dsimp only
   let E :=
     abstractFixedField ℚ (SeparableClosure ℚ) L.field
-  letI hLfinite : Finite
+  let hLfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
@@ -925,10 +938,10 @@ private theorem
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
           L.field (le_baseField L.field)) :=
     (L.toFiniteGaloisExtension.toFiniteAbstractFieldExtension).field.finite
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) L.field hLfinite
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   exact
     addSubgroup_map_eq_of_comp_eq_of_map_eq
@@ -1132,7 +1145,7 @@ theorem
   let E :=
     abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) A.below
-  letI hKfinite : Finite
+  let hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
@@ -1140,40 +1153,40 @@ theorem
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
           K.field (le_baseField K.field)) :=
     K.finite
-  letI hPfinite : Finite
+  let hPfinite : Finite
       (K.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           K.field P.field P.below) :=
     P.finite
-  letI hAfinite : Finite
+  let hAfinite : Finite
       (K.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           K.field A.field A.below) :=
     A.finite
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) K.field hKfinite
-  letI : FiniteDimensional F T :=
+  let : FiniteDimensional F T :=
     abstractRelativeFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ)
       K.field P.field P.below hKfinite hPfinite
-  letI : IsScalarTower ℚ F T :=
+  let : IsScalarTower ℚ F T :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional ℚ T :=
+  let : FiniteDimensional ℚ T :=
     FiniteDimensional.trans ℚ F T
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ)
       K.field A.field A.below hKfinite hAfinite
-  letI : IsScalarTower ℚ F E :=
+  let : IsScalarTower ℚ F E :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     FiniteDimensional.trans ℚ F E
-  letI : NumberField F :=
+  let : NumberField F :=
     NumberField.of_module_finite ℚ F
-  letI : NumberField T :=
+  let : NumberField T :=
     NumberField.of_module_finite ℚ T
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   intro hunramifiedTop
   have hPA :
@@ -1195,9 +1208,9 @@ theorem
     exact
       (abstractFixedField_le
         ℚ (SeparableClosure ℚ) hPA) hx
-  letI : Algebra E T :=
+  let : Algebra E T :=
     (IntermediateField.inclusion hET).toRingHom.toAlgebra
-  letI : IsScalarTower F E T :=
+  let : IsScalarTower F E T :=
     IsScalarTower.of_algebraMap_eq' rfl
   have hunramifiedAbelian :
       IsEverywhereUnramified F E :=

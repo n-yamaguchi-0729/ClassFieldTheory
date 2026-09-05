@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.IsSepClosed
-import LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
+
+set_option autoImplicit false
 
 /-!
 # Intrinsic absolute Galois data

@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
-import AlgebraicNumberTheory.Idele.SinglePlace
-import AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+
+set_option autoImplicit false
 
 /-!
 # The one-place norm kernel

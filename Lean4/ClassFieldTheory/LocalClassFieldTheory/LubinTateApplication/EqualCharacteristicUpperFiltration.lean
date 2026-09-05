@@ -1,6 +1,10 @@
-import LubinTate.EqualCharacteristic.Ramification
-import LubinTate.EqualCharacteristic.FiniteLevel.UnitQuotientGalois
-import RamificationTheory.LocalField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.UnitQuotientGalois
+import ValuedFieldTheory.Ramification.LocalField.Core
+import ValuedFieldTheory.Ramification.LocalField.BaseChange
+import ValuedFieldTheory.Ramification.LocalField.Unramified
+
+set_option autoImplicit false
 
 /-!
 # Equal-characteristic Lubin--Tate upper filtration

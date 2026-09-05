@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnits
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnits
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedField
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: higher units fix the primitive point
@@ -25,7 +27,7 @@ noncomputable local instance equalCharacteristicHigherUnitFixedBaseAlgebra
     (F : LocalField K) :
     Algebra F.residueField⸨X⸩
       (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  laurentSeriesCoefficientAlgebra
+  equalCharacteristicCompletedFrobeniusFixedBaseAlgebra F
 
 /-- States the theorem `equalCharacteristicCompletedFrobeniusAlgEquiv_primitiveRoot_fixed_of_mem_higherUnit`. -/
 theorem

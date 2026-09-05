@@ -1,11 +1,13 @@
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.TensorNorm
-import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
-import AlgebraicNumberTheory.RayClass.Approximation
-import AlgebraicNumberTheory.RayClass.Topology
-import ValuationTheory.Completion.FiniteLocalization
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.TensorNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Approximation
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import ValuedFieldTheory.Valuation.Completion.FiniteLocalization
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
 import Mathlib.FieldTheory.IsAlgClosed.Basic
+
+set_option autoImplicit false
 
 /-!
 # Archimedean norm approximation
@@ -143,15 +145,15 @@ theorem chosenFinitePlaceLocalNormSubgroup_eq_top_of_splitsCompletely
   let w := chosenFinitePlaceExtension (L := L) v
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E :=
     AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
-  letI : FiniteDimensional vK.Completion E :=
+  let : FiniteDimensional vK.Completion E :=
     AlgebraicNumberTheory.Valuations.localizedCompletionModuleFinite
       vK hvK w
   have hdegree :

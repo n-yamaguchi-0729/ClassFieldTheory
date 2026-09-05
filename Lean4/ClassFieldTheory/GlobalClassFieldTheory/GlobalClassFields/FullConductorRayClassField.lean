@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.ConductorInfinitePart
-import GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorInfinitePart
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+
+set_option autoImplicit false
 
 /-!
 # Full conductors and ray class field containment

@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.FinitePadicAuxiliaryField
-import GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.FinitePadicAuxiliaryField
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
+
+set_option autoImplicit false
 
 /-!
 # Factorization of the global Artin map through local Artin maps
@@ -89,15 +91,15 @@ private theorem exists_finitePlacePrimary_localGlobalRepresentative
           (K := K) (L := L) v z = σ.1 ∧
       globalNormResidueMonoidHom K L
           (IdeleGroup.finitePlaceIdeleClass v z) = σ.1 := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseScalarTower K L
-  letI := numberFieldTowerExtensionSubgroup_normal K L
+  let := numberFieldTowerExtensionSubgroup_normal K L
   obtain
       ⟨τ, hτσ, hτdecomposition, hτdegree,
         _hfinite, _hbase, _hintersection, _hcontainment,
@@ -364,7 +366,7 @@ private opaque exists_finitePlaceNormDescent_localGlobalRepresentative
       {W' : IsDedekindDomain.HeightOneSpectrum (𝓞 M) //
         finitePlaceBelow (K := K) W' = v} :=
     ⟨W, hWbelow⟩
-  letI :
+  let :
       Algebra (v.adicCompletion K) (W.adicCompletion M) :=
     (finitePlaceAdicCompletionMap K M v Wover).toAlgebra
   let z : (v.adicCompletion K)ˣ :=
@@ -514,7 +516,7 @@ private opaque exists_finitePlacePrimary_cyclicFixedFieldRepresentative
           (IdeleGroup.finitePlaceIdeleClass v z) = δ.1 := by
   let σG : Gal(L / K) := δ.1
   let M := automorphismCyclicFixedField σG
-  letI : NumberField M := NumberField.of_module_finite K M
+  let : NumberField M := NumberField.of_module_finite K M
   let W := automorphismCyclicFixedPlace v σG
   let σM : Gal(L / M) := automorphismOverCyclicFixedField σG
   have hσMdecomposition :

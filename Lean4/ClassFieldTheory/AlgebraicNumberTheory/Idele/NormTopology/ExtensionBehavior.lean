@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.NormTopology.FiniteNormArithmetic
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.FiniteNormArithmetic
+
+set_option autoImplicit false
 
 /-!
 # Scalar-extension behavior of idele norms
@@ -77,7 +79,7 @@ private noncomputable def infinitePlaceFiberEquivPlacesOver
   invFun W :=
     ⟨W.1, by
       change W.1.comap (algebraMap K L) = v₀
-      letI : W.1.1.LiesOver v₀.1 := W.2
+      let : W.1.1.LiesOver v₀.1 := W.2
       exact InfinitePlace.LiesOver.comap_eq W.1 v₀⟩
   left_inv W := Subtype.ext rfl
   right_inv W := Subtype.ext rfl
@@ -90,7 +92,7 @@ private theorem infinitePlace_mult_eq_base_mult_mul_inertiaDeg
     (W : InfinitePlace L)
     (hW : W ∈ v₀.placesOver L) :
     W.mult = v₀.mult * v₀.inertiaDeg W := by
-  letI : W.1.LiesOver v₀.1 := hW
+  let : W.1.LiesOver v₀.1 := hW
   rcases v₀.isReal_or_isComplex with hvReal | hvComplex
   · rcases W.isReal_or_isComplex with hWReal | hWComplex
     · have hUnramified : W.IsUnramified K :=
@@ -211,7 +213,7 @@ theorem archimedeanNorm_extension
           (infiniteComponent
             (_root_.infinitePlaceBelow (K := K) W) a) := by
     let v₀ := _root_.infinitePlaceBelow (K := K) W
-    letI : W.1.LiesOver v₀.1 := ⟨rfl⟩
+    let : W.1.LiesOver v₀.1 := ⟨rfl⟩
     rw [extension_infiniteComponent K L a W]
     exact
       nnnormUnitHom_infinitePlaceCompletionMap

@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Degree.Valuation
-import GroupTheory.QuotientTower
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
+import GaloisCohomology.GroupTheory.QuotientTower
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -192,26 +194,28 @@ theorem relativeNorm_absoluteConjugate_apply [ContinuousMul G]
         ((relativeNorm A (baseField G) K
           (le_baseField K) a :
           ambientFixedAddSubgroup A (baseField G)) : A.V) := by
-  letI : Finite
+  let := Fintype.ofFinite
+    ((baseField G).toSubgroup ⧸
+      extensionSubgroup (baseField G) K
+        (le_baseField K))
+  let conjugateFintype : Fintype
       ((baseField G).toSubgroup ⧸
         extensionSubgroup (baseField G)
           (conjugateClosedSubgroup K σ)
           (le_baseField (conjugateClosedSubgroup K σ))) :=
-    Finite.of_equiv
+    Fintype.ofEquiv
       ((baseField G).toSubgroup ⧸
         extensionSubgroup (baseField G) K
           (le_baseField K))
       (absoluteConjugateCosetEquiv K σ).symm
-  letI := Fintype.ofFinite
-    ((baseField G).toSubgroup ⧸
-      extensionSubgroup (baseField G) K
-        (le_baseField K))
-  letI := Fintype.ofFinite
-    ((baseField G).toSubgroup ⧸
-      extensionSubgroup (baseField G)
-        (conjugateClosedSubgroup K σ)
-        (le_baseField (conjugateClosedSubgroup K σ)))
+  have hconjugateFintype : Fintype.ofFinite
+      ((baseField G).toSubgroup ⧸
+        extensionSubgroup (baseField G)
+          (conjugateClosedSubgroup K σ)
+          (le_baseField (conjugateClosedSubgroup K σ))) = conjugateFintype :=
+    Subsingleton.elim _ _
   simp only [relativeNorm_apply_coe, relativeNormValue]
+  rw [hconjugateFintype]
   calc
     ∑ q, relativeCosetAction A (baseField G)
         (conjugateClosedSubgroup K σ)
@@ -282,8 +286,7 @@ theorem relativeNorm_normalExtensionAction
     relativeNorm A K L hLK (normalExtensionAction A K L hLK hnormal k a) =
       relativeNorm A K L hLK a := by
   apply Subtype.ext
-  letI := hnormal
-  letI := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
+  let := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
   let e : (K.toSubgroup ⧸ extensionSubgroup K L hLK) ≃
       (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
     Equiv.mulRight (QuotientGroup.mk k)
@@ -369,12 +372,18 @@ private theorem finiteTowerNormTransApplyAux
       relativeTowerQuotientFinite K L M hML hLK
     relativeNorm A K L hLK (relativeNorm A L M hML a) =
       relativeNorm A K M (hML.trans hLK) a := by
-  letI : Finite (K.toSubgroup ⧸ extensionSubgroup K M (hML.trans hLK)) :=
-    relativeTowerQuotientFinite K L M hML hLK
   apply Subtype.ext
-  letI := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
-  letI := Fintype.ofFinite (L.toSubgroup ⧸ extensionSubgroup L M hML)
-  letI := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K M (hML.trans hLK))
+  let := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
+  let := Fintype.ofFinite (L.toSubgroup ⧸ extensionSubgroup L M hML)
+  let totalFintype : Fintype
+      (K.toSubgroup ⧸ extensionSubgroup K M (hML.trans hLK)) :=
+    Fintype.ofEquiv
+      ((K.toSubgroup ⧸ extensionSubgroup K L hLK) ×
+        (L.toSubgroup ⧸ extensionSubgroup L M hML))
+      (Subgroup.quotientTowerEquiv hML hLK).symm
+  have htotalFintype : Fintype.ofFinite
+      (K.toSubgroup ⧸ extensionSubgroup K M (hML.trans hLK)) = totalFintype :=
+    Subsingleton.elim _ _
   have houter : ∀ q : K.toSubgroup ⧸ extensionSubgroup K L hLK,
       relativeCosetAction A K L hLK (relativeNorm A L M hML a) q =
         A.ρ (Quotient.out q).1 (relativeNormValue A L M hML a) := by
@@ -393,6 +402,7 @@ private theorem finiteTowerNormTransApplyAux
       _ = A.ρ (Quotient.out q).1 (relativeNormValue A L M hML a) := by
         rw [relativeNorm_apply_coe]
   simp only [relativeNorm_apply_coe, relativeNormValue]
+  rw [htotalFintype]
   rw [Finset.sum_congr rfl (fun q _ ↦ houter q)]
   simp only [relativeNormValue]
   simp_rw [map_sum]

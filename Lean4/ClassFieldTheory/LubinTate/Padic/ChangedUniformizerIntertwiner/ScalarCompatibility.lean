@@ -1,4 +1,6 @@
-import LubinTate.Padic.ChangedUniformizerIntertwiner.ScalarEndomorphisms
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.ScalarEndomorphisms
+
+set_option autoImplicit false
 
 /-!
 # Changed-uniformizer scalar compatibility

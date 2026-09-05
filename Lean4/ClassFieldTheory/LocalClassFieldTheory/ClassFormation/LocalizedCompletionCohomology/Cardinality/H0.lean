@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Finite
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Finite
+
+set_option autoImplicit false
 
 /-!
 # Degree-zero localized Herbrand cardinality
@@ -59,19 +61,19 @@ theorem localHerbrandH0_card_eq_localDegree
           (LocalizedCompletion vK w)ˣ) =
       Module.finrank vK.Completion
         (LocalizedCompletion vK w) := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : FiniteDimensional vK.Completion
+  let := localizedCompletionBaseAlgebra vK w
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
+  let : FiniteDimensional vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionFiniteDimensional vK hvK w
-  letI : IsGalois vK.Completion
+  let : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionIsGalois vK w
-  letI := localizedCompletionDecompositionGroupFintype vK w
-  letI :=
+  let := localizedCompletionDecompositionGroupFintype vK w
+  let :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI : Finite
+  let : Finite
       (HerbrandH0
         (absoluteValueDecompositionGroup k w.1)
         (LocalizedCompletion vK w)ˣ) :=
@@ -86,7 +88,7 @@ theorem localHerbrandH0_card_eq_localDegree
     finiteExtensionUnits_tate_card_of_generator
       vK.Completion (LocalizedCompletion vK w)
       g hg
-  letI : Finite
+  let : Finite
       (tateCohomology
         (Rep.ofAlgebraAutOnUnits vK.Completion
           (LocalizedCompletion vK w)) 0) :=

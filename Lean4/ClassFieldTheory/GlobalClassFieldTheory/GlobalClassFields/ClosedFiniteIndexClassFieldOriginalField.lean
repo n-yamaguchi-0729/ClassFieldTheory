@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldNormRange
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldNormRange
+
+set_option autoImplicit false
 
 /-!
 # Transport to the original number field

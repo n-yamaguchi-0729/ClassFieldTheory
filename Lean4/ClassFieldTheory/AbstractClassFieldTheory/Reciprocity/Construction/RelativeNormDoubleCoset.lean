@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Degree.Norm
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Norm
+import GaloisCohomology.Cyclic.IntegralRepUniverse
 import Mathlib.GroupTheory.GroupAction.Quotient
+
+set_option autoImplicit false
 
 universe u
 
@@ -158,7 +160,7 @@ theorem relativeNorm_eq_sum_chosenOrbit_of_fintype
       ∑ q, ∑ r, relativeCosetAction A K S hSK a
         ((MulAction.selfEquivSigmaOrbitsQuotientStabilizer'
           M (K.toSubgroup ⧸ extensionSubgroup K S hSK) hφ).symm ⟨q, r⟩) := by
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K S hSK)
   rw [relativeNorm_apply_coe, relativeNormValue]
   let e := MulAction.selfEquivSigmaOrbitsQuotientStabilizer'
@@ -243,7 +245,7 @@ theorem relativeNorm_eq_sum_doubleCoset_of_fintype
     ((relativeNorm A K S hSK a : ambientFixedAddSubgroup A K) : A.V) =
       ∑ q, ∑ r, relativeCosetAction A K S hSK a
         ((relativeNormDoubleCosetEquiv K K' S hSK hK'K).symm ⟨q, r⟩) := by
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K S hSK)
   rw [relativeNorm_apply_coe, relativeNormValue]
   calc
@@ -276,13 +278,13 @@ theorem relativeNorm_eq_sum_doubleCoset
       ∑ q, ∑ r, relativeCosetAction A K S hSK a
         ((relativeNormDoubleCosetEquiv K K' S hSK hK'K).symm ⟨q, r⟩) := by
   dsimp only
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K S hSK)
-  letI : Fintype (Quotient (orbitRel
+  let : Fintype (Quotient (orbitRel
       (extensionSubgroup K K' hK'K)
       (K.toSubgroup ⧸ extensionSubgroup K S hSK))) :=
     relativeNormDoubleCosetOrbitFintype K K' S hSK hK'K
-  letI (q : Quotient (orbitRel (extensionSubgroup K K' hK'K)
+  let (q : Quotient (orbitRel (extensionSubgroup K K' hK'K)
       (K.toSubgroup ⧸ extensionSubgroup K S hSK))) :
       Fintype ((extensionSubgroup K K' hK'K) ⧸
         MulAction.stabilizer (extensionSubgroup K K' hK'K) q.out) :=

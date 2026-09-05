@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceComparison
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceComparison
+
+set_option autoImplicit false
 
 /-!
 # Finite-place local--global Kummer transport
@@ -106,7 +108,7 @@ theorem finitePlaceKummerLocal_isSplittingField
   let hnC := finitePlaceHilbert_natCast_ne_zero K n hnK v
   let bC := finitePlaceHilbert_completionUnit K v b
   let S := chosenSimpleKummerExtension C n hnC bC
-  letI : FiniteDimensional C S :=
+  let : FiniteDimensional C S :=
     finitePlaceKummerLocalFiniteDimensional K n hnK v b
   change Polynomial.IsSplittingField C S
     (Polynomial.X ^ (n : ℕ) - Polynomial.C (bC : C))

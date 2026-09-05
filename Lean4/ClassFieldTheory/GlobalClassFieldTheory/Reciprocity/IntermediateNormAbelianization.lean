@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbelianizationNaturality
-import GlobalClassFieldTheory.GlobalClassFields.NormTowerConductor
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbelianizationNaturality
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormTowerConductor
+
+set_option autoImplicit false
 
 /-!
 # Abelianized restriction over intermediate fields

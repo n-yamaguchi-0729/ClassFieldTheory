@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
+
+set_option autoImplicit false
 
 /-!
 # Finite-place local--global Kummer comparison
@@ -65,7 +67,7 @@ theorem finitePlaceKummerLocalizedFiniteDimensional
       finitePlaceKummerLocalizedAlgebra K n hnK v b w
     FiniteDimensional (finitePlaceKummerBaseCompletion K v)
       (finitePlaceKummerLocalizedCompletion K n hnK v b w) := by
-  letI : FiniteDimensional K (chosenSimpleKummerExtension K n hnK b) :=
+  let : FiniteDimensional K (chosenSimpleKummerExtension K n hnK b) :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
   exact finitePlaceLocalArtinFiniteDimensional
     (K := K) (L := chosenSimpleKummerExtension K n hnK b) v w
@@ -109,12 +111,12 @@ theorem finitePlaceKummerLocalizedRootUnit_pow
     apply Subtype.ext
     exact chosenSimpleKummerRoot_pow K n hnK b
   let L := chosenSimpleKummerExtension K n hnK b
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := LocalizedCompletion vK w
-  letI : Algebra vK.Completion E :=
+  let : Algebra vK.Completion E :=
     finitePlaceKummerLocalizedAlgebra K n hnK v b w
   apply Units.ext
   simp only [finitePlaceKummerLocalizedRootUnit,
@@ -151,16 +153,16 @@ theorem finitePlaceKummerLocalizedRoot_adjoin_eq_top
         finitePlaceKummerLocalizedCompletion K n hnK v b w)} = ⊤ := by
   let vK := NumberField.HeightOneSpectrum.adicAbv K v
   let L := chosenSimpleKummerExtension K n hnK b
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := LocalizedCompletion vK w
-  letI : Algebra vK.Completion E :=
+  let : Algebra vK.Completion E :=
     finitePlaceKummerLocalizedAlgebra K n hnK v b w
-  letI : Algebra K E := localizedCompletionGlobalAlgebra vK w
-  letI : SMul K E := (localizedCompletionGlobalAlgebra vK w).toSMul
-  letI : IsScalarTower K vK.Completion E :=
+  let : Algebra K E := localizedCompletionGlobalAlgebra vK w
+  let : SMul K E := (localizedCompletionGlobalAlgebra vK w).toSMul
+  let : IsScalarTower K vK.Completion E :=
     localizedCompletionIsScalarTower vK w
   exact localizedCompletion_adjoin_image_eq_top_of_adjoin_eq_top
     vK w
@@ -187,9 +189,9 @@ theorem finitePlaceKummerLocalized_isSplittingField
         Polynomial.C (algebraMap K C (b : K))) := by
   let C := finitePlaceKummerBaseCompletion K v
   let E := finitePlaceKummerLocalizedCompletion K n hnK v b w
-  letI : Algebra C E :=
+  let : Algebra C E :=
     finitePlaceKummerLocalizedAlgebra K n hnK v b w
-  letI : FiniteDimensional C E :=
+  let : FiniteDimensional C E :=
     finitePlaceKummerLocalizedFiniteDimensional K n hnK v b w
   exact
     isSplittingField_X_pow_sub_C_of_root_adjoin_eq_top_of_primitiveRoots

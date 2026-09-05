@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
+
+set_option autoImplicit false
 
 /-!
 # The rational cyclotomic product formula in arithmetic normalization
@@ -26,7 +28,9 @@ local instance (q : Nat.Primes) : Fact q.1.Prime :=
 local instance (m : ℕ+) : NeZero (m : ℕ) :=
   ⟨m.ne_zero⟩
 
-noncomputable local instance (priority := 2000)
+section ArbitraryCyclotomicLevel
+
+noncomputable local instance
     rationalCyclotomicArithmeticLevelFiniteDimensional
     (m : ℕ+) :
     FiniteDimensional ℚ
@@ -34,7 +38,7 @@ noncomputable local instance (priority := 2000)
   IsCyclotomicExtension.finiteDimensional
     {(m : ℕ)} ℚ (KummerTheory.rationalCyclotomicLevel m)
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     rationalCyclotomicArithmeticLevelIsAbelianGalois
     (m : ℕ+) :
     IsAbelianGalois ℚ
@@ -121,6 +125,8 @@ theorem
     galEquivZMod_chosenFinitePlaceArtinMonoidHom_principal_of_not_dvd
       m q hq x]
   rw [← zpow_neg, neg_neg]
+
+end ArbitraryCyclotomicLevel
 
 /-- The arithmetic chosen finite-place character of a rational
 principal idèle at the prime `q`. -/
@@ -210,6 +216,162 @@ theorem
     rationalCyclotomicArithmeticPrincipalFinitePlaceCharacter_eq_inv,
     rationalCyclotomicPrincipalFinitePlaceCharacter_at_prime]
 
+local instance (p : Nat.Primes) (k : ℕ) :
+    NumberField
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  KummerTheory.rationalCyclotomicLevel_numberField
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance (p : Nat.Primes) (k : ℕ) :
+    FiniteDimensional ℚ
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  rationalCyclotomicPrincipalPrimeLevelFiniteDimensional
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance (p : Nat.Primes) (k : ℕ) :
+    IsAbelianGalois ℚ
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  rationalCyclotomicLevelIsAbelianGalois
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+/-- Pointwise inversion of the chosen local characters, assembled before
+the public product formula so that its proof does not unfold the full
+finite-product expressions during definitional equality checking. -/
+private theorem
+    rationalCyclotomicArithmeticPrincipalFinitePlaceProduct_eq_inv_geometric
+    (p : Nat.Primes) (k : ℕ) (x : ℚˣ) :
+    (∏ᶠ v : HeightOneSpectrum (𝓞 ℚ),
+        IsCyclotomicExtension.Rat.galEquivZMod
+          (p.1 ^ k)
+          (KummerTheory.rationalCyclotomicLevel
+            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (hK :=
+            KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
+              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (arithmeticChosenFinitePlaceArtinMonoidHom
+            ℚ
+            (KummerTheory.rationalCyclotomicLevel
+              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+            v
+            (IdeleGroup.finiteComponent v
+              (IdeleGroup.principalIdele ℚ x)))) =
+      (∏ᶠ v : HeightOneSpectrum (𝓞 ℚ),
+        IsCyclotomicExtension.Rat.galEquivZMod
+          (p.1 ^ k)
+          (KummerTheory.rationalCyclotomicLevel
+            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (hK :=
+            KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
+              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (chosenFinitePlaceArtinMonoidHom
+            (K := ℚ)
+            (L :=
+              KummerTheory.rationalCyclotomicLevel
+                ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+            v
+            (IdeleGroup.finiteComponent v
+              (IdeleGroup.principalIdele ℚ x))))⁻¹ := by
+  calc
+    (∏ᶠ v : HeightOneSpectrum (𝓞 ℚ),
+        IsCyclotomicExtension.Rat.galEquivZMod
+          (p.1 ^ k)
+          (KummerTheory.rationalCyclotomicLevel
+            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (hK :=
+            KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
+              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+          (arithmeticChosenFinitePlaceArtinMonoidHom
+            ℚ
+            (KummerTheory.rationalCyclotomicLevel
+              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+            v
+            (IdeleGroup.finiteComponent v
+              (IdeleGroup.principalIdele ℚ x)))) =
+        ∏ᶠ v : HeightOneSpectrum (𝓞 ℚ),
+          (IsCyclotomicExtension.Rat.galEquivZMod
+            (p.1 ^ k)
+            (KummerTheory.rationalCyclotomicLevel
+              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+            (hK :=
+              KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
+                ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+            (chosenFinitePlaceArtinMonoidHom
+              (K := ℚ)
+              (L :=
+                KummerTheory.rationalCyclotomicLevel
+                  ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+              v
+              (IdeleGroup.finiteComponent v
+                (IdeleGroup.principalIdele ℚ x))))⁻¹ := by
+      apply finprod_congr
+      intro v
+      exact
+        galEquivZMod_arithmeticChosenFinitePlaceArtinMonoidHom_eq_inv
+          ⟨p.1 ^ k, pow_pos p.2.pos k⟩ v
+          (IdeleGroup.finiteComponent v
+            (IdeleGroup.principalIdele ℚ x))
+    _ =
+        (∏ᶠ v : HeightOneSpectrum (𝓞 ℚ),
+          IsCyclotomicExtension.Rat.galEquivZMod
+            (p.1 ^ k)
+            (KummerTheory.rationalCyclotomicLevel
+              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+            (hK :=
+              KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
+                ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+            (chosenFinitePlaceArtinMonoidHom
+              (K := ℚ)
+              (L :=
+                KummerTheory.rationalCyclotomicLevel
+                  ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
+              v
+              (IdeleGroup.finiteComponent v
+                (IdeleGroup.principalIdele ℚ x))))⁻¹ := by
+      rw [finprod_inv_distrib]
+
+/-- The reduction of a rational sign is fixed by inversion. -/
+private theorem rationalSignPadicUnit_toZModPow_inv_eq_self
+    (p : Nat.Primes) (k : ℕ) (x : ℚˣ) :
+    (Units.map (PadicInt.toZModPow k).toMonoidHom
+        (rationalSignPadicUnit x p))⁻¹ =
+      Units.map (PadicInt.toZModPow k).toMonoidHom
+        (rationalSignPadicUnit x p) := by
+  have hs :
+      Units.map (PadicInt.toZModPow k).toMonoidHom
+          (rationalSignPadicUnit x p) *
+        Units.map (PadicInt.toZModPow k).toMonoidHom
+          (rationalSignPadicUnit x p) = 1 := by
+    simpa only [pow_two] using
+      rationalSignPadicUnit_toZModPow_sq x p k
+  calc
+    (Units.map (PadicInt.toZModPow k).toMonoidHom
+        (rationalSignPadicUnit x p))⁻¹ =
+        (Units.map (PadicInt.toZModPow k).toMonoidHom
+          (rationalSignPadicUnit x p))⁻¹ * 1 := by
+      rw [mul_one]
+    _ =
+        (Units.map (PadicInt.toZModPow k).toMonoidHom
+          (rationalSignPadicUnit x p))⁻¹ *
+          (Units.map (PadicInt.toZModPow k).toMonoidHom
+            (rationalSignPadicUnit x p) *
+            Units.map (PadicInt.toZModPow k).toMonoidHom
+              (rationalSignPadicUnit x p)) := by
+      rw [hs]
+    _ =
+        ((Units.map (PadicInt.toZModPow k).toMonoidHom
+          (rationalSignPadicUnit x p))⁻¹ *
+          Units.map (PadicInt.toZModPow k).toMonoidHom
+            (rationalSignPadicUnit x p)) *
+          Units.map (PadicInt.toZModPow k).toMonoidHom
+            (rationalSignPadicUnit x p) := by
+      rw [mul_assoc]
+    _ = Units.map (PadicInt.toZModPow k).toMonoidHom
+        (rationalSignPadicUnit x p) := by
+      rw [inv_mul_cancel, one_mul]
+
 /-- At every prime-power cyclotomic level, the product of the actual
 arithmetic finite-place characters of a rational principal idèle is
 the reduction of its sign. -/
@@ -233,70 +395,12 @@ theorem
               (IdeleGroup.principalIdele ℚ x)))) =
       Units.map (PadicInt.toZModPow k).toMonoidHom
         (rationalSignPadicUnit x p) := by
-  let arithmeticFactor :
-      HeightOneSpectrum (𝓞 ℚ) → (ZMod (p.1 ^ k))ˣ :=
-    fun v =>
-      IsCyclotomicExtension.Rat.galEquivZMod
-        (p.1 ^ k)
-        (KummerTheory.rationalCyclotomicLevel
-          ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
-        (hK :=
-          KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
-        (arithmeticChosenFinitePlaceArtinMonoidHom
-          ℚ
-          (KummerTheory.rationalCyclotomicLevel
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
-          v
-          (IdeleGroup.finiteComponent v
-            (IdeleGroup.principalIdele ℚ x)))
-  let geometricFactor :
-      HeightOneSpectrum (𝓞 ℚ) → (ZMod (p.1 ^ k))ˣ :=
-    fun v =>
-      IsCyclotomicExtension.Rat.galEquivZMod
-        (p.1 ^ k)
-        (KummerTheory.rationalCyclotomicLevel
-          ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
-        (hK :=
-          KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
-            ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
-        (chosenFinitePlaceArtinMonoidHom
-          (K := ℚ)
-          (L :=
-            KummerTheory.rationalCyclotomicLevel
-              ⟨p.1 ^ k, pow_pos p.2.pos k⟩)
-          v
-          (IdeleGroup.finiteComponent v
-            (IdeleGroup.principalIdele ℚ x)))
-  let s : (ZMod (p.1 ^ k))ˣ :=
-    Units.map (PadicInt.toZModPow k).toMonoidHom
-      (rationalSignPadicUnit x p)
-  change (∏ᶠ v, arithmeticFactor v) = s
-  calc
-    (∏ᶠ v, arithmeticFactor v) =
-        ∏ᶠ v, (geometricFactor v)⁻¹ := by
-      apply finprod_congr
-      intro v
-      exact
-        galEquivZMod_arithmeticChosenFinitePlaceArtinMonoidHom_eq_inv
-          ⟨p.1 ^ k, pow_pos p.2.pos k⟩ v
-          (IdeleGroup.finiteComponent v
-            (IdeleGroup.principalIdele ℚ x))
-    _ = (∏ᶠ v, geometricFactor v)⁻¹ := by
-      rw [finprod_inv_distrib]
-    _ = s⁻¹ := by
-      exact
-        congrArg (fun u => u⁻¹)
-          (rationalCyclotomicPrincipalFinitePlaceProduct_eq_sign p k x)
-    _ = s := by
-      have hs : s * s = 1 := by
-        simpa only [s, pow_two] using
-          rationalSignPadicUnit_toZModPow_sq x p k
-      calc
-        s⁻¹ = s⁻¹ * 1 := by rw [mul_one]
-        _ = s⁻¹ * (s * s) := by rw [hs]
-        _ = (s⁻¹ * s) * s := by rw [mul_assoc]
-        _ = s := by rw [inv_mul_cancel, one_mul]
+  exact
+    (rationalCyclotomicArithmeticPrincipalFinitePlaceProduct_eq_inv_geometric
+      p k x).trans
+      ((congrArg (fun u => u⁻¹)
+        (rationalCyclotomicPrincipalFinitePlaceProduct_eq_sign p k x)).trans
+        (rationalSignPadicUnit_toZModPow_inv_eq_self p k x))
 
 end Reciprocity
 end GlobalClassFieldTheory

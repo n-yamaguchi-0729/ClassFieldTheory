@@ -1,6 +1,8 @@
-import LocalFieldTheory.DiscreteValuationField.PadicField
-import LubinTate.FormalModule.Series
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+import ClassFieldTheory.LubinTate.FormalModule.Series
 import Mathlib.RingTheory.PowerSeries.Binomial
+
+set_option autoImplicit false
 
 /-!
 # The multiplicative Lubin--Tate series over `ℚ_p`
@@ -35,18 +37,15 @@ noncomputable def padicMultiplicativeLubinTateSeries
   constantCoeff_eq_zero := by
     simp
   coeff_one_eq_uniformizer := by
-    calc
-      PowerSeries.coeff 1
-          (PowerSeries.binomialSeries
-              (padicLocalField p).valuationSubring (p : ℤ) -
-            1) =
-          (p : (padicLocalField p).valuationSubring) := by
-        simp only [PowerSeries.binomialSeries_nat, map_sub,
-          PowerSeries.coeff_one]
-        rw [PowerSeries.coeff_one_pow]
-        simp
-      _ = padicIntEquivValuationSubring p (p : ℤ_[p]) := by
-        exact (map_natCast (padicIntEquivValuationSubring p) p).symm
+    have hcoeff : PowerSeries.coeff 1
+        (PowerSeries.binomialSeries
+            (padicLocalField p).valuationSubring (p : ℤ) - 1) =
+        (p : (padicLocalField p).valuationSubring) := by
+      simp only [PowerSeries.binomialSeries_nat, map_sub,
+        PowerSeries.coeff_one]
+      rw [PowerSeries.coeff_one_pow]
+      simp
+    exact hcoeff.trans (map_natCast (padicIntEquivValuationSubring p) p).symm
   map_residue_eq_frobenius := by
     let eO : ℤ_[p] ≃+*
         (padicDVRValuation p).valuationSubring :=
@@ -60,10 +59,10 @@ noncomputable def padicMultiplicativeLubinTateSeries
       exact
         (IsLocalRing.ResidueField.mapEquiv eO).symm.trans
           (padicIntResidueFieldEquivZMod p)
-    letI : CharP (padicLocalField p).residueField p :=
+    let : CharP (padicLocalField p).residueField p :=
       charP_of_injective_ringHom
         (f := eRes.symm.toRingHom) eRes.symm.injective p
-    letI : CharP (PowerSeries (padicLocalField p).residueField) p :=
+    let : CharP (PowerSeries (padicLocalField p).residueField) p :=
       CharP.of_ringHom_of_ne_zero
         PowerSeries.C p ((Fact.out : p.Prime).ne_zero)
     have hcard :

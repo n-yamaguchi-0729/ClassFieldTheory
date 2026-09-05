@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusContinuity
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusContinuity
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the completed Frobenius lift over the Laurent base

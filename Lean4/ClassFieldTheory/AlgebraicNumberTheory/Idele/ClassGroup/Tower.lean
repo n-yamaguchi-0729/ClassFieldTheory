@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Extension.ClassGroup
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.RingTheory.TensorProduct.Maps
+
+set_option autoImplicit false
 
 /-!
 # Idele-class norms in a field tower
@@ -279,6 +281,16 @@ def towerRelativeIdeleEquiv :
       RelativeIdeleGroup K L :=
   Units.mapEquiv
     (towerRelativeAdeleRingEquiv K M L).toMulEquiv
+
+-- Fix the canonical commutativity proof for the tower's tensor-product units.
+local instance : IsMulCommutative (TowerRelativeIdeleGroup K M L) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+local instance : IsMulCommutative (RelativeIdeleGroup.ClassGroup K L) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+local instance : IsMulCommutative (IdeleClassGroup K) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 namespace TowerRelativeIdeleGroup
 
@@ -648,9 +660,9 @@ theorem towerCompositeClassNormQuotient_card_le_mul
     intermediateToCompositeNormQuotient K M L
   let g : B →* C :=
     compositeToBaseNormQuotient K M L
-  letI : Fintype A := Fintype.ofFinite A
-  letI : Fintype C := Fintype.ofFinite C
-  letI : Fintype B :=
+  let : Fintype A := Fintype.ofFinite A
+  let : Fintype C := Fintype.ofFinite C
+  let : Fintype B :=
     Group.fintypeOfKerEqRange f g
       (intermediateToCompositeNormQuotient_range_eq_ker
         K M L).symm

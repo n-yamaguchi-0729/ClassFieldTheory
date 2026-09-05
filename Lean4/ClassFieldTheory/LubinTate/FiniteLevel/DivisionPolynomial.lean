@@ -1,5 +1,7 @@
-import LubinTate.FormalModule.StandardSeries
+import ClassFieldTheory.LubinTate.FormalModule.StandardSeries
 import Mathlib.Algebra.Polynomial.Monic
+
+set_option autoImplicit false
 
 /-!
 # Standard Lubin--Tate division polynomials

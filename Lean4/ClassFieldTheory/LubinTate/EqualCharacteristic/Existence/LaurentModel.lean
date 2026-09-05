@@ -1,4 +1,6 @@
-import LocalFieldTheory.DiscreteValuationField.IwasawaPrincipalUnits
+import ValuedFieldTheory.LocalField.DiscreteValuationField.IwasawaPrincipalUnits
+
+set_option autoImplicit false
 
 /-!
 # Equal-characteristic Laurent-series model

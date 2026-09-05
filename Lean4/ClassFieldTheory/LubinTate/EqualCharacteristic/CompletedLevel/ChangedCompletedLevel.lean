@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedLevel
-import LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedLevel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizer
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the completed changed-uniformizer level
@@ -18,7 +20,7 @@ The repository's primitive polynomial indexed by `n` cuts out division level
 noncomputable section
 
 open Filter
-open scoped LaurentSeries NNReal Polynomial PowerSeries Topology Valued WithZero
+open scoped LaurentSeries NNReal Polynomial PowerSeries Topology WithZero
 
 
 universe u v
@@ -119,6 +121,21 @@ noncomputable instance equalCharacteristicChangedCompletedLevelField_algebra
     (equalCharacteristicChangedCompletedPrimitivePolynomial F u n).SplittingField
   infer_instance
 
+section
+
+local instance equalCharacteristicChangedCompletedLevelField_module
+    (F : LocalField.{u, v} K) (u : F.residueField⟦X⟧ˣ) (n : ℕ) :
+    @Module (equalCharacteristicCompletedUnramifiedField F.residueField)
+      (equalCharacteristicChangedCompletedLevelField F u n)
+      (inferInstance : DivisionRing
+        (equalCharacteristicCompletedUnramifiedField F.residueField)).toRing.toSemiring
+      (inferInstance : AddCommGroup
+        (equalCharacteristicChangedCompletedLevelField F u n)).toAddCommMonoid :=
+  @Algebra.toModule
+    (equalCharacteristicCompletedUnramifiedField F.residueField)
+    (equalCharacteristicChangedCompletedLevelField F u n) _ _
+    (equalCharacteristicChangedCompletedLevelField_algebra F u n)
+
 /-- The changed completed level field is finite-dimensional over its completed base. -/
 instance equalCharacteristicChangedCompletedLevelField_finiteDimensionalInstance
     (F : LocalField.{u, v} K) (u : F.residueField⟦X⟧ˣ) (n : ℕ) :
@@ -129,6 +146,17 @@ instance equalCharacteristicChangedCompletedLevelField_finiteDimensionalInstance
     (equalCharacteristicCompletedUnramifiedField F.residueField)
     (equalCharacteristicChangedCompletedPrimitivePolynomial F u n).SplittingField
   infer_instance
+
+local instance equalCharacteristicChangedCompletedLevelField_isAlgebraic
+    (F : LocalField.{u, v} K) (u : F.residueField⟦X⟧ˣ) (n : ℕ) :
+    Algebra.IsAlgebraic
+      (equalCharacteristicCompletedUnramifiedField F.residueField)
+      (equalCharacteristicChangedCompletedLevelField F u n) :=
+  @Algebra.IsAlgebraic.of_finite
+    (equalCharacteristicCompletedUnramifiedField F.residueField)
+    (equalCharacteristicChangedCompletedLevelField F u n) _ _ _
+    (equalCharacteristicChangedCompletedLevelField_algebra F u n)
+    (equalCharacteristicChangedCompletedLevelField_finiteDimensionalInstance F u n)
 
 /-- The changed completed level field has the residue characteristic. -/
 instance equalCharacteristicChangedCompletedLevelField_charP
@@ -254,7 +282,7 @@ theorem equalCharacteristicChangedCompletedLevelIsUltrametric
     (F : LocalField.{u, v} K) (u : F.residueField⟦X⟧ˣ) (n : ℕ) :
     IsUltrametricDist (equalCharacteristicChangedCompletedLevelField F u n) :=
   ⟨fun x y z ↦ by
-    change ‖x - z‖ ≤ max ‖x - y‖ ‖y - z‖
+    rw [dist_eq_norm, dist_eq_norm, dist_eq_norm]
     rw [← sub_add_sub_cancel x y z]
     exact isNonarchimedean_spectralNorm
       (K := equalCharacteristicCompletedUnramifiedField F.residueField)
@@ -284,7 +312,7 @@ noncomputable local instance equalCharacteristicChangedCompletedLevelCompleteSpa
 noncomputable def equalCharacteristicChangedCompletedLevelValued
     (F : LocalField.{u, v} K) (u : F.residueField⟦X⟧ˣ) (n : ℕ) :
     Valued (equalCharacteristicChangedCompletedLevelField F u n) ℝ≥0 :=
-  NormedField.toValued
+  NormedField.toValued (K := equalCharacteristicChangedCompletedLevelField F u n)
 
 noncomputable local instance equalCharacteristicChangedCompletedLevelValuedInstance
     (F : LocalField.{u, v} K) (u : F.residueField⟦X⟧ˣ) (n : ℕ) :
@@ -698,6 +726,8 @@ theorem equalCharacteristicChangedCompletedPrimitiveRootInteger_hasEval
   apply tendsto_pow_atTop_nhds_zero_of_norm_lt_one
   change ‖equalCharacteristicChangedCompletedPrimitiveRoot F u n‖ < 1
   exact equalCharacteristicChangedCompletedPrimitiveRoot_norm_lt_one F u n
+
+end
 
 end EqualCharacteristic
 end LubinTate

@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.Local
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.Local
+
+set_option autoImplicit false
 
 /-!
 # Finite unrestricted local-block families
@@ -65,15 +67,15 @@ theorem relativeUnrestrictedLocalBlockFamilyHerbrandH0Finite
   let d :=
     relativeUnrestrictedSPlaceDatum
       (K := K) (L := L) S
-  letI localAction :=
+  let localAction :=
     localBlockFamilyLocalAction d
-  letI blockAction :=
+  let blockAction :=
     localBlockFamilyBlockAction d
-  letI familyAction :=
+  let familyAction :=
     localBlockFamilyCohomologyAction d
-  letI decompositionFintype :=
+  let decompositionFintype :=
     localBlockFamilyDecompositionFintype d
-  letI localFinite : ∀ i, Finite
+  let localFinite : ∀ i, Finite
       (HerbrandH0
         (absoluteValueDecompositionGroup K (d i).extension.1)
         (LocalizedCompletion
@@ -133,15 +135,15 @@ theorem relativeUnrestrictedLocalBlockFamilyHerbrandHMinusOneFinite
   let d :=
     relativeUnrestrictedSPlaceDatum
       (K := K) (L := L) S
-  letI localAction :=
+  let localAction :=
     localBlockFamilyLocalAction d
-  letI blockAction :=
+  let blockAction :=
     localBlockFamilyBlockAction d
-  letI familyAction :=
+  let familyAction :=
     localBlockFamilyCohomologyAction d
-  letI decompositionFintype :=
+  let decompositionFintype :=
     localBlockFamilyDecompositionFintype d
-  letI localFinite : ∀ i, Finite
+  let localFinite : ∀ i, Finite
       (HerbrandHMinusOne
         (absoluteValueDecompositionGroup K (d i).extension.1)
         (LocalizedCompletion

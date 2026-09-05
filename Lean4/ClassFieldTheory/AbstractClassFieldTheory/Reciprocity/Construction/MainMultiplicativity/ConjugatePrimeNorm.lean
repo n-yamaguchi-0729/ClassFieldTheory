@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
-import AbstractClassFieldTheory.Reciprocity.Construction.RelativeNormDoubleCoset
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.RelativeNormDoubleCoset
+
+set_option autoImplicit false
 
 /-!
 # Norms of primes in conjugate Frobenius fixed fields
@@ -68,9 +70,9 @@ theorem exists_primeElement_frobeniusActionConjugate_norm_eq
           relativeNorm A K.field S hSK π := by
   dsimp only
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
   let σ' := D.frobeniusActionConjugate KR L hLK φ σ m
@@ -78,16 +80,16 @@ theorem exists_primeElement_frobeniusActionConjugate_norm_eq
   let S' := D.frobeniusFixedField KR L hLK σ'
   let hSK := D.frobeniusFixedField_le KR L hLK σ
   let hS'K := D.frobeniusFixedField_le KR L hLK σ'
-  letI hSfinite : Finite
+  let hSfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S hSK) :=
     D.frobeniusFixedField_finite KR L hLK σ
-  letI hS'finite : Finite
+  let hS'finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S' hS'K) :=
     D.frobeniusFixedField_finite KR L hLK σ'
-  letI hSabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hSabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S (le_baseField S)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK σ
-  letI hS'absolute : Finite ((baseField G).toSubgroup ⧸
+  let hS'absolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S' (le_baseField S')) :=
     D.frobeniusFixedField_absoluteFinite K L hLK σ'
   let Sigma : FiniteAbstractField G := ⟨S, hSabsolute⟩
@@ -114,7 +116,7 @@ theorem exists_primeElement_frobeniusActionConjugate_norm_eq
       change s * x * s⁻¹ ∈ K.field.toSubgroup
       simpa [s] using K.field.toSubgroup.mul_mem
         (K.field.toSubgroup.mul_mem (K.field.toSubgroup.inv_mem k.2) hx) k.2
-  letI hCabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hCabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) C (le_baseField C)) :=
     Finite.of_equiv
       ((baseField G).toSubgroup ⧸
@@ -128,13 +130,15 @@ theorem exists_primeElement_frobeniusActionConjugate_norm_eq
   let π' : ambientFixedAddSubgroup A S' :=
     ⟨πC.1, by rw [← hC]; exact πC.2⟩
   have hπC : v.IsPrimeElement SigmaC πC := by
-    rw [ValuationData.IsPrimeElement] at hπ ⊢
+    change v.valuationAt Sigma π = v.oneValue at hπ
+    change v.valuationAt SigmaC πC = v.oneValue
     have hconj : v.valuationAt SigmaC πC = v.valuationAt Sigma π := by
       simpa [C, SigmaC, Sigma, πC] using
         v.normalizedValuation_conjugate Sigma s π
     exact hconj.trans hπ
   have hπ' : v.IsPrimeElement Sigma' π' := by
-    rw [ValuationData.IsPrimeElement] at hπC ⊢
+    change v.valuationAt SigmaC πC = v.oneValue at hπC
+    change v.valuationAt Sigma' π' = v.oneValue
     have valuation_transport
         (C₀ S₀ : FiniteAbstractField G)
         (h : C₀.field = S₀.field)
@@ -157,7 +161,7 @@ theorem exists_primeElement_frobeniusActionConjugate_norm_eq
       valuation_transport SigmaC Sigma' hSigmaField πC π' rfl
     exact hv.trans hπC
   refine ⟨π', hπ', ?_⟩
-  letI hCSfinite : Finite
+  let hCSfinite : Finite
       (Kc.toSubgroup ⧸ extensionSubgroup Kc C hCS) :=
     finite_conjugateExtension K.field S hSK s
   have hnormC := relativeNorm_conjugate_apply A K.field S hSK s π

@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldNormResidueNaturality
-import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
-import LocalFieldTheory.NonarchimedeanLocalField.FiniteExtensionTopology
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldNormResidueNaturality
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionTopology
+
+set_option autoImplicit false
 
 /-!
 # Continuous fixed-field naturality diagrams
@@ -692,28 +694,28 @@ theorem norm_restriction_commutes_continuous
           T.upperBase_le_lowerBase)
     (abelianizedRestrictionMap T).comp (upperNormResidueMap T) =
       (lowerNormResidueMap T).comp (normUnitsMap T) := by
-  letI : FiniteDimensional k
+  let : FiniteDimensional k
       (abstractFixedField k (SeparableClosure k) T.lowerBase) :=
     abstractFixedField_finiteDimensional
       k (SeparableClosure k) T.lowerBase T.lowerAbsoluteFinite
-  letI : FiniteDimensional k
+  let : FiniteDimensional k
       (abstractFixedField k (SeparableClosure k) T.upperBase) :=
     abstractFixedField_finiteDimensional
       k (SeparableClosure k) T.upperBase (upperAbsoluteFinite T)
-  letI : FiniteDimensional k
+  let : FiniteDimensional k
       (abstractRelativeFixedField k (SeparableClosure k)
         T.upperBase_le_lowerBase) :=
     abstractFixedField_finiteDimensional
       k (SeparableClosure k) T.upperBase (upperAbsoluteFinite T)
-  letI : NontriviallyNormedField
+  let : NontriviallyNormedField
       (abstractFixedField k (SeparableClosure k) T.lowerBase) :=
     finiteExtensionSpectralNormedField k
       (abstractFixedField k (SeparableClosure k) T.lowerBase)
-  letI : NontriviallyNormedField
+  let : NontriviallyNormedField
       (abstractFixedField k (SeparableClosure k) T.upperBase) :=
     finiteExtensionSpectralNormedField k
       (abstractFixedField k (SeparableClosure k) T.upperBase)
-  letI : NontriviallyNormedField
+  let : NontriviallyNormedField
       (abstractRelativeFixedField k (SeparableClosure k)
         T.upperBase_le_lowerBase) :=
     finiteExtensionSpectralNormedField k
@@ -914,20 +916,20 @@ theorem transfer_inclusion_commutes_continuous
         (abstractFixedField k (SeparableClosure k) T.intermediate)
     (abelianizedTransferMap T).comp (baseNormResidueMap T) =
       (intermediateNormResidueMap T).comp (unitsInclusionMap T) := by
-  letI : FiniteDimensional k
+  let : FiniteDimensional k
       (abstractFixedField k (SeparableClosure k) T.base) :=
     abstractFixedField_finiteDimensional
       k (SeparableClosure k) T.base T.baseAbsoluteFinite
-  letI : FiniteDimensional k
+  let : FiniteDimensional k
       (abstractFixedField k (SeparableClosure k) T.intermediate) :=
     abstractFixedField_finiteDimensional
       k (SeparableClosure k) T.intermediate
         (intermediateAbsoluteFinite T)
-  letI : NontriviallyNormedField
+  let : NontriviallyNormedField
       (abstractFixedField k (SeparableClosure k) T.base) :=
     finiteExtensionSpectralNormedField k
       (abstractFixedField k (SeparableClosure k) T.base)
-  letI : NontriviallyNormedField
+  let : NontriviallyNormedField
       (abstractFixedField k (SeparableClosure k) T.intermediate) :=
     finiteExtensionSpectralNormedField k
       (abstractFixedField k (SeparableClosure k) T.intermediate)

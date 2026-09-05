@@ -1,6 +1,8 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldLocalData
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldLocalData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Intrinsic-to-ambient base equivalences
@@ -34,7 +36,7 @@ theorem ambientEmbeddedAbsoluteQuotientFinite
   let H₀ :=
     closedFixingSubgroup K (SeparableClosure K)
       (AlgHom.fieldRange i)
-  letI : FiniteDimensional K (AlgHom.fieldRange i) :=
+  let : FiniteDimensional K (AlgHom.fieldRange i) :=
     (AlgEquiv.ofInjectiveField i).toLinearEquiv.finiteDimensional
   let G := Gal(SeparableClosure K / K)
   let Bases := { B : ClosedSubgroup G //
@@ -52,7 +54,7 @@ theorem ambientEmbeddedAbsoluteQuotientFinite
     apply Subtype.ext
     exact closedFixingSubgroup_bot_eq_baseField
       K (SeparableClosure K)
-  letI : Finite (Q Bfix) := by
+  let : Finite (Q Bfix) := by
     change Finite
       ((closedFixingSubgroup K (SeparableClosure K)
           (⊥ : IntermediateField K (SeparableClosure K))).toSubgroup ⧸
@@ -119,17 +121,17 @@ theorem intrinsicBase_normalizedDegree_eq_ambientFixedField
             (AlgEquiv.autCongr e τ.1)) := by
   dsimp only
   let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
   intro e τ
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : NontriviallyNormedField F :=
+  let : NontriviallyNormedField F :=
     finiteExtensionSpectralNormedField K F
-  letI : ValuativeRel F :=
+  let : ValuativeRel F :=
     finiteExtensionSpectralValuativeRel K F
-  letI : IsNonarchimedeanLocalField F :=
+  let : IsNonarchimedeanLocalField F :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K F
   rw [intrinsicBase_normalizedDegree_eq_localResidueDegree F τ]
   exact
@@ -197,8 +199,6 @@ noncomputable def
       (intrinsicAbstractBase F).toSubgroup ≃*
         (closedFixingSubgroup K (SeparableClosure K)
           (AlgHom.fieldRange i)).toSubgroup := by
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
@@ -365,16 +365,16 @@ theorem
       intrinsicBaseEquivAmbientEmbeddedField K F i e tau =
         (abstractSubgroupEquivGaloisGroup
           K (SeparableClosure K) H₀).symm rho := by
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e tau
   dsimp only
   let H₀ :=
     closedFixingSubgroup K (SeparableClosure K)
       (AlgHom.fieldRange i)
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -386,15 +386,15 @@ theorem
     ⟨H₀, hHabsolute⟩
   let F₀ :=
     abstractFixedField K (SeparableClosure K) H₀
-  letI : FiniteDimensional K F₀ :=
+  let : FiniteDimensional K F₀ :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H₀ hHabsolute
-  letI : Algebra.IsSeparable F₀ (SeparableClosure K) :=
+  let : Algebra.IsSeparable F₀ (SeparableClosure K) :=
     Algebra.isSeparable_tower_top_of_isSeparable
       K F₀ (SeparableClosure K)
-  letI : IsSepClosure F₀ (SeparableClosure K) :=
+  let : IsSepClosure F₀ (SeparableClosure K) :=
     ⟨inferInstance, inferInstance⟩
-  letI : Algebra F₀ (SeparableClosure F₀) :=
+  let : Algebra F₀ (SeparableClosure F₀) :=
     (separableClosure F₀ (AlgebraicClosure F₀)).algebra
   let e₀ : SeparableClosure F₀ ≃ₐ[F₀] SeparableClosure K :=
     IsSepClosure.equiv F₀
@@ -505,15 +505,13 @@ theorem
       (intrinsicBaseEquivAmbientEmbeddedField
         K F i e tau).1.1 x =
         e (tau.1 (e.symm x)) := by
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e tau x
   let H₀ :=
     closedFixingSubgroup K (SeparableClosure K)
       (AlgHom.fieldRange i)
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -614,16 +612,14 @@ theorem
         (localResidueDatum K).normalizedDegree
           (H.toFiniteResidueAbstractField (localResidueDatum K))
           (intrinsicBaseEquivAmbientEmbeddedField K F i e tau) := by
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e tau
   dsimp only
   let H₀ :=
     closedFixingSubgroup K (SeparableClosure K)
       (AlgHom.fieldRange i)
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup

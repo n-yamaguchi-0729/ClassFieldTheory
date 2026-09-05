@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.IntrinsicBaseEquivalence
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.IntrinsicBaseEquivalence
+
+set_option autoImplicit false
 
 /-!
 # Embedded extension quotients
@@ -61,9 +63,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e tau
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -162,9 +162,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -245,9 +243,7 @@ theorem ambientEmbeddedExtensionSubgroup_normal
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -274,7 +270,7 @@ theorem ambientEmbeddedExtensionSubgroup_normal
     exact (AlgHom.fieldRange i).fixingSubgroup_le hRange
   let psi :=
     intrinsicBaseEquivAmbientEmbeddedField K F i e
-  letI hSourceNormal :
+  let hSourceNormal :
       (extensionSubgroup
         (intrinsicAbstractBase F) EI.field EI.below).Normal :=
     EI.normal
@@ -329,9 +325,7 @@ theorem ambientEmbeddedExtensionQuotient_finite
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -356,16 +350,16 @@ theorem ambientEmbeddedExtensionQuotient_finite
       (AlgHom.fieldRange j).fixingSubgroup ≤
         (AlgHom.fieldRange i).fixingSubgroup
     exact (AlgHom.fieldRange i).fixingSubgroup_le hRange
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
   let psi :=
     intrinsicBaseEquivAmbientEmbeddedField K F i e
-  letI hSourceNormal :
+  let hSourceNormal :
       (extensionSubgroup
         (intrinsicAbstractBase F) EI.field EI.below).Normal :=
     EI.normal
-  letI hSourceFinite : Finite
+  let hSourceFinite : Finite
       ((intrinsicAbstractBase F).toSubgroup ⧸
         extensionSubgroup
           (intrinsicAbstractBase F) EI.field EI.below) :=
@@ -428,8 +422,6 @@ noncomputable def
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
@@ -536,9 +528,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e tau
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -561,11 +551,11 @@ theorem
     intro x hx
     rcases hx with ⟨y, rfl⟩
     exact ⟨algebraMap F E y, rfl⟩
-  letI hSourceNormal :
+  let hSourceNormal :
       (extensionSubgroup
         (intrinsicAbstractBase F) EI.field EI.below).Normal :=
     EI.normal
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
   let psi :=
@@ -642,9 +632,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e rho x
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -669,11 +657,11 @@ theorem
       (AlgHom.fieldRange j).fixingSubgroup ≤
         (AlgHom.fieldRange i).fixingSubgroup
     exact (AlgHom.fieldRange i).fixingSubgroup_le hRange
-  letI hSourceNormal :
+  let hSourceNormal :
       (extensionSubgroup
         (intrinsicAbstractBase F) EI.field EI.below).Normal :=
     EI.normal
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
   let psi :=

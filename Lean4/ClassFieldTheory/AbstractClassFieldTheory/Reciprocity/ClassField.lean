@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+
+set_option autoImplicit false
 
 /-!
 # The abstract class-field correspondence

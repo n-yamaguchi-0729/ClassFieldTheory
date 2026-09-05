@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import AbstractClassFieldTheory.Degree.Fields
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
 import Mathlib.FieldTheory.Finite.Extension
 import Mathlib.FieldTheory.Galois.Profinite
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -91,7 +93,7 @@ theorem finiteResidueFrobeniusExponentHom_surjective :
 /-- The finite-level Frobenius exponent homomorphism is injective. -/
 theorem finiteResidueFrobeniusExponentHom_injective :
     Function.Injective (finiteResidueFrobeniusExponentHom k L) := by
-  letI : NeZero (Module.finrank k L) := ⟨Module.finrank_pos.ne'⟩
+  let : NeZero (Module.finrank k L) := ⟨Module.finrank_pos.ne'⟩
   have hcard :
       Nat.card (Multiplicative (ZMod (Module.finrank k L))) =
         Nat.card (L ≃ₐ[k] L) := by

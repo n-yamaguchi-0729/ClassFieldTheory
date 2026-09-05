@@ -1,9 +1,11 @@
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
 import Mathlib.Topology.Algebra.Module.FiniteDimension
-import ValuationTheory.DiscreteValuationField.ChevalleyExtension
-import LocalFieldTheory.NonarchimedeanLocalField.ValuedTopology
-import LocalClassFieldTheory.ClassFormation.Main
+import ValuedFieldTheory.Valuation.DiscreteValuationField.ChevalleyExtension
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Main
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -53,47 +55,45 @@ theorem finiteExtensionUnits_tate_card_of_generator
     (g : Gal(L / K))
     (hg : ∀ sigma : Gal(L / K), sigma ∈ Subgroup.zpowers g) :
     UnitsTateCardinalityData K L := by
-  letI : UniformSpace K := IsTopologicalAddGroup.rightUniformSpace K
-  letI : IsUniformAddGroup K := isUniformAddGroup_of_addCommGroup
-  letI : Valued K (ValuativeRel.ValueGroupWithZero K) := inferInstance
-  letI : (Valued.v : Valuation K (ValuativeRel.ValueGroupWithZero K)).RankOne :=
+  let : UniformSpace K := IsTopologicalAddGroup.rightUniformSpace K
+  let : IsUniformAddGroup K := isUniformAddGroup_of_addCommGroup
+  let : (Valued.v : Valuation K (ValuativeRel.ValueGroupWithZero K)).RankOne :=
     { hom' := ValuativeRel.IsRankLeOne.nonempty.some.emb (R := K) |>.comp
         MonoidWithZeroHom.ValueGroup₀.embedding
       strictMono' := ValuativeRel.IsRankLeOne.nonempty.some.strictMono.comp
         MonoidWithZeroHom.ValueGroup₀.embedding_strictMono }
-  letI : NontriviallyNormedField K :=
+  let : NontriviallyNormedField K :=
     Valued.toNontriviallyNormedField
       (L := K) (Γ₀ := ValuativeRel.ValueGroupWithZero K)
-  letI : CompleteSpace K := inferInstance
 
-  letI : NontriviallyNormedField L :=
+  let : NontriviallyNormedField L :=
     spectralNorm.nontriviallyNormedField K L
-  letI : NormedSpace K L := spectralNorm.normedSpace K L
-  letI : CompleteSpace L := spectralNorm.completeSpace K L
-  letI : LocallyCompactSpace L :=
+  let : NormedSpace K L := spectralNorm.normedSpace K L
+  let : CompleteSpace L := spectralNorm.completeSpace K L
+  let : LocallyCompactSpace L :=
     LocallyCompactSpace.of_finiteDimensional_of_complete K L
-  letI : IsUltrametricDist L :=
+  let : IsUltrametricDist L :=
     ⟨fun x y z => by
       change ‖x - z‖ ≤ max ‖x - y‖ ‖y - z‖
       rw [← sub_add_sub_cancel x y z]
       exact isNonarchimedean_spectralNorm
         (K := K) (L := L) (x - y) (y - z)⟩
-  letI : Valued L ℝ≥0 := NormedField.toValued
+  let : Valued L ℝ≥0 := NormedField.toValued
   let vL : Valuation L ℝ≥0 := Valued.v
-  letI : vL.IsNontrivial :=
+  let : vL.IsNontrivial :=
     (inferInstance : (NormedField.valuation (K := L)).IsNontrivial)
-  letI : ValuativeRel L := ValuativeRel.ofValuation vL
-  letI : vL.Compatible := Valuation.Compatible.ofValuation vL
-  letI : ValuativeRel.IsNontrivial L :=
+  let : ValuativeRel L := ValuativeRel.ofValuation vL
+  let : vL.Compatible := Valuation.Compatible.ofValuation vL
+  let : ValuativeRel.IsNontrivial L :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vL).2 inferInstance
-  letI : IsValuativeTopology L :=
+  let : IsValuativeTopology L :=
     isValuativeTopology_of_valued_ofValuation L ℝ≥0
-  letI : IsNonarchimedeanLocalField L :=
+  let : IsNonarchimedeanLocalField L :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
 
-  letI : (ValuativeRel.valuation K).HasExtension
+  let : (ValuativeRel.valuation K).HasExtension
       (ValuativeRel.valuation L) := by
     apply Valuation.HasExtension.ofComapInteger
     ext x
@@ -105,7 +105,11 @@ theorem finiteExtensionUnits_tate_card_of_generator
     rw [spectralNorm_extends]
     exact Valued.toNormedField.norm_le_one_iff
 
-  letI : Algebra.IsIntegral 𝒪[K] 𝒪[L] := ⟨by
+  let : Algebra.IsIntegral
+      (ValuativeRel.valuation K).valuationSubring
+      (ValuativeRel.valuation L).valuationSubring := by
+    change Algebra.IsIntegral 𝒪[K] 𝒪[L]
+    refine ⟨?_⟩
     intro y
     apply IsIntegral.tower_bot
       (R := 𝒪[K]) (A := 𝒪[L]) (B := L)
@@ -146,27 +150,21 @@ theorem finiteExtensionUnits_tate_card_of_generator
           (ValuativeRel.valuation K).integer.subtype from rfl,
           Polynomial.map_toSubring]
         exact minpoly.aeval K (y : L)
-      rwa [Polynomial.aeval_map_algebraMap K (y : L) p] at hmaproot⟩
-
-  letI : Algebra.IsIntegral
-      (ValuativeRel.valuation K).valuationSubring
-      (ValuativeRel.valuation L).valuationSubring := by
-    change Algebra.IsIntegral 𝒪[K] 𝒪[L]
-    infer_instance
+      rwa [Polynomial.aeval_map_algebraMap K (y : L) p] at hmaproot
   let hIntegralClosure : IsIntegralClosure
       (ValuativeRel.valuation L).valuationSubring
       (ValuativeRel.valuation K).valuationSubring L :=
     DiscreteValuationField.Valuation.valuationSubring_isIntegralClosure_of_isIntegral
       (ValuativeRel.valuation K) (ValuativeRel.valuation L)
-  letI : IsIntegralClosure 𝒪[L] 𝒪[K] L := by
+  let : IsIntegralClosure 𝒪[L] 𝒪[K] L := by
     change IsIntegralClosure
       (ValuativeRel.valuation L).valuationSubring
       (ValuativeRel.valuation K).valuationSubring L
     exact hIntegralClosure
-  letI : Module.Finite 𝒪[K] 𝒪[L] :=
+  let : Module.Finite 𝒪[K] 𝒪[L] :=
     integerRing_moduleFinite_of_isIntegralClosure K L
 
-  letI : Finite (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) :=
+  let : Finite (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) :=
     localFieldUnitsTateH0FiniteOfGenerator K L g hg
   have hcard := localFieldUnits_tate_card_of_generator K L g hg
   exact
@@ -185,42 +183,40 @@ theorem finiteTowerUnits_tate_card_of_generator
     (g : Gal(L / K))
     (hg : ∀ sigma : Gal(L / K), sigma ∈ Subgroup.zpowers g) :
     UnitsTateCardinalityData K L := by
-  letI : UniformSpace k := IsTopologicalAddGroup.rightUniformSpace k
-  letI : IsUniformAddGroup k := isUniformAddGroup_of_addCommGroup
-  letI : Valued k (ValuativeRel.ValueGroupWithZero k) := inferInstance
-  letI : (Valued.v : Valuation k (ValuativeRel.ValueGroupWithZero k)).RankOne :=
+  let : UniformSpace k := IsTopologicalAddGroup.rightUniformSpace k
+  let : IsUniformAddGroup k := isUniformAddGroup_of_addCommGroup
+  let : (Valued.v : Valuation k (ValuativeRel.ValueGroupWithZero k)).RankOne :=
     { hom' := ValuativeRel.IsRankLeOne.nonempty.some.emb (R := k) |>.comp
         MonoidWithZeroHom.ValueGroup₀.embedding
       strictMono' := ValuativeRel.IsRankLeOne.nonempty.some.strictMono.comp
         MonoidWithZeroHom.ValueGroup₀.embedding_strictMono }
-  letI : NontriviallyNormedField k :=
+  let : NontriviallyNormedField k :=
     Valued.toNontriviallyNormedField
       (L := k) (Γ₀ := ValuativeRel.ValueGroupWithZero k)
-  letI : CompleteSpace k := inferInstance
 
-  letI : NontriviallyNormedField K :=
+  let : NontriviallyNormedField K :=
     spectralNorm.nontriviallyNormedField k K
-  letI : NormedSpace k K := spectralNorm.normedSpace k K
-  letI : CompleteSpace K := spectralNorm.completeSpace k K
-  letI : LocallyCompactSpace K :=
+  let : NormedSpace k K := spectralNorm.normedSpace k K
+  let : CompleteSpace K := spectralNorm.completeSpace k K
+  let : LocallyCompactSpace K :=
     LocallyCompactSpace.of_finiteDimensional_of_complete k K
-  letI : IsUltrametricDist K :=
+  let : IsUltrametricDist K :=
     ⟨fun x y z => by
       change ‖x - z‖ ≤ max ‖x - y‖ ‖y - z‖
       rw [← sub_add_sub_cancel x y z]
       exact isNonarchimedean_spectralNorm
         (K := k) (L := K) (x - y) (y - z)⟩
-  letI : Valued K ℝ≥0 := NormedField.toValued
+  let : Valued K ℝ≥0 := NormedField.toValued
   let vK : Valuation K ℝ≥0 := Valued.v
-  letI : vK.IsNontrivial :=
+  let : vK.IsNontrivial :=
     (inferInstance : (NormedField.valuation (K := K)).IsNontrivial)
-  letI : ValuativeRel K := ValuativeRel.ofValuation vK
-  letI : vK.Compatible := Valuation.Compatible.ofValuation vK
-  letI : ValuativeRel.IsNontrivial K :=
+  let : ValuativeRel K := ValuativeRel.ofValuation vK
+  let : vK.Compatible := Valuation.Compatible.ofValuation vK
+  let : ValuativeRel.IsNontrivial K :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vK).2 inferInstance
-  letI : IsValuativeTopology K :=
+  let : IsValuativeTopology K :=
     isValuativeTopology_of_valued_ofValuation K ℝ≥0
-  letI : IsNonarchimedeanLocalField K :=
+  let : IsNonarchimedeanLocalField K :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }

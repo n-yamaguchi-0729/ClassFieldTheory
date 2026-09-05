@@ -1,8 +1,10 @@
-import LocalFieldTheory.DiscreteValuationField.PadicField
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
 import Mathlib.RingTheory.WittVector.Compare
 import Mathlib.RingTheory.WittVector.Complete
 import Mathlib.RingTheory.WittVector.FrobeniusFractionField
-import ValuationTheory.Topology.AdicContractingFixedPoint
+import ValuedFieldTheory.Valuation.Topology.AdicContractingFixedPoint
+
+set_option autoImplicit false
 
 /-!
 # The coefficient source for the p-adic changed-uniformizer intertwiner

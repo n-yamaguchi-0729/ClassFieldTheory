@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainNaturality
-import AbstractClassFieldTheory.Reciprocity.Construction.DoubleCosetOrbitGeometry
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainNaturality
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.DoubleCosetOrbitGeometry
+
+set_option autoImplicit false
 
 /-!
 # Transfer--norm Frobenius geometry
@@ -308,7 +310,7 @@ theorem transferNormNaturalityFrobeniusIntermediateFiniteIndex
   let p := QuotientGroup.mk' I
   have hker : p.ker ≤ M := by
     simpa [p] using hIM
-  letI : M.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
+  let : M.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
   rw [Subgroup.finiteIndex_iff,
     M.index_map_eq (QuotientGroup.mk'_surjective I) hker]
   exact Subgroup.FiniteIndex.index_ne_zero
@@ -326,13 +328,13 @@ theorem transferNormNaturalityFrobeniusIntermediate_isClosed
       E L hL : Set
         (E.base.field.toSubgroup ⧸ D.extensionInertiaWithin E.base.field L
           (hL.trans E.below))) := by
-  letI : CompactSpace E.field.field.toSubgroup :=
+  let : CompactSpace E.field.field.toSubgroup :=
     isCompact_iff_compactSpace.mp E.field.field.isClosed'.isCompact
-  letI : IsClosed
+  let : IsClosed
       (D.extensionInertiaWithin E.field.field L hL :
         Set E.field.field.toSubgroup) :=
     D.extensionInertiaWithin_isClosed E.field L hL
-  letI : IsClosed (D.extensionInertiaWithin E.base.field L
+  let : IsClosed (D.extensionInertiaWithin E.base.field L
       (hL.trans E.below) : Set E.base.field.toSubgroup) :=
     D.extensionInertiaWithin_isClosed E.base L (hL.trans E.below)
   let f := D.finiteReciprocityNaturalityFrobeniusTowerMapContinuous

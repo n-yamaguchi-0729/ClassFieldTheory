@@ -1,5 +1,7 @@
-import KummerTheory.Concrete.SUnitPreparation.FullSUnitKummerExtension
-import KummerTheory.Concrete.SUnitPreparation.FiniteRadicalSupport
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.FullSUnitKummerExtension
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.FiniteRadicalSupport
+
+set_option autoImplicit false
 
 /-!
 # Restriction from an enlarged S-unit Kummer extension
@@ -93,7 +95,7 @@ noncomputable def enlargedSUnitKummerRestrictionHom
       (K := K) (Omega := Omega) n
       (enlargeByFiniteKummerRadicalSupport
         (K := K) (L := E) n hmu S)
-  letI : Algebra E N :=
+  let : Algebra E N :=
     enlargedSUnitKummerAlgebra
       (K := K) (Omega := Omega) E n hmu hexponent S
   letI : IsScalarTower K E N := by infer_instance
@@ -120,11 +122,11 @@ theorem enlargedSUnitKummerRestrictionHom_surjective
       (K := K) (Omega := Omega) n
       (enlargeByFiniteKummerRadicalSupport
         (K := K) (L := E) n hmu S)
-  letI : Algebra E N :=
+  let _ : Algebra E N :=
     enlargedSUnitKummerAlgebra
       (K := K) (Omega := Omega) E n hmu hexponent S
-  letI : IsScalarTower K E N := by infer_instance
-  letI : IsGalois K N :=
+  let : IsScalarTower K E N := by infer_instance
+  let : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n
       (enlargeByFiniteKummerRadicalSupport
@@ -155,10 +157,10 @@ noncomputable def enlargedSUnitKummerEmbeddedExtension
       (K := K) (Omega := Omega) n
       (enlargeByFiniteKummerRadicalSupport
         (K := K) (L := E) n hmu S)
-  letI : Algebra E N :=
+  let : Algebra E N :=
     enlargedSUnitKummerAlgebra
       (K := K) (Omega := Omega) E n hmu hexponent S
-  letI : IsScalarTower K E N := by infer_instance
+  let : IsScalarTower K E N := by infer_instance
   exact (IsScalarTower.toAlgHom K E N).fieldRange
 
 /-- The kernel of restriction is precisely the subgroup fixing the
@@ -184,10 +186,10 @@ theorem enlargedSUnitKummerRestrictionHom_ker_eq_fixingSubgroup
   let N :=
     fullSUnitKummerExtension
       (K := K) (Omega := Omega) n S'
-  letI : Algebra E N :=
+  let _ : Algebra E N :=
     enlargedSUnitKummerAlgebra
       (K := K) (Omega := Omega) E n hmu hexponent S
-  letI : IsScalarTower K E N := by infer_instance
+  let _ : IsScalarTower K E N := by infer_instance
   let M : IntermediateField K N :=
     (IsScalarTower.toAlgHom K E N).fieldRange
   change
@@ -251,10 +253,10 @@ theorem fixedField_enlargedSUnitKummerRestrictionHom_ker
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : IsGalois K N :=
+  let : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
   rw [
@@ -357,10 +359,10 @@ theorem enlargedSUnitKummerCyclicFixedField_isGalois
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : IsGalois K N :=
+  let : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
-  letI : Finite Gal(N/K) :=
+  let : Finite Gal(N/K) :=
     finite_fullSUnitKummerExtension_galois
       (K := K) (Omega := Omega) n hnK hmu S'
   change
@@ -406,7 +408,7 @@ theorem enlargedSUnitKummerCyclicFixedField_finrank
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
   change
@@ -452,7 +454,7 @@ theorem enlargedSUnitKummerCyclicFixedField_isCyclic
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
   let P : Subgroup Gal(N/K) :=

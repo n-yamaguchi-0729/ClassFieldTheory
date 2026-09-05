@@ -1,7 +1,11 @@
-import RamificationTheory.LocalField
-import LubinTate.FiniteLevel.StandardLocalField
-import LubinTate.FiniteLevel.HerbrandFormula
-import LubinTate.FiniteLevel.LevelFieldTower
+import ValuedFieldTheory.Ramification.LocalField.Core
+import ValuedFieldTheory.Ramification.LocalField.BaseChange
+import ValuedFieldTheory.Ramification.LocalField.Unramified
+import ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
+import ClassFieldTheory.LubinTate.FiniteLevel.HerbrandFormula
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelFieldTower
+
+set_option autoImplicit false
 
 /-!
 # Upper ramification groups of standard Lubin--Tate levels
@@ -51,14 +55,14 @@ theorem
       localUpperRamificationGroup K L t := by
   let F := standardLocalField K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
   let base := localCompleteDVF K
   let targetLocal := chosenLocalExtensionCompleteDVF K L
   let targetLT := standardLubinTateLevelCompleteDVF hπ n
-  letI : base.valuation.HasExtension targetLT.valuation := by
+  let : base.valuation.HasExtension targetLT.valuation := by
     change F.toCompleteDVF.valuation.HasExtension targetLT.valuation
     exact standardLubinTateLevelCompleteDVF_hasExtension hπ n
   let huniqLocal :
@@ -121,13 +125,13 @@ theorem standardLubinTateRealUpperRamificationGroup_eq_restrictKer
   let m := k - 1
   let E := standardLubinTateLevelField hπ m
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     standardLubinTateLevelField_finiteDimensional hπ m
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     standardLubinTateLevelField_isGalois (F := F) hπ m
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
   let hmn : m ≤ n := by
     dsimp only [m]
@@ -172,9 +176,9 @@ theorem standardLubinTateRealUpperRamificationGroup_eq_restrictKer
         hπ n (k : ℝ))).1
     exact hmap.trans hLowerBot
   have hψ_surjective : Function.Surjective ψ := by
-    letI : Algebra E L :=
+    let : Algebra E L :=
       RingHom.toAlgebra (IntermediateField.inclusion hEL).toRingHom
-    letI : IsScalarTower K E L :=
+    let : IsScalarTower K E L :=
       IsScalarTower.of_algebraMap_eq' rfl
     change Function.Surjective
       (AlgEquiv.restrictNormalHom E :

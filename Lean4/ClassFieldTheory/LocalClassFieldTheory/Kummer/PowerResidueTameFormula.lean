@@ -1,12 +1,14 @@
-import AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
-import KummerTheory.Concrete.FiniteDualSeparation
-import KummerTheory.Concrete.LocalUnitKummerUnramified
-import LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
-import LocalClassFieldTheory.Kummer.LocalHilbertPairing
-import LocalFieldTheory.NonarchimedeanLocalField.ResidueUnits
-import LocalFieldTheory.NonarchimedeanLocalField.FiniteExtensionTopology
-import LocalFieldTheory.NonarchimedeanLocalField.UnramifiedFrobenius
-import LocalFieldTheory.NonarchimedeanLocalField.ValuationExactSequence
+import ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
+import GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
+import GaloisCohomology.Kummer.Concrete.LocalUnitKummerUnramified
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
+import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueUnits
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionTopology
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+
+set_option autoImplicit false
 
 /-!
 # Tame local power-residue formula
@@ -202,7 +204,7 @@ theorem residue_arithmeticFrobenius_integerUnitQuotient
               u / u)) =
       (residueUnitsConcreteEquiv L (integerUnitsToResidueUnits L u)) ^
         (Nat.card 𝓀[K] - 1) := by
-  letI : Fintype 𝓀[K] := Fintype.ofFinite _
+  let : Fintype 𝓀[K] := Fintype.ofFinite _
   let phi : Gal(L / K) :=
     arithmeticFrobeniusOfUnramifiedValuation K L
   let uBar : 𝓀[L]ˣ :=
@@ -382,7 +384,7 @@ theorem dvd_residueCard_sub_one_of_primitiveRoots
     (hn : ValuativeRel.valuation K ((n : ℕ) : K) = 1)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) :
     (n : ℕ) ∣ Nat.card 𝓀[K] - 1 := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   have hroots :
       Nat.card (rootsOfUnity (n : ℕ) 𝓀[K]) = (n : ℕ) := by
     calc
@@ -522,7 +524,7 @@ theorem localNthRootsReductionEquiv_localTamePowerResidueSymbol
           rw [← Nat.card_eq_fintype_card]
           exact dvd_residueCard_sub_one_of_primitiveRoots K n hn hmu)
         (integerUnitsToResidueUnits K u) := by
-  letI : Fintype 𝓀[K] := Fintype.ofFinite _
+  let : Fintype 𝓀[K] := Fintype.ofFinite _
   exact (localNthRootsReductionEquiv K n hn hmu).apply_symm_apply _
 
 /-- The tame power-residue symbol embedded in an unramified extension is the
@@ -548,7 +550,7 @@ theorem nthRootsSubgroupMap_localTamePowerResidueSymbol_eq_arithmeticFrobenius_r
         (localTamePowerResidueSymbol K n hn hmu u)).1 =
       rootQuotient (K := K) (L := L) beta
         (arithmeticFrobeniusOfUnramifiedValuation K L) := by
-  letI : Fintype 𝓀[K] := Fintype.ofFinite _
+  let : Fintype 𝓀[K] := Fintype.ofFinite _
   let phi : Gal(L / K) :=
     arithmeticFrobeniusOfUnramifiedValuation K L
   have hbetaPowFixed :
@@ -615,8 +617,14 @@ theorem nthRootsSubgroupMap_localTamePowerResidueSymbol_eq_arithmeticFrobenius_r
             (residueUnitsConcreteEquiv K
               (integerUnitsToResidueUnits K u)) ^
           ((Nat.card 𝓀[K] - 1) / (n : ℕ)) := by
-    simpa only [quotientO, betaFrobeniusO, betaO, phi,
-      residueUnitsConcreteEquiv_apply] using
+    change
+      residueUnitsConcreteEquiv L
+          (integerUnitsToResidueUnits L quotientO) =
+        residueUnitsConcreteEquiv L
+            (residueUnitsMapOfValuationExtension K L
+              (integerUnitsToResidueUnits K u)) ^
+          ((Nat.card 𝓀[K] - 1) / (n : ℕ))
+    simpa only [quotientO, betaFrobeniusO, betaO, phi] using
       residue_arithmeticFrobenius_kummerRootQuotient
         K L n hn hmu u beta hbetaPow
   have htameReduction :
@@ -647,9 +655,8 @@ theorem nthRootsSubgroupMap_localTamePowerResidueSymbol_eq_arithmeticFrobenius_r
           residueUnitsConcreteEquiv K
               (integerUnitsToResidueUnits K u) ^
             ((Fintype.card 𝓀[K] - 1) / (n : ℕ)) := by
-        simpa only [
-          AlgebraicNumberTheory.PowerResidueSymbols.finiteFieldPowerResidueSymbol_apply,
-          residueUnitsConcreteEquiv_apply] using hvalue
+        rw [← AlgebraicNumberTheory.PowerResidueSymbols.finiteFieldPowerResidueSymbol_apply]
+        exact hvalue
       _ = residueUnitsConcreteEquiv K
             (integerUnitsToResidueUnits K u) ^
           ((Nat.card 𝓀[K] - 1) / (n : ℕ)) := by
@@ -715,23 +722,23 @@ theorem
   let b : Kˣ := integerUnitsToFieldUnits K u
   let E := chosenSimpleKummerExtension K n hnK b
   let beta : Eˣ := chosenSimpleKummerRootUnit K n hnK b
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NontriviallyNormedField E :=
+  let : NontriviallyNormedField E :=
     finiteExtensionSpectralNormedField K E
-  letI : ValuativeRel E :=
+  let : ValuativeRel E :=
     finiteExtensionSpectralValuativeRel K E
-  letI : IsNonarchimedeanLocalField E :=
+  let : IsNonarchimedeanLocalField E :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K E
-  letI : Valuation.HasExtension
+  let : Valuation.HasExtension
       (ValuativeRel.valuation K) (ValuativeRel.valuation E) :=
     finiteExtensionSpectralValuation_hasExtension K E
-  letI : Algebra 𝒪[K] E := Algebra.ofSubsemiring 𝒪[K]
-  letI : IsIntegralClosure 𝒪[E] 𝒪[K] E :=
+  let : Algebra 𝒪[K] E := Algebra.ofSubsemiring 𝒪[K]
+  let : IsIntegralClosure 𝒪[E] 𝒪[K] E :=
     localCompleteDVF_integerRing_isIntegralClosure K E
-  letI : Module.Finite 𝒪[K] 𝒪[E] :=
+  let : Module.Finite 𝒪[K] 𝒪[E] :=
     localCompleteDVF_integerRing_moduleFinite K E
   have hbetaPowUnits :
       beta ^ (n : ℕ) = Units.map (algebraMap K E).toMonoidHom b := by
@@ -758,7 +765,7 @@ theorem
       (IntermediateField.adjoin_simple_eq_top_iff_of_isAlgebraic
         (Algebra.IsAlgebraic.isAlgebraic (beta : E))).mp
     exact hgenIntermediate
-  letI : IsUnramifiedValuedExtension K E :=
+  let : IsUnramifiedValuedExtension K E :=
     isUnramifiedValuedExtension_of_unit_kummer_generator
       n (b : K) (beta : E) hbVal hn hbetaVal hbetaPow hgen
   let piInv : Kˣ := inverseIntegerRingUniformizerFieldUnit K
@@ -859,23 +866,23 @@ theorem localHilbertSymbol_integerUnit_integerUnit_eq_one
   let b : Kˣ := integerUnitsToFieldUnits K v
   let E := chosenSimpleKummerExtension K n hnK b
   let beta : Eˣ := chosenSimpleKummerRootUnit K n hnK b
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NontriviallyNormedField E :=
+  let : NontriviallyNormedField E :=
     finiteExtensionSpectralNormedField K E
-  letI : ValuativeRel E :=
+  let : ValuativeRel E :=
     finiteExtensionSpectralValuativeRel K E
-  letI : IsNonarchimedeanLocalField E :=
+  let : IsNonarchimedeanLocalField E :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K E
-  letI : Valuation.HasExtension
+  let : Valuation.HasExtension
       (ValuativeRel.valuation K) (ValuativeRel.valuation E) :=
     finiteExtensionSpectralValuation_hasExtension K E
-  letI : Algebra 𝒪[K] E := Algebra.ofSubsemiring 𝒪[K]
-  letI : IsIntegralClosure 𝒪[E] 𝒪[K] E :=
+  let : Algebra 𝒪[K] E := Algebra.ofSubsemiring 𝒪[K]
+  let : IsIntegralClosure 𝒪[E] 𝒪[K] E :=
     localCompleteDVF_integerRing_isIntegralClosure K E
-  letI : Module.Finite 𝒪[K] 𝒪[E] :=
+  let : Module.Finite 𝒪[K] 𝒪[E] :=
     localCompleteDVF_integerRing_moduleFinite K E
   have hbetaPowUnits :
       beta ^ (n : ℕ) = Units.map (algebraMap K E).toMonoidHom b := by
@@ -902,7 +909,7 @@ theorem localHilbertSymbol_integerUnit_integerUnit_eq_one
       (IntermediateField.adjoin_simple_eq_top_iff_of_isAlgebraic
         (Algebra.IsAlgebraic.isAlgebraic (beta : E))).mp
     exact hgenIntermediate
-  letI : IsUnramifiedValuedExtension K E :=
+  let : IsUnramifiedValuedExtension K E :=
     isUnramifiedValuedExtension_of_unit_kummer_generator
       n (b : K) (beta : E) hbVal hn hbetaVal hbetaPow hgen
   have haVal : valuationMap K (Additive.ofMul a) = 0 := by

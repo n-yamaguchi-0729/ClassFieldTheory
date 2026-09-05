@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.Cohomology.Herbrand
-import AlgebraicNumberTheory.Idele.Extension.IdeleClassBaseChange
-import AlgebraicNumberTheory.Idele.Extension.EmbeddingNorm
-import AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleClassBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.EmbeddingNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+
+set_option autoImplicit false
 
 /-!
 # Relative and ordinary idele-class norms

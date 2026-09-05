@@ -3,6 +3,8 @@ import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.FieldTheory.IsSepClosed
 import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
 
+set_option autoImplicit false
+
 /-!
 # Absolute abelianization inside the separable closure
 

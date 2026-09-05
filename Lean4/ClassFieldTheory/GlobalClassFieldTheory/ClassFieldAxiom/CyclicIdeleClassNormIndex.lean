@@ -1,15 +1,24 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient
-import AlgebraicNumberTheory.Idele.Principal
-import AlgebraicNumberTheory.Idele.ClassGroup.BaseChange
-import AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
-import KummerTheory.Concrete.CyclotomicPrimeBaseChange
-import AlgebraicNumberTheory.Galois.CyclicPrimeDegreeSubextension
-import GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
-import AlgebraicNumberTheory.Ramification.Splitting.PrimeOrderFixedField
-import LocalClassFieldTheory.ClassFormation.CohomologyBridge
-import LocalClassFieldTheory.ClassFormation.Hilbert90
-import CyclicCohomology.Herbrand.HerbrandLowDegree.TateComparison
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.ArchimedeanPowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlaceCompletionInstances
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.LocalResidueArithmetic
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlacePowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.NormContainment
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedIdeleIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedPrincipalQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.PrimePowerKummerIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Principal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ClassFieldTheory.KummerTheory.Concrete.CyclotomicPrimeBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeDegreeSubextension
+import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.PrimeOrderFixedField
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.CohomologyBridge
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Hilbert90
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.TateComparison
+
+set_option autoImplicit false
 
 /-!
 # The global class-field axiom
@@ -75,11 +84,18 @@ theorem ideleClassHerbrandH0_pow_finrank_eq_one
     letI :=
       RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
     q ^ Module.finrank K L = 1 := by
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   rw [← IsGalois.card_aut_eq_finrank,
     Nat.card_eq_fintype_card]
   exact herbrandH0_pow_card_eq_one q
+
+section NormQuotientCommutativity
+
+local instance cyclicNormBase_isMulCommutative
+    (A : Type) [Field A] [NumberField A] :
+    IsMulCommutative (IdeleClassGroup A) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- The concrete class-norm quotient `C_K / N C_L` has exponent dividing
 `[L:K]`. -/
@@ -90,7 +106,7 @@ theorem ideleClassNormQuotient_pow_finrank_eq_one
     [FiniteDimensional K L] [IsGalois K L]
     (q : RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L) :
     q ^ Module.finrank K L = 1 := by
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   let e :=
     RelativeIdeleGroup.Cohomology.ideleClassHerbrandH0EquivNormQuotient K L
@@ -139,25 +155,24 @@ theorem ideleClassNormQuotient_pow_injective_of_coprime
     (hd : d.Coprime (Module.finrank K L)) :
     Function.Injective
       (fun q : RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L => q ^ d) := by
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   let e :=
     RelativeIdeleGroup.Cohomology.ideleClassHerbrandH0EquivNormQuotient K L
-  let quotientGroup :
-      Group (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L) :=
-    inferInstance
-  letI : CommGroup
-      (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L) :=
-    { quotientGroup with
-      mul_comm := by
-        intro x y
-        apply e.symm.injective
-        simp only [map_mul]
-        rw [mul_comm] }
-  exact pow_injective_of_exponent_of_coprime
-    (A := RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L)
-    (Module.finrank K L) d
-    (ideleClassNormQuotient_pow_finrank_eq_one K L) hd
+  have hpow :
+      Function.Injective
+        (fun x : HerbrandH0 (L ≃ₐ[K] L) (RelativeIdeleGroup.ClassGroup K L) =>
+          x ^ d) :=
+    pow_injective_of_exponent_of_coprime
+      (A := HerbrandH0 (L ≃ₐ[K] L) (RelativeIdeleGroup.ClassGroup K L))
+      (Module.finrank K L) d
+      (ideleClassHerbrandH0_pow_finrank_eq_one K L) hd
+  intro x y hxy
+  apply e.symm.injective
+  apply hpow
+  exact
+    ((map_pow e.symm x d).symm.trans (congrArg e.symm hxy)).trans
+      (map_pow e.symm y d)
 
 /-- Source-producing form of the roots-of-unity base-change step.  For a
 pushout square `N = M ⊗[K] L`, if `[M:K]` is coprime
@@ -189,6 +204,13 @@ theorem pushoutNormQuotientMap_injective_of_coprime
     K M L N
     (ideleClassNormQuotient_pow_injective_of_coprime
       K L (Module.finrank K M) hcoprime)
+
+section IntermediateNormQuotientCommutativity
+
+local instance cyclicNormRelative_isMulCommutative
+    (A B : Type) [Field A] [NumberField A] [Field B] [Algebra A B] :
+    IsMulCommutative (RelativeIdeleGroup.ClassGroup A B) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- The pushout map with its target changed from the fixed-bottom tower
 presentation to the actual norm quotient `C_M / N_{N/M} C_N`.
@@ -319,25 +341,25 @@ theorem ideleClassNorm_index_le_prime_of_finrank_eq
     (p : ℕ) (hp : p.Prime)
     (hdegree : Module.finrank K L = p) :
     (RelativeIdeleGroup.Cohomology.ideleClassNorm K L).range.index ≤ p := by
-  letI : NeZero p := ⟨hp.ne_zero⟩
+  let : NeZero p := ⟨hp.ne_zero⟩
   let M := KummerTheory.PrimeCyclotomicBase K p
   let N := KummerTheory.PrimeCyclotomicPushout K L p
-  letI : Field N :=
+  let : Field N :=
     KummerTheory.primeCyclotomicPushoutField
       K L p hp hdegree
-  letI : Algebra L N :=
+  let : Algebra L N :=
     Algebra.TensorProduct.rightAlgebra
-  letI : Algebra M N :=
+  let : Algebra M N :=
     KummerTheory.primeCyclotomicPushoutAlgebra
       K L p hp hdegree
-  letI : FiniteDimensional M N :=
+  let : FiniteDimensional M N :=
     Module.Finite.of_restrictScalars_finite K M N
-  letI : FiniteDimensional L N :=
+  let : FiniteDimensional L N :=
     Module.Finite.of_restrictScalars_finite K L N
-  letI : NumberField N :=
+  let : NumberField N :=
     KummerTheory.primeCyclotomicPushout_numberField
       K L p hp hdegree
-  letI : IsGalois M N :=
+  let : IsGalois M N :=
     KummerTheory.primeCyclotomicPushout_isGalois
       K L p hp hdegree
   let n : ℕ+ := ⟨p, hp.pos⟩
@@ -363,7 +385,7 @@ theorem ideleClassNorm_index_le_prime_of_finrank_eq
         p := by
     rw [← Subgroup.index_eq_card]
     exact hTargetIndex
-  letI :
+  let :
       Finite (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient M N) :=
     Nat.finite_of_card_ne_zero (by
       rw [hTargetCard]
@@ -397,12 +419,12 @@ theorem ideleClassNormQuotient_card_le_actual_tower_mul
     Nat.card (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L) ≤
       Nat.card (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient M L) *
         Nat.card (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K M) := by
-  letI : Finite (RelativeIdeleGroup.ClassNormQuotient M L) := by
+  let : Finite (RelativeIdeleGroup.ClassNormQuotient M L) := by
     change
       Finite
         (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient M L)
     infer_instance
-  letI : Finite (RelativeIdeleGroup.ClassNormQuotient K M) := by
+  let : Finite (RelativeIdeleGroup.ClassNormQuotient K M) := by
     change
       Finite
         (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K M)
@@ -414,7 +436,7 @@ theorem ideleClassNormQuotient_card_le_actual_tower_mul
   let e :=
     intermediateClassNormQuotientBaseChangeMulEquiv
       K M L
-  letI :
+  let :
       Finite
         (IntermediateClassNormQuotient K M L) :=
     Finite.of_injective e e.injective
@@ -430,6 +452,8 @@ theorem ideleClassNormQuotient_card_le_actual_tower_mul
           Nat.card
             (RelativeIdeleGroup.ClassNormQuotient K M) := by
       rw [Nat.card_congr e.toEquiv]
+
+end IntermediateNormQuotientCommutativity
 
 /-- Relative-coordinate source for the norm-index calculation. -/
 theorem relativeIdeleClassNorm_index_eq_finrank_cyclic
@@ -472,19 +496,19 @@ theorem relativeIdeleClassNorm_index_eq_finrank_cyclic
       let M :=
         cyclicPrimeDegreeIntermediate
           (K := K) (L := L) hdegreeLarge
-      letI : IsGalois K M :=
+      let : IsGalois K M :=
         cyclicPrimeDegreeIntermediate_isGalois
           (K := K) (L := L) hdegreeLarge
-      letI : IsGalois M L :=
+      let : IsGalois M L :=
         cyclicPrimeDegreeIntermediate_top_isGalois
           (K := K) (L := L) hdegreeLarge
-      letI : IsCyclic (M ≃ₐ[K] M) :=
+      let : IsCyclic (M ≃ₐ[K] M) :=
         cyclicPrimeDegreeIntermediate_base_isCyclic
           (K := K) (L := L) hdegreeLarge
-      letI : IsCyclic (L ≃ₐ[M] L) :=
+      let : IsCyclic (L ≃ₐ[M] L) :=
         cyclicPrimeDegreeIntermediate_top_isCyclic
           (K := K) (L := L) hdegreeLarge
-      letI : NumberField M :=
+      let : NumberField M :=
         NumberField.of_module_finite K M
       have hp : p.Prime := by
         simpa only [p] using
@@ -544,12 +568,12 @@ theorem relativeIdeleClassNorm_index_eq_finrank_cyclic
             Module.finrank K M := by
         rw [← Subgroup.index_eq_card]
         exact hBaseIndex
-      letI :
+      let :
           Finite (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient M L) :=
         Nat.finite_of_card_ne_zero (by
           rw [hTopCard]
           exact Nat.ne_of_gt Module.finrank_pos)
-      letI :
+      let :
           Finite (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K M) :=
         Nat.finite_of_card_ne_zero (by
           rw [hBaseCard]
@@ -616,12 +640,14 @@ theorem relativeIdeleClassNormQuotient_finite_of_actual_tower
     [Finite (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient M L)]
     [Finite (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K M)] :
     Finite (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L) := by
-  letI : Finite (RelativeIdeleGroup.ClassNormQuotient M L) := by
+  let : IsMulCommutative (RelativeIdeleGroup.ClassGroup K M) :=
+    ⟨⟨fun a b => mul_comm a b⟩⟩
+  let : Finite (RelativeIdeleGroup.ClassNormQuotient M L) := by
     change
       Finite
         (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient M L)
     infer_instance
-  letI : Finite (RelativeIdeleGroup.ClassNormQuotient K M) := by
+  let : Finite (RelativeIdeleGroup.ClassNormQuotient K M) := by
     change
       Finite
         (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K M)
@@ -630,7 +656,7 @@ theorem relativeIdeleClassNormQuotient_finite_of_actual_tower
   let e :=
     intermediateClassNormQuotientBaseChangeMulEquiv
       K M L
-  letI :
+  let :
       Finite
         (IntermediateClassNormQuotient K M L) :=
     Finite.of_injective e e.injective
@@ -638,14 +664,14 @@ theorem relativeIdeleClassNormQuotient_finite_of_actual_tower
     intermediateToCompositeNormQuotient K M L
   let g :=
     compositeToBaseNormQuotient K M L
-  letI :
+  let :
       Fintype
         (IntermediateClassNormQuotient K M L) :=
     Fintype.ofFinite _
-  letI :
+  let :
       Fintype (RelativeIdeleGroup.ClassNormQuotient K M) :=
     Fintype.ofFinite _
-  letI :
+  let :
       Fintype
         (TowerCompositeClassNormQuotient K M L) :=
     Group.fintypeOfKerEqRange f g
@@ -677,9 +703,9 @@ theorem
     · have hAutCard :
           Nat.card (L ≃ₐ[K] L) = 1 := by
         rw [IsGalois.card_aut_eq_finrank K L, hdegreeOne]
-      letI : Subsingleton (L ≃ₐ[K] L) :=
+      let : Subsingleton (L ≃ₐ[K] L) :=
         (Nat.card_eq_one_iff_unique.mp hAutCard).1
-      letI : IsCyclic (L ≃ₐ[K] L) := inferInstance
+      let : IsCyclic (L ≃ₐ[K] L) := inferInstance
       have hCard :
           Nat.card
               (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L) =
@@ -687,7 +713,7 @@ theorem
         rw [← Subgroup.index_eq_card,
           relativeIdeleClassNorm_index_eq_finrank_cyclic K L,
           hdegreeOne]
-      letI :
+      let :
           Finite
             (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L) :=
         Nat.finite_of_card_ne_zero (by
@@ -704,11 +730,11 @@ theorem
       let M :=
         primeOrderFixedField
           (K := K) (L := L) hdegreeLarge
-      letI : NumberField M :=
+      let : NumberField M :=
         NumberField.of_module_finite K M
-      letI : IsAbelianGalois K M := inferInstance
-      letI : IsAbelianGalois M L := inferInstance
-      letI : IsCyclic (L ≃ₐ[M] L) :=
+      let : IsAbelianGalois K M := inferInstance
+      let : IsAbelianGalois M L := inferInstance
+      let : IsCyclic (L ≃ₐ[M] L) :=
         primeOrderFixedField_isCyclic
           (K := K) (L := L) hdegreeLarge
       have hp :
@@ -745,7 +771,7 @@ theorem
                 (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K M) ≤
               Module.finrank K M :=
         ih (Module.finrank K M) hBaseLtDegree K M rfl
-      letI :
+      let :
           Finite
             (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K M) :=
         hBaseData.1
@@ -755,13 +781,13 @@ theorem
             Module.finrank M L := by
         rw [← Subgroup.index_eq_card]
         exact relativeIdeleClassNorm_index_eq_finrank_cyclic M L
-      letI :
+      let :
           Finite
             (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient M L) :=
         Nat.finite_of_card_ne_zero (by
           rw [hTopCard]
           exact Nat.ne_of_gt Module.finrank_pos)
-      letI :
+      let :
           Finite
             (RelativeIdeleGroup.Cohomology.IdeleClassNormQuotient K L) :=
         relativeIdeleClassNormQuotient_finite_of_actual_tower
@@ -844,9 +870,9 @@ theorem ideleClass_lowDegree_card_eq_finrank_cyclic
           (HerbrandHMinusOne (L ≃ₐ[K] L)
             (RelativeIdeleGroup.ClassGroup K L) sigma) =
         1 := by
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
-  letI : IsCyclic (L ≃ₐ[K] L) :=
+  let : IsCyclic (L ≃ₐ[K] L) :=
     ⟨⟨sigma, hsigma⟩⟩
   obtain ⟨hC, hCvalue⟩ :=
     _root_.GlobalClassFieldTheory.Cohomology.ideleClass_herbrandQuotient_eq_card_of_supported_local_calculation
@@ -858,12 +884,12 @@ theorem ideleClass_lowDegree_card_eq_finrank_cyclic
         (K := K) (L := L))
       (_root_.GlobalClassFieldTheory.Cohomology.chosenFinitePlaceIsUnramified_of_notMem_ideleClassHerbrandSupport
         (K := K) (L := L))
-  letI :
+  let :
       Finite
         (HerbrandH0 (L ≃ₐ[K] L)
           (RelativeIdeleGroup.ClassGroup K L)) :=
     hC.1
-  letI :
+  let :
       Finite
         (HerbrandHMinusOne (L ≃ₐ[K] L)
           (RelativeIdeleGroup.ClassGroup K L) sigma) :=
@@ -927,19 +953,19 @@ theorem ideleClass_tate_lowDegree_finite_card_eq_finrank_cyclic
             (Rep.ofMulDistribMulAction (L ≃ₐ[K] L)
               (RelativeIdeleGroup.ClassGroup K L)) (-1)) =
         1 := by
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   have hHerbrand :=
     ideleClass_lowDegree_card_eq_finrank_cyclic
       K L sigma hsigma
-  letI :
+  let :
       Finite
         (HerbrandH0 (L ≃ₐ[K] L)
           (RelativeIdeleGroup.ClassGroup K L)) :=
     Nat.finite_of_card_ne_zero (by
       rw [hHerbrand.1]
       exact Nat.ne_of_gt Module.finrank_pos)
-  letI :
+  let :
       Finite
         (HerbrandHMinusOne (L ≃ₐ[K] L)
           (RelativeIdeleGroup.ClassGroup K L) sigma) :=
@@ -967,13 +993,13 @@ theorem ideleClass_tate_lowDegree_finite_card_eq_finrank_cyclic
       (G := L ≃ₐ[K] L)
       (A := RelativeIdeleGroup.ClassGroup K L)
       sigma hsigma).toLinearEquiv.toEquiv
-  letI :
+  let :
       Finite
         (tateCohomology
           (Rep.ofMulDistribMulAction (L ≃ₐ[K] L)
             (RelativeIdeleGroup.ClassGroup K L)) 0) :=
     Finite.of_injective e0 e0.injective
-  letI :
+  let :
       Finite
         (tateCohomology
           (Rep.ofMulDistribMulAction (L ≃ₐ[K] L)
@@ -1033,7 +1059,7 @@ theorem ideleClass_tateHMinusOne_subsingleton_cyclic
         (tateCohomology
           (Rep.ofMulDistribMulAction (L ≃ₐ[K] L)
             (RelativeIdeleGroup.ClassGroup K L)) (-1))) := by
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   have h :=
     ideleClass_tate_lowDegree_finite_card_eq_finrank_cyclic
@@ -1056,7 +1082,7 @@ theorem fieldUnitsHerbrandHMinusOne_subsingleton
     letI :=
       LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
     Subsingleton (HerbrandHMinusOne (L ≃ₐ[K] L) Lˣ σ) := by
-  letI :=
+  let :=
     LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
   let e :=
     LocalClassFieldTheory.herbrandHminusOneEquivUnitsTateHminusOne
@@ -1083,9 +1109,9 @@ theorem fieldUnitsHerbrandHMinusOne_card_eq_one
     letI :=
       LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
     Nat.card (HerbrandHMinusOne (L ≃ₐ[K] L) Lˣ σ) = 1 := by
-  letI :=
+  let :=
     LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :
+  let :
       Subsingleton
         (HerbrandHMinusOne (L ≃ₐ[K] L) Lˣ σ) :=
     fieldUnitsHerbrandHMinusOne_subsingleton K L σ hσ
@@ -1110,16 +1136,16 @@ theorem principalIdelesHerbrandHMinusOne_subsingleton
     Subsingleton
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeIdeleGroup.principalSubgroup K L) σ) := by
-  letI :=
+  let :=
     LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.principalIdeleMulDistribMulAction K L
   let e :=
     fieldUnitsHerbrandHMinusOneEquivPrincipalIdeles
       K L σ
-  letI :
+  let :
       Subsingleton
         (HerbrandHMinusOne (L ≃ₐ[K] L) Lˣ σ) :=
     fieldUnitsHerbrandHMinusOne_subsingleton K L σ hσ
@@ -1144,18 +1170,20 @@ theorem principalIdelesHerbrandHMinusOne_card_eq_one
     Nat.card
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeIdeleGroup.principalSubgroup K L) σ) = 1 := by
-  letI :=
+  let :=
     LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.principalIdeleMulDistribMulAction K L
-  letI :
+  let :
       Subsingleton
         (HerbrandHMinusOne (L ≃ₐ[K] L)
           (RelativeIdeleGroup.principalSubgroup K L) σ) :=
     principalIdelesHerbrandHMinusOne_subsingleton K L σ hσ
   exact Nat.card_eq_one_iff_unique.mpr
     ⟨inferInstance, ⟨1⟩⟩
+
+end NormQuotientCommutativity
 
 end GlobalClassFieldTheory.ClassFieldAxiom

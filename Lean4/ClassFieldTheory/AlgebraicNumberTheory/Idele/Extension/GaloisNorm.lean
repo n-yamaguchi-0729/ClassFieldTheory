@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.Extension.NormProperties
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormProperties
 import Mathlib.Algebra.Module.LinearMap.Polynomial
 import Mathlib.LinearAlgebra.Charpoly.BaseChange
 import Mathlib.RingTheory.TensorProduct.MvPolynomial
+
+set_option autoImplicit false
 
 /-!
 # The Galois product formula for the relative idele norm
@@ -231,7 +233,7 @@ theorem eval₂_conjugatePolynomial_baseChange
             Algebra.TensorProduct.basis A b i) := by
       apply Finset.sum_congr rfl
       intro i hi
-      simp [Algebra.TensorProduct.basis_apply,
+      simp [scalarConjugation, Algebra.TensorProduct.basis_apply,
         Algebra.TensorProduct.tmul_mul_tmul,
         Algebra.smul_def]
     _ = scalarConjugation (K := K) (L := L) A σ

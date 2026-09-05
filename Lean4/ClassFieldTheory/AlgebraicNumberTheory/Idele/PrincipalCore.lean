@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.Basic
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+
+set_option autoImplicit false
 
 /-!
 # Principal ideles and the idele class group

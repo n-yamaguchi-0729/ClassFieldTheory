@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.BasePlaceSelection
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.BasePlaceSelection
+
+set_option autoImplicit false
 
 /-!
 # The finite prime set for an S-unit Kummer extension

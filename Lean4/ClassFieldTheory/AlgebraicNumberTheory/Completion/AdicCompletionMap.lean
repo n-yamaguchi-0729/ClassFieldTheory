@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Completion.ExtensionIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
 import Mathlib.NumberTheory.RamificationInertia.Valuation
+
+set_option autoImplicit false
 
 /-!
 # The canonical map between adic completions
@@ -52,7 +54,7 @@ theorem finitePlaceAdicCompletionMap_coe
     finitePlaceAdicCompletionMap K L w W
         (x : w.adicCompletion K) =
       (algebraMap K L x : W.1.adicCompletion L) := by
-  letI : W.1.asIdeal.LiesOver w.asIdeal := by
+  let : W.1.asIdeal.LiesOver w.asIdeal := by
     constructor
     exact congrArg HeightOneSpectrum.asIdeal W.2.symm
   change
@@ -91,7 +93,7 @@ theorem finitePlaceAdicCompletionMap_isScalarTower
     letI : Algebra (w.adicCompletion K) (W.1.adicCompletion L) :=
       (finitePlaceAdicCompletionMap K L w W).toAlgebra
     IsScalarTower K (w.adicCompletion K) (W.1.adicCompletion L) := by
-  letI : Algebra (w.adicCompletion K) (W.1.adicCompletion L) :=
+  let : Algebra (w.adicCompletion K) (W.1.adicCompletion L) :=
     (finitePlaceAdicCompletionMap K L w W).toAlgebra
   apply IsScalarTower.of_algebraMap_eq
   intro x
@@ -108,7 +110,7 @@ theorem finitePlaceAdicCompletionMap_continuous
     (W : {W : HeightOneSpectrum (𝓞 L) //
       finitePlaceBelow (K := K) W = w}) :
     Continuous (finitePlaceAdicCompletionMap K L w W) := by
-  letI : W.1.asIdeal.LiesOver w.asIdeal := by
+  let : W.1.asIdeal.LiesOver w.asIdeal := by
     constructor
     exact congrArg HeightOneSpectrum.asIdeal W.2.symm
   unfold finitePlaceAdicCompletionMap

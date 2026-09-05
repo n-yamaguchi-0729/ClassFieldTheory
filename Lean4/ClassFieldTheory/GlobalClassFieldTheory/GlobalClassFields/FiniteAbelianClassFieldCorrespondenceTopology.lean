@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldCorrespondence
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldCorrespondence
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+
+set_option autoImplicit false
 
 /-!
 # Ordinary topology in the finite abelian class-field correspondence
@@ -30,7 +32,7 @@ open Reciprocity
 
 /-- Use the same rational algebra structure as the ordinary correspondence
 when constructing all named fixed-field carriers below. -/
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     finiteAbelianClassFieldCorrespondenceTopology_separableClosureAlgebra :
     Algebra ℚ (SeparableClosure ℚ) :=
   rationalSeparableClosureAlgebra

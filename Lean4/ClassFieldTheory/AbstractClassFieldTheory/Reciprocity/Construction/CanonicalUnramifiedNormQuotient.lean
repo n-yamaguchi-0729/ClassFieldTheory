@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.UnramifiedNormQuotient
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.UnramifiedNormQuotient
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -157,7 +159,7 @@ theorem canonicalUnramifiedNormQuotientValuation_injective
     (hUnramified : E.IsUnramified D) :
     Function.Injective
       (v.canonicalUnramifiedNormQuotientValuation E hUnramified) := by
-  letI := hnormal
+  let := hnormal
   let n := (E.degree : ℕ)
   let hn : 0 < n := E.degree.property
   have hkernel : ∀ q : FiniteNormQuotient A E.base.field
@@ -202,11 +204,11 @@ theorem canonicalUnramifiedNormQuotientValuation_injective
       ⟨a - normb, by
         rw [v.mem_unitAddSubgroup_iff, map_sub, haz', hnormb, sub_self]⟩
     let KR := E.base.toFiniteResidueAbstractField D
-    letI hnormalKR :
+    let hnormalKR :
         (extensionSubgroup KR.field E.field.field E.below).Normal := by
       change (extensionSubgroup E.base.field E.field.field E.below).Normal
       exact hnormal
-    letI hfiniteKR : Finite
+    let hfiniteKR : Finite
         (KR.field.toSubgroup ⧸
           extensionSubgroup KR.field E.field.field E.below) := by
       change Finite (E.base.field.toSubgroup ⧸
@@ -215,7 +217,7 @@ theorem canonicalUnramifiedNormQuotientValuation_injective
     obtain ⟨g, hg⟩ :=
       D.exists_quotient_generator_of_unramified
         KR E.field.field E.below hUnramified
-    letI : Fintype (E.base.field.toSubgroup ⧸
+    let : Fintype (E.base.field.toSubgroup ⧸
         extensionSubgroup E.base.field E.field.field E.below) :=
       Fintype.ofFinite _
     let Euc : FiniteUnramifiedCyclicExtension D E.base :=

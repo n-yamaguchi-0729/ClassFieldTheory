@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitsNorm
-import LocalFieldTheory.NonarchimedeanLocalField.StandardOpenSubgroups
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitsNorm
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: the sharp standard subgroup consists of norms
@@ -32,7 +34,7 @@ theorem equalCharacteristicLubinTate_fieldPrincipalUnits_le_normSubgroup
       equalCharacteristicLaurentValuativeRel F
     LocalFieldTheory.fieldPrincipalUnits F.residueField⸨X⸩ (n + 1) ≤
       equalCharacteristicLubinTateNormSubgroup F n := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   rw [← equalCharacteristicLubinTateHigherUnitSubgroup_map_toLaurentField_eq]
   rintro x ⟨a, ha, rfl⟩
@@ -52,7 +54,7 @@ theorem
     LocalFieldTheory.uniformizerPrincipalSubgroup F.residueField⸨X⸩
         ((equalCharacteristicLaurentUniformizerUnit F)⁻¹) 1 (n + 1) ≤
       equalCharacteristicLubinTateNormSubgroup F n := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   rw [LocalFieldTheory.uniformizerPrincipalSubgroup]
   apply sup_le

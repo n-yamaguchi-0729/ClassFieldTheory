@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Completion.LocalizedValuation
-import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.LocalizedValuation
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+
+set_option autoImplicit false
 
 /-!
 # The chosen localization at a finite place
@@ -331,8 +333,12 @@ noncomputable instance chosenFinitePlaceLocalizedIntegerModuleFinite
     Module.Finite
       𝒪[ChosenFinitePlaceBaseCompletion (K := K) w₀]
       𝒪[ChosenFinitePlaceLocalizedCompletion
-        (K := K) (L := L) w₀] :=
-  integerRing_moduleFinite_of_isIntegralClosure
+        (K := K) (L := L) w₀] := by
+  let : Algebra.IsSeparable
+      (ChosenFinitePlaceBaseCompletion (K := K) w₀)
+      (ChosenFinitePlaceLocalizedCompletion (K := K) (L := L) w₀) :=
+    (chosenFinitePlaceLocalizedIsGalois (K := K) (L := L) w₀).to_isSeparable
+  exact integerRing_moduleFinite_of_isIntegralClosure
     (ChosenFinitePlaceBaseCompletion (K := K) w₀)
     (ChosenFinitePlaceLocalizedCompletion
       (K := K) (L := L) w₀)

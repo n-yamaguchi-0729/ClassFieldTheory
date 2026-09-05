@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.Data.ZMod.QuotientGroup
-import CyclicCohomology.Herbrand.HerbrandLowDegree
-import LocalClassFieldTheory.ClassFormation.Valuation
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Valuation
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.ClassFormation.ValueGroupCohomology` Lean module. -/
 
 namespace LocalClassFieldTheory
@@ -28,8 +30,13 @@ theorem galoisGroupValueGroup_tateNorm_toAdd (a : Multiplicative Int) :
     Multiplicative.toAdd
         (tateNorm (Gal(L / K)) (Multiplicative Int) a) =
       (Fintype.card (Gal(L / K)) : Int) * Multiplicative.toAdd a := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
-  simp [tateNorm]
+  let := galoisGroupValueGroupMulDistribMulAction K L
+  have hnorm : tateNorm (Gal(L / K)) (Multiplicative Int) a =
+      a ^ Fintype.card (Gal(L / K)) := by
+    simp only [tateNorm, galoisGroupValueGroupMulDistribMulAction_smul,
+      Finset.prod_const, Finset.card_univ]
+  simpa only [toAdd_pow, nsmul_eq_mul] using
+    congrArg Multiplicative.toAdd hnorm
 
 /-- Reduction modulo `|G|` on the fixed subgroup of the trivial value-group
 module. -/
@@ -51,7 +58,7 @@ def galoisGroupValueGroupFixedToZModHom :
 theorem galoisGroupValueGroupFixedToZModHom_surjective :
     letI := galoisGroupValueGroupMulDistribMulAction K L
     Function.Surjective (galoisGroupValueGroupFixedToZModHom K L) := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   intro y
   rcases ZMod.intCast_surjective (Multiplicative.toAdd y) with ⟨z, hz⟩
   let x : fixedSubgroup (Gal(L / K)) (Multiplicative Int) :=
@@ -69,7 +76,7 @@ theorem galoisGroupValueGroupFixedToZModHom_ker :
     MonoidHom.ker (galoisGroupValueGroupFixedToZModHom K L) =
       (tateNormSubgroup (Gal(L / K)) (Multiplicative Int)).subgroupOf
         (fixedSubgroup (Gal(L / K)) (Multiplicative Int)) := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   ext x
   rw [MonoidHom.mem_ker]
   constructor
@@ -123,7 +130,7 @@ description rather than assumed as an extra hypothesis. -/
 theorem galoisGroupValueGroupHerbrandH0Finite :
     letI := galoisGroupValueGroupMulDistribMulAction K L
     Finite (HerbrandH0 (Gal(L / K)) (Multiplicative Int)) := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   exact Finite.of_equiv
     (Multiplicative (ZMod (Fintype.card (Gal(L / K)))))
     (galoisGroupValueGroupHerbrandH0MulEquivZMod K L).symm.toEquiv
@@ -134,8 +141,7 @@ theorem galoisGroupValueGroup_herbrandH0_card :
     letI := galoisGroupValueGroupHerbrandH0Finite K L
     Nat.card (HerbrandH0 (Gal(L / K)) (Multiplicative Int)) =
       Fintype.card (Gal(L / K)) := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
-  letI := galoisGroupValueGroupHerbrandH0Finite K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   rw [Nat.card_congr (galoisGroupValueGroupHerbrandH0MulEquivZMod K L).toEquiv]
   simp
 
@@ -146,8 +152,7 @@ theorem galoisGroupValueGroup_herbrandH0_card_eq_finrank [IsGalois K L] :
     letI := galoisGroupValueGroupHerbrandH0Finite K L
     Nat.card (HerbrandH0 (Gal(L / K)) (Multiplicative Int)) =
       Module.finrank K L := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
-  letI := galoisGroupValueGroupHerbrandH0Finite K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   rw [galoisGroupValueGroup_herbrandH0_card K L]
   exact Fintype.card_eq_nat_card.trans (IsGalois.card_aut_eq_finrank K L)
 
@@ -155,7 +160,7 @@ theorem galoisGroupValueGroup_herbrandH0_card_eq_finrank [IsGalois K L] :
 theorem galoisGroupValueGroup_normKernelSubgroup_eq_bot :
     letI := galoisGroupValueGroupMulDistribMulAction K L
     normKernelSubgroup (Gal(L / K)) (Multiplicative Int) = ⊥ := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   apply le_antisymm
   · intro x hx
     rw [Subgroup.mem_bot]
@@ -177,12 +182,12 @@ theorem galoisGroupValueGroupHerbrandHMinusOneFinite
     letI := galoisGroupValueGroupMulDistribMulAction K L
     Finite
       (HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) σ) := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
-  haveI : Subsingleton
+  let := galoisGroupValueGroupMulDistribMulAction K L
+  have : Subsingleton
       (normKernelSubgroup (Gal(L / K)) (Multiplicative Int)) := by
     rw [galoisGroupValueGroup_normKernelSubgroup_eq_bot K L]
     infer_instance
-  letI : Subsingleton
+  let : Subsingleton
       (HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) σ) :=
     ⟨fun q =>
       HerbrandHMinusOne.inductionOn σ
@@ -203,13 +208,12 @@ theorem galoisGroupValueGroup_herbrandHMinusOne_card_eq_one
     letI := galoisGroupValueGroupHerbrandHMinusOneFinite K L σ
     Nat.card
       (HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) σ) = 1 := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
-  letI := galoisGroupValueGroupHerbrandHMinusOneFinite K L σ
-  haveI : Subsingleton
+  let := galoisGroupValueGroupMulDistribMulAction K L
+  have : Subsingleton
       (normKernelSubgroup (Gal(L / K)) (Multiplicative Int)) := by
     rw [galoisGroupValueGroup_normKernelSubgroup_eq_bot K L]
     infer_instance
-  letI : Subsingleton
+  let : Subsingleton
       (HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) σ) :=
     ⟨fun q =>
       HerbrandHMinusOne.inductionOn σ

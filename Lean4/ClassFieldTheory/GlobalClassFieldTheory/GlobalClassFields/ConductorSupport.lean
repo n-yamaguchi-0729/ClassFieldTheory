@@ -1,8 +1,12 @@
-import GlobalClassFieldTheory.GlobalClassFields.ConductorLocalComparison
-import GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
-import AlgebraicNumberTheory.Completion.UnramifiedComparison
-import AlgebraicNumberTheory.Idele.Extension.IdeleNorm
-import AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorLocalComparison
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
+
+set_option autoImplicit false
 
 /-!
 # Support of the narrow finite conductor

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Ramification.Splitting.NormalClosure
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.CoordinatePlaces
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.PrimeSet
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.NormalClosure
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.CoordinatePlaces
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.PrimeSet
+
+set_option autoImplicit false
 
 /-!
 # Decomposition groups and fields for S-unit Kummer prime selection
@@ -81,13 +83,13 @@ theorem sUnitKummerKernelGenerator_mem_decompositionGroup
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
-  letI : IsGalois K N :=
+  let _ : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
-  letI : NumberField N :=
+  let : NumberField N :=
     NumberField.of_module_finite K N
   let sigmaKer :=
     sUnitKummerKernelGenerator
@@ -98,17 +100,17 @@ theorem sUnitKummerKernelGenerator_mem_decompositionGroup
   let P : Subgroup Gal(N/K) :=
     Subgroup.zpowers sigma
   let Ni := IntermediateField.fixedField P
-  letI : NumberField Ni :=
+  let : NumberField Ni :=
     NumberField.of_module_finite K Ni
-  letI : IsGalois Ni N :=
+  let : IsGalois Ni N :=
     enlargedSUnitKummerCyclicFixedField_isGalois
       (K := K) (Omega := Omega) E n hmu
       (galois_pow_eq_one_of_equiv_pi_zmod
         (K := K) E n r eG)
       S sigmaKer
-  letI : IsScalarTower K Ni N :=
+  let : IsScalarTower K Ni N :=
     IntermediateField.isScalarTower_mid Ni
-  letI : IsMulCommutative Gal(N/K) :=
+  let : IsMulCommutative Gal(N/K) :=
     KummerTheory.kummerRadicalExtension_isMulCommutative
       n hmu (fullSUnitKummerSubgroup (K := K) n S').1
   let q : HeightOneSpectrum (𝓞 Ni) :=
@@ -209,13 +211,13 @@ theorem sUnitKummerChosenDecompositionGroup_eq_zpowers
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
-  letI : IsGalois K N :=
+  let _ : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
-  letI : NumberField N :=
+  let : NumberField N :=
     NumberField.of_module_finite K N
   let D :=
     _root_.finitePlaceDecompositionGroup
@@ -229,13 +231,13 @@ theorem sUnitKummerChosenDecompositionGroup_eq_zpowers
       p v hp hv hn r eG S i
   let sigma : Gal(N/K) :=
     sigmaKer.1
-  letI : Finite Gal(N/K) :=
+  let : Finite Gal(N/K) :=
     finite_fullSUnitKummerExtension_galois
       (K := K) (Omega := Omega) n
       (by
         exact_mod_cast n.ne_zero)
       hmu S'
-  letI : IsCyclic D :=
+  let : IsCyclic D :=
     finitePlaceDecompositionGroup_isCyclic_of_chosenUnramified
       (F := K) (L := N)
       _
@@ -262,7 +264,7 @@ theorem sUnitKummerChosenDecompositionGroup_eq_zpowers
   have hlower : (n : ℕ) ≤ Nat.card D := by
     rw [← horderD]
     exact orderOf_le_card
-  letI := Fintype.ofFinite D
+  let := Fintype.ofFinite D
   have hpow (g : D) : g ^ (n : ℕ) = 1 := by
     apply Subtype.ext
     exact
@@ -329,20 +331,20 @@ theorem finitePlaceSplitsCompletely_of_mem_sUnitKummerPrimeSet
       (K := K) (Omega := Omega) n S'
   let hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
-  letI : IsGalois K N :=
+  let _ : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
-  letI : NumberField N :=
+  let _ : NumberField N :=
     NumberField.of_module_finite K N
-  letI : Algebra E N :=
+  let : Algebra E N :=
     enlargedSUnitKummerAlgebra
       (K := K) (Omega := Omega) E n hmu
       (galois_pow_eq_one_of_equiv_pi_zmod
         (K := K) E n r eG) S
-  letI : IsScalarTower K E N := by
+  let : IsScalarTower K E N := by
     infer_instance
   apply
     finitePlaceSplitsCompletely_of_decompositionGroup_le_restrictNormalHom_ker
@@ -352,7 +354,10 @@ theorem finitePlaceSplitsCompletely_of_mem_sUnitKummerPrimeSet
       (K := K) (Omega := Omega) E n hmu
       p v hp hv hn r eG S i]
   apply Subgroup.zpowers_le.mpr
-  simp [enlargedSUnitKummerRestrictionHom, N, S']
+  simpa only [enlargedSUnitKummerRestrictionHom, N, S'] using
+    (sUnitKummerKernelGenerator
+      (K := K) (Omega := Omega) E n hmu
+      p v hp hv hn r eG S i).property
 
 /-- The decomposition field of the chosen base place is the coordinate fixed
 field used in the Kummer prime-selection construction. -/
@@ -408,13 +413,13 @@ theorem sUnitKummerChosenDecompositionField_eq_coordinateFixedField
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
-  letI : IsGalois K N :=
+  let _ : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
-  letI : NumberField N :=
+  let : NumberField N :=
     NumberField.of_module_finite K N
   rw [
     sUnitKummerChosenDecompositionGroup_eq_zpowers

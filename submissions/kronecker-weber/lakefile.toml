@@ -1,0 +1,15 @@
+name = "KroneckerWeberSubmission"
+version = "0.1.0"
+defaultTargets = ["Challenge", "Solution"]
+
+[[require]]
+name = "ClassFieldTheory"
+path = "../.."
+
+[[lean_lib]]
+name = "Challenge"
+roots = ["Challenge"]
+
+[[lean_lib]]
+name = "Solution"
+roots = ["Solution"]

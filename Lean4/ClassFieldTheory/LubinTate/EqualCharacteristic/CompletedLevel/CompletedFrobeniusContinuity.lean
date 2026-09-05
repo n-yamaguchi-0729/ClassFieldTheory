@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusLift
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusLift
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: continuity of the standard completed Frobenius lift

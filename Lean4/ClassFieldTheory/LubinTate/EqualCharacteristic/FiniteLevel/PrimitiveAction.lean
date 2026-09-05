@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
 import Mathlib.FieldTheory.Finite.Basic
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: the unit action on primitive division points
@@ -244,7 +246,7 @@ theorem equalCharacteristicLubinTatePrimitivePolynomial_isRoot_bracket
   let c := PowerSeries.coeff 0 (a : F.residueField⟦X⟧)
   have hc : c ≠ 0 := powerSeries_unit_coeff_zero_ne_zero a
   have hcpow : c ^ (Nat.card F.residueField - 1) = 1 := by
-    letI := Fintype.ofFinite F.residueField
+    let := Fintype.ofFinite F.residueField
     simpa only [Nat.card_eq_fintype_card] using
       FiniteField.pow_card_sub_one_eq_one c hc
   have hziterate :

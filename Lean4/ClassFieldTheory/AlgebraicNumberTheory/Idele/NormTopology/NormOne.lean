@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
-import AlgebraicNumberTheory.Idele.PrincipalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
+
+set_option autoImplicit false
 
 /-!
 # Norms on norm-one idele groups

@@ -1,6 +1,8 @@
 import Mathlib.FieldTheory.Galois.GaloisClosure
 import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
-import RamificationTheory.InertiaCardinality
+import ValuedFieldTheory.Ramification.InertiaCardinality
+
+set_option autoImplicit false
 
 /-!
 # A finite-group degree product
@@ -48,7 +50,7 @@ theorem finrank_le_totient_prod_primePowers_of_inertia_bounds
     (hcard : ∀ p ∈ S, Nat.card (I p) ≤ Nat.totient (p.1 ^ e p)) :
     Module.finrank ℚ M ≤
       Nat.totient (∏ p ∈ S, p.1 ^ e p) := by
-  letI : Finite (M ≃ₐ[ℚ] M) := inferInstance
+  let : Finite (M ≃ₐ[ℚ] M) := inferInstance
   calc
     Module.finrank ℚ M = Nat.card (M ≃ₐ[ℚ] M) :=
       (IsGalois.card_aut_eq_finrank ℚ M).symm

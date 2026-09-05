@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.NormLimitation
-import GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormLimitation
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+
+set_option autoImplicit false
 
 /-!
 # Statement boundary for ideal norm limitation

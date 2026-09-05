@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
+import ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
 import Mathlib.NumberTheory.NumberField.Ideal.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
+
+set_option autoImplicit false
 
 /-!
 # Power-residue symbols at prime ideals and integral ideals
@@ -52,7 +54,7 @@ theorem rootsOfUnityReduction_injective
     (P : HeightOneSpectrum (𝓞 K)) (n : ℕ+)
     (hcoprime : (Ideal.absNorm P.asIdeal).Coprime (n : ℕ)) :
     Function.Injective (rootsOfUnityReduction K P (n : ℕ)) := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   intro z w hzw
   exact
     Ideal.rootsOfUnityMapQuot_injective
@@ -68,7 +70,7 @@ theorem dvd_absNorm_sub_one_of_primitiveRoots
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
     (hcoprime : (Ideal.absNorm P.asIdeal).Coprime (n : ℕ)) :
     (n : ℕ) ∣ Ideal.absNorm P.asIdeal - 1 := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   obtain ⟨zeta, hzeta⟩ := hmu
   have hzetaK : IsPrimitiveRoot zeta (n : ℕ) :=
     (mem_primitiveRoots n.pos).1 hzeta
@@ -97,7 +99,7 @@ noncomputable def rootsOfUnityReductionEquiv
     (hcoprime : (Ideal.absNorm P.asIdeal).Coprime (n : ℕ)) :
     rootsOfUnity (n : ℕ) (𝓞 K) ≃*
       rootsOfUnity (n : ℕ) (𝓞 K ⧸ P.asIdeal) := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   letI : Fintype (rootsOfUnity (n : ℕ) (𝓞 K)) :=
     Fintype.ofFinite _
   let f := rootsOfUnityReduction K P (n : ℕ)
@@ -472,7 +474,7 @@ theorem idealPowerResidueSymbol_eq_finprod
       ∏ᶠ P : HeightOneSpectrum (𝓞 K),
         idealPowerResidueFactor K I n hmu a hcoprime ha P := by
   classical
-  letI : Fintype
+  let : Fintype
       (idealPrimeDivisors K I) :=
     (idealPrimeDivisors_finite K I hI).fintype
   calc
@@ -585,7 +587,7 @@ theorem idealPowerResidueSymbol_mul
       idealPowerResidueSymbol K I hI n hmu a hcoprime ha *
         idealPowerResidueSymbol K I hI n hmu b hcoprime hb := by
   classical
-  letI : Fintype
+  let : Fintype
       (idealPrimeDivisors K I) :=
     (idealPrimeDivisors_finite K I hI).fintype
   unfold idealPowerResidueSymbol

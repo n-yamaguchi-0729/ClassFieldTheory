@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.RayClass.Topology
-import GlobalClassFieldTheory.GlobalClassFields.ConductorLocalComparison
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorLocalComparison
+
+set_option autoImplicit false
 
 /-!
 # Lattice operations on narrow finite conductors

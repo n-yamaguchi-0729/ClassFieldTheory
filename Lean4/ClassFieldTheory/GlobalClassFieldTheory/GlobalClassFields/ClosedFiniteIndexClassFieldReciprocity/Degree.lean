@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldOriginalField
-import GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldOriginalField
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidue
+
+set_option autoImplicit false
 
 /-!
 # Degree of a closed finite-index class field

@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
+
+set_option autoImplicit false
 
 /-!
 # Evaluation of algebraic closed finite-index reciprocity

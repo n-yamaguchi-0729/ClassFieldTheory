@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Adele.LocalComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.LocalComponents
 import Mathlib.Algebra.Group.TransferInstance
+
+set_option autoImplicit false
 
 /-!
 # The restricted local product of a relative adele algebra

@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.TowerRestriction
-import AlgebraicNumberTheory.Completion.AdicCompletionComparison
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.TowerRestriction
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
+
+set_option autoImplicit false
 
 /-!
 # Cross-base restriction of finite-place Artin homomorphisms
@@ -61,11 +63,11 @@ private theorem finitePlaceArtinLocalizedCompletion_algebraMap
   let vF := NumberField.HeightOneSpectrum.adicAbv F v
   let hvF : vF.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hMF :=
+  let hMF :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := F) w.1
-  letI : SMul F w.1.Completion := hMF.toSMul
-  letI : Algebra vF.Completion w.1.Completion :=
+  let : SMul F w.1.Completion := hMF.toSMul
+  let : Algebra vF.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vF w.1 w.2
   let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vF w
   let U := finitePlaceExtensionEquivAbove
@@ -286,34 +288,34 @@ theorem finitePlaceArtinLocalizedCompletion_towerPoint
     RayClass.adicAbv_isNontrivial v
   let hvK' : vK'.IsNontrivial :=
     RayClass.adicAbv_isNontrivial W
-  letI hwK :=
+  let hwK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hwK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hwK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI :=
+  let :=
     LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK w
-  letI hwK' :=
+  let hwK' :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K') w'.1
-  letI : SMul K' w'.1.Completion := hwK'.toSMul
-  letI : Algebra vK'.Completion w'.1.Completion :=
+  let : SMul K' w'.1.Completion := hwK'.toSMul
+  let : Algebra vK'.Completion w'.1.Completion :=
     AbsoluteValue.completionAlgebra vK' w'.1 w'.2
-  letI :=
+  let :=
     LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK' w'
   let C := vK.Completion
   let D := vK'.Completion
   let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
   let E' := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK' w'
-  letI : Algebra C D :=
+  let : Algebra C D :=
     (finitePlaceArtinRelativeCompletionRingHom
       (K := K) (K' := K') v W hW).toAlgebra
-  letI : Algebra E E' :=
+  let : Algebra E E' :=
     (finitePlaceArtinLocalizedCompletionRingHom
       (K := K) (L := L) (K' := K') (L' := L')
       v W w w' hcentres).toAlgebra
-  letI : Algebra C E' :=
+  let : Algebra C E' :=
     ((algebraMap D E').comp (algebraMap C D)).toAlgebra
   change algebraMap C E' x =
     algebraMap E E' (algebraMap C E x)
@@ -465,21 +467,21 @@ private theorem finitePlaceArtinLocalizedCompletion_globalEmbedding
     RayClass.adicAbv_isNontrivial v
   let hvK' : vK'.IsNontrivial :=
     RayClass.adicAbv_isNontrivial W
-  letI hwK :=
+  let hwK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hwK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hwK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI hwK' :=
+  let hwK' :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K') w'.1
-  letI : SMul K' w'.1.Completion := hwK'.toSMul
-  letI : Algebra vK'.Completion w'.1.Completion :=
+  let : SMul K' w'.1.Completion := hwK'.toSMul
+  let : Algebra vK'.Completion w'.1.Completion :=
     AbsoluteValue.completionAlgebra vK' w'.1 w'.2
   let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
   let E' := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK' w'
-  letI : Algebra E E' :=
+  let : Algebra E E' :=
     (finitePlaceArtinLocalizedCompletionRingHom
       (K := K) (L := L) (K' := K') (L' := L')
       v W w w' hcentres).toAlgebra
@@ -631,17 +633,30 @@ noncomputable def finitePlaceCrossLocalRestrictionMonoidHom
     finitePlaceLocalArtinLocalizedAlgebra (K := K) (L := L) v w
   letI : Algebra D E' :=
     finitePlaceLocalArtinLocalizedAlgebra (K := K') (L := L') W w'
-  letI : Algebra K E :=
+  let lowerGlobalAlgebra : Algebra K E :=
     LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK w
-  letI : Algebra K' E' :=
+  let upperGlobalAlgebra : Algebra K' E' :=
     LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK' w'
   letI : Algebra C D :=
     (finitePlaceArtinRelativeCompletionRingHom
       (K := K) (K' := K') v W hW).toAlgebra
-  letI : Algebra E E' :=
-    (finitePlaceArtinLocalizedCompletionRingHom
-      (K := K) (L := L) (K' := K') (L' := L')
-      v W w w' hcentres).toAlgebra
+  let derivedStructures :
+      PProd (Algebra E E') (Normal C E) := by
+    letI : Algebra K E := lowerGlobalAlgebra
+    letI : Algebra K' E' := upperGlobalAlgebra
+    let upperAlgebra : Algebra E E' :=
+      (finitePlaceArtinLocalizedCompletionRingHom
+        (K := K) (L := L) (K' := K') (L' := L')
+        v W w w' hcentres).toAlgebra
+    letI : FiniteDimensional C E :=
+      finitePlaceLocalArtinFiniteDimensional (K := K) (L := L) v w
+    letI : IsAbelianGalois C E :=
+      finitePlaceLocalArtinIsAbelianGalois (K := K) (L := L) v w
+        (inferInstance : FiniteDimensional K L)
+    letI hGaloisE : IsGalois C E :=
+      (inferInstance : IsAbelianGalois C E).toIsGalois
+    exact ⟨upperAlgebra, hGaloisE.to_normal⟩
+  letI : Algebra E E' := derivedStructures.fst
   letI : Algebra C E' :=
     ((algebraMap D E').comp (algebraMap C D)).toAlgebra
   letI : IsScalarTower C D E' :=
@@ -654,14 +669,7 @@ noncomputable def finitePlaceCrossLocalRestrictionMonoidHom
         finitePlaceArtinLocalizedCompletion_towerPoint
           (K := K) (L := L) (K' := K') (L' := L')
           v W hW w w' hcentres x
-  letI : FiniteDimensional C E :=
-    finitePlaceLocalArtinFiniteDimensional (K := K) (L := L) v w
-  letI : IsAbelianGalois C E :=
-    finitePlaceLocalArtinIsAbelianGalois (K := K) (L := L) v w
-      (inferInstance : FiniteDimensional K L)
-  letI hGaloisE : IsGalois C E :=
-    (inferInstance : IsAbelianGalois C E).toIsGalois
-  letI : Normal C E := hGaloisE.to_normal
+  letI : Normal C E := derivedStructures.snd
   exact
     (AlgEquiv.restrictNormalHom E).comp
       (AlgEquiv.restrictScalarsHom C)
@@ -700,11 +708,11 @@ private theorem finitePlaceDecompositionEquiv_symm_action
       AbsoluteValue.toAlgebraicLocalization vF wF.1 wF.2
     embedding (((e.symm tau).1 : M ≃ₐ[F] M) z) =
       tau (embedding z) := by
-  letI hwF :=
+  let hwF :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := F) wF.1
-  letI : SMul F wF.1.Completion := hwF.toSMul
-  letI : Algebra vF.Completion wF.1.Completion :=
+  let : SMul F wF.1.Completion := hwF.toSMul
+  let : Algebra vF.Completion wF.1.Completion :=
     AbsoluteValue.completionAlgebra vF wF.1 wF.2
   let E :=
     AlgebraicNumberTheory.Valuations.LocalizedCompletion vF wF
@@ -836,26 +844,26 @@ theorem finitePlaceCrossDecompositionTransport
     let D := vK'.Completion
     let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
     let E' := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK' w'
-    letI : Algebra C E :=
+    let : Algebra C E :=
       finitePlaceLocalArtinLocalizedAlgebra (K := K) (L := L) v w
-    letI : Algebra D E' :=
+    let : Algebra D E' :=
       finitePlaceLocalArtinLocalizedAlgebra (K := K') (L := L') W w'
-    letI : Algebra K E :=
+    let : Algebra K E :=
       LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK w
-    letI : Algebra K' E' :=
+    let : Algebra K' E' :=
       LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK' w'
-    letI : Algebra C D :=
+    let : Algebra C D :=
       (finitePlaceArtinRelativeCompletionRingHom
         (K := K) (K' := K') v W hW).toAlgebra
-    letI : Algebra E E' :=
+    let : Algebra E E' :=
       (finitePlaceArtinLocalizedCompletionRingHom
         (K := K) (L := L) (K' := K') (L' := L')
         v W w w' hcentres).toAlgebra
-    letI : Algebra C E' :=
+    let : Algebra C E' :=
       ((algebraMap D E').comp (algebraMap C D)).toAlgebra
-    letI : IsScalarTower C D E' :=
+    let : IsScalarTower C D E' :=
       IsScalarTower.of_algebraMap_eq' rfl
-    letI : IsScalarTower C E E' :=
+    let : IsScalarTower C E E' :=
       IsScalarTower.of_algebraMap_eq' <| by
         apply RingHom.ext
         intro x
@@ -863,14 +871,14 @@ theorem finitePlaceCrossDecompositionTransport
           finitePlaceArtinLocalizedCompletion_towerPoint
             (K := K) (L := L) (K' := K') (L' := L')
             v W hW w w' hcentres x
-    letI : FiniteDimensional C E :=
+    let : FiniteDimensional C E :=
       finitePlaceLocalArtinFiniteDimensional (K := K) (L := L) v w
-    letI : IsAbelianGalois C E :=
+    let : IsAbelianGalois C E :=
       finitePlaceLocalArtinIsAbelianGalois (K := K) (L := L) v w
         (inferInstance : FiniteDimensional K L)
-    letI hGaloisE : IsGalois C E :=
+    let hGaloisE : IsGalois C E :=
       (inferInstance : IsAbelianGalois C E).toIsGalois
-    letI : Normal C E := hGaloisE.to_normal
+    let : Normal C E := hGaloisE.to_normal
     let eLower :
         absoluteValueDecompositionGroup K w.1 ≃*
           (E ≃ₐ[C] E) :=

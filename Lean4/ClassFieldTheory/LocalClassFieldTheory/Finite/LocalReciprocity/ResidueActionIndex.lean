@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.ResidueDatum
-import RamificationTheory.HilbertRamification.ResidueExactSequence
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueDatum
+import ValuedFieldTheory.Ramification.HilbertRamification.ResidueExactSequence
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 

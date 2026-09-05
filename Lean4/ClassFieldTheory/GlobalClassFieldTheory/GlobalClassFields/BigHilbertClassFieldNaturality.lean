@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
+
+set_option autoImplicit false
 
 /-!
 # Naturality of the big Hilbert class field
@@ -60,11 +62,11 @@ private theorem infinitePlaceCompletionCongrHom_algebraMap
     infinitePlaceCompletionCongrHom e W
         (algebraMap K (W.comap e.toRingHom).Completion x) =
       algebraMap M W.Completion (e x) := by
-  letI : Algebra K M :=
+  let : Algebra K M :=
     e.toRingHom.toAlgebra
   let v : InfinitePlace K :=
     W.comap e.toRingHom
-  letI : W.1.LiesOver v.1 :=
+  let : W.1.LiesOver v.1 :=
     ⟨rfl⟩
   change
     NumberField.LiesOver.completionMap
@@ -100,11 +102,11 @@ private theorem
         ((relativeAdeleBaseChangeRingEquiv
           (K := ℚ) (L := K) (b ⊗ₜ[ℚ] x)).1
             (W.comap e.toRingHom)) := by
-  letI : Algebra K M :=
+  let : Algebra K M :=
     e.toRingHom.toAlgebra
   let v : InfinitePlace K :=
     W.comap e.toRingHom
-  letI : W.1.LiesOver v.1 :=
+  let : W.1.LiesOver v.1 :=
     ⟨rfl⟩
   change
     (relativeAdeleBaseChangeRingEquiv
@@ -126,11 +128,11 @@ private theorem
     exact
       infinitePlaceBelow_infinitePlaceBelow
         (K := ℚ) (M := K) (L := M) W
-  letI : v.1.LiesOver qv.1 :=
+  let : v.1.LiesOver qv.1 :=
     ⟨rfl⟩
-  letI : W.1.LiesOver qW.1 :=
+  let : W.1.LiesOver qW.1 :=
     ⟨rfl⟩
-  letI : W.1.LiesOver qv.1 :=
+  let : W.1.LiesOver qv.1 :=
     ⟨congrArg (fun q : InfinitePlace ℚ => q.1) hq.symm⟩
   have hxMap :
       NumberField.LiesOver.completionMap
@@ -242,13 +244,13 @@ private theorem
         (infinitePlaceCompletionCongrHom e W x) =
       InfinitePlace.Completion.extensionEmbeddingOfIsReal
         (hW.comap e.toRingHom) x := by
-  letI : Algebra K M :=
+  let : Algebra K M :=
     e.toRingHom.toAlgebra
   let v :=
     W.comap e.toRingHom
-  letI : W.1.LiesOver v.1 :=
+  let : W.1.LiesOver v.1 :=
     ⟨rfl⟩
-  letI :
+  let :
       NumberField.ComplexEmbedding.LiesOver
         (InfinitePlace.Completion.extensionEmbedding W)
         (InfinitePlace.Completion.extensionEmbedding v) :=

@@ -1,5 +1,7 @@
-import CyclicCohomology.Herbrand.HerbrandFiniteness
-import LocalClassFieldTheory.ClassFormation.ValueGroupCohomology
+import GaloisCohomology.Cyclic.Herbrand.HerbrandFiniteness
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.ValueGroupCohomology
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -48,9 +50,9 @@ theorem valuationHerbrand_shortExact :
           integerUnitsToFieldUnits L y = x) ∧
       Function.Injective (integerUnitsToFieldUnits L) ∧
       Function.Surjective (valuationUnitsMulHom L) := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := galoisGroupFieldUnitsMulDistribMulAction K L
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupFieldUnitsMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   exact ⟨integerUnitsToFieldUnits_galoisGroup_equivariant K L,
     valuationUnitsMulHom_galoisGroup_equivariant K L,
     valuationUnitsMulHom_eq_one_iff_exists_integerUnit L,
@@ -69,33 +71,8 @@ theorem galoisGroupValueGroup_herbrandQuotientDefined
     (g : Gal(L / K)) :
     letI := galoisGroupValueGroupMulDistribMulAction K L
     HerbrandQuotientDefined (Gal(L / K)) (Multiplicative Int) g := by
-  letI := galoisGroupValueGroupMulDistribMulAction K L
-  letI : Finite
-      (HerbrandH0 (Gal(L / K)) (Multiplicative Int)) :=
-    Finite.of_equiv
-      (Multiplicative (ZMod (Fintype.card (Gal(L / K)))))
-      (galoisGroupValueGroupHerbrandH0MulEquivZMod K L).symm.toEquiv
-  haveI : Subsingleton
-      (normKernelSubgroup (Gal(L / K)) (Multiplicative Int)) := by
-    rw [galoisGroupValueGroup_normKernelSubgroup_eq_bot K L]
-    infer_instance
-  letI : Subsingleton
-      (HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) g) :=
-    herbrandHMinusOne_subsingleton_of_normKernel_le_augmentationSubgroup g
-      (fun x hx => by
-        have hx' :
-            (⟨x, hx⟩ :
-              normKernelSubgroup (Gal(L / K)) (Multiplicative Int)) = 1 :=
-          Subsingleton.elim _ _
-        have hxval : x = 1 := congrArg Subtype.val hx'
-        rw [hxval]
-        exact Subgroup.one_mem _)
-  letI : Finite
-      (HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) g) :=
-    Finite.of_injective
-      (fun _ : HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) g => false)
-      (fun x y _ => Subsingleton.elim x y)
-  exact ⟨inferInstance, inferInstance⟩
+  exact ⟨galoisGroupValueGroupHerbrandH0Finite K L,
+    galoisGroupValueGroupHerbrandHMinusOneFinite K L g⟩
 
 /-- Herbrand-quotient multiplicativity for the actual valuation sequence.  Once the
 Herbrand quotient of the integer-unit term is defined, the value-group term
@@ -127,9 +104,9 @@ theorem valuationHerbrand_multiplicativity_of_integerUnits_defined
             g hU.1 hU.2 *
           @herbrandQuotient (Gal(L / K)) (Multiplicative Int) _ _ _
             (galoisGroupValueGroupMulDistribMulAction K L) g hZ.1 hZ.2 := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := galoisGroupFieldUnitsMulDistribMulAction K L
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupFieldUnitsMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   let hZ : HerbrandQuotientDefined (Gal(L / K)) (Multiplicative Int) g :=
     galoisGroupValueGroup_herbrandQuotientDefined K L g
   let hseq := valuationHerbrand_shortExact K L
@@ -141,16 +118,16 @@ theorem valuationHerbrand_multiplicativity_of_integerUnits_defined
     hseq.1 hseq.2.1 hseq.2.2.1 hseq.2.2.2.1 hseq.2.2.2.2
     g hg hU hZ
   refine ⟨hField, ?_⟩
-  letI : Finite
+  let : Finite
       (HerbrandH0 (Gal(L / K)) (ValuativeRel.valuation L).integerˣ) := hU.1
-  letI : Finite
+  let : Finite
       (HerbrandHMinusOne (Gal(L / K))
         (ValuativeRel.valuation L).integerˣ g) := hU.2
-  letI : Finite (HerbrandH0 (Gal(L / K)) Lˣ) := hField.1
-  letI : Finite (HerbrandHMinusOne (Gal(L / K)) Lˣ g) := hField.2
-  letI : Finite
+  let : Finite (HerbrandH0 (Gal(L / K)) Lˣ) := hField.1
+  let : Finite (HerbrandHMinusOne (Gal(L / K)) Lˣ g) := hField.2
+  let : Finite
       (HerbrandH0 (Gal(L / K)) (Multiplicative Int)) := hZ.1
-  letI : Finite
+  let : Finite
       (HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) g) := hZ.2
   exact herbrandQuotient_multiplicative_of_shortExact
     (G := Gal(L / K))

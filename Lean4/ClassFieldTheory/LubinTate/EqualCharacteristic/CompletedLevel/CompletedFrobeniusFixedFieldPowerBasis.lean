@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldPrimitive
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldPrimitive
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the fixed primitive completed power basis

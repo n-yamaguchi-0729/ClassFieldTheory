@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtin
-import AlgebraicNumberTheory.Idele.ClassGroup.Tower
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtin
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+
+set_option autoImplicit false
 
 /-!
 # The normalized cyclotomic idele value
@@ -108,20 +110,20 @@ theorem
   apply Subtype.ext
   funext Eop
   let E := Eop.unop
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   let P :=
     numberFieldCyclotomicZHatFiniteGaloisLayerInCompositum K E
-  letI : NumberField P :=
+  let : NumberField P :=
     numberFieldCyclotomicZHatFiniteLayerInCompositum_numberField K E
-  letI : Algebra E P :=
+  let : Algebra E P :=
     rationalCyclotomicZHatFiniteLayerInCompositum_algebra K E
-  letI : SMul E P :=
+  let : SMul E P :=
     rationalCyclotomicZHatFiniteLayerInCompositum_smul K E
-  letI : Module E P := Algebra.toModule
-  letI : IsScalarTower ℚ E P :=
+  let : Module E P := Algebra.toModule
+  let : IsScalarTower ℚ E P :=
     rationalCyclotomicZHatFiniteLayerInCompositum_scalarTower K E
-  letI : IsAbelianGalois K P :=
+  let : IsAbelianGalois K P :=
     numberFieldCyclotomicZHatFiniteLayerInCompositum_isAbelianGalois K E
   have hcomm :
       (IntermediateField.restrictRestrictAlgEquivMapHom
@@ -258,8 +260,9 @@ multiple of the rational cyclotomic value group. -/
 theorem
     nsmulImage_rationalCyclotomicZHatIdeleValue_range_le_normComposite_range :
     nsmulImage
-        (MonoidHom.toAdditive
-          rationalCyclotomicZHatIdeleValue.toMonoidHom).range
+        ((AddEquiv.toAdditive_toMultiplicative (G := ZHat)).toAddMonoidHom.comp
+          (MonoidHom.toAdditive
+            rationalCyclotomicZHatIdeleValue.toMonoidHom)).range
         (Module.finrank ℚ K) ≤
       (cyclotomicZHatNormComposite K).range := by
   intro z hz
@@ -293,7 +296,7 @@ theorem finiteCyclotomicLayer_normArtin_range
           (IdeleGroup.norm ℚ K)).range =
       (IntermediateField.restrictRestrictAlgEquivMapHom
         ℚ E K C).range := by
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   let C :=
     numberFieldCyclotomicZHatFiniteCompositum K E
@@ -355,7 +358,7 @@ theorem finiteCyclotomicLayer_normArtin_range_eq_fixingSubgroup
         (K := ℚ) (L := E)).comp
           (IdeleGroup.norm ℚ K)).range =
       (numberFieldCyclotomicZHatFiniteIntersection K E).fixingSubgroup := by
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   rw [finiteCyclotomicLayer_normArtin_range K E]
   exact
@@ -375,7 +378,7 @@ theorem
     let E :=
       (numberFieldCyclotomicZHatIntersection K).restrict hle
     letI : FiniteDimensional ℚ E :=
-      (IntermediateField.restrict_algEquiv hle).toLinearEquiv.finiteDimensional
+      (IntermediateField.restrictAlgEquiv hle).toLinearEquiv.finiteDimensional
     letI : NumberField E :=
       NumberField.of_module_finite ℚ E
     IdeleGroup.norm ℚ K a ∈
@@ -386,19 +389,19 @@ theorem
     inf_le_right
   let E :=
     (numberFieldCyclotomicZHatIntersection K).restrict hle
-  letI : FiniteDimensional ℚ E :=
-    (IntermediateField.restrict_algEquiv hle).toLinearEquiv.finiteDimensional
-  letI : NumberField E :=
+  let : FiniteDimensional ℚ E :=
+    (IntermediateField.restrictAlgEquiv hle).toLinearEquiv.finiteDimensional
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   let eEK : E →ₐ[ℚ] K :=
     (numberFieldCyclotomicZHatIntersectionEmbedding K).comp
-      (IntermediateField.restrict_algEquiv hle).symm.toAlgHom
-  letI : Algebra E K :=
+      (IntermediateField.restrictAlgEquiv hle).symm.toAlgHom
+  let : Algebra E K :=
     eEK.toRingHom.toAlgebra
-  letI : IsScalarTower ℚ E K :=
+  let : IsScalarTower ℚ E K :=
     IsScalarTower.of_algebraMap_eq'
       eEK.comp_algebraMap.symm
-  letI : FiniteDimensional E K :=
+  let : FiniteDimensional E K :=
     FiniteDimensional.right ℚ E K
   let b : RelativeIdeleGroup ℚ K :=
     (relativeIdeleBaseChangeMulEquiv
@@ -449,17 +452,23 @@ theorem
     inf_le_right
   let E₀ :=
     (numberFieldCyclotomicZHatIntersection K).restrict hle
-  letI : FiniteDimensional ℚ E₀ :=
-    (IntermediateField.restrict_algEquiv hle).toLinearEquiv.finiteDimensional
-  letI : NumberField E₀ :=
+  let : FiniteDimensional ℚ E₀ :=
+    (IntermediateField.restrictAlgEquiv hle).toLinearEquiv.finiteDimensional
+  let : NumberField E₀ :=
     NumberField.of_module_finite ℚ E₀
+  let : IsAbelianGalois ℚ rationalCyclotomicZHatField :=
+    rationalCyclotomicZHatField_isAbelianGalois
+  let inclusion : E₀ →ₐ[ℚ] rationalCyclotomicZHatField :=
+    E₀.val.toRingHom.toRatAlgHom
   let E :
       FiniteGaloisIntermediateField
         ℚ rationalCyclotomicZHatField :=
     { toIntermediateField := E₀
       finiteDimensional := inferInstance
-      isGalois := inferInstance }
-  letI : NumberField E :=
+      isGalois :=
+        (IsAbelianGalois.of_algHom (K := ℚ) (L := E₀)
+          (M := rationalCyclotomicZHatField) inclusion).toIsGalois }
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   have hnorm :
       IdeleGroup.norm ℚ K a ∈
@@ -471,8 +480,11 @@ theorem
       ideleNorm_mem_cyclotomicZHatIntersection_relativeIdeleNorm_range
         K a
   obtain ⟨z, hz⟩ := hnorm
-  letI : IsAbelianGalois ℚ E :=
-    IsAbelianGalois.of_algHom E.toIntermediateField.val
+  let : IsAbelianGalois ℚ E :=
+    IsAbelianGalois.of_algHom (K := ℚ) (L := E)
+      (M := rationalCyclotomicZHatField)
+      (show E →ₐ[ℚ] rationalCyclotomicZHatField from
+        E.toIntermediateField.val.toRingHom.toRatAlgHom)
   have hfinite :
       globalArtinMonoidHom
           (K := ℚ) (L := E)
@@ -567,7 +579,7 @@ theorem
       (k := ℚ) (K := rationalCyclotomicZHatField) V
   obtain ⟨E, hEV⟩ :=
     hkrull.mp hVnhds
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   have hσfix :
       ∀ x : rationalCyclotomicZHatField,

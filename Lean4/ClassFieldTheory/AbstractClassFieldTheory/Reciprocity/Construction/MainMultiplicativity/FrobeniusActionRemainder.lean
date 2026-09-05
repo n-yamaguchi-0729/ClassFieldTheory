@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusDescent
-import AbstractClassFieldTheory.Reciprocity.Construction.Universal
-import AbstractClassFieldTheory.Reciprocity.Construction.TransferOrbitClosure
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusDescent
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.Universal
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.TransferOrbitClosure
+
+set_option autoImplicit false
 
 /-!
 # Frobenius action remainders
@@ -392,12 +394,13 @@ theorem frobeniusActionRemainder_apply_fixedField (D : DegreeData G)
     change D.frobeniusQuotientAction A K.field L hLK σ.1 aI = aI
     exact D.frobeniusQuotientAction_fixedFieldInclusion A K L hLK σ a
   have hinv : B.ρ σ.1⁻¹ aI = aI := by
-    calc
-      B.ρ σ.1⁻¹ aI = B.ρ σ.1⁻¹ (B.ρ σ.1 aI) := by rw [hfix]
-      _ = B.ρ (σ.1⁻¹ * σ.1) aI := by
-        rw [map_mul]
-        rfl
-      _ = aI := by simp
+    have hmul : B.ρ (σ.1⁻¹ * σ.1) aI = aI := by
+      rw [inv_mul_cancel, map_one]
+      rfl
+    rw [map_mul] at hmul
+    change B.ρ σ.1⁻¹ (B.ρ σ.1 aI) = aI at hmul
+    rw [hfix] at hmul
+    exact hmul
   change B.ρ
       (φ.1 ^ D.frobeniusExponent K L hLK σ * σ.1⁻¹) aI =
     B.ρ (φ.1 ^ D.frobeniusExponent K L hLK σ) aI

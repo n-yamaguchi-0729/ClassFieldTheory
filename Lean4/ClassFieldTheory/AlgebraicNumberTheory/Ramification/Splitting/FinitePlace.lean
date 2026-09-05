@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import GroupTheory.Finite
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+import GaloisCohomology.GroupTheory.Finite
+
+set_option autoImplicit false
 
 /-!
 # Decomposition groups and complete splitting at finite places
@@ -101,21 +103,21 @@ theorem finitePlaceDecompositionGroup_card_eq_localDegree
     RayClass.adicAbv_isNontrivial v
   let w :=
     chosenFinitePlaceExtension (L := L) v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI :=
+  let :=
     localizedCompletionGlobalAlgebra vK w
-  letI :=
+  let :=
     localizedCompletionIsScalarTower vK w
   let E :=
     LocalizedCompletion vK w
-  letI : FiniteDimensional vK.Completion E :=
+  let : FiniteDimensional vK.Completion E :=
     localizedCompletionModuleFinite vK hvK w
-  letI : IsGalois vK.Completion E :=
+  let : IsGalois vK.Completion E :=
     HilbertRamification.algebraicLocalization_isGalois vK w
   calc
     Nat.card

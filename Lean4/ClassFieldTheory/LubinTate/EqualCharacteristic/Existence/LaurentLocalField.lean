@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.Existence.LaurentModel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentModel
 import Mathlib.RingTheory.PowerSeries.PiTopology
+
+set_option autoImplicit false
 
 /-!
 # The local-field structure on a finite-coefficient Laurent field
@@ -40,9 +42,9 @@ private theorem isValuativeTopology_of_valued_ofValuation'
     letI := ValuativeRel.ofValuation (Valued.v : Valuation L Γ)
     IsValuativeTopology L := by
   let vL : Valuation L Γ := Valued.v
-  letI : ValuativeRel L := ValuativeRel.ofValuation vL
-  letI : vL.Compatible := Valuation.Compatible.ofValuation vL
-  letI : ValuativeRel.IsNontrivial L :=
+  let : ValuativeRel L := ValuativeRel.ofValuation vL
+  let : vL.Compatible := Valuation.Compatible.ofValuation vL
+  let : ValuativeRel.IsNontrivial L :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vL).2 inferInstance
   apply IsValuativeTopology.of_zero
   intro s
@@ -104,7 +106,7 @@ theorem continuous_laurentSeries_ofPowerSeries
   intro f hf
   have hcoeff : ∀ n : ℕ, n < N → PowerSeries.coeff n f = 0 := by
     intro n hn
-    simp only [U, Set.mem_iInter, Set.mem_setOf_eq] at hf
+    simp only [U, Set.mem_iInter, Set.mem_ofPred_eq] at hf
     exact hf n (Finset.mem_range.mpr hn)
   change (Valued.v : Valuation k⸨X⸩ ℤᵐ⁰).restrict
     ((f : k⟦X⟧) : k⸨X⸩) < γ.1
@@ -223,7 +225,7 @@ theorem powerSeriesEquivLaurentValuativeInteger_X_irreducible :
     Irreducible
       (powerSeriesEquivLaurentValuativeInteger k
         (PowerSeries.X : k⟦X⟧)) := by
-  letI : ValuativeRel k⸨X⸩ := ValuativeRel.ofValuation
+  let : ValuativeRel k⸨X⸩ := ValuativeRel.ofValuation
     (Valued.v : Valuation k⸨X⸩ ℤᵐ⁰)
   exact PowerSeries.X_irreducible.map
     (powerSeriesEquivLaurentValuativeInteger k)
@@ -233,10 +235,10 @@ is compact. -/
 theorem laurentSeriesIntegerCompactSpace
     (k : Type u) [Field k] [Finite k] :
     CompactSpace (Valued.integer k⸨X⸩) := by
-  letI : TopologicalSpace k := ⊥
-  letI : DiscreteTopology k := ⟨rfl⟩
-  letI : CompactSpace k := Finite.compactSpace
-  letI : CompactSpace k⟦X⟧ :=
+  let : TopologicalSpace k := ⊥
+  let : DiscreteTopology k := ⟨rfl⟩
+  let : CompactSpace k := Finite.compactSpace
+  let : CompactSpace k⟦X⟧ :=
     inferInstanceAs (CompactSpace ((Unit →₀ ℕ) → k))
   rw [← isCompact_univ_iff]
   have h := (isCompact_univ : IsCompact (Set.univ : Set k⟦X⟧)).image
@@ -250,7 +252,7 @@ native valuation topology. -/
 theorem laurentSeriesLocallyCompactSpace
     (k : Type u) [Field k] [Finite k] :
     LocallyCompactSpace k⸨X⸩ := by
-  letI : CompactSpace (Valued.integer k⸨X⸩) :=
+  let : CompactSpace (Valued.integer k⸨X⸩) :=
     laurentSeriesIntegerCompactSpace k
   have hcompact : IsCompact (X := k⸨X⸩) (Valued.integer k⸨X⸩) :=
     isCompact_iff_compactSpace.mpr inferInstance
@@ -277,8 +279,8 @@ theorem equalCharacteristicLaurentIsNonarchimedeanLocalField
     IsNonarchimedeanLocalField F.residueField⸨X⸩ := by
   let L := F.residueField⸨X⸩
   let vL := (Valued.v : Valuation L ℤᵐ⁰)
-  letI : ValuativeRel L := equalCharacteristicLaurentValuativeRel F
-  letI : vL.Compatible := Valuation.Compatible.ofValuation vL
+  let : ValuativeRel L := equalCharacteristicLaurentValuativeRel F
+  let : vL.Compatible := Valuation.Compatible.ofValuation vL
   let x : L :=
     ((PowerSeries.X : F.residueField⟦X⟧) : F.residueField⸨X⸩)
   have hxv : vL x = WithZero.exp (-1 : ℤ) := by
@@ -294,13 +296,13 @@ theorem equalCharacteristicLaurentIsNonarchimedeanLocalField
   have hxlt : vL x < 1 := by
     rw [hxv, ← WithZero.exp_zero, WithZero.exp_lt_exp]
     omega
-  letI : vL.IsNontrivial :=
+  let : vL.IsNontrivial :=
     (Valuation.isNontrivial_iff_exists_lt_one vL).2 ⟨x, hx0, hxlt⟩
-  letI : ValuativeRel.IsNontrivial L :=
+  let : ValuativeRel.IsNontrivial L :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vL).2 inferInstance
-  letI : IsValuativeTopology L :=
+  let : IsValuativeTopology L :=
     isValuativeTopology_of_valued_ofValuation' L ℤᵐ⁰
-  letI : LocallyCompactSpace L :=
+  let : LocallyCompactSpace L :=
     laurentSeriesLocallyCompactSpace F.residueField
   exact
     { toIsValuativeTopology := inferInstance

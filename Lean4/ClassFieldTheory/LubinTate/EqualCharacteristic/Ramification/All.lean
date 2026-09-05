@@ -1,0 +1,7 @@
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.DisplacementValuation
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.GaloisAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.LowerGroups
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
+
+set_option autoImplicit false

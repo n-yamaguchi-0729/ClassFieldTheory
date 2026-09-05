@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.ConductorLattice
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorLattice
+
+set_option autoImplicit false
 
 /-!
 # Exact narrow finite conductor ray-class presentations
@@ -10,7 +12,7 @@ finite orders and proves uniqueness of subgroups whose exact narrow finite
 conductor ray-class presentations are maximal.
 -/
 
-open scoped NumberField
+open scoped IsMulCommutative NumberField
 
 noncomputable section
 
@@ -20,6 +22,13 @@ namespace GlobalClassFields
 open NumberField
 
 variable {K : Type} [Field K] [NumberField K]
+
+/-- Fix the canonical commutative structure used to infer normality of
+subgroups of the idèle class group in this module. -/
+local instance
+    conductorRayClassMaximality_ideleClassGroupIsMulCommutative :
+    IsMulCommutative (IdeleClassGroup K) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 namespace ConductorialSubgroup
 
@@ -35,7 +44,13 @@ noncomputable def narrowFiniteConductorRayClassGroupToQuotient
       (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor))
     H.1
     (MonoidHom.id _)
-    H.narrowFiniteConductor_isDefiningModulus
+    (show
+      RayClass.Modulus.congruenceSubgroup
+          (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor) ≤
+        Subgroup.comap (MonoidHom.id _) H.1 from by
+      intro x hx
+      change x ∈ H.1
+      exact H.narrowFiniteConductor_isDefiningModulus hx)
 
 /-- The exact narrow finite conductor quotient map preserves every
 idèle-class representative. -/
@@ -75,7 +90,18 @@ theorem narrowFiniteConductorRayClassGroupToQuotient_ker
             (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor)))
         H.1 := by
   unfold narrowFiniteConductorRayClassGroupToQuotient
-  rw [QuotientGroup.ker_map, Subgroup.comap_id]
+  let N :=
+    RayClass.Modulus.congruenceSubgroup
+      (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor)
+  let M := H.1
+  change
+    (QuotientGroup.map N M (MonoidHom.id (IdeleClassGroup K)) _).ker =
+      Subgroup.map (QuotientGroup.mk' N) M
+  simpa only [Subgroup.comap_id] using
+    (QuotientGroup.ker_map (N := N) M
+      (MonoidHom.id (IdeleClassGroup K))
+      (show N ≤ Subgroup.comap (MonoidHom.id (IdeleClassGroup K)) M from
+        fun _ hx => H.narrowFiniteConductor_isDefiningModulus hx))
 
 /-- Quotienting the exact narrow finite conductor ray class group by the
 image of `H` recovers `C_K / H`. -/

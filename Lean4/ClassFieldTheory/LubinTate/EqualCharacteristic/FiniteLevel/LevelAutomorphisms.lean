@@ -1,8 +1,10 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelField
-import LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveAction
-import LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
 import Mathlib.FieldTheory.Galois.Basic
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: automorphisms of equal-characteristic Lubin--Tate level fields
@@ -303,13 +305,13 @@ noncomputable instance equalCharacteristicLubinTateLevelField_galFinite
     (n : ℕ) :
     Finite (Gal((equalCharacteristicLubinTateLevelField F n) /
       F.residueField⸨X⸩)) := by
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI : Module.Free F.residueField⸨X⸩
+  let : Module.Free F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     Module.Free.of_divisionRing _ _
-  letI : Finite
+  let : Finite
       ((equalCharacteristicLubinTateLevelField F n) →ₐ[
         F.residueField⸨X⸩]
         (equalCharacteristicLubinTateLevelField F n)) :=
@@ -326,7 +328,7 @@ theorem equalCharacteristicLubinTateLevelField_natCard_gal
         F.residueField⸨X⸩)) =
       Module.finrank F.residueField⸨X⸩
         (equalCharacteristicLubinTateLevelField F n) := by
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   apply Nat.le_antisymm
@@ -352,7 +354,7 @@ theorem equalCharacteristicLubinTateLevelField_isGalois
     (n : ℕ) :
     IsGalois F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) := by
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   exact IsGalois.of_card_aut_eq_finrank F.residueField⸨X⸩

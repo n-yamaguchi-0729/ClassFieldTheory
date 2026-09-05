@@ -1,4 +1,6 @@
-import GroupTheory.QuotientTower
+import GaloisCohomology.GroupTheory.QuotientTower
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -144,7 +146,7 @@ theorem relativeIndexCardinal_eq_index_of_finite {L K : Subgroup G} (hLK : L ≤
 @[simp] theorem relativeIndexCardinal_self (K : Subgroup G) :
     relativeIndexCardinal (le_refl K) = 1 := by
   let α := K ⧸ K.subgroupOf K
-  letI : Subsingleton α := by
+  let : Subsingleton α := by
     constructor
     intro q r
     refine Quotient.inductionOn₂ q r ?_
@@ -152,7 +154,6 @@ theorem relativeIndexCardinal_eq_index_of_finite {L K : Subgroup G} (hLK : L ≤
     apply Quotient.eq''.mpr
     rw [QuotientGroup.leftRel_apply, Subgroup.mem_subgroupOf]
     exact (x⁻¹ * y).2
-  letI : Nonempty α := ⟨QuotientGroup.mk 1⟩
   change Cardinal.mk α = 1
   exact Cardinal.mk_eq_one α
 

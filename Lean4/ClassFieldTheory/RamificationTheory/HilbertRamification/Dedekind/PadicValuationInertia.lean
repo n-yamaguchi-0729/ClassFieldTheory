@@ -1,11 +1,13 @@
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Mathlib.RingTheory.DedekindDomain.Dvr
 import Mathlib.RingTheory.Localization.AsSubring
-import AlgebraicNumberTheory.Ramification.RationalPrime
-import RamificationTheory.HilbertRamification.Dedekind.Basic
-import ValuationTheory.DiscreteValuationField.ChevalleyExtension
-import RamificationTheory.HilbertRamification.LocalizationRamificationGroups
-import RamificationTheory.HilbertRamification.PadicLocalization
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+import ValuedFieldTheory.Valuation.DiscreteValuationField.ChevalleyExtension
+import ValuedFieldTheory.Ramification.HilbertRamification.LocalizationRamificationGroups
+import ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
+
+set_option autoImplicit false
 
 /-!
 # The global valuation/prime-ideal bridge in the global cyclotomic inertia argument
@@ -220,21 +222,22 @@ omit [IsAbelianGalois ℚ M] in
 theorem globalPadicPrimeIdeal_liesOver
     (w : AbsoluteValueExtension (Rat.AbsoluteValue.padic p) M) :
     (globalPadicPrimeIdeal p M w).LiesOver
-      (rationalPrimeIdeal ⟨p, Fact.out⟩) := by
+      (rationalPrimeIdeal (⟨p, Fact.out⟩ : Nat.Primes)) := by
   constructor
-  rw [rationalPrimeIdeal_eq_span,
-    globalPadicPrimeIdeal_under_eq_span]
+  exact
+    (rationalPrimeIdeal_eq_span (⟨p, Fact.out⟩ : Nat.Primes)).trans
+      (globalPadicPrimeIdeal_under_eq_span p M w).symm
 
 omit [IsAbelianGalois ℚ M] in
 /-- The synchronized prime is nonzero. -/
 theorem globalPadicPrimeIdeal_ne_bot
     (w : AbsoluteValueExtension (Rat.AbsoluteValue.padic p) M) :
     globalPadicPrimeIdeal p M w ≠ ⊥ := by
-  letI : (globalPadicPrimeIdeal p M w).LiesOver
-      (rationalPrimeIdeal ⟨p, Fact.out⟩) :=
+  let : (globalPadicPrimeIdeal p M w).LiesOver
+      (rationalPrimeIdeal (⟨p, Fact.out⟩ : Nat.Primes)) :=
     globalPadicPrimeIdeal_liesOver p M w
   apply Ideal.ne_bot_of_liesOver_of_ne_bot
-    (p := rationalPrimeIdeal ⟨p, Fact.out⟩)
+    (p := rationalPrimeIdeal (⟨p, Fact.out⟩ : Nat.Primes))
   exact (Rat.HeightOneSpectrum.primesEquiv.symm
     (⟨p, Fact.out⟩ : Nat.Primes)).ne_bot
 

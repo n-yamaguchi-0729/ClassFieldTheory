@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.NormSubgroup.StandardSubgroupNorm
-import LubinTate.EqualCharacteristic.NormSubgroup.UnitQuotientCard
-import LocalClassFieldTheory.LubinTateApplication.NormIndex
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.StandardSubgroupNorm
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UnitQuotientCard
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.NormIndex
+
+set_option autoImplicit false
 
 /-!
 # Lubin--Tate application: the exact norm subgroup
@@ -39,8 +41,8 @@ theorem equalCharacteristicLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup
         (equalCharacteristicLaurentUniformizerUnit F)⁻¹ 1 (n + 1) := by
   let B := F.residueField⸨X⸩
   let pi : Bˣ := (equalCharacteristicLaurentUniformizerUnit F)⁻¹
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
   let H := LocalFieldTheory.uniformizerPrincipalSubgroup B pi 1 (n + 1)
   let N := equalCharacteristicLubinTateNormSubgroup F n
@@ -58,7 +60,7 @@ theorem equalCharacteristicLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup
       (Nat.sub_pos_of_lt
         (Finite.one_lt_card : 1 < Nat.card F.residueField))
       (Nat.pow_pos Nat.card_pos)
-  letI : H.FiniteIndex := ⟨by
+  let _ : H.FiniteIndex := ⟨by
     rw [hindexH]
     exact Nat.ne_of_gt hdpos⟩
   have hHN : H ≤ N := by

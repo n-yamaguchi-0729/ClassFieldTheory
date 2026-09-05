@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegativeUnit
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegativeUnit
+
+set_option autoImplicit false
 
 /-!
 # The negative-negative real infinite-place Hilbert factor
@@ -29,11 +31,11 @@ theorem infinitePlaceKummerRootCharacter_eq_neg_one_of_real_of_neg_neg
       ⟨(-1 : Kˣ), by simp [hn]⟩
     infinitePlaceKummerRootCharacter K n hnK hmu v a b = negOne := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L := NumberField.of_module_finite K L
+  let : NumberField L := NumberField.of_module_finite K L
   let a_v : v.Completionˣ :=
     Units.map (algebraMap K v.Completion).toMonoidHom a
   let beta : Lˣ := chosenSimpleKummerRootUnit K n hnK b

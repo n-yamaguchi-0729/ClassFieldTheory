@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.SUnit.LogLattice
-import CyclicCohomology.Herbrand.Permutation.LatticeHerbrand
+import ClassFieldTheory.AlgebraicNumberTheory.SUnit.LogLattice
+import GaloisCohomology.Cyclic.Herbrand.Permutation.LatticeHerbrand
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+
+set_option autoImplicit false
 
 /-!
 # Galois actions on `S`-units and their logarithmic lattice
@@ -150,9 +152,8 @@ theorem intValuation_finitePlaceEquiv
     simp [idealMapMulEquiv, Ideal.map_span]
   rw [finitePlaceEquiv_asIdeal, hspan]
   norm_cast
-  simpa [e] using
-    (multiplicity_map_eq (idealMapMulEquiv e)
-      (a := v.asIdeal) (b := Ideal.span ({r} : Set (𝓞 L))))
+  exact multiplicity_map_eq (idealMapMulEquiv e)
+    (a := v.asIdeal) (b := Ideal.span ({r} : Set (𝓞 L)))
 
 omit [NumberField K] in
 /-- The field-valued adic valuation is invariant under simultaneous
@@ -516,8 +517,8 @@ theorem permutationRepresentation_logPlace
     permutationRepresentation
         (logPlacePermutationHom K L S hS) σ z =
       σ • z := by
-  letI := logPlaceMulAction K L S hS
-  letI := fullLogSpaceDistribMulAction K L S hS
+  let := logPlaceMulAction K L S hS
+  let := fullLogSpaceDistribMulAction K L S hS
   ext p
   rfl
 
@@ -532,8 +533,8 @@ theorem coordinateSum_smul
     letI := fullLogSpaceDistribMulAction K L S hS
     SUnitGroup.coordinateSum (K := L) S (σ • z) =
       SUnitGroup.coordinateSum (K := L) S z := by
-  letI := logPlaceMulAction K L S hS
-  letI := fullLogSpaceDistribMulAction K L S hS
+  let := logPlaceMulAction K L S hS
+  let := fullLogSpaceDistribMulAction K L S hS
   change
     (∑ p : SUnitGroup.LogPlace (K := L) S,
       z (σ⁻¹ • p)) = ∑ p, z p
@@ -725,15 +726,15 @@ noncomputable def extendedFullLogLattice
 instance instDiscreteTopology_extendedFullLogLattice
     (S : Finset (HeightOneSpectrum (𝓞 L))) :
     DiscreteTopology (extendedFullLogLattice L S) := by
-  letI : Module.Finite ℤ
+  let : Module.Finite ℤ
       (SUnitGroup.fullLogLattice (K := L) S) :=
     ZLattice.module_finite ℝ
       (SUnitGroup.fullLogLattice (K := L) S)
-  letI : Module.Free ℤ
+  let : Module.Free ℤ
       (SUnitGroup.fullLogLattice (K := L) S) :=
     ZLattice.module_free ℝ
       (SUnitGroup.fullLogLattice (K := L) S)
-  letI :
+  let :
       DiscreteTopology
         (fullLogHyperplaneDiagonalLattice L S) := by
     unfold fullLogHyperplaneDiagonalLattice
@@ -752,20 +753,20 @@ instance instDiscreteTopology_extendedFullLogLattice
 instance instIsZLattice_extendedFullLogLattice
     (S : Finset (HeightOneSpectrum (𝓞 L))) :
     IsZLattice ℝ (extendedFullLogLattice L S) := by
-  letI : Module.Finite ℤ
+  let : Module.Finite ℤ
       (SUnitGroup.fullLogLattice (K := L) S) :=
     ZLattice.module_finite ℝ
       (SUnitGroup.fullLogLattice (K := L) S)
-  letI : Module.Free ℤ
+  let : Module.Free ℤ
       (SUnitGroup.fullLogLattice (K := L) S) :=
     ZLattice.module_free ℝ
       (SUnitGroup.fullLogLattice (K := L) S)
-  letI :
+  let :
       DiscreteTopology
         (fullLogHyperplaneDiagonalLattice L S) := by
     unfold fullLogHyperplaneDiagonalLattice
     infer_instance
-  letI :
+  let :
       IsZLattice ℝ
         (fullLogHyperplaneDiagonalLattice L S) := by
     unfold fullLogHyperplaneDiagonalLattice
@@ -792,10 +793,10 @@ theorem fullLogAmbient_smul
     letI := fullLogSpaceDistribMulAction K L S hS
     SUnitGroup.fullLogAmbient (K := L) S (σ • x) =
       σ • SUnitGroup.fullLogAmbient (K := L) S x := by
-  letI := sUnitMulDistribMulAction K L S hS
-  letI := additiveSUnitDistribMulAction K L S hS
-  letI := logPlaceMulAction K L S hS
-  letI := fullLogSpaceDistribMulAction K L S hS
+  let := sUnitMulDistribMulAction K L S hS
+  let := additiveSUnitDistribMulAction K L S hS
+  let := logPlaceMulAction K L S hS
+  let := fullLogSpaceDistribMulAction K L S hS
   let y : L :=
     (((Additive.toMul x :
       SUnitGroup (K := L) S) : Lˣ) : L)
@@ -881,11 +882,11 @@ theorem fullLog_smul
     letI := logHyperplaneDistribMulAction K L S hS
     SUnitGroup.fullLog (K := L) S (σ • x) =
       σ • SUnitGroup.fullLog (K := L) S x := by
-  letI := sUnitMulDistribMulAction K L S hS
-  letI := additiveSUnitDistribMulAction K L S hS
-  letI := logPlaceMulAction K L S hS
-  letI := fullLogSpaceDistribMulAction K L S hS
-  letI := logHyperplaneDistribMulAction K L S hS
+  let := sUnitMulDistribMulAction K L S hS
+  let := additiveSUnitDistribMulAction K L S hS
+  let := logPlaceMulAction K L S hS
+  let := fullLogSpaceDistribMulAction K L S hS
+  let := logHyperplaneDistribMulAction K L S hS
   apply Subtype.ext
   exact fullLogAmbient_smul K L hS σ x
 
@@ -950,11 +951,11 @@ theorem fullLogLattice_smul_mem
     letI := fullLogSpaceDistribMulAction K L S hS
     letI := logHyperplaneDistribMulAction K L S hS
     σ • z ∈ SUnitGroup.fullLogLattice (K := L) S := by
-  letI := sUnitMulDistribMulAction K L S hS
-  letI := additiveSUnitDistribMulAction K L S hS
-  letI := logPlaceMulAction K L S hS
-  letI := fullLogSpaceDistribMulAction K L S hS
-  letI := logHyperplaneDistribMulAction K L S hS
+  let := sUnitMulDistribMulAction K L S hS
+  let := additiveSUnitDistribMulAction K L S hS
+  let := logPlaceMulAction K L S hS
+  let := fullLogSpaceDistribMulAction K L S hS
+  let := logHyperplaneDistribMulAction K L S hS
   rw [SUnitGroup.fullLogLattice_eq_range] at hz ⊢
   obtain ⟨x, hx⟩ := hz
   change SUnitGroup.fullLog (K := L) S x = z at hx
@@ -976,9 +977,9 @@ theorem fullLogSpaceSplit_fst_smul
     letI := logHyperplaneDistribMulAction K L S hS
     (fullLogSpaceSplit L S (σ • z)).1 =
       σ • (fullLogSpaceSplit L S z).1 := by
-  letI := logPlaceMulAction K L S hS
-  letI := fullLogSpaceDistribMulAction K L S hS
-  letI := logHyperplaneDistribMulAction K L S hS
+  let := logPlaceMulAction K L S hS
+  let := fullLogSpaceDistribMulAction K L S hS
+  let := logHyperplaneDistribMulAction K L S hS
   apply Subtype.ext
   change
     σ • z -
@@ -1004,8 +1005,8 @@ theorem fullLogSpaceSplit_snd_smul
     letI := fullLogSpaceDistribMulAction K L S hS
     (fullLogSpaceSplit L S (σ • z)).2 =
       (fullLogSpaceSplit L S z).2 := by
-  letI := logPlaceMulAction K L S hS
-  letI := fullLogSpaceDistribMulAction K L S hS
+  let := logPlaceMulAction K L S hS
+  let := fullLogSpaceDistribMulAction K L S hS
   exact coordinateSum_smul K L hS σ z
 
 omit [NumberField K] in
@@ -1020,11 +1021,11 @@ theorem extendedFullLogLattice_permutation_stable
         permutationRepresentation
             (logPlacePermutationHom K L S hS) σ z ∈
           extendedFullLogLattice L S := by
-  letI := sUnitMulDistribMulAction K L S hS
-  letI := additiveSUnitDistribMulAction K L S hS
-  letI := logPlaceMulAction K L S hS
-  letI := fullLogSpaceDistribMulAction K L S hS
-  letI := logHyperplaneDistribMulAction K L S hS
+  let := sUnitMulDistribMulAction K L S hS
+  let := additiveSUnitDistribMulAction K L S hS
+  let := logPlaceMulAction K L S hS
+  let := fullLogSpaceDistribMulAction K L S hS
+  let := logHyperplaneDistribMulAction K L S hS
   intro σ z hz
   rw [permutationRepresentation_logPlace K L hS]
   change

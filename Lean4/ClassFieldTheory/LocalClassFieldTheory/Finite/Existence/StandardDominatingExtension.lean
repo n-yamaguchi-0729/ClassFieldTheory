@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.Existence.StandardLubinTate
-import LocalClassFieldTheory.Finite.Existence.OrderReversal
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Characteristic-independent dominating standard extensions
@@ -46,16 +48,16 @@ theorem exists_finiteAbelianDominatingStandardLubinTateCompositum
         K (localNormSubgroup K L) d n hd hn hstandard)
   refine ⟨d, n, hd, hn, ?_⟩
   let E := abstractFixedField K (SeparableClosure K) P.field
-  letI : Finite
+  let : Finite
       ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
         extensionSubgroup
           (baseField (intrinsicAbsoluteGalois K)) P.field
           (le_baseField P.field)) :=
     finiteAbelianSubextension_finite_over_absoluteBase K P
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) P.field inferInstance
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K P
   apply nonempty_algHom_of_normSubgroup_le K L E
   simpa [E, P, finiteAbelianNormSubgroup] using hP

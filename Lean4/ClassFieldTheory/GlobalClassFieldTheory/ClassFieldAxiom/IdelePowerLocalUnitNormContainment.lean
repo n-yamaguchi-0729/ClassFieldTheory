@@ -1,9 +1,11 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitLocalPowerMap
-import GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitSubgroup
-import GlobalClassFieldTheory.ClassFieldAxiom.KummerLocalNormContainment
-import GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
-import AlgebraicNumberTheory.Idele.Norm
-import AlgebraicNumberTheory.Idele.PrincipalNorm
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitLocalPowerMap
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitSubgroup
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.KummerLocalNormContainment
+import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Norm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
+
+set_option autoImplicit false
 
 /-!
 # Norm containment for idele power-local-unit subgroups
@@ -303,17 +305,19 @@ theorem
         (K := K) n S' T hb
     let M :=
       KummerTheory.chosenSimpleKummerExtension K n hnK b
-    letI : FiniteDimensional K M :=
+    let : FiniteDimensional K M :=
       KummerTheory.chosenSimpleKummerExtension_finiteDimensional
         K n hnK b
-    letI : IsAbelianGalois K M :=
+    let : IsAbelianGalois K M :=
       KummerTheory.chosenSimpleKummerExtension_isAbelianGalois
         K n hnK hmu b
-    letI : NumberField M :=
+    let : NumberField M :=
       NumberField.of_module_finite K M
-    letI : Group (RelativeIdeleGroup.ClassGroup K M) :=
-      QuotientGroup.Quotient.group
-        (RelativeIdeleGroup.principalSubgroup K M)
+    let : (RelativeIdeleGroup.principalSubgroup K M).Normal :=
+      ⟨fun n hn g => by
+        have hconj : g * n * g⁻¹ = n := by
+          rw [mul_comm g n, mul_assoc, mul_inv_cancel, mul_one]
+        rwa [hconj]⟩
     have hSplitS :
         ∀ w : HeightOneSpectrum (𝓞 K), w ∈ S' →
           _root_.FinitePlaceSplitsCompletely
@@ -592,7 +596,7 @@ theorem
             (IdeleGroup.principalSubgroup K) a
       rw [← huq, map_mul, map_inv, hsOne, map_mul, hqOne]
       simp
-    letI : IsCyclic (M ≃ₐ[K] M) := by
+    let : IsCyclic (M ≃ₐ[K] M) := by
       simpa only [M] using
         KummerTheory.chosenSimpleKummerExtension_isCyclic
           K n hnK hmu b

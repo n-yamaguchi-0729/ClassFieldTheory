@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Degree.Frobenius
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Frobenius
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -38,7 +40,7 @@ theorem exists_positive_nsmul_one_sub_mem_of_index_ne_zero
   change zHatReduction m hm z - n • (1 : ZMod m) = 0
   rw [nsmul_eq_mul, mul_one]
   change r - (n : ZMod m) = 0
-  haveI : NeZero m := ⟨Nat.ne_of_gt hm⟩
+  have : NeZero m := ⟨Nat.ne_of_gt hm⟩
   have hn : (n : ZMod m) = r := by
     change ((r.val + m : ℕ) : ZMod m) = r
     rw [Nat.cast_add, ZMod.natCast_zmod_val, ZMod.natCast_self, add_zero]

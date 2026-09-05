@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Theta.ThetaSeries
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaSeries
+
+set_option autoImplicit false
 
 /-!
 # The Lubin–Tate endomorphism commutation law: uniqueness source for the first theta identity

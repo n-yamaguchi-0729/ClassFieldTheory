@@ -1,12 +1,14 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitNormContainment
-import GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
-import AlgebraicNumberTheory.Idele.Norm
-import AlgebraicNumberTheory.Idele.Principal
-import AlgebraicNumberTheory.Idele.Extension.NormProperties
-import CyclicCohomology.Herbrand.HerbrandLowDegree.Cardinality
-import CyclicCohomology.Herbrand.HerbrandLowDegree.TateComparison
-import CyclicCohomology.TateH0.Main
-import LocalClassFieldTheory.ClassFormation.CohomologyBridge
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitNormContainment
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Norm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Principal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormProperties
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Cardinality
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.TateComparison
+import GaloisCohomology.Cyclic.TateH0.Main
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.CohomologyBridge
+
+set_option autoImplicit false
 
 /-!
 # The Hasse norm principle: the concrete local-global map
@@ -335,34 +337,45 @@ private theorem tateH0IsoHerbrandH0_fixedCycle
           ((tateComplex M).homologyπ 0 (tateH0FixedCycle a)) =
         S.homologyπ y := by
     exact isoZeroBoundary_fixedCycle a
-  have hzInv :
-      (show tateCohomology M 0 from
-        (tateComplex M).homologyπ 0 (tateH0FixedCycle a)) =
-        (TateCohomology.isoZeroBoundary M).inv (S.homologyπ y) := by
-    have h := congrArg (TateCohomology.isoZeroBoundary M).inv hz
-    simpa only [Iso.hom_inv_id_apply] using h
   show
     (tateH0IsoHerbrandH0 (G := G) (A := A)).hom
         (show tateCohomology M 0 from
           (tateComplex M).homologyπ 0 (tateH0FixedCycle a)) =
       Additive.ofMul (HerbrandH0.mk a)
-  rw [hzInv]
-  show
-    ((((TateCohomology.isoZeroBoundary M).inv ≫
-        (tateH0IsoHerbrandH0 (G := G) (A := A)).hom).hom
-      (S.homologyπ y))) =
-      (Additive.ofMul (HerbrandH0.mk a) : Additive (HerbrandH0 G A))
-  dsimp only [tateH0IsoHerbrandH0]
-  rw [Iso.trans_hom, Iso.trans_hom]
-  rw [Iso.inv_hom_id_assoc]
-  rw [ModuleCat.comp_apply]
-  rw [ShortComplex.π_moduleCatCyclesIso_hom_apply]
-  rw [show y = S.moduleCatCyclesIso.inv x by rfl,
-    Iso.inv_hom_id_apply]
-  show
-    Additive.ofMul (HerbrandH0.mk a) =
-      Additive.ofMul (HerbrandH0.mk a)
-  rfl
+  have hy :
+      S.moduleCatHomologyIso.hom (S.homologyπ y) =
+        S.moduleCatLeftHomologyData.π x := by
+    rw [ShortComplex.π_moduleCatCyclesIso_hom_apply]
+    rw [show y = S.moduleCatCyclesIso.inv x by rfl,
+      Iso.inv_hom_id_apply]
+  have hPresentation :
+      ∃ eQ : S.moduleCatLeftHomologyData.H ≅
+          ModuleCat.of ℤ (Additive (HerbrandH0 G A)),
+        tateH0IsoHerbrandH0 (G := G) (A := A) =
+            TateCohomology.isoZeroBoundary M ≪≫
+              S.moduleCatHomologyIso ≪≫ eQ ∧
+          eQ.hom (S.moduleCatLeftHomologyData.π x) =
+            Additive.ofMul (HerbrandH0.mk a) := by
+    exact ⟨_, rfl, rfl⟩
+  obtain ⟨eQ, hIso, hQ⟩ := hPresentation
+  calc
+    (tateH0IsoHerbrandH0 (G := G) (A := A)).hom
+        ((tateComplex M).homologyπ 0 (tateH0FixedCycle a)) =
+      (TateCohomology.isoZeroBoundary M ≪≫
+        S.moduleCatHomologyIso ≪≫ eQ).hom
+          ((tateComplex M).homologyπ 0 (tateH0FixedCycle a)) :=
+      congrArg
+        (fun e ↦ e.hom
+          ((tateComplex M).homologyπ 0 (tateH0FixedCycle a))) hIso
+    _ = eQ.hom
+        (S.moduleCatHomologyIso.hom
+          ((TateCohomology.isoZeroBoundary M).hom
+            ((tateComplex M).homologyπ 0 (tateH0FixedCycle a)))) := rfl
+    _ = eQ.hom (S.moduleCatHomologyIso.hom (S.homologyπ y)) :=
+      congrArg (fun z ↦ eQ.hom (S.moduleCatHomologyIso.hom z)) hz
+    _ = eQ.hom (S.moduleCatLeftHomologyData.π x) :=
+      congrArg (fun z ↦ eQ.hom z) hy
+    _ = Additive.ofMul (HerbrandH0.mk a) := hQ
 
 /-- Ideles whose component at every infinite place lies in the image of
 the determinant norm on the corresponding archimedean local tensor
@@ -554,9 +567,9 @@ private theorem principalIdeleHerbrandH0Map_mk
               rw [← RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant
                 K L σ a, a.2 σ]⟩ :
             fixedSubgroup (L ≃ₐ[K] L) (RelativeIdeleGroup K L)) := by
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.principalIdeleMulDistribMulAction K L
   intro a
   let aI :
@@ -681,6 +694,13 @@ private theorem principalIdeleHerbrandH0Map_mk
       HerbrandH0.mk aI
   exact congrArg Additive.toMul hadd
 
+section IdeleClassConnecting
+
+attribute [local instance]
+  RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction
+  RelativeIdeleGroup.Cohomology.principalIdeleMulDistribMulAction
+  RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction
+
 /-- The low-degree connecting homomorphism
 `H⁻¹(G, C_L) → H⁰(G, P_L)` attached to
 `1 → P_L → I_L → C_L → 1`. -/
@@ -701,12 +721,6 @@ noncomputable def ideleClassToPrincipalConnecting
             (RelativeIdeleGroup.ClassGroup K L)) (-1)) →*
       HerbrandH0 (L ≃ₐ[K] L)
         (RelativeIdeleGroup.principalSubgroup K L) := by
-  letI :=
-    RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
-    RelativeIdeleGroup.Cohomology.principalIdeleMulDistribMulAction K L
-  letI :=
-    RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   let q :
       RelativeIdeleGroup K L →*
         RelativeIdeleGroup.ClassGroup K L :=
@@ -727,20 +741,28 @@ noncomputable def ideleClassToPrincipalConnecting
       (RelativeIdeleGroup.principalSubgroup K L)
   let S :=
     equivariantShortComplex
-      (RelativeIdeleGroup.principalSubgroup K L).subtype
-      q
-      (RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant K L)
-      hqEquivariant
-      hqExact
+      (G := L ≃ₐ[K] L)
+      (A := RelativeIdeleGroup.principalSubgroup K L)
+      (B := RelativeIdeleGroup K L)
+      (C := RelativeIdeleGroup.ClassGroup K L)
+      (i := (RelativeIdeleGroup.principalSubgroup K L).subtype)
+      (j := q)
+      (hi := RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant K L)
+      (hj := hqEquivariant)
+      (hker := hqExact)
   have hS : S.ShortExact :=
     equivariantShortComplex_shortExact
-      (RelativeIdeleGroup.principalSubgroup K L).subtype
-      q
-      (RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant K L)
-      hqEquivariant
-      hqExact
-      (RelativeIdeleGroup.principalSubgroup K L).subtype_injective
-      hqSurjective
+      (G := L ≃ₐ[K] L)
+      (A := RelativeIdeleGroup.principalSubgroup K L)
+      (B := RelativeIdeleGroup K L)
+      (C := RelativeIdeleGroup.ClassGroup K L)
+      (i := (RelativeIdeleGroup.principalSubgroup K L).subtype)
+      (j := q)
+      (hi := RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant K L)
+      (hj := hqEquivariant)
+      (hker := hqExact)
+      (hinj := (RelativeIdeleGroup.principalSubgroup K L).subtype_injective)
+      (hsurj := hqSurjective)
   let eP :=
     (tateH0IsoHerbrandH0
       (G := L ≃ₐ[K] L)
@@ -765,12 +787,6 @@ theorem ideleClassToPrincipalConnecting_range_eq_ker
       RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
     MonoidHom.range (ideleClassToPrincipalConnecting K L) =
       MonoidHom.ker (principalIdeleHerbrandH0Map K L) := by
-  letI :=
-    RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
-    RelativeIdeleGroup.Cohomology.principalIdeleMulDistribMulAction K L
-  letI :=
-    RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   let q :
       RelativeIdeleGroup K L →*
         RelativeIdeleGroup.ClassGroup K L :=
@@ -791,20 +807,28 @@ theorem ideleClassToPrincipalConnecting_range_eq_ker
       (RelativeIdeleGroup.principalSubgroup K L)
   let S :=
     equivariantShortComplex
-      (RelativeIdeleGroup.principalSubgroup K L).subtype
-      q
-      (RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant K L)
-      hqEquivariant
-      hqExact
+      (G := L ≃ₐ[K] L)
+      (A := RelativeIdeleGroup.principalSubgroup K L)
+      (B := RelativeIdeleGroup K L)
+      (C := RelativeIdeleGroup.ClassGroup K L)
+      (i := (RelativeIdeleGroup.principalSubgroup K L).subtype)
+      (j := q)
+      (hi := RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant K L)
+      (hj := hqEquivariant)
+      (hker := hqExact)
   have hS : S.ShortExact :=
     equivariantShortComplex_shortExact
-      (RelativeIdeleGroup.principalSubgroup K L).subtype
-      q
-      (RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant K L)
-      hqEquivariant
-      hqExact
-      (RelativeIdeleGroup.principalSubgroup K L).subtype_injective
-      hqSurjective
+      (G := L ≃ₐ[K] L)
+      (A := RelativeIdeleGroup.principalSubgroup K L)
+      (B := RelativeIdeleGroup K L)
+      (C := RelativeIdeleGroup.ClassGroup K L)
+      (i := (RelativeIdeleGroup.principalSubgroup K L).subtype)
+      (j := q)
+      (hi := RelativeIdeleGroup.Cohomology.principalIdeleSubtype_equivariant K L)
+      (hj := hqEquivariant)
+      (hker := hqExact)
+      (hinj := (RelativeIdeleGroup.principalSubgroup K L).subtype_injective)
+      (hsurj := hqSurjective)
   let δm :=
     (TateCohomology.δ hS (-1)).hom.toAddMonoidHom.toMultiplicative
   let fm :=
@@ -831,6 +855,8 @@ theorem ideleClassToPrincipalConnecting_range_eq_ker
       mulExact_transport_mulEquiv δm fm eP eI hbase
   show MonoidHom.range connecting = MonoidHom.ker principal
   exact htarget.monoidHom_ker_eq.symm
+
+end IdeleClassConnecting
 
 /-- Degree-zero Tate cohomology of the actual field-unit action is the
 concrete global norm quotient `Kˣ / N_{L/K}(Lˣ)`. -/
@@ -931,11 +957,11 @@ theorem fieldUnitsHerbrandH0_map_baseFieldUnit_eq_one_of_mem_norm
       RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
     fieldUnitsToRelativeIdeleHerbrandH0 K L
         (HerbrandH0.mk (baseFieldUnitAsFixedUnit K L x)) = 1 := by
-  letI :=
+  let :=
     LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.principalIdeleMulDistribMulAction K L
   let aP :
       fixedSubgroup (L ≃ₐ[K] L)
@@ -1035,13 +1061,13 @@ theorem ideleClassToFieldUnitsConnecting_range_eq_ker
         (ideleClassToFieldUnitsConnecting K L) =
       MonoidHom.ker
         (fieldUnitsToRelativeIdeleHerbrandH0 K L) := by
-  letI :=
+  let :=
     LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.principalIdeleMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   let e :=
     fieldUnitsHerbrandH0EquivPrincipalIdeles K L
@@ -1092,11 +1118,11 @@ theorem fieldUnitsToRelativeIdeleHerbrandH0_injective_of_subsingleton
       RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
     Function.Injective
       (fieldUnitsToRelativeIdeleHerbrandH0 K L) := by
-  letI :=
+  let :=
     LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   rw [← MonoidHom.ker_eq_bot_iff]
   rw [← ideleClassToFieldUnitsConnecting_range_eq_ker K L]
@@ -1127,11 +1153,11 @@ theorem everywhereLocalFieldNormSubgroup_le_global_of_subsingleton
             (RelativeIdeleGroup.ClassGroup K L)) (-1)))] :
     everywhereLocalFieldNormSubgroup K L ≤
       globalFieldNormSubgroup K L := by
-  letI :=
+  let :=
     LocalClassFieldTheory.galoisGroupFieldUnitsMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.relativeIdeleMulDistribMulAction K L
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
   intro x hx
   have hxNorm :
@@ -1320,9 +1346,9 @@ theorem hasseNormDiagonal_injective_cyclic
     Function.Injective (hasseNormDiagonal K L) := by
   obtain ⟨sigma, hsigma⟩ :=
     IsCyclic.exists_generator (α := L ≃ₐ[K] L)
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K L
-  letI :
+  let :
       Subsingleton
         (Multiplicative
           (tateCohomology

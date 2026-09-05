@@ -1,14 +1,18 @@
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin
-import AlgebraicNumberTheory.Idele.SinglePlace
-import AlgebraicNumberTheory.Completion.UnramifiedComparison
-import AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
-import AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import AlgebraicNumberTheory.Idele.NormTopology.Continuity
-import AlgebraicNumberTheory.Idele.SPlaces
-import AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
-import LocalFieldTheory.NonarchimedeanLocalField.NormalizedIntegerValuation
-import ValuationTheory.DiscreteValuationField.FiniteExtension.Uniqueness
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.Continuity
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SPlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormalizedIntegerValuation
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
 import Mathlib.Algebra.BigOperators.Finprod
+
+set_option autoImplicit false
 
 /-!
 # The finite-place product of local Artin homomorphisms
@@ -106,7 +110,7 @@ theorem normUnits_mem_finitePlaceIntegerUnits
     ⟨finitePlaceExtensionCentre (K := K) (L := M) v w,
       finitePlaceBelow_finitePlaceExtensionCentre
         (K := K) (L := M) v w⟩
-  letI : Algebra (v.adicCompletion K)
+  let : Algebra (v.adicCompletion K)
       ((finitePlaceExtensionCentre
         (K := K) (L := M) v w).adicCompletion M) :=
     (finitePlaceAdicCompletionMap K M v W).toAlgebra
@@ -173,7 +177,7 @@ theorem finitePlaceArtinFactors_hasFiniteMulSupport
                   (chosenFinitePlaceExtension
                     (L := L) v),
                 hram⟩))
-    simpa only [S, Set.mem_setOf_eq, not_not,
+    simpa only [S, Set.mem_ofPred_eq, not_not,
       IdeleGroup.finiteComponent_apply] using hvS
   rw [← chosenFinitePlaceArtinMonoidHom_ker
     (K := K) (L := L) v] at hNorm
@@ -389,7 +393,7 @@ theorem finitePlaceGlobalArtinMonoidHom_norm_eq_finprod_fibers
               (W.1.adicCompletion M)
               (IdeleGroup.finiteComponent W.1 a)) := by
   classical
-  letI : ∀ v : HeightOneSpectrum (𝓞 K),
+  let : ∀ v : HeightOneSpectrum (𝓞 K),
       Fintype {W : HeightOneSpectrum (𝓞 M) //
         finitePlaceBelow (K := K) W = v} :=
     fun v => by
@@ -403,7 +407,7 @@ theorem finitePlaceGlobalArtinMonoidHom_norm_eq_finprod_fibers
         Fintype.ofEquiv (AbsoluteValueExtension vK M)
           (finitePlaceExtensionEquivAbove
             (K := K) (L := M) v)
-  letI : ∀ v : HeightOneSpectrum (𝓞 K),
+  let : ∀ v : HeightOneSpectrum (𝓞 K),
       ∀ W : {W : HeightOneSpectrum (𝓞 M) //
         finitePlaceBelow (K := K) W = v},
         Algebra (v.adicCompletion K)
@@ -443,7 +447,7 @@ private theorem finitePlaceNormArtinFactor_eq_one_of_component_unit_of_unramifie
     ⟨W, rfl⟩
   let z : (W.adicCompletionIntegers M).units :=
     ⟨IdeleGroup.finiteComponent W a, hComponentUnit⟩
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion M) :=
+  let : Algebra (v.adicCompletion K) (W.adicCompletion M) :=
     (finitePlaceAdicCompletionMap K M v Wv).toAlgebra
   have hNormUnit :
       LocalFieldTheory.normUnits
@@ -515,7 +519,7 @@ theorem finitePlaceNormArtinFactors_hasFiniteMulSupport
   have hComponentUnit :
       IdeleGroup.finiteComponent W a ∈
         (W.adicCompletionIntegers M).units := by
-    simpa only [S, Set.mem_setOf_eq, not_not,
+    simpa only [S, Set.mem_ofPred_eq, not_not,
       IdeleGroup.finiteComponent_apply] using hWS
   have hvT : v ∉ T := by
     intro hvT
@@ -567,7 +571,7 @@ theorem finitePlaceGlobalArtinMonoidHom_norm_eq_finprod
             (W.adicCompletion M)
             (IdeleGroup.finiteComponent W a)) := by
   classical
-  letI : ∀ W : HeightOneSpectrum (𝓞 M),
+  let : ∀ W : HeightOneSpectrum (𝓞 M),
       Algebra
         ((finitePlaceBelow
           (K := K) W).adicCompletion K)
@@ -577,7 +581,7 @@ theorem finitePlaceGlobalArtinMonoidHom_norm_eq_finprod
         K M
         (finitePlaceBelow (K := K) W)
         ⟨W, rfl⟩).toAlgebra
-  letI : ∀ v : HeightOneSpectrum (𝓞 K),
+  let : ∀ v : HeightOneSpectrum (𝓞 K),
       Fintype {W : HeightOneSpectrum (𝓞 M) //
         finitePlaceBelow (K := K) W = v} :=
     fun v => by
@@ -591,7 +595,7 @@ theorem finitePlaceGlobalArtinMonoidHom_norm_eq_finprod
         Fintype.ofEquiv (AbsoluteValueExtension vK M)
           (finitePlaceExtensionEquivAbove
             (K := K) (L := M) v)
-  letI : ∀ v : HeightOneSpectrum (𝓞 K),
+  let : ∀ v : HeightOneSpectrum (𝓞 K),
       ∀ W : {W : HeightOneSpectrum (𝓞 M) //
         finitePlaceBelow (K := K) W = v},
         Algebra (v.adicCompletion K)
@@ -679,7 +683,7 @@ theorem finitePlaceGlobalArtinMonoidHom_norm_restriction
         (IdeleGroup.norm K K') := by
   apply MonoidHom.ext
   intro a
-  letI : ∀ W : HeightOneSpectrum (𝓞 K'),
+  let : ∀ W : HeightOneSpectrum (𝓞 K'),
       Algebra
         ((finitePlaceBelow
           (K := K) W).adicCompletion K)

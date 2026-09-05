@@ -1,7 +1,9 @@
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.PrimitiveElement
-import LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormProduct
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormProduct
+
+set_option autoImplicit false
 
 /-!
 # Relative norms on actual fixed fields
@@ -87,17 +89,17 @@ private theorem abstractFixedFieldCosetToAlgHom_surjective
     Function.Surjective
       (abstractFixedFieldCosetToAlgHom k Ω K L hLK) := by
   intro f
-  letI : Algebra.IsSeparable (abstractFixedField k Ω K)
+  let : Algebra.IsSeparable (abstractFixedField k Ω K)
       (abstractRelativeFixedField k Ω hLK) :=
     Algebra.isSeparable_tower_bot_of_isSeparable
       (abstractFixedField k Ω K)
       (abstractRelativeFixedField k Ω hLK) Ω
-  letI : Algebra.IsSeparable (abstractRelativeFixedField k Ω hLK) Ω :=
+  let : Algebra.IsSeparable (abstractRelativeFixedField k Ω hLK) Ω :=
     Algebra.isSeparable_tower_top_of_isSeparable
       (abstractFixedField k Ω K)
       (abstractRelativeFixedField k Ω hLK) Ω
   obtain ⟨φ, hφ⟩ :=
-    (IsSepClosed.surjective_restrictDomain_of_isSeparable
+    (IsSepClosed.surjective_domRestrict_of_isSeparable
       (K := abstractFixedField k Ω K)
       (L := abstractRelativeFixedField k Ω hLK)
       (M := Ω) (E := Ω)) f
@@ -198,11 +200,11 @@ theorem relativeNorm_abstractFixedFieldUnit_eq_normUnits
         (Additive.ofMul
           (normUnits (abstractFixedField k Ω K)
             (abstractRelativeFixedField k Ω hLK) x)) := by
-  letI : FiniteDimensional (abstractFixedField k Ω K)
+  let : FiniteDimensional (abstractFixedField k Ω K)
       (abstractRelativeFixedField k Ω hLK) :=
     abstractRelativeFixedField_finiteDimensional
       k Ω K L hLK hKabsolute hfinite
-  letI : Algebra.IsSeparable (abstractFixedField k Ω K)
+  let : Algebra.IsSeparable (abstractFixedField k Ω K)
       (abstractRelativeFixedField k Ω hLK) :=
     Algebra.isSeparable_tower_bot_of_isSeparable
       (abstractFixedField k Ω K)
@@ -211,7 +213,7 @@ theorem relativeNorm_abstractFixedFieldUnit_eq_normUnits
   apply Additive.ext
   apply Units.ext
   let Q := K.toSubgroup ⧸ extensionSubgroup K L hLK
-  letI := Fintype.ofFinite Q
+  let := Fintype.ofFinite Q
   change
     ((Additive.toMul
       (relativeNormValue (galoisAmbientUnitsRep k Ω)
@@ -225,7 +227,7 @@ theorem relativeNorm_abstractFixedFieldUnit_eq_normUnits
         K L hLK
         (abstractRelativeFixedFieldUnitsEquivGaloisFixed
           k Ω K L hLK (Additive.ofMul x)) q) : Ωˣ) : Ω) = _
-  rw [toMul_sum]
+
   change (Units.coeHom Ω) (∏ q : Q,
     Additive.toMul
       (relativeCosetAction (galoisAmbientUnitsRep k Ω)

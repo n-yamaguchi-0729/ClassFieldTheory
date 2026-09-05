@@ -1,8 +1,10 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldRelativeNorm
-import LocalClassFieldTheory.Finite.LocalReciprocity.LocalClassFieldAxiom
-import LocalClassFieldTheory.Finite.LocalReciprocity.LocalHenselianValuation
-import AbstractClassFieldTheory.Reciprocity.Main
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldRelativeNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.LocalClassFieldAxiom
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.LocalHenselianValuation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
 import Mathlib.FieldTheory.Galois.Notation
+
+set_option autoImplicit false
 
 /-!
 # Naturality of fixed-field norm-residue symbols
@@ -200,7 +202,7 @@ theorem abstractFixedFieldNormResidueSymbol_norm_restriction
       (abstractFixedFieldNormResidueSymbol
         k Ω D v hcf K L hLK).comp
         (abstractFixedFieldNormUnits k Ω K K' hK'K) := by
-  letI : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
+  let : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
       extensionSubgroup (baseField (Gal(Ω / k))) K'
         (le_baseField K')) :=
     relativeTowerQuotientFinite (baseField (Gal(Ω / k))) K K' hK'K
@@ -357,17 +359,17 @@ theorem abstractFixedFieldNormResidueSymbol_transfer_inclusion
       (abstractFixedFieldNormResidueSymbol
         k Ω D v hcf K' L hLK').comp
         (abstractFixedFieldUnitsInclusion k Ω K K' hK'K) := by
-  letI : (extensionSubgroup K' L hLK').Normal :=
+  let : (extensionSubgroup K' L hLK').Normal :=
     transferNormNaturality_intermediateExtension_normal K K' L hLK' hK'K
-  letI : Finite
+  let : Finite
       (K'.toSubgroup ⧸ extensionSubgroup K' L hLK') :=
     FiniteGaloisSubextension.finite_extension_over_intermediate
       (hLK'.trans hK'K) hK'K hLK'
-  letI : Finite
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K K' hK'K) :=
     FiniteGaloisSubextension.finite_intermediate_extension
       (hLK'.trans hK'K) hLK' hK'K
-  letI : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
+  let : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
       extensionSubgroup (baseField (Gal(Ω / k))) K'
         (le_baseField K')) :=
     relativeTowerQuotientFinite (baseField (Gal(Ω / k))) K K' hK'K
@@ -502,8 +504,8 @@ theorem upperAbsoluteFinite
       ((baseField (Gal(SeparableClosure k / k))).toSubgroup ⧸
         extensionSubgroup (baseField (Gal(SeparableClosure k / k)))
           T.upperBase (le_baseField T.upperBase)) := by
-  letI := T.lowerAbsoluteFinite
-  letI := T.baseFinite
+  let := T.lowerAbsoluteFinite
+  let := T.baseFinite
   exact
     relativeTowerQuotientFinite
       (baseField (Gal(SeparableClosure k / k)))
@@ -562,13 +564,13 @@ theorem norm_restriction_commutes
     (T : LocalFixedFieldNormRestrictionSquare k) :
     (abelianizedRestriction T).comp (upperNormResidueSymbol T) =
       (lowerNormResidueSymbol T).comp (normUnits T) := by
-  letI := T.lowerNormal
-  letI := T.upperNormal
-  letI := T.lowerFinite
-  letI := T.upperFinite
-  letI := T.baseFinite
-  letI := T.lowerAbsoluteFinite
-  letI := upperAbsoluteFinite T
+  let := T.lowerNormal
+  let := T.upperNormal
+  let := T.lowerFinite
+  let := T.upperFinite
+  let := T.baseFinite
+  let := T.lowerAbsoluteFinite
+  let := upperAbsoluteFinite T
   simpa [abelianizedRestriction, upperNormResidueSymbol,
     lowerNormResidueSymbol, normUnits] using
     (abstractFixedFieldNormResidueSymbol_norm_restriction
@@ -624,7 +626,7 @@ variable {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
 theorem intermediateNormal (T : LocalFixedFieldTransferTower k) :
     (extensionSubgroup T.intermediate T.top
       T.top_le_intermediate).Normal := by
-  letI := T.totalNormal
+  let := T.totalNormal
   exact
     transferNormNaturality_intermediateExtension_normal
       T.base T.intermediate T.top
@@ -635,8 +637,8 @@ theorem intermediateFinite (T : LocalFixedFieldTransferTower k) :
     Finite (T.intermediate.toSubgroup ⧸
       extensionSubgroup T.intermediate T.top
         T.top_le_intermediate) := by
-  letI := T.totalNormal
-  letI := T.totalFinite
+  let := T.totalNormal
+  let := T.totalFinite
   exact
     FiniteGaloisSubextension.finite_extension_over_intermediate
       (T.top_le_intermediate.trans T.intermediate_le_base)
@@ -648,8 +650,8 @@ theorem baseIntermediateFinite
     Finite (T.base.toSubgroup ⧸
       extensionSubgroup T.base T.intermediate
         T.intermediate_le_base) := by
-  letI := T.totalNormal
-  letI := T.totalFinite
+  let := T.totalNormal
+  let := T.totalFinite
   exact
     FiniteGaloisSubextension.finite_intermediate_extension
       (T.top_le_intermediate.trans T.intermediate_le_base)
@@ -662,8 +664,8 @@ theorem intermediateAbsoluteFinite
       ((baseField (Gal(SeparableClosure k / k))).toSubgroup ⧸
         extensionSubgroup (baseField (Gal(SeparableClosure k / k)))
           T.intermediate (le_baseField T.intermediate)) := by
-  letI := T.baseAbsoluteFinite
-  letI := baseIntermediateFinite T
+  let := T.baseAbsoluteFinite
+  let := baseIntermediateFinite T
   exact
     relativeTowerQuotientFinite
       (baseField (Gal(SeparableClosure k / k)))
@@ -721,13 +723,13 @@ theorem transfer_inclusion_commutes
     (T : LocalFixedFieldTransferTower k) :
     (abelianizedTransfer T).comp (baseNormResidueSymbol T) =
       (intermediateNormResidueSymbol T).comp (unitsInclusion T) := by
-  letI := T.totalNormal
-  letI := T.totalFinite
-  letI := T.baseAbsoluteFinite
-  letI := intermediateNormal T
-  letI := intermediateFinite T
-  letI := baseIntermediateFinite T
-  letI := intermediateAbsoluteFinite T
+  let := T.totalNormal
+  let := T.totalFinite
+  let := T.baseAbsoluteFinite
+  let := intermediateNormal T
+  let := intermediateFinite T
+  let := baseIntermediateFinite T
+  let := intermediateAbsoluteFinite T
   simpa [abelianizedTransfer, baseNormResidueSymbol,
     intermediateNormResidueSymbol, unitsInclusion] using
     (abstractFixedFieldNormResidueSymbol_transfer_inclusion

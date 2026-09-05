@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.AdeleBaseChange
-import AlgebraicNumberTheory.Idele.Extension.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.AdeleBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.BaseChange
+
+set_option autoImplicit false
 
 /-!
 # The norm on ordinary ideles
@@ -54,6 +56,8 @@ theorem norm_principalIdele
     RelativeIdeleGroup.norm_principalIdele]
 
 end IdeleGroup
+
+universe u v
 
 variable
     (K : Type u) (L : Type v)

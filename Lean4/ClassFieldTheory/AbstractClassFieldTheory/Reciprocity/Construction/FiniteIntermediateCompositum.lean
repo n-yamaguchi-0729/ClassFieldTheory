@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityIndependence
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityIndependence
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -26,7 +28,7 @@ def compositum {E K : ClosedSubgroup G}
   below := (inf_le_left :
     (M.field ⊓ N.field).toSubgroup ≤ M.field.toSubgroup).trans M.below
   finite := by
-    letI : Finite
+    let : Finite
         (K.toSubgroup ⧸ extensionSubgroup K N.field N.below) := N.finite
     exact M.compositumWith_finite_over_base N.field N.below
 
@@ -50,7 +52,7 @@ theorem absoluteFinite {E K : ClosedSubgroup G}
     (M : FiniteIntermediateField E K) :
     Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) M.field (le_baseField M.field)) := by
-  letI : Finite
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K M.field M.below) := M.finite
   exact relativeTowerQuotientFinite (baseField G) K M.field M.below
     (le_baseField K)

@@ -1,5 +1,7 @@
 import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 
+set_option autoImplicit false
+
 /-!
 # Gauss reciprocity and its supplementary laws
 

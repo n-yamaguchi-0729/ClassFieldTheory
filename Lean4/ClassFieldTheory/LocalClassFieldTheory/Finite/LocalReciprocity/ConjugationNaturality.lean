@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
-import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+
+set_option autoImplicit false
 
 /-!
 # Conjugation naturality of finite local reciprocity
@@ -42,9 +44,13 @@ theorem abelianizedGaloisConjugationOfEmbeddings_eq_refl
         ((finiteGaloisConjugationOfEmbeddings K L i j).abelianizationCongr
           ((finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L i).abelianizationCongr.symm z)) =
       z
-  rw [finiteGaloisAbstractQuotientEquivGaloisGroup_conjugation]
   exact
-    (finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L i).abelianizationCongr.apply_symm_apply z
+    (finiteGaloisAbstractQuotientEquivGaloisGroup_conjugation
+        K L i j
+        ((finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding
+          K L i).abelianizationCongr.symm z)).trans
+      ((finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding
+        K L i).abelianizationCongr.apply_symm_apply z)
 
 /-- Algebraic conjugation naturality for the norm-residue symbols computed
 from two explicit realizations of the same finite Galois extension. -/

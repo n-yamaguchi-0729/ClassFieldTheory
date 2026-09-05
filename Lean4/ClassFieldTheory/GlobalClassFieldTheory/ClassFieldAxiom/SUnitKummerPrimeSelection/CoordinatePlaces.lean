@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.BasePlaceSelection
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.FinitePlaceDecomposition
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.BasePlaceSelection
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.FinitePlaceDecomposition
+
+set_option autoImplicit false
 
 /-!
 # Coordinate places in an S-unit Kummer extension
@@ -88,7 +90,7 @@ theorem exists_sUnitKummerCoordinatePlace
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
   let Ni :=
@@ -99,9 +101,9 @@ theorem exists_sUnitKummerCoordinatePlace
       (sUnitKummerKernelGenerator
         (K := K) (Omega := Omega) E n hmu
         p v hp hv hn r eG S i)
-  letI : NumberField Ni :=
+  let : NumberField Ni :=
     NumberField.of_module_finite K Ni
-  letI : IsGalois Ni N :=
+  let : IsGalois Ni N :=
     enlargedSUnitKummerCyclicFixedField_isGalois
       (K := K) (Omega := Omega) E n hmu
       (galois_pow_eq_one_of_equiv_pi_zmod
@@ -364,13 +366,13 @@ theorem sUnitKummerChosenBasePlace_isUnramified
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
-  letI : IsGalois K N :=
+  let : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
-  letI : NumberField N :=
+  let : NumberField N :=
     NumberField.of_module_finite K N
   apply
     _root_.chosenFinitePlaceIsUnramified_of_isUnramifiedAt

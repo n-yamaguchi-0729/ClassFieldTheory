@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LocalClassFieldTheory.ClassFormation.FieldUnitsHerbrand
-import LocalClassFieldTheory.ClassFormation.IntegerUnitsHerbrand
-import LocalClassFieldTheory.ClassFormation.NormalBasisCohomology
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.FieldUnitsHerbrand
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.IntegerUnitsHerbrand
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.NormalBasisCohomology
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open CyclicCohomology
@@ -52,10 +54,10 @@ theorem exists_localIntegerUnitsHerbrandDefinedAndEqOne
   have hcHn : cH ≤ n := le_trans (le_max_left cH cU) hrest
   have hcUn : cU ≤ n := le_trans (le_max_right cH cU) hrest
   rcases hcV n hcVn with ⟨V, hV, _hVprincipal⟩
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
     K L n V hV
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := chosenNormalBasisIntegerUnitsQuotMulDistribMulAction K L n V hV
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := chosenNormalBasisIntegerUnitsQuotMulDistribMulAction K L n V hV
   have hcoh := hcH n hcHn V hV
   rcases hcU n hcUn V hV g hg hcoh.1 hcoh.2 with ⟨hU, hUone⟩
   exact ⟨hU, hUone⟩
@@ -95,8 +97,6 @@ theorem localFieldUnits_tate_card_of_generator
     letI := localFieldUnitsTateH0FiniteOfGenerator K L g hg
     Nat.card (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) = Module.finrank K L ∧
       Nat.card (tateCohomology (Rep.ofAlgebraAutOnUnits K L) (-1)) = 1 := by
-  letI : Finite (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) :=
-    localFieldUnitsTateH0FiniteOfGenerator K L g hg
   exact fieldUnits_tate_card_of_integerUnits_herbrand_eq_one
     K L g hg (localIntegerUnitsHerbrandDefined K L g hg)
       (localIntegerUnitsHerbrandQuotient_eq_one K L g hg)
@@ -116,8 +116,6 @@ theorem localFieldUnits_tate_card_of_isCyclic [IsCyclic (Gal(L / K))] :
     letI := localFieldUnitsTateH0FiniteOfIsCyclic K L
     Nat.card (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) = Module.finrank K L ∧
       Nat.card (tateCohomology (Rep.ofAlgebraAutOnUnits K L) (-1)) = 1 := by
-  letI : Finite (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) :=
-    localFieldUnitsTateH0FiniteOfIsCyclic K L
   rcases (IsCyclic.exists_generator :
     ∃ g : Gal(L / K), ∀ sigma : Gal(L / K),
       sigma ∈ Subgroup.zpowers g) with ⟨g, hg⟩

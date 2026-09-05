@@ -1,7 +1,9 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusSemigroup
-import AbstractClassFieldTheory.Reciprocity.Construction.NormSubgroup
-import AbstractClassFieldTheory.Reciprocity.Construction.PrimeChoice
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusSemigroup
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.NormSubgroup
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.PrimeChoice
+
+set_option autoImplicit false
 
 universe u
 
@@ -65,12 +67,12 @@ theorem frobeniusFixedField_absoluteFinite (D : DegreeData G)
             (hLnormal := by
               simpa only [FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal) σ))) := by
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
-  letI : Finite (K.field.toSubgroup ⧸
+  let : Finite (K.field.toSubgroup ⧸
       extensionSubgroup K.field (D.frobeniusFixedField KR L hLK σ)
         (D.frobeniusFixedField_le KR L hLK σ)) :=
     D.frobeniusFixedField_finite KR L hLK σ

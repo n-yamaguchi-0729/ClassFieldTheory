@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
+
+set_option autoImplicit false
 
 /-!
 # Algebra for localized completion cohomology
@@ -47,7 +49,7 @@ theorem localizedCompletionFiniteDimensional
     letI : Algebra vK.Completion (LocalizedCompletion vK w) :=
       localizedCompletionBaseAlgebra vK w
     FiniteDimensional vK.Completion (LocalizedCompletion vK w) := by
-  letI := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionBaseAlgebra vK w
   exact localizedCompletionModuleFinite vK hvK w
 
 /-- The named Galois certificate for the algebraic localization of a Galois
@@ -59,7 +61,7 @@ theorem localizedCompletionIsGalois
     letI : Algebra vK.Completion (LocalizedCompletion vK w) :=
       localizedCompletionBaseAlgebra vK w
     IsGalois vK.Completion (LocalizedCompletion vK w) := by
-  letI := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionBaseAlgebra vK w
   exact HilbertRamification.algebraicLocalization_isGalois vK w
 
 /-- The algebra structure on the algebraic localization induced by the tower
@@ -86,9 +88,9 @@ theorem localizedCompletionIsScalarTower
     letI := localizedCompletionGlobalAlgebra vK w
     IsScalarTower K vK.Completion
       (LocalizedCompletion vK w) := by
-  letI : Algebra vK.Completion (LocalizedCompletion vK w) :=
+  let _ : Algebra vK.Completion (LocalizedCompletion vK w) :=
     localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
+  let _ := localizedCompletionGlobalAlgebra vK w
   exact IsScalarTower.of_algebraMap_eq' rfl
 
 /-- The canonical global-to-local embedding as a `K`-algebra homomorphism. -/
@@ -131,9 +133,9 @@ theorem localizedCompletion_adjoin_range_eq_top
     IntermediateField.adjoin vK.Completion
       (Set.range
         (AbsoluteValue.toAlgebraicLocalization vK w.1 w.2)) = ⊤ := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
+  let _ := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionGlobalAlgebra vK w
+  let _ := localizedCompletionIsScalarTower vK w
   exact
     HilbertRamification.decompositionField_localization_adjoin_range_eq_top
       vK w
@@ -152,9 +154,9 @@ theorem localizedCompletion_adjoin_image_eq_top_of_adjoin_eq_top
     letI := localizedCompletionIsScalarTower vK w
     IntermediateField.adjoin vK.Completion
       {AbsoluteValue.toAlgebraicLocalization vK w.1 w.2 β} = ⊤ := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
+  let _ := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionGlobalAlgebra vK w
+  let _ := localizedCompletionIsScalarTower vK w
   let toF := localizedCompletionToAlgHom vK w
   let βw := AbsoluteValue.toAlgebraicLocalization vK w.1 w.2 β
   have hfieldRange :
@@ -198,9 +200,9 @@ theorem localizedCompletion_generator_isSeparable
     letI := localizedCompletionIsScalarTower vK w
     IsSeparable vK.Completion
       (AbsoluteValue.toAlgebraicLocalization vK w.1 w.2 x) := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
+  let _ := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionGlobalAlgebra vK w
+  let _ := localizedCompletionIsScalarTower vK w
   exact
     HilbertRamification.decompositionField_toLocalization_isSeparable
       vK w x
@@ -220,9 +222,9 @@ theorem localizedCompletion_generator_minpoly_splits
         (AbsoluteValue.toAlgebraicLocalization vK w.1 w.2 x)).map
       (algebraMap vK.Completion
         (LocalizedCompletion vK w))).Splits := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
+  let _ := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionGlobalAlgebra vK w
+  let _ := localizedCompletionIsScalarTower vK w
   exact
     HilbertRamification.decompositionField_toLocalization_minpoly_splits
       vK w x
@@ -243,10 +245,10 @@ theorem localizedCompletion_isAbelianGalois
     letI := localizedCompletionIsScalarTower vK w
     IsAbelianGalois vK.Completion
       (LocalizedCompletion vK w) := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : IsGalois vK.Completion
+  let _ := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionGlobalAlgebra vK w
+  let _ := localizedCompletionIsScalarTower vK w
+  let _ : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionIsGalois vK w
   let e :
@@ -279,10 +281,10 @@ theorem localizedCompletion_baseField_comap_eq_fixedField_decompositionGroup
       (AbsoluteValue.toAlgebraicLocalization vK w.1 w.2) =
         (IntermediateField.fixedField
           (absoluteValueDecompositionGroup K w.1)).toSubfield := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : IsGalois vK.Completion
+  let _ := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionGlobalAlgebra vK w
+  let _ := localizedCompletionIsScalarTower vK w
+  let _ : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionIsGalois vK w
   ext x

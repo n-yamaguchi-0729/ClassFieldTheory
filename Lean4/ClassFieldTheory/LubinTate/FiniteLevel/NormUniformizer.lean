@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.PrimitiveUniformizer
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveUniformizer
 import Mathlib.RingTheory.Norm.Basic
+
+set_option autoImplicit false
 
 /-!
 # Norm of a primitive standard Lubin--Tate point

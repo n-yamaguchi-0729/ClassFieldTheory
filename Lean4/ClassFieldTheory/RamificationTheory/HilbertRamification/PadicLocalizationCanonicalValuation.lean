@@ -1,8 +1,19 @@
-import ValuationTheory.AbsoluteValue.AlgebraicLocalization
-import RamificationTheory.HilbertRamification.LocalizationRamificationGroups
-import RamificationTheory.HilbertRamification.PadicLocalization
-import LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
-import ValuationTheory.AbsoluteValue.AlgebraicExtension
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+import ValuedFieldTheory.Ramification.HilbertRamification.LocalizationRamificationGroups
+import ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
+import ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.Core
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.FiniteNormExtension
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormula
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaAbsoluteValue
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaCoefficients
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaExtension
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaIntegralClosure
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueExtensionCoefficients
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueValuationSubring
+
+set_option autoImplicit false
 
 /-!
 # The valuation on the p-adic localization in the global cyclotomic inertia argument
@@ -34,13 +45,13 @@ noncomputable def globalPadicLocalizationCanonicalAbsoluteValueProperty
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
   letI hE : Field E := inferInstance
   letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p
+  let e := padicAbsoluteValueCompletionRingEquiv p
   letI : Algebra ℚ_[p] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
   letI : Module.Finite vK.Completion E :=
     globalPadicLocalizationModuleFinite p L w
-  letI : Algebra ℚ_[p] vK.Completion := e.symm.toAlgHom.toAlgebra
+  letI : Algebra ℚ_[p] vK.Completion := e.symm.toRingHom.toAlgebra
   letI : IsScalarTower ℚ_[p] vK.Completion E :=
     IsScalarTower.of_algebraMap_eq' (by ext x; rfl)
   letI : Module.Finite ℚ_[p] vK.Completion :=
@@ -56,25 +67,25 @@ theorem globalPadicLocalizationAbsoluteValue_eq_canonical
     (w : AbsoluteValueExtension (Rat.AbsoluteValue.padic p) L) :
     globalPadicLocalizationCanonicalAbsoluteValueProperty p L w := by
   let vK := Rat.AbsoluteValue.padic p
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
-  letI : SMul ℚ w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
+  let : SMul ℚ w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
-  letI hE : Field E := inferInstance
-  letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p
-  letI hQpE : Algebra ℚ_[p] E :=
+  let hE : Field E := inferInstance
+  let hBaseE : Algebra vK.Completion E := inferInstance
+  let e := padicAbsoluteValueCompletionRingEquiv p
+  let hQpE : Algebra ℚ_[p] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
-  letI : Module.Finite vK.Completion E :=
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
+  let : Module.Finite vK.Completion E :=
     globalPadicLocalizationModuleFinite p L w
-  letI : Algebra ℚ_[p] vK.Completion := e.symm.toAlgHom.toAlgebra
-  letI : IsScalarTower ℚ_[p] vK.Completion E :=
+  let : Algebra ℚ_[p] vK.Completion := e.symm.toRingHom.toAlgebra
+  let : IsScalarTower ℚ_[p] vK.Completion E :=
     IsScalarTower.of_algebraMap_eq' (by ext x; rfl)
-  letI : Module.Finite ℚ_[p] vK.Completion :=
+  let : Module.Finite ℚ_[p] vK.Completion :=
     FiniteDimensional.of_surjective
       (Algebra.linearMap ℚ_[p] vK.Completion) e.symm.surjective
-  letI : Module.Finite ℚ_[p] E := Module.Finite.trans vK.Completion E
+  let : Module.Finite ℚ_[p] E := Module.Finite.trans vK.Completion E
   change AbsoluteValue.algebraicLocalizationAbsoluteValue vK w.1 w.2 =
     padicFiniteExtensionAbsoluteValue p E
   let aE := AbsoluteValue.algebraicLocalizationAbsoluteValue vK w.1 w.2
@@ -129,13 +140,13 @@ noncomputable def globalPadicLocalizationCanonicalValuationProperty
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
   letI hE : Field E := inferInstance
   letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p
+  let e := padicAbsoluteValueCompletionRingEquiv p
   letI hQpE : Algebra ℚ_[p] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
   letI : Module.Finite vK.Completion E :=
     globalPadicLocalizationModuleFinite p L w
-  letI : Algebra ℚ_[p] vK.Completion := e.symm.toAlgHom.toAlgebra
+  letI : Algebra ℚ_[p] vK.Completion := e.symm.toRingHom.toAlgebra
   letI : IsScalarTower ℚ_[p] vK.Completion E :=
     IsScalarTower.of_algebraMap_eq' (by ext x; rfl)
   letI : Module.Finite ℚ_[p] vK.Completion :=
@@ -156,25 +167,25 @@ theorem globalPadicLocalizationValuationSubring_eq_canonical
   let vK := Rat.AbsoluteValue.padic p
   let hv := rationalPadicAbsoluteValue_nonarchimedean p
   let hw := HilbertRamification.absoluteValueExtension_nonarchimedean_of_base vK w hv
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
-  letI : SMul ℚ w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
+  let : SMul ℚ w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
-  letI hE : Field E := inferInstance
-  letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p
-  letI hQpE : Algebra ℚ_[p] E :=
+  let hE : Field E := inferInstance
+  let hBaseE : Algebra vK.Completion E := inferInstance
+  let e := padicAbsoluteValueCompletionRingEquiv p
+  let hQpE : Algebra ℚ_[p] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
-  letI : Module.Finite vK.Completion E :=
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
+  let : Module.Finite vK.Completion E :=
     globalPadicLocalizationModuleFinite p L w
-  letI : Algebra ℚ_[p] vK.Completion := e.symm.toAlgHom.toAlgebra
-  letI : IsScalarTower ℚ_[p] vK.Completion E :=
+  let : Algebra ℚ_[p] vK.Completion := e.symm.toRingHom.toAlgebra
+  let : IsScalarTower ℚ_[p] vK.Completion E :=
     IsScalarTower.of_algebraMap_eq' (by ext x; rfl)
-  letI : Module.Finite ℚ_[p] vK.Completion :=
+  let : Module.Finite ℚ_[p] vK.Completion :=
     FiniteDimensional.of_surjective
       (Algebra.linearMap ℚ_[p] vK.Completion) e.symm.surjective
-  letI : Module.Finite ℚ_[p] E := Module.Finite.trans vK.Completion E
+  let : Module.Finite ℚ_[p] E := Module.Finite.trans vK.Completion E
   change
     HilbertRamification.algebraicLocalizationValuationSubring vK w hw =
       absoluteValueValuationSubring

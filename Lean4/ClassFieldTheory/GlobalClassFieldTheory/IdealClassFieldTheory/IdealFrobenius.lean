@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
+
+set_option autoImplicit false
 
 /-!
 # Ideal Frobenius classes and the decomposition law
@@ -21,7 +23,7 @@ open NumberField IsDedekindDomain
 
 variable {K : Type} [Field K] [NumberField K]
 
-attribute [local instance 1000]
+attribute [local instance]
   ideleClassSubgroupNormal idealArtinKernelNormal
 
 /-- The ideal-theoretic Frobenius class attached to a prime outside the

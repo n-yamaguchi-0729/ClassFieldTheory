@@ -1,0 +1,23 @@
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteArtin
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteArtinRestriction
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotientTransitions
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotients
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteGaloisAbelianization
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbstractProfiniteCompletionComparison
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.FiniteAbelianQuotientKernels
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.FiniteReciprocityDiagram
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.LocalMultiplicativeCompletion
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletionCriteria
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.TopologicalAbelianizationCongr
+
+set_option autoImplicit false
+
+/-!
+# Infinite local class field theory
+
+Public aggregate for the topological profinite completion, compatible finite
+Artin maps, the absolute local Artin map, and the profinite local reciprocity
+equivalence.
+-/

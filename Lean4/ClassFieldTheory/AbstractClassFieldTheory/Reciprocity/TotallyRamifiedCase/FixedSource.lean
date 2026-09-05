@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.FrobeniusNorms
-import AbstractClassFieldTheory.Reciprocity.TotallyRamified
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.FrobeniusNorms
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamified
+
+set_option autoImplicit false
 
 /-!
 # The fixed source in the totally ramified reciprocity argument
@@ -102,14 +104,19 @@ theorem galoisGenerator_generates (E : FiniteCyclicSubextension K) :
   refine ⟨n, ?_⟩
   apply e.injective
   change e (e.symm E.generator ^ n) = e x
-  rw [map_zpow, e.apply_symm_apply]
-  exact hn
+  exact (map_zpow e _ n).trans
+    ((congrArg (fun y => y ^ n) (e.apply_symm_apply E.generator)).trans hn)
 
 end FiniteCyclicSubextension
 
 namespace ValuationData
 
 variable {D : DegreeData G} {A : Rep ℤ G}
+
+-- The two fixed-field presentations have the same canonical addition.
+-- Fix its homogeneous type before elaborating the bundled second operand.
+local infixl:65 (priority := high) " + " =>
+  (fun {α : Type _} [Add α] (a b : α) => HAdd.hAdd a b)
 
 /-- The complete source-producing calculation in the cyclic totally
 ramified case of the abstract reciprocity theorem. All fields, restriction
@@ -186,11 +193,11 @@ theorem abstractReciprocity_cyclicTotallyRamified_fixedSource
   let L := E.toFiniteAbstractFieldExtension.field
   let KR := K.toFiniteResidueAbstractField D
   let LG := E.toFiniteGaloisSubextension
-  letI hLGfinite : Finite
+  let hLGfinite : Finite
       (KR.field.toSubgroup ⧸
         extensionSubgroup KR.field LG.field LG.below) :=
     LG.finite
-  letI hLGfiniteOverK : Finite
+  let hLGfiniteOverK : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field LG.field LG.below) := by
     have h := hLGfinite
@@ -201,7 +208,7 @@ theorem abstractReciprocity_cyclicTotallyRamified_fixedSource
   let q := E.galoisGenerator
   let hq := E.galoisGenerator_generates
   let hLGTot := hTot
-  letI hKRabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hKRabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) KR.field (le_baseField KR.field)) := by
     change Finite
       ((baseField G).toSubgroup ⧸
@@ -212,17 +219,17 @@ theorem abstractReciprocity_cyclicTotallyRamified_fixedSource
     KR LG hLGTot q
   let Sigma := D.frobeniusFixedField KR LG.field LG.below σ
   let hSigmaK := D.frobeniusFixedField_le KR LG.field LG.below σ
-  letI hSigmaFinite : Finite
+  let hSigmaFinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field Sigma hSigmaK) :=
     D.frobeniusFixedField_finite KR LG.field LG.below σ
   intro w hpiL hnorm
   let M := D.abstractReciprocityTotallyRamifiedFiniteGaloisExtension
     KR LG hLGTot q
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (KR.field.toSubgroup ⧸
         extensionSubgroup KR.field M.field M.below) :=
     M.finite
-  letI hMabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hMabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) M.field (le_baseField M.field)) :=
     FiniteGaloisSubextension.finite_extension_trans M.below (le_baseField K.field)
   let MF : FiniteAbstractField G := ⟨M.field, hMabsolute⟩
@@ -238,19 +245,19 @@ theorem abstractReciprocity_cyclicTotallyRamified_fixedSource
   let hM₀K : M₀.toSubgroup ≤ K.field.toSubgroup :=
     M.intermediateField_le_base S
   let N := M.lowerFiniteGalois S
-  letI hMnormal : (extensionSubgroup K.field M.field M.below).Normal := M.normal
-  letI hNnormal : (extensionSubgroup M₀ M.field hMM₀).Normal := N.normal
-  letI hNfinite : Finite
+  let hMnormal : (extensionSubgroup K.field M.field M.below).Normal := M.normal
+  let hNnormal : (extensionSubgroup M₀ M.field hMM₀).Normal := N.normal
+  let hNfinite : Finite
       (M₀.toSubgroup ⧸ extensionSubgroup M₀ M.field hMM₀) :=
     N.finite
-  letI hMLfinite : Finite
+  let hMLfinite : Finite
       (E.field.toSubgroup ⧸ extensionSubgroup E.field M.field hML) :=
     FiniteGaloisSubextension.finite_extension_over_intermediate
       M.below E.below hML
-  letI hM₀finite : Finite
+  let hM₀finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field M₀ hM₀K) :=
     M.intermediateField_finite S
-  letI hM₀absolute : Finite ((baseField G).toSubgroup ⧸
+  let hM₀absolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) M₀ (le_baseField M₀)) :=
     FiniteGaloisSubextension.finite_extension_trans hM₀K (le_baseField K.field)
   let M₀F : FiniteAbstractField G := ⟨M₀, hM₀absolute⟩
@@ -356,8 +363,8 @@ theorem abstractReciprocity_cyclicTotallyRamified_fixedSource
   have hg : ∀ x, x ∈ Subgroup.zpowers g :=
     D.abstractReciprocityTotallyRamifiedLowerGenerator_generates
       KR LG hLGTot q hq
-  letI hNFintype : Fintype N.extensionQuotient := Fintype.ofFinite _
-  letI hNCyclic : IsCyclic N.extensionQuotient := by
+  let hNFintype : Fintype N.extensionQuotient := Fintype.ofFinite _
+  let hNCyclic : IsCyclic N.extensionQuotient := by
     rw [isCyclic_iff_exists_zpowers_eq_top]
     refine ⟨g, ?_⟩
     ext x
@@ -366,7 +373,7 @@ theorem abstractReciprocity_cyclicTotallyRamified_fixedSource
       exact Subgroup.mem_top x
     · intro _
       exact hg x
-  letI hNcomm : CommGroup N.extensionQuotient := IsCyclic.commGroup
+  let hNcomm : CommGroup N.extensionQuotient := IsCyclic.commGroup
   obtain ⟨aN, haN⟩ :=
     abstractReciprocity_exists_hMinusOne_primitive hcf
       EN N.normal g hg uM wM hnormWU

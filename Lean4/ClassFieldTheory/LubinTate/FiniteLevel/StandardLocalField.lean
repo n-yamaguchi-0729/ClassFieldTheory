@@ -1,9 +1,11 @@
-import LocalFieldTheory.DiscreteValuationField.Basic
-import LocalFieldTheory.DiscreteValuationField.PrincipalUnits.ResidueQuotient
-import LocalFieldTheory.DiscreteValuationField.PrincipalUnits.TeichmullerDecomposition
-import LocalFieldTheory.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
-import LocalFieldTheory.NonarchimedeanLocalField.IdealQuotients
-import LocalFieldTheory.NonarchimedeanLocalField.StandardOpenSubgroups
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.ResidueQuotient
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.TeichmullerDecomposition
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+
+set_option autoImplicit false
 
 /-!
 # The canonical local-field package for Lubin--Tate applications

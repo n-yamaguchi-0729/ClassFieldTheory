@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
-import LocalFieldTheory.Padic.PrincipalUnits
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
+import ValuedFieldTheory.LocalField.Padic.PrincipalUnits
+
+set_option autoImplicit false
 
 /-!
 # Standard p-adic norm-subgroup intersections

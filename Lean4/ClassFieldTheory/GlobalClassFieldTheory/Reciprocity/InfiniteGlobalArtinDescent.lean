@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtin
-import GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
+
+set_option autoImplicit false
 
 /-!
 # Descent of the infinite global Artin homomorphism
@@ -39,9 +41,9 @@ theorem infiniteGlobalArtinMonoidHom_principalIdele
     infiniteGlobalArtinMonoidHom K Ω
         (IdeleGroup.principalIdele K x) =
       1 := by
-  letI (E : FiniteGaloisIntermediateField K Ω) : NumberField E :=
+  let (E : FiniteGaloisIntermediateField K Ω) : NumberField E :=
     NumberField.of_module_finite K E
-  letI (E : FiniteGaloisIntermediateField K Ω) : IsAbelianGalois K E :=
+  let (E : FiniteGaloisIntermediateField K Ω) : IsAbelianGalois K E :=
     IsAbelianGalois.of_algHom E.toIntermediateField.val
   apply (InfiniteGalois.continuousMulEquivToLimit K Ω).injective
   rw [

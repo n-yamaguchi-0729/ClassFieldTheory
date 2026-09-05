@@ -1,6 +1,8 @@
 import Mathlib.FieldTheory.PrimitiveElement
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormProduct
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormProduct
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory KummerTheory
@@ -83,10 +85,10 @@ private theorem baseFixingCosetToAlgHom_surjective
     [FiniteDimensional K E] [Algebra.IsSeparable K E] :
     Function.Surjective (baseFixingCosetToAlgHom K Ω E) := by
   intro f
-  letI : Algebra.IsSeparable E Ω :=
+  let : Algebra.IsSeparable E Ω :=
     Algebra.isSeparable_tower_top_of_isSeparable K E Ω
   obtain ⟨φ, hφ⟩ :=
-    (IsSepClosed.surjective_restrictDomain_of_isSeparable
+    (IsSepClosed.surjective_domRestrict_of_isSeparable
       (K := K) (L := E) (M := Ω) (E := Ω)) f
   let σ : Ω ≃ₐ[K] Ω :=
     AlgEquiv.ofBijective φ
@@ -203,7 +205,7 @@ theorem relativeNorm_intermediateFieldUnit_val_of_isSeparable (x : Eˣ) :
     extensionSubgroup
       (closedFixingSubgroup K Ω (⊥ : IntermediateField K Ω))
       (closedFixingSubgroup K Ω E) (fixingSubgroupLeBase K Ω E)
-  letI := Fintype.ofFinite Q
+  let := Fintype.ofFinite Q
   change
     ((Additive.toMul
       (relativeNormValue (galoisAmbientUnitsRep K Ω)
@@ -219,7 +221,7 @@ theorem relativeNorm_intermediateFieldUnit_val_of_isSeparable (x : Eˣ) :
         (closedFixingSubgroup K Ω E) (fixingSubgroupLeBase K Ω E)
         (intermediateFieldUnitsEquivGaloisFixed K Ω E
           (Additive.ofMul x)) q) : Ωˣ) : Ω) = _
-  rw [toMul_sum]
+
   change (Units.coeHom Ω) (∏ q : Q,
     Additive.toMul
       (relativeCosetAction (galoisAmbientUnitsRep K Ω)

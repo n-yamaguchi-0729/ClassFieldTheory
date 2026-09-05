@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
-import LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+
+set_option autoImplicit false
 
 /-!
 # Conjugation of finite-place Artin homomorphisms
@@ -101,17 +103,17 @@ theorem finitePlaceConjugateLocalizedCompletionAlgEquiv_toAlgebraicLocalization
   let wc := absoluteValueExtensionConjugate vK w g
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hwK :=
+  let hwK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hwK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hwK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI hwcK :=
+  let hwcK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) wc.1
-  letI : SMul K wc.1.Completion := hwcK.toSMul
-  letI : Algebra vK.Completion wc.1.Completion :=
+  let : SMul K wc.1.Completion := hwcK.toSMul
+  let : Algebra vK.Completion wc.1.Completion :=
     AbsoluteValue.completionAlgebra vK wc.1 wc.2
   apply
     (AlgebraicNumberTheory.Valuations.localizedCompletionEquivCompletion
@@ -150,17 +152,17 @@ theorem
         vK wc.1 wc.2 (g.symm x) := by
   let vK := NumberField.HeightOneSpectrum.adicAbv K v
   let wc := absoluteValueExtensionConjugate vK w g
-  letI hwK :=
+  let hwK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hwK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hwK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI hwcK :=
+  let hwcK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) wc.1
-  letI : SMul K wc.1.Completion := hwcK.toSMul
-  letI : Algebra vK.Completion wc.1.Completion :=
+  let : SMul K wc.1.Completion := hwcK.toSMul
+  let : Algebra vK.Completion wc.1.Completion :=
     AbsoluteValue.completionAlgebra vK wc.1 wc.2
   let e :=
     finitePlaceConjugateLocalizedCompletionAlgEquiv
@@ -209,17 +211,17 @@ theorem finitePlaceDecompositionTransport_conjugate_apply
   let wc := absoluteValueExtensionConjugate vK w g
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hwK :=
+  let hwK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hwK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hwK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI hwcK :=
+  let hwcK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) wc.1
-  letI : SMul K wc.1.Completion := hwcK.toSMul
-  letI : Algebra vK.Completion wc.1.Completion :=
+  let : SMul K wc.1.Completion := hwcK.toSMul
+  let : Algebra vK.Completion wc.1.Completion :=
     AbsoluteValue.completionAlgebra vK wc.1 wc.2
   let Ew := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
   let Ewc := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK wc
@@ -388,23 +390,23 @@ theorem finitePlaceLocalArtinMonoidHom_conjugate
   let wc := absoluteValueExtensionConjugate vK w g
   let Ew := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
   let Ewc := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK wc
-  letI : Algebra vK.Completion Ew :=
+  let : Algebra vK.Completion Ew :=
     finitePlaceLocalArtinLocalizedAlgebra v w
-  letI : Algebra vK.Completion Ewc :=
+  let : Algebra vK.Completion Ewc :=
     finitePlaceLocalArtinLocalizedAlgebra v wc
-  letI : FiniteDimensional vK.Completion Ew :=
+  let : FiniteDimensional vK.Completion Ew :=
     finitePlaceLocalArtinFiniteDimensional v w
-  letI : FiniteDimensional vK.Completion Ewc :=
+  let : FiniteDimensional vK.Completion Ewc :=
     finitePlaceLocalArtinFiniteDimensional v wc
-  letI : IsAbelianGalois vK.Completion Ew :=
+  let : IsAbelianGalois vK.Completion Ew :=
     finitePlaceLocalArtinIsAbelianGalois v w
       (inferInstance : FiniteDimensional K L)
-  letI : IsAbelianGalois vK.Completion Ewc :=
+  let : IsAbelianGalois vK.Completion Ewc :=
     finitePlaceLocalArtinIsAbelianGalois v wc
       (inferInstance : FiniteDimensional K L)
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField vK.Completion :=
+  let : IsNonarchimedeanLocalField vK.Completion :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   let e :=
     finitePlaceConjugateLocalizedCompletionAlgEquiv
@@ -440,17 +442,17 @@ theorem finitePlaceArtinMonoidHomOfExtension_conjugate
   let wc := absoluteValueExtensionConjugate vK w g
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hwK :=
+  let hwK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hwK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hwK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI hwcK :=
+  let hwcK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) wc.1
-  letI : SMul K wc.1.Completion := hwcK.toSMul
-  letI : Algebra vK.Completion wc.1.Completion :=
+  let : SMul K wc.1.Completion := hwcK.toSMul
+  let : Algebra vK.Completion wc.1.Completion :=
     AbsoluteValue.completionAlgebra vK wc.1 wc.2
   let Ew := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
   let Ewc := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK wc
@@ -513,23 +515,23 @@ theorem finitePlaceArtinMonoidHomOfExtension_eq
         (K := K) (L := L) v w =
       finitePlaceArtinMonoidHomOfExtension
         (K := K) (L := L) v w' := by
-  letI : NumberField L := NumberField.of_module_finite K L
+  let : NumberField L := NumberField.of_module_finite K L
   let W :=
     finitePlaceExtensionCentre
       (K := K) (L := L) v w
   let W' :=
     finitePlaceExtensionCentre
       (K := K) (L := L) v w'
-  letI : Finite (L ≃ₐ[K] L) :=
+  let : Finite (L ≃ₐ[K] L) :=
     IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-  letI :
+  let :
       IsGaloisGroup (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
     IsGaloisGroup.of_isFractionRing
       (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) K L
-  letI : W.asIdeal.LiesOver v.asIdeal :=
+  let : W.asIdeal.LiesOver v.asIdeal :=
     ⟨(finitePlaceExtensionCentreIdeal_under
       (K := K) (L := L) v w).symm⟩
-  letI : W'.asIdeal.LiesOver v.asIdeal :=
+  let : W'.asIdeal.LiesOver v.asIdeal :=
     ⟨(finitePlaceExtensionCentreIdeal_under
       (K := K) (L := L) v w').symm⟩
   obtain ⟨g, hg⟩ :=

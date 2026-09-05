@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.RayClass.FullModulus
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+
+set_option autoImplicit false
 
 /-!
 # Narrow ideal classes

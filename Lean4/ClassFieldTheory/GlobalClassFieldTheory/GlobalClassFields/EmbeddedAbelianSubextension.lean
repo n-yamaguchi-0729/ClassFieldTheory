@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidueNaturality
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueNaturality
 import Mathlib.FieldTheory.Galois.Abelian
+
+set_option autoImplicit false
 
 /-!
 # Embedded finite abelian subextensions

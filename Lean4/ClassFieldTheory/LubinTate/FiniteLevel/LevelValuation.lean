@@ -1,6 +1,8 @@
-import LubinTate.FiniteLevel.LevelAutomorphisms
-import RamificationTheory.HilbertRamification.CompleteDVF
-import RamificationTheory.HilbertRamification.RealLowerGroups
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelAutomorphisms
+import ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
+import ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
+
+set_option autoImplicit false
 
 /-!
 # Uniqueness of the valuation on standard Lubin--Tate levels
@@ -30,9 +32,9 @@ theorem standardLubinTateLevelCompleteDVF_hasUniqueValuationExtension
     ValuationTheory.DiscreteValuationField.ValuedExtension.HasUniqueValuationExtension.{u, v, u, 0, 0}
       (base := F.toCompleteDVF)
       (target := standardLubinTateLevelCompleteDVF hπ n) := by
-  letI : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
+  let : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsGalois K (standardLubinTateLevelField hπ n) :=
+  let : IsGalois K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_isGalois hπ n
   intro Gamma' _ v'
   exact

@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+
+set_option autoImplicit false
 
 /-!
 # Named membership endpoints for rational finite-norm transport
@@ -21,13 +23,13 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance (priority := 2000)
+local instance
     membershipTypesIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
-local instance (priority := 2000)
+local instance
     membershipTypesIdeleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
@@ -41,7 +43,7 @@ noncomputable def rationalFiniteNormTransferRelativeNormMembership
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
+    (_hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -76,12 +78,6 @@ noncomputable def rationalFiniteNormTransferRelativeNormMembership
       K H hHK
   letI : FiniteDimensional ℚ F :=
     RationalFiniteNormTransferInternal.fixedFiniteDimensional H
-  letI : FiniteDimensional F U :=
-    RationalFiniteNormTransferInternal.relativeFiniteDimensional
-      H L hLH
-  letI : IsScalarTower ℚ F U :=
-    RationalFiniteNormTransferInternal.relativeScalarTower
-      H L hLH
   letI : FiniteDimensional ℚ U :=
     RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
       H L hLH
@@ -90,15 +86,24 @@ noncomputable def rationalFiniteNormTransferRelativeNormMembership
   letI : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       H L hLH
-  letI : FiniteDimensional E U :=
-    RationalFiniteNormTransferInternal.relativeFiniteDimensional
+  letI : Algebra E U := by
+    change Algebra F U
+    exact U.algebra
+  letI : Module E U := by
+    change Module F U
+    exact (U.algebra : Algebra F U).toModule
+  letI : FiniteDimensional E U := by
+    change FiniteDimensional F U
+    exact RationalFiniteNormTransferInternal.relativeFiniteDimensional
       H L hLH
-  letI : IsScalarTower ℚ E U :=
-    RationalFiniteNormTransferInternal.relativeScalarTower
+  letI : IsScalarTower ℚ E U := by
+    change IsScalarTower ℚ F U
+    exact RationalFiniteNormTransferInternal.relativeScalarTower
       H L hLH
-  letI : IsGalois E U :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      H L hLH hLHnormal
+  letI : IsGalois E U := by
+    change IsGalois F U
+    exact RationalFiniteNormTransferInternal.relativeIsGalois
+      H L hLH _hLHnormal
   c ∈ (_root_.ideleClassNorm E U).range
 
 /-- The named relative norm-membership endpoint for the canonical ordinary

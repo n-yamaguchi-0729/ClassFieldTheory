@@ -1,8 +1,10 @@
-import LubinTate.Padic.ChangedUniformizerIntertwiner.CompletedSeries
-import LubinTate.Padic.ChangedUniformizerCoefficient
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.CompletedSeries
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerCoefficient
 import Mathlib.RingTheory.PowerSeries.Expand
 import Mathlib.RingTheory.PowerSeries.Order
 import Mathlib.RingTheory.PowerSeries.Trunc
+
+set_option autoImplicit false
 
 /-!
 # Changed-uniformizer defect correction

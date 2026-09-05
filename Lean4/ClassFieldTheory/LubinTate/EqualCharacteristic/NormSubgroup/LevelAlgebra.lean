@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
-import LocalFieldTheory.NonarchimedeanLocalField.NormQuotient
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: canonical algebra and norm subgroup at a finite level

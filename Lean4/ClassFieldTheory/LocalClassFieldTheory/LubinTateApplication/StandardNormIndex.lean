@@ -1,7 +1,9 @@
-import LubinTate.FiniteLevel.StandardLocalField
-import LocalClassFieldTheory.Finite.UnramifiedConductor
-import LubinTate.FiniteLevel.LevelAbelian
-import LubinTate.FiniteLevel.NormSubgroup
+import ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
+import ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
+import ClassFieldTheory.LubinTate.FiniteLevel.NormSubgroup
+
+set_option autoImplicit false
 
 /-!
 # Norm indices for standard finite Lubin--Tate levels
@@ -37,9 +39,9 @@ theorem standardLubinTateNormSubgroup_index
       (Nat.card 𝓀[K] - 1) * Nat.card 𝓀[K] ^ n := by
   let F := standardLocalField K
   let E := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   change (localNormSubgroup K E).index = _
   calc

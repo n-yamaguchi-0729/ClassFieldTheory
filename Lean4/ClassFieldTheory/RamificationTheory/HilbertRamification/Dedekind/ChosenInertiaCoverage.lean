@@ -1,8 +1,10 @@
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Mathlib.NumberTheory.NumberField.Ideal.Basic
-import AlgebraicNumberTheory.Ramification.RationalPrime
-import RamificationTheory.HilbertRamification.Dedekind.Conjugation
-import RamificationTheory.HilbertRamification.Dedekind.NumberFieldPrimes
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Conjugation
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.NumberFieldPrimes
+
+set_option autoImplicit false
 
 /-!
 # Global cyclotomic inertia argument: coverage by finitely many chosen inertia groups
@@ -65,16 +67,16 @@ theorem inertiaGroup_le_finsetSup_chosen_of_unramified_outside
     ∀ (Q : Ideal (𝓞 M)) [Q.IsPrime] [Q.IsMaximal],
       inertiaGroup Q G ≤
         S.sup (fun p => inertiaGroup (chosen p).1 G) := by
-  letI : Finite G := IsGaloisGroup.finite G ℚ M
+  let : Finite G := IsGaloisGroup.finite G ℚ M
   intro Q _ _
   let q : Ideal ℤ := Q.under ℤ
-  letI : Q.LiesOver q := ⟨rfl⟩
+  let : Q.LiesOver q := ⟨rfl⟩
   by_cases hqS : ∃ p ∈ S, rationalPrimeIdeal p = q
   · obtain ⟨p, hpS, hpq⟩ := hqS
     let P : Ideal (𝓞 M) := (chosen p).1
-    letI : P.IsPrime := (chosen p).2.1
-    letI : P.LiesOver (rationalPrimeIdeal p) := (chosen p).2.2
-    letI : Q.LiesOver (rationalPrimeIdeal p) := ⟨hpq⟩
+    let : P.IsPrime := (chosen p).2.1
+    let : P.LiesOver (rationalPrimeIdeal p) := (chosen p).2.2
+    let : Q.LiesOver (rationalPrimeIdeal p) := ⟨hpq⟩
     have hIQ : inertiaGroup Q G = inertiaGroup P G :=
       (inertiaGroup_eq_of_liesOver_of_commGroup
         (rationalPrimeIdeal p) P Q).symm
@@ -83,17 +85,17 @@ theorem inertiaGroup_le_finsetSup_chosen_of_unramified_outside
       (f := fun r => inertiaGroup (chosen r).1 G) hpS
   · have hunramified : Algebra.IsUnramifiedAt ℤ Q :=
       hunramifiedOutside Q hqS
-    letI : Algebra.IsUnramifiedAt ℤ Q := hunramified
+    let : Algebra.IsUnramifiedAt ℤ Q := hunramified
     have hunramified_ringOfIntegers :
         Algebra.IsUnramifiedAt (𝓞 ℚ) Q :=
       Algebra.IsUnramifiedAt.of_restrictScalars ℤ Q
-    letI : Finite
+    let : Finite
         ((𝓞 ℚ) ⧸ basePrime (K := ℚ) Q) :=
       inferInstance
-    letI : PerfectField
+    let : PerfectField
         ((𝓞 ℚ) ⧸ basePrime (K := ℚ) Q) :=
       PerfectField.ofFinite
-    letI : Algebra.IsSeparable
+    let : Algebra.IsSeparable
         ((𝓞 ℚ) ⧸ basePrime (K := ℚ) Q) ((𝓞 M) ⧸ Q) :=
       Algebra.IsAlgebraic.isSeparable_of_perfectField
     have hbot : inertiaGroup Q G = ⊥ :=

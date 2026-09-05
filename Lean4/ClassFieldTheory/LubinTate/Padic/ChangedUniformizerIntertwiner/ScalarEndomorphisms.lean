@@ -1,8 +1,10 @@
-import LubinTate.FiniteLevel.ChangedUniformizer
-import LubinTate.FiniteLevel.PrimitiveAction
-import LubinTate.FormalModule.RecursiveIntertwiner
-import LubinTate.FormalModule.StandardFormalGroup
-import LubinTate.Padic.ChangedUniformizerIntertwiner.IntertwinerConstruction
+import ClassFieldTheory.LubinTate.FiniteLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveAction
+import ClassFieldTheory.LubinTate.FormalModule.RecursiveIntertwiner
+import ClassFieldTheory.LubinTate.FormalModule.StandardFormalGroup
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.IntertwinerConstruction
+
+set_option autoImplicit false
 
 /-!
 # Completed scalar endomorphisms
@@ -242,7 +244,6 @@ private theorem padicMultiplicativeScalarEndomorphism_commutes
       (padicMultiplicativeLubinTateSeries p)
       (padicMultiplicativeLubinTateSeries p)
       (fun _ : Unit => a)
-  rw [Intertwines] at h
   calc
     _ =
         MvPowerSeries.subst
@@ -288,7 +289,6 @@ private theorem padicChangedStandardScalarEndomorphism_commutes
       (padicMultiplicativeLubinTateSeries_isUniformizer p) u
   have h :=
     standardLubinTateEndomorphism_intertwines hπ a
-  rw [Intertwines] at h
   calc
     _ =
         MvPowerSeries.subst

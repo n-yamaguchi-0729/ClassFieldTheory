@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
-import LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: equal-characteristic Lubin--Tate level fields

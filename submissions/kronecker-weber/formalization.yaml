@@ -1,0 +1,105 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/99c678e569c7c4c0772db297c5ddd5e4c9b6322e/schema/v0.4.schema.json
+version: "v0.4"
+project:
+  name: "The global Kronecker–Weber theorem in Lean"
+  description: >-
+    A formalization of the classical Kronecker–Weber theorem: every number field
+    that is abelian Galois over the rational numbers admits a rational algebra
+    embedding into a cyclotomic field of positive order. The proof is supplied
+    by the class field theory development in this repository. This submission
+    selects the global theorem and makes no claim of a new mathematical result.
+  authors:
+    - "Naganori Yamaguchi"
+  responsible_maintainers:
+    - "Naganori Yamaguchi"
+  license: "Apache-2.0"
+# The repository contains the substantive CFT development; no separate
+# substantive repository or invented self-referential commit is declared.
+classification:
+  arxiv: ["math.NT"]
+  msc2020: ["11R37"]
+sources:
+  - title: "Kronecker–Weber theorem (classical result)"
+    type: "other"
+    relationship: "formalizes"
+    note: >-
+      The source result is the classical theorem about finite abelian extensions
+      of the rational numbers. Specific editions, theorem numbers, and literature
+      actually consulted during proof development were not tracked. This entry
+      does not attribute the proof to an unverified publication or assert an
+      independent new proof. The responsible maintainer should complete the
+      bibliographic account before submission.
+related_formalizations:
+  - id: "https://github.com/leanprover-community/mathlib4/tree/6f1ef4e5dd604a435bddba4747b13970cd65d2a1"
+    relationship: "builds-on"
+    note: >-
+      Mathlib supplies the number-field, abelian-Galois, cyclotomic-field and
+      algebra-homomorphism vocabulary, and reused mathematical infrastructure.
+      No claim about the absence of other Kronecker–Weber formalizations is made.
+status:
+  scope: >-
+    The selected declaration is KroneckerWeber.exists_cyclotomicEmbedding in
+    ClassFieldTheory.KroneckerWeber.Core. Its carrier is L : Type with Field L,
+    NumberField L and IsAbelianGalois Q L. It produces a positive natural n
+    and Nonempty (L ->_a[Q] CyclotomicField n Q). Challenge contains the one
+    deliberate statement hole; Solution imports the existing proof without
+    changing its name, type or hypotheses. This nested submission package has
+    not yet been built or checked by Comparator or the hosted verifier.
+# Optional proof-status counts are omitted until this public candidate is
+# audited; unknown counts must not be encoded as zero.
+automation:
+  methods:
+    - method: "other"
+      framework: "unknown for historical proof development"
+      tool_setup: "AI-assisted Lean development, as disclosed in the public library documentation"
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "not tracked for historical proof development"
+      prompting_notes: "Historical prompts and model roles were not comprehensively recorded."
+    - method: "agent"
+      framework: "Codex"
+      tool_setup: "Submission packaging and static statement/metadata review under user instructions"
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+      prompting_notes: >-
+        Reuse the exact existing theorem, preserve its assumptions, separate
+        Challenge and Solution, and do not invent missing provenance or test results.
+  spend_usd: "not tracked"
+  notes: >-
+    The public library discloses development with AI assistance by a non-specialist.
+    Human authorship and responsibility remain with Naganori Yamaguchi.
+    Exact historical model names, usage shares, prompt histories and aggregate
+    effort or costs are unknown; preparation of this interface does not
+    reconstruct that history.
+fidelity:
+  divergences: >-
+    The Challenge preserves the existing theorem signature exactly and uses only
+    standard Mathlib notions. No new hypotheses or weaker conclusion were
+    introduced for the comparison. Alignment with a particular historical
+    publication or proof has not been audited.
+review:
+  status: "agent-reviewed"
+  reviewers: ["Codex (static submission preparation review)"]
+  notes: >-
+    Review here means textual theorem-signature comparison, import ownership
+    inspection, and metadata/packaging checks. It does not assert a new Lean,
+    Comparator or NanoDa run on this submission package, a Palomar decision,
+    or independent human mathematical peer review. Existing workspace checks
+    have a different recorded scope and are not Palomar submission results.
+alignment:
+  namespace: "KroneckerWeber"
+  statements:
+    - source: "Kronecker–Weber theorem (classical result)"
+      lean: "KroneckerWeber.exists_cyclotomicEmbedding"
+      module: "ClassFieldTheory.KroneckerWeber.Core"
+      status: "proved in the substantive source; submission-package verification pending"
+      note: "Challenge and Solution select the same declaration name and unchanged type."
+acknowledgements: >-
+  This development builds on Lean and Mathlib and uses AI assistance.
+  Naganori Yamaguchi (山口永悟) is identified by the public author homepage at
+  https://n-yamaguchi-0729.github.io/homepage-en.html and the library catalog.
+  The repository maintainer handle is n-yamaguchi-0729:
+  https://github.com/n-yamaguchi-0729. Specific additional historical
+  contributors and source acknowledgements remain to be confirmed.

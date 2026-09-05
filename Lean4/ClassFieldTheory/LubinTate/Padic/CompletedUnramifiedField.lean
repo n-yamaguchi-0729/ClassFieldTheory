@@ -1,7 +1,9 @@
-import LubinTate.Padic.ChangedUniformizerCoefficient
-import ValuationTheory.DiscreteValuationField.Complete
-import ValuationTheory.DiscreteValuationField.ValuationExtension
-import ValuationTheory.LocalRingEquiv
+import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerCoefficient
+import ValuedFieldTheory.Valuation.DiscreteValuationField.Complete
+import ValuedFieldTheory.Valuation.DiscreteValuationField.ValuationExtension
+import ValuedFieldTheory.Valuation.LocalRingEquiv
+
+set_option autoImplicit false
 
 /-!
 # The p-adic completed-unramified coefficient field
@@ -89,7 +91,7 @@ theorem padicCompletedUnramifiedValuation_isAdicComplete
   let v := padicCompletedUnramifiedValuation p
   let e : W ≃+* v.valuationSubring :=
     padicCompletedUnramifiedWittRingEquivValuationSubring p
-  letI : Algebra W v.valuationSubring := e.toRingHom.toAlgebra
+  let : Algebra W v.valuationSubring := e.toRingHom.toAlgebra
   let eLin : W ≃ₗ[W] v.valuationSubring :=
     { toFun := e
       invFun := e.symm
@@ -108,7 +110,7 @@ theorem padicCompletedUnramifiedValuation_isAdicComplete
         simpa only [W] using
           padicCompletedUnramifiedWittRing_maximalIdeal p]
     infer_instance
-  letI : IsAdicComplete (IsLocalRing.maximalIdeal W) W :=
+  let : IsAdicComplete (IsLocalRing.maximalIdeal W) W :=
     hcompleteW
   have hcompleteAsW :
       IsAdicComplete (IsLocalRing.maximalIdeal W)
@@ -316,8 +318,14 @@ theorem padicCompletedUnramifiedIntegerMap_map_maximalIdeal
         IsLocalRing.maximalIdeal W
     rw [(padicLocalField p).toCompleteDVF.maximalIdeal_eq_span_uniformizer hπ,
       padicCompletedUnramifiedWittRing_maximalIdeal,
-      Ideal.map_span, Set.image_singleton,
-      padicValuationSubringToCompletedUnramifiedWittRing_uniformizer]
+      Ideal.map_span]
+    exact congrArg (Ideal.span : Set W → Ideal W)
+      ((Set.image_singleton
+        (f := padicValuationSubringToCompletedUnramifiedWittRing p)
+        (a := show (padicLocalField p).valuationSubring from
+          padicIntEquivValuationSubring p (p : ℤ_[p]))).trans
+            (congrArg (fun x : W => ({x} : Set W))
+              (padicValuationSubringToCompletedUnramifiedWittRing_uniformizer p)))
   change
     Ideal.map
         (e.toRingHom.comp
@@ -353,7 +361,7 @@ theorem padicCompletedUnramifiedValuation_hasExtension
     (padicLocalField p).toCompleteDVF.valuation.HasExtension
       (padicCompletedUnramifiedCompleteDVF p).valuation := by
   let f := padicCompletedUnramifiedIntegerMap p
-  letI : IsLocalHom f := by
+  let : IsLocalHom f := by
     apply ((IsLocalRing.local_hom_TFAE f).out 2 0).mp
     rw [padicCompletedUnramifiedIntegerMap_map_maximalIdeal]
   exact

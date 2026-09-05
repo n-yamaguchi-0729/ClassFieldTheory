@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
+
+set_option autoImplicit false
 
 /-!
 # Generic evaluation core for transported reciprocity
@@ -16,6 +18,14 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open Reciprocity
+
+/-- Canonical class-group commutativity supplies normality in the transport formula. -/
+private theorem closedFiniteIndexEvaluationCoreClassGroupIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] closedFiniteIndexEvaluationCoreClassGroupIsMulCommutative
 
 variable
     {K L : Type} [Field K] [NumberField K]

@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainFiniteReciprocity
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainFiniteReciprocity
+
+set_option autoImplicit false
 
 universe u
 
@@ -152,7 +154,9 @@ theorem finiteReciprocityNaturalityFrobeniusTowerMap_degree
         (D.extensionNormalizedDegree E.field L' hL'K' q).toAdd := by
   refine Quotient.inductionOn' q ?_
   intro k'
-  simpa using D.frobeniusRestrictionNaturality_normalizedDegree E k'
+  change (D.normalizedDegree E.base (Subgroup.inclusion E.below k')).toAdd =
+    (E.residueDegree : ℕ) • (D.normalizedDegree E.field k').toAdd
+  exact D.frobeniusRestrictionNaturality_normalizedDegree E k'
 
 /-- A positive Frobenius lift over `K'` remains a positive Frobenius lift
 over `K`; its exponent is multiplied by `f_{K'/K}`. -/
@@ -358,16 +362,16 @@ theorem finiteReciprocityNaturalityFrobeniusFixedField_isTotallyRamified
         (D.frobeniusFixedResidueField_residueDegree E.field L' hL'K' σ).symm
   let hS'K' := D.frobeniusFixedField_le E.field L' hL'K' σ
   let hSK := D.frobeniusFixedField_le E.base L hLK τ
-  letI : Finite (E.field.toSubgroup ⧸
+  let : Finite (E.field.toSubgroup ⧸
       extensionSubgroup E.field.field S' hS'K') :=
     D.frobeniusFixedField_finite E.field L' hL'K' σ
-  letI : Finite (E.base.toSubgroup ⧸
+  let : Finite (E.base.toSubgroup ⧸
       extensionSubgroup E.base.field S hSK) :=
     D.frobeniusFixedField_finite E.base L hLK τ
-  letI : Finite (E.base.toSubgroup ⧸
+  let : Finite (E.base.toSubgroup ⧸
       extensionSubgroup E.base.field S' (hS'K'.trans E.below)) :=
     relativeTowerQuotientFinite E.base.field E.field.field S' hS'K' E.below
-  letI hS'Sfinite : Finite
+  let hS'Sfinite : Finite
       (S.toSubgroup ⧸ extensionSubgroup S S' hS'S) :=
     FiniteIntermediateField.finite_extension_of_le
       (hS'S.trans hSK) hSK hS'S
@@ -560,7 +564,7 @@ theorem finiteReciprocityNaturalityConjugationNormMap_finiteNormClass
       finiteNormClass A (conjugateClosedSubgroup K s)
         (conjugateClosedSubgroup L s) (conjugateClosedSubgroup_mono hLK s)
         (conjugateFixedElement A K s a) := by
-  letI hConjFinite : Finite ((conjugateClosedSubgroup K s).toSubgroup ⧸
+  let hConjFinite : Finite ((conjugateClosedSubgroup K s).toSubgroup ⧸
       extensionSubgroup (conjugateClosedSubgroup K s)
         (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s)) :=
@@ -593,7 +597,7 @@ theorem finiteReciprocityNaturality_norm_tower_class
           (relativeNorm A K' S' hS'K' π)) =
       finiteNormClass A K L hLK
         (relativeNorm A K S hSK (relativeNorm A S S' hS'S π)) := by
-  letI hS'Kfinite : Finite (K.toSubgroup ⧸
+  let hS'Kfinite : Finite (K.toSubgroup ⧸
       extensionSubgroup K S' (hS'K'.trans hK'K)) :=
     finiteReciprocityNaturality_tower_finite K K' S' hK'K hS'K'
   let TKK' : DegreeData.FiniteTower G :=
@@ -653,25 +657,25 @@ theorem finiteReciprocityNaturality_restriction_norm_commutes
           E.base.field E.field.field L L'
           hLK hL'K' E.below hL'L).toAdditive := by
   let ER := E.toFiniteResidueAbstractExtension D
-  letI hL'K'finiteER : Finite
+  let hL'K'finiteER : Finite
       (ER.field.field.toSubgroup ⧸
         extensionSubgroup ER.field.field L' hL'K') := by
     change Finite
       (ER.field.field.toSubgroup ⧸
         extensionSubgroup ER.field.field L' hL'K') at hL'K'finite
     exact hL'K'finite
-  letI hLKfiniteER : Finite
+  let hLKfiniteER : Finite
       (ER.base.field.toSubgroup ⧸
         extensionSubgroup ER.base.field L hLK) := by
     change Finite
       (ER.base.field.toSubgroup ⧸
         extensionSubgroup ER.base.field L hLK) at hLKfinite
     exact hLKfinite
-  letI hLnormalERbase :
+  let hLnormalERbase :
       (extensionSubgroup ER.base.field L hLK).Normal := by
     change (extensionSubgroup ER.base.field L hLK).Normal at hLnormal
     exact hLnormal
-  letI hL'normalERfield :
+  let hL'normalERfield :
       (extensionSubgroup ER.field.field L' hL'K').Normal := by
     change (extensionSubgroup ER.field.field L' hL'K').Normal at hL'normal
     exact hL'normal
@@ -696,27 +700,27 @@ theorem finiteReciprocityNaturality_restriction_norm_commutes
   let hSK := D.frobeniusFixedField_le ER.base L hLK τ
   let hS'S := D.finiteReciprocityNaturalityFrobeniusFixedField_le
     ER L L' hLK hL'K' hL'L σ
-  letI hS'K'finite : Finite
+  let hS'K'finite : Finite
       (E.field.field.toSubgroup ⧸
         extensionSubgroup E.field.field S' hS'K') :=
     D.frobeniusFixedField_finite ER.field L' hL'K' σ
-  letI hSKfinite : Finite
+  let hSKfinite : Finite
       (E.base.field.toSubgroup ⧸
         extensionSubgroup E.base.field S hSK) :=
     D.frobeniusFixedField_finite ER.base L hLK τ
-  letI hS'Kfinite : Finite
+  let hS'Kfinite : Finite
       (E.base.field.toSubgroup ⧸
         extensionSubgroup E.base.field S' (hS'K'.trans E.below)) :=
     finiteReciprocityNaturality_tower_finite
       E.base.field E.field.field S' E.below hS'K'
-  letI hS'Sfinite : Finite
+  let hS'Sfinite : Finite
       (S.toSubgroup ⧸ extensionSubgroup S S' hS'S) :=
     FiniteIntermediateField.finite_extension_of_le
       (K := E.base.field) (hS'S.trans hSK) hSK hS'S
-  letI hSabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hSabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S (le_baseField S)) :=
     D.frobeniusFixedField_absoluteFinite E.base L hLK τ
-  letI hS'absolute : Finite ((baseField G).toSubgroup ⧸
+  let hS'absolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S' (le_baseField S')) :=
     D.frobeniusFixedField_absoluteFinite E.field L' hL'K' σ
   let Sfinite : FiniteAbstractField G := ⟨S, hSabsolute⟩
@@ -846,10 +850,12 @@ theorem finiteReciprocityNaturalityNormalizedDegree_conjugateSubgroupEquiv
     (K.residueDegree : ℕ) • (D.normalizedDegree K k).toAdd
   rw [D.residueDegree_nsmul_normalizedDegree K k]
   rw [← K.residueDegree_conjugate s]
-  rw [D.residueDegree_nsmul_normalizedDegree
-    (K.conjugate s : D.FiniteResidueAbstractField)]
-  exact congrArg Multiplicative.toAdd
-    (D.finiteReciprocityNaturalityDegree_conjugateSubgroupEquiv K.field s k)
+  exact (D.residueDegree_nsmul_normalizedDegree
+    (K.conjugate s : D.FiniteResidueAbstractField)
+    (show (K.conjugate s).field.toSubgroup from
+      conjugateSubgroupEquiv K.field s k)).trans
+    (congrArg Multiplicative.toAdd
+      (D.finiteReciprocityNaturalityDegree_conjugateSubgroupEquiv K.field s k))
 
 /-- Conjugation carries `I_L` inside `G_K` exactly to the corresponding
 inertia subgroup for `L^s / K^s`. -/
@@ -954,7 +960,12 @@ theorem finiteReciprocityNaturalityFrobeniusConjugationEquiv_mk
     D.finiteReciprocityNaturalityFrobeniusConjugationEquiv K L hLK s
         (QuotientGroup.mk k) =
       QuotientGroup.mk (conjugateSubgroupEquiv K s k) := by
-  simp [finiteReciprocityNaturalityFrobeniusConjugationEquiv]
+  exact QuotientGroup.congr_mk
+    (D.extensionInertiaWithin K L hLK)
+    (D.extensionInertiaWithin (conjugateClosedSubgroup K s)
+      (conjugateClosedSubgroup L s) (conjugateClosedSubgroup_mono hLK s))
+    (conjugateSubgroupEquiv K s)
+    (D.finiteReciprocityNaturalityMap_extensionInertiaWithin_conjugate K L hLK s) k
 
 /-- The normality transported by conjugation is exposed at the
 residue-finite field boundary.  Keeping this bridge as an instance prevents
@@ -1061,6 +1072,25 @@ theorem finiteReciprocityNaturalityFrobeniusConjugationLift_exponent
     _ = (Multiplicative.ofAdd (1 : ZHat)) ^
         D.frobeniusExponent K L hLK σ :=
       D.extensionNormalizedDegree_frobenius_eq_pow K L hLK σ
+
+section ConjugateFrobeniusQuotients
+
+private theorem finiteReciprocityNaturalityConjugateInertia_normal
+    (D : DegreeData G) [IsTopologicalGroup G]
+    (K : FiniteResidueAbstractField D) (L : ClosedSubgroup G)
+    (hLK : L.toSubgroup ≤ K.field.toSubgroup) (s : G)
+    [hLnormal : (extensionSubgroup K.field L hLK).Normal] :
+    (D.extensionInertiaWithin (K.conjugate s).field
+      (conjugateClosedSubgroup L s)
+      (conjugateClosedSubgroup_mono hLK s)).Normal :=
+  D.extensionInertiaWithin_normal
+    (K.conjugate s).field (conjugateClosedSubgroup L s)
+    (conjugateClosedSubgroup_mono hLK s)
+    (hLnormal := D.finiteReciprocityNaturalityFiniteResidueConjugate_normal
+      K L hLK s (hLnormal := hLnormal))
+
+attribute [local instance] finiteReciprocityNaturalityConjugateInertia_normal
+
 
 /-- The continuous conjugation equivalence identifies the two closed cyclic
 subgroups generated by corresponding Frobenius lifts. -/
@@ -1219,12 +1249,18 @@ theorem finiteReciprocityNaturalityFrobeniusFixedField_conjugate
           D.finiteReciprocityNaturalityFrobeniusConjugationEquiv
               K.field L hLK s (QuotientGroup.mk k) =
             QuotientGroup.mk ks := by
-        apply QuotientGroup.eq_iff_div_mem.mpr
-        simp [k]
+        exact congrArg
+          (QuotientGroup.mk' (D.extensionInertiaWithin
+            (conjugateClosedSubgroup K.field s)
+            (conjugateClosedSubgroup L s)
+            (conjugateClosedSubgroup_mono hLK s)))
+          ((conjugateSubgroupEquiv K.field s).apply_symm_apply ks)
       rw [hmk]
       exact hksClosure
     refine ⟨k, ?_, hkValue⟩
     exact (D.mem_frobeniusFixedSubgroupWithin_iff K L hLK σ k).2 hkClosure
+
+end ConjugateFrobeniusQuotients
 
 end DegreeData
 
@@ -1277,6 +1313,29 @@ private theorem finiteReciprocityNaturality_relativeNorm_right_transport
   subst T
   rfl
 
+section ConjugateFiniteNormQuotient
+
+@[instance_reducible]
+private def finiteReciprocityNaturalityConjugateNormAddZero
+    (A : Rep ℤ G) [IsTopologicalGroup G]
+    (K : FiniteAbstractField G) (L : ClosedSubgroup G)
+    (hLK : L.toSubgroup ≤ K.field.toSubgroup) (s : G)
+    [hLfinite : Finite
+      (K.field.toSubgroup ⧸ extensionSubgroup K.field L hLK)] :=
+  letI : Finite
+      ((K.conjugate s).field.toSubgroup ⧸
+        extensionSubgroup (K.conjugate s).field (conjugateClosedSubgroup L s)
+          (conjugateClosedSubgroup_mono hLK s)) :=
+    finite_conjugateExtension K.field L hLK s (hLfinite := hLfinite)
+  show AddZero (FiniteNormQuotient A (K.conjugate s).field
+    (conjugateClosedSubgroup L s) (conjugateClosedSubgroup_mono hLK s)) from
+    (finiteNormQuotientAddCommGroup A (K.conjugate s).field
+      (conjugateClosedSubgroup L s)
+      (conjugateClosedSubgroup_mono hLK s)).toAddZeroClass.toAddZero
+
+attribute [local instance] finiteReciprocityNaturalityConjugateNormAddZero
+
+
 /-- **norm--conjugation naturality, second diagram.** Conjugation of finite Galois
 groups corresponds under the finite reciprocity equivalence to conjugation of finite norm
 classes. -/
@@ -1301,7 +1360,7 @@ theorem finiteReciprocityNaturality_conjugation_commutes
       (D.finiteReciprocityHom A v hAxiom Ks Ls hLsKs).comp
         (finiteReciprocityNaturalityConjugation K.field L hLK s).toMonoidHom.toAdditive := by
   dsimp only
-  letI hLsfinite : Finite
+  let hLsfinite : Finite
       ((conjugateClosedSubgroup K.field s).toSubgroup ⧸
         extensionSubgroup (conjugateClosedSubgroup K.field s)
           (conjugateClosedSubgroup L s)
@@ -1318,7 +1377,7 @@ theorem finiteReciprocityNaturality_conjugation_commutes
     unfold FiniteAbstractField.conjugate
     unfold DegreeData.FiniteResidueAbstractField.conjugate
     rfl
-  letI hLsfiniteKs : Finite
+  let hLsfiniteKs : Finite
       (Ks.field.toSubgroup ⧸
         extensionSubgroup Ks.field (conjugateClosedSubgroup L s)
           (conjugateClosedSubgroup_mono hLK s)) := by
@@ -1328,16 +1387,16 @@ theorem finiteReciprocityNaturality_conjugation_commutes
           (conjugateClosedSubgroup L s)
           (conjugateClosedSubgroup_mono hLK s))
     exact hLsfinite
-  letI hLsfiniteKRs : Finite
+  let hLsfiniteKRs : Finite
       (KRs.field.toSubgroup ⧸
         extensionSubgroup KRs.field (conjugateClosedSubgroup L s)
           (conjugateClosedSubgroup_mono hLK s)) := by
     simpa only [KRs, FiniteAbstractField.toFiniteResidueAbstractField] using
       hLsfiniteKs
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using
       hLnormal
-  letI hLsnormalKs :
+  let hLsnormalKs :
       (extensionSubgroup Ks.field (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s)).Normal := by
     change
@@ -1345,7 +1404,7 @@ theorem finiteReciprocityNaturality_conjugation_commutes
         (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s)).Normal
     infer_instance
-  letI hLsnormalKRs :
+  let hLsnormalKRs :
       (extensionSubgroup KRs.field (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s)).Normal := by
     simpa only [KRs, FiniteAbstractField.toFiniteResidueAbstractField] using
@@ -1396,10 +1455,10 @@ theorem finiteReciprocityNaturality_conjugation_commutes
   have hConjS : conjugateClosedSubgroup S s = Ss := by
     exact D.finiteReciprocityNaturalityFrobeniusFixedField_conjugate
       KR L hLK s σ
-  letI hSKfinite : Finite
+  let hSKfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S hSK) :=
     D.frobeniusFixedField_finite KR L hLK σ
-  letI hConjSKfinite : Finite
+  let hConjSKfinite : Finite
       (Ks.field.toSubgroup ⧸
         extensionSubgroup Ks.field
           (conjugateClosedSubgroup S s)
@@ -1411,7 +1470,7 @@ theorem finiteReciprocityNaturality_conjugation_commutes
             (conjugateClosedSubgroup S s)
             (conjugateClosedSubgroup_mono hSK s))
       exact finite_conjugateExtension K.field S hSK s
-  letI hSsKsfinite : Finite
+  let hSsKsfinite : Finite
       (Ks.field.toSubgroup ⧸ extensionSubgroup Ks.field Ss hSsKs) :=
     D.frobeniusFixedField_finite KRs
       (conjugateClosedSubgroup L s)
@@ -1429,7 +1488,7 @@ theorem finiteReciprocityNaturality_conjugation_commutes
   let πs0 : ambientFixedAddSubgroup A (conjugateClosedSubgroup S s) :=
     conjugateFixedElement A S s π
   have hπs0 : v.IsPrimeElement (Sfinite.conjugate s) πs0 := by
-    rw [ValuationData.IsPrimeElement]
+    change v.valuationAt (Sfinite.conjugate s) πs0 = v.oneValue
     rw [show v.valuationAt (Sfinite.conjugate s) πs0 =
         v.valuationAt Sfinite π by
       simpa [Sfinite, πs0] using
@@ -1449,44 +1508,63 @@ theorem finiteReciprocityNaturality_conjugation_commutes
       (conjugateClosedSubgroup_mono hLK s)
       ((finiteReciprocityNaturalityConjugation
         K.field L hLK s).toMonoidHom.toAdditive q)
-  calc
-    finiteReciprocityNaturalityConjugationNormMap A K.field L hLK s
+  have hprimeNorm :
+      finiteReciprocityNaturalityConjugationNormMap A K.field L hLK s
         (D.finiteReciprocityHom A v hAxiom K L hLK q) =
       finiteReciprocityNaturalityConjugationNormMap A K.field L hLK s
         (finiteNormClass A K.field L hLK
           (relativeNorm A K.field S hSK π)) := by
-      rw [D.finiteReciprocityHom_apply_eq_primeNormClass
-        A v hAxiom K L hLK q σ hσ π hπ]
-    _ = finiteNormClass A Ks.field
+    rw [D.finiteReciprocityHom_apply_eq_primeNormClass
+      A v hAxiom K L hLK q σ hσ π hπ]
+  have hconjugateNorm :
+      finiteReciprocityNaturalityConjugationNormMap A K.field L hLK s
+        (finiteNormClass A K.field L hLK
+          (relativeNorm A K.field S hSK π)) =
+      finiteNormClass A Ks.field
         (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s)
         (relativeNorm A Ks.field
           (conjugateClosedSubgroup S s)
           (conjugateClosedSubgroup_mono hSK s) πs0) := by
-      exact finiteReciprocityNaturality_conjugation_norm_class
-        A K.field L S hLK hSK s π
-    _ = finiteNormClass A Ks.field
+    exact finiteReciprocityNaturality_conjugation_norm_class
+      A K.field L S hLK hSK s π
+  have htransportNorm :
+      finiteNormClass A Ks.field
+        (conjugateClosedSubgroup L s)
+        (conjugateClosedSubgroup_mono hLK s)
+        (relativeNorm A Ks.field
+          (conjugateClosedSubgroup S s)
+          (conjugateClosedSubgroup_mono hSK s) πs0) =
+      finiteNormClass A Ks.field
         (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s)
         (relativeNorm A Ks.field Ss hSsKs πs) := by
-      apply congrArg (finiteNormClass A Ks.field
+    apply congrArg (finiteNormClass A Ks.field
+      (conjugateClosedSubgroup L s)
+      (conjugateClosedSubgroup_mono hLK s))
+    have htransport :=
+      finiteReciprocityNaturality_relativeNorm_right_transport A
+        Ks.field (conjugateClosedSubgroup S s) Ss
+        hConjS (conjugateClosedSubgroup_mono hSK s) hSsKs πs0
+    simpa [πs] using htransport
+  have hconjugatePrimeNorm :
+      finiteNormClass A Ks.field
         (conjugateClosedSubgroup L s)
-        (conjugateClosedSubgroup_mono hLK s))
-      have htransport :=
-        finiteReciprocityNaturality_relativeNorm_right_transport A
-          Ks.field (conjugateClosedSubgroup S s) Ss
-          hConjS (conjugateClosedSubgroup_mono hSK s) hSsKs πs0
-      simpa [πs] using htransport
-    _ = D.finiteReciprocityHom A v hAxiom Ks
+        (conjugateClosedSubgroup_mono hLK s)
+        (relativeNorm A Ks.field Ss hSsKs πs) =
+      D.finiteReciprocityHom A v hAxiom Ks
         (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s)
         ((finiteReciprocityNaturalityConjugation
           K.field L hLK s).toMonoidHom.toAdditive q) := by
-      rw [D.finiteReciprocityHom_apply_eq_primeNormClass
-        A v hAxiom Ks
-        (conjugateClosedSubgroup L s)
-        (conjugateClosedSubgroup_mono hLK s)
-        _ σs hσs πs hπs]
+    rw [D.finiteReciprocityHom_apply_eq_primeNormClass
+      A v hAxiom Ks
+      (conjugateClosedSubgroup L s)
+      (conjugateClosedSubgroup_mono hLK s)
+      _ σs hσs πs hπs]
+  exact hprimeNorm.trans (hconjugateNorm.trans (htransportNorm.trans hconjugatePrimeNorm))
+
+end ConjugateFiniteNormQuotient
 
 end DegreeData
 

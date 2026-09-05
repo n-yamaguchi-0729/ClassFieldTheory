@@ -1,6 +1,8 @@
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.Galois.GaloisClosure
-import AlgebraicNumberTheory.SeparableClosureEmbedding
+import ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
+
+set_option autoImplicit false
 
 /-!
 # Finite abelian composita
@@ -84,9 +86,9 @@ theorem isAbelianGalois_sup
     ((j.comp A'.val).codRestrict A.toSubalgebra fun x ↦ x.2)
   let eB : B' →ₐ[K] B :=
     ((j.comp B'.val).codRestrict B.toSubalgebra fun x ↦ x.2)
-  letI : IsAbelianGalois K A' := IsAbelianGalois.of_algHom eA
-  letI : IsAbelianGalois K B' := IsAbelianGalois.of_algHom eB
-  letI : IsGalois K M := inferInstance
+  let : IsAbelianGalois K A' := IsAbelianGalois.of_algHom eA
+  let : IsAbelianGalois K B' := IsAbelianGalois.of_algHom eB
+  let : IsGalois K M := inferInstance
 
   let rA : (M ≃ₐ[K] M) →* (A' ≃ₐ[K] A') :=
     AlgEquiv.restrictNormalHom A'
@@ -145,10 +147,10 @@ instance finiteAbelianCompositumField_finiteDimensional :
 /-- The concrete compositum is abelian Galois over the base. -/
 instance finiteAbelianCompositumField_isAbelianGalois :
     IsAbelianGalois K (finiteAbelianCompositumField K L E) := by
-  letI : IsAbelianGalois K (finiteGaloisFieldRange K L) :=
+  let : IsAbelianGalois K (finiteGaloisFieldRange K L) :=
     IsAbelianGalois.of_algHom
       (finiteGaloisFieldRangeEquiv K L).symm.toAlgHom
-  letI : IsAbelianGalois K (finiteGaloisFieldRange K E) :=
+  let : IsAbelianGalois K (finiteGaloisFieldRange K E) :=
     IsAbelianGalois.of_algHom
       (finiteGaloisFieldRangeEquiv K E).symm.toAlgHom
   exact isAbelianGalois_sup K

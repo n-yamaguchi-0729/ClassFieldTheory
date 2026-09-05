@@ -1,4 +1,6 @@
-import KroneckerWeber.GlobalCompositumLeftFactors
+import ClassFieldTheory.KroneckerWeber.GlobalCompositumLeftFactors
+
+set_option autoImplicit false
 
 /-!
 # The global cyclotomic factor inside the common local target
@@ -34,7 +36,7 @@ theorem kroneckerWeberGlobalRightEmbedding
     (p : Nat.Primes)
     (hp : p ∈ kroneckerWeberRamifiedPrimes (L := L)) :
     kroneckerWeberGlobalRightEmbeddingProperty (L := L) p := by
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let : Fact p.1.Prime := ⟨p.2⟩
   exact ⟨cyclotomicFieldEmbeddingOfBaseAndDvd ℚ ℚ_[p.1]
     (kroneckerWeberConductorCandidate (L := L))
     (kroneckerWeberLocalCompositumOrder (L := L) p)

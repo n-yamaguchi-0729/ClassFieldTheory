@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracketRecursion
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaAtCompletedLevel
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracketRecursion
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaAtCompletedLevel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveAction
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the formal standard bracket at a completed division point

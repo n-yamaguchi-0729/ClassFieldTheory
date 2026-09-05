@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
-import AlgebraicNumberTheory.RayClass.Ideal
-import AlgebraicNumberTheory.RayClass.Topology
-import AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
-import LocalFieldTheory.NonarchimedeanLocalField.NormContinuity
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
 import Mathlib.Algebra.BigOperators.Finsupp.Basic
+
+set_option autoImplicit false
 
 /-!
 # Norms of ideals prime to a modulus
@@ -51,12 +53,12 @@ theorem exists_localHigherUnitGroup_le_norm_preimage
             (v.adicCompletion K) (W.adicCompletion L)) := by
   classical
   let v := _root_.finitePlaceBelow (K := K) W
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
+  let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
     (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
-  letI : IsScalarTower
+  let : IsScalarTower
       K (v.adicCompletion K) (W.adicCompletion L) :=
     _root_.finitePlaceAdicCompletionMap_isScalarTower K L v ⟨W, rfl⟩
-  letI : ContinuousSMul
+  let : ContinuousSMul
       (v.adicCompletion K) (W.adicCompletion L) :=
     continuousSMul_of_algebraMap _ _ (by
       change Continuous
@@ -64,10 +66,10 @@ theorem exists_localHigherUnitGroup_le_norm_preimage
       exact
         _root_.finitePlaceAdicCompletionMap_continuous
           K L v ⟨W, rfl⟩)
-  letI : FiniteDimensional
+  let : FiniteDimensional
       (v.adicCompletion K) (W.adicCompletion L) :=
     inferInstance
-  letI : NontriviallyNormedField (v.adicCompletion K) :=
+  let : NontriviallyNormedField (v.adicCompletion K) :=
     NontriviallyNormedField.ofNormNeOne (by
       obtain ⟨ϖ, hϖ⟩ :=
         IsDiscreteValuationRing.exists_irreducible
@@ -148,7 +150,7 @@ theorem localHigherUnitGroup_idealNormLiftedModulusExponent_le
           (v.adicCompletion K) (W.adicCompletion L)) := by
   classical
   let v := _root_.finitePlaceBelow (K := K) W
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
+  let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
     (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
   rw [idealNormLiftedModulusExponent, dif_pos hW]
   exact
@@ -177,7 +179,7 @@ theorem idealNormLiftedModulusExponent_min
     idealNormLiftedModulusExponent (K := K) (L := L) m W ≤ r + 1 := by
   classical
   let v := _root_.finitePlaceBelow (K := K) W
-  letI : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
+  let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
     (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
   rw [idealNormLiftedModulusExponent, dif_pos hW]
   exact Nat.add_le_add_right
@@ -428,14 +430,14 @@ theorem _root_.IdeleGroup.fractionalIdeal_ideleNorm
   let eAbove :=
     finitePlaceExtensionEquivAbove
       (K := K) (L := L) v
-  letI :=
+  let :=
     AlgebraicNumberTheory.Valuations.completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK
-  letI : Fintype {W : HeightOneSpectrum (𝓞 L) //
+  let : Fintype {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v} :=
     Fintype.ofEquiv
       (AlgebraicNumberTheory.Valuations.AbsoluteValueExtension vK L) eAbove
-  letI : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
+  let : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v},
       Algebra (v.adicCompletion K) (W.1.adicCompletion L) :=
     fun W =>
@@ -536,14 +538,14 @@ theorem finite_norm_mem_finitePrimeToModulusSubgroup
   let eAbove :=
     finitePlaceExtensionEquivAbove
       (K := K) (L := L) v
-  letI :=
+  let :=
     AlgebraicNumberTheory.Valuations.completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK
-  letI : Fintype {W : HeightOneSpectrum (𝓞 L) //
+  let : Fintype {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v} :=
     Fintype.ofEquiv
       (AlgebraicNumberTheory.Valuations.AbsoluteValueExtension vK L) eAbove
-  letI : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
+  let : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v},
       Algebra (v.adicCompletion K) (W.1.adicCompletion L) :=
     fun W =>
@@ -561,7 +563,7 @@ theorem finite_norm_mem_finitePrimeToModulusSubgroup
     (a.property.2 W
       ((mem_idealNormLiftedModulus_support_iff
         (K := K) (L := L) m W).2 hv))
-  letI : Algebra
+  let : Algebra
       ((_root_.finitePlaceBelow (K := K) W).adicCompletion K)
       (W.adicCompletion L) :=
     (_root_.finitePlaceAdicCompletionMap K L

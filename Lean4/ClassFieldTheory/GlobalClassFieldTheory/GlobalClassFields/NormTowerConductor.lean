@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
-import AlgebraicNumberTheory.Idele.ClassGroup.Tower
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+
+set_option autoImplicit false
 
 /-!
 # Norm quotients and narrow finite conductors in a field tower
@@ -29,6 +31,42 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
+
+/-- The canonical commutativity witness used to form ordinary norm quotients. -/
+private theorem normTowerIdeleClassIsMulCommutative
+    {F : Type} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] normTowerIdeleClassIsMulCommutative
+
+/-- Quotient commutativity follows by lifting representatives through the
+canonical quotient map, without constructing another group dictionary. -/
+private theorem normTowerQuotientIsMulCommutative
+    {G : Type*} [Group G] [IsMulCommutative G]
+    (N : Subgroup G) : IsMulCommutative (G ⧸ N) := by
+  refine IsMulCommutative.of_comm ?_
+  intro a b
+  obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective N a
+  obtain ⟨y, rfl⟩ := QuotientGroup.mk'_surjective N b
+  calc
+    QuotientGroup.mk' N x * QuotientGroup.mk' N y =
+        QuotientGroup.mk' N (x * y) :=
+      ((QuotientGroup.mk' N).map_mul x y).symm
+    _ = QuotientGroup.mk' N (y * x) :=
+      congrArg (QuotientGroup.mk' N) (mul_comm' x y)
+    _ = QuotientGroup.mk' N y * QuotientGroup.mk' N x :=
+      (QuotientGroup.mk' N).map_mul y x
+
+/-- A quotient of the idele class group is commutative, so its norm-image
+subgroups are normal when forming the second quotient. -/
+private theorem normTowerIdeleClassQuotientIsMulCommutative
+    {F : Type} [Field F] [NumberField F]
+    (N : Subgroup (IdeleClassGroup F)) :
+    IsMulCommutative (IdeleClassGroup F ⧸ N) :=
+  normTowerQuotientIsMulCommutative N
+
+attribute [local instance] normTowerIdeleClassQuotientIsMulCommutative
 
 variable {K : Type} [Field K] [NumberField K]
 
@@ -178,7 +216,18 @@ theorem ideleClassNormQuotientTowerMap_ker :
           ((_root_.ideleClassNorm K L).range))
         ((_root_.ideleClassNorm K M).range) := by
   unfold ideleClassNormQuotientTowerMap
-  rw [QuotientGroup.ker_map, Subgroup.comap_id]
+  exact
+    (QuotientGroup.ker_map
+      (N := ((_root_.ideleClassNorm K L).range))
+      ((_root_.ideleClassNorm K M).range)
+      (MonoidHom.id (IdeleClassGroup K))
+      (fun _ hx =>
+        ideleClassNorm_range_le_of_tower
+          (K := K) (M := M) (L := L) hx)).trans
+      (congrArg
+        (Subgroup.map
+          (QuotientGroup.mk' ((_root_.ideleClassNorm K L).range)))
+        (Subgroup.comap_id ((_root_.ideleClassNorm K M).range)))
 
 /-- Quotienting the top norm quotient by the image of the intermediate
 norm subgroup gives the intermediate norm quotient. -/

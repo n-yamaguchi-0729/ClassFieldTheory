@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.NormTopology
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
+
+set_option autoImplicit false
 
 /-!
 # Continuity of norms
@@ -26,11 +28,11 @@ theorem normTopology_norm_continuous
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)] :
     IsNormContinuous A L K (relativeNorm A K L hLK) := by
   unfold IsNormContinuous
-  letI : TopologicalSpace (ambientFixedAddSubgroup A L) := normTopology A L
-  letI : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
-  letI : IsTopologicalAddGroup (ambientFixedAddSubgroup A L) :=
+  let : TopologicalSpace (ambientFixedAddSubgroup A L) := normTopology A L
+  let : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
+  let : IsTopologicalAddGroup (ambientFixedAddSubgroup A L) :=
     (normFilterBasis A L).isTopologicalAddGroup
-  letI : IsTopologicalAddGroup (ambientFixedAddSubgroup A K) :=
+  let : IsTopologicalAddGroup (ambientFixedAddSubgroup A K) :=
     (normFilterBasis A K).isTopologicalAddGroup
   apply continuous_of_continuousAt_zero (relativeNorm A K L hLK)
   rw [ContinuousAt, map_zero]
@@ -40,19 +42,19 @@ theorem normTopology_norm_continuous
   rcases hU with ⟨M, rfl⟩
   let P : ClosedSubgroup G := L ⊓ M.field
   let ML : FiniteGaloisSubextension L := M.baseChange L hLK
-  letI hMKfinite : Finite
+  let hMKfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K M.field M.below) := M.finite
   refine ⟨(FiniteGaloisSubextension.normSubgroup A ML : Set (ambientFixedAddSubgroup A L)),
     ⟨ML, rfl⟩, ?_⟩
   intro x hx
   change x ∈ FiniteGaloisSubextension.normSubgroup A ML at hx
   rcases hx with ⟨a, rfl⟩
-  letI hMLfinite : Finite
+  let hMLfinite : Finite
       (L.toSubgroup ⧸ extensionSubgroup L P inf_le_left) := ML.finite
-  letI hPKfinite : Finite
+  let hPKfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K P (inf_le_left.trans hLK)) :=
     FiniteGaloisSubextension.finite_extension_trans inf_le_left hLK
-  letI hPMfinite : Finite
+  let hPMfinite : Finite
       (M.field.toSubgroup ⧸
         extensionSubgroup M.field P inf_le_right) :=
     FiniteGaloisSubextension.finite_extension_over_intermediate

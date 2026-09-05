@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldDegree
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldDegree
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the fixed-field prime element and its norm
@@ -129,8 +131,7 @@ theorem equalCharacteristicCompletedFrobeniusTargetLevelEquiv_generator
           equalCharacteristicCompletedLevelField F n),
         equalCharacteristicDirectThetaAtCompletedPrimitiveRoot_mem_fixedField
           F a n⟩ := by
-  simp only [equalCharacteristicCompletedFrobeniusTargetLevelEquiv,
-    AlgEquiv.ofBijective_apply]
+  simp only [equalCharacteristicCompletedFrobeniusTargetLevelEquiv]
   exact equalCharacteristicDirectTargetLevelFieldToFixedField_generator F a n
 
 /-- The distinguished element `pi_delta = theta(lambda)`, regarded as an element of

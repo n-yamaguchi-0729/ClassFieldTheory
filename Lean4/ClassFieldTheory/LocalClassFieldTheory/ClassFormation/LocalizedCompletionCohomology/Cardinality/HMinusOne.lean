@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.H0
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.H0
+
+set_option autoImplicit false
 
 /-!
 # Degree-minus-one localized Herbrand cardinality
@@ -64,19 +66,19 @@ theorem localHerbrandHMinusOne_card_eq_one
           (subgroupGeneratorOfGenerator
             (absoluteValueDecompositionGroup k w.1)
             σ hgen)) = 1 := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : FiniteDimensional vK.Completion
+  let := localizedCompletionBaseAlgebra vK w
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
+  let : FiniteDimensional vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionFiniteDimensional vK hvK w
-  letI : IsGalois vK.Completion
+  let : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionIsGalois vK w
-  letI := localizedCompletionDecompositionGroupFintype vK w
-  letI :=
+  let := localizedCompletionDecompositionGroupFintype vK w
+  let :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI : Finite
+  let : Finite
       (HerbrandHMinusOne
         (absoluteValueDecompositionGroup k w.1)
         (LocalizedCompletion vK w)ˣ

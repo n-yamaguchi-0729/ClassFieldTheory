@@ -1,5 +1,15 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity
-import GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.QuotientTransport
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationCore
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Evaluation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Evaluation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+
+set_option autoImplicit false
 
 /-!
 # Arithmetic topological class-field correspondence
@@ -26,7 +36,7 @@ variable {K : Type} [Field K] [NumberField K]
 /-- Fix the commutative idèle-class instance path used by every quotient in
 this module, so the norm quotient and the literal quotient share one normality
 construction during elaboration. -/
-local instance (priority := 2000)
+local instance
     arithmeticClassFieldCorrespondenceIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=

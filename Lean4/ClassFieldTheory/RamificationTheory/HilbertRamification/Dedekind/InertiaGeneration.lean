@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Ramification.UnramifiedRationals
-import RamificationTheory.HilbertRamification.Dedekind.FixedFieldUnramified
-import RamificationTheory.HilbertRamification.Dedekind.FixedFields
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.UnramifiedRationals
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.FixedFieldUnramified
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.FixedFields
+
+set_option autoImplicit false
 
 /-!
 # Global cyclotomic inertia argument: completion of the inertia-generation step
@@ -34,7 +36,7 @@ theorem subgroup_eq_top_of_forall_inertiaGroup_le
     (hI : ∀ (Q : Ideal (𝓞 M)) [Q.IsPrime] [Q.IsMaximal],
       inertiaGroup Q G ≤ H) :
     H = ⊤ := by
-  letI : Finite G := IsGaloisGroup.finite G ℚ M
+  let : Finite G := IsGaloisGroup.finite G ℚ M
   have hunramified :
       ∀ (P : Ideal
           (𝓞 (fixedFieldOfSubgroup (K := ℚ) (L := M) G H)))

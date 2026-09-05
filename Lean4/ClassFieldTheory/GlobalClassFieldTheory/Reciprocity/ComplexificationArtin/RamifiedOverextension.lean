@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.InfinitePlaceOverfield
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.InfinitePlaceOverfield
+
+set_option autoImplicit false
 
 /-!
 # The quadratic overextension at a ramified real place
@@ -15,7 +17,7 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
-attribute [local instance 2000]
+attribute [local instance]
   infinitePlaceComplexificationOverfieldRationalAlgebra
 
 section ComplexConjugationOverextension
@@ -166,7 +168,7 @@ theorem ramifiedInfinitePlaceRealFixedFieldEmbedding_coe
           (K := K) (L := L) v) x
 
 @[reducible]
-noncomputable instance (priority := 2000)
+noncomputable instance
     ramifiedInfinitePlaceRealFixedField_algebra
     (v : InfinitePlace K)
     (hRamified :
@@ -227,7 +229,7 @@ noncomputable instance ramifiedInfinitePlaceRealFixedField_numberField
       (ramifiedInfinitePlaceRealFixedField
         (K := K) (L := L) v hRamified) :=
   by
-    letI : FiniteDimensional ℚ
+    let : FiniteDimensional ℚ
         (ramifiedInfinitePlaceRealFixedField
           (K := K) (L := L) v hRamified) :=
       ramifiedInfinitePlaceRealFixedField_finiteDimensional
@@ -310,7 +312,7 @@ noncomputable instance
         (K := K) (L := L) v hRamified)
       (infinitePlaceComplexificationOverfield
         (K := K) (L := L) v) := by
-  letI : IsGalois
+  let : IsGalois
       (ramifiedInfinitePlaceRealFixedField
         (K := K) (L := L) v hRamified)
       (infinitePlaceComplexificationOverfield
@@ -323,7 +325,7 @@ noncomputable instance
         (K := K) (L := L) v hRamified)
   let e :=
     IntermediateField.subgroupEquivAlgEquiv H
-  letI :
+  let :
       IsCyclic
         Gal(
           (infinitePlaceComplexificationOverfield
@@ -439,7 +441,7 @@ theorem ramifiedInfinitePlaceOverextension_eq_one_or_conjugation
       (e.apply_symm_apply σ).symm.trans
         (congrArg e hσSub)
 
-attribute [local instance 2000]
+attribute [local instance]
   rationalComplexificationCyclotomicField_isAbelianGalois
 
 /-- Restriction of the quadratic overextension Galois group to the

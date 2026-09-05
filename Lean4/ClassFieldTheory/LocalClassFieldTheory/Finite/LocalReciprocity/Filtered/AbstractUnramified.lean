@@ -1,9 +1,138 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Unramified
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalFieldTheory
-import LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
-import LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
-import LocalClassFieldTheory.Finite.LocalReciprocity.Core
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Unramified
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ValuedFieldTheory.LocalField.Analytic.Arithmetic
+import ValuedFieldTheory.LocalField.Analytic.ContinuousFieldUnitLog
+import ValuedFieldTheory.LocalField.Analytic.DenominatorValuation
+import ValuedFieldTheory.LocalField.Analytic.FieldUnitLogExtension
+import ValuedFieldTheory.LocalField.Analytic.LogExpAdditivity
+import ValuedFieldTheory.LocalField.Analytic.LogExpComposition
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.ExpConvergence
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.FormalCore
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.FormalCoreBase.ChoicePositions
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.FormalCoreBase.PowerSeriesComposition
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.FormalCoreBase.ProductArgument
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.FormalCoreBase.BasicFactors
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.FormalCoreBase.ChoiceCountSystem
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.FormalCoreBase.ExplicitChoiceCounts
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.FormalProduct
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.Homomorphisms
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.InverseEstimates
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.LogConvergence
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.PrincipalUnitExp
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.PrincipalUnitLog
+import ValuedFieldTheory.LocalField.Analytic.LogExpSeries.SeriesTerms
+import ValuedFieldTheory.LocalField.Analytic.LogExpContinuity
+import ValuedFieldTheory.LocalField.Analytic.PrincipalUnitExpLogEquiv
+import ValuedFieldTheory.LocalField.Analytic.FieldUnitLogUniqueness
+import ValuedFieldTheory.LocalField.GroupTheory.ContinuousQuotientEquiv
+import ValuedFieldTheory.LocalField.GroupTheory.IntegerMultipleSubgroup
+import ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
+import ValuedFieldTheory.LocalField.DiscreteValuationField.EqualCharacteristicLaurent
+import ValuedFieldTheory.LocalField.DiscreteValuationField.MixedCharacteristicQp
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FiniteCoefficientLaurent
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldNormBase
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitDecomposition
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationIdeal
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationInvariants
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.RangeRestriction
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.CyclicValueGroup
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.IntegerValuation
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.SeriesValuationEstimates
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.IntegerValuationUniformizer
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.CompleteRangeRestriction
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.UniformizerIntegerValuation
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.RangeRestrictedTopology
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.ValuationSubringUnitMap
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.LocalFieldRangeRestriction
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValuationSubringUnits.ValuedExtensionUnitMap
+import ValuedFieldTheory.LocalField.DiscreteValuationField.WithZeroValuationTopology
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldNorm
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldNormEquiv
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PolynomialRootProximity
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationAddVal
+import ValuedFieldTheory.LocalField.DiscreteValuationField.NormFiltration
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.Core
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnitPadicAction.Core
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnitInverseLimitSurjectivity
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicLinearOfContinuous
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitFactors
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicModuleStructure
+import ValuedFieldTheory.LocalField.DiscreteValuationField.MixedCharacteristicStructure.Core
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Norm.Basic
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Norm.Quotients
+import ValuedFieldTheory.LocalField.DiscreteValuationField.IwasawaIndexing
+import ValuedFieldTheory.LocalField.DiscreteValuationField.IwasawaPrincipalUnits
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitStructure
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PowerIndex
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicPowerIndex
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitPowerIndexFormulas
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Units
+import ValuedFieldTheory.LocalField.DiscreteValuationField.ValueGroup
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicValuationComparison
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.AdditiveEquiv
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Basic
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionTopology
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.GaloisIntegerRing
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Norm
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormSubgroupFunctoriality
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormalizedIntegerValuation
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassFiniteness
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrincipalUnitActions
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrincipalUnitQuotients
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrincipalUnits
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ProfiniteUnits
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.MultiplicativeDecomposition
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueExtension
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueGalois
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueUnits
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Valuation
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuativeExtension
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UniformizerPrincipalQuotient
+import ValuedFieldTheory.LocalField.Padic.ClosedAddSubgroup
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.EisensteinPolynomial
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.EisensteinRelation
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.Existence
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.IntegralClosure
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.IntegralTranslate
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.PrimeElement
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.RamificationIndex
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.ValuationRingEquiv
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.Unramified.ArithmeticFrobenius
+import ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+import ValuedFieldTheory.LocalField.Padic.NonarchimedeanLocalField
+import ValuedFieldTheory.LocalField.Padic.PrincipalUnits
+import ValuedFieldTheory.LocalField.Padic.UnitDecomposition
+import ValuedFieldTheory.LocalField.Unramified.BaseChange
+import ValuedFieldTheory.LocalField.Unramified.BaseChangeCore
+import ValuedFieldTheory.LocalField.Unramified.BasicInvariants
+import ValuedFieldTheory.LocalField.Unramified.Composition
+import ValuedFieldTheory.LocalField.Unramified.Definitions
+import ValuedFieldTheory.LocalField.Unramified.FiniteSupport
+import ValuedFieldTheory.LocalField.Unramified.HenselReduction
+import ValuedFieldTheory.LocalField.Unramified.HenselianAlgebraicExtension
+import ValuedFieldTheory.LocalField.Unramified.MaximalResidue
+import ValuedFieldTheory.LocalField.Unramified.MaximalSubextension
+import ValuedFieldTheory.LocalField.Unramified.ResidueEmbedding
+import ValuedFieldTheory.LocalField.Unramified.ResidueLifting
+import ValuedFieldTheory.LocalField.Unramified.Separable
+import ValuedFieldTheory.LocalField.NormUnits
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Core
+
+set_option autoImplicit false
 
 /-!
 # Abstract unramified fixed fields and ramification groups
@@ -41,7 +170,7 @@ private theorem baseFixingExtensionSubgroup_index_eq_finrank
       (closedFixingSubgroup K Ω E)
       (fixingSubgroupLeBase K Ω E)).index =
         Module.finrank K E := by
-  letI : Finite
+  let : Finite
       ((closedFixingSubgroup K Ω
           (⊥ : IntermediateField K Ω)).toSubgroup ⧸
         extensionSubgroup
@@ -119,10 +248,10 @@ theorem finiteAbstractField_degree_eq_abstractFixedField_finrank
       Module.finrank K E := by
   let E :=
     abstractFixedField K (SeparableClosure K) H.field
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     abstractFixedField_isGalois_of_base_normal K H.field hnormal
   calc
     (H.toFiniteAbstractExtension.degree : ℕ) =
@@ -138,7 +267,7 @@ theorem finiteAbstractField_degree_eq_abstractFixedField_finrank
       exact congrArg Subgroup.index
         (InfiniteGalois.fixingSubgroup_fixedField H.field).symm
     _ = Module.finrank K E :=
-      (IntermediateField.finrank_eq_fixingSubgroup_index E).symm
+      (IntermediateField.finrank_eq_fixingSubgroup_index (SeparableClosure K) E).symm
 
 /-- Abstract unramifiedness of a normal finite fixed field gives actual
 unramifiedness for its canonical spectral valuation. -/
@@ -183,29 +312,29 @@ theorem abstractFixedField_isUnramifiedValuedExtension
       K E := by
   let E :=
     abstractFixedField K (SeparableClosure K) H.field
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     abstractFixedField_isGalois_of_base_normal K H.field hnormal
 
-  letI : NontriviallyNormedField K :=
+  let : NontriviallyNormedField K :=
     localFieldNontriviallyNormedField K
-  letI : IsUltrametricDist K :=
+  let : IsUltrametricDist K :=
     localFieldIsUltrametricDist K
-  letI : CompleteSpace K := inferInstance
-  letI : NontriviallyNormedField E :=
+  let : CompleteSpace K := inferInstance
+  let : NontriviallyNormedField E :=
     finiteExtensionSpectralNormedField K E
-  letI : ValuativeRel E :=
+  let : ValuativeRel E :=
     finiteExtensionSpectralValuativeRel K E
-  letI : IsNonarchimedeanLocalField E :=
+  let : IsNonarchimedeanLocalField E :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K E
-  letI : Valuation.HasExtension
+  let : Valuation.HasExtension
       (ValuativeRel.valuation K) (ValuativeRel.valuation E) :=
     finiteExtensionSpectralValuation_hasExtension K E
-  letI : IsIntegralClosure 𝒪[E] 𝒪[K] E :=
+  let : IsIntegralClosure 𝒪[E] 𝒪[K] E :=
     localCompleteDVF_integerRing_isIntegralClosure K E
-  letI : Module.Finite 𝒪[K] 𝒪[E] :=
+  let : Module.Finite 𝒪[K] 𝒪[E] :=
     localCompleteDVF_integerRing_moduleFinite K E
 
   have hresidueDegree :
@@ -276,31 +405,31 @@ theorem localUpperRamificationGroup_abstractFixedField_eq_bot
     localUpperRamificationGroup K E t = ⊥ := by
   let E :=
     abstractFixedField K (SeparableClosure K) H.field
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     abstractFixedField_isGalois_of_base_normal K H.field hnormal
 
-  letI : NontriviallyNormedField K :=
+  let : NontriviallyNormedField K :=
     localFieldNontriviallyNormedField K
-  letI : IsUltrametricDist K :=
+  let : IsUltrametricDist K :=
     localFieldIsUltrametricDist K
-  letI : CompleteSpace K := inferInstance
-  letI : NontriviallyNormedField E :=
+  let : CompleteSpace K := inferInstance
+  let : NontriviallyNormedField E :=
     finiteExtensionSpectralNormedField K E
-  letI : ValuativeRel E :=
+  let : ValuativeRel E :=
     finiteExtensionSpectralValuativeRel K E
-  letI : IsNonarchimedeanLocalField E :=
+  let : IsNonarchimedeanLocalField E :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K E
-  letI : Valuation.HasExtension
+  let : Valuation.HasExtension
       (ValuativeRel.valuation K) (ValuativeRel.valuation E) :=
     finiteExtensionSpectralValuation_hasExtension K E
-  letI : IsIntegralClosure 𝒪[E] 𝒪[K] E :=
+  let : IsIntegralClosure 𝒪[E] 𝒪[K] E :=
     localCompleteDVF_integerRing_isIntegralClosure K E
-  letI : Module.Finite 𝒪[K] 𝒪[E] :=
+  let : Module.Finite 𝒪[K] 𝒪[E] :=
     localCompleteDVF_integerRing_moduleFinite K E
-  letI :
+  let :
       LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
         K E :=
     abstractFixedField_isUnramifiedValuedExtension
@@ -433,31 +562,31 @@ theorem
   let H := localFiniteUnramifiedAbstractField K d hd
   let E :=
     abstractFixedField K (SeparableClosure K) H.field
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : IsAbelianGalois K E := by
+  let : IsAbelianGalois K E := by
     change IsAbelianGalois K
       (abstractFixedField K (SeparableClosure K)
         (localFiniteUnramifiedAbelianSubextension K d hd).field)
     exact finiteAbelianSubextension_fixedField_isAbelianGalois K
       (localFiniteUnramifiedAbelianSubextension K d hd)
 
-  letI : NontriviallyNormedField K :=
+  let : NontriviallyNormedField K :=
     localFieldNontriviallyNormedField K
-  letI : IsUltrametricDist K :=
+  let : IsUltrametricDist K :=
     localFieldIsUltrametricDist K
-  letI : CompleteSpace K := inferInstance
-  letI : NontriviallyNormedField E :=
+  let : CompleteSpace K := inferInstance
+  let : NontriviallyNormedField E :=
     finiteExtensionSpectralNormedField K E
-  letI : ValuativeRel E :=
+  let : ValuativeRel E :=
     finiteExtensionSpectralValuativeRel K E
-  letI : IsNonarchimedeanLocalField E :=
+  let : IsNonarchimedeanLocalField E :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K E
-  letI : Valuation.HasExtension
+  let : Valuation.HasExtension
       (ValuativeRel.valuation K) (ValuativeRel.valuation E) :=
     finiteExtensionSpectralValuation_hasExtension K E
-  letI :
+  let :
       LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
         K E :=
     abstractFixedField_isUnramifiedValuedExtension

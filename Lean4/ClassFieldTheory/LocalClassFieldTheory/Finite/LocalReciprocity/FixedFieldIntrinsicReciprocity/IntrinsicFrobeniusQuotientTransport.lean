@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
+
+set_option autoImplicit false
 
 /-!
 # Intrinsic Frobenius quotient transport
@@ -172,29 +174,7 @@ noncomputable def intrinsicFrobeniusQuotientEquivAmbientFixedField
         (localResidueDatum K).extensionInertiaWithin
           H.field J hJH) := by
   dsimp only
-  let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   intro e
-  let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  letI : FiniteDimensional K F :=
-    abstractFixedField_finiteDimensional
-      K (SeparableClosure K) H.field H.finite
-  letI : NontriviallyNormedField F :=
-    finiteExtensionSpectralNormedField K F
-  letI : ValuativeRel F :=
-    finiteExtensionSpectralValuativeRel K F
-  letI : IsNonarchimedeanLocalField F :=
-    finiteExtensionSpectralIsNonarchimedeanLocalField K F
-  letI : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  letI : IsGalois F E :=
-    abstractRelativeFixedField_isGalois
-      K (SeparableClosure K) H.field J hJH hJnormal
-  let i : E →ₐ[F] SeparableClosure F :=
-    e.symm.toAlgHom.comp E.val
-  let EI := finiteGaloisAbstractExtensionOfEmbedding F E i
   exact
     (intrinsicFrobeniusQuotientContinuousEquivAmbientFixedField
       K H J hJH e).toMulEquiv
@@ -223,7 +203,7 @@ theorem intrinsicFrobeniusQuotientEquivAmbientFixedField_mk
         (intrinsicBaseEquivAmbientFixedField K H e τ) := by
   dsimp only
   rintro e τ
-  rfl
+  exact LocalFieldTheory.QuotientGroup.continuousCongr_mk _ _ _ _ _
 
 /-- The intrinsic-to-ambient Frobenius quotient equivalence preserves the
 normalized extension degree of every quotient class. -/
@@ -278,23 +258,23 @@ theorem
         RF EI.field EI.below q := by
   dsimp only
   let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
   intro e
   let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : NontriviallyNormedField F :=
+  let : NontriviallyNormedField F :=
     finiteExtensionSpectralNormedField K F
-  letI : ValuativeRel F :=
+  let : ValuativeRel F :=
     finiteExtensionSpectralValuativeRel K F
-  letI : IsNonarchimedeanLocalField F :=
+  let : IsNonarchimedeanLocalField F :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K F
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       K (SeparableClosure K) H.field J hJH hJnormal
   let i : E →ₐ[F] SeparableClosure F :=
@@ -326,7 +306,7 @@ theorem
       intrinsicBaseEquivAmbientFixedField_apply_val
         K H e τ
   rw [hψτRH]
-  simpa [RF, RH, τRF, ψτRH] using
+  exact
     (intrinsicBase_normalizedDegree_eq_ambientFixedField
       K H e τ).symm
 

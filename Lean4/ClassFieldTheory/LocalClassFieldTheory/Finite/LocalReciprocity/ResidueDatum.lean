@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAlgebraicallyClosed
-import AbstractClassFieldTheory.Degree.Fields
-import RamificationTheory.GaloisValuation.ClosedFixingSubgroup
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAlgebraicallyClosed
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
+import ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory
@@ -62,7 +64,7 @@ theorem residueDatumIn_fieldImage_closedFixingSubgroup
         (closedFixingSubgroup k Omega E) =
       (zHatMulNat (Module.finrank k E)).toAddMonoidHom.range.toSubgroup := by
   ext z
-  letI : Finite E := Module.finite_of_finite k
+  let : Finite E := Module.finite_of_finite k
   constructor
   · rintro ⟨sigma, rfl⟩
     change (residueAbsoluteDegreeIn k Omega sigma.1).toAdd ∈

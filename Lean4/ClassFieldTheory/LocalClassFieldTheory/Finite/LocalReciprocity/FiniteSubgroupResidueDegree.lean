@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.LocalResidueDatum
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.LocalResidueDatum
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open CyclicCohomology RamificationTheory ClassFormation
@@ -263,7 +265,7 @@ theorem localAbstractFixedResidueIntermediateField_finiteDimensional
   let Omega := selectedResidueField A
   let rho := (localSeparableResidueAlgAction K).toMonoidHom
   let F := localAbstractFixedResidueIntermediateField K H
-  letI : Finite (G ⧸ H.toSubgroup) :=
+  let : Finite (G ⧸ H.toSubgroup) :=
     ambientQuotientFiniteOfAbstractFinite
       K (SeparableClosure K) H inferInstance
   have hHindex : H.toSubgroup.index ≠ 0 :=
@@ -274,16 +276,16 @@ theorem localAbstractFixedResidueIntermediateField_finiteDimensional
       H.toSubgroup.index_map_dvd (localSeparableResidueAlgAction_surjective K)
     rw [hzero] at hdiv
     exact hHindex (eq_zero_of_zero_dvd hdiv)
-  letI : Finite
+  let : Finite
       ((Omega ≃ₐ[k] Omega) ⧸ H.toSubgroup.map rho) :=
     (Subgroup.index_ne_zero_iff_finite (H := H.toSubgroup.map rho)).mp
       hmapIndex
   have himage : H.toSubgroup.map rho = F.fixingSubgroup :=
     localAbstractFixedResidueAction_map_eq_fixingSubgroup K H
-  letI : Finite ((Omega ≃ₐ[k] Omega) ⧸ F.fixingSubgroup) := by
+  let : Finite ((Omega ≃ₐ[k] Omega) ⧸ F.fixingSubgroup) := by
     rw [← himage]
     infer_instance
-  letI : Subgroup.FiniteIndex F.fixingSubgroup :=
+  let : Subgroup.FiniteIndex F.fixingSubgroup :=
     F.fixingSubgroup.finiteIndex_of_finite_quotient
   apply (InfiniteGalois.isOpen_iff_finite (K := Omega) F).1
   exact Subgroup.isOpen_of_isClosed_of_finiteIndex
@@ -306,15 +308,16 @@ noncomputable def localAbstractFixedResidueFiniteGaloisIntermediateField
   let Omega := selectedResidueField A
   let F := localAbstractFixedResidueIntermediateField K H
   letI : Algebra k F := F.algebra
-  letI : Module k F := Algebra.toModule
   letI : FiniteDimensional k F :=
     localAbstractFixedResidueIntermediateField_finiteDimensional K H
   letI : Finite F := Module.finite_of_finite k
   letI : Fintype F := Fintype.ofFinite F
   letI : IsGalois k F := by
     obtain ⟨p, hp⟩ := CharP.exists k
-    letI : CharP k p := hp
-    letI : CharP F p := charP_of_injective_algebraMap' k p
+    let : CharP k p := hp
+    let : CharP F p :=
+      charP_of_injective_algebraMap (R := k) (A := F)
+        (algebraMap k F).injective p
     exact IsGalois.of_separable_splitting_field
       (galois_poly_separable p (Fintype.card F)
         (let ⟨n, _, hn⟩ := FiniteField.card F p
@@ -335,13 +338,12 @@ theorem localResidueDatum_residueDegree_eq_selectedResidueFinrank
   let Omega := selectedResidueField A
   let rho := (localSeparableResidueAlgAction K).toMonoidHom
   let R := localAbstractFixedResidueIntermediateField K H.field
-  letI : Algebra k R := R.algebra
-  letI : Module k R := Algebra.toModule
-  letI : FiniteDimensional k R :=
+  let : Algebra k R := R.algebra
+  let : FiniteDimensional k R :=
     localAbstractFixedResidueIntermediateField_finiteDimensional K H.field
   let F := localAbstractFixedResidueFiniteGaloisIntermediateField K H.field
   let HR := H.toFiniteResidueAbstractField (localResidueDatum K)
-  letI : Finite ((localResidueDatum K).residueQuotient H.field) :=
+  let : Finite ((localResidueDatum K).residueQuotient H.field) :=
     HR.finiteResidueQuotient
   have himage : H.field.toSubgroup.map rho =
       F.toIntermediateField.fixingSubgroup := by
@@ -359,11 +361,14 @@ theorem localResidueDatum_residueDegree_eq_selectedResidueFinrank
           Module.finrank k R
     exact residueDegreeImage_index_eq_finrank_of_map_eq_fixingSubgroup
       k Omega rho H.field.toSubgroup F himage
-  letI : ((localResidueDatum K).fieldImage HR.field).IsFiniteRelIndex
+  let : ((localResidueDatum K).fieldImage HR.field).IsFiniteRelIndex
       (⊤ : Subgroup ZHatMul) :=
     ⟨by
       rw [Subgroup.relIndex_top_right, hindex]
-      exact Module.finrank_pos.ne'⟩
+      let : Module.IsTorsionFree k R :=
+        (Module.isTorsionFree_iff_algebraMap_injective (R := k) (A := R)).mpr
+          (algebraMap k R).injective
+      exact (Module.finrank_pos (R := k) (M := R)).ne'⟩
   apply Nat.cast_injective (R := Cardinal)
   change ((H.residueDegree (localResidueDatum K) : ℕ) : Cardinal) =
     (Module.finrank k R : Cardinal)
@@ -407,12 +412,11 @@ theorem localResidueDatum_normalizedDegree_eq_residueAbsoluteDegreeIn
   let k := decompositionResidueField K A
   let Omega := selectedResidueField A
   let F := localAbstractFixedResidueIntermediateField K H.field
-  letI : Algebra k F := F.algebra
-  letI : Module k F := Algebra.toModule
-  letI : FiniteDimensional k F :=
+  let : Algebra k F := F.algebra
+  let : FiniteDimensional k F :=
     localAbstractFixedResidueIntermediateField_finiteDimensional K H.field
-  letI : Finite F := Module.finite_of_finite k
-  letI : Fintype F := Fintype.ofFinite F
+  let : Finite F := Module.finite_of_finite k
+  let : Fintype F := Fintype.ofFinite F
   let HF := H.toFiniteResidueAbstractField (localResidueDatum K)
   let tau : Omega ≃ₐ[F] Omega :=
     localAbstractFixedResidueActionOverIntermediateField K H.field sigma

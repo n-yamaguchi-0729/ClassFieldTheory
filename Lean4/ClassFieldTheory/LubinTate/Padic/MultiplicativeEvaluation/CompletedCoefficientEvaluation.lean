@@ -1,5 +1,7 @@
-import LubinTate.Padic.CompletedLevel
+import ClassFieldTheory.LubinTate.Padic.CompletedLevel
 import Mathlib.RingTheory.AdicCompletion.Topology
+
+set_option autoImplicit false
 
 /-!
 # Coefficient maps and analytic evaluation on completed p-adic levels

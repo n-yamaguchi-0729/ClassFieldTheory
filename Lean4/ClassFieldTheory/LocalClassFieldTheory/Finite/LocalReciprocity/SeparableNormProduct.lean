@@ -1,6 +1,9 @@
 import Mathlib.FieldTheory.PrimitiveElement
 import Mathlib.FieldTheory.IsSepClosed
 import Mathlib.RingTheory.Norm.Transitivity
+import Mathlib.RingTheory.AlgebraTower
+
+set_option autoImplicit false
 
 /-!
 # Separable field norms as products of embeddings
@@ -35,25 +38,25 @@ theorem prod_embeddings_algebraMap_powerBasisGen_eq
     ∏ σ : E →ₐ[k] Ω, σ (algebraMap L E pb.gen) =
       ((@Finset.univ (L →ₐ[k] Ω) (PowerBasis.AlgHom.fintype pb)).prod
         (fun σ => σ pb.gen)) ^ Module.finrank L E := by
-  haveI : FiniteDimensional L E := FiniteDimensional.right k L E
-  haveI : Algebra.IsSeparable L E :=
+  have : FiniteDimensional L E := FiniteDimensional.right k L E
+  have : Algebra.IsSeparable L E :=
     Algebra.isSeparable_tower_top_of_isSeparable k L E
-  letI : Fintype (L →ₐ[k] Ω) := PowerBasis.AlgHom.fintype pb
+  let : Fintype (L →ₐ[k] Ω) := PowerBasis.AlgHom.fintype pb
   rw [Fintype.prod_equiv algHomEquivSigma
     (fun σ : E →ₐ[k] Ω => σ (algebraMap L E pb.gen))
     (fun σ => σ.1 pb.gen)]
   rw [← Finset.univ_sigma_univ, Finset.prod_sigma, ← Finset.prod_pow]
   · refine Finset.prod_congr rfl fun σ _ => ?_
-    letI : Algebra L Ω := σ.toRingHom.toAlgebra
+    let : Algebra L Ω := σ.toRingHom.toAlgebra
     simp_rw [Finset.prod_const]
     congr
     rw [Finset.card_univ, Fintype.card_eq_nat_card]
     exact AlgHom.natCard_of_splits L E Ω (fun x =>
       IsSepClosed.splits_codomain _ (Algebra.IsSeparable.isSeparable L x))
   · intro σ
-    simp only [algHomEquivSigma, Equiv.coe_fn_mk,
-      AlgHom.restrictDomain, AlgHom.comp_apply,
-      IsScalarTower.coe_toAlgHom']
+    change σ (algebraMap L E pb.gen) =
+      (σ.comp (IsScalarTower.toAlgHom k L E)) pb.gen
+    exact (AlgHom.comp_apply σ (IsScalarTower.toAlgHom k L E) pb.gen).symm
 
 /-- Mapping the norm of an element of a finite separable extension into a
 separably closed field gives the product of all base-field embeddings. -/
@@ -64,7 +67,7 @@ theorem algebraMap_norm_eq_prod_embeddings_of_isSepClosed
     (x : E) :
     algebraMap k Ω (Algebra.norm k x) = ∏ σ : E →ₐ[k] Ω, σ x := by
   have hx := Algebra.IsSeparable.isIntegral k x
-  letI : Algebra.IsSeparable k
+  let : Algebra.IsSeparable k
       (IntermediateField.adjoin k ({x} : Set E)) :=
     Algebra.isSeparable_tower_bot_of_isSeparable k
       (IntermediateField.adjoin k ({x} : Set E)) E

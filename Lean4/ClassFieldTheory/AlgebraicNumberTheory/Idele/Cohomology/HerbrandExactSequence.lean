@@ -1,5 +1,7 @@
-import CyclicCohomology.Herbrand.HerbrandLowDegree.Index
-import AlgebraicNumberTheory.Idele.Cohomology.Herbrand
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Index
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
+
+set_option autoImplicit false
 
 /-!
 # The final cardinal step in the idele-class Herbrand calculation
@@ -104,22 +106,22 @@ theorem ideleClass_herbrandQuotient_eq_card_of_relative_principal_values
           (RelativeIdeleGroup.ClassGroup K L)
           _ _ _ _ σ hC.1 hC.2 =
         (Fintype.card (L ≃ₐ[K] L) : ℚ) := by
-  letI := relativeIdeleMulDistribMulAction K L
-  letI := principalIdeleMulDistribMulAction K L
-  letI := ideleClassMulDistribMulAction K L
-  letI : Finite
+  let := relativeIdeleMulDistribMulAction K L
+  let := principalIdeleMulDistribMulAction K L
+  let := ideleClassMulDistribMulAction K L
+  let : Finite
       (HerbrandH0 (L ≃ₐ[K] L)
         (RelativeIdeleGroup K L)) :=
     hRelativeDefined.1
-  letI : Finite
+  let : Finite
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeIdeleGroup K L) σ) :=
     hRelativeDefined.2
-  letI : Finite
+  let : Finite
       (HerbrandH0 (L ≃ₐ[K] L)
         (RelativeIdeleGroup.principalSubgroup K L)) :=
     hPrincipalDefined.1
-  letI : Finite
+  let : Finite
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeIdeleGroup.principalSubgroup K L) σ) :=
     hPrincipalDefined.2
@@ -188,18 +190,18 @@ theorem card_le_ideleClassNorm_index_of_relative_principal_values
         q / (Fintype.card (L ≃ₐ[K] L) : ℚ)) :
     Fintype.card (L ≃ₐ[K] L) ≤
       (RelativeIdeleGroup.Cohomology.ideleClassNorm K L).range.index := by
-  letI := relativeIdeleMulDistribMulAction K L
-  letI := principalIdeleMulDistribMulAction K L
-  letI := ideleClassMulDistribMulAction K L
+  let := relativeIdeleMulDistribMulAction K L
+  let := principalIdeleMulDistribMulAction K L
+  let := ideleClassMulDistribMulAction K L
   obtain ⟨hC, hCvalue⟩ :=
     ideleClass_herbrandQuotient_eq_card_of_relative_principal_values
       K L σ hgen hRelativeDefined hPrincipalDefined
         q hq hRelative hPrincipal
-  letI : Finite
+  let : Finite
       (HerbrandH0 (L ≃ₐ[K] L)
         (RelativeIdeleGroup.ClassGroup K L)) :=
     hC.1
-  letI : Finite
+  let : Finite
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeIdeleGroup.ClassGroup K L) σ) :=
     hC.2

@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.Extension.LocalComponent
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalComponent
+
+set_option autoImplicit false
 
 /-!
 # Finite coefficient support for relative ideles

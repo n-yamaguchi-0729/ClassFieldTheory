@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
 import Mathlib.RingTheory.Norm.Basic
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: the uniformizer norm in the equal-characteristic level field

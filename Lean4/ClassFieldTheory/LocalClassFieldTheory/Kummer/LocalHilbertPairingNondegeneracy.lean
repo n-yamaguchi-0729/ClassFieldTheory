@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Kummer.LocalHilbertPairing
-import LocalClassFieldTheory.Finite.Existence.MaximalKummerNorm
+import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MaximalKummerNorm
+
+set_option autoImplicit false
 
 /-!
 # Nondegeneracy of the local Hilbert pairing
@@ -58,9 +60,9 @@ theorem localHilbertSymbol_left_kernel
       finiteKummerRadicalSubgroup (K := K) (L := E) n :=
     le_finiteKummerRadicalSubgroup_kummerRadicalExtension
       n hnK Delta.1
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     maximalKummerRadicalExtension_finiteDimensional K n hnK hmu
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     kummerRadicalExtension_isAbelianGalois
       (K := K) (Omega := SeparableClosure K) n hmu Delta.1
   constructor

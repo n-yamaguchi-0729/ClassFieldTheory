@@ -1,9 +1,13 @@
-import AlgebraicNumberTheory.Completion.UnramifiedComparison
-import AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
-import AlgebraicNumberTheory.Idele.Norm
-import GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
-import GlobalClassFieldTheory.GlobalClassFields.ConductorSupport
-import GlobalClassFieldTheory.GlobalClassFields.ConductorRayClassMaximality
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Norm
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorSupport
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorRayClassMaximality
+
+set_option autoImplicit false
 
 /-!
 # Narrow finite conductors of actual idele-class norm subgroups
@@ -23,7 +27,7 @@ finite places.  The full conductor, including an archimedean component,
 is deliberately not defined here.
 -/
 
-open scoped NumberField Classical
+open scoped NumberField Classical IsMulCommutative
 
 noncomputable section
 
@@ -37,6 +41,13 @@ variable
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
+
+/-- Fix the canonical commutative idèle-class structure used by the norm
+quotients in this module. -/
+local instance normConductorIdeleClassGroupIsMulCommutative
+    {F : Type} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 omit [NumberField L] in
 /-- Every chosen finite-place norm subgroup contains a local
@@ -461,7 +472,21 @@ theorem
                 (K := K) (L := L)))))
         ((_root_.ideleClassNorm K L).range) := by
   unfold narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
-  rw [QuotientGroup.ker_map, Subgroup.comap_id]
+  let N :=
+    RayClass.Modulus.congruenceSubgroup
+      (RayClass.Modulus.narrowOfFinite
+        (ideleClassNormNarrowFiniteConductor (K := K) (L := L)))
+  let M := (_root_.ideleClassNorm K L).range
+  change
+    (QuotientGroup.map N M (MonoidHom.id (IdeleClassGroup K)) _).ker =
+      Subgroup.map (QuotientGroup.mk' N) M
+  simpa only [Subgroup.comap_id] using
+    (QuotientGroup.ker_map (N := N) M
+      (MonoidHom.id (IdeleClassGroup K))
+      (show N ≤ Subgroup.comap (MonoidHom.id (IdeleClassGroup K)) M from
+        fun _ hx =>
+          ideleClassNorm_narrowFiniteConductor_isDefiningModulus
+            (K := K) (L := L) hx))
 
 /-- Quotienting the conductor ray class group by the image of the actual
 norm subgroup recovers the actual idele-class norm quotient. -/

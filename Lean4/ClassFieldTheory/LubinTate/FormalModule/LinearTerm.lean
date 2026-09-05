@@ -1,6 +1,8 @@
 import Mathlib.RingTheory.MvPowerSeries.Order
 import Mathlib.RingTheory.PowerSeries.Substitution
 
+set_option autoImplicit false
+
 /-!
 # Prescribed linear terms for multivariable power series
 

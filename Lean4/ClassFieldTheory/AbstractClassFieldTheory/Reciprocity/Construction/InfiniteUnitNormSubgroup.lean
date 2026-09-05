@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.InfiniteUnitDescent
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.InfiniteUnitDescent
+
+set_option autoImplicit false
 
 universe u
 
@@ -51,13 +53,13 @@ theorem mem_finiteIntermediateUnitNormRange_of_overfield
     (aK : ambientFixedAddSubgroup A K.field)
     (haK : relativeNorm A K.field P.field P.below uP.1 = aK) :
     aK ∈ v.finiteIntermediateUnitNormRange E K M := by
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field M.field M.below) :=
     M.finite
-  letI hPMfinite : Finite
+  let hPMfinite : Finite
       (M.field.toSubgroup ⧸ extensionSubgroup M.field P.field hPM) :=
     FiniteIntermediateField.finite_extension_of_le P.below M.below hPM
-  letI : Finite
+  let : Finite
       ((M.toFiniteAbstractField K).field.toSubgroup ⧸
         extensionSubgroup (M.toFiniteAbstractField K).field P.field hPM) := by
     change Finite
@@ -123,15 +125,17 @@ theorem finiteIntermediateUnitNormRange_le_normRange
     (M : FiniteIntermediateField E K.field) :
     v.finiteIntermediateUnitNormRange E K M ≤
       finiteIntermediateNormRange A E K.field M := by
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field M.field M.below) :=
     M.finite
   change
     ((relativeNorm A K.field M.field M.below).comp
       (v.unitAddSubgroup (M.toFiniteAbstractField K)).subtype).range ≤
         (relativeNorm A K.field M.field M.below).range
-  rw [AddMonoidHom.range_comp]
-  exact AddSubgroup.map_le_range _ _
+  rintro a ⟨u, hu⟩
+  refine ⟨u.1, ?_⟩
+  change relativeNorm A K.field M.field M.below u.1 = a at hu
+  exact hu
 
 /-- Proves the bound `v.infiniteUnitNormSubgroup E K ≤ infiniteNormSubgroup A E K.field`. -/
 theorem infiniteUnitNormSubgroup_le_normSubgroup

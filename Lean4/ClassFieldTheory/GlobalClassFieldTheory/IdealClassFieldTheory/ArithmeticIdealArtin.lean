@@ -1,8 +1,10 @@
-import AlgebraicNumberTheory.Idele.FinitePrime
-import GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
-import GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
-import GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
-import GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+
+set_option autoImplicit false
 
 /-!
 # The ideal Artin map in arithmetic Frobenius normalization
@@ -29,7 +31,7 @@ variable
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
 
-attribute [local instance 1000]
+attribute [local instance]
   ideleClassSubgroupNormal idealArtinKernelNormal
 
 /-- The genuine Galois-valued ideal Artin map in arithmetic Frobenius

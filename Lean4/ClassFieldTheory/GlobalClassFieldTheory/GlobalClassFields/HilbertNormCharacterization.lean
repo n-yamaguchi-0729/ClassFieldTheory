@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+
+set_option autoImplicit false
 
 /-!
 # Hilbert norm subgroups and unramified extensions
@@ -31,7 +33,7 @@ variable
     [FiniteDimensional K L] [IsGalois K L]
 
 /-- Keep norm-range quotient normality out of exported declaration types. -/
-local instance (priority := 2000)
+local instance
     hilbertNormCharacterization_ideleClassGroupIsMulCommutative :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
@@ -138,7 +140,18 @@ theorem
           (bigHilbertClassFieldNormSubgroup (K := K)))
         ((_root_.ideleClassNorm K L).range) := by
   unfold bigHilbertClassFieldQuotientToIdeleClassNormQuotient
-  rw [QuotientGroup.ker_map, Subgroup.comap_id]
+  exact
+    (QuotientGroup.ker_map
+      (N := bigHilbertClassFieldNormSubgroup (K := K))
+      ((_root_.ideleClassNorm K L).range)
+      (MonoidHom.id (IdeleClassGroup K))
+      (fun _ hx =>
+        bigHilbertClassFieldNormSubgroup_le_ideleClassNorm_range_of_no_ramifiedFinitePlaces
+          (K := K) (L := L) hunramified hx)).trans
+      (congrArg
+        (Subgroup.map
+          (QuotientGroup.mk' (bigHilbertClassFieldNormSubgroup (K := K))))
+        (Subgroup.comap_id ((_root_.ideleClassNorm K L).range)))
 
 /-- For an everywhere finite-unramified extension, quotienting the
 big-Hilbert reciprocity quotient by the image of its actual norm

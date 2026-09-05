@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport.AbsoluteValue
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.AbsoluteValue
+
+set_option autoImplicit false
 
 /-!
 # Integral lattices in relative tensor coordinates
@@ -32,7 +34,7 @@ theorem exists_integral_relativeBasis_scale :
           (d • relativeExtensionBasis
             (K := K) (L := L) i) := by
   classical
-  letI : Algebra.IsAlgebraic ℤ L :=
+  let : Algebra.IsAlgebraic ℤ L :=
     (IsFractionRing.isAlgebraic_iff' ℤ (𝓞 L) L).mp
       inferInstance
   let s : Finset L :=
@@ -200,8 +202,10 @@ theorem scaledRelativeIntegerLattice_map_toField :
     scaledRelativeFieldLattice,
     Submodule.map_span]
   congr 1
-  ext x
-  simp [ringOfIntegersToFieldLinearMap]
+  exact
+    (Set.range_comp
+      (ringOfIntegersToFieldLinearMap (K := K) (L := L))
+      (scaledRelativeExtensionInteger (K := K) (L := L))).symm
 
 omit [NumberField K] [NumberField L] [FiniteDimensional K L] in
 /-- The inclusion `𝓞 L → L` used above is injective. -/

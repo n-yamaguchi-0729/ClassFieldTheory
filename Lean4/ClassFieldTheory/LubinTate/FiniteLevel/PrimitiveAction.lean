@@ -1,7 +1,9 @@
-import LubinTate.FiniteLevel.CompletedEvaluation
-import LubinTate.FormalModule.StandardFormalGroup
-import LocalFieldTheory.DiscreteValuationField.PrincipalUnits.ResidueQuotient
-import LocalFieldTheory.DiscreteValuationField.PrincipalUnits.TeichmullerDecomposition
+import ClassFieldTheory.LubinTate.FiniteLevel.CompletedEvaluation
+import ClassFieldTheory.LubinTate.FormalModule.StandardFormalGroup
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.ResidueQuotient
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.TeichmullerDecomposition
+
+set_option autoImplicit false
 
 /-!
 # The standard Lubin--Tate action on primitive division points

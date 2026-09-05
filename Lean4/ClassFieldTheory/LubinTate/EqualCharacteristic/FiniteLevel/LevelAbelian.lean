@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
 import Mathlib.FieldTheory.Galois.Abelian
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: abelian equal-characteristic Lubin--Tate level fields
@@ -36,10 +38,10 @@ theorem equalCharacteristicLubinTateUnitParameterToGal_surjective
     (n : ℕ) :
     Function.Surjective
       (equalCharacteristicLubinTateUnitParameterToGal F n) := by
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI : Finite
+  let : Finite
       (Gal((equalCharacteristicLubinTateLevelField F n) /
         F.residueField⸨X⸩)) :=
     equalCharacteristicLubinTateLevelField_galFinite F n

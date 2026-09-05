@@ -1,11 +1,13 @@
-import AlgebraicNumberTheory.Completion.AdicCompletionComparison
-import AlgebraicNumberTheory.Idele.IdealMap
-import AlgebraicNumberTheory.Idele.LocallyCompact
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormValuation
-import LocalFieldTheory.NonarchimedeanLocalField.NormalizedIntegerValuation
-import LocalFieldTheory.NonarchimedeanLocalField.ValuedTopology
-import ValuationTheory.DiscreteValuationField.FiniteExtension.Uniqueness
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.SeparableNormValuation
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormalizedIntegerValuation
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
 import Mathlib.RingTheory.RamificationInertia.Inertia
+
+set_option autoImplicit false
 
 /-!
 # Local orders of finite-place norms
@@ -284,18 +286,18 @@ theorem localOrder_normUnits
   classical
   let F := v₀.adicCompletion K
   let E := W.1.adicCompletion L
-  letI : Algebra F E :=
+  let : Algebra F E :=
     (finitePlaceAdicCompletionMap K L v₀ W).toAlgebra
-  letI : IsScalarTower K F E :=
+  let : IsScalarTower K F E :=
     finitePlaceAdicCompletionMap_isScalarTower K L v₀ W
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     finitePlaceAdicCompletionMap_moduleFinite K L v₀ W
-  letI : CharZero F :=
+  let : CharZero F :=
     charZero_of_injective_algebraMap
       (algebraMap K F).injective
-  letI : Algebra.IsIntegral F E :=
+  let : Algebra.IsIntegral F E :=
     Algebra.IsIntegral.of_finite F E
-  letI : Algebra.IsSeparable F E :=
+  let : Algebra.IsSeparable F E :=
     Algebra.IsSeparable.of_integral F E
   let νF : Valuation F (WithZero (Multiplicative ℤ)) :=
     Valued.v
@@ -307,15 +309,15 @@ theorem localOrder_normUnits
   have hνE : Function.Surjective νE := by
     simpa [E, νE] using
       W.1.valuedAdicCompletion_surjective L
-  letI : ValuativeRel F :=
+  let : ValuativeRel F :=
     ValuativeRel.ofValuation νF
-  letI : ValuativeRel E :=
+  let : ValuativeRel E :=
     ValuativeRel.ofValuation νE
-  letI : νF.Compatible :=
+  let : νF.Compatible :=
     Valuation.Compatible.ofValuation νF
-  letI : νE.Compatible :=
+  let : νE.Compatible :=
     Valuation.Compatible.ofValuation νE
-  letI : νF.IsNontrivial := by
+  let : νF.IsNontrivial := by
     obtain ⟨π, hπ⟩ :=
       hνF (WithZero.exp (-1 : ℤ))
     refine ⟨⟨π, ?_, ?_⟩⟩
@@ -326,7 +328,7 @@ theorem localOrder_normUnits
         WithZero.exp (-1 : ℤ) ≠
           WithZero.exp (0 : ℤ)
       simp
-  letI : νE.IsNontrivial := by
+  let : νE.IsNontrivial := by
     obtain ⟨π, hπ⟩ :=
       hνE (WithZero.exp (-1 : ℤ))
     refine ⟨⟨π, ?_, ?_⟩⟩
@@ -337,32 +339,32 @@ theorem localOrder_normUnits
         WithZero.exp (-1 : ℤ) ≠
           WithZero.exp (0 : ℤ)
       simp
-  letI : ValuativeRel.IsNontrivial F :=
+  let : ValuativeRel.IsNontrivial F :=
     (ValuativeRel.isNontrivial_iff_isNontrivial νF).2
       inferInstance
-  letI : ValuativeRel.IsNontrivial E :=
+  let : ValuativeRel.IsNontrivial E :=
     (ValuativeRel.isNontrivial_iff_isNontrivial νE).2
       inferInstance
-  letI : IsValuativeTopology F :=
+  let : IsValuativeTopology F :=
     LocalFieldTheory.isValuativeTopology_of_valued_ofValuation
       F (WithZero (Multiplicative ℤ))
-  letI : IsValuativeTopology E :=
+  let : IsValuativeTopology E :=
     LocalFieldTheory.isValuativeTopology_of_valued_ofValuation
       E (WithZero (Multiplicative ℤ))
-  letI : IsNonarchimedeanLocalField F :=
+  let : IsNonarchimedeanLocalField F :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
-  letI : IsNonarchimedeanLocalField E :=
+  let : IsNonarchimedeanLocalField E :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
   let ν₀F := ValuativeRel.valuation F
   let ν₀E := ValuativeRel.valuation E
-  letI : W.1.asIdeal.LiesOver v₀.asIdeal := by
+  let : W.1.asIdeal.LiesOver v₀.asIdeal := by
     constructor
     exact congrArg HeightOneSpectrum.asIdeal W.2.symm
-  letI : ν₀F.HasExtension ν₀E := by
+  let : ν₀F.HasExtension ν₀E := by
     apply Valuation.HasExtension.ofComapInteger
     ext z
     change
@@ -384,9 +386,9 @@ theorem localOrder_normUnits
       pow_le_one_iff
         (W.1.asIdeal.ramificationIdx_pos
           (𝓞 K)).ne']
-  letI : Algebra 𝒪[F] E :=
+  let : Algebra 𝒪[F] E :=
     Algebra.ofSubsemiring 𝒪[F]
-  letI : IsIntegralClosure 𝒪[E] 𝒪[F] E :=
+  let : IsIntegralClosure 𝒪[E] 𝒪[F] E :=
     LocalFieldTheory.localCompleteDVF_integerRing_isIntegralClosure F E
   have hNormValue :=
     LocalClassFieldTheory.v_normUnits_eq_residue_finrank_mul_of_isSeparable

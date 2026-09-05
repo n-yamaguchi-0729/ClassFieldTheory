@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 import Mathlib.FieldTheory.KrullTopology
 import Mathlib.Topology.Algebra.Group.Quotient
+
+set_option autoImplicit false
 
 /-!
 # Topological global norm-residue reciprocity
@@ -24,6 +26,22 @@ noncomputable section
 
 namespace GlobalClassFieldTheory
 namespace Reciprocity
+
+/-- Fix the canonical class-group dictionary before bundling norm-quotient maps. -/
+@[instance_reducible]
+private noncomputable def topologicalNormResidueIdeleClassCommGroup
+    (F : Type) [Field F] [NumberField F] :
+    CommGroup (IdeleClassGroup F) :=
+  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
+
+attribute [local instance] topologicalNormResidueIdeleClassCommGroup
+
+private theorem topologicalNormResidueIdeleClassIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] topologicalNormResidueIdeleClassIsMulCommutative
 
 variable
     (K L : Type) [Field K] [NumberField K]
@@ -50,7 +68,7 @@ noncomputable def globalNormResidueContinuousMulEquiv :
     (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) ≃ₜ*
       Gal(L / K) := by
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) :=
     ideleClassNormQuotient_discreteTopology K L

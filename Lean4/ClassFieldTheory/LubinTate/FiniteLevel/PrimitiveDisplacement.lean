@@ -1,8 +1,10 @@
-import LubinTate.FiniteLevel.CompletedIterates
-import LubinTate.FiniteLevel.PrimitiveAction
-import LubinTate.FiniteLevel.LevelValuation
+import ClassFieldTheory.LubinTate.FiniteLevel.CompletedIterates
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveAction
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelValuation
 import Mathlib.RingTheory.MvPowerSeries.Inverse
 import Mathlib.RingTheory.PowerSeries.Inverse
+
+set_option autoImplicit false
 
 /-!
 # Displacements of primitive Lubin--Tate points

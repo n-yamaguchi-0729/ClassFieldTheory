@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.RayClass.Basic
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+
+set_option autoImplicit false
 
 /-!
 # Ray moduli with selected real places
@@ -225,9 +227,7 @@ theorem localInfiniteCongruenceSubgroup_replaceFinitePart
     (m : Modulus K) (f : FiniteModulus K) (w : InfinitePlace K) :
     (m.replaceFinitePart f).localInfiniteCongruenceSubgroup w =
       m.localInfiniteCongruenceSubgroup w := by
-  by_cases hw : w.IsReal
-  · simp [localInfiniteCongruenceSubgroup, hw]
-  · simp [localInfiniteCongruenceSubgroup, hw]
+  rfl
 
 @[simp]
 theorem localInfiniteCongruenceSubgroup_of_mem
@@ -336,7 +336,7 @@ def congruenceSubgroup (m : Modulus K) :
 /-- The full ray congruence subgroup is normal in the idèle class group. -/
 instance congruenceSubgroup_normal (m : Modulus K) :
     m.congruenceSubgroup.Normal := by
-  letI : IsMulCommutative (IdeleClassGroup K) := ⟨⟨fun a b => mul_comm a b⟩⟩
+  let : IsMulCommutative (IdeleClassGroup K) := ⟨⟨fun a b => mul_comm a b⟩⟩
   exact Subgroup.normal_of_isMulCommutative _
 
 end Modulus

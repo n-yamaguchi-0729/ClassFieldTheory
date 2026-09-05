@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Completion.LocalizedValuation
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.LocalizedValuation
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+
+set_option autoImplicit false
 
 /-!
 # Transporting integer rings across finite-place cosets
@@ -61,9 +63,9 @@ theorem rightCosetCompletionRingEquivLocalized_norm_eq
     letI := AbsoluteValue.completionAlgebra vK w.1 w.2
     ‖rightCosetCompletionRingEquivLocalized vK hvK w q x‖ =
       ‖x‖ := by
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
   let z :=
     conjugateExtensionCompletionRingEquiv
       vK w (Quotient.out q) x

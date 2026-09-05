@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Completion.ExtensionIndex
-import AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
+
+set_option autoImplicit false
 
 /-!
 # Finite-place splitting through prime ideals
@@ -37,7 +39,7 @@ theorem absoluteValueDecompositionGroup_eq_finitePlaceStabilizer
     absoluteValueDecompositionGroup K w.1 =
       MulAction.stabilizer (L ≃ₐ[K] L)
         (finitePlaceExtensionCentre (K := K) (L := L) v w) := by
-  letI := finitePlaceMulAction K L
+  let := finitePlaceMulAction K L
   ext σ
   rw [mem_absoluteValueDecompositionGroup_iff_extensionConjugate_eq
       (HeightOneSpectrum.adicAbv K v)
@@ -89,7 +91,7 @@ theorem finitePlaceSplitsCompletely_iff_centre_stabilizer_eq_bot
       letI := finitePlaceMulAction K L
       MulAction.stabilizer (L ≃ₐ[K] L)
         (finitePlaceExtensionCentre (K := K) (L := L) v w) = ⊥ := by
-  letI := finitePlaceMulAction K L
+  let := finitePlaceMulAction K L
   unfold FinitePlaceSplitsCompletely finitePlaceDecompositionGroup
   constructor
   · intro h
@@ -121,7 +123,7 @@ theorem finitePlaceSplitsCompletely_iff_stabilizer_eq_bot
     FinitePlaceSplitsCompletely (K := K) (L := L) v ↔
       letI := finitePlaceMulAction K L
       MulAction.stabilizer (L ≃ₐ[K] L) W = ⊥ := by
-  letI := finitePlaceMulAction K L
+  let := finitePlaceMulAction K L
   let Wv :
       {W : HeightOneSpectrum (𝓞 L) //
         finitePlaceBelow (K := K) W = v} :=
@@ -218,13 +220,13 @@ theorem finitePlaceSplitsCompletely_over_intermediate_of_below
         finitePlaceBelow (K := K) v' := by
     rw [← finitePlaceBelow_finitePlaceBelow
       (K := K) (M := M) (L := L) W, hWM]
-  letI := finitePlaceMulAction K L
+  let := finitePlaceMulAction K L
   have hKbot :
       MulAction.stabilizer (L ≃ₐ[K] L) W = ⊥ :=
     (finitePlaceSplitsCompletely_iff_stabilizer_eq_bot
       (K := K) (L := L)
       (finitePlaceBelow (K := K) v') W hWK).mp hsplit
-  letI := finitePlaceMulAction M L
+  let := finitePlaceMulAction M L
   apply
     (finitePlaceSplitsCompletely_iff_stabilizer_eq_bot
       (K := M) (L := L) v' W hWM).mpr

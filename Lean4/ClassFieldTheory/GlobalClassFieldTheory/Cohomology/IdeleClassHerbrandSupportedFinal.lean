@@ -1,10 +1,29 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand
-import AlgebraicNumberTheory.SUnit.Herbrand
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced
-import AlgebraicNumberTheory.Idele.Cohomology.HerbrandExactSequence
-import AlgebraicNumberTheory.Completion.UnramifiedComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.Local
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.FamilyFinite
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.FamilyCardinality
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.Factors
+import ClassFieldTheory.AlgebraicNumberTheory.SUnit.Herbrand
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquivApply
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInclusion
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInducedSmul
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockTensorSmul
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.CompletionTransport
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Spine
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Action
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Equiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Inclusion
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.HerbrandExactSequence
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
 import Mathlib.Algebra.BigOperators.GroupWithZero.Finset
+
+set_option autoImplicit false
 
 /-!
 # Supported ideles and the idele-class norm index
@@ -79,7 +98,7 @@ theorem
         (HerbrandHMinusOne (L ≃ₐ[K] L)
           (RelativeOutsideSPlaceFactors
             (K := K) (L := L) S) σ) := by
-  letI componentAction :
+  let componentAction :
       ∀ w : {w : HeightOneSpectrum (𝓞 K) // w ∉ S},
         MulDistribMulAction (L ≃ₐ[K] L)
           (relativeLocalTensorDecompositionIntegralUnitSubgroup
@@ -87,7 +106,7 @@ theorem
     fun w =>
       relativeLocalTensorDecompositionIntegralUnitSubgroupAction
         (K := K) (L := L) w.1
-  letI outsideAction :=
+  let outsideAction :=
     relativeOutsideSPlaceFactorsAction
       (K := K) (L := L) S
   let e0 :
@@ -121,7 +140,7 @@ theorem
     intro x y
     apply e0.injective
     funext w
-    letI :
+    let :
         Subsingleton
           (HerbrandH0 (L ≃ₐ[K] L)
             (relativeLocalTensorDecompositionIntegralUnitSubgroup
@@ -133,7 +152,7 @@ theorem
     intro x y
     apply em.injective
     funext w
-    letI :
+    let :
         Subsingleton
           (HerbrandHMinusOne (L ≃ₐ[K] L)
             (relativeLocalTensorDecompositionIntegralUnitSubgroup
@@ -168,14 +187,14 @@ theorem
           (RelativeOutsideSPlaceFactors
             (K := K) (L := L) S)
           _ _ _ _ σ h.1 h.2 = 1 := by
-  letI outsideAction :=
+  let outsideAction :=
     relativeOutsideSPlaceFactorsAction
       (K := K) (L := L) S
   have hsub :=
     relativeOutsideSPlaceFactors_unramifiedHerbrand_subsingleton
       (K := K) (L := L) S σ hgen hUnram
-  letI h0Subsingleton := hsub.1
-  letI hmSubsingleton := hsub.2
+  let h0Subsingleton := hsub.1
+  let hmSubsingleton := hsub.2
   let h :
       HerbrandQuotientDefined
         (L ≃ₐ[K] L)
@@ -183,24 +202,24 @@ theorem
           (K := K) (L := L) S) σ :=
     ⟨Finite.of_subsingleton, Finite.of_subsingleton⟩
   refine ⟨h, ?_⟩
-  letI h0Finite := h.1
-  letI hmFinite := h.2
-  letI : Inhabited
+  let h0Finite := h.1
+  let hmFinite := h.2
+  let : Inhabited
       (HerbrandH0 (L ≃ₐ[K] L)
         (RelativeOutsideSPlaceFactors
           (K := K) (L := L) S)) :=
     ⟨1⟩
-  letI : Inhabited
+  let : Inhabited
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeOutsideSPlaceFactors
           (K := K) (L := L) S) σ) :=
     ⟨1⟩
-  letI : Unique
+  let : Unique
       (HerbrandH0 (L ≃ₐ[K] L)
         (RelativeOutsideSPlaceFactors
           (K := K) (L := L) S)) :=
     Unique.mk' _
-  letI : Unique
+  let : Unique
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeOutsideSPlaceFactors
           (K := K) (L := L) S) σ) :=
@@ -239,13 +258,13 @@ theorem
         ∏ i,
           (relativeUnrestrictedSPlaceLocalDegree
             (K := K) (L := L) S i : ℚ) := by
-  letI supportedAction :=
+  let supportedAction :=
     relativeIdeleLocalTensorDecompositionSupportedSubgroupAction
       (K := K) (L := L) S
-  letI unrestrictedAction :=
+  let unrestrictedAction :=
     relativeUnrestrictedSPlaceFactorsAction
       (K := K) (L := L) S
-  letI outsideAction :=
+  let outsideAction :=
     relativeOutsideSPlaceFactorsAction
       (K := K) (L := L) S
   let hU :
@@ -260,11 +279,11 @@ theorem
   obtain ⟨hO, hOq⟩ :=
     relativeOutsideSPlaceFactors_unramifiedHerbrandQuotient_eq_one
       (K := K) (L := L) S σ hgen hUnram
-  letI hU0 := hU.1
-  letI hUm := hU.2
-  letI hO0 := hO.1
-  letI hOm := hO.2
-  letI hProd0 :
+  let hU0 := hU.1
+  let hUm := hU.2
+  let hO0 := hO.1
+  let hOm := hO.2
+  let hProd0 :
       Finite
         (HerbrandH0 (L ≃ₐ[K] L)
           (RelativeUnrestrictedSPlaceFactors
@@ -272,7 +291,7 @@ theorem
             RelativeOutsideSPlaceFactors
               (K := K) (L := L) S)) :=
     herbrandH0ProdFinite _ _
-  letI hProdm :
+  let hProdm :
       Finite
         (HerbrandHMinusOne (L ≃ₐ[K] L)
           (RelativeUnrestrictedSPlaceFactors
@@ -310,8 +329,8 @@ theorem
     ⟨Finite.of_equiv _ e0.symm.toEquiv,
       Finite.of_equiv _ em.symm.toEquiv⟩
   refine ⟨hSupported, ?_⟩
-  letI hS0 := hSupported.1
-  letI hSm := hSupported.2
+  let hS0 := hSupported.1
+  let hSm := hSupported.2
   calc
     @herbrandQuotient
           (L ≃ₐ[K] L)
@@ -401,12 +420,12 @@ theorem sUnitToRelativeIdeleSupported_equivariant
         σ •
           sUnitToRelativeIdeleSupported
             (K := K) (L := L) S x := by
-  letI sUnitAction :=
+  let sUnitAction :=
     sUnitMulDistribMulAction K L
       (finitePlacesAbove (K := K) (L := L) S)
       (finitePlacesAbove_isGaloisStable
         (K := K) (L := L) S)
-  letI supportedAction :=
+  let supportedAction :=
     relativeIdeleLocalTensorDecompositionSupportedSubgroupAction
       (K := K) (L := L) S
   intro σ x
@@ -440,10 +459,10 @@ theorem relativeIdeleSupportedToClass_equivariant
         σ •
           relativeIdeleSupportedToClass
             (K := K) (L := L) S z := by
-  letI supportedAction :=
+  let supportedAction :=
     relativeIdeleLocalTensorDecompositionSupportedSubgroupAction
       (K := K) (L := L) S
-  letI classAction := ideleClassMulDistribMulAction K L
+  let classAction := ideleClassMulDistribMulAction K L
   intro σ z
   change
     QuotientGroup.mk'
@@ -660,7 +679,7 @@ theorem logPlaceBelowRelativeUnrestrictedIndex_smul
         (K := K) (L := L) S (σ • q) =
       logPlaceBelowRelativeUnrestrictedIndex
         (K := K) (L := L) S q := by
-  letI logAction :=
+  let logAction :=
     aboveSLogPlaceMulAction
       (K := K) (L := L) S
   cases q with
@@ -836,17 +855,17 @@ noncomputable def
                   exact congrArg Subtype.val (Sum.inr.inj hxy)
                 let v :=
                   finitePlaceBelow (K := K) W₁.1
-                letI : Finite (L ≃ₐ[K] L) :=
+                let : Finite (L ≃ₐ[K] L) :=
                   IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-                letI :
+                let :
                     IsGaloisGroup
                       (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
                   IsGaloisGroup.of_isFractionRing
                     (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) K L
-                letI : W₁.1.asIdeal.LiesOver v.asIdeal :=
+                let : W₁.1.asIdeal.LiesOver v.asIdeal :=
                   ⟨by
                     simp only [v, finitePlaceBelow_asIdeal]⟩
-                letI : W₂.1.asIdeal.LiesOver v.asIdeal :=
+                let : W₂.1.asIdeal.LiesOver v.asIdeal :=
                   ⟨by
                     have h :=
                       congrArg HeightOneSpectrum.asIdeal hbelow
@@ -957,18 +976,18 @@ theorem
       let W₀ :=
         finitePlaceExtensionCentre
           (K := K) (L := L) v w
-      letI finiteAction := finitePlaceMulAction K L
-      letI : Finite (L ≃ₐ[K] L) :=
+      let finiteAction := finitePlaceMulAction K L
+      let : Finite (L ≃ₐ[K] L) :=
         IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-      letI :
+      let :
           IsGaloisGroup
             (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
         IsGaloisGroup.of_isFractionRing
           (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) K L
-      letI : W₀.asIdeal.LiesOver v.asIdeal :=
+      let : W₀.asIdeal.LiesOver v.asIdeal :=
         ⟨(finitePlaceExtensionCentreIdeal_under
           (K := K) (L := L) v w).symm⟩
-      letI : W.1.asIdeal.LiesOver v.asIdeal :=
+      let : W.1.asIdeal.LiesOver v.asIdeal :=
         ⟨by
           simp only [v, finitePlaceBelow_asIdeal]⟩
       obtain ⟨τ, hτ⟩ :=
@@ -1030,10 +1049,10 @@ theorem
         (logPlaceLocalDegree K L
           (finitePlacesAbove (K := K) (L := L) S)
           ω.out : ℚ) := by
-  letI logAction :=
+  let logAction :=
     aboveSLogPlaceMulAction
       (K := K) (L := L) S
-  letI orbitFintype :
+  let orbitFintype :
       Fintype
         (MulAction.orbitRel.Quotient
           (L ≃ₐ[K] L)
@@ -1157,34 +1176,34 @@ theorem
           (RelativeIdeleGroup.ClassGroup K L)
           _ _ _ _ σ hC.1 hC.2 =
         (Fintype.card (L ≃ₐ[K] L) : ℚ) := by
-  letI sUnitAction :=
+  let sUnitAction :=
     sUnitMulDistribMulAction K L
       (finitePlacesAbove (K := K) (L := L) S)
       (finitePlacesAbove_isGaloisStable
         (K := K) (L := L) S)
-  letI supportedAction :=
+  let supportedAction :=
     relativeIdeleLocalTensorDecompositionSupportedSubgroupAction
       (K := K) (L := L) S
-  letI classAction := ideleClassMulDistribMulAction K L
-  letI hU0 :
+  let classAction := ideleClassMulDistribMulAction K L
+  let hU0 :
       Finite
         (HerbrandH0 (L ≃ₐ[K] L)
           (SUnitGroup (K := L)
             (finitePlacesAbove (K := K) (L := L) S))) :=
     hUnitDefined.1
-  letI hUm :
+  let hUm :
       Finite
         (HerbrandHMinusOne (L ≃ₐ[K] L)
           (SUnitGroup (K := L)
             (finitePlacesAbove (K := K) (L := L) S)) σ) :=
     hUnitDefined.2
-  letI hS0 :
+  let hS0 :
       Finite
         (HerbrandH0 (L ≃ₐ[K] L)
           (relativeIdeleLocalTensorDecompositionSupportedSubgroup
             (K := K) (L := L) S)) :=
     hSupportedDefined.1
-  letI hSm :
+  let hSm :
       Finite
         (HerbrandHMinusOne (L ≃ₐ[K] L)
           (relativeIdeleLocalTensorDecompositionSupportedSubgroup
@@ -1256,8 +1275,8 @@ theorem
       inferInstance inferInstance inferInstance inferInstance
       i j hi hj hker hinj hsurj
       σ hgen hUnitDefined hSupportedDefined
-  letI hC0 := hC.1
-  letI hCm := hC.2
+  let hC0 := hC.1
+  let hCm := hC.2
   have hmul :
       herbrandQuotient
           (G := L ≃ₐ[K] L)
@@ -1366,13 +1385,13 @@ theorem
         q / (Fintype.card (L ≃ₐ[K] L) : ℚ)) :
     Fintype.card (L ≃ₐ[K] L) ≤
       (RelativeIdeleGroup.Cohomology.ideleClassNorm K L).range.index := by
-  letI classAction := ideleClassMulDistribMulAction K L
+  let classAction := ideleClassMulDistribMulAction K L
   obtain ⟨hC, hCvalue⟩ :=
     ideleClass_herbrandQuotient_eq_card_of_sUnit_supported_values
       (K := K) (L := L) S σ hgen hSP
       hUnitDefined hSupportedDefined q hq hSupported hUnit
-  letI hC0 := hC.1
-  letI hCm := hC.2
+  let hC0 := hC.1
+  let hCm := hC.2
   rw [ideleClassNorm_index_eq_herbrandH0_card K L]
   apply
     le_herbrandH0_card_of_herbrandQuotient_eq_nat
@@ -1417,21 +1436,21 @@ theorem
       (K := K) (L := L) S
   let ρ :=
     logPlacePermutationHom K L T hT
-  letI indexAction :
+  let indexAction :
       MulAction (L ≃ₐ[K] L)
         (SUnitGroup.LogPlace (K := L) T) :=
     permutationMulAction ρ
-  letI sUnitAction :
+  let sUnitAction :
       MulDistribMulAction (L ≃ₐ[K] L)
         (SUnitGroup (K := L) T) :=
     sUnitMulDistribMulAction K L T hT
-  letI orbitFintype :
+  let orbitFintype :
       Fintype
         (MulAction.orbitRel.Quotient
           (L ≃ₐ[K] L)
           (SUnitGroup.LogPlace (K := L) T)) :=
     Fintype.ofFinite _
-  letI stabilizerFintype :
+  let stabilizerFintype :
       ∀ ω :
           MulAction.orbitRel.Quotient
             (L ≃ₐ[K] L)
@@ -1441,7 +1460,7 @@ theorem
   obtain ⟨hUnit, hUnitValue⟩ :=
     sUnit_herbrandQuotient_eq_localDegreeProduct_div_card
       (K := K) (L := L) hT σ hgen
-  letI supportedAction :=
+  let supportedAction :=
     relativeIdeleLocalTensorDecompositionSupportedSubgroupAction
       (K := K) (L := L) S
   obtain ⟨hSupported, hSupportedValue⟩ :=
@@ -1512,12 +1531,12 @@ theorem
           (K := K) (L := L) w) :
     Fintype.card (L ≃ₐ[K] L) ≤
       (RelativeIdeleGroup.Cohomology.ideleClassNorm K L).range.index := by
-  letI classAction := ideleClassMulDistribMulAction K L
+  let classAction := ideleClassMulDistribMulAction K L
   obtain ⟨hC, hCvalue⟩ :=
     ideleClass_herbrandQuotient_eq_card_of_supported_local_calculation
       (K := K) (L := L) S σ hgen hSP hUnram
-  letI hC0 := hC.1
-  letI hCm := hC.2
+  let hC0 := hC.1
+  let hCm := hC.2
   rw [ideleClassNorm_index_eq_herbrandH0_card K L]
   apply
     le_herbrandH0_card_of_herbrandQuotient_eq_nat

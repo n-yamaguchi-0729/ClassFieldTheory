@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
+
+set_option autoImplicit false
 
 /-!
 # Maximality criteria for Hilbert class fields
@@ -18,6 +20,13 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
+
+private theorem hilbertClassFieldMaximalityIdeleClassGroupIsMulCommutative
+    {F : Type} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] hilbertClassFieldMaximalityIdeleClassGroupIsMulCommutative
 
 variable
     {K L : Type}

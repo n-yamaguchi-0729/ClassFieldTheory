@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.RayClass.Topology
-import AlgebraicNumberTheory.Idele.LocallyCompact
-import AlgebraicNumberTheory.Idele.PrincipalNorm
-import ValuationTheory.AbsoluteValue.Theory.AbsoluteValues
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
+import ValuedFieldTheory.Valuation.AbsoluteValue.Theory.AbsoluteValues
 import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 import Mathlib.Topology.Algebra.IsOpenUnits
 import Mathlib.Topology.Algebra.Ring.Compact
+
+set_option autoImplicit false
 
 /-!
 # Ideals prime to a ray-class modulus

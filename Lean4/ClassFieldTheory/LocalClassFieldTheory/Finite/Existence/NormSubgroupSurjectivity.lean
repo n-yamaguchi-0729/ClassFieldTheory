@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.SeparableClosureEmbedding
-import LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+
+set_option autoImplicit false
 
 /-!
 # Surjectivity criteria for the local norm-subgroup map
@@ -117,7 +119,7 @@ theorem exists_finiteAbelianNormSubgroup_eq_of_normOpen
           AddSubgroup (ambientFixedAddSubgroup (intrinsicAbsoluteUnits K)
             (intrinsicAbstractBase K))) : Set _)) :
     ∃ L, finiteAbelianNormSubgroupMap K L = H := by
-  letI : H.subgroup.FiniteIndex := H.finiteIndex
+  let : H.subgroup.FiniteIndex := H.finiteIndex
   let Habs : AddSubgroup
       (ambientFixedAddSubgroup (intrinsicAbsoluteUnits K)
         (intrinsicAbstractBase K)) :=
@@ -177,7 +179,7 @@ theorem finiteAbelianNormSubgroupMap_surjective_of_normOpen
             (intrinsicAbstractBase K))) : Set _)) :
     Function.Surjective (finiteAbelianNormSubgroupMap K) := by
   intro H
-  letI : H.subgroup.FiniteIndex := H.finiteIndex
+  let : H.subgroup.FiniteIndex := H.finiteIndex
   apply exists_finiteAbelianNormSubgroup_eq_of_normOpen K H
   exact hnormOpen H.subgroup
 
@@ -202,9 +204,9 @@ theorem finiteIndexSubgroup_isNormOpen_of_normSubgroup_le
   let e := baseUnitsEquivGaloisAmbientFixed K (SeparableClosure K)
   let i := AlgebraicNumberTheory.separableEmbeddingIntoSeparableClosure K E
   let R : IntermediateField K (SeparableClosure K) := AlgHom.fieldRange i
-  letI : FiniteDimensional K R :=
+  let : FiniteDimensional K R :=
     (AlgEquiv.ofInjectiveField i).toLinearEquiv.finiteDimensional
-  letI : IsGalois K R := IsGalois.of_algEquiv (AlgEquiv.ofInjectiveField i)
+  let : IsGalois K R := IsGalois.of_algEquiv (AlgEquiv.ofInjectiveField i)
   let L : FiniteGaloisSubextension B := {
     field := RamificationTheory.closedFixingSubgroup K (SeparableClosure K) R
     below := fixingSubgroupLeBase K (SeparableClosure K) R
@@ -254,9 +256,9 @@ theorem exists_finiteGaloisExtension_normSubgroup_map_le_of_normSubgroup_le
   let e := baseUnitsEquivGaloisAmbientFixed K (SeparableClosure K)
   let i := AlgebraicNumberTheory.separableEmbeddingIntoSeparableClosure K E
   let R : IntermediateField K (SeparableClosure K) := AlgHom.fieldRange i
-  letI : FiniteDimensional K R :=
+  let : FiniteDimensional K R :=
     (AlgEquiv.ofInjectiveField i).toLinearEquiv.finiteDimensional
-  letI : IsGalois K R := IsGalois.of_algEquiv (AlgEquiv.ofInjectiveField i)
+  let : IsGalois K R := IsGalois.of_algEquiv (AlgEquiv.ofInjectiveField i)
   let T : FiniteGaloisSubextension B := {
     field := RamificationTheory.closedFixingSubgroup K (SeparableClosure K) R
     below := fixingSubgroupLeBase K (SeparableClosure K) R

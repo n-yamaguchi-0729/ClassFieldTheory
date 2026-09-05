@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Compatibility
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Compatibility
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+
+set_option autoImplicit false
 
 /-!
 # Zero-class transport to norm membership
@@ -22,13 +24,13 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance (priority := 2000)
+local instance
     zeroTransportIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
-local instance (priority := 2000)
+local instance
     zeroTransportIdeleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
@@ -61,7 +63,7 @@ private noncomputable def
     RationalFiniteNormTransferCanonicalFiniteNormRepresentativeQuotientZeroData
       K H L hHK hLH hLHnormal c := by
   refine ⟨?_⟩
-  letI hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
+  let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
   change
     (0 : FiniteNormQuotient rationalIdeleClassRepresentation H L hLH) =
@@ -139,9 +141,9 @@ private noncomputable def
       (hHLfinite := hHLfinite)
       K H L hHK hLH hLHnormal c := by
   refine ⟨?_⟩
-  letI hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
+  let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
-  letI : Zero
+  let : Zero
       (rationalFiniteNormTransferQuotientTarget
         (hKfinite := hHfinite) (hfinite := hHLfinite)
         H L hLH hLHnormal) :=
@@ -204,27 +206,27 @@ private noncomputable def
       (hHLfinite := hHLfinite)
       K H L hHK hLH hLHnormal c := by
   refine ⟨?_⟩
-  letI hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
+  let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
   let F := abstractFixedField ℚ (SeparableClosure ℚ) H
   let U := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLH
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     RationalFiniteNormTransferInternal.fixedFiniteDimensional H
-  letI : FiniteDimensional F U :=
+  let : FiniteDimensional F U :=
     RationalFiniteNormTransferInternal.relativeFiniteDimensional
       H L hLH
-  letI : IsScalarTower ℚ F U :=
+  let : IsScalarTower ℚ F U :=
     RationalFiniteNormTransferInternal.relativeScalarTower
       H L hLH
-  letI : FiniteDimensional ℚ U :=
+  let : FiniteDimensional ℚ U :=
     RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
       H L hLH
-  letI : NumberField F :=
+  let : NumberField F :=
     RationalFiniteNormTransferInternal.fixedNumberField H
-  letI : NumberField U :=
+  let : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       H L hLH
-  letI : IsGalois F U :=
+  let : IsGalois F U :=
     RationalFiniteNormTransferInternal.relativeIsGalois
       H L hLH hLHnormal
   let b :=
@@ -238,7 +240,7 @@ private noncomputable def
     rationalFiniteNormTransferQuotientMap
       (hKfinite := hHfinite) (hfinite := hHLfinite)
       H L hLH hLHnormal
-  letI : Zero
+  let : Zero
       (rationalFiniteNormTransferQuotientTarget
         (hKfinite := hHfinite) (hfinite := hHLfinite)
         H L hLH hLHnormal) :=
@@ -290,27 +292,27 @@ private noncomputable def
       (hHLfinite := hHLfinite)
       K H L hHK hLH hHKnormal hLHnormal c := by
   refine ⟨?_⟩
-  letI hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
+  let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
   let F := abstractFixedField ℚ (SeparableClosure ℚ) H
   let U := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLH
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     RationalFiniteNormTransferInternal.fixedFiniteDimensional H
-  letI : FiniteDimensional F U :=
+  let : FiniteDimensional F U :=
     RationalFiniteNormTransferInternal.relativeFiniteDimensional
       H L hLH
-  letI : IsScalarTower ℚ F U :=
+  let : IsScalarTower ℚ F U :=
     RationalFiniteNormTransferInternal.relativeScalarTower
       H L hLH
-  letI : FiniteDimensional ℚ U :=
+  let : FiniteDimensional ℚ U :=
     RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
       H L hLH
-  letI : NumberField F :=
+  let : NumberField F :=
     RationalFiniteNormTransferInternal.fixedNumberField H
-  letI : NumberField U :=
+  let : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       H L hLH
-  letI : IsGalois F U :=
+  let : IsGalois F U :=
     RationalFiniteNormTransferInternal.relativeIsGalois
       H L hLH hLHnormal
   have hmembership :=
@@ -334,7 +336,7 @@ private noncomputable def
 
 /-- Internal transport of the canonical absolute norm membership to the
 relative ordinary-extension field spine. -/
-private noncomputable def
+private theorem
     rationalFiniteNormTransferCanonicalAbsoluteMembership_implies_relativeMembership
     (K H L : ClosedSubgroup
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
@@ -358,58 +360,48 @@ private noncomputable def
     (hincludeCanonical :
       rationalFiniteNormTransferCanonicalFiniteNormClassZero
         K H L hHK hLH c) :
-    RationalFiniteNormTransferCanonicalNormMembershipData
-      (hKfinite := hKfinite) (hKHfinite := hKHfinite)
-      (hHLfinite := hHLfinite)
+    rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
       K H L hHK hLH hHKnormal hLHnormal c := by
-  refine ⟨?_⟩
-  letI hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
+  let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
-  let B := abstractFixedField ℚ (SeparableClosure ℚ) K
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hHK
-  let F := abstractFixedField ℚ (SeparableClosure ℚ) H
   let U := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLH
-  letI : FiniteDimensional ℚ B :=
-    RationalFiniteNormTransferInternal.fixedFiniteDimensional K
-  letI : FiniteDimensional B E :=
-    RationalFiniteNormTransferInternal.relativeFiniteDimensional
-      K H hHK
-  letI : IsScalarTower ℚ B E :=
-    RationalFiniteNormTransferInternal.relativeScalarTower
-      K H hHK
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
       K H hHK
-  letI : NumberField E :=
+  let : NumberField E :=
     RationalFiniteNormTransferInternal.relativeNumberField
       K H hHK
-  letI : FiniteDimensional ℚ F :=
-    RationalFiniteNormTransferInternal.fixedFiniteDimensional H
-  letI : FiniteDimensional F U :=
-    RationalFiniteNormTransferInternal.relativeFiniteDimensional
-      H L hLH
-  letI : IsScalarTower ℚ F U :=
-    RationalFiniteNormTransferInternal.relativeScalarTower
-      H L hLH
-  letI : FiniteDimensional ℚ U :=
+  let : FiniteDimensional ℚ U :=
     RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
       H L hLH
-  letI : NumberField F :=
-    RationalFiniteNormTransferInternal.fixedNumberField H
-  letI : NumberField U :=
+  let : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       H L hLH
-  letI : FiniteDimensional E U :=
-    RationalFiniteNormTransferInternal.relativeFiniteDimensional
+  let : Algebra E U := by
+    change Algebra
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact U.algebra
+  let : Module E U := by
+    change Module
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact
+      (U.algebra : Algebra
+        (abstractFixedField ℚ (SeparableClosure ℚ) H) U).toModule
+  let : FiniteDimensional E U := by
+    change FiniteDimensional
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact RationalFiniteNormTransferInternal.relativeFiniteDimensional
       H L hLH
-  letI : IsScalarTower ℚ E U :=
-    RationalFiniteNormTransferInternal.relativeScalarTower
+  let : IsScalarTower ℚ E U := by
+    change IsScalarTower ℚ
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact RationalFiniteNormTransferInternal.relativeScalarTower
       H L hLH
-  letI : IsGalois F U :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      H L hLH hLHnormal
-  letI : IsGalois E U :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
+  let : IsGalois E U := by
+    change IsGalois
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact RationalFiniteNormTransferInternal.relativeIsGalois
       H L hLH hLHnormal
   have habsoluteData :=
     rationalFiniteNormTransferFiniteNormRepresentativeMembership_implies_canonicalAbsoluteMembership
@@ -420,7 +412,7 @@ private noncomputable def
   change
     rationalFiniteNormTransferOrdinaryExtensionRepresentative
         K H hHK hHKnormal c ∈
-    (_root_.ideleClassNorm F U).range at habsolute
+    (_root_.ideleClassNorm E U).range at habsolute
   unfold
     rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
   change
@@ -458,10 +450,10 @@ theorem
     rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
       K H L hHK hLH hHKnormal hLHnormal c := by
   exact
-    (rationalFiniteNormTransferCanonicalAbsoluteMembership_implies_relativeMembership
+    rationalFiniteNormTransferCanonicalAbsoluteMembership_implies_relativeMembership
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)
       (hHLfinite := hHLfinite)
-      K H L hHK hLH hHKnormal hLHnormal c hincludeCanonical).membership
+      K H L hHK hLH hHKnormal hLHnormal c hincludeCanonical
 
 end RationalIdeleExtension
 

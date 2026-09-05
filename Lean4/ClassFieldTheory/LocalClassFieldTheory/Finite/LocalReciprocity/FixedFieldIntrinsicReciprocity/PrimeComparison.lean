@@ -1,6 +1,8 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeComparison
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusFixedField
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusFixedField
+
+set_option autoImplicit false
 
 /-!
 # Intrinsic fixed-field prime comparison
@@ -259,12 +261,12 @@ local instance intrinsicPrimeComparison_frobeniusSourceFiniteDimensional
         _ _
         (intrinsicPrimeComparison_frobeniusSourceAlgebra
           K H J hJH e σ)) := by
-  letI : Algebra F
+  let : Algebra F
       (intrinsicFixedFieldFrobeniusSourceField
         K H J hJH e σ) :=
     intrinsicPrimeComparison_frobeniusSourceAlgebra
       K H J hJH e σ
-  letI _hRFFinite :
+  let _hRFFinite :
       Finite
         ((RF).field.toSubgroup ⧸
           extensionSubgroup (RF).field (EI).field (EI).below) :=
@@ -345,7 +347,7 @@ local instance intrinsicPrimeComparison_frobeniusAmbientFiniteDimensionalK
         _ _
         (intrinsicPrimeComparison_frobeniusAmbientAlgebraK
           K H J hJH e σ)) := by
-  letI : Algebra K
+  let : Algebra K
       (intrinsicFixedFieldFrobeniusAmbientField
         K H J hJH e σ) :=
     intrinsicPrimeComparison_frobeniusAmbientAlgebraK
@@ -414,7 +416,7 @@ local instance intrinsicPrimeComparison_frobeniusAmbientFiniteDimensionalF
         _ _
         (intrinsicPrimeComparison_frobeniusAmbientAlgebraF
           K H J hJH e σ)) := by
-  letI : Algebra F
+  let : Algebra F
       (intrinsicFixedFieldFrobeniusAmbientField
         K H J hJH e σ) :=
     intrinsicPrimeComparison_frobeniusAmbientAlgebraF

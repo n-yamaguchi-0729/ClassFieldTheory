@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFrobeniusFixed
-import LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNorm
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFrobeniusFixed
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNorm
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: higher-unit Frobenius fixes the standard level map
@@ -29,7 +31,7 @@ private theorem ringHom_apply_eq_of_powerBasis
     (x : L) :
     delta (f x) = f x := by
   let phi : L →+* C := delta.comp f
-  letI : Algebra B C := (f.comp (algebraMap B L)).toAlgebra
+  let : Algebra B C := (f.comp (algebraMap B L)).toAlgebra
   let phiAlg : L →ₐ[B] C :=
     { phi with commutes' := hbase }
   let fAlg : L →ₐ[B] C :=

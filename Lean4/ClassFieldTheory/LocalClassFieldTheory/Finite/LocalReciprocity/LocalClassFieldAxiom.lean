@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom
-import CyclicCohomology.TateComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom
+import GaloisCohomology.Cyclic.TateComparison
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open CyclicCohomology ClassFormation
@@ -36,19 +38,19 @@ private theorem galoisAmbientUnits_satisfiesClassFieldAxiom
     SatisfiesClassFieldAxiom (galoisAmbientUnitsRep k Ω) := by
   rintro ⟨K, hKfinite⟩
   rintro ⟨L, hLK, hnormal, hfinite, g, hg⟩
-  letI := hKfinite
-  letI := hnormal
-  letI := hfinite
+  let := hKfinite
+  let := hnormal
+  let := hfinite
   let Q := K.toSubgroup ⧸ extensionSubgroup K L hLK
-  letI : Fintype Q := Fintype.ofFinite Q
+  let : Fintype Q := Fintype.ofFinite Q
   let F := abstractFixedField k Ω K
   let E := abstractRelativeFixedField k Ω hLK
-  letI : FiniteDimensional k F :=
+  let : FiniteDimensional k F :=
     abstractFixedField_finiteDimensional k Ω K hKfinite
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       k Ω K L hLK hKfinite hfinite
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois k Ω K L hLK hnormal
   let eQ : Q ≃* Gal(E / F) :=
     abstractExtensionQuotientEquivGaloisGroup k Ω K L hLK hnormal
@@ -57,11 +59,11 @@ private theorem galoisAmbientUnits_satisfiesClassFieldAxiom
     map_cyclicGenerator eQ g hg
   have hUnitsTateCard := finiteTowerUnits_tate_card_of_generator k F E g' hg'
 
-  letI : IsCyclic Q := CyclicCohomology.isCyclic_of_generator g hg
-  letI : CommGroup Q := IsCyclic.commGroup
-  letI : IsCyclic (Gal(E / F)) :=
+  let : IsCyclic Q := CyclicCohomology.isCyclic_of_generator g hg
+  let : CommGroup Q := IsCyclic.commGroup
+  let : IsCyclic (Gal(E / F)) :=
     CyclicCohomology.isCyclic_of_generator g' hg'
-  letI : CommGroup (Gal(E / F)) := IsCyclic.commGroup
+  let : CommGroup (Gal(E / F)) := IsCyclic.commGroup
   let M := extensionFixedRepresentation
     (galoisAmbientUnitsRep k Ω) K L hLK hnormal
   let U := Rep.ofAlgebraAutOnUnits F E
@@ -87,17 +89,17 @@ private theorem galoisAmbientUnits_satisfiesClassFieldAxiom
       tateCohomology M (-1) ≅ tateCohomology U (-1) :=
     TateCohomology.isoFiniteCyclicNegOne M g hg ≪≫ eHm1 ≪≫
       (TateCohomology.isoFiniteCyclicNegOne U g' hg').symm
-  letI : Finite (tateCohomology U 0) :=
+  let : Finite (tateCohomology U 0) :=
     hUnitsTateCard.finiteH0
   have hUTateMinusOneZero :
       Limits.IsZero (tateCohomology U (-1)) :=
     hilbert90_unitsTateHminusOne_isZero F E g' hg'
-  letI : Subsingleton (tateCohomology U (-1)) :=
+  let : Subsingleton (tateCohomology U (-1)) :=
     ModuleCat.subsingleton_of_isZero hUTateMinusOneZero
-  letI : Finite (tateCohomology U (-1)) := by infer_instance
-  letI : Finite (tateCohomology M 0) :=
+  let : Finite (tateCohomology U (-1)) := by infer_instance
+  let : Finite (tateCohomology M 0) :=
     Finite.of_equiv (tateCohomology U 0) eTateH0.symm.toLinearEquiv.toEquiv
-  letI : Finite (tateCohomology M (-1)) :=
+  let : Finite (tateCohomology M (-1)) :=
     Finite.of_equiv (tateCohomology U (-1)) eTateHm1.symm.toLinearEquiv.toEquiv
   have hH0actual :
       Nat.card (tateCohomology U 0) =

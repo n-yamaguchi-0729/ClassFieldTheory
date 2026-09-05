@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
-import LocalFieldTheory.NonarchimedeanLocalField.IdealQuotients
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+
+set_option autoImplicit false
 
 /-!
 # Unramified reciprocity

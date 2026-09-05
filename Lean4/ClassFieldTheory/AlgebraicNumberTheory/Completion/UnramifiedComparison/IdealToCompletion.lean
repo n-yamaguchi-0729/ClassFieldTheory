@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Completion.IntegerRingComparison
-import LocalFieldTheory.DiscreteValuationField.RamificationIdeal
-import ValuationTheory.LocalRingEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.IntegerRingComparison
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationIdeal
+import ValuedFieldTheory.Valuation.LocalRingEquiv
+
+set_option autoImplicit false
 
 /-!
 # From ideal-theoretic to completed unramifiedness
@@ -215,7 +217,7 @@ theorem chosenFinitePlace_integral_uniformizer_not_mem_maximalIdeal_sq
   let W :=
     finitePlaceExtensionCentre
       (K := K) (L := L) v w
-  letI : W.asIdeal.LiesOver v.asIdeal :=
+  let : W.asIdeal.LiesOver v.asIdeal :=
     finitePlaceExtensionCentre_liesOver
       (K := K) (L := L) v w
   let E :=
@@ -371,11 +373,11 @@ theorem chosenFinitePlace_maximalIdeal_ramificationIdx'_eq_one_of_centre_ramific
     (𝓂[vK.Completion] :
         Ideal 𝒪[vK.Completion]).ramificationIdx'
       (𝓂[E] : Ideal 𝒪[E]) = 1
-  letI :
+  let :
       IsLocalHom (algebraMap vK.Completion E) :=
     IsLocalRing.instIsLocalHomRingHomOfNontrivial
       (algebraMap vK.Completion E)
-  letI :
+  let :
       IsLocalHom
         (algebraMap 𝒪[vK.Completion] 𝒪[E]) :=
     Valuation.HasExtension.instIsLocalHomValuationInteger
@@ -405,12 +407,12 @@ theorem finitePlaceExtensionCentre_ramificationIdx_eq_one_of_isUnramifiedAt
   let W :=
     finitePlaceExtensionCentre
       (K := K) (L := L) v w
-  letI : W.asIdeal.LiesOver v.asIdeal :=
+  let : W.asIdeal.LiesOver v.asIdeal :=
     finitePlaceExtensionCentre_liesOver
       (K := K) (L := L) v w
   rw [Ideal.ramificationIdx'_eq_ramificationIdx
     v.asIdeal W.asIdeal v.ne_bot]
-  letI : Algebra.IsUnramifiedAt (𝓞 K) W.asIdeal := hunram
+  let : Algebra.IsUnramifiedAt (𝓞 K) W.asIdeal := hunram
   exact Ideal.ramificationIdx_eq_one W.asIdeal (𝓞 K)
 
 /-- Ramification index one at the actual global centre gives ramification
@@ -445,14 +447,14 @@ theorem chosenFinitePlace_maximalIdeal_ramificationIdx_eq_one_of_centre_ramifica
         𝒪[vK.Completion])
       (IsDiscreteValuationRing.not_isField
         𝒪[vK.Completion])
-  letI :
+  let :
       Module.IsTorsionFree vK.Completion E :=
     DivisionSemiring.to_moduleIsTorsionFree
-  letI :
+  let :
       Module.IsTorsionFree
         𝒪[vK.Completion] 𝒪[E] :=
     Valuation.HasExtension.instIsTorsionFreeInteger
-  letI :
+  let :
       (𝓂[E] : Ideal 𝒪[E]).LiesOver
         (𝓂[vK.Completion] : Ideal 𝒪[vK.Completion]) := by
     exact

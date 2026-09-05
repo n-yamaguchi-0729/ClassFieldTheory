@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import AlgebraicNumberTheory.Idele.SinglePlace
-import LocalFieldTheory.NonarchimedeanLocalField.Norm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Norm
+
+set_option autoImplicit false
 
 /-!
 # Norms of base units supported at one finite place
@@ -66,9 +68,9 @@ theorem finitePlaceCompletionDegree_pos
       {W : HeightOneSpectrum (𝓞 L) //
         _root_.finitePlaceBelow (K := K) W = q} :=
     ⟨v, rfl⟩
-  letI : Algebra (q.adicCompletion K) (v.adicCompletion L) :=
+  let : Algebra (q.adicCompletion K) (v.adicCompletion L) :=
     (finitePlaceAdicCompletionMap K L q W).toAlgebra
-  letI : Module.Finite (q.adicCompletion K) (v.adicCompletion L) :=
+  let : Module.Finite (q.adicCompletion K) (v.adicCompletion L) :=
     finitePlaceAdicCompletionMap_moduleFinite K L q W
   change
     0 <
@@ -135,10 +137,10 @@ theorem norm_finitePlaceIdele_finitePlaceBaseUnitExtension
         finitePlaceIdele_finiteComponent_same]
       rw [Finset.prod_eq_single W₀]
       · rw [finitePlaceIdele_finiteComponent_same]
-        letI :
+        let :
             Algebra (q.adicCompletion K) (v.adicCompletion L) :=
           (finitePlaceAdicCompletionMap K L q W₀).toAlgebra
-        letI : Module.Finite (q.adicCompletion K) (v.adicCompletion L) :=
+        let : Module.Finite (q.adicCompletion K) (v.adicCompletion L) :=
           finitePlaceAdicCompletionMap_moduleFinite K L q W₀
         have hmap :
             algebraMap (q.adicCompletion K) (v.adicCompletion L) =
@@ -211,7 +213,7 @@ theorem norm_finitePlaceIdele_eq_finitePlaceIdele_normUnits
         (LocalFieldTheory.normUnits
           (v.adicCompletion K) (W.1.adicCompletion L) y) := by
   classical
-  letI :
+  let :
       Algebra (v.adicCompletion K) (W.1.adicCompletion L) :=
     (finitePlaceAdicCompletionMap K L v W).toAlgebra
   apply Prod.ext
@@ -293,7 +295,7 @@ theorem ideleClassNorm_finitePlaceIdeleClass_eq_normUnits
         (LocalFieldTheory.normUnits
           (v.adicCompletion K) (W.1.adicCompletion L) y) := by
   classical
-  letI :
+  let :
       Algebra (v.adicCompletion K) (W.1.adicCompletion L) :=
     (finitePlaceAdicCompletionMap K L v W).toAlgebra
   rw [

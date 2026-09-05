@@ -1,5 +1,7 @@
-import ValuationTheory.AbsoluteValue.AlgebraicLocalization
-import KroneckerWeber.GlobalCompositumValuedEmbedding
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+import ClassFieldTheory.KroneckerWeber.GlobalCompositumValuedEmbedding
+
+set_option autoImplicit false
 
 /-!
 # Embedding the localized global compositum in the common cyclotomic target
@@ -42,10 +44,10 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
   let M := kroneckerWeberCompositumField L
   let N := kroneckerWeberLocalCompositumOrder (L := L) p
   have hN : 0 < N := kroneckerWeberLocalCompositumOrder_pos (L := L) p
-  letI : NeZero N := ⟨hN.ne'⟩
+  let _ : NeZero N := ⟨hN.ne'⟩
   let T := CyclotomicField N ℚ_[p.1]
-  letI hTField : Field T := inferInstance
-  letI : FiniteDimensional ℚ_[p.1] T :=
+  let _ : Field T := inferInstance
+  let _ : FiniteDimensional ℚ_[p.1] T :=
     IsCyclotomicExtension.finiteDimensional {N} ℚ_[p.1] T
   let W :=
     kroneckerWeberGlobalValuedCompositumEmbeddingData (L := L) p hp
@@ -56,29 +58,32 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
   have hW : ∀ x : M, aT (W.embedding x) = wM.1 x := by
     intro x
     rfl
-  letI : CompleteSpace (WithAbs aT) :=
+  let _ : CompleteSpace (WithAbs aT) :=
     completeSpace_withAbs_of_isCompleteForAbsoluteValue aT
       (padicFiniteExtensionAbsoluteValue_complete p.1 T)
   let F : wM.1.Completion →+* WithAbs aT :=
     AbsoluteValue.completionMapToCompleteTarget
       wM.1 aT W.embedding.toRingHom hW
 
-  letI hKvField : Field vK.Completion := inferInstance
-  letI hwMField : Field wM.1.Completion := inferInstance
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) wM.1
-  letI : SMul ℚ wM.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK wM.1 wM.2
+  let _ : Field vK.Completion := inferInstance
+  let _ : Field wM.1.Completion := inferInstance
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) wM.1
+  let _ : Algebra ℚ wM.1.Completion := hK
+  let _ : SMul ℚ wM.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK wM.1 wM.2
   let E := AbsoluteValue.algebraicLocalization vK wM.1 wM.2
-  letI hE : Field E := inferInstance
-  letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p.1
-  letI hQpE : Algebra ℚ_[p.1] E :=
+  let hE : Field E := inferInstance
+  let _ : Field E := hE
+  let hBaseE : Algebra vK.Completion E := inferInstance
+  let _ : Algebra vK.Completion E := hBaseE
+  let e := padicAbsoluteValueCompletionRingEquiv p.1
+  let _ : Algebra ℚ_[p.1] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p.1] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
 
   let g : vK.Completion →+* WithAbs aT :=
     (WithAbs.equiv aT).symm.toRingHom.comp
-      ((algebraMap ℚ_[p.1] T).comp e.toRingEquiv.toRingHom)
+      ((algebraMap ℚ_[p.1] T).comp e.toRingHom)
   have hgNorm (x : vK.Completion) : ‖g x‖ = ‖x‖ := by
     change aT (algebraMap ℚ_[p.1] T (e x)) = ‖x‖
     rw [padicFiniteExtensionAbsoluteValue_extends]
@@ -107,9 +112,18 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
         algebraMap ℚ_[p.1] T
           (e (((WithAbs.equiv vK).symm q : WithAbs vK) :
             vK.Completion))
-      rw [W.embedding.commutes,
-        padicAbsoluteValueCompletionAlgEquiv_coe]
-      rfl
+      rw [W.embedding.commutes]
+      have he : e (((WithAbs.equiv vK).symm q : WithAbs vK) :
+          vK.Completion) = padicAbsoluteValueBaseMap p.1
+            ((WithAbs.equiv vK).symm q) := by
+        change padicAbsoluteValueCompletionRingHom p.1
+            (((WithAbs.equiv vK).symm q : WithAbs vK) : vK.Completion) = _
+        exact padicAbsoluteValueCompletionRingHom_coe p.1 _
+      have hq : algebraMap ℚ T q =
+          algebraMap ℚ_[p.1] T
+            (padicAbsoluteValueBaseMap p.1 ((WithAbs.equiv vK).symm q)) := by
+        simp
+      exact hq.trans (congrArg (algebraMap ℚ_[p.1] T) he.symm)
     exact DFunLike.congr_fun hcomp x
 
   let iRing : E →+* T :=

@@ -1,6 +1,8 @@
-import LubinTate.FormalModule.Series
-import LubinTate.FormalModule.LinearTerm
+import ClassFieldTheory.LubinTate.FormalModule.Series
+import ClassFieldTheory.LubinTate.FormalModule.LinearTerm
 import Mathlib.RingTheory.MvPowerSeries.Substitution
+
+set_option autoImplicit false
 
 /-!
 # Intertwining equations for Lubin--Tate series

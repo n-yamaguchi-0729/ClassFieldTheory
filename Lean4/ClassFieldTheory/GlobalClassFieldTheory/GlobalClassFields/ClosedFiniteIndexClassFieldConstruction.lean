@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldCorrespondenceTopology
-import GlobalClassFieldTheory.GlobalClassFields.FiniteIndexNormClassField
-import GlobalClassFieldTheory.GlobalClassFields.OrdinaryNormClassField
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldCorrespondenceTopology
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteIndexNormClassField
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.OrdinaryNormClassField
+
+set_option autoImplicit false
 
 /-!
 # Construction of a closed finite-index class field

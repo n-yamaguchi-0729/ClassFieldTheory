@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
 import Mathlib.GroupTheory.Abelianization.Defs
+
+set_option autoImplicit false
 
 /-!
 # Ambient embedded norm-residue values

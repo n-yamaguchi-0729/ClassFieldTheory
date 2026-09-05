@@ -1,8 +1,10 @@
-import ValuationTheory.AbsoluteValue.AlgebraicLocalization
-import RamificationTheory.HilbertRamification.InertiaRestrictionCard
-import RamificationTheory.HilbertRamification.PadicCyclotomicInertiaBound
-import RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
-import KroneckerWeber.LocalCyclotomicEmbedding
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+import ValuedFieldTheory.Ramification.HilbertRamification.InertiaRestrictionCard
+import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicInertiaBound
+import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+import ClassFieldTheory.KroneckerWeber.LocalCyclotomicEmbedding
+
+set_option autoImplicit false
 
 /-!
 # The one-prime p-primary inertia bound
@@ -45,31 +47,33 @@ theorem globalPadicInertia_natCard_le_coprimeCyclotomicPrimePowTotient
   let hv := rationalPadicAbsoluteValue_nonarchimedean p
   let hw := HilbertRamification.absoluteValueExtension_nonarchimedean_of_base
     vK w hv
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
-  letI : SMul ℚ w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
+  let : SMul ℚ w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
-  letI hE : Field E := inferInstance
-  letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p
-  letI hQpE : Algebra ℚ_[p] E :=
+  let hE : Field E := inferInstance
+  let hBaseE : Algebra vK.Completion E := inferInstance
+  let e := padicAbsoluteValueCompletionRingEquiv p
+  let hQpE : Algebra ℚ_[p] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
-  letI : Module.Finite vK.Completion E :=
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
+  let : Module.Finite vK.Completion E :=
     globalPadicLocalizationModuleFinite p L w
-  letI : IsAbelianGalois vK.Completion E :=
+  let : IsAbelianGalois vK.Completion E :=
     globalPadicLocalization_isAbelianGalois p L w
-  letI : Algebra ℚ_[p] vK.Completion := e.symm.toAlgHom.toAlgebra
-  letI : IsScalarTower ℚ_[p] vK.Completion E :=
-    IsScalarTower.of_algebraMap_eq' (by ext x; rfl)
-  letI : Module.Finite ℚ_[p] vK.Completion :=
+  let : Algebra ℚ_[p] vK.Completion := e.symm.toRingHom.toAlgebra
+  let : IsScalarTower ℚ_[p] vK.Completion E :=
+    IsScalarTower.of_algebraMap_eq' (by
+      ext x
+      exact transportedAlgebraAlongRingEquiv_algebraMap e x)
+  let : Module.Finite ℚ_[p] vK.Completion :=
     FiniteDimensional.of_surjective
       (Algebra.linearMap ℚ_[p] vK.Completion) e.symm.surjective
-  letI : Module.Finite ℚ_[p] E := Module.Finite.trans vK.Completion E
-  letI : IsGalois ℚ_[p] E := by
+  let : Module.Finite ℚ_[p] E := Module.Finite.trans vK.Completion E
+  let : IsGalois ℚ_[p] E := by
     apply IsGalois.of_equiv_equiv
       (F := vK.Completion) (E := E) (M := ℚ_[p]) (N := E)
-      (f := e.toRingEquiv) (g := RingEquiv.refl E)
+      (f := e) (g := RingEquiv.refl E)
     apply RingHom.ext
     intro x
     simp only [RingHom.comp_apply]

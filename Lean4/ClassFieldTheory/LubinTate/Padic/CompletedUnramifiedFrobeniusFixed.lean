@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Finite.Basic
-import LubinTate.Padic.CompletedUnramifiedField
+import ClassFieldTheory.LubinTate.Padic.CompletedUnramifiedField
+
+set_option autoImplicit false
 
 /-!
 # Fixed points of p-adic completed-unramified Frobenius

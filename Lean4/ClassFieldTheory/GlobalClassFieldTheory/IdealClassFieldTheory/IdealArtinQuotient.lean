@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+
+set_option autoImplicit false
 
 /-!
 # The ideal Artin quotient
@@ -22,7 +24,7 @@ variable {K : Type} [Field K] [NumberField K]
 -- Reuse the normality witness embedded in the imported ideal-Artin definitions.
 -- Choosing a different generic witness here makes quotient equivalences compare
 -- enormous, propositionally equal but non-definitional terms.
-attribute [local instance 1000] ideleClassSubgroupNormal
+attribute [local instance] ideleClassSubgroupNormal
 
 local instance idealArtinKernelNormal
     (m : RayClass.Modulus K)

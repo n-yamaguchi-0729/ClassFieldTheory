@@ -1,7 +1,9 @@
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-import AlgebraicNumberTheory.Ramification.RationalPrime
-import KroneckerWeber.Setup
-import RamificationTheory.HilbertRamification.Dedekind.CompositumUnramified
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
+import ClassFieldTheory.KroneckerWeber.Setup
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.CompositumUnramified
+
+set_option autoImplicit false
 
 /-!
 # Ramification support of the auxiliary compositum
@@ -70,7 +72,7 @@ theorem kroneckerWeber_leftFactor_ramificationIdx_eq_one
   let eLAₒ : (𝓞 L) ≃ₐ[ℤ] (𝓞 A) :=
     (RingOfIntegers.mapAlgEquiv eLA).restrictScalars ℤ
   let PL : Ideal (𝓞 L) := PA.comap eLAₒ
-  letI : PL.LiesOver (rationalPrimeIdeal p) :=
+  let : PL.LiesOver (rationalPrimeIdeal p) :=
     Ideal.comap_liesOver PA (rationalPrimeIdeal p) eLAₒ
   have hp0 : rationalPrimeIdeal p ≠ ⊥ :=
     (Rat.HeightOneSpectrum.primesEquiv.symm p).ne_bot
@@ -114,7 +116,7 @@ theorem kroneckerWeber_cyclotomicFactor_ramificationIdx_eq_one
     PB.ramificationIdx ℤ = 1 := by
   let C : Type :=
     CyclotomicField (kroneckerWeberConductorCandidate (L := L)) ℚ
-  letI : IsCyclotomicExtension
+  let : IsCyclotomicExtension
       {kroneckerWeberConductorCandidate (L := L)} ℚ C := by
     dsimp only [C]
     exact CyclotomicField.isCyclotomicExtension
@@ -122,10 +124,10 @@ theorem kroneckerWeber_cyclotomicFactor_ramificationIdx_eq_one
   let eCBₒ : (𝓞 C) ≃ₐ[ℤ] (𝓞 B) :=
     (RingOfIntegers.mapAlgEquiv eCB).restrictScalars ℤ
   let PC : Ideal (𝓞 C) := PB.comap eCBₒ
-  letI : PC.LiesOver (rationalPrimeIdeal p) :=
+  let : PC.LiesOver (rationalPrimeIdeal p) :=
     Ideal.comap_liesOver PB (rationalPrimeIdeal p) eCBₒ
-  letI : Fact (Nat.Prime p.1) := ⟨p.2⟩
-  letI : PC.LiesOver (Ideal.span {(p.1 : ℤ)}) := by
+  let : Fact (Nat.Prime p.1) := ⟨p.2⟩
+  let : PC.LiesOver (Ideal.span {(p.1 : ℤ)}) := by
     rw [← rationalPrimeIdeal_eq_span p]
     infer_instance
   have hpndvd :
@@ -180,7 +182,7 @@ theorem kroneckerWeberCompositum_isUnramifiedAt_of_not_mem
   have hQ0 : Q ≠ ⊥ :=
     Ring.ne_bot_of_isMaximal_of_not_isField
       (M := Q) inferInstance (RingOfIntegers.not_isField M)
-  letI : q.IsPrime := inferInstance
+  let : q.IsPrime := inferInstance
   have hq0 : q ≠ ⊥ :=
     Ideal.under_ne_bot ℤ hQ0
   let v : IsDedekindDomain.HeightOneSpectrum ℤ :=
@@ -194,25 +196,25 @@ theorem kroneckerWeberCompositum_isUnramifiedAt_of_not_mem
     intro hp
     exact hQoutside ⟨p, hp, hpq⟩
 
-  letI : Q.LiesOver (rationalPrimeIdeal p) := ⟨hpq⟩
+  let : Q.LiesOver (rationalPrimeIdeal p) := ⟨hpq⟩
   have hp0 : rationalPrimeIdeal p ≠ ⊥ :=
     (Rat.HeightOneSpectrum.primesEquiv.symm p).ne_bot
 
   let PA : Ideal (𝓞 A) := Q.under (𝓞 A)
   let PB : Ideal (𝓞 B) := Q.under (𝓞 B)
-  letI : Q.LiesOver PA := ⟨rfl⟩
-  letI : Q.LiesOver PB := ⟨rfl⟩
-  letI : PA.LiesOver (rationalPrimeIdeal p) :=
+  let : Q.LiesOver PA := ⟨rfl⟩
+  let : Q.LiesOver PB := ⟨rfl⟩
+  let : PA.LiesOver (rationalPrimeIdeal p) :=
     Ideal.LiesOver.tower_bot Q PA (rationalPrimeIdeal p)
-  letI : PB.LiesOver (rationalPrimeIdeal p) :=
+  let : PB.LiesOver (rationalPrimeIdeal p) :=
     Ideal.LiesOver.tower_bot Q PB (rationalPrimeIdeal p)
   have hPA0 : PA ≠ ⊥ :=
     Ideal.ne_bot_of_liesOver_of_ne_bot hp0 PA
   have hPB0 : PB ≠ ⊥ :=
     Ideal.ne_bot_of_liesOver_of_ne_bot hp0 PB
-  letI : PA.IsMaximal :=
+  let : PA.IsMaximal :=
     (inferInstance : PA.IsPrime).isMaximal hPA0
-  letI : PB.IsMaximal :=
+  let : PB.IsMaximal :=
     (inferInstance : PB.IsPrime).isMaximal hPB0
 
   have hPAramification :
@@ -226,19 +228,19 @@ theorem kroneckerWeberCompositum_isUnramifiedAt_of_not_mem
 
   let aAlg : Algebra ℚ A := inferInstance
   let hANormal : @Normal ℚ A _ _ aAlg := inferInstance
-  letI hAAlg : Algebra ℚ A := A.algebra'
+  let hAAlg : Algebra ℚ A := A.algebra'
   have hAAlg_eq : aAlg = hAAlg := Subsingleton.elim _ _
   cases hAAlg_eq
-  letI : Normal ℚ A := hANormal
+  let : Normal ℚ A := hANormal
   let bAlg : Algebra ℚ B := inferInstance
   let hBNormal : @Normal ℚ B _ _ bAlg := inferInstance
-  letI hBAlg : Algebra ℚ B := B.algebra'
+  let hBAlg : Algebra ℚ B := B.algebra'
   have hBAlg_eq : bAlg = hBAlg := Subsingleton.elim _ _
   cases hBAlg_eq
-  letI : Normal ℚ B := hBNormal
-  letI hAGalois : IsGalois ℚ A :=
+  let : Normal ℚ B := hBNormal
+  let hAGalois : IsGalois ℚ A :=
     isGalois_iff.mpr ⟨inferInstance, inferInstance⟩
-  letI hBGalois : IsGalois ℚ B :=
+  let hBGalois : IsGalois ℚ B :=
     isGalois_iff.mpr ⟨inferInstance, inferInstance⟩
   have hIA : inertiaGroup PA Gal(A/ℚ) = ⊥ :=
     @inertiaGroup_eq_bot_of_ramificationIdx_eq_one_int A _ _ hAGalois

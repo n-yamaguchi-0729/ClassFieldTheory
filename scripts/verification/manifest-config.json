@@ -1,0 +1,41 @@
+{
+  "owners": {
+    "ClassFieldTheory": [
+      "ClassFieldTheory"
+    ],
+    "ValuedFieldTheory": [
+      "ValuedFieldTheory"
+    ],
+    "GaloisCohomology": [
+      "GaloisCohomology"
+    ]
+  },
+  "roots": [
+    "ClassFieldTheory",
+    "ValuedFieldTheory.All",
+    "GaloisCohomology.All"
+  ],
+  "leanToolchain": "leanprover/lean4:v4.33.0",
+  "mathlibRevision": "6f1ef4e5dd604a435bddba4747b13970cd65d2a1",
+  "mathlibRepository": "https://github.com/leanprover-community/mathlib4",
+  "externalModuleRoots": [
+    "Mathlib",
+    "Lean",
+    "Init",
+    "Std",
+    "Batteries",
+    "Qq",
+    "Aesop",
+    "Plausible"
+  ],
+  "excludedDirectories": [
+    ".git",
+    ".lake"
+  ],
+  "excludedPaths": [
+    "scripts/verification",
+    "tests",
+    "submissions/kronecker-weber"
+  ],
+  "enforceSourcePolicy": true
+}

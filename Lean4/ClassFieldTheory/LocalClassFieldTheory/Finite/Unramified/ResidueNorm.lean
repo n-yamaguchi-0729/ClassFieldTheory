@@ -1,5 +1,10 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.Unramified.PrincipalUnits
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Basic
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Trace
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Lift
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.Finite.Unramified.ResidueNorm` Lean module. -/
 
 noncomputable section

@@ -1,7 +1,9 @@
-import CyclicCohomology.Herbrand.NormalBasisLattice
-import CyclicCohomology.Herbrand.HerbrandLowDegree
-import LocalClassFieldTheory.ClassFormation.Valuation
+import GaloisCohomology.Cyclic.Herbrand.NormalBasisLattice
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Valuation
 import Mathlib.GroupTheory.GroupAction.Quotient
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.ClassFormation.NormalBasisGaloisAction` Lean module. -/
 
 namespace LocalClassFieldTheory
@@ -65,7 +67,6 @@ def quotientMulDistribMulActionOfSubgroupStable
     MulDistribMulAction G (A ⧸ V) := by
   letI : MulAction.QuotientAction G V :=
     quotientActionOfSubgroupStable G A V hstable
-  letI : MulAction G (A ⧸ V) := MulAction.quotient G V
   exact
     { smul := (· • ·)
       one_smul := one_smul G
@@ -120,7 +121,7 @@ theorem galoisGroup_smul_mem_chosenNormalBasisPrincipalUnitSet
     (ha : a ∈ chosenNormalBasisPrincipalUnitSet K L n) :
     letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
     sigma • a ∈ chosenNormalBasisPrincipalUnitSet K L n := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   rw [mem_chosenNormalBasisPrincipalUnitSet_iff] at ha ⊢
   have hstable :=
     galoisGroup_apply_mem_chosenBaseUniformizerPow_chosenNormalBasisIntegerLattice
@@ -166,8 +167,8 @@ theorem chosenNormalBasisPrincipalUnitSubgroup_tateNorm_coe
     letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
     ((tateNorm (Gal(L / K)) V a : V) : 𝒪[L]ˣ) =
       tateNorm (Gal(L / K)) 𝒪[L]ˣ (a : 𝒪[L]ˣ) := by
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction K L n V hV
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction K L n V hV
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   unfold tateNorm
   change V.subtype (∏ g : Gal(L / K), g • a) =
     ∏ g : Gal(L / K), g • (a : 𝒪[L]ˣ)
@@ -186,8 +187,8 @@ theorem chosenNormalBasisPrincipalUnitSubgroup_sigmaMinusOne_coe
     letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
     ((sigmaMinusOne (Gal(L / K)) V sigma a : V) : 𝒪[L]ˣ) =
       sigmaMinusOne (Gal(L / K)) 𝒪[L]ˣ sigma (a : 𝒪[L]ˣ) := by
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction K L n V hV
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction K L n V hV
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   rfl
 
 /-- The quotient action on `𝒪_Lˣ / V^n`, descended from the actual integer-unit

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import KummerTheory.Concrete.Cyclotomic.RationalCyclotomicField
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+import GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicField
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+
+set_option autoImplicit false
 
 /-!
 # Localized rational cyclotomic levels
@@ -98,6 +100,20 @@ theorem rationalCyclotomicLevelPrimitiveRoot_isPrimitiveRoot
       ℚ (KummerTheory.rationalCyclotomicLevel m)
       (by simp) m.ne_zero)
 
+section RationalGlobalToLocalized
+
+private theorem rationalCyclotomicLocalizedCompletion_charZero
+    (m : ℕ+) (v : HeightOneSpectrum (𝓞 ℚ)) :
+    CharZero (rationalCyclotomicLocalizedCompletion m v) :=
+  charZero_of_injective_ringHom
+    ((AbsoluteValue.toAlgebraicLocalization
+      (rationalCyclotomicAdicAbsoluteValue v)
+      (rationalCyclotomicChosenFinitePlaceExtension m v).1
+      (rationalCyclotomicChosenFinitePlaceExtension m v).2).comp
+      (algebraMap ℚ (KummerTheory.rationalCyclotomicLevel m))).injective
+
+attribute [local instance] rationalCyclotomicLocalizedCompletion_charZero
+
 /-- The actual global-to-local embedding of the selected rational
 cyclotomic level, regarded as a rational algebra homomorphism. -/
 noncomputable def rationalCyclotomicGlobalToLocalizedAlgHom
@@ -153,6 +169,8 @@ theorem rationalCyclotomicLocalizedPrimitiveRoot_isPrimitiveRoot
     (rationalCyclotomicLevelPrimitiveRoot_isPrimitiveRoot m).map_of_injective
       (rationalCyclotomicGlobalToLocalizedAlgHom m v).injective
 
+end RationalGlobalToLocalized
+
 /-- The selected primitive root generates the actual rational cyclotomic
 level over `ℚ`. -/
 theorem rationalCyclotomicLevelPrimitiveRoot_adjoin_eq_top
@@ -161,7 +179,7 @@ theorem rationalCyclotomicLevelPrimitiveRoot_adjoin_eq_top
         ({rationalCyclotomicLevelPrimitiveRoot m} :
           Set (KummerTheory.rationalCyclotomicLevel m)) =
       ⊤ := by
-  letI : NeZero (m : ℕ) := ⟨m.ne_zero⟩
+  let : NeZero (m : ℕ) := ⟨m.ne_zero⟩
   exact
     IntermediateField.adjoin_eq_top_of_algebra
       ℚ
@@ -181,17 +199,17 @@ theorem
       ⊤ := by
   let vQ := rationalCyclotomicAdicAbsoluteValue v
   let w := rationalCyclotomicChosenFinitePlaceExtension m v
-  letI hℚ :=
+  let hℚ :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := ℚ) w.1
-  letI : SMul ℚ w.1.Completion := hℚ.toSMul
-  letI : Algebra vQ.Completion w.1.Completion :=
+  let : SMul ℚ w.1.Completion := hℚ.toSMul
+  let : Algebra vQ.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vQ w.1 w.2
-  letI : Algebra ℚ (LocalizedCompletion vQ w) :=
+  let : Algebra ℚ (LocalizedCompletion vQ w) :=
     localizedCompletionGlobalAlgebra vQ w
-  letI : SMul ℚ (LocalizedCompletion vQ w) :=
+  let : SMul ℚ (LocalizedCompletion vQ w) :=
     (localizedCompletionGlobalAlgebra vQ w).toSMul
-  letI : IsScalarTower ℚ vQ.Completion
+  let : IsScalarTower ℚ vQ.Completion
       (LocalizedCompletion vQ w) :=
     localizedCompletionIsScalarTower vQ w
   exact
@@ -224,7 +242,7 @@ theorem rationalCyclotomicLevel_localizedCompletion_isCyclotomicExtension
     IsCyclotomicExtension {(m : ℕ)}
       (rationalCyclotomicAdicAbsoluteValue v).Completion
       (rationalCyclotomicLocalizedCompletion m v) := by
-  letI : NeZero (m : ℕ) := ⟨m.ne_zero⟩
+  let : NeZero (m : ℕ) := ⟨m.ne_zero⟩
   let ζv : rationalCyclotomicLocalizedCompletion m v :=
     rationalCyclotomicLocalizedPrimitiveRoot m v
   have hζv : IsPrimitiveRoot ζv (m : ℕ) :=

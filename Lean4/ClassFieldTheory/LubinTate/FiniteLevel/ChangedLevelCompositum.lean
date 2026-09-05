@@ -1,6 +1,8 @@
-import LubinTate.FiniteLevel.ChangedUniformizer
-import LubinTate.FiniteLevel.LevelValuation
-import LocalFieldTheory.DiscreteValuationField.RamificationAddVal
+import ClassFieldTheory.LubinTate.FiniteLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelValuation
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationAddVal
+
+set_option autoImplicit false
 
 /-!
 # A common valued field for original and changed Lubin--Tate levels
@@ -54,9 +56,9 @@ theorem standardLubinTateChangedLevelCompositumField_finiteDimensional
   let L' := standardLubinTateChangedLevelField hπ u n
   let hπ' :=
     standardLubinTateChangedUniformizer_isUniformizer hπ u
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : FiniteDimensional K L' :=
+  let : FiniteDimensional K L' :=
     standardLubinTateLevelField_finiteDimensional hπ' n
   exact L.finiteDimensional_sup L'
 
@@ -71,13 +73,13 @@ theorem standardLubinTateChangedLevelCompositumField_isSeparable
   let L' := standardLubinTateChangedLevelField hπ u n
   let hπ' :=
     standardLubinTateChangedUniformizer_isUniformizer hπ u
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : FiniteDimensional K L' :=
+  let : FiniteDimensional K L' :=
     standardLubinTateLevelField_finiteDimensional hπ' n
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
-  letI : IsGalois K L' :=
+  let : IsGalois K L' :=
     standardLubinTateLevelField_isGalois (F := F) hπ' n
   infer_instance
 
@@ -93,11 +95,11 @@ theorem standardLubinTateChangedLevelCompositumField_isGalois
   let M := standardLubinTateChangedLevelCompositumField hπ u n
   let hπ' :=
     standardLubinTateChangedUniformizer_isUniformizer hπ u
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
-  letI : IsGalois K L' :=
+  let : IsGalois K L' :=
     standardLubinTateLevelField_isGalois (F := F) hπ' n
-  letI : Algebra.IsSeparable K M :=
+  let : Algebra.IsSeparable K M :=
     standardLubinTateChangedLevelCompositumField_isSeparable hπ u n
   exact
     { to_isSeparable := inferInstance
@@ -121,10 +123,10 @@ private theorem
             ramificationIndex F.toCompleteDVF.toDVF target.toDVF *
               residueDegree F.toCompleteDVF.toDVF target.toDVF := by
   let M := standardLubinTateChangedLevelCompositumField hπ u n
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     standardLubinTateChangedLevelCompositumField_finiteDimensional
       hπ u n
-  letI : Algebra.IsSeparable K M :=
+  let : Algebra.IsSeparable K M :=
     standardLubinTateChangedLevelCompositumField_isSeparable hπ u n
   exact
     exists_integralClosure_standard_fundamental_identity
@@ -213,10 +215,10 @@ theorem
       (target :=
         standardLubinTateChangedLevelCompositumCompleteDVF hπ u n) := by
   let M := standardLubinTateChangedLevelCompositumField hπ u n
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     standardLubinTateChangedLevelCompositumField_finiteDimensional
       hπ u n
-  letI : Algebra.IsSeparable K M :=
+  let : Algebra.IsSeparable K M :=
     standardLubinTateChangedLevelCompositumField_isSeparable hπ u n
   intro Gamma' _ v'
   exact
@@ -357,12 +359,12 @@ theorem standardLubinTateLevelToChangedLevelCompositum_hasExtension
   let level := standardLubinTateLevelCompleteDVF hπ n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : IsScalarTower K L M :=
+  let : IsScalarTower K L M :=
     IsScalarTower.of_algebraMap_eq' rfl
   let vcomap := target.valuation.comap (algebraMap L M)
-  letI : F.toCompleteDVF.valuation.HasExtension vcomap :=
+  let : F.toCompleteDVF.valuation.HasExtension vcomap :=
     { val_isEquiv_comap := by
         rw [_root_.Valuation.isEquiv_iff_val_le_one]
         intro a
@@ -402,12 +404,12 @@ theorem standardLubinTateChangedLevelToCompositum_hasExtension
   let level := standardLubinTateLevelCompleteDVF hπ' n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L' M :=
+  let : Algebra L' M :=
     standardLubinTateChangedLevelToCompositumAlgebra hπ u n
-  letI : IsScalarTower K L' M :=
+  let : IsScalarTower K L' M :=
     IsScalarTower.of_algebraMap_eq' rfl
   let vcomap := target.valuation.comap (algebraMap L' M)
-  letI : F.toCompleteDVF.valuation.HasExtension vcomap :=
+  let : F.toCompleteDVF.valuation.HasExtension vcomap :=
     { val_isEquiv_comap := by
         rw [_root_.Valuation.isEquiv_iff_val_le_one]
         intro a
@@ -444,9 +446,9 @@ theorem
   let level := standardLubinTateLevelCompleteDVF hπ n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateLevelToChangedLevelCompositum_hasExtension
       hπ u n
   change
@@ -474,9 +476,9 @@ theorem
   let level := standardLubinTateLevelCompleteDVF hπ n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateLevelToChangedLevelCompositum_hasExtension
       hπ u n
   change
@@ -507,9 +509,9 @@ theorem
   let level := standardLubinTateLevelCompleteDVF hπ' n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L' M :=
+  let : Algebra L' M :=
     standardLubinTateChangedLevelToCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateChangedLevelToCompositum_hasExtension hπ u n
   change
     target.valuation (algebraMap L' M x) ≤ 1 ↔
@@ -539,9 +541,9 @@ theorem
   let level := standardLubinTateLevelCompleteDVF hπ' n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L' M :=
+  let : Algebra L' M :=
     standardLubinTateChangedLevelToCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateChangedLevelToCompositum_hasExtension hπ u n
   change
     target.valuation (algebraMap L' M x) < 1 ↔
@@ -656,9 +658,9 @@ theorem
   let level := standardLubinTateLevelCompleteDVF hπ n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateLevelToChangedLevelCompositum_hasExtension
       hπ u n
   change
@@ -694,9 +696,9 @@ theorem
   let level := standardLubinTateLevelCompleteDVF hπ' n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L' M :=
+  let : Algebra L' M :=
     standardLubinTateChangedLevelToCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateChangedLevelToCompositum_hasExtension hπ u n
   change
     (((integerMap level.toDVF target.toDVF a :
@@ -728,9 +730,9 @@ theorem standardLubinTateLevelToChangedLevelCompositum_addVal
   let level := standardLubinTateLevelCompleteDVF hπ n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateLevelToChangedLevelCompositum_hasExtension
       hπ u n
   change
@@ -769,9 +771,9 @@ theorem standardLubinTateChangedLevelToCompositum_addVal
   let level := standardLubinTateLevelCompleteDVF hπ' n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L' M :=
+  let : Algebra L' M :=
     standardLubinTateChangedLevelToCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateChangedLevelToCompositum_hasExtension hπ u n
   change
     IsDiscreteValuationRing.addVal target.valuationSubring
@@ -790,7 +792,7 @@ private theorem nat_eq_of_nsmul_enat_eq
     simpa only [nsmul_eq_mul] using h
   have hmulNat := congrArg ENat.toNat hmul
   have habd : a * d = b * d := by
-    simpa only [ENat.toNat_mul, ENat.toNat_coe] using hmulNat
+    simpa only [ENat.toNat_mul, ENat.toNat_natCast] using hmulNat
   exact Nat.eq_of_mul_eq_mul_right hd habd
 
 /-- The original and changed levels have the same ramification index inside
@@ -817,13 +819,13 @@ theorem
   let M := standardLubinTateChangedLevelCompositumField hπ u n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : Algebra L' M :=
+  let : Algebra L' M :=
     standardLubinTateChangedLevelToCompositumAlgebra hπ u n
-  letI : IsScalarTower K L M :=
+  let : IsScalarTower K L M :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : IsScalarTower K L' M :=
+  let : IsScalarTower K L' M :=
     IsScalarTower.of_algebraMap_eq' rfl
   let d :=
     (Nat.card F.residueField - 1) *
@@ -923,9 +925,9 @@ theorem
   let level := standardLubinTateLevelCompleteDVF hπ n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateLevelToChangedLevelCompositum_hasExtension
       hπ u n
   change
@@ -963,9 +965,9 @@ theorem
   let level := standardLubinTateLevelCompleteDVF hπ' n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L' M :=
+  let : Algebra L' M :=
     standardLubinTateChangedLevelToCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateChangedLevelToCompositum_hasExtension hπ u n
   change
     integerMap level.toDVF target.toDVF a ∈

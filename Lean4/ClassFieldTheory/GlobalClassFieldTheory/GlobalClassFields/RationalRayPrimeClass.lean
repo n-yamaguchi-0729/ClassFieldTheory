@@ -1,8 +1,10 @@
-import AlgebraicNumberTheory.Idele.FinitePrime
-import AlgebraicNumberTheory.Ramification.RationalPrime
-import AlgebraicNumberTheory.RayClass.Rational
-import AlgebraicNumberTheory.RayClass.Topology
-import GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+
+set_option autoImplicit false
 
 /-!
 # Rational prime classes in rational ray class groups

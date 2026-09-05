@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Extension.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.BaseChange
 import Mathlib.RingTheory.Norm.Transitivity
+
+set_option autoImplicit false
 
 /-!
 # Functorial properties of the idele norm

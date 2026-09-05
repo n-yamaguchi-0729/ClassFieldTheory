@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Reduction
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
+
+set_option autoImplicit false
 
 /-!
 # Frobenius lifts for totally ramified extensions
@@ -268,13 +270,13 @@ theorem abstractReciprocityTotallyRamifiedFiniteGaloisExtension_le_L
       K L hTot q).field.toSubgroup ≤ L.field.toSubgroup := by
   let σ := D.chosenDegreeOneFrobeniusLiftOfFiniteTotallyRamified
     K L hTot q
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L.field L.below) :=
     L.finite
   let SigmaI := D.frobeniusFixedIntermediateField K L.field L.below σ
   let LI := D.fieldAsMaximalUnramifiedIntermediate K.field L.field L.below
   let C := SigmaI.compositum LI
-  letI : (extensionSubgroup K.field (D.maximalUnramifiedField L.field)
+  let : (extensionSubgroup K.field (D.maximalUnramifiedField L.field)
       (D.maximalUnramifiedField_le_of_le L.below)).Normal :=
     D.extensionSubgroup_maximalUnramifiedField_normal K.field L.field L.below
   change (C.galoisRefinement).field.toSubgroup ≤ L.field.toSubgroup
@@ -295,13 +297,13 @@ theorem abstractReciprocityTotallyRamifiedFiniteGaloisExtension_le_sigma
           K L hTot q)).toSubgroup := by
   let σ := D.chosenDegreeOneFrobeniusLiftOfFiniteTotallyRamified
     K L hTot q
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L.field L.below) :=
     L.finite
   let SigmaI := D.frobeniusFixedIntermediateField K L.field L.below σ
   let LI := D.fieldAsMaximalUnramifiedIntermediate K.field L.field L.below
   let C := SigmaI.compositum LI
-  letI : (extensionSubgroup K.field (D.maximalUnramifiedField L.field)
+  let : (extensionSubgroup K.field (D.maximalUnramifiedField L.field)
       (D.maximalUnramifiedField_le_of_le L.below)).Normal :=
     D.extensionSubgroup_maximalUnramifiedField_normal K.field L.field L.below
   change (C.galoisRefinement).field.toSubgroup ≤ SigmaI.field.toSubgroup
@@ -321,13 +323,13 @@ theorem maximalUnramifiedField_le_abstractReciprocityTotallyRamifiedFiniteGalois
         K L hTot q).field.toSubgroup := by
   let σ := D.chosenDegreeOneFrobeniusLiftOfFiniteTotallyRamified
     K L hTot q
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L.field L.below) :=
     L.finite
   let SigmaI := D.frobeniusFixedIntermediateField K L.field L.below σ
   let LI := D.fieldAsMaximalUnramifiedIntermediate K.field L.field L.below
   let C := SigmaI.compositum LI
-  letI : (extensionSubgroup K.field (D.maximalUnramifiedField L.field)
+  let : (extensionSubgroup K.field (D.maximalUnramifiedField L.field)
       (D.maximalUnramifiedField_le_of_le L.below)).Normal :=
     D.extensionSubgroup_maximalUnramifiedField_normal K.field L.field L.below
   change (D.maximalUnramifiedField L.field).toSubgroup ≤

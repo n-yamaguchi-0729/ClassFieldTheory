@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
+
+set_option autoImplicit false
 
 /-!
 # Rational abstract extension transport to ordinary idele classes
@@ -73,25 +75,25 @@ theorem rationalAbstractExtensionIdeleClassEquiv_to_ordinary
           K L hLK hnormal x) := by
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI := hnormal
-  letI : FiniteDimensional ℚ F :=
+  let := hnormal
+  let : FiniteDimensional ℚ F :=
     abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) K hKfinite
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) K L hLK hKfinite hfinite
-  letI : IsScalarTower ℚ F E :=
+  let : IsScalarTower ℚ F E :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     FiniteDimensional.trans ℚ F E
-  letI : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
+  let : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
     change FiniteDimensional ℚ
       (abstractFixedField ℚ (SeparableClosure ℚ) L)
     change FiniteDimensional ℚ E
     infer_instance
-  letI : NumberField F :=
+  let : NumberField F :=
     NumberField.of_module_finite ℚ F
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   let eAmbient :=
     extensionFixedRepresentationEquiv

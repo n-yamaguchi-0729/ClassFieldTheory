@@ -1,9 +1,11 @@
 import Mathlib.Algebra.Group.TransferInstance
 import Mathlib.Topology.Algebra.FilterBasis
 import Mathlib.Topology.Algebra.Group.ClosedSubgroup
-import AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
-import CyclicCohomology.IntegralRepUniverse
-import ValuationTheory.Topology.Models
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+import ValuedFieldTheory.Valuation.Topology.Models
+
+set_option autoImplicit false
 
 /-!
 # Abstract reciprocity: the norm topology
@@ -196,8 +198,8 @@ theorem normTopology_addSubgroup_isOpen_iff
     IsNormOpen A K H ↔
       ∃ L : FiniteGaloisSubextension K, normSubgroup A L ≤ H := by
   rw [isNormOpen_iff_raw]
-  letI : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
-  letI : IsTopologicalAddGroup (ambientFixedAddSubgroup A K) :=
+  let : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
+  let : IsTopologicalAddGroup (ambientFixedAddSubgroup A K) :=
     (normFilterBasis A K).isTopologicalAddGroup
   constructor
   · intro hH
@@ -273,14 +275,14 @@ theorem normTopology_hausdorff
   let modelHomeomorph := withNormTopologyHomeomorph A K
   constructor
   · intro hmodel
-    letI : T2Space (WithNormTopology A K) := hmodel
-    letI : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
-    letI : T2Space (ambientFixedAddSubgroup A K) :=
+    let : T2Space (WithNormTopology A K) := hmodel
+    let : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
+    let : T2Space (ambientFixedAddSubgroup A K) :=
       modelHomeomorph.t2Space
     exact (normTopology_hausdorff_raw A K).1 inferInstance
   · intro huniversal
-    letI : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
-    letI : T2Space (ambientFixedAddSubgroup A K) :=
+    let : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
+    let : T2Space (ambientFixedAddSubgroup A K) :=
       (normTopology_hausdorff_raw A K).2 huniversal
     exact modelHomeomorph.symm.t2Space
 
@@ -295,8 +297,8 @@ theorem normTopology_open_iff_closed_finiteIndex_of_finite_normQuotients
     IsNormOpen A K H ↔
       IsNormClosed A K H ∧
         Finite (ambientFixedAddSubgroup A K ⧸ H) := by
-  letI : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
-  letI : IsTopologicalAddGroup (ambientFixedAddSubgroup A K) :=
+  let : TopologicalSpace (ambientFixedAddSubgroup A K) := normTopology A K
+  let : IsTopologicalAddGroup (ambientFixedAddSubgroup A K) :=
     (normFilterBasis A K).isTopologicalAddGroup
   constructor
   · intro hHmodel
@@ -304,16 +306,16 @@ theorem normTopology_open_iff_closed_finiteIndex_of_finite_normQuotients
     refine ⟨(isNormClosed_iff_raw A K H).2 (H.isClosed_of_isOpen hH), ?_⟩
     obtain ⟨L, hLH⟩ :=
       (normTopology_addSubgroup_isOpen_iff A K H).1 hHmodel
-    letI : Finite (ambientFixedAddSubgroup A K ⧸ normSubgroup A L) :=
+    let : Finite (ambientFixedAddSubgroup A K ⧸ normSubgroup A L) :=
       hfinite L
-    letI : (normSubgroup A L).FiniteIndex :=
+    let : (normSubgroup A L).FiniteIndex :=
       AddSubgroup.finiteIndex_of_finite_quotient
-    letI : H.FiniteIndex := AddSubgroup.finiteIndex_of_le hLH
+    let : H.FiniteIndex := AddSubgroup.finiteIndex_of_le hLH
     exact AddSubgroup.finite_quotient_of_finiteIndex
   · rintro ⟨hclosedModel, hfin⟩
     have hclosed := (isNormClosed_iff_raw A K H).1 hclosedModel
-    letI : Finite (ambientFixedAddSubgroup A K ⧸ H) := hfin
-    letI : H.FiniteIndex := AddSubgroup.finiteIndex_of_finite_quotient
+    let : Finite (ambientFixedAddSubgroup A K ⧸ H) := hfin
+    let : H.FiniteIndex := AddSubgroup.finiteIndex_of_finite_quotient
     exact (isNormOpen_iff_raw A K H).2
       (H.isOpen_of_isClosed_of_finiteIndex hclosed)
 

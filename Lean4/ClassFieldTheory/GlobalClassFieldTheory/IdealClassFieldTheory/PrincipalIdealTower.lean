@@ -1,7 +1,9 @@
-import AbstractClassFieldTheory.Degree.NormConjugation
-import AbstractClassFieldTheory.Reciprocity.ClassFieldCandidate
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import AbstractClassFieldTheory.Reciprocity.Reduction
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.NormConjugation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassFieldCandidate
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
+
+set_option autoImplicit false
 
 /-!
 # Galois structure on a conjugate-stable abelian tower
@@ -56,18 +58,18 @@ def conjugateFiniteAbelianSubextension
     { field := conjugateClosedSubgroup L.field s
       below := conjugateClosedSubgroup_mono L.below s
       normal := by
-        letI :
+        let :
             (CyclicCohomology.extensionSubgroup K L.field L.below).Normal :=
           L.normal
         infer_instance
       finite := by
-        letI : Finite
+        let : Finite
             (K.toSubgroup ⧸
               CyclicCohomology.extensionSubgroup K L.field L.below) :=
           L.finite
         exact finite_conjugateExtension K L.field L.below s }
   commutative := by
-    letI : (CyclicCohomology.extensionSubgroup K L.field L.below).Normal :=
+    let : (CyclicCohomology.extensionSubgroup K L.field L.below).Normal :=
       L.normal
     let e :=
       finiteReciprocityNaturalityConjugation K L.field L.below s
@@ -114,11 +116,11 @@ def galoisSubextensionOfConjugateStableAbelianTower
     exact
       (conjugateClosedSubgroup_mem M.field (r : G) (q : G)).1 hqConj
   finite := by
-    letI : Finite
+    let : Finite
         (L.field.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup L.field M.field M.below) :=
       M.finite
-    letI : Finite
+    let : Finite
         (K.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup K L.field L.below) :=
       L.finite
@@ -169,10 +171,10 @@ theorem abelianIntermediateField_le_of_finiteAbelianIntermediate
     (hPL : P.field.toSubgroup ≤ L.field.toSubgroup) :
     P.abelianIntermediateField.toSubgroup ≤
       L.field.toSubgroup := by
-  letI :
+  let :
       (CyclicCohomology.extensionSubgroup K P.field P.below).Normal :=
     P.normal
-  letI :
+  let :
       (CyclicCohomology.extensionSubgroup K L.field L.below).Normal :=
     L.normal
   let restriction :

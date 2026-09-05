@@ -1,0 +1,5 @@
+import ValuedFieldTheory.LocalField.GroupTheory.ContinuousQuotientEquiv
+import ValuedFieldTheory.LocalField.GroupTheory.IntegerMultipleSubgroup
+import ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
+
+set_option autoImplicit false

@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalFieldTheory.NonarchimedeanLocalField.ResidueGalois
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueGalois
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide` Lean module. -/
 
 noncomputable section

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.FinitePrime
-import GlobalClassFieldTheory.GlobalClassFields.ConductorRayClassMaximality
-import GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorRayClassMaximality
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+
+set_option autoImplicit false
 
 /-!
 # Prime Artin classes at an exact narrow finite conductor
@@ -25,7 +27,7 @@ variable {K : Type} [Field K] [NumberField K]
 
 -- Keep quotient witnesses definitionally aligned with the imported
 -- ideal-Artin construction and avoid repeating generic normality search.
-attribute [local instance 1000]
+attribute [local instance]
   IdealClassFieldTheory.ideleClassSubgroupNormal
 
 /-- The class of a normalized one-place prime idèle in an arbitrary

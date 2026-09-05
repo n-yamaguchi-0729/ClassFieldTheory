@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Frobenius.LaurentSeriesFrobenius
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.LaurentSeriesFrobenius
 import Mathlib.RingTheory.PowerSeries.Basic
+
+set_option autoImplicit false
 
 /-!
 # The equal-characteristic completed-unramified construction: equal-characteristic Frobenius on the completed unramified ring
@@ -37,7 +39,7 @@ noncomputable def equalCharacteristicCoefficientFrobenius :
 theorem equalCharacteristicCoefficientFrobenius_apply
     (x : AlgebraicClosure k) :
     equalCharacteristicCoefficientFrobenius k x = x ^ Nat.card k := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   simp [equalCharacteristicCoefficientFrobenius,
     Nat.card_eq_fintype_card]
 

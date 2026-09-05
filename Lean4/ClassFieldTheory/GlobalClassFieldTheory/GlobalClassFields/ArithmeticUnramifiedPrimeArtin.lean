@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
-import GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+
+set_option autoImplicit false
 
 /-!
 # Arithmetic Frobenius at an unramified finite place

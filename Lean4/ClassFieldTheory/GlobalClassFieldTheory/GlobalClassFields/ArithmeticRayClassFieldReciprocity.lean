@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
-import GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+
+set_option autoImplicit false
 
 /-!
 # Arithmetic reciprocity for actual ray class fields
@@ -20,6 +22,13 @@ namespace GlobalClassFields
 
 open NumberField
 open Reciprocity
+
+private theorem arithmeticRayClassIdeleClassGroupIsMulCommutative
+    {F : Type} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] arithmeticRayClassIdeleClassGroupIsMulCommutative
 
 variable {K : Type} [Field K] [NumberField K]
 

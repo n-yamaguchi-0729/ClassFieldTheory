@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Normal.Basic
 
+set_option autoImplicit false
+
 /-!
 # Ranges of embeddings of normal extensions
 
@@ -19,7 +21,7 @@ theorem fieldRange_eq_of_normal
     f.fieldRange = g.fieldRange := by
   have fieldRange_le_of_normal
       (u v : L →ₐ[F] Ω) : u.fieldRange ≤ v.fieldRange := by
-    letI : Normal F v.fieldRange :=
+    let : Normal F v.fieldRange :=
       (AlgEquiv.transfer_normal v.equivFieldRange).mp
         (inferInstance : Normal F L)
     have hrange :

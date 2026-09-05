@@ -1,6 +1,8 @@
-import ValuationTheory.DiscreteValuationField.Compositum
-import LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
-import RamificationTheory.HilbertRamification.CyclotomicDegreeBound
+import ValuedFieldTheory.Valuation.DiscreteValuationField.Compositum
+import ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+import ValuedFieldTheory.Ramification.HilbertRamification.CyclotomicDegreeBound
+
+set_option autoImplicit false
 
 /-!
 # A p-primary ramification bound for p-adic cyclotomic fields
@@ -53,13 +55,13 @@ theorem coprimeLocalCyclotomic_exponentialRamificationIndex_le_totient_primePow
   have hab : a.Coprime b := by
     dsimp [a, b]
     exact (hpr.pow_left n).symm
-  letI : NeZero a := ⟨ha.ne'⟩
-  letI : NeZero b := ⟨hb.ne'⟩
-  letI : NeZero m := ⟨hm.ne'⟩
+  let : NeZero a := ⟨ha.ne'⟩
+  let : NeZero b := ⟨hb.ne'⟩
+  let : NeZero m := ⟨hm.ne'⟩
   let D := CyclotomicField m ℚ_[p]
-  letI hDcyclo : IsCyclotomicExtension {m} ℚ_[p] D :=
+  let hDcyclo : IsCyclotomicExtension {m} ℚ_[p] D :=
     CyclotomicField.isCyclotomicExtension m ℚ_[p]
-  letI : FiniteDimensional ℚ_[p] D :=
+  let : FiniteDimensional ℚ_[p] D :=
     IsCyclotomicExtension.finiteDimensional {m} ℚ_[p] D
   obtain ⟨ζ, hζ⟩ := hDcyclo.exists_isPrimitiveRoot (Set.mem_singleton m) hm.ne'
   have hζa : IsPrimitiveRoot (ζ ^ b) a :=
@@ -70,24 +72,24 @@ theorem coprimeLocalCyclotomic_exponentialRamificationIndex_le_totient_primePow
     IntermediateField.adjoin ℚ_[p] {ζ ^ b}
   let C : IntermediateField ℚ_[p] D :=
     IntermediateField.adjoin ℚ_[p] {ζ ^ a}
-  letI hUcyclo : IsCyclotomicExtension {a} ℚ_[p] U := by
+  let hUcyclo : IsCyclotomicExtension {a} ℚ_[p] U := by
     simpa [U] using hζa.intermediateField_adjoin_isCyclotomicExtension ℚ_[p]
-  letI hCcyclo : IsCyclotomicExtension {b} ℚ_[p] C := by
+  let hCcyclo : IsCyclotomicExtension {b} ℚ_[p] C := by
     simpa [C] using hζb.intermediateField_adjoin_isCyclotomicExtension ℚ_[p]
-  letI : FiniteDimensional ℚ_[p] U :=
+  let : FiniteDimensional ℚ_[p] U :=
     IsCyclotomicExtension.finiteDimensional {a} ℚ_[p] U
-  letI : FiniteDimensional ℚ_[p] C :=
+  let : FiniteDimensional ℚ_[p] C :=
     IsCyclotomicExtension.finiteDimensional {b} ℚ_[p] C
   let algUD : Algebra U D := U.val.toRingHom.toAlgebra
-  letI : Algebra U D := algUD
-  letI : SMul U D := algUD.toSMul
-  letI : Module U D := algUD.toModule
-  letI : IsScalarTower ℚ_[p] U D := IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional U D := FiniteDimensional.right ℚ_[p] U D
-  letI hTopCyclo : IsCyclotomicExtension {m} ℚ_[p]
+  let : Algebra U D := algUD
+  let : SMul U D := algUD.toSMul
+  let : Module U D := algUD.toModule
+  let : IsScalarTower ℚ_[p] U D := IsScalarTower.of_algebraMap_eq' rfl
+  let : FiniteDimensional U D := FiniteDimensional.right ℚ_[p] U D
+  let hTopCyclo : IsCyclotomicExtension {m} ℚ_[p]
       (⊤ : IntermediateField ℚ_[p] D) :=
     IsCyclotomicExtension.equiv {m} ℚ_[p] D IntermediateField.topEquiv.symm
-  letI hSupCyclo : IsCyclotomicExtension {m} ℚ_[p]
+  let hSupCyclo : IsCyclotomicExtension {m} ℚ_[p]
       (U ⊔ C : IntermediateField ℚ_[p] D) := by
     have h := IntermediateField.isCyclotomicExtension_lcm_sup
       ℚ_[p] D a b U C
@@ -96,16 +98,16 @@ theorem coprimeLocalCyclotomic_exponentialRamificationIndex_le_totient_primePow
     IntermediateField.isCyclotomicExtension_eq {m} ℚ_[p] D _ _
   let algUSup : Algebra U (U ⊔ C : IntermediateField ℚ_[p] D) :=
     (IntermediateField.inclusion (show U ≤ U ⊔ C from le_sup_left)).toRingHom.toAlgebra
-  letI : Algebra U (U ⊔ C : IntermediateField ℚ_[p] D) := algUSup
-  letI : SMul U (U ⊔ C : IntermediateField ℚ_[p] D) := algUSup.toSMul
-  letI : Module U (U ⊔ C : IntermediateField ℚ_[p] D) := algUSup.toModule
-  letI : IsScalarTower ℚ_[p] U
+  let : Algebra U (U ⊔ C : IntermediateField ℚ_[p] D) := algUSup
+  let : SMul U (U ⊔ C : IntermediateField ℚ_[p] D) := algUSup.toSMul
+  let : Module U (U ⊔ C : IntermediateField ℚ_[p] D) := algUSup.toModule
+  let : IsScalarTower ℚ_[p] U
       (U ⊔ C : IntermediateField ℚ_[p] D) :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional ℚ_[p]
+  let : FiniteDimensional ℚ_[p]
       (U ⊔ C : IntermediateField ℚ_[p] D) :=
     IntermediateField.finiteDimensional_sup U C
-  letI : FiniteDimensional U
+  let : FiniteDimensional U
       (U ⊔ C : IntermediateField ℚ_[p] D) :=
     FiniteDimensional.right ℚ_[p] U (U ⊔ C : IntermediateField ℚ_[p] D)
   have hDegreeUD : Module.finrank U D ≤ Module.finrank ℚ_[p] C := by

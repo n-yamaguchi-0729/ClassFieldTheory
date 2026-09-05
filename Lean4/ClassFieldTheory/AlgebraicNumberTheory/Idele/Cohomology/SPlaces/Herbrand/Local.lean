@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.FamilyClassAxiom
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.LocalBlocks
-import AlgebraicNumberTheory.Completion.ChosenLocalization
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.FamilyClassAxiom
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.LocalBlocks
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
+
+set_option autoImplicit false
 
 /-!
 # Cohomology of the unrestricted factors of a relative `S`-idele
@@ -63,18 +65,18 @@ theorem absoluteValueDecompositionGroup_card_eq_localizedDegree
     Nat.card (absoluteValueDecompositionGroup K w.1) =
       Module.finrank vK.Completion
         (LocalizedCompletion vK w) := by
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : FiniteDimensional vK.Completion
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
+  let : FiniteDimensional vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionModuleFinite vK hvK w
-  letI : IsGalois vK.Completion
+  let : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     HilbertRamification.algebraicLocalization_isGalois vK w
   calc

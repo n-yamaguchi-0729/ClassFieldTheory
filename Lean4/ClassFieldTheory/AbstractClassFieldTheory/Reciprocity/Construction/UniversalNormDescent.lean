@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.CoreFrobeniusNorm
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.CoreFrobeniusNorm
 import Mathlib.Dynamics.BirkhoffSum.Basic
+
+set_option autoImplicit false
 
 universe u v
 
@@ -117,7 +119,7 @@ theorem relativeNorm_conjugateStableAction
     relativeNorm B F E hEF (conjugateStableAction B E s hE a) =
       conjugateStableAction B F s hF (relativeNorm B F E hEF a) := by
   let hConj := conjugateClosedSubgroup_mono hEF s
-  letI : Finite ((conjugateClosedSubgroup F s).toSubgroup ⧸
+  let : Finite ((conjugateClosedSubgroup F s).toSubgroup ⧸
       extensionSubgroup (conjugateClosedSubgroup F s)
         (conjugateClosedSubgroup E s) hConj) :=
     finite_conjugateExtension F E hEF s
@@ -239,15 +241,17 @@ theorem rep_norm_eq_generatorPowerSum
         simp
       obtain ⟨i, hi, hiq⟩ := Finset.mem_image.mp hq
       exact ⟨⟨i, Finset.mem_range.mp hi⟩, hiq⟩)
-  simpa [Rep.norm, Representation.norm, e] using
+  have hsum : (∑ q : Q, B.ρ q x) =
+      ∑ i : Fin n, B.ρ (g ^ i.1) x :=
     (e.sum_comp (fun q : Q => B.ρ q x)).symm
+  simpa [Rep.norm, Representation.norm] using hsum
 
 /-- Powers in a representation are the iterates of the corresponding
 action map. -/
 theorem rep_action_pow_eq_iterate {R : IntegralRepGroupType} [Group R]
     (B : Rep ℤ R) (g : R) (n : ℕ) (x : B.V) :
     B.ρ (g ^ n) x = ((B.ρ g)^[n]) x := by
-  letI : Module ℤ B.V := B.hV2
+  let : Module ℤ B.V := B.hV2
   rw [map_pow, Module.End.coe_pow]
 
 /-- Replace the generator action in the preceding norm formula by a

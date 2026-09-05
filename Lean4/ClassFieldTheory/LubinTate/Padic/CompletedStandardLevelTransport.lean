@@ -1,5 +1,7 @@
-import LubinTate.Padic.CompletedFrobeniusLift
+import ClassFieldTheory.LubinTate.Padic.CompletedFrobeniusLift
 import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
+
+set_option autoImplicit false
 
 /-!
 # Transporting a finite p-adic Lubin--Tate level to the completed level
@@ -121,6 +123,16 @@ noncomputable def padicStandardLevelIntegerEmbedding
   let E := padicCompletedLevelField p n
   let target := padicCompletedLevelCompleteDVF p n
   let ι : L →ₐ[ℚ_[p]] E := padicStandardLevelEmbedding p n
+  letI : F.valuation.HasExtension source.valuation :=
+    standardLubinTateLevelCompleteDVF_hasExtension
+      (F := padicLocalField p)
+      (π := padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n
+  letI : Algebra F.valuationSubring source.valuationSubring :=
+    Valuation.HasExtension.instAlgebra_valuationSubring
+      (padicLocalField p).valuation
+      (standardLubinTateLevelCompleteDVF
+        (F := padicLocalField p)
+        (π := padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n).valuation
   letI : IsScalarTower F.valuationSubring source.valuationSubring L :=
     IsScalarTower.of_algebraMap_eq' rfl
   letI : IsIntegralClosure
@@ -192,8 +204,6 @@ theorem padicStandardLevelIntegerEmbedding_coe
           (x :
             standardLubinTateLevelField
               (padicMultiplicativeLubinTateSeries_isUniformizer p) n) := by
-  simp only [padicStandardLevelIntegerEmbedding,
-    RingHom.codRestrict_apply, RingHom.comp_apply]
   rfl
 
 /-- The integral embedding sends the finite primitive point to the chosen
@@ -209,9 +219,10 @@ theorem padicStandardLevelIntegerEmbedding_apply_primitivePoint
   apply Subtype.ext
   rw [padicStandardLevelIntegerEmbedding_coe,
     padicCompletedPrimitiveRootInteger_coe]
-  rw [standardLubinTatePrimitivePointInteger_coe]
-  simpa only [standardLubinTateLevelGenerator] using
-    padicStandardLevelEmbedding_apply_gen p n
+  have hpoint := congrArg (padicStandardLevelEmbedding p n)
+    (standardLubinTatePrimitivePointInteger_coe
+      (F := padicLocalField p) hπ n)
+  exact hpoint.trans (padicStandardLevelEmbedding_apply_gen p n)
 
 /-- The integral standard-level embedding is continuous for the two
 maximal-ideal adic topologies. -/
@@ -254,7 +265,6 @@ theorem padicStandardLevelIntegerEmbedding_comp_coefficientHom
   ext a
   simp only [RingHom.comp_apply,
     padicStandardLevelIntegerEmbedding_coe,
-    standardLubinTateLevelCoefficientHom_apply,
     padicCompletedLevelPadicIntegerCoefficientHom_coe]
   change
     padicStandardLevelEmbedding p n
@@ -385,9 +395,11 @@ theorem padicStandardUnitParameterLevelRoot_class
   let F := padicLocalField p
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   apply Subtype.ext
-  rw [standardLubinTateUnitParameterLevelRoot_coe,
-    standardLubinTateUnitParameterRoot_class,
-    standardLubinTatePrimitiveLevelAction_coe]
+  exact (standardLubinTateUnitParameterLevelRoot_coe F hπ n
+    (standardLubinTateUnitParameterClass F n u)).trans
+      ((standardLubinTateUnitParameterRoot_class F hπ n u).trans
+        (standardLubinTatePrimitiveLevelAction_coe
+          (F := F) hπ n u).symm)
 
 /-- The direct completed unit action is the completed realization of the
 same finite unit-parameter class. -/
@@ -493,11 +505,13 @@ theorem padicCompletedUnitFrobeniusLiftEquiv_standardLevelEmbedding
               (padicLocalField p) n u)
             (standardLubinTateLevelPowerBasis hπ n).gen)
     rw [padicStandardLevelEmbedding_apply_gen,
-      padicCompletedUnitFrobeniusLiftEquiv_primitiveRoot,
-      standardLubinTateUnitParameterAlgEquiv_apply_gen]
-    simpa only [padicCompletedUnitParameterRoot] using
-      padicCompletedStandardPrimitivePointUnitAction_eq_unitParameterRoot
-        p n u
+      padicCompletedUnitFrobeniusLiftEquiv_primitiveRoot]
+    have hgen := congrArg (padicStandardLevelEmbedding p n)
+      (standardLubinTateUnitParameterAlgEquiv_apply_gen
+        (padicLocalField p) hπ n
+        (standardLubinTateUnitParameterClass (padicLocalField p) n u))
+    exact (padicCompletedStandardPrimitivePointUnitAction_eq_unitParameterRoot
+      p n u).trans hgen.symm
   exact DFunLike.congr_fun hintertwine x
 
 /-- The inverse completed unit-indexed Frobenius lift restricts to the

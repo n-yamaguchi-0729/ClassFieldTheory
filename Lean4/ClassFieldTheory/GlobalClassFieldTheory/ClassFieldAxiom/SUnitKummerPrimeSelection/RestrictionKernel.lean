@@ -1,4 +1,6 @@
-import KummerTheory.Concrete.SUnitPreparation
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.Core
+
+set_option autoImplicit false
 
 /-!
 # Restriction kernels of S-unit Kummer extensions
@@ -121,8 +123,17 @@ theorem iSup_zpowers_sUnitKummerKernelGenerator_eq_top
       apply Multiplicative.toAdd.injective
       rw [toAdd_pow]
       simpa using hm.symm
-    rw [hz, Pi.mulSingle_pow, map_pow]
-    exact
+    have hpower : e.symm (Pi.mulSingle i z) =
+        (sUnitKummerKernelGenerator
+          (K := K) (Omega := Omega) E n hmu
+          p v hp hv hn r eG S i) ^ m :=
+      (congrArg (fun t : Multiplicative (ZMod (n : ℕ)) =>
+        e.symm (Pi.mulSingle i t)) hz).trans
+        ((congrArg e.symm
+          (Pi.mulSingle_pow i (Multiplicative.ofAdd (1 : ZMod (n : ℕ))) m)).trans
+          (map_pow e.symm
+            (Pi.mulSingle i (Multiplicative.ofAdd (1 : ZMod (n : ℕ)))) m))
+    have hmem :=
       P.pow_mem
         ((le_iSup
           (fun i =>
@@ -135,6 +146,7 @@ theorem iSup_zpowers_sUnitKummerKernelGenerator_eq_top
               (K := K) (Omega := Omega) E n hmu
               p v hp hv hn r eG S i)))
         m
+    exact hpower.symm ▸ hmem
   have hesigma :
       e sigma ∈ P.map e.toMonoidHom := by
     apply Subgroup.pi_mem_of_mulSingle_mem (e sigma)
@@ -176,22 +188,21 @@ theorem orderOf_sUnitKummerKernelGenerator
     chosenEnlargedSUnitKummerRestrictionKernelEquivPiZMod
       (K := K) (Omega := Omega) E n hmu
       p v hp hv hn r eG S
-  change
-    orderOf
-        (e.symm
-          (Pi.mulSingle i
-            (Multiplicative.ofAdd
-              (1 : ZMod (n : ℕ))))) =
-      (n : ℕ)
-  rw [← e.orderOf_eq
-      (e.symm
-        (Pi.mulSingle i
-          (Multiplicative.ofAdd
-            (1 : ZMod (n : ℕ))))),
-    e.apply_symm_apply,
-    orderOf_piMulSingle,
-    orderOf_ofAdd_eq_addOrderOf,
-    ZMod.addOrderOf_one]
+  let I := Fin
+    (totalPlaceCard (K := K)
+      (enlargeByFiniteKummerRadicalSupport (K := K) (L := E) n hmu S) - r)
+  let j : I := i
+  let c : I → Multiplicative (ZMod (n : ℕ)) :=
+    Pi.mulSingle j (Multiplicative.ofAdd (1 : ZMod (n : ℕ)))
+  change orderOf (e.symm c) = (n : ℕ)
+  have hone : orderOf (Multiplicative.ofAdd (1 : ZMod (n : ℕ))) = (n : ℕ) :=
+    (orderOf_ofAdd_eq_addOrderOf (1 : ZMod (n : ℕ))).trans
+      (ZMod.addOrderOf_one (n : ℕ))
+  have hc : orderOf c = (n : ℕ) :=
+    (orderOf_piMulSingle
+      (M := fun _ : I => Multiplicative (ZMod (n : ℕ)))
+      j (Multiplicative.ofAdd (1 : ZMod (n : ℕ)))).trans hone
+  exact (e.symm.orderOf_eq c).trans hc
 
 /-- The cyclic fixed field attached to the `i`-th coordinate of the
 actual relative Galois group `Gal(N/E)`. -/

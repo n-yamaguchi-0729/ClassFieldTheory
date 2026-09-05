@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LocalFieldTheory.DiscreteValuationField.Basic
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
 import Mathlib.RingTheory.PowerSeries.Basic
+
+set_option autoImplicit false
 
 /-!
 # Lubin--Tate power series

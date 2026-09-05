@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Basic
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.ClassGroup.Basic
+
+set_option autoImplicit false
 
 /-!
 # The ideal attached to an idele

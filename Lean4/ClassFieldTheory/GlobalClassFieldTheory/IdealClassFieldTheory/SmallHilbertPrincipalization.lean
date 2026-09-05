@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTheorem
-import GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTransfer
-import GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTheorem
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTransfer
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
+
+set_option autoImplicit false
 
 /-!
 # Principalization in the selected small Hilbert class field
@@ -35,19 +37,19 @@ open KummerTheory
 open LocalClassFieldTheory
 open Reciprocity
 
-local instance (priority := 2000)
+local instance
     smallHilbertPrincipalization_ideleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
-local instance (priority := 2000)
+local instance
     smallHilbertPrincipalization_ideleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
   N.normal_of_isMulCommutative
 
-local instance (priority := 2000)
+local instance
     smallHilbertPrincipalization_smallHilbertQuotientGroup
     {F : Type} [Field F] [NumberField F] :
     Group
@@ -56,7 +58,7 @@ local instance (priority := 2000)
   QuotientGroup.Quotient.group
     (smallHilbertClassFieldNormSubgroup (K := F))
 
-local instance (priority := 2000)
+local instance
     smallHilbertPrincipalization_smallHilbertQuotientOne
     {F : Type} [Field F] [NumberField F] :
     One

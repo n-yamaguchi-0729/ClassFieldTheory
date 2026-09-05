@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.IdealMap
-import AlgebraicNumberTheory.Idele.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
 import Mathlib.RingTheory.DedekindDomain.SInteger
+
+set_option autoImplicit false
 
 /-!
 # Ideles and units with finite support

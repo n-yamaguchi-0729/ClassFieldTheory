@@ -1,8 +1,10 @@
-import AlgebraicNumberTheory.AdeleBaseChange
-import AlgebraicNumberTheory.Completion.AdicCompletionComparison
-import AlgebraicNumberTheory.Idele.ClassGroup.Core
+import ClassFieldTheory.AlgebraicNumberTheory.AdeleBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
 import Mathlib.NumberTheory.RamificationInertia.Valuation
 import Mathlib.RingTheory.ClassGroup.ExtendedHom
+
+set_option autoImplicit false
 
 /-!
 # Extension of ideles and ideal classes
@@ -132,7 +134,7 @@ theorem count_extension_prime
       ((extension K L (prime w) : FractionalIdealGroup L) :
         FractionalIdeal (nonZeroDivisors (𝓞 L)) L) =
       (w.asIdeal.ramificationIdx' W.asIdeal : ℤ) := by
-  letI : W.asIdeal.LiesOver w.asIdeal := by
+  let : W.asIdeal.LiesOver w.asIdeal := by
     constructor
     exact congrArg HeightOneSpectrum.asIdeal hW.symm
   have hmap :
@@ -380,7 +382,7 @@ theorem extension_infiniteComponent
         (infiniteComponent v a) := by
   let v :=
     _root_.infinitePlaceBelow (K := K) W
-  letI : W.1.LiesOver v.1 := ⟨rfl⟩
+  let : W.1.LiesOver v.1 := ⟨rfl⟩
   apply Units.ext
   change
     (ContinuousMulEquiv.piUnits (extension K L a).1 W :
@@ -408,9 +410,7 @@ theorem extension_infiniteComponent
   simp only [_root_.relativeIdeleToLocalData]
   rw [RelativeIdeleGroup.infiniteComponent_inclusion]
   rw [_root_.infinitePlaceTensorUnitsEquivAbove_apply]
-  simp only [Units.coe_map, Units.coe_mapEquiv,
-    AlgebraicNumberTheory.Valuations.localTensorUnitsEquivCompletionProduct_apply_coe,
-    _root_.infinitePlaceLocalTensorUnitsEquiv_infiniteLocalIdeleInclusion_coe]
+  simp only [Units.coe_map]
   change
     _root_.infinitePlaceTensorRingEquivAbove
         (K := K) (L := L) v

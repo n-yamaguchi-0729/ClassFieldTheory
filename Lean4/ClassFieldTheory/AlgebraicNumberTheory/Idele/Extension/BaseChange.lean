@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.Idele.Basic
-import AlgebraicNumberTheory.Idele.PrincipalCore
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 import Mathlib.FieldTheory.Galois.NormalBasis
 import Mathlib.GroupTheory.GroupAction.Defs
 import Mathlib.LinearAlgebra.TensorProduct.Basis
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Maps
+
+set_option autoImplicit false
 
 /-!
 # Ideles in finite extensions: the tensor-product model

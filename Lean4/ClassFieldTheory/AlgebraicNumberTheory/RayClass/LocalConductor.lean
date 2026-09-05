@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.SinglePlace
-import AlgebraicNumberTheory.RayClass.FullModulus
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+
+set_option autoImplicit false
 
 /-!
 # Local conductor subgroups in the idele class group

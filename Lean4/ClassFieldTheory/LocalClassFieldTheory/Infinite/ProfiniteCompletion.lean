@@ -3,6 +3,8 @@ import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.OpenSubgroup
 
+set_option autoImplicit false
+
 /-!
 # Completion by open finite quotients
 
@@ -304,7 +306,7 @@ def topologicalProfiniteCompletionPreimageIndex
     by
     let q : G →* P ⧸ (N : Subgroup P) :=
       (QuotientGroup.mk' (N : Subgroup P)).comp f.toMonoidHom
-    letI : q.ker.FiniteIndex := Subgroup.finiteIndex_ker q
+    let : q.ker.FiniteIndex := Subgroup.finiteIndex_ker q
     apply Subgroup.finiteIndex_of_le (H := q.ker)
     intro g hg
     change f g ∈ N
@@ -334,7 +336,7 @@ def topologicalProfiniteCompletionFiniteQuotientMorphism
       (P.toFiniteQuotientFunctor ⋙ forget₂ FiniteGrp ProfiniteGrp).obj N where
   toMonoidHom := topologicalProfiniteCompletionFiniteQuotientMap P f N
   continuous_toFun := by
-    letI : DiscreteTopology
+    let : DiscreteTopology
         (openFiniteQuotient G
           (topologicalProfiniteCompletionPreimageIndex P f N)) :=
       ⟨rfl⟩

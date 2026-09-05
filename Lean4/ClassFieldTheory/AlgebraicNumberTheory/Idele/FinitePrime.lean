@@ -1,5 +1,14 @@
-import AlgebraicNumberTheory.Idele.ClassGroup
-import AlgebraicNumberTheory.Idele.SinglePlace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormalClosureNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+
+set_option autoImplicit false
 
 /-!
 # Normalized finite-prime ideles

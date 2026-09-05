@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquiv
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInclusion
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInclusion
+
+set_option autoImplicit false
 
 /-!
 # Compatibility of the chosen integral equivalence and inclusion
@@ -49,7 +51,7 @@ theorem
   let hvK : vK.IsNontrivial := RayClass.adicAbv_isNontrivial w₀
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K w₀
-  letI := decompositionGroupLocalUnitsAction vK hvK u
+  let := decompositionGroupLocalUnitsAction vK hvK u
   apply
     (inducedRightCosetCoordinates
       (absoluteValueDecompositionGroup K u.1)).injective

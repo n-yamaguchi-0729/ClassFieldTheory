@@ -1,7 +1,9 @@
-import ValuationTheory.AbsoluteValue.AlgebraicLocalization
-import AlgebraicNumberTheory.CompositumEmbedding
-import KroneckerWeber.GlobalCompositumCyclotomicTarget
-import RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+import ClassFieldTheory.AlgebraicNumberTheory.CompositumEmbedding
+import ClassFieldTheory.KroneckerWeber.GlobalCompositumCyclotomicTarget
+import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+
+set_option autoImplicit false
 
 /-!
 # The left-factor ring embedding for the global compositum
@@ -30,7 +32,7 @@ Its factorization through the chosen localization is retained in the proof,
 without exposing that expensive localization type in this declaration. -/
 noncomputable def kroneckerWeberGlobalLeftRingEmbeddingProperty
     (p : Nat.Primes) : Prop := by
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let _ : Fact p.1.Prime := ⟨p.2⟩
   let N := kroneckerWeberLocalCompositumOrder (L := L) p
   have hN : 0 < N := kroneckerWeberLocalCompositumOrder_pos (L := L) p
   letI : NeZero N := ⟨hN.ne'⟩
@@ -46,30 +48,36 @@ which preserves the chosen `p`-adic place. -/
 theorem kroneckerWeberGlobalLeftRingEmbedding
     (p : Nat.Primes) :
     kroneckerWeberGlobalLeftRingEmbeddingProperty (L := L) p := by
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let _ : Fact p.1.Prime := ⟨p.2⟩
   let w := kroneckerWeberPadicExtension (L := L) p.1
   let vK := Rat.AbsoluteValue.padic p.1
-  letI hKvField : Field vK.Completion := inferInstance
-  letI hwField : Field w.1.Completion := inferInstance
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
-  letI : SMul ℚ w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ : Field vK.Completion := inferInstance
+  let _ : Field w.1.Completion := inferInstance
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
+  let _ : Algebra ℚ w.1.Completion := hK
+  let _ : SMul ℚ w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
-  letI hE : Field E := inferInstance
-  letI hBaseE : Algebra vK.Completion E := inferInstance
-  let e := padicAbsoluteValueCompletionAlgEquiv p.1
-  letI hQpE : Algebra ℚ_[p.1] E :=
+  let hE : Field E := inferInstance
+  let _ : Field E := hE
+  let hBaseE : Algebra vK.Completion E := inferInstance
+  let _ : Algebra vK.Completion E := hBaseE
+  let e := padicAbsoluteValueCompletionRingEquiv p.1
+  let hQpE : Algebra ℚ_[p.1] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p.1] E _ _
-      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e.toRingEquiv
-  letI : Module.Finite vK.Completion E :=
+      (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
+  let _ : Algebra ℚ_[p.1] E := hQpE
+  let _ : Module.Finite vK.Completion E :=
     globalPadicLocalizationModuleFinite p.1 L w
-  letI : Algebra ℚ_[p.1] vK.Completion := e.symm.toAlgHom.toAlgebra
-  letI : IsScalarTower ℚ_[p.1] vK.Completion E :=
-    IsScalarTower.of_algebraMap_eq' (by ext x; rfl)
-  letI : Module.Finite ℚ_[p.1] vK.Completion :=
+  let _ : Algebra ℚ_[p.1] vK.Completion := e.symm.toRingHom.toAlgebra
+  let _ : IsScalarTower ℚ_[p.1] vK.Completion E :=
+    IsScalarTower.of_algebraMap_eq' (by
+      ext x
+      exact transportedAlgebraAlongRingEquiv_algebraMap e x)
+  let _ : Module.Finite ℚ_[p.1] vK.Completion :=
     FiniteDimensional.of_surjective
       (Algebra.linearMap ℚ_[p.1] vK.Completion) e.symm.surjective
-  letI : Module.Finite ℚ_[p.1] E := Module.Finite.trans vK.Completion E
+  let _ : Module.Finite ℚ_[p.1] E := Module.Finite.trans vK.Completion E
   let u :=
     (p.1 ^ kroneckerWeberLocalUnramifiedDegree (L := L) p - 1) *
       p.1 ^ kroneckerWeberLocalRamificationExponent (L := L) p
@@ -82,8 +90,8 @@ theorem kroneckerWeberGlobalLeftRingEmbedding
     · exact pow_pos p.2.pos _
   have hN : 0 < N :=
     kroneckerWeberLocalCompositumOrder_pos (L := L) p
-  letI : NeZero N := ⟨hN.ne'⟩
-  letI : FiniteDimensional ℚ_[p.1] (CyclotomicField N ℚ_[p.1]) :=
+  let _ : NeZero N := ⟨hN.ne'⟩
+  let _ : FiniteDimensional ℚ_[p.1] (CyclotomicField N ℚ_[p.1]) :=
     IsCyclotomicExtension.finiteDimensional {N} ℚ_[p.1]
       (CyclotomicField N ℚ_[p.1])
   have hi := kroneckerWeberLocalCyclotomicEmbedding (L := L) p

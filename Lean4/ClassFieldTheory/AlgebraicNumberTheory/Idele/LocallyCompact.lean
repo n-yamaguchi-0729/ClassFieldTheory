@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
 import Mathlib.Topology.Algebra.Valued.LocallyCompact
+
+set_option autoImplicit false
 
 /-!
 # Local compactness of the idele group
@@ -24,7 +26,7 @@ theorem exists_ringOfIntegers_approximation
     (v : HeightOneSpectrum (𝓞 K)) (y : K)
     (hy : v.valuation K y ≤ 1) :
     ∃ r : 𝓞 K, v.valuation K (y - algebraMap (𝓞 K) K r) < 1 := by
-  letI : Field (𝓞 K ⧸ v.asIdeal) := Ideal.Quotient.field v.asIdeal
+  let : Field (𝓞 K ⧸ v.asIdeal) := Ideal.Quotient.field v.asIdeal
   have hy' : y ∈ v.valuationSubringAtPrime K := by
     rw [v.valuationSubringAtPrime_eq_valuationSubring]
     exact hy
@@ -237,7 +239,7 @@ finite. -/
 theorem finite_adicCompletion_residueField
     (v : HeightOneSpectrum (𝓞 K)) :
     Finite (Valued.ResidueField (v.adicCompletion K)) := by
-  letI : Finite (𝓞 K ⧸ v.asIdeal) :=
+  let : Finite (𝓞 K ⧸ v.asIdeal) :=
     v.asIdeal.finiteQuotientOfFreeOfNeBot v.ne_bot
   exact Finite.of_equiv (𝓞 K ⧸ v.asIdeal)
     (GlobalClassFieldTheory.ClassFieldAxiom.ringOfIntegersQuotientEquivAdicResidueField

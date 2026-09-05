@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.IdealMap
-import AlgebraicNumberTheory.Idele.Principal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Principal
 import Mathlib.NumberTheory.NumberField.ProductFormula
+
+set_option autoImplicit false
 
 /-!
 # The absolute norm of an idele

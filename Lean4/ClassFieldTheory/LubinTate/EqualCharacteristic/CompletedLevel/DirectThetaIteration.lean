@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaSeries
-import LubinTate.EqualCharacteristic.Theta.ThetaFirstIdentity
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaSeries
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaFirstIdentity
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: iterating the direct second theta identity

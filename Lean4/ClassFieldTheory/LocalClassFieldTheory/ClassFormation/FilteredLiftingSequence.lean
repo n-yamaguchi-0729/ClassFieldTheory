@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.NormalBasisInfiniteProduct
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.NormalBasisInfiniteProduct
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -137,7 +139,9 @@ theorem filteredLift_initial_eq_correctionProduct_mul_state
           (chosenFilteredLiftCorrectionSequence A P R F n initial step) d) *
         (chosenFilteredLiftStateSequence A P R F n initial step d).value := by
   induction d with
-  | zero => simp
+  | zero =>
+      rw [filteredCorrectionProduct_zero, chosenFilteredLiftStateSequence_zero,
+        map_one, one_mul]
   | succ d ih =>
       rw [filteredCorrectionProduct_succ, map_mul]
       rw [mul_assoc, ← chosenFilteredLiftStateSequence_equation

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import AlgebraicNumberTheory.Idele.SinglePlace
-import LocalFieldTheory.NonarchimedeanLocalField.Norm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Norm
+
+set_option autoImplicit false
 
 /-!
 # Norms of base units supported at one infinite place
@@ -51,7 +53,7 @@ theorem infinitePlaceBaseUnitExtension_neg_one
         (-1 :
           ((_root_.infinitePlaceBelow (K := K) W).Completion)ˣ) =
       (-1 : W.Completionˣ) := by
-  letI : W.1.LiesOver
+  let : W.1.LiesOver
       (_root_.infinitePlaceBelow (K := K) W).1 :=
     ⟨rfl⟩
   apply Units.ext
@@ -107,8 +109,8 @@ theorem norm_infinitePlaceIdele_infinitePlaceBaseUnitExtension
         infinitePlaceIdele_infiniteComponent_same]
       rw [Finset.prod_eq_single W₀]
       · rw [infinitePlaceIdele_infiniteComponent_same]
-        letI : W.1.LiesOver v.1 := ⟨rfl⟩
-        letI : Algebra v.Completion W.Completion :=
+        let : W.1.LiesOver v.1 := ⟨rfl⟩
+        let : Algebra v.Completion W.Completion :=
           (NumberField.LiesOver.completionMap (v := v) (w := W)).toAlgebra
         have hmap :
             algebraMap v.Completion W.Completion =
@@ -195,12 +197,12 @@ theorem norm_infinitePlaceIdele_infinitePlaceBaseUnitExtension_of_isUnramified
       infinitePlaceIdele
         (_root_.infinitePlaceBelow (K := K) W) x := by
   let v := _root_.infinitePlaceBelow (K := K) W
-  letI : W.1.LiesOver v.1 := ⟨rfl⟩
-  letI : Algebra v.Completion W.Completion :=
+  let : W.1.LiesOver v.1 := ⟨rfl⟩
+  let : Algebra v.Completion W.Completion :=
     (NumberField.LiesOver.completionMap (v := v) (w := W)).toAlgebra
   have hDegree :
       Module.finrank v.Completion W.Completion = 1 :=
-    InfinitePlace.Completion.finrank_eq_one_of_isUnramified
+    InfinitePlace.IsUnramified.finrank_eq_one
       v hW
   rw [
     norm_infinitePlaceIdele_infinitePlaceBaseUnitExtension,

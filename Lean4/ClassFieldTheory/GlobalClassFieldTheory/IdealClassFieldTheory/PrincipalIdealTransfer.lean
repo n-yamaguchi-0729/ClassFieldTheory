@@ -1,7 +1,15 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer
-import GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Compatibility
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.ZeroTransport
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FiniteNormClass
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
+
+set_option autoImplicit false
 
 /-!
 # Transfer input for the principal ideal theorem
@@ -33,13 +41,13 @@ open Reciprocity
 
 variable (K : Type) [Field K] [NumberField K]
 
-local instance (priority := 2000)
+local instance
     principalIdealTransferIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
-local instance (priority := 2000)
+local instance
     principalIdealTransferIdeleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
@@ -105,29 +113,61 @@ private theorem
     let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hHK
     let U := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLH
     letI : FiniteDimensional ℚ F :=
-      abstractFixedField_finiteDimensional
-        ℚ (SeparableClosure ℚ) K hKfinite
+      RationalFiniteNormTransferInternal.fixedFiniteDimensional
+        (hKfinite := hKfinite) K
     letI : FiniteDimensional F E :=
-      abstractRelativeFixedField_finiteDimensional
-        ℚ (SeparableClosure ℚ) K H hHK hKfinite hKHfinite
+      RationalFiniteNormTransferInternal.relativeFiniteDimensional
+        (hKfinite := hKfinite) (hfinite := hKHfinite)
+        K H hHK
     letI : IsScalarTower ℚ F E :=
-      IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-    letI : FiniteDimensional ℚ E := FiniteDimensional.trans ℚ F E
-    letI : FiniteDimensional E U :=
-      abstractRelativeFixedField_finiteDimensional
-        ℚ (SeparableClosure ℚ) H L hLH hHfinite hHLfinite
-    letI : IsScalarTower ℚ E U :=
-      IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-    letI : FiniteDimensional ℚ U := FiniteDimensional.trans ℚ E U
-    letI : NumberField F := NumberField.of_module_finite ℚ F
-    letI : NumberField E := NumberField.of_module_finite ℚ E
-    letI : NumberField U := NumberField.of_module_finite ℚ U
+      RationalFiniteNormTransferInternal.relativeScalarTower K H hHK
+    letI : FiniteDimensional ℚ E :=
+      RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
+        (hKfinite := hKfinite) (hfinite := hKHfinite)
+        K H hHK
+    letI : NumberField F :=
+      RationalFiniteNormTransferInternal.fixedNumberField
+        (hKfinite := hKfinite) K
+    letI : NumberField E :=
+      RationalFiniteNormTransferInternal.relativeNumberField
+        (hKfinite := hKfinite) (hfinite := hKHfinite)
+        K H hHK
+    letI : FiniteDimensional ℚ U :=
+      RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
+        (hKfinite := hHfinite) (hfinite := hHLfinite)
+        H L hLH
+    letI : NumberField U :=
+      RationalFiniteNormTransferInternal.relativeNumberField
+        (hKfinite := hHfinite) (hfinite := hHLfinite)
+        H L hLH
+    letI : Algebra E U := by
+      change Algebra
+        (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+      exact U.algebra
+    letI : Module E U := by
+      change Module
+        (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+      exact
+        (U.algebra : Algebra
+          (abstractFixedField ℚ (SeparableClosure ℚ) H) U).toModule
+    letI : FiniteDimensional E U := by
+      change FiniteDimensional
+        (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+      exact RationalFiniteNormTransferInternal.relativeFiniteDimensional
+        (hKfinite := hHfinite) (hfinite := hHLfinite)
+        H L hLH
+    letI : IsScalarTower ℚ E U := by
+      change IsScalarTower ℚ
+        (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+      exact RationalFiniteNormTransferInternal.relativeScalarTower H L hLH
     letI : IsGalois F E :=
-      abstractRelativeFixedField_isGalois
-        ℚ (SeparableClosure ℚ) K H hHK hHKnormal
-    letI : IsGalois E U :=
-      abstractRelativeFixedField_isGalois
-        ℚ (SeparableClosure ℚ) H L hLH hLHnormal
+      RationalFiniteNormTransferInternal.relativeIsGalois
+        K H hHK hHKnormal
+    letI : IsGalois E U := by
+      change IsGalois
+        (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+      exact RationalFiniteNormTransferInternal.relativeIsGalois
+        H L hLH hLHnormal
     ideleClassExtension F E c ∈ (_root_.ideleClassNorm E U).range := by
   dsimp only
   unfold
@@ -160,11 +200,11 @@ private theorem
       (hKfinite := K₀.finite) (hHLfinite := hHTfinite)
       K₀.field H T hHK hTH c := by
   let S := commutator M.extensionQuotient
-  letI : Finite
+  let : Finite
       (K₀.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup K₀.field M.field M.below) :=
     M.finite
-  letI : Finite
+  let : Finite
       ((M.intermediateField S).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           (M.intermediateField S) M.field
@@ -266,7 +306,7 @@ private theorem
     rfl
   let hMH : N.field.toSubgroup ≤ H.toSubgroup := N.below
   let hHK : H.toSubgroup ≤ K₀.field.toSubgroup := L.below
-  letI hHMfinite : Finite
+  let hHMfinite : Finite
       (H.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup H N.field hMH) :=
     N.finite
@@ -333,11 +373,11 @@ private theorem
   let hMHnormal :
       (CyclicCohomology.extensionSubgroup H N.field hMH).Normal :=
     N.normal
-  letI hKHfinite : Finite
+  let hKHfinite : Finite
       (K₀.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup K₀.field H hHK) :=
     L.finite
-  letI hHMfinite : Finite
+  let hHMfinite : Finite
       (H.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup H N.field hMH) :=
     N.finite
@@ -402,29 +442,62 @@ private noncomputable abbrev
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hHK
   let U := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hMH
   letI : FiniteDimensional ℚ F :=
-    abstractFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K₀.field K₀.finite
+    RationalFiniteNormTransferInternal.fixedFiniteDimensional
+      (hKfinite := K₀.finite) K₀.field
   letI : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K₀.field H hHK K₀.finite hKHfinite
+    RationalFiniteNormTransferInternal.relativeFiniteDimensional
+      (hKfinite := K₀.finite) (hfinite := hKHfinite)
+      K₀.field H hHK
   letI : IsScalarTower ℚ F E :=
-    IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional ℚ E := FiniteDimensional.trans ℚ F E
-  letI : FiniteDimensional E U :=
-    abstractRelativeFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) H N.field hMH hHfinite hHMfinite
-  letI : IsScalarTower ℚ E U :=
-    IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional ℚ U := FiniteDimensional.trans ℚ E U
-  letI : NumberField F := NumberField.of_module_finite ℚ F
-  letI : NumberField E := NumberField.of_module_finite ℚ E
-  letI : NumberField U := NumberField.of_module_finite ℚ U
+    RationalFiniteNormTransferInternal.relativeScalarTower K₀.field H hHK
+  letI : FiniteDimensional ℚ E :=
+    RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
+      (hKfinite := K₀.finite) (hfinite := hKHfinite)
+      K₀.field H hHK
+  letI : NumberField F :=
+    RationalFiniteNormTransferInternal.fixedNumberField
+      (hKfinite := K₀.finite) K₀.field
+  letI : NumberField E :=
+    RationalFiniteNormTransferInternal.relativeNumberField
+      (hKfinite := K₀.finite) (hfinite := hKHfinite)
+      K₀.field H hHK
+  letI : FiniteDimensional ℚ U :=
+    RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
+      (hKfinite := hHfinite) (hfinite := hHMfinite)
+      H N.field hMH
+  letI : NumberField U :=
+    RationalFiniteNormTransferInternal.relativeNumberField
+      (hKfinite := hHfinite) (hfinite := hHMfinite)
+      H N.field hMH
+  letI : Algebra E U := by
+    change Algebra
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact U.algebra
+  letI : Module E U := by
+    change Module
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact
+      (U.algebra : Algebra
+        (abstractFixedField ℚ (SeparableClosure ℚ) H) U).toModule
+  letI : FiniteDimensional E U := by
+    change FiniteDimensional
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact RationalFiniteNormTransferInternal.relativeFiniteDimensional
+      (hKfinite := hHfinite) (hfinite := hHMfinite)
+      H N.field hMH
+  letI : IsScalarTower ℚ E U := by
+    change IsScalarTower ℚ
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact RationalFiniteNormTransferInternal.relativeScalarTower
+      H N.field hMH
   letI : IsGalois F E :=
-    abstractRelativeFixedField_isGalois
-      ℚ (SeparableClosure ℚ) K₀.field H hHK hHKnormal
-  letI : IsGalois E U :=
-    abstractRelativeFixedField_isGalois
-      ℚ (SeparableClosure ℚ) H N.field hMH hMHnormal
+    RationalFiniteNormTransferInternal.relativeIsGalois
+      K₀.field H hHK hHKnormal
+  letI : IsGalois E U := by
+    change IsGalois
+      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
+    exact RationalFiniteNormTransferInternal.relativeIsGalois
+      H N.field hMH hMHnormal
   ∀ c : rationalFiniteNormTransferBaseIdeleClass
       (hKfinite := K₀.finite) K₀.field,
     ideleClassExtension F E c ∈ (_root_.ideleClassNorm E U).range
@@ -546,7 +619,7 @@ private noncomputable def
     SmallHilbertClassFieldSecondNormRangeContainmentData K where
   containment := by
     unfold smallHilbertClassFieldSecondNormRangeContainment
-    letI : IsGalois K (smallHilbertClassFieldBase K) :=
+    let : IsGalois K (smallHilbertClassFieldBase K) :=
       IsGalois.of_algEquiv
         (smallHilbertClassFieldBaseEquivOverOriginal K)
     have hbase :=

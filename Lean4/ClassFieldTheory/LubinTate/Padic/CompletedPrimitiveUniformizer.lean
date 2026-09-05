@@ -1,6 +1,8 @@
-import LubinTate.Padic.CompletedChangedUniformizerPrimitive
-import LocalFieldTheory.DiscreteValuationField.RamificationAddVal
-import ValuationTheory.DiscreteValuationField.AddVal
+import ClassFieldTheory.LubinTate.Padic.CompletedChangedUniformizerPrimitive
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationAddVal
+import ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+
+set_option autoImplicit false
 
 /-!
 # The completed p-adic primitive point is a uniformizer
@@ -87,7 +89,7 @@ private theorem
     padicIntEquivValuationSubring p (p : ℤ_[p])
   let πA : base.valuationSubring :=
     padicCompletedUnramifiedIntegerMap p π
-  letI : IsScalarTower base.valuationSubring
+  let : IsScalarTower base.valuationSubring
       target.valuationSubring E :=
     IsScalarTower.of_algebraMap_eq' rfl
   have hdpos : 0 < d := by
@@ -213,11 +215,11 @@ private theorem
     change
       (padicCompletedPrimitivePolynomialInteger p n -
         Polynomial.X ^ d).coeff 0 = πA
-    rw [Polynomial.coeff_sub,
-      padicCompletedPrimitivePolynomialInteger,
-      Polynomial.coeff_map,
-      standardLubinTatePrimitivePolynomial_coeff_zero,
-      Polynomial.coeff_X_pow, if_neg hdne.symm, sub_zero]
+    rw [Polynomial.coeff_sub, Polynomial.coeff_X_pow,
+      if_neg hdne.symm, sub_zero,
+      padicCompletedPrimitivePolynomialInteger, Polynomial.coeff_map]
+    exact congrArg (padicCompletedUnramifiedIntegerMap p)
+      (standardLubinTatePrimitivePolynomial_coeff_zero (padicLocalField p) π n)
   have hπA :
       base.valuation.IsUniformizer
         (πA : padicCompletedUnramifiedField p) := by
@@ -313,7 +315,7 @@ private theorem
     simpa using hcast
   have hvle :
       IsDiscreteValuationRing.addVal target.valuationSubring root ≤ 1 :=
-    (ENat.mul_le_mul_left_iff hdcoe (ENat.coe_ne_top d)).1 hmul_le
+    (ENat.mul_le_mul_left_iff hdcoe (ENat.natCast_ne_top d)).1 hmul_le
   have hrootVal :
       IsDiscreteValuationRing.addVal target.valuationSubring root = 1 :=
     le_antisymm hvle honele
@@ -409,7 +411,7 @@ private theorem
       (padicLocalField p) π u
   let πuA : base.valuationSubring :=
     padicCompletedUnramifiedIntegerMap p πu
-  letI : IsScalarTower base.valuationSubring
+  let : IsScalarTower base.valuationSubring
       target.valuationSubring (padicCompletedLevelField p n) :=
     IsScalarTower.of_algebraMap_eq' rfl
   have hdpos : 0 < d := by
@@ -552,11 +554,12 @@ private theorem
     change
       (padicChangedCompletedPrimitivePolynomialInteger p u n -
         Polynomial.X ^ d).coeff 0 = πuA
-    rw [Polynomial.coeff_sub,
-      padicChangedCompletedPrimitivePolynomialInteger,
-      Polynomial.coeff_map,
-      standardLubinTatePrimitivePolynomial_coeff_zero,
-      Polynomial.coeff_X_pow, if_neg hdne.symm, sub_zero]
+    rw [Polynomial.coeff_sub, Polynomial.coeff_X_pow,
+      if_neg hdne.symm, sub_zero,
+      padicChangedCompletedPrimitivePolynomialInteger, Polynomial.coeff_map]
+    exact congrArg (padicCompletedUnramifiedIntegerMap p)
+      (standardLubinTatePrimitivePolynomial_coeff_zero
+        (padicLocalField p) πu n)
   have hπuA :
       base.valuation.IsUniformizer
         (πuA : padicCompletedUnramifiedField p) := by
@@ -649,7 +652,7 @@ private theorem
     rw [hmul, hed, mul_one]
   have hvle :
       IsDiscreteValuationRing.addVal target.valuationSubring θ ≤ 1 :=
-    (ENat.mul_le_mul_left_iff hdcoe (ENat.coe_ne_top d)).1 hmul_le
+    (ENat.mul_le_mul_left_iff hdcoe (ENat.natCast_ne_top d)).1 hmul_le
   have hθval :
       IsDiscreteValuationRing.addVal target.valuationSubring θ = 1 :=
     le_antisymm hvle honele

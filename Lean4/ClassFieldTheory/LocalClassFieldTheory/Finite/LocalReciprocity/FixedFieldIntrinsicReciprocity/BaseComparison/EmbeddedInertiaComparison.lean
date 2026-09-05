@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.EmbeddedExtensionQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.EmbeddedExtensionQuotient
+
+set_option autoImplicit false
 
 /-!
 # Embedded inertia comparison
@@ -68,9 +70,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e tau
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -95,7 +95,7 @@ theorem
       (AlgHom.fieldRange j).fixingSubgroup ≤
         (AlgHom.fieldRange i).fixingSubgroup
     exact (AlgHom.fieldRange i).fixingSubgroup_le hRange
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -230,9 +230,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let jF : E →ₐ[F] SeparableClosure K :=

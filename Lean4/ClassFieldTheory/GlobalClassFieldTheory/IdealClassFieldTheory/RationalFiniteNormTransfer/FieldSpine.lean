@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Reduction
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
+
+set_option autoImplicit false
 
 /-!
 # Fixed-field instance spine for rational finite-norm transport
@@ -30,7 +32,7 @@ theorem ideleClassGroupIsMulCommutative
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
-local instance (priority := 2000)
+local instance
     fieldSpineIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
@@ -42,7 +44,7 @@ theorem ideleClassSubgroupNormal
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
   N.normal_of_isMulCommutative
 
-local instance (priority := 2000)
+local instance
     fieldSpineIdeleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
@@ -77,14 +79,14 @@ theorem absoluteFinite
           (baseField
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
           L (le_baseField L)) := by
-  letI : Finite
+  let : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         extensionSubgroup
           (baseField
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
           K (le_baseField K)) := hKfinite
-  letI : Finite
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK) := hfinite
   exact FiniteGaloisSubextension.finite_extension_trans
     hLK (le_baseField K)
@@ -155,9 +157,9 @@ theorem relativeAbsoluteFiniteDimensional
       (abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK) := by
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI : FiniteDimensional ℚ F := fixedFiniteDimensional K
-  letI : FiniteDimensional F E := relativeFiniteDimensional K L hLK
-  letI : IsScalarTower ℚ F E := relativeScalarTower K L hLK
+  let : FiniteDimensional ℚ F := fixedFiniteDimensional K
+  let : FiniteDimensional F E := relativeFiniteDimensional K L hLK
+  let : IsScalarTower ℚ F E := relativeScalarTower K L hLK
   exact FiniteDimensional.trans ℚ F E
 
 /-- The number-field structure on a rational abstract fixed field. -/
@@ -173,7 +175,7 @@ theorem fixedNumberField
           K (le_baseField K))] :
     NumberField (abstractFixedField ℚ (SeparableClosure ℚ) K) := by
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K
-  letI : FiniteDimensional ℚ F := fixedFiniteDimensional K
+  let : FiniteDimensional ℚ F := fixedFiniteDimensional K
   exact NumberField.of_module_finite ℚ F
 
 /-- The number-field structure on a rational relative fixed field. -/
@@ -193,7 +195,7 @@ theorem relativeNumberField
     NumberField
       (abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK) := by
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     relativeAbsoluteFiniteDimensional K L hLK
   exact NumberField.of_module_finite ℚ E
 
@@ -211,13 +213,13 @@ theorem relativeIsGalois
 
 end RationalFiniteNormTransferInternal
 
-local instance (priority := 2000)
+local instance
     fieldSpinePublicIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
-local instance (priority := 2000)
+local instance
     fieldSpinePublicIdeleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=

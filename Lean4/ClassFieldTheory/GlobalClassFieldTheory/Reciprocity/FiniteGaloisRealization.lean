@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationFinitePlace
-import GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationNormQuotient
-import AbstractClassFieldTheory.Reciprocity.NormTopology
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationFinitePlace
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationNormQuotient
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
+
+set_option autoImplicit false
 
 /-!
 # Reciprocity for a realized finite Galois number-field tower
@@ -22,6 +24,22 @@ open ClassFormation
 open AlgebraicNumberTheory
 open LocalClassFieldTheory
 open RamificationTheory
+
+/-- Fix the canonical class-group structure before forming norm quotients. -/
+@[instance_reducible]
+private noncomputable def realizedTowerIdeleClassCommGroup
+    (F : Type) [Field F] [NumberField F] :
+    CommGroup (IdeleClassGroup F) :=
+  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
+
+attribute [local instance] realizedTowerIdeleClassCommGroup
+
+private theorem realizedTowerIdeleClassIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] realizedTowerIdeleClassIsMulCommutative
 
 variable
     (K L : Type) [Field K] [NumberField K]
@@ -65,9 +83,9 @@ private theorem numberFieldTowerAbstractTopFiniteDimensional :
     FiniteDimensional ℚ
       (abstractRelativeFixedField ℚ (SeparableClosure ℚ)
         (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) := by
-  letI := numberFieldTowerAbstractBaseFiniteDimensional K L
-  letI := numberFieldTowerAbstractRelativeFiniteDimensional K L
-  letI := numberFieldTowerAbstractScalarTower K L
+  let := numberFieldTowerAbstractBaseFiniteDimensional K L
+  let := numberFieldTowerAbstractRelativeFiniteDimensional K L
+  let := numberFieldTowerAbstractScalarTower K L
   exact FiniteDimensional.trans ℚ
     (abstractFixedField ℚ (SeparableClosure ℚ)
       (numberFieldTowerBaseSubgroup K L))
@@ -79,21 +97,21 @@ private theorem numberFieldTowerAbstractBaseNumberField :
     NumberField
       (abstractFixedField ℚ (SeparableClosure ℚ)
         (numberFieldTowerBaseSubgroup K L)) := by
-  letI := numberFieldTowerAbstractBaseFiniteDimensional K L
+  let := numberFieldTowerAbstractBaseFiniteDimensional K L
   exact NumberField.of_module_finite ℚ _
 
 private theorem numberFieldTowerAbstractTopNumberField :
     NumberField
       (abstractRelativeFixedField ℚ (SeparableClosure ℚ)
         (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) := by
-  letI := numberFieldTowerAbstractTopFiniteDimensional K L
+  let := numberFieldTowerAbstractTopFiniteDimensional K L
   exact NumberField.of_module_finite ℚ _
 
 private theorem numberFieldTowerRestrictedTopFiniteDimensional :
     FiniteDimensional ℚ
       ((abstractRelativeFixedField ℚ (SeparableClosure ℚ)
         (numberFieldTowerTopSubgroup_le_baseSubgroup K L)).restrictScalars ℚ) := by
-  letI := numberFieldTowerAbstractTopFiniteDimensional K L
+  let := numberFieldTowerAbstractTopFiniteDimensional K L
   change FiniteDimensional ℚ
     (abstractFixedField ℚ (SeparableClosure ℚ)
       (numberFieldTowerTopSubgroup L))
@@ -106,7 +124,7 @@ private theorem numberFieldTowerRestrictedTopNumberField :
     NumberField
       ((abstractRelativeFixedField ℚ (SeparableClosure ℚ)
         (numberFieldTowerTopSubgroup_le_baseSubgroup K L)).restrictScalars ℚ) := by
-  letI := numberFieldTowerRestrictedTopFiniteDimensional K L
+  let := numberFieldTowerRestrictedTopFiniteDimensional K L
   exact NumberField.of_module_finite ℚ _
 
 @[reducible] private noncomputable def numberFieldTowerRestrictedTopAlgebra :
@@ -194,22 +212,23 @@ private noncomputable def numberFieldTowerFiniteNormClassDirectComparisonValue
   let hJH : J.toSubgroup ≤ H.toSubgroup :=
     numberFieldTowerTopSubgroup_le_baseSubgroup K L
   let hnormal := numberFieldTowerExtensionSubgroupNormal K L
-  letI := numberFieldTowerAbstractBaseFiniteDimensional K L
-  letI := numberFieldTowerAbstractRelativeFiniteDimensional K L
-  letI := numberFieldTowerAbstractScalarTower K L
-  letI := numberFieldTowerAbstractTopFiniteDimensional K L
-  letI := numberFieldTowerAbstractBaseNumberField K L
-  letI := numberFieldTowerAbstractTopNumberField K L
-  letI := numberFieldTowerRestrictedTopFiniteDimensional K L
-  letI := numberFieldTowerRestrictedTopNumberField K L
-  letI := numberFieldTowerRestrictedTopAlgebra K L
-  letI := numberFieldTowerAbstractRelativeIsGalois K L
+  let F := abstractFixedField ℚ (SeparableClosure ℚ) H
+  let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hJH
+  letI : NumberField F := numberFieldTowerAbstractBaseNumberField K L
+  letI : NumberField E := numberFieldTowerAbstractTopNumberField K L
+  let eBase : K ≃ₐ[ℚ] F := numberFieldTowerAbstractBaseFieldEquiv K L
+  let eTop : L ≃ₐ[ℚ] E := numberFieldTowerAbstractTopFieldEquiv K L
+  have hcompat : ∀ x : K,
+      eTop (algebraMap K L x) = algebraMap F E (eBase x) :=
+    numberFieldTowerAbstractFieldEquiv_algebraMap K L
+  let actualFieldEquiv :
+      (IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range) ≃*
+        (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range) :=
+    ordinaryIdeleClassNormQuotientCongrOfAlgEquiv
+      (K := K) (L := L) (K' := F) (L' := E) eBase eTop hcompat
   exact
     MulEquiv.toAdditive
-      (ordinaryIdeleClassNormQuotientCongrOfAlgEquiv
-        (numberFieldTowerAbstractBaseFieldEquiv K L)
-        (numberFieldTowerAbstractTopFieldEquiv K L)
-        (numberFieldTowerAbstractFieldEquiv_algebraMap K L)).symm
+      actualFieldEquiv.symm
       (rationalFiniteNormQuotientEquivIdeleClassNormQuotient
         (hKfinite := numberFieldTowerBaseSubgroupAbsoluteQuotientFinite K L)
         (hfinite := numberFieldTowerExtensionQuotientFinite K L)
@@ -240,22 +259,21 @@ private noncomputable def numberFieldTowerActualNormClassRepresentativeValue
     numberFieldTowerTopSubgroup_le_baseSubgroup K L
   let F := abstractFixedField ℚ (SeparableClosure ℚ) H
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hJH
-  letI := numberFieldTowerAbstractBaseFiniteDimensional K L
-  letI := numberFieldTowerAbstractRelativeFiniteDimensional K L
-  letI := numberFieldTowerAbstractScalarTower K L
-  letI := numberFieldTowerAbstractTopFiniteDimensional K L
-  letI := numberFieldTowerAbstractBaseNumberField K L
-  letI := numberFieldTowerAbstractTopNumberField K L
-  letI := numberFieldTowerRestrictedTopFiniteDimensional K L
-  letI := numberFieldTowerRestrictedTopNumberField K L
-  letI := numberFieldTowerRestrictedTopAlgebra K L
-  letI := numberFieldTowerAbstractRelativeIsGalois K L
+  letI : NumberField F := numberFieldTowerAbstractBaseNumberField K L
+  letI : NumberField E := numberFieldTowerAbstractTopNumberField K L
+  let eBase : K ≃ₐ[ℚ] F := numberFieldTowerAbstractBaseFieldEquiv K L
+  let eTop : L ≃ₐ[ℚ] E := numberFieldTowerAbstractTopFieldEquiv K L
+  have hcompat : ∀ x : K,
+      eTop (algebraMap K L x) = algebraMap F E (eBase x) :=
+    numberFieldTowerAbstractFieldEquiv_algebraMap K L
+  let actualFieldEquiv :
+      (IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range) ≃*
+        (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range) :=
+    ordinaryIdeleClassNormQuotientCongrOfAlgEquiv
+      (K := K) (L := L) (K' := F) (L' := E) eBase eTop hcompat
   exact
     Additive.ofMul
-      ((ordinaryIdeleClassNormQuotientCongrOfAlgEquiv
-        (numberFieldTowerAbstractBaseFieldEquiv K L)
-        (numberFieldTowerAbstractTopFieldEquiv K L)
-        (numberFieldTowerAbstractFieldEquiv_algebraMap K L)).symm
+      (actualFieldEquiv.symm
           (QuotientGroup.mk'
             (_root_.ideleClassNorm F E).range
             (Additive.toMul
@@ -274,30 +292,42 @@ private theorem numberFieldTowerFiniteNormClassDirectComparison_eq_actualValue
   let hnormal := numberFieldTowerExtensionSubgroupNormal K L
   let F := abstractFixedField ℚ (SeparableClosure ℚ) H
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hJH
-  letI := numberFieldTowerAbstractBaseFiniteDimensional K L
-  letI := numberFieldTowerAbstractRelativeFiniteDimensional K L
-  letI := numberFieldTowerAbstractScalarTower K L
-  letI := numberFieldTowerAbstractTopFiniteDimensional K L
-  letI := numberFieldTowerAbstractBaseNumberField K L
-  letI := numberFieldTowerAbstractTopNumberField K L
-  letI := numberFieldTowerRestrictedTopFiniteDimensional K L
-  letI := numberFieldTowerRestrictedTopNumberField K L
-  letI := numberFieldTowerRestrictedTopAlgebra K L
-  letI := numberFieldTowerAbstractRelativeIsGalois K L
-  let actualFieldEquiv :=
+  let : NumberField F := numberFieldTowerAbstractBaseNumberField K L
+  let : NumberField E := numberFieldTowerAbstractTopNumberField K L
+  let eBase : K ≃ₐ[ℚ] F := numberFieldTowerAbstractBaseFieldEquiv K L
+  let eTop : L ≃ₐ[ℚ] E := numberFieldTowerAbstractTopFieldEquiv K L
+  have hcompat : ∀ x : K,
+      eTop (algebraMap K L x) = algebraMap F E (eBase x) :=
+    numberFieldTowerAbstractFieldEquiv_algebraMap K L
+  let actualFieldEquiv :
+      (IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range) ≃*
+        (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range) :=
     ordinaryIdeleClassNormQuotientCongrOfAlgEquiv
-      (numberFieldTowerAbstractBaseFieldEquiv K L)
-      (numberFieldTowerAbstractTopFieldEquiv K L)
-      (numberFieldTowerAbstractFieldEquiv_algebraMap K L)
-  have hfixed :=
+      (K := K) (L := L) (K' := F) (L' := E) eBase eTop hcompat
+  let q : FiniteNormQuotient rationalIdeleClassRepresentation H J hJH ≃+
+      Additive (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range) :=
+    rationalFiniteNormQuotientEquivIdeleClassNormQuotient
+      (hKfinite := numberFieldTowerBaseSubgroupAbsoluteQuotientFinite K L)
+      (hfinite := numberFieldTowerExtensionQuotientFinite K L)
+      H J hJH hnormal
+  let c : Additive (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range) :=
+    Additive.ofMul
+      (QuotientGroup.mk' (_root_.ideleClassNorm F E).range
+        (Additive.toMul
+          ((rationalAbstractFixedFieldIdeleClassEquivFixed H).symm a)))
+  have hfixed :
+      q (finiteNormClass rationalIdeleClassRepresentation H J hJH a) = c :=
     rationalFiniteNormQuotientEquivIdeleClassNormQuotient_finiteNormClass
       (hKfinite := numberFieldTowerBaseSubgroupAbsoluteQuotientFinite K L)
       (hfinite := numberFieldTowerExtensionQuotientFinite K L)
       H J hJH hnormal a
-  unfold numberFieldTowerFiniteNormClassDirectComparisonValue
-  unfold numberFieldTowerActualNormClassRepresentativeValue
-  exact
-    congrArg (MulEquiv.toAdditive actualFieldEquiv.symm) hfixed
+  change
+    (MulEquiv.toAdditive actualFieldEquiv.symm)
+        (q (finiteNormClass rationalIdeleClassRepresentation H J hJH a)) =
+      (MulEquiv.toAdditive actualFieldEquiv.symm) c
+  exact congrArg
+    (fun x : Additive (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range) =>
+      (MulEquiv.toAdditive actualFieldEquiv.symm) x) hfixed
 
 private theorem numberFieldTowerActualNormClassRepresentativeValue_eq_expected
     (a : KummerTheory.ambientFixedAddSubgroup
@@ -311,23 +341,18 @@ private theorem numberFieldTowerActualNormClassRepresentativeValue_eq_expected
     numberFieldTowerTopSubgroup_le_baseSubgroup K L
   let F := abstractFixedField ℚ (SeparableClosure ℚ) H
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hJH
-  letI := numberFieldTowerAbstractBaseFiniteDimensional K L
-  letI := numberFieldTowerAbstractRelativeFiniteDimensional K L
-  letI := numberFieldTowerAbstractScalarTower K L
-  letI := numberFieldTowerAbstractTopFiniteDimensional K L
-  letI := numberFieldTowerAbstractBaseNumberField K L
-  letI := numberFieldTowerAbstractTopNumberField K L
-  letI := numberFieldTowerRestrictedTopFiniteDimensional K L
-  letI := numberFieldTowerRestrictedTopNumberField K L
-  letI := numberFieldTowerRestrictedTopAlgebra K L
-  letI : IsGalois F (E.restrictScalars ℚ) := by
-    change IsGalois F E
-    exact numberFieldTowerAbstractRelativeIsGalois K L
-  let actualFieldEquiv :=
+  let : NumberField F := numberFieldTowerAbstractBaseNumberField K L
+  let : NumberField E := numberFieldTowerAbstractTopNumberField K L
+  let eBase : K ≃ₐ[ℚ] F := numberFieldTowerAbstractBaseFieldEquiv K L
+  let eTop : L ≃ₐ[ℚ] E := numberFieldTowerAbstractTopFieldEquiv K L
+  have hcompat : ∀ x : K,
+      eTop (algebraMap K L x) = algebraMap F E (eBase x) :=
+    numberFieldTowerAbstractFieldEquiv_algebraMap K L
+  let actualFieldEquiv :
+      (IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range) ≃*
+        (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range) :=
     ordinaryIdeleClassNormQuotientCongrOfAlgEquiv
-      (numberFieldTowerAbstractBaseFieldEquiv K L)
-      (numberFieldTowerAbstractTopFieldEquiv K L)
-      (numberFieldTowerAbstractFieldEquiv_algebraMap K L)
+      (K := K) (L := L) (K' := F) (L' := E) eBase eTop hcompat
   let c : IdeleClassGroup F :=
     Additive.toMul
       ((rationalAbstractFixedFieldIdeleClassEquivFixed H).symm a)
@@ -344,9 +369,7 @@ private theorem numberFieldTowerActualNormClassRepresentativeValue_eq_expected
   exact
     congrArg Additive.ofMul
       (ordinaryIdeleClassNormQuotientCongrOfAlgEquiv_symm_mk
-        (numberFieldTowerAbstractBaseFieldEquiv K L)
-        (numberFieldTowerAbstractTopFieldEquiv K L)
-        (numberFieldTowerAbstractFieldEquiv_algebraMap K L) c)
+        (K₀ := K) (L₀ := L) (K₁ := F) (L₁ := E) eBase eTop hcompat c)
 
 /-- On a finite norm-class representative, the comparison with the
 original number-field tower is the ordinary class map applied after
@@ -418,9 +441,6 @@ theorem
         (numberFieldTowerIdeleClassEquivAmbientFixed
           K L).symm.toAddMonoidHom =
       (_root_.ideleClassNorm K L).range.toAddSubgroup := by
-  letI := (numberFieldTowerFiniteAbstractField K L).finite
-  letI := numberFieldTowerExtensionSubgroup_normal K L
-  letI := numberFieldTowerExtensionQuotient_finite K L
   let E :=
     numberFieldTowerIdeleClassEquivAmbientFixed K L
   let Q :=
@@ -501,9 +521,6 @@ theorem numberFieldTowerTransport_isNormOpen_of_normRange_le
           (KummerTheory.ambientFixedAddSubgroup
             rationalIdeleClassRepresentation
             (numberFieldTowerBaseSubgroup K L))) := by
-  letI := (numberFieldTowerFiniteAbstractField K L).finite
-  letI := numberFieldTowerExtensionSubgroup_normal K L
-  letI := numberFieldTowerExtensionQuotient_finite K L
   let E :=
     numberFieldTowerIdeleClassEquivAmbientFixed K L
   rw [normTopology_addSubgroup_isOpen_iff]

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Galois.MaximalAbelianSubextension
-import AlgebraicNumberTheory.Idele.ClassGroup.NormalClosureNorm
-import GlobalClassFieldTheory.Reciprocity.IntermediateNormAbelianization
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.MaximalAbelianSubextension
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormalClosureNorm
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IntermediateNormAbelianization
+
+set_option autoImplicit false
 
 /-!
 # The norm limitation theorem
@@ -142,7 +144,7 @@ theorem
     [IsAbelianGalois K L] :
     finiteNormalClosureMaximalAbelianSubfield K L =
       finiteNormalClosureOriginalField K L := by
-  letI : IsAbelianGalois K (finiteNormalClosureOriginalField K L) :=
+  let : IsAbelianGalois K (finiteNormalClosureOriginalField K L) :=
     IsAbelianGalois.of_algHom
       (finiteNormalClosureOriginalFieldEquiv K L).symm.toAlgHom
   apply le_antisymm

@@ -1,5 +1,7 @@
-import CyclicCohomology.Herbrand.Induced
-import RamificationTheory.HilbertRamification.AlgebraicLocalization
+import GaloisCohomology.Cyclic.Herbrand.Induced
+import ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
+
+set_option autoImplicit false
 
 /-!
 # Local blocks of the idele group

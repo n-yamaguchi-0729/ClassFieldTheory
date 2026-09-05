@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldMembership
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldAlgebra
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldMembership
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldAlgebra
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: the standard level embedded in the higher-unit fixed field

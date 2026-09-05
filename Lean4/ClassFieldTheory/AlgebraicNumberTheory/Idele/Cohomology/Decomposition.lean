@@ -1,8 +1,20 @@
-import AlgebraicNumberTheory.Idele.SPlaces
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Family
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
-import LocalClassFieldTheory.Finite.Unramified.Cohomology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SPlaces
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Family.Instances
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Family.H0
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Family.HMinusOne
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Finite
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.H0
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.HMinusOne
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Quotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Cohomology
+
+set_option autoImplicit false
 
 /-!
 # Finite-support decompositions of actual ideles
@@ -267,27 +279,27 @@ theorem localTensorFamilyEquivLocalBlockFamily_smul
       (localBlockFamilyAction d).smul τ
         (localTensorFamilyEquivLocalBlockFamily d z) := by
   funext i
-  letI :=
+  let _ :=
     decompositionGroupLocalUnitsAction
       (d i).base (d i).base_isNontrivial
       (d i).extension
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) (d i).extension.1
-  letI : SMul K (d i).extension.1.Completion :=
+  let _ : SMul K (d i).extension.1.Completion :=
     hK.toSMul
-  letI :=
+  let _ :=
     AbsoluteValue.completionAlgebra
       (d i).base (d i).extension.1
       (d i).extension.2
-  letI : ∀ w' : AbsoluteValueExtension (d i).base L,
+  let _ : ∀ w' : AbsoluteValueExtension (d i).base L,
       Algebra (d i).base.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra
       (d i).base w'.1 w'.2
-  letI :=
+  let _ :=
     localTensorUnitsAction (K := K) (L := L)
       (d i).base
-  letI : MulDistribMulAction (L ≃ₐ[K] L)
+  let _ : MulDistribMulAction (L ≃ₐ[K] L)
       (LocalPlaceBlock
         (d i).base (d i).base_isNontrivial
         (d i).extension) :=
@@ -479,12 +491,12 @@ theorem unramifiedInducedIntegerUnitsHerbrand_subsingleton
       Subsingleton
         (HerbrandHMinusOne G
           (InducedModule (B := 𝒪[ell]ˣ) H) σ) := by
-  letI : MulDistribMulAction (Gal(ell / k)) 𝒪[ell]ˣ :=
+  let _ : MulDistribMulAction (Gal(ell / k)) 𝒪[ell]ˣ :=
     galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure
       k ell
-  letI : MulDistribMulAction H 𝒪[ell]ˣ :=
+  let _ : MulDistribMulAction H 𝒪[ell]ˣ :=
     MulDistribMulAction.compHom 𝒪[ell]ˣ e.toMonoidHom
-  letI : Fintype H := Fintype.ofFinite H
+  let _ : Fintype H := Fintype.ofFinite H
   let δ := subgroupGeneratorOfGenerator H σ hσ
   have hδ : ∀ τ : Gal(ell / k),
       τ ∈ Subgroup.zpowers (e δ) := by

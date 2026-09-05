@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
-import GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
-import KummerTheory.Concrete.SimpleExtension
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+import GaloisCohomology.Kummer.Concrete.SimpleExtension
+
+set_option autoImplicit false
 
 /-!
 # Infinite-place Kummer root characters
@@ -73,11 +75,11 @@ theorem infinitePlaceKummerRootCharacter_eq_one_of_isComplex
     (v : InfinitePlace K) (a b : Kˣ) (hv : v.IsComplex) :
     infinitePlaceKummerRootCharacter K n hnK hmu v a b = 1 := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L := NumberField.of_module_finite K L
+  let : NumberField L := NumberField.of_module_finite K L
   let a_v : v.Completionˣ :=
     Units.map (algebraMap K v.Completion).toMonoidHom a
   have hArtin :

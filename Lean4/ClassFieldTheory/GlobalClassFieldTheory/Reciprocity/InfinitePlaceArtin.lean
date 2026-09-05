@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.LocalBlocks
-import AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import AlgebraicNumberTheory.Idele.SinglePlace
-import AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.LocalBlocks
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 import Mathlib.Algebra.BigOperators.Group.Finset.Lemmas
 import Mathlib.Algebra.Group.Hom.Instances
+
+set_option autoImplicit false
 
 /-!
 # Archimedean Artin homomorphisms
@@ -426,7 +428,7 @@ theorem infinitePlace_normUnits_real_complex_pos
         (LocalFieldTheory.normUnits
           v.Completion W.Completion x :
             v.Completion) := by
-  letI : W.1.LiesOver v.1 :=
+  let : W.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hW⟩
   let eReal :
       v.Completion ≃+* ℝ :=
@@ -436,7 +438,7 @@ theorem infinitePlace_normUnits_real_complex_pos
       W.Completion ≃+* ℂ :=
     InfinitePlace.Completion.ringEquivComplexOfIsComplex
       hWComplex
-  letI :
+  let :
       NumberField.ComplexEmbedding.LiesOver
         (InfinitePlace.Completion.extensionEmbedding W)
         (InfinitePlace.Completion.extensionEmbedding v) :=
@@ -485,7 +487,7 @@ theorem infinitePlace_normUnits_real_real
       Units.mapEquiv
         (InfinitePlace.Completion.ringEquivRealOfIsReal
           hWReal).toMulEquiv x := by
-  letI : W.1.LiesOver v.1 :=
+  let : W.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hW⟩
   let eBase :
       v.Completion ≃+* ℝ :=
@@ -495,7 +497,7 @@ theorem infinitePlace_normUnits_real_real
       W.Completion ≃+* ℝ :=
     InfinitePlace.Completion.ringEquivRealOfIsReal
       hWReal
-  letI :
+  let :
       NumberField.ComplexEmbedding.LiesOver
         (InfinitePlace.Completion.extensionEmbedding W)
         (InfinitePlace.Completion.extensionEmbedding v) :=
@@ -565,7 +567,7 @@ theorem infinitePlaceArtinMonoidHomOfPlace_norm_restriction
       ← IsScalarTower.algebraMap_eq K L L',
       IsScalarTower.algebraMap_eq K K' L',
       InfinitePlace.comap_comp, hw', hW]
-  letI : W.1.LiesOver v.1 :=
+  let : W.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hW⟩
   dsimp only
   by_cases hUpperUnramified : w'.IsUnramified K'
@@ -846,7 +848,7 @@ theorem chosenInfinitePlaceArtinMonoidHom_norm_restriction
       ← IsScalarTower.algebraMap_eq K L L',
       IsScalarTower.algebraMap_eq K K' L',
       InfinitePlace.comap_comp, hw', hW]
-  letI : W.1.LiesOver v.1 := ⟨rfl⟩
+  let : W.1.LiesOver v.1 := ⟨rfl⟩
   calc
     ((AlgEquiv.restrictNormalHom L).comp
         (AlgEquiv.restrictScalarsHom K)).comp
@@ -1015,7 +1017,7 @@ theorem chosenInfinitePlaceArtinMonoidHom_ker
       w.comap (algebraMap K L) = v :=
     chosenInfinitePlaceAbove_comap
       (L := L) v
-  letI : w.1.LiesOver v.1 :=
+  let : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
   rw [
     infiniteTensorNormSubgroup_eq_localNormSubgroup
@@ -1023,8 +1025,7 @@ theorem chosenInfinitePlaceArtinMonoidHom_ker
   by_cases hUnramified : w.IsUnramified K
   · have hDegree :
         Module.finrank v.Completion w.Completion = 1 :=
-      InfinitePlace.Completion.finrank_eq_one_of_isUnramified
-        v hUnramified
+      InfinitePlace.IsUnramified.finrank_eq_one v hUnramified
     have hNormTop :
         localNormSubgroup
           v.Completion w.Completion = ⊤ := by
@@ -1112,7 +1113,7 @@ theorem chosenInfinitePlaceArtinMonoidHom_ker
     let eComplexUnits :
         w.Completionˣ ≃* ℂˣ :=
       Units.mapEquiv eComplexField.toMulEquiv
-    letI :
+    let :
         NumberField.ComplexEmbedding.LiesOver
           (InfinitePlace.Completion.extensionEmbedding w)
           (InfinitePlace.Completion.extensionEmbedding v) :=
@@ -1264,7 +1265,7 @@ theorem infinitePlaceGlobalArtinMonoidHom_norm_eq_prod
             W.Completion
             (IdeleGroup.infiniteComponent W a)) := by
   classical
-  letI : ∀ W : InfinitePlace M,
+  let : ∀ W : InfinitePlace M,
       W.1.LiesOver
         (infinitePlaceBelow (K := K) W).1 :=
     fun _ => ⟨rfl⟩
@@ -1304,15 +1305,15 @@ theorem infinitePlaceGlobalArtinMonoidHom_norm_eq_prod
       let eAbove :=
         infinitePlaceAboveEquivExtension
           (K := K) (L := M) v
-      letI :=
+      let :=
         AlgebraicNumberTheory.Valuations.completionTensorDecomposition_extensionFintype
           (K := K) (L := M) vK hvK
-      letI : Fintype {W : InfinitePlace M //
+      let : Fintype {W : InfinitePlace M //
           infinitePlaceBelow (K := K) W = v} :=
         Fintype.ofEquiv
           (AlgebraicNumberTheory.Valuations.AbsoluteValueExtension vK M)
           eAbove.symm
-      letI : ∀ W : {W : InfinitePlace M //
+      let : ∀ W : {W : InfinitePlace M //
           infinitePlaceBelow (K := K) W = v},
           W.1.1.LiesOver v.1 :=
         fun W =>
@@ -1357,7 +1358,7 @@ theorem infinitePlaceGlobalArtinMonoidHom_norm_restriction
         (IdeleGroup.norm K K') := by
   apply MonoidHom.ext
   intro a
-  letI : ∀ W : InfinitePlace K',
+  let : ∀ W : InfinitePlace K',
       W.1.LiesOver
         (infinitePlaceBelow
           (K := K) W).1 :=

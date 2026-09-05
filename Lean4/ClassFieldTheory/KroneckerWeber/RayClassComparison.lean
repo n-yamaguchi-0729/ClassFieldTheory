@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.RayClass.Topology
-import AlgebraicNumberTheory.RayClass.Rational
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
 import Mathlib.NumberTheory.Cyclotomic.Gal
+
+set_option autoImplicit false
 
 /-!
 # The rational ray-class/cyclotomic comparison
@@ -57,12 +59,12 @@ theorem rationalRayClassFieldQuotient_card_eq_cyclotomicDegree
           RayClass.Modulus.congruenceSubgroup
             (RayClass.rationalModulus m)) =
       Module.finrank ℚ (CyclotomicField m ℚ) := by
-  letI : NeZero m := ⟨hm⟩
-  letI : NeZero (m : ℚ) := ⟨by exact_mod_cast hm⟩
-  letI : IsCyclotomicExtension {m} ℚ
+  let : NeZero m := ⟨hm⟩
+  let : NeZero (m : ℚ) := ⟨by exact_mod_cast hm⟩
+  let : IsCyclotomicExtension {m} ℚ
       (CyclotomicField m ℚ) :=
     CyclotomicField.isCyclotomicExtension m ℚ
-  letI : IsGalois ℚ (CyclotomicField m ℚ) :=
+  let : IsGalois ℚ (CyclotomicField m ℚ) :=
     IsCyclotomicExtension.isGalois {m} ℚ
       (CyclotomicField m ℚ)
   calc
@@ -88,9 +90,9 @@ theorem rationalRayClassFieldQuotient_card_eq_totient
           RayClass.Modulus.congruenceSubgroup
             (RayClass.rationalModulus m)) =
       m.totient := by
-  letI : NeZero m := ⟨hm⟩
-  letI : NeZero (m : ℚ) := ⟨by exact_mod_cast hm⟩
-  letI : IsCyclotomicExtension {m} ℚ
+  let : NeZero m := ⟨hm⟩
+  let : NeZero (m : ℚ) := ⟨by exact_mod_cast hm⟩
+  let : IsCyclotomicExtension {m} ℚ
       (CyclotomicField m ℚ) :=
     CyclotomicField.isCyclotomicExtension m ℚ
   calc

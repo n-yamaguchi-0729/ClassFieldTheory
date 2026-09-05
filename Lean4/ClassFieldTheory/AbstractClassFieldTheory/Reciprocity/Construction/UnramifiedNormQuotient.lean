@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FiniteNormQuotient
-import AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityIndependence
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FiniteNormQuotient
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityIndependence
+
+set_option autoImplicit false
 
 universe u
 
@@ -315,10 +317,10 @@ theorem unramifiedNormQuotientValuation_injective
       ⟨a - normb, by
         rw [v.mem_unitAddSubgroup_iff, map_sub, haz, hnormb, sub_self]⟩
     let KR := K.toFiniteResidueAbstractField D
-    letI : (extensionSubgroup KR.field L hLK).Normal := by
+    let : (extensionSubgroup KR.field L hLK).Normal := by
       change (extensionSubgroup K.field L hLK).Normal
       exact hnormal
-    letI : Finite
+    let : Finite
         (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
       change Finite
         (K.field.toSubgroup ⧸ extensionSubgroup K.field L hLK)
@@ -326,7 +328,7 @@ theorem unramifiedNormQuotientValuation_injective
     obtain ⟨g, hg⟩ :=
       D.exists_quotient_generator_of_unramified
         KR L hLK hUnramified
-    letI : Fintype
+    let : Fintype
         (K.field.toSubgroup ⧸ extensionSubgroup K.field L hLK) :=
       Fintype.ofFinite _
     let Euc : FiniteUnramifiedCyclicExtension D K :=
@@ -464,9 +466,9 @@ theorem primeClass_zmultiples_eq_top
       (finiteNormClass A K.field L hLK π) = ⊤ := by
   let e := v.unramifiedReciprocity_valuationEquiv hAxiom K L hLK hUnramified
   let E := FiniteAbstractFieldExtension.ofInclusion L K hLK
-  letI : NeZero (E.degree : ℕ) :=
+  let : NeZero (E.degree : ℕ) :=
     ⟨E.degree.property.ne'⟩
-  letI : Finite (FiniteNormQuotient A K.field L hLK) :=
+  let : Finite (FiniteNormQuotient A K.field L hLK) :=
     Finite.of_equiv (ZMod (E.degree : ℕ)) (by
       simpa [E] using e.symm.toEquiv)
   apply AddSubgroup.eq_top_of_card_eq

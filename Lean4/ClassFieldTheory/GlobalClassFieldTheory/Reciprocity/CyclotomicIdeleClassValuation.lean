@@ -1,10 +1,12 @@
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
-import GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleValueTopology
-import GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtension
-import AlgebraicNumberTheory.Idele.NormOneCompact
-import AlgebraicNumberTheory.Idele.NormTopology.IdeleClassNorm
-import AbstractClassFieldTheory.Degree.Valuation
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleValueTopology
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtension
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormOneCompact
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.IdeleClassNorm
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
+
+set_option autoImplicit false
 
 /-!
 # The cyclotomic valuation on idele classes
@@ -35,6 +37,16 @@ namespace Reciprocity
 
 open ClassFormation
 open KummerTheory
+
+/-- Fix the canonical source-group dictionary before constructing the value maps
+and their additive ranges. -/
+@[instance_reducible]
+private noncomputable def cyclotomicValuationIdeleClassCommGroup
+    (F : Type) [Field F] [NumberField F] :
+    CommGroup (IdeleClassGroup F) :=
+  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
+
+attribute [local instance] cyclotomicValuationIdeleClassCommGroup
 
 /-- Lift a continuous multiplicative map through a quotient group once its
 defining normal subgroup is contained in the kernel.  Keeping the quotient-map
@@ -327,7 +339,7 @@ theorem
 /-- Use the rational algebra structure expected by the imported finite-layer
 API throughout this block.  Fixing it before the first finite-layer binder
 keeps the parameter and every restriction target definitionally aligned. -/
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicIdeleClassValuation_rationalCyclotomicZHatFieldAlgebra :
     Algebra ℚ rationalCyclotomicZHatField :=
   DivisionRing.toRatAlgebra
@@ -345,7 +357,7 @@ private theorem
   NumberField.of_module_finite K
     (numberFieldCyclotomicZHatFiniteLayerInCompositum K E)
 
-attribute [local instance 2000]
+attribute [local instance]
   numberFieldCyclotomicZHatFiniteLayerNumberField
 
 private structure NumberFieldCyclotomicZHatFiniteLayerArtinData
@@ -953,7 +965,7 @@ private theorem rationalAbstractFixedFieldNumberField :
     NumberField
       (LocalClassFieldTheory.abstractFixedField
         ℚ (SeparableClosure ℚ) H.field) := by
-  letI : FiniteDimensional ℚ
+  let : FiniteDimensional ℚ
       (LocalClassFieldTheory.abstractFixedField
         ℚ (SeparableClosure ℚ) H.field) :=
     rationalAbstractFixedFieldFiniteDimensional H
@@ -969,24 +981,17 @@ theorem
     let F :=
       LocalClassFieldTheory.abstractFixedField
         ℚ (SeparableClosure ℚ) H.field
-    letI : FiniteDimensional ℚ F :=
+    let : FiniteDimensional ℚ F :=
       rationalAbstractFixedFieldFiniteDimensional H
-    letI : NumberField F :=
+    let : NumberField F :=
       rationalAbstractFixedFieldNumberField H
     (rationalCyclotomicZHatIdeleClassNormComposite F).range =
       nsmulImage (⊤ : AddSubgroup ZHat)
         (H.residueDegree rationalCyclotomicDegreeData : ℕ) := by
+  intro F hfinite hnumberField
+  clear hfinite
   have hdegree :=
-    cyclotomicZHatIntersectionDegree_abstractFixedField_eq_residueDegree
-      H
-  dsimp only
-  let F :=
-    LocalClassFieldTheory.abstractFixedField
-      ℚ (SeparableClosure ℚ) H.field
-  letI : FiniteDimensional ℚ F :=
-    rationalAbstractFixedFieldFiniteDimensional H
-  letI : NumberField F :=
-    rationalAbstractFixedFieldNumberField H
+    cyclotomicZHatIntersectionDegree_abstractFixedField_eq_residueDegree H
   rw [rationalCyclotomicZHatIdeleClassNormComposite_range]
   exact
     congrArg
@@ -1003,9 +1008,7 @@ theorem rationalCyclotomicZHatValuation_normToBase_range :
   let F :=
     LocalClassFieldTheory.abstractFixedField
       ℚ (SeparableClosure ℚ) H.field
-  letI : FiniteDimensional ℚ F :=
-    rationalAbstractFixedFieldFiniteDimensional H
-  letI : NumberField F :=
+  let : NumberField F :=
     rationalAbstractFixedFieldNumberField H
   let eF :=
     rationalAbstractFixedFieldIdeleClassEquivFixed H.field
@@ -1092,9 +1095,7 @@ theorem rationalCyclotomicZHatValuation_normToBase_fixed_apply
   let F :=
     LocalClassFieldTheory.abstractFixedField
       ℚ (SeparableClosure ℚ) H.field
-  letI : FiniteDimensional ℚ F :=
-    rationalAbstractFixedFieldFiniteDimensional H
-  letI : NumberField F :=
+  let : NumberField F :=
     rationalAbstractFixedFieldNumberField H
   change
     rationalCyclotomicZHatIdeleClassValueContinuous
@@ -1135,13 +1136,11 @@ theorem
   let F :=
     LocalClassFieldTheory.abstractFixedField
       ℚ (SeparableClosure ℚ) H.field
-  letI : FiniteDimensional ℚ F :=
-    rationalAbstractFixedFieldFiniteDimensional H
-  letI : NumberField F :=
+  let : NumberField F :=
     rationalAbstractFixedFieldNumberField H
   apply
     zHatMulNat_injective
-      (H.residueDegree rationalCyclotomicDegreeData).property
+      (H.residueDegree rationalCyclotomicDegreeData).pos
   calc
     (H.residueDegree rationalCyclotomicDegreeData : ℕ) •
           ((rationalCyclotomicIdeleClassValuationData.valuationAt H

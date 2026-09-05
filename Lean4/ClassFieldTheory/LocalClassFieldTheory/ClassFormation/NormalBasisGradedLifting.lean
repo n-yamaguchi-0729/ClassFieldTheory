@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.ClassFormation.NormalBasis
-import LocalClassFieldTheory.ClassFormation.PrincipalUnitGraded
-import LocalClassFieldTheory.ClassFormation.NormalBasisGaloisAction
-import CyclicCohomology.Herbrand.HerbrandLowDegree
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.NormalBasis
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.PrincipalUnitGraded
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.NormalBasisGaloisAction
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.ClassFormation.NormalBasisGradedLifting` Lean module. -/
 
 namespace LocalClassFieldTheory
@@ -37,8 +39,8 @@ theorem chosenNormalBasisPrincipalUnitLatticeClass_galoisGroup
         (galoisGroup_smul_mem_chosenNormalBasisPrincipalUnitSet
           (K := K) (L := L) n sigma hu) =
       sigma • chosenNormalBasisPrincipalUnitLatticeClass K L n u hu := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
   let y : chosenBaseUniformizerPowSubmodule K L n
       (chosenNormalBasisIntegerLattice K L) :=
     ⟨((((u : 𝒪[L]ˣ) : 𝒪[L]) - 1 : 𝒪[L]) : L), hu⟩
@@ -129,13 +131,13 @@ theorem chosenNormalBasisPrincipalUnitSuccQuotMulEquiv_galoisGroup
     letI := multiplicativeMulDistribMulActionOfDistribMulAction
       (Gal(L / K)) (chosenNormalBasisLatticeSuccQuot K L n)
     Phi (sigma • q) = sigma • Phi q := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
     K L n Vn hVn
-  letI := chosenNormalBasisPrincipalUnitSuccQuotMulDistribMulAction
+  let := chosenNormalBasisPrincipalUnitSuccQuotMulDistribMulAction
     K L n hV hVn hVsucc
-  letI := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
-  letI := multiplicativeMulDistribMulActionOfDistribMulAction
+  let := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
+  let := multiplicativeMulDistribMulActionOfDistribMulAction
     (Gal(L / K)) (chosenNormalBasisLatticeSuccQuot K L n)
   refine
     chosenNormalBasisPrincipalUnitSuccQuot.inductionOn
@@ -163,19 +165,19 @@ theorem exists_chosenNormalBasisPrincipalUnit_h0_oneStep_lifting
         a' ∈ chosenNormalBasisPrincipalUnitSet K L (k + 1) ∧
         (∀ sigma : Gal(L / K), sigma • a' = a') ∧
         a = tateNorm (Gal(L / K)) 𝒪[L]ˣ b * a' := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   rcases exists_chosenNormalBasisPrincipalUnitSuccQuotMulEquivLatticeSuccQuot
       (K := K) (L := L) with ⟨c, hc⟩
   refine ⟨c, ?_⟩
   intro k hck a ha hfixed
   rcases hc k hck with
     ⟨Vn, Vsucc, hV, hVn, hVsucc, Phi, _hVnle, hPhi⟩
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
     K L k Vn hVn
-  letI := chosenNormalBasisPrincipalUnitSuccQuotMulDistribMulAction
+  let := chosenNormalBasisPrincipalUnitSuccQuotMulDistribMulAction
     K L k hV hVn hVsucc
-  letI := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L k
-  letI := multiplicativeMulDistribMulActionOfDistribMulAction
+  let := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L k
+  let := multiplicativeMulDistribMulActionOfDistribMulAction
     (Gal(L / K)) (chosenNormalBasisLatticeSuccQuot K L k)
   let av : Vn := ⟨a, by
     change a ∈ (Vn : Set 𝒪[L]ˣ)
@@ -315,19 +317,19 @@ theorem exists_chosenNormalBasisPrincipalUnit_hMinusOne_oneStep_lifting
         a' ∈ chosenNormalBasisPrincipalUnitSet K L (k + 1) ∧
         tateNorm (Gal(L / K)) 𝒪[L]ˣ a' = 1 ∧
         a = sigmaMinusOne (Gal(L / K)) 𝒪[L]ˣ g b * a' := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   rcases exists_chosenNormalBasisPrincipalUnitSuccQuotMulEquivLatticeSuccQuot
       (K := K) (L := L) with ⟨c, hc⟩
   refine ⟨c, ?_⟩
   intro k hck a ha hnorm
   rcases hc k hck with
     ⟨Vn, Vsucc, hV, hVn, hVsucc, Phi, _hVnle, hPhi⟩
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction
     K L k Vn hVn
-  letI := chosenNormalBasisPrincipalUnitSuccQuotMulDistribMulAction
+  let := chosenNormalBasisPrincipalUnitSuccQuotMulDistribMulAction
     K L k hV hVn hVsucc
-  letI := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L k
-  letI := multiplicativeMulDistribMulActionOfDistribMulAction
+  let := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L k
+  let := multiplicativeMulDistribMulActionOfDistribMulAction
     (Gal(L / K)) (chosenNormalBasisLatticeSuccQuot K L k)
   let av : Vn := ⟨a, by
     change a ∈ (Vn : Set 𝒪[L]ˣ)
@@ -448,8 +450,16 @@ theorem exists_chosenNormalBasisPrincipalUnit_hMinusOne_oneStep_lifting
       (chosenNormalBasisPrincipalUnitSubgroupInclusion (L := L) Vn)
       (fun sigma z => chosenNormalBasisPrincipalUnitSubgroupInclusion_equivariant
         (K := K) (L := L) k Vn hVn sigma z) aprimev
-    rw [haprimeNormV] at hmap
-    simpa using hmap.symm
+    have hleft :
+        chosenNormalBasisPrincipalUnitSubgroupInclusion (L := L) Vn
+          (tateNorm (Gal(L / K)) Vn aprimev) = 1 :=
+      (congrArg
+        (chosenNormalBasisPrincipalUnitSubgroupInclusion (L := L) Vn)
+        haprimeNormV).trans
+          (chosenNormalBasisPrincipalUnitSubgroupInclusion (L := L) Vn).map_one
+    exact (congrArg (tateNorm (Gal(L / K)) 𝒪[L]ˣ)
+      (chosenNormalBasisPrincipalUnitSubgroupInclusion_apply
+        (L := L) Vn aprimev)).symm.trans (hmap.symm.trans hleft)
   refine ⟨(bv : 𝒪[L]ˣ), (aprimev : 𝒪[L]ˣ), ?_, ?_, haprimeNorm, ?_⟩
   · exact hVn ▸ bv.2
   · exact hVsucc ▸ haprimeSucc

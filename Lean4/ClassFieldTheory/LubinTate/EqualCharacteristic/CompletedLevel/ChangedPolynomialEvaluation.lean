@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizer
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: evaluation of changed Lubin--Tate polynomials

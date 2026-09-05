@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
-import AlgebraicNumberTheory.Idele.IdentityComponent
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldOriginalField
-import GlobalClassFieldTheory.Reciprocity.MaximalAbelianGlobalArtin
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdentityComponent
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldOriginalField
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianGlobalArtin
+
+set_option autoImplicit false
 
 /-!
 # The kernel of maximal abelian global reciprocity
@@ -96,7 +98,7 @@ theorem finiteAbelianExtensionInMaximalAbelianExtension_ideleClassNorm_range
   let e : L ≃ₐ[K] E :=
     finiteAbelianExtensionEquivInMaximalAbelianExtension K L
   let hE : NumberField E := NumberField.of_module_finite K E
-  letI : NumberField E := hE
+  let : NumberField E := hE
   have htransport :=
     ordinaryIdeleClassNorm_range_map_congrOfAlgEquiv
       (K := K) (K' := K) (L := L) (L' := E)
@@ -130,11 +132,11 @@ theorem maximalAbelianGlobalArtin_ker :
     obtain ⟨H, hHclosed, hHfinite, _, hcH⟩ :=
       exists_closedFiniteIndexSubgroup_not_mem_of_not_mem_identityComponent
         K c hcIdentity
-    letI : H.FiniteIndex := hHfinite
+    let : H.FiniteIndex := hHfinite
     let L := closedFiniteIndexClassField (K := K) H hHclosed
-    letI : NumberField L := NumberField.of_module_finite K L
+    let : NumberField L := NumberField.of_module_finite K L
     let E := finiteAbelianExtensionInMaximalAbelianExtension K L
-    letI : NumberField E := NumberField.of_module_finite K E
+    let : NumberField E := NumberField.of_module_finite K E
     have hNormE : (_root_.ideleClassNorm K E).range = H := by
       calc
         (_root_.ideleClassNorm K E).range =

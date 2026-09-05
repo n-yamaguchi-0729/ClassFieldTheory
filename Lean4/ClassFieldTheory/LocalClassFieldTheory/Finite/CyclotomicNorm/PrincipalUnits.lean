@@ -1,7 +1,9 @@
-import LocalFieldTheory.Padic.PrincipalUnits
-import LocalFieldTheory.Padic.Cyclotomic.TotallyRamified.Existence
-import LocalClassFieldTheory.Finite.UnramifiedConductor
-import ValuationTheory.LocalRingEquiv
+import ValuedFieldTheory.LocalField.Padic.PrincipalUnits
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.Existence
+import ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
+import ValuedFieldTheory.Valuation.LocalRingEquiv
+
+set_option autoImplicit false
 
 /-!
 # Norm subgroups of p-adic prime-power cyclotomic extensions
@@ -125,17 +127,17 @@ theorem localNormSubgroup_eq_uniformizerPrincipalSubgroup_cyclotomicPrimePower_o
     (hgen : Algebra.adjoin ℚ_[p] ({zeta} : Set L) = ⊤) :
     localNormSubgroup ℚ_[p] L =
       LocalFieldTheory.uniformizerPrincipalSubgroup ℚ_[p] (padicPrimeUnit p) 1 (k + 1) := by
-  letI : IsNonarchimedeanLocalField ℚ_[p] :=
+  let : IsNonarchimedeanLocalField ℚ_[p] :=
     padicIsNonarchimedeanLocalField p
   let n := p ^ (k + 1)
-  letI : NeZero n :=
+  let : NeZero n :=
     ⟨pow_ne_zero _ (Fact.out : Nat.Prime p).ne_zero⟩
-  letI : IsCyclotomicExtension {n} ℚ_[p] L := by
+  let : IsCyclotomicExtension {n} ℚ_[p] L := by
     simpa [n] using
       AlgebraicNumberTheory.Valuations.padic_isCyclotomicExtension_of_primitiveRoot_adjoin_eq_top zeta hzeta hgen
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     IsCyclotomicExtension.finiteDimensional {n} ℚ_[p] L
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     IsCyclotomicExtension.isAbelianGalois {n} ℚ_[p] L
   let H :=
     LocalFieldTheory.uniformizerPrincipalSubgroup ℚ_[p] (padicPrimeUnit p) 1 (k + 1)
@@ -163,7 +165,7 @@ theorem localNormSubgroup_eq_uniformizerPrincipalSubgroup_cyclotomicPrimePower_o
   have hdpos : 0 < (p - 1) * p ^ k :=
     Nat.mul_pos (Nat.sub_pos_of_lt (Fact.out : Nat.Prime p).one_lt)
       (pow_pos (Fact.out : Nat.Prime p).pos k)
-  letI : H.FiniteIndex := ⟨by
+  let : H.FiniteIndex := ⟨by
     rw [hindexH]
     exact Nat.ne_of_gt hdpos⟩
   have hHN : H ≤ N := by
@@ -190,8 +192,8 @@ theorem minpoly_two_add_primitiveFourthRoot
     minpoly ℚ_[2] ((2 : L) + i) =
       (Polynomial.cyclotomic 4 ℚ_[2]).comp
         (Polynomial.X - Polynomial.C (2 : ℚ_[2])) := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
-  letI : NeZero (4 : ℚ_[2]) := ⟨by norm_num⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : NeZero (4 : ℚ_[2]) := ⟨by norm_num⟩
   have hirr :
       Irreducible (Polynomial.cyclotomic 4 ℚ_[2]) := by
     simpa using
@@ -253,14 +255,14 @@ theorem norm_two_add_fourthRoot_cyclotomic_two
     (hgen : Algebra.adjoin ℚ_[2] ({zeta} : Set L) = ⊤) :
     Algebra.norm ℚ_[2] ((2 : L) + zeta ^ (2 ^ m)) =
       (5 : ℚ_[2]) ^ (2 ^ m) := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let n := 2 ^ (m + 2)
-  letI : NeZero n := ⟨pow_ne_zero _ (by norm_num)⟩
-  letI : IsCyclotomicExtension {n} ℚ_[2] L := by
+  let : NeZero n := ⟨pow_ne_zero _ (by norm_num)⟩
+  let : IsCyclotomicExtension {n} ℚ_[2] L := by
     simpa [n, Nat.add_assoc] using
       AlgebraicNumberTheory.Valuations.padic_isCyclotomicExtension_of_primitiveRoot_adjoin_eq_top
         (p := 2) (k := m + 1) zeta hzeta hgen
-  letI : FiniteDimensional ℚ_[2] L :=
+  let : FiniteDimensional ℚ_[2] L :=
     IsCyclotomicExtension.finiteDimensional {n} ℚ_[2] L
   let i : L := zeta ^ (2 ^ m)
   have hi : IsPrimitiveRoot i 4 := by
@@ -339,7 +341,7 @@ theorem padicDVR_logExp_level_two :
         (((LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
           (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2)).residueCharacteristic : ℚ) - 1) <
       (2 : ℚ) := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   rw [padicDVR_ramificationIndex_eq_one 2,
     padicDVR_residueCharacteristic 2]
   norm_num
@@ -367,7 +369,7 @@ theorem padicDVR_higherPrincipalUnit_two_power
       ∃ r : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2,
         (r : F.valuationSubringˣ) ^ (2 ^ m) =
           (u : F.valuationSubringˣ) := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let v := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2
   let F :=
     LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.completeDVFOfWithZeroValuation v
@@ -472,7 +474,7 @@ noncomputable def padicDVR_five :
     let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
     ((((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
       F.valuationSubringˣ) : F.valuationSubring) : ℚ_[2]) = 5 := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
   let eO : ℤ_[2] ≃+* F.valuationSubring :=
     LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicIntEquivValuationSubring 2
@@ -492,7 +494,7 @@ theorem padicDVR_U2_split (u :
       (u : F.valuationSubringˣ) /
           (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) ∈
         LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 3 := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
   let eO : ℤ_[2] ≃+* F.valuationSubring :=
     LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicIntEquivValuationSubring 2
@@ -604,7 +606,7 @@ theorem padicDVR_U2_square_class
       (u : F.valuationSubringˣ) =
         (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) *
           (r : F.valuationSubringˣ) ^ 2 := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
   let F' :=
     LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.completeDVFOfWithZeroValuation
@@ -651,7 +653,7 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_zero
     (zeta : L) (hzeta : IsPrimitiveRoot zeta (2 ^ 1))
     (hgen : Algebra.adjoin ℚ_[2] ({zeta} : Set L) = ⊤) :
     LocalFieldTheory.fieldPrincipalUnits ℚ_[2] 1 ≤ localNormSubgroup ℚ_[2] L := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   intro x hx
   have hnorm :=
     LocalFieldTheory.DiscreteValuationField.fieldNormSubgroup_pow_finrank_mem ℚ_[2] L x
@@ -668,14 +670,14 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_succ
     (zeta : L) (hzeta : IsPrimitiveRoot zeta (2 ^ (m + 2)))
     (hgen : Algebra.adjoin ℚ_[2] ({zeta} : Set L) = ⊤) :
     LocalFieldTheory.fieldPrincipalUnits ℚ_[2] (m + 2) ≤ localNormSubgroup ℚ_[2] L := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let n := 2 ^ (m + 2)
-  letI : NeZero n := ⟨pow_ne_zero _ (by norm_num)⟩
-  letI : IsCyclotomicExtension {n} ℚ_[2] L := by
+  let : NeZero n := ⟨pow_ne_zero _ (by norm_num)⟩
+  let : IsCyclotomicExtension {n} ℚ_[2] L := by
     simpa [n, Nat.add_assoc] using
       AlgebraicNumberTheory.Valuations.padic_isCyclotomicExtension_of_primitiveRoot_adjoin_eq_top
         (p := 2) (k := m + 1) zeta hzeta hgen
-  letI : FiniteDimensional ℚ_[2] L :=
+  let : FiniteDimensional ℚ_[2] L :=
     IsCyclotomicExtension.finiteDimensional {n} ℚ_[2] L
   let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
   let F' :=
@@ -838,7 +840,7 @@ theorem uniformizerPrincipalSubgroup_le_normSubgroup_cyclotomic_two
     (hgen : Algebra.adjoin ℚ_[2] ({zeta} : Set L) = ⊤) :
     LocalFieldTheory.uniformizerPrincipalSubgroup ℚ_[2] (padicPrimeUnit 2) 1 (k + 1) ≤
       localNormSubgroup ℚ_[2] L := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   rw [LocalFieldTheory.uniformizerPrincipalSubgroup]
   apply sup_le
   · rw [Subgroup.zpowers_le]
@@ -857,18 +859,18 @@ theorem localNormSubgroup_eq_uniformizerPrincipalSubgroup_cyclotomicPrimePower_t
     localNormSubgroup ℚ_[2] L =
       LocalFieldTheory.uniformizerPrincipalSubgroup ℚ_[2]
         (padicPrimeUnit 2) 1 (k + 1) := by
-  letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
-  letI : IsNonarchimedeanLocalField ℚ_[2] :=
+  let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
+  let : IsNonarchimedeanLocalField ℚ_[2] :=
     padicIsNonarchimedeanLocalField 2
   let n := 2 ^ (k + 1)
-  letI : NeZero n := ⟨pow_ne_zero _ (by norm_num)⟩
-  letI : IsCyclotomicExtension {n} ℚ_[2] L := by
+  let : NeZero n := ⟨pow_ne_zero _ (by norm_num)⟩
+  let : IsCyclotomicExtension {n} ℚ_[2] L := by
     simpa [n] using
       AlgebraicNumberTheory.Valuations.padic_isCyclotomicExtension_of_primitiveRoot_adjoin_eq_top
         zeta hzeta hgen
-  letI : FiniteDimensional ℚ_[2] L :=
+  let : FiniteDimensional ℚ_[2] L :=
     IsCyclotomicExtension.finiteDimensional {n} ℚ_[2] L
-  letI : IsAbelianGalois ℚ_[2] L :=
+  let : IsAbelianGalois ℚ_[2] L :=
     IsCyclotomicExtension.isAbelianGalois {n} ℚ_[2] L
   let H :=
     LocalFieldTheory.uniformizerPrincipalSubgroup ℚ_[2]
@@ -895,7 +897,7 @@ theorem localNormSubgroup_eq_uniformizerPrincipalSubgroup_cyclotomicPrimePower_t
     rw [Subgroup.index_eq_card]
     exact hcardN
   have hdpos : 0 < (2 - 1) * 2 ^ k := by positivity
-  letI : H.FiniteIndex := ⟨by
+  let : H.FiniteIndex := ⟨by
     rw [hindexH]
     exact Nat.ne_of_gt hdpos⟩
   have hHN : H ≤ N := by

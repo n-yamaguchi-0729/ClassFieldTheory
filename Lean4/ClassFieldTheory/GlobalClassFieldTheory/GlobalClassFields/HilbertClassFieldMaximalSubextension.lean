@@ -1,11 +1,13 @@
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
-import GlobalClassFieldTheory.GlobalClassFields.EmbeddedAbelianSubextension
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
-import GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
-import GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.EmbeddedAbelianSubextension
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
 import Mathlib.NumberTheory.NumberField.Basic
-import RamificationTheory.GaloisValuation.ClosedFixingSubgroup
+import ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
+
+set_option autoImplicit false
 
 /-!
 # The maximal finite-unramified abelian subextension
@@ -186,7 +188,7 @@ private theorem bigHilbertClassFieldMaximalNormSubgroup_map_symm
   let e :=
     rationalAbstractFixedFieldIdeleClassEquivFixed
       (bigHilbertClassFieldBaseSubgroup K)
-  letI hLfinite : Finite
+  let hLfinite : Finite
       ((bigHilbertClassFieldBaseSubgroup K).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           (bigHilbertClassFieldBaseSubgroup K)
@@ -603,7 +605,7 @@ noncomputable def bigHilbertClassFieldCompatibleEmbedding
     [Algebra K E] [FiniteDimensional K E] :
     E →ₐ[ℚ] SeparableClosure ℚ :=
   Classical.choose
-    (IsAlgClosed.surjective_restrictDomain_of_isAlgebraic
+    (IsAlgClosed.surjective_domRestrict_of_isAlgebraic
       (K := ℚ) (L := K) (E := E)
       (M := SeparableClosure ℚ)
       (bigHilbertClassFieldBaseEmbedding K))
@@ -616,10 +618,10 @@ theorem bigHilbertClassFieldCompatibleEmbedding_restrictDomain
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E] :
-    (bigHilbertClassFieldCompatibleEmbedding K E).restrictDomain K =
+    (bigHilbertClassFieldCompatibleEmbedding K E).domRestrict K =
       bigHilbertClassFieldBaseEmbedding K :=
   Classical.choose_spec
-    (IsAlgClosed.surjective_restrictDomain_of_isAlgebraic
+    (IsAlgClosed.surjective_domRestrict_of_isAlgebraic
       (K := ℚ) (L := K) (E := E)
       (M := SeparableClosure ℚ)
       (bigHilbertClassFieldBaseEmbedding K))
@@ -654,7 +656,7 @@ theorem bigHilbertClassFieldCompatibleEmbedding_baseSubgroup
       bigHilbertClassFieldBaseSubgroup K := by
   change
     RamificationTheory.closedFixingSubgroup ℚ (SeparableClosure ℚ)
-        ((bigHilbertClassFieldCompatibleEmbedding K E).restrictDomain K).fieldRange =
+        ((bigHilbertClassFieldCompatibleEmbedding K E).domRestrict K).fieldRange =
       RamificationTheory.closedFixingSubgroup ℚ (SeparableClosure ℚ)
         (bigHilbertClassFieldBaseEmbedding K).fieldRange
   exact
@@ -709,9 +711,9 @@ theorem finitePlaceUnramifiedness_congrTop
     (e : L ≃ₐ[K] M)
     (h : IsUnramifiedAtFinitePlaces K L) :
     IsUnramifiedAtFinitePlaces K M := by
-  letI hAlgebra : Algebra L M :=
+  let hAlgebra : Algebra L M :=
     e.toRingHom.toAlgebra
-  letI hScalarTower : IsScalarTower K L M :=
+  let hScalarTower : IsScalarTower K L M :=
     IsScalarTower.of_algebraMap_eq' (by
       apply RingHom.ext
       intro x
@@ -720,7 +722,7 @@ theorem finitePlaceUnramifiedness_congrTop
     AlgEquiv.ofRingEquiv (f := e.toRingEquiv) (fun _ => rfl)
   let eOLM : (𝓞 L) ≃ₐ[𝓞 L] (𝓞 M) :=
     NumberField.RingOfIntegers.mapAlgEquiv eLM
-  letI hFormallyUnramified :
+  let hFormallyUnramified :
       Algebra.FormallyUnramified (𝓞 L) (𝓞 M) :=
     Algebra.FormallyUnramified.of_equiv eOLM
   have hLM :

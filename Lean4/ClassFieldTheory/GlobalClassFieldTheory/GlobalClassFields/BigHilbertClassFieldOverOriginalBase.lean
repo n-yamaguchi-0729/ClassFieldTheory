@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
+
+set_option autoImplicit false
 
 /-!
 # The big Hilbert class field over the original number field

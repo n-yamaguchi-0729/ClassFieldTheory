@@ -1,7 +1,9 @@
-import LubinTate.EqualCharacteristic.Ramification.DisplacementValuation
-import RamificationTheory.HilbertRamification.RealLowerGroups
-import RamificationTheory.HilbertRamification.RamificationNumber
-import ValuationTheory.DiscreteValuationField.AddVal
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.DisplacementValuation
+import ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
+import ValuedFieldTheory.Ramification.HilbertRamification.RamificationNumber
+import ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+
+set_option autoImplicit false
 
 /-!
 # Lower ramification groups of equal-characteristic Lubin--Tate levels
@@ -385,7 +387,7 @@ theorem mem_equalCharacteristicLubinTateRealLowerRamificationGroup_pow_sub_one_i
         intro htop
         exact hu (PowerSeries.order_eq_top.mp htop)
       have hcoe : ((u.order.toNat : ℕ) : ℕ∞) = u.order :=
-        ENat.coe_toNat hordertop
+        ENat.natCast_toNat hordertop
       have hkorder : k ≤ u.order.toNat := by
         rw [← hcoe] at horder
         exact_mod_cast horder
@@ -699,7 +701,7 @@ theorem mem_equalCharacteristicLubinTateRealLowerRamificationGroup_nat_iff_coeff
         intro htop
         exact hu (PowerSeries.order_eq_top.mp htop)
       have hcoe : ((u.order.toNat : ℕ) : ℕ∞) = u.order :=
-        ENat.coe_toNat hordertop
+        ENat.natCast_toNat hordertop
       have hkorder : k ≤ u.order.toNat := by
         rw [← hcoe] at horder
         exact_mod_cast horder

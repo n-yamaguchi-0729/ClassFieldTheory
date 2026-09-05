@@ -1,8 +1,10 @@
-import GlobalClassFieldTheory.GlobalClassFields.KummerNormDescent
-import GlobalClassFieldTheory.GlobalClassFields.SUnitKummerNormRealization
-import AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
-import AlgebraicNumberTheory.Idele.ClassGroup.NormalClosureNorm
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.KummerNormDescent
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SUnitKummerNormRealization
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormalClosureNorm
 import Mathlib.NumberTheory.Cyclotomic.Basic
+
+set_option autoImplicit false
 
 /-!
 # Cyclotomic descent for full S-unit Kummer norms
@@ -36,14 +38,14 @@ local instance cyclotomicKummerNormDescent_neZero
     (n : ℕ+) : NeZero (n : ℕ) :=
   ⟨n.ne_zero⟩
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicKummerNormDescent_cyclotomicFiniteDimensional
     (n : ℕ+) :
     FiniteDimensional K (CyclotomicField (n : ℕ) K) :=
   IsCyclotomicExtension.finiteDimensional
     {(n : ℕ)} K (CyclotomicField (n : ℕ) K)
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicKummerNormDescent_cyclotomicIsGalois
     (n : ℕ+) :
     IsGalois K (CyclotomicField (n : ℕ) K) :=
@@ -235,16 +237,6 @@ noncomputable abbrev cyclotomicFullSUnitKummerExtension
       (K := CyclotomicField (n : ℕ) K) n
       (cyclotomicKummerNormSupportAbove (K := K) n seed))
 
-@[reducible]
-noncomputable local instance (priority := 2000)
-    cyclotomicKummerNormDescent_kummerAlgebraOverCyclotomic
-    (n : ℕ+)
-    (seed : Finset (HeightOneSpectrum (𝓞 K))) :
-    Algebra
-      (CyclotomicField (n : ℕ) K)
-      (cyclotomicFullSUnitKummerExtension (K := K) n seed) :=
-  (cyclotomicFullSUnitKummerExtension (K := K) n seed).algebra'
-
 /-- The cyclotomic full S-unit Kummer extension is Galois over the
 cyclotomic base. -/
 theorem cyclotomicFullSUnitKummerExtension_isGalois
@@ -283,7 +275,7 @@ theorem cyclotomicFullSUnitKummerExtension_finiteDimensional
       (sUnitKummerNormSupport (K := C) n
         (cyclotomicKummerNormSupportAbove (K := K) n seed)))
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicKummerNormDescent_kummerFiniteDimensional
     (n : ℕ+)
     (seed : Finset (HeightOneSpectrum (𝓞 K))) :
@@ -325,7 +317,7 @@ private theorem
   let C := CyclotomicField (n : ℕ) K
   let S' := cyclotomicKummerNormSupportAbove (K := K) n seed
   let E := cyclotomicFullSUnitKummerExtension (K := K) n seed
-  letI : NumberField E :=
+  let : NumberField E :=
     cyclotomicKummerNormDescent_kummerNumberField (K := K) n seed
   have hmu : (primitiveRoots (n : ℕ) C).Nonempty :=
     cyclotomicKummerNormDescent_primitiveRoots_nonempty
@@ -349,7 +341,7 @@ private theorem
       hstable)
 
 @[reducible]
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicKummerNormDescent_kummerAlgebraOverBase
     (n : ℕ+)
     (seed : Finset (HeightOneSpectrum (𝓞 K))) :
@@ -361,7 +353,7 @@ noncomputable local instance (priority := 2000)
     (algebraMap K (CyclotomicField (n : ℕ) K))).toAlgebra
 
 @[reducible]
-noncomputable local instance (priority := 2000)
+private noncomputable def
     cyclotomicKummerNormDescent_kummerSMulOverBase
     (n : ℕ+)
     (seed : Finset (HeightOneSpectrum (𝓞 K))) :
@@ -372,7 +364,7 @@ noncomputable local instance (priority := 2000)
       (K := K) n seed)
 
 @[reducible]
-noncomputable local instance (priority := 2000)
+private noncomputable def
     cyclotomicKummerNormDescent_kummerModuleOverBase
     (n : ℕ+)
     (seed : Finset (HeightOneSpectrum (𝓞 K))) :
@@ -380,7 +372,7 @@ noncomputable local instance (priority := 2000)
       (cyclotomicFullSUnitKummerExtension (K := K) n seed) :=
   Algebra.toModule
 
-noncomputable local instance (priority := 2000)
+private theorem
     cyclotomicKummerNormDescent_kummerScalarTower
     (n : ℕ+)
     (seed : Finset (HeightOneSpectrum (𝓞 K))) :
@@ -389,15 +381,20 @@ noncomputable local instance (priority := 2000)
       (cyclotomicFullSUnitKummerExtension (K := K) n seed) :=
   IsScalarTower.of_algebraMap_eq' rfl
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     cyclotomicKummerNormDescent_kummerFiniteDimensionalOverBase
     (n : ℕ+)
     (seed : Finset (HeightOneSpectrum (𝓞 K))) :
     FiniteDimensional K
       (cyclotomicFullSUnitKummerExtension (K := K) n seed) :=
-  FiniteDimensional.trans K
-    (CyclotomicField (n : ℕ) K)
-    (cyclotomicFullSUnitKummerExtension (K := K) n seed)
+  by
+    let : IsScalarTower K
+        (CyclotomicField (n : ℕ) K)
+        (cyclotomicFullSUnitKummerExtension (K := K) n seed) :=
+      cyclotomicKummerNormDescent_kummerScalarTower (K := K) n seed
+    exact FiniteDimensional.trans K
+      (CyclotomicField (n : ℕ) K)
+      (cyclotomicFullSUnitKummerExtension (K := K) n seed)
 
 /-- The norm range of the actual cyclotomic full S-unit Kummer extension,
 viewed as a finite extension of `K`, lies in the power-local-unit subgroup
@@ -421,7 +418,9 @@ theorem
   let S := cyclotomicKummerNormSupport (K := K) n seed
   let S' := cyclotomicKummerNormSupportAbove (K := K) n seed
   let E := cyclotomicFullSUnitKummerExtension (K := K) n seed
-  letI : NumberField E :=
+  let : IsScalarTower K C E :=
+    cyclotomicKummerNormDescent_kummerScalarTower (K := K) n seed
+  let : NumberField E :=
     cyclotomicKummerNormDescent_kummerNumberField (K := K) n seed
   have hNormC :
       (_root_.ideleClassNorm C E).range =
@@ -465,7 +464,7 @@ theorem
   classical
   dsimp only
   let E := cyclotomicFullSUnitKummerExtension (K := K) n seed
-  letI : NumberField E :=
+  let : NumberField E :=
     cyclotomicKummerNormDescent_kummerNumberField (K := K) n seed
   let F := finiteNormalClosure K E
   calc

@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.LocalBlocks
-import CyclicCohomology.Herbrand.HerbrandLowDegree.BinaryProduct
-import AlgebraicNumberTheory.Idele.Relative.SPlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.LocalBlocks
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.BinaryProduct
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.SPlaces
 import Mathlib.Algebra.GroupWithZero.Action.Prod
+
+set_option autoImplicit false
 
 /-!
 # Reassociation of supported relative-idele factors
@@ -168,14 +170,14 @@ theorem
   · funext i
     cases i with
     | inl w =>
-        letI :=
+        let :=
           scalarTensorUnitsAction
             (K := K) (L := L) (A := w.Completion)
         exact
           RelativeIdeleGroup.infiniteComponent_smul
             (K := K) (L := L) w σ z
     | inr w =>
-        letI :=
+        let :=
           scalarTensorUnitsAction
             (K := K) (L := L)
             (A := w.1.adicCompletion K)
@@ -184,7 +186,7 @@ theorem
             (K := K) (L := L) w.1 σ z
   · funext w
     apply Subtype.ext
-    letI :=
+    let :=
       scalarTensorUnitsAction
         (K := K) (L := L)
         (A := w.1.adicCompletion K)

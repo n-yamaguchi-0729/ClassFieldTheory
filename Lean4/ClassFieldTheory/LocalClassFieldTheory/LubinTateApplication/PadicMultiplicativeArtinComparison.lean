@@ -1,11 +1,13 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
-import LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
-import LocalFieldTheory.DiscreteValuationField.FieldUnitDecomposition
-import LocalFieldTheory.DiscreteValuationField.PadicField
-import LubinTate.FiniteLevel.HigherUnitLevelEquiv
-import LubinTate.Padic.CompletedChangedStandardFrobenius
-import LubinTate.Padic.MultiplicativeEvaluation
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitDecomposition
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+import ClassFieldTheory.LubinTate.FiniteLevel.HigherUnitLevelEquiv
+import ClassFieldTheory.LubinTate.Padic.CompletedChangedStandardFrobenius
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.Core
+
+set_option autoImplicit false
 
 /-!
 # The local Artin map on multiplicative p-adic Lubin--Tate levels
@@ -43,17 +45,17 @@ noncomputable def padicCompletedChangedUniformizerNegativePrimeUnit
     (by
       let D := padicCompletedChangedUniformizerFixedField p u n
       let M := padicCompletedStandardChangedCompositum p u n
-      letI : NontriviallyNormedField D :=
+      let : NontriviallyNormedField D :=
         finiteExtensionSpectralNormedField ℚ_[p] D
-      letI : ValuativeRel D :=
+      let : ValuativeRel D :=
         finiteExtensionSpectralValuativeRel ℚ_[p] D
-      letI : IsNonarchimedeanLocalField D :=
+      let : IsNonarchimedeanLocalField D :=
         finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
-      letI : NontriviallyNormedField M :=
+      let : NontriviallyNormedField M :=
         finiteExtensionSpectralNormedField ℚ_[p] M
-      letI : ValuativeRel M :=
+      let : ValuativeRel M :=
         finiteExtensionSpectralValuativeRel ℚ_[p] M
-      letI : IsNonarchimedeanLocalField M :=
+      let : IsNonarchimedeanLocalField M :=
         finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
       apply neg_ne_zero.mpr
       exact
@@ -82,11 +84,11 @@ theorem padicCompletedChangedUniformizerNegativePrimeUnit_norm
       standardLubinTateChangedUniformizerUnit
         (padicMultiplicativeLubinTateSeries_isUniformizer p) u := by
   apply Units.ext
-  simpa only [
-    normUnits_apply_coe,
-    padicCompletedChangedUniformizerNegativePrimeUnit_coe,
-    standardLubinTateChangedUniformizerUnit_coe] using
-    padicCompletedChangedUniformizer_norm_neg_primeElement p u n
+  simpa only [normUnits_apply_coe,
+    padicCompletedChangedUniformizerNegativePrimeUnit_coe] using
+    (padicCompletedChangedUniformizer_norm_neg_primeElement p u n).trans
+      (standardLubinTateChangedUniformizerUnit_coe
+        (padicMultiplicativeLubinTateSeries_isUniformizer p) u).symm
 
 /-- The negative changed prime has normalized additive value `-1` in its
 completed fixed field. -/
@@ -106,17 +108,17 @@ theorem padicCompletedChangedUniformizerNegativePrimeUnit_valuationMap
       -1 := by
   let D := padicCompletedChangedUniformizerFixedField p u n
   let M := padicCompletedStandardChangedCompositum p u n
-  letI : NontriviallyNormedField D :=
+  let : NontriviallyNormedField D :=
     finiteExtensionSpectralNormedField ℚ_[p] D
-  letI : ValuativeRel D :=
+  let : ValuativeRel D :=
     finiteExtensionSpectralValuativeRel ℚ_[p] D
-  letI : IsNonarchimedeanLocalField D :=
+  let : IsNonarchimedeanLocalField D :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField ℚ_[p] M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel ℚ_[p] M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
   obtain ⟨htheta, _⟩ :=
     padicCompletedChangedUniformizerPrimeElement_isUniformizer_in_changedField_and_compositum
@@ -173,23 +175,23 @@ theorem
       padicCompletedChangedUniformizerRelativeArtinCandidate p u n := by
   let D := padicCompletedChangedUniformizerFixedField p u n
   let M := padicCompletedStandardChangedCompositum p u n
-  letI : NontriviallyNormedField D :=
+  let : NontriviallyNormedField D :=
     finiteExtensionSpectralNormedField ℚ_[p] D
-  letI : ValuativeRel D :=
+  let : ValuativeRel D :=
     finiteExtensionSpectralValuativeRel ℚ_[p] D
-  letI : IsNonarchimedeanLocalField D :=
+  let : IsNonarchimedeanLocalField D :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField ℚ_[p] M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel ℚ_[p] M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-  letI :
+  let :
       Valuation.HasExtension (ValuativeRel.valuation D)
         (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension_of_tower ℚ_[p] D M
-  letI :
+  let :
       IsNonarchimedeanLocalField.IsUnramifiedValuedExtension D M :=
     padicCompletedStandardChangedCompositum_isUnramifiedValuedExtension
       p u n
@@ -208,6 +210,18 @@ theorem
     _ = padicCompletedChangedUniformizerRelativeArtinCandidate p u n :=
       (padicCompletedChangedUniformizerRelativeArtinCandidate_eq_inverseArithmeticFrobenius
         p u n).symm
+
+section PadicStandardLevelRestriction
+
+private theorem padicArtinStandardLevel_normal
+    (p : ℕ) [Fact p.Prime] (n : ℕ) :
+    Normal ℚ_[p]
+      (standardLubinTateLevelField
+        (padicMultiplicativeLubinTateSeries_isUniformizer p) n) :=
+  (standardLubinTateLevelField_isGalois (F := padicLocalField p)
+    (padicMultiplicativeLubinTateSeries_isUniformizer p) n).to_normal
+
+attribute [local instance] padicArtinStandardLevel_normal
 
 /-- Restricting the relative changed-prime Artin candidate to the standard
 multiplicative level gives the direct finite unit-parameter automorphism. -/
@@ -235,10 +249,10 @@ theorem
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let T := standardLubinTateLevelField hπ n
   let M := padicCompletedStandardChangedCompositum p u n
-  letI : Algebra T M :=
+  let : Algebra T M :=
     (padicStandardLevelToCompletedChangedCompositum
       p u n).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ_[p] T M :=
+  let : IsScalarTower ℚ_[p] T M :=
     IsScalarTower.of_algebraMap_eq'
       (padicStandardLevelToCompletedChangedCompositum p u n).comp_algebraMap.symm
   apply AlgEquiv.ext
@@ -267,8 +281,13 @@ theorem
   rw [
     padicCompletedChangedUniformizerRelativeArtinCandidate_apply,
     padicCompletedChangedUniformizerArtinCandidate_standardLevel]
-  rw [standardLubinTateUnitParameterEquivGal_apply]
-  rfl
+  exact congrArg
+    (fun σ : Gal(T / ℚ_[p]) =>
+      padicStandardLevelToCompletedChangedCompositum p u n (σ x))
+    (standardLubinTateUnitParameterEquivGal_apply (padicLocalField p) hπ n
+      (standardLubinTateUnitParameterClass (padicLocalField p) n u)).symm
+
+end PadicStandardLevelRestriction
 
 /-- The chosen p-adic Lubin--Tate uniformizer is an actual norm from every
 finite multiplicative level, hence its actual local Artin image is trivial. -/
@@ -286,9 +305,9 @@ theorem padicMultiplicativeAbelianLocalArtin_baseUniformizer
       1 := by
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois
       (padicLocalField p) hπ n
   have hnorm :=
@@ -320,9 +339,9 @@ theorem padicMultiplicativeAbelianLocalArtin_eq_uniformizerUnitPart
   let F := padicLocalField p
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   let φ := abelianLocalArtinMonoidHom ℚ_[p] L
   let ϖ : ℚ_[p]ˣ := standardLubinTateBaseUniformizerUnit hπ
@@ -377,9 +396,9 @@ theorem padicMultiplicativeAbelianLocalArtin_changedUniformizer
   let hπ : F.toCompleteDVF.valuation.IsUniformizer (π : ℚ_[p]) :=
     padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField (F := F) (π := π) hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois
       F hπ n
   have hchanged :
@@ -427,41 +446,41 @@ theorem padicMultiplicativeAbelianLocalArtin_eq_unitParameter
   let T := standardLubinTateLevelField hπ n
   let D := padicCompletedChangedUniformizerFixedField p u n
   let M := padicCompletedStandardChangedCompositum p u n
-  letI : FiniteDimensional ℚ_[p] T :=
+  let : FiniteDimensional ℚ_[p] T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] T :=
+  let : IsAbelianGalois ℚ_[p] T :=
     standardLubinTateLevelField_isAbelianGalois
       (padicLocalField p) hπ n
-  letI : Algebra T M :=
+  let : Algebra T M :=
     (padicStandardLevelToCompletedChangedCompositum
       p u n).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ_[p] T M :=
+  let : IsScalarTower ℚ_[p] T M :=
     IsScalarTower.of_algebraMap_eq'
       (padicStandardLevelToCompletedChangedCompositum p u n).comp_algebraMap.symm
-  letI : FiniteDimensional D M :=
+  let : FiniteDimensional D M :=
     FiniteDimensional.right ℚ_[p] D M
-  letI : NontriviallyNormedField D :=
+  let : NontriviallyNormedField D :=
     finiteExtensionSpectralNormedField ℚ_[p] D
-  letI : ValuativeRel D :=
+  let : ValuativeRel D :=
     finiteExtensionSpectralValuativeRel ℚ_[p] D
-  letI : IsNonarchimedeanLocalField D :=
+  let : IsNonarchimedeanLocalField D :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] D
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField ℚ_[p] M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel ℚ_[p] M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField ℚ_[p] M
-  letI :
+  let :
       Valuation.HasExtension (ValuativeRel.valuation ℚ_[p])
         (ValuativeRel.valuation D) :=
     finiteExtensionSpectralValuation_hasExtension ℚ_[p] D
-  letI :
+  let :
       Valuation.HasExtension (ValuativeRel.valuation D)
         (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension_of_tower
       ℚ_[p] D M
-  letI :
+  let :
       IsNonarchimedeanLocalField.IsUnramifiedValuedExtension D M :=
     padicCompletedStandardChangedCompositum_isUnramifiedValuedExtension
       p u n
@@ -530,9 +549,9 @@ theorem padicMultiplicativeAbelianLocalArtin_primitiveRoot
   let F := padicLocalField p
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let T := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] T :=
+  let : FiniteDimensional ℚ_[p] T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] T :=
+  let : IsAbelianGalois ℚ_[p] T :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   have hArtin :
       abelianLocalArtinMonoidHom ℚ_[p] T
@@ -571,9 +590,9 @@ theorem
       1 := by
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois
       (padicLocalField p) hπ n
   have hnorm :=
@@ -644,9 +663,9 @@ theorem padicMultiplicativeArtinUnitParameterHom_surjective
   let F := padicLocalField p
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   let φ := abelianLocalArtinMonoidHom ℚ_[p] L
   intro σ
@@ -749,9 +768,9 @@ theorem padicMultiplicativeAbelianLocalArtin_ker
   let F := padicLocalField p
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   let φ := abelianLocalArtinMonoidHom ℚ_[p] L
   let ϖ : ℚ_[p]ˣ := standardLubinTateBaseUniformizerUnit hπ
@@ -848,9 +867,9 @@ theorem
   let F := padicLocalField p
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   calc
     localNormSubgroup ℚ_[p] L =
@@ -883,9 +902,9 @@ theorem
           (padicLocalField p) n u))⁻¹ := by
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois
       (padicLocalField p) hπ n
   have hArtin :
@@ -938,17 +957,17 @@ theorem
               (padicLocalField p).valuationSubring))).val := by
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois
       (padicLocalField p) hπ n
   let F := padicLocalField p
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional ℚ_[p] L :=
+  let : FiniteDimensional ℚ_[p] L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois ℚ_[p] L :=
+  let : IsAbelianGalois ℚ_[p] L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   have hArtin :
       abelianLocalArtinMonoidHom ℚ_[p] L

@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Frobenius.CoefficientFrobenius
-import LubinTate.EqualCharacteristic.Existence.LaurentLocalField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CoefficientFrobenius
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalField
 import Mathlib.RingTheory.PowerSeries.Evaluation
+
+set_option autoImplicit false
 
 /-!
 # The equal-characteristic completed-unramified construction: the completed maximal-unramified field in equal characteristic
@@ -111,7 +113,7 @@ theorem equalCharacteristicCoefficientFrobenius_fixed_iff
   · intro hx
     have hxpow : x ^ Nat.card k = x := by
       simpa [equalCharacteristicCoefficientFrobenius_apply] using hx
-    letI : Fintype k := Fintype.ofFinite k
+    let : Fintype k := Fintype.ofFinite k
     have hxint : IsIntegral k x :=
       (Algebra.IsAlgebraic.isAlgebraic x).isIntegral
     have hroot : Polynomial.aeval x
@@ -475,7 +477,8 @@ theorem equalCharacteristicCompletedUnramifiedFixedPreimage_coeff
     (m : ℤ) :
     (equalCharacteristicCompletedUnramifiedFixedPreimage k x hx).coeff m =
       equalCharacteristicCompletedUnramifiedFixedCoeff k x hx m := by
-  simp [equalCharacteristicCompletedUnramifiedFixedPreimage]
+  rw [equalCharacteristicCompletedUnramifiedFixedPreimage]
+  exact congrFun HahnSeries.coeff_ofSuppBddBelow m
 
 /-- The fixed field of coefficientwise Frobenius is exactly the embedded
 Laurent-series base `k((T))`. -/

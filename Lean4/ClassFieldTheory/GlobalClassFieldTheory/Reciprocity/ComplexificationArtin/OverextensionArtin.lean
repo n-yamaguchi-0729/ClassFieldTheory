@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RamifiedOverextension
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RamifiedOverextension
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+
+set_option autoImplicit false
 
 /-!
 # Artin reciprocity on the ramified infinite-place overextension
@@ -25,7 +27,12 @@ variable
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
 
-local instance (priority := 2000)
+section
+
+attribute [-instance]
+  ramifiedInfinitePlaceRealFixedField_ratScalarTower
+
+local instance
     ramifiedInfinitePlaceOverextensionIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
@@ -124,7 +131,7 @@ theorem
           (ramifiedInfinitePlaceRealFixedField
             (K := K) (L := L) v hRamified) x) =
       1 := by
-  letI :
+  let :
       IsAbelianGalois ℚ rationalComplexificationCyclotomicField :=
     rationalComplexificationCyclotomicField_isAbelianGalois
   apply
@@ -403,7 +410,7 @@ theorem
   let e : Q ≃* Gal(L' / K') :=
     AddEquiv.toMultiplicative
       (globalNormResidueEquiv K' L')
-  letI : Finite Q :=
+  let : Finite Q :=
     Finite.of_injective e e.injective
   exact
     (ramifiedInfinitePlaceOverextensionNormQuotientArtinMonoidHom_surjective
@@ -537,7 +544,7 @@ theorem
       (K := K) (L := L) v
   let N := (_root_.ideleClassNorm K' L').range
   let Q := IdeleClassGroup K' ⧸ N
-  letI : N.Normal := inferInstance
+  let : N.Normal := inferInstance
   change Q at q
   let qOne : Q :=
     QuotientGroup.mk
@@ -755,6 +762,8 @@ theorem
   rw [
     globalNormResidueMonoidHom_ramifiedInfinitePlaceOverextension_ideleClass_mk,
     globalArtinMonoidHom_infinitePlaceIdele]
+
+end
 
 end ComplexConjugationOverextension
 

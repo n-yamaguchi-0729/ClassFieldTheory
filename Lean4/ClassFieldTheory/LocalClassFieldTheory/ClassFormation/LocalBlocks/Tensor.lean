@@ -1,8 +1,10 @@
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Induced
-import ValuationTheory.Completion.TensorProductDecomposition
-import RamificationTheory.HilbertRamification.AlgebraicLocalization
-import RamificationTheory.HilbertRamification.AbsoluteValueConjugacy
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Induced
+import ValuedFieldTheory.Valuation.Completion.TensorProductDecomposition
+import ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
+import ValuedFieldTheory.Ramification.HilbertRamification.AbsoluteValueConjugacy
 import Mathlib.Algebra.Group.Pi.Units
+
+set_option autoImplicit false
 
 /-!
 # The tensor-product realization of a local induced block
@@ -292,13 +294,13 @@ theorem conjugateExtensionCompletionRingEquiv_algebraMap
         (algebraMap vK.Completion
           (absoluteValueExtensionConjugate vK w σ).1.Completion b) =
       algebraMap vK.Completion w.1.Completion b := by
-  letI :
+  let _ :
       Algebra vK.Completion
         (absoluteValueConjugate w.1 σ).Completion :=
     AbsoluteValue.completionAlgebra vK
       (absoluteValueConjugate w.1 σ)
       (absoluteValueConjugate_extends vK w σ)
-  letI : Algebra vK.Completion w.1.Completion :=
+  let _ : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   change
     conjugateCompletionRingEquiv w.1 σ
@@ -338,9 +340,9 @@ theorem localTensorEvaluation_tmul
       algebraMap vK.Completion (LocalizedCompletion vK w) b *
         AbsoluteValue.toAlgebraicLocalization
           vK w.1 w.2 x := by
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
   apply (localizedCompletionEquivCompletion vK hvK w).injective
   rw [map_mul]
   simp only [localTensorEvaluation, AlgHom.coe_comp, Function.comp_apply,
@@ -366,9 +368,9 @@ theorem localTensorEvaluation_conjugation_decomposition
         vK hvK w h
         (localTensorEvaluation vK hvK w
           (localTensorConjugation vK g z)) := by
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
   induction z using TensorProduct.induction_on with
   | zero =>
       simp
@@ -452,12 +454,12 @@ theorem localTensorOrbitHom_smul
     letI := localTensorUnitsAction (K := K) (L := L) vK
     localTensorOrbitHom vK hvK w (τ • z) =
       τ • localTensorOrbitHom vK hvK w z := by
-  letI :=
+  let _ :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI := localTensorUnitsAction (K := K) (L := L) vK
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ := localTensorUnitsAction (K := K) (L := L) vK
   apply Subtype.ext
   funext g
   apply Units.ext
@@ -487,7 +489,7 @@ theorem conjugateExtensionCompletionRingEquiv_completionTensorDecomposition_left
           (absoluteValueExtensionConjugate vK w g)) =
       absoluteValueExtension_localizationTensorHom vK w
         (localTensorConjugation vK g z) := by
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Algebra vK.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
   induction z using TensorProduct.induction_on with
@@ -906,12 +908,12 @@ theorem localTensorUnitsEquivLocalPlaceBlock_apply_out_coe
       localTensorEvaluation vK hvK w
         (localTensorConjugation vK (Quotient.out q)
           (z : LocalTensorAlgebra (L := L) vK)) := by
-  letI :=
+  let _ :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Algebra vK.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
   have hcoord :
@@ -973,12 +975,12 @@ theorem localTensorUnitsEquivLocalPlaceBlock_eq_orbitHom_apply
       fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
     localTensorUnitsEquivLocalPlaceBlock vK hvK w z =
       localTensorOrbitHom vK hvK w z := by
-  letI :=
+  let _ :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Algebra vK.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
   apply
@@ -1015,15 +1017,15 @@ theorem localTensorUnitsEquivLocalPlaceBlock_smul
     letI := localTensorUnitsAction (K := K) (L := L) vK
     localTensorUnitsEquivLocalPlaceBlock vK hvK w (τ • z) =
       τ • localTensorUnitsEquivLocalPlaceBlock vK hvK w z := by
-  letI :=
+  let _ :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Algebra vK.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
-  letI := localTensorUnitsAction (K := K) (L := L) vK
+  let _ := localTensorUnitsAction (K := K) (L := L) vK
   rw [localTensorUnitsEquivLocalPlaceBlock_eq_orbitHom_apply,
     localTensorUnitsEquivLocalPlaceBlock_eq_orbitHom_apply]
   exact localTensorOrbitHom_smul vK hvK w τ z
@@ -1045,15 +1047,15 @@ theorem localTensorUnitsEquivLocalPlaceBlock_symm_smul
         (τ • f) =
       τ •
         (localTensorUnitsEquivLocalPlaceBlock vK hvK w).symm f := by
-  letI :=
+  let _ :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : ∀ w' : AbsoluteValueExtension vK L,
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let _ : SMul K w.1.Completion := hK.toSMul
+  let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let _ : ∀ w' : AbsoluteValueExtension vK L,
       Algebra vK.Completion w'.1.Completion :=
     fun w' ↦ AbsoluteValue.completionAlgebra vK w'.1 w'.2
-  letI := localTensorUnitsAction (K := K) (L := L) vK
+  let _ := localTensorUnitsAction (K := K) (L := L) vK
   apply
     (localTensorUnitsEquivLocalPlaceBlock
       vK hvK w).injective

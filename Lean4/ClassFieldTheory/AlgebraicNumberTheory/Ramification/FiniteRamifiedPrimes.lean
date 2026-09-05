@@ -1,6 +1,8 @@
 import Mathlib.RingTheory.DedekindDomain.Different
 import Mathlib.RingTheory.DedekindDomain.Factorization
 
+set_option autoImplicit false
+
 /-!
 # Finiteness of ramified primes in Dedekind extensions
 
@@ -29,7 +31,7 @@ def heightOnePrimeBelow (w : IsDedekindDomain.HeightOneSpectrum B) :
   asIdeal := w.asIdeal.under A
   isPrime := inferInstance
   ne_bot := by
-    haveI : Algebra.IsIntegral A B := Algebra.IsIntegral.of_finite A B
+    have : Algebra.IsIntegral A B := Algebra.IsIntegral.of_finite A B
     exact mt Ideal.eq_bot_of_comap_eq_bot w.ne_bot
 
 variable (A B)
@@ -60,7 +62,7 @@ theorem finite_ramified_base_heightOne_primes :
   refine ⟨w, hram, ?_⟩
   apply IsDedekindDomain.HeightOneSpectrum.ext
   dsimp [f, heightOnePrimeBelow]
-  letI : w.asIdeal.LiesOver v.asIdeal := hlie
+  let : w.asIdeal.LiesOver v.asIdeal := hlie
   exact (Ideal.over_def w.asIdeal v.asIdeal).symm
 
 end AlgebraicNumberTheory.Ramification

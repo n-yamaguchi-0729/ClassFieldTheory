@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.NormSubgroup
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.NormSubgroup
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 universe u
 

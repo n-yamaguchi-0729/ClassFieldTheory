@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaIteration
-import LubinTate.EqualCharacteristic.CompletedLevel.ThetaLocalInverse
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaIteration
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ThetaLocalInverse
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: direct theta at the standard completed level
@@ -139,12 +141,11 @@ theorem equalCharacteristicDirectThetaSourceUniformizerInteger_coe
     equalCharacteristicCompletedBaseIntegerToLevel,
     equalCharacteristicCompletedLevelUniformizer,
     equalCharacteristicCompletedBaseUniformizer]
-  change
-    ((PowerSeries.X :
-      (AlgebraicClosure F.residueField)⟦X⟧) :
-        (AlgebraicClosure F.residueField)⸨X⸩) =
-      HahnSeries.single 1 1
-  exact HahnSeries.ofPowerSeries_X
+  exact congrArg
+    (algebraMap
+      (equalCharacteristicCompletedUnramifiedField F.residueField)
+      (equalCharacteristicCompletedLevelField F n))
+    (PowerSeries.coe_X (R := AlgebraicClosure F.residueField))
 
 /-- The direct target parameter `uT` in the standard completed-level
 valuation ring. -/

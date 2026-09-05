@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.ConductorLocalComparison
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorLocalComparison
+
+set_option autoImplicit false
 
 /-!
 # Removing one real place from a defining modulus

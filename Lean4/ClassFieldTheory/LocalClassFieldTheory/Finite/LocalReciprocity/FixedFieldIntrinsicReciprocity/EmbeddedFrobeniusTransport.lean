@@ -1,6 +1,12 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison
-import LocalFieldTheory.GroupTheory.ContinuousQuotientEquiv
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.EmbeddedExtensionQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.EmbeddedInertiaComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.FixedFieldNormQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.FixedFieldSpecialization
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.IntrinsicBaseEquivalence
+import ValuedFieldTheory.LocalField.GroupTheory.ContinuousQuotientEquiv
+
+set_option autoImplicit false
 
 /-!
 # Embedded Frobenius transport
@@ -60,23 +66,23 @@ theorem map_intrinsicExtensionInertia_eq_ambientFixedField
         H.field J hJH := by
   dsimp only
   let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
   intro e
   let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
-  letI : NontriviallyNormedField F :=
+  let : NontriviallyNormedField F :=
     finiteExtensionSpectralNormedField K F
-  letI : ValuativeRel F :=
+  let : ValuativeRel F :=
     finiteExtensionSpectralValuativeRel K F
-  letI : IsNonarchimedeanLocalField F :=
+  let : IsNonarchimedeanLocalField F :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K F
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       K (SeparableClosure K) H.field J hJH hJnormal
   let i : E →ₐ[F] SeparableClosure F :=
@@ -119,10 +125,10 @@ theorem intrinsicBaseEquivAmbientFixedField_continuous
       Continuous (intrinsicBaseEquivAmbientFixedField K H e) := by
   dsimp only
   let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
   intro e
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H.field H.finite
   apply continuous_induced_rng.mpr
@@ -149,15 +155,13 @@ theorem
     ∀ e : SeparableClosure F ≃ₐ[F] SeparableClosure K,
       Continuous
         (intrinsicBaseEquivAmbientEmbeddedField K F i e) := by
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let H₀ :=
     closedFixingSubgroup K (SeparableClosure K)
       (AlgHom.fieldRange i)
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -169,15 +173,15 @@ theorem
     ⟨H₀, ambientEmbeddedAbsoluteQuotientFinite K F i⟩
   let F₀ :=
     abstractFixedField K (SeparableClosure K) H₀
-  letI : FiniteDimensional K F₀ :=
+  let : FiniteDimensional K F₀ :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) H₀ hHabsolute
-  letI : Algebra.IsSeparable F₀ (SeparableClosure K) :=
+  let : Algebra.IsSeparable F₀ (SeparableClosure K) :=
     Algebra.isSeparable_tower_top_of_isSeparable
       K F₀ (SeparableClosure K)
-  letI : IsSepClosure F₀ (SeparableClosure K) :=
+  let : IsSepClosure F₀ (SeparableClosure K) :=
     ⟨inferInstance, inferInstance⟩
-  letI : Algebra F₀ (SeparableClosure F₀) :=
+  let : Algebra F₀ (SeparableClosure F₀) :=
     (separableClosure F₀ (AlgebraicClosure F₀)).algebra
   let e₀ : SeparableClosure F₀ ≃ₐ[F₀] SeparableClosure K :=
     IsSepClosure.equiv F₀
@@ -288,8 +292,6 @@ noncomputable def
       (intrinsicAbstractBase F).toSubgroup ≃ₜ*
         (closedFixingSubgroup K (SeparableClosure K)
           (AlgHom.fieldRange i)).toSubgroup := by
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
@@ -376,8 +378,6 @@ noncomputable def
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
@@ -549,9 +549,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -576,26 +574,26 @@ theorem
       (AlgHom.fieldRange j).fixingSubgroup ≤
         (AlgHom.fieldRange i).fixingSubgroup
     exact (AlgHom.fieldRange i).fixingSubgroup_le hRange
-  letI hSourceNormal :
+  let hSourceNormal :
       (extensionSubgroup
         (intrinsicAbstractBase F) EI.field EI.below).Normal :=
     EI.normal
-  letI hSourceFinite : Finite
+  let hSourceFinite : Finite
       ((intrinsicAbstractBase F).toSubgroup ⧸
         extensionSubgroup
           (intrinsicAbstractBase F) EI.field EI.below) :=
     EI.finite
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
-  letI hTargetFinite : Finite
+  let hTargetFinite : Finite
       (H₀.toSubgroup ⧸ extensionSubgroup H₀ J₀ hJH) :=
     ambientEmbeddedExtensionQuotient_finite K F E j e
   intro q
   let RF :=
     (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
       (localResidueDatum F)
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -704,8 +702,6 @@ noncomputable def
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
@@ -846,9 +842,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -873,19 +867,19 @@ theorem
       (AlgHom.fieldRange j).fixingSubgroup ≤
         (AlgHom.fieldRange i).fixingSubgroup
     exact (AlgHom.fieldRange i).fixingSubgroup_le hRange
-  letI hSourceNormal :
+  let hSourceNormal :
       (extensionSubgroup
         (intrinsicAbstractBase F) EI.field EI.below).Normal :=
     EI.normal
-  letI hSourceFinite : Finite
+  let hSourceFinite : Finite
       ((intrinsicAbstractBase F).toSubgroup ⧸
         extensionSubgroup
           (intrinsicAbstractBase F) EI.field EI.below) :=
     EI.finite
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
-  letI hTargetFinite : Finite
+  let hTargetFinite : Finite
       (H₀.toSubgroup ⧸ extensionSubgroup H₀ J₀ hJH) :=
     ambientEmbeddedExtensionQuotient_finite K F E j e
   intro q
@@ -1133,9 +1127,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -1160,25 +1152,25 @@ theorem
       (AlgHom.fieldRange j).fixingSubgroup ≤
         (AlgHom.fieldRange i).fixingSubgroup
     exact (AlgHom.fieldRange i).fixingSubgroup_le hRange
-  letI hSourceNormal :
+  let hSourceNormal :
       (extensionSubgroup
         (intrinsicAbstractBase F) EI.field EI.below).Normal :=
     EI.normal
-  letI hSourceFinite : Finite
+  let hSourceFinite : Finite
       ((intrinsicAbstractBase F).toSubgroup ⧸
         extensionSubgroup
           (intrinsicAbstractBase F) EI.field EI.below) :=
     EI.finite
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
-  letI hTargetFinite : Finite
+  let hTargetFinite : Finite
       (H₀.toSubgroup ⧸ extensionSubgroup H₀ J₀ hJH) :=
     ambientEmbeddedExtensionQuotient_finite K F E j e
   let RF :=
     (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
       (localResidueDatum F)
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -1347,9 +1339,7 @@ theorem
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -1372,25 +1362,25 @@ theorem
     intro x hx
     rcases hx with ⟨y, rfl⟩
     exact ⟨algebraMap F E y, rfl⟩
-  letI hSourceNormal :
+  let hSourceNormal :
       (extensionSubgroup
         (intrinsicAbstractBase F) EI.field EI.below).Normal :=
     EI.normal
-  letI hSourceFinite : Finite
+  let hSourceFinite : Finite
       ((intrinsicAbstractBase F).toSubgroup ⧸
         extensionSubgroup
           (intrinsicAbstractBase F) EI.field EI.below) :=
     EI.finite
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
-  letI hTargetFinite : Finite
+  let hTargetFinite : Finite
       (H₀.toSubgroup ⧸ extensionSubgroup H₀ J₀ hJH) :=
     ambientEmbeddedExtensionQuotient_finite K F E j e
   let RF :=
     (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
       (localResidueDatum F)
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -1530,8 +1520,6 @@ noncomputable def
   dsimp only
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   intro e

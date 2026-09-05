@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.Adele.IntegralLocalFactor
-import AlgebraicNumberTheory.SUnit.GaloisAction
-import AlgebraicNumberTheory.NormalClosure
-import RamificationTheory.HilbertRamification.Dedekind.Basic
-import RamificationTheory.HilbertRamification.Dedekind.PrimeContractions
-import RamificationTheory.HilbertRamification.AbsoluteValueConjugacy
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralLocalFactor
+import ClassFieldTheory.AlgebraicNumberTheory.SUnit.GaloisAction
+import ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.PrimeContractions
+import ValuedFieldTheory.Ramification.HilbertRamification.AbsoluteValueConjugacy
 import Mathlib.RingTheory.Ideal.GoingUp
+
+set_option autoImplicit false
 
 /-!
 # Finite places in a number-field extension
@@ -324,7 +326,7 @@ theorem finitePlaceExtensionValuationSubring_eq_localization
   let P :=
     finitePlaceExtensionCentreIdeal
       (K := K) (L := L) v w
-  letI : P.IsPrime :=
+  let : P.IsPrime :=
     finitePlaceExtensionCentreIdeal_isPrime
       (K := K) (L := L) v w
   let W :=
@@ -570,17 +572,17 @@ private theorem
       IsAlgClosed.lift
   let W₀ :=
     finitePlaceExtensionCentre (K := K) (L := L) v w₀
-  letI : Finite (L ≃ₐ[K] L) :=
+  let : Finite (L ≃ₐ[K] L) :=
     IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-  letI :
+  let :
       IsGaloisGroup (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
     IsGaloisGroup.of_isFractionRing
       (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) K L
   intro W
-  letI : W₀.asIdeal.LiesOver v.asIdeal :=
+  let : W₀.asIdeal.LiesOver v.asIdeal :=
     ⟨(finitePlaceExtensionCentreIdeal_under
       (K := K) (L := L) v w₀).symm⟩
-  letI : W.1.asIdeal.LiesOver v.asIdeal := ⟨by
+  let : W.1.asIdeal.LiesOver v.asIdeal := ⟨by
     have h := congrArg HeightOneSpectrum.asIdeal W.2
     simpa only [finitePlaceBelow_asIdeal] using h.symm⟩
   obtain ⟨σ, hσ⟩ :=
@@ -609,17 +611,17 @@ theorem finitePlaceExtensionCentreInFibre_surjective
   let M := finiteNormalClosure K L
   let e : L →ₐ[K] M :=
     finiteNormalClosureEmbedding K L
-  letI : Algebra L M :=
+  let : Algebra L M :=
     e.toRingHom.toAlgebra
-  letI : IsScalarTower K L M :=
+  let : IsScalarTower K L M :=
     IsScalarTower.of_algebraMap_eq'
       e.comp_algebraMap.symm
-  letI : FiniteDimensional L M :=
+  let : FiniteDimensional L M :=
     FiniteDimensional.right K L M
   obtain ⟨Q, hQmax, hQover⟩ :=
     Ideal.exists_maximal_ideal_liesOver_of_isIntegral
       (S := 𝓞 M) W.1.asIdeal
-  letI : Q.IsMaximal :=
+  let : Q.IsMaximal :=
     hQmax
   let U : HeightOneSpectrum (𝓞 M) :=
     { asIdeal := Q

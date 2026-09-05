@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
+
+set_option autoImplicit false
 
 /-!
 # Naturality of the small Hilbert class field
@@ -19,6 +21,14 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
+
+/-- Supply the canonical commutativity used by both small-Hilbert quotients. -/
+private theorem smallHilbertNaturalityIdeleClassIsMulCommutative
+    {F : Type*} [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] smallHilbertNaturalityIdeleClassIsMulCommutative
 
 variable
     {K M : Type*}

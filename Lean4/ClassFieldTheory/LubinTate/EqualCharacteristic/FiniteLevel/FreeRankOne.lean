@@ -1,9 +1,11 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.AmbientDivisionTorsion
-import LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.AmbientDivisionTorsion
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
 import Mathlib.Algebra.Module.RingHom
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.LinearAlgebra.FreeModule.Basic
+
+set_option autoImplicit false
 
 /-!
 # The primitive-division-module equivalence: equal-characteristic division points are free of rank one
@@ -218,8 +220,8 @@ theorem equalCharacteristicLubinTateParameterRoot_bijective
     [CharP K F.residueCharacteristic]
     (n : ℕ) :
     Function.Bijective (equalCharacteristicLubinTateParameterRoot F n) := by
-  letI := Fintype.ofFinite (equalCharacteristicLubinTateParameter F n)
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite (equalCharacteristicLubinTateParameter F n)
+  let := Fintype.ofFinite
     (equalCharacteristicLubinTateAmbientTorsionAddSubgroup F
       (equalCharacteristicSeparableUniformizer F) (n + 1))
   apply (Fintype.bijective_iff_injective_and_card

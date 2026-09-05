@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
+
+set_option autoImplicit false
 
 /-!
 # Finite support for integral relative ideles

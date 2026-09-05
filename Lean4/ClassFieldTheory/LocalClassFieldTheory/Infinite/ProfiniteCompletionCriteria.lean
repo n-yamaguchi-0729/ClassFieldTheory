@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.Infinite.ProfiniteCompletion
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
+
+set_option autoImplicit false
 
 /-!
 # Bijectivity criteria for maps out of the open-quotient completion
@@ -99,15 +101,23 @@ theorem topologicalProfiniteCompletionLift_injective_of_preimage_cofinal
       hNH.hom
     have htransition :=
       topologicalProfiniteCompletionProjection_transition G i x
-    change topologicalProfiniteCompletionProjection G H x = 1
-    calc
-      _ = (openFiniteQuotientDiagram G).map i
-          (topologicalProfiniteCompletionProjection G
-            (topologicalProfiniteCompletionPreimageIndex P f N) x) :=
-        htransition.symm
-      _ = (openFiniteQuotientDiagram G).map i 1 :=
-        congrArg (fun y => (openFiniteQuotientDiagram G).map i y) hpreimage
-      _ = 1 := map_one _
+    have hmap :
+        (ProfiniteGrp.Hom.hom ((openFiniteQuotientDiagram G).map i))
+            (topologicalProfiniteCompletionProjection G
+              (topologicalProfiniteCompletionPreimageIndex P f N) x) =
+          (ProfiniteGrp.Hom.hom ((openFiniteQuotientDiagram G).map i))
+            (1 : (openFiniteQuotientDiagram G).obj
+              (topologicalProfiniteCompletionPreimageIndex P f N)) :=
+      congrArg
+        (ProfiniteGrp.Hom.hom ((openFiniteQuotientDiagram G).map i))
+        hpreimage
+    have hone :
+        (ProfiniteGrp.Hom.hom ((openFiniteQuotientDiagram G).map i))
+            (1 : (openFiniteQuotientDiagram G).obj
+              (topologicalProfiniteCompletionPreimageIndex P f N)) =
+          (1 : (openFiniteQuotientDiagram G).obj H) :=
+      map_one _
+    exact htransition.symm.trans (hmap.trans hone)
   · exact bot_le
 
 end LocalClassFieldTheory

@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Finite.Existence.LocalAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
-import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.LocalAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+
+set_option autoImplicit false
 
 /-!
 # Finite abelian subextensions and native norm subgroups
@@ -29,7 +31,7 @@ theorem finiteAbelianSubextension_finite_over_absoluteBase
     Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
       extensionSubgroup (baseField (intrinsicAbsoluteGalois K)) L.field
         (le_baseField L.field)) := by
-  letI : Finite ((intrinsicAbstractBase K).toSubgroup ⧸
+  let : Finite ((intrinsicAbstractBase K).toSubgroup ⧸
       extensionSubgroup (intrinsicAbstractBase K) L.field L.below) :=
     L.finite
   simpa only using
@@ -80,17 +82,17 @@ theorem finiteAbelianSubextension_fixedField_isAbelianGalois
     IsAbelianGalois K
       (abstractFixedField K (SeparableClosure K) L.field) := by
   let E := abstractFixedField K (SeparableClosure K) L.field
-  letI : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
+  let : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
       extensionSubgroup (baseField (intrinsicAbsoluteGalois K)) L.field
         (le_baseField L.field)) :=
     finiteAbelianSubextension_finite_over_absoluteBase K L
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) L.field inferInstance
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     abstractFixedField_isGalois_of_base_normal K L.field
       (finiteAbelianSubextension_normal_over_absoluteBase K L)
-  letI : (extensionSubgroup
+  let : (extensionSubgroup
       (intrinsicAbstractBase K) L.field L.below).Normal := L.normal
   let e : L.extensionQuotient ≃* Gal(E / K) := by
     let e₀ := baseFixingExtensionQuotientEquivGaloisGroup
@@ -230,18 +232,18 @@ theorem map_finiteAbelianNormSubgroup_eq_additiveNormSubgroup
         (baseUnitsEquivGaloisAmbientFixed K (SeparableClosure K)).symm.toAddMonoidHom =
       additiveNormSubgroup K
         (abstractFixedField K (SeparableClosure K) L.field) := by
-  letI : Finite ((intrinsicAbstractBase K).toSubgroup ⧸
+  let : Finite ((intrinsicAbstractBase K).toSubgroup ⧸
       extensionSubgroup (intrinsicAbstractBase K) L.field L.below) :=
     L.finite
-  letI : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
+  let : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
       extensionSubgroup (baseField (intrinsicAbsoluteGalois K)) L.field
         (le_baseField L.field)) :=
     finiteAbelianSubextension_finite_over_absoluteBase K L
   let E := abstractFixedField K (SeparableClosure K) L.field
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) L.field inferInstance
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     abstractFixedField_isGalois_of_base_normal K L.field
       (finiteAbelianSubextension_normal_over_absoluteBase K L)
   ext y
@@ -329,14 +331,14 @@ theorem finiteAbelianNormSubgroup_isOpen
     (L : FiniteAbelianSubextension (intrinsicAbstractBase K)) :
     IsOpen (finiteAbelianNormSubgroup K L : Set Kˣ) := by
   let E := abstractFixedField K (SeparableClosure K) L.field
-  letI : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
+  let : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
       extensionSubgroup (baseField (intrinsicAbsoluteGalois K)) L.field
         (le_baseField L.field)) :=
     finiteAbelianSubextension_finite_over_absoluteBase K L
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) L.field inferInstance
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     abstractFixedField_isGalois_of_base_normal K L.field
       (finiteAbelianSubextension_normal_over_absoluteBase K L)
   exact localNormSubgroup_isOpen K E
@@ -346,26 +348,26 @@ theorem finiteAbelianNormSubgroup_finiteIndex
     (L : FiniteAbelianSubextension (intrinsicAbstractBase K)) :
     (finiteAbelianNormSubgroup K L).FiniteIndex := by
   let E := abstractFixedField K (SeparableClosure K) L.field
-  letI : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
+  let : Finite ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
       extensionSubgroup (baseField (intrinsicAbsoluteGalois K)) L.field
         (le_baseField L.field)) :=
     finiteAbelianSubextension_finite_over_absoluteBase K L
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) L.field inferInstance
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     abstractFixedField_isGalois_of_base_normal K L.field
       (finiteAbelianSubextension_normal_over_absoluteBase K L)
-  letI : Finite (Gal(E / K)) := by
+  let : Finite (Gal(E / K)) := by
     apply Nat.finite_of_card_ne_zero
     rw [IsGalois.card_aut_eq_finrank K E]
     exact Nat.ne_of_gt Module.finrank_pos
-  letI : Finite (Abelianization (Gal(E / K))) :=
+  let : Finite (Abelianization (Gal(E / K))) :=
     Finite.of_surjective Abelianization.of QuotientGroup.mk_surjective
-  letI : Finite (NormQuotient K E) :=
+  let : Finite (NormQuotient K E) :=
     Finite.of_equiv (Abelianization (Gal(E / K)))
       (abelianizationEquivNormQuotient K E).toEquiv
-  letI : Finite (Kˣ ⧸ localNormSubgroup K E) := by
+  let : Finite (Kˣ ⧸ localNormSubgroup K E) := by
     change Finite (NormQuotient K E)
     infer_instance
   change (localNormSubgroup K E).FiniteIndex

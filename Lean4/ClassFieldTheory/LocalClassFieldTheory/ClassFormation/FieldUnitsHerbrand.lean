@@ -1,8 +1,10 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LocalClassFieldTheory.ClassFormation.CohomologyBridge
-import LocalClassFieldTheory.ClassFormation.Hilbert90
-import LocalClassFieldTheory.ClassFormation.ValuationHerbrand
-import LocalClassFieldTheory.ClassFormation.ValueGroupCohomology
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.CohomologyBridge
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Hilbert90
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.ValuationHerbrand
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.ValueGroupCohomology
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open CyclicCohomology
@@ -44,12 +46,12 @@ theorem unitsTateH0FiniteOfIntegerUnitsHerbrand
       HerbrandQuotientDefined (Gal(L / K))
         (ValuativeRel.valuation L).integerˣ g) :
     Finite (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := galoisGroupFieldUnitsMulDistribMulAction K L
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupFieldUnitsMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   obtain ⟨hField, _⟩ :=
     valuationHerbrand_multiplicativity_of_integerUnits_defined K L g hg hU
-  letI : Finite (HerbrandH0 (Gal(L / K)) Lˣ) := hField.1
+  let : Finite (HerbrandH0 (Gal(L / K)) Lˣ) := hField.1
   exact Finite.of_equiv (HerbrandH0 (Gal(L / K)) Lˣ)
     (herbrandH0EquivTateCohomologyZero K L)
 
@@ -73,21 +75,19 @@ theorem fieldUnits_tate_card_of_integerUnits_herbrand_eq_one
     letI := unitsTateH0FiniteOfIntegerUnitsHerbrand K L g hg hU
     Nat.card (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) = Module.finrank K L ∧
       Nat.card (tateCohomology (Rep.ofAlgebraAutOnUnits K L) (-1)) = 1 := by
-  letI : Finite (tateCohomology (Rep.ofAlgebraAutOnUnits K L) 0) :=
-    unitsTateH0FiniteOfIntegerUnitsHerbrand K L g hg hU
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := galoisGroupFieldUnitsMulDistribMulAction K L
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupFieldUnitsMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   let hZ : HerbrandQuotientDefined
       (Gal(L / K)) (Multiplicative Int) g :=
     galoisGroupValueGroup_herbrandQuotientDefined K L g
   rcases valuationHerbrand_multiplicativity_of_integerUnits_defined
       K L g hg hU with ⟨hField, hmult⟩
-  letI : Finite (HerbrandH0 (Gal(L / K)) Lˣ) := hField.1
-  letI : Finite (HerbrandHMinusOne (Gal(L / K)) Lˣ g) := hField.2
-  letI : Finite
+  let : Finite (HerbrandH0 (Gal(L / K)) Lˣ) := hField.1
+  let : Finite (HerbrandHMinusOne (Gal(L / K)) Lˣ g) := hField.2
+  let : Finite
       (HerbrandH0 (Gal(L / K)) (Multiplicative Int)) := hZ.1
-  letI : Finite
+  let : Finite
       (HerbrandHMinusOne (Gal(L / K)) (Multiplicative Int) g) := hZ.2
   have hZ0 :
       Nat.card (HerbrandH0 (Gal(L / K)) (Multiplicative Int)) =

@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegative
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegative
+
+set_option autoImplicit false
 
 /-!
 # Complete infinite-place Kummer root-character comparison
@@ -26,9 +28,9 @@ theorem infinitePlaceKummerRootCharacter_eq_one_of_real_of_left_pos
     (ha : 0 < InfinitePlace.embedding_of_isReal hv (a : K)) :
     infinitePlaceKummerRootCharacter K n hnK hmu v a b = 1 := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   let a_v : v.Completionˣ :=
     Units.map (algebraMap K v.Completion).toMonoidHom a

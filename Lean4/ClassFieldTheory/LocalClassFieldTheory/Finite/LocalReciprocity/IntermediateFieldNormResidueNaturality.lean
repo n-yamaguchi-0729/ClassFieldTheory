@@ -1,7 +1,9 @@
 import Mathlib.GroupTheory.Abelianization.Defs
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.Main
-import RamificationTheory.GaloisValuation.IntermediateFieldRestriction
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Main
+import ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
+
+set_option autoImplicit false
 
 /-!
 # Restriction naturality for the concrete local norm-residue symbol
@@ -202,8 +204,8 @@ private theorem intermediateFieldRestrict_abstractAbelianization
   let EF := finiteGaloisAbstractExtensionOfEmbedding K F F.val
   let qE := finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K E E.val
   let qF := finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K F F.val
-  letI : (extensionSubgroup B EE.field EE.below).Normal := EE.normal
-  letI : (extensionSubgroup B EF.field EF.below).Normal := EF.normal
+  let : (extensionSubgroup B EE.field EE.below).Normal := EE.normal
+  let : (extensionSubgroup B EF.field EF.below).Normal := EF.normal
   obtain ⟨q, rfl⟩ := QuotientGroup.mk_surjective z
   obtain ⟨sigma, rfl⟩ := QuotientGroup.mk_surjective q
   change
@@ -271,17 +273,17 @@ theorem concreteNormResidueAutomorphism_restrict
   let xF := embeddedBaseNormClass K F F.val a
   have hFE : EF.field.toSubgroup ≤ EE.field.toSubgroup :=
     embeddedAbstractExtension_field_le K E F hEF
-  letI hEENormal : (extensionSubgroup B EE.field EE.below).Normal :=
+  let hEENormal : (extensionSubgroup B EE.field EE.below).Normal :=
     EE.normal
-  letI hEFNormal : (extensionSubgroup B EF.field EF.below).Normal :=
+  let hEFNormal : (extensionSubgroup B EF.field EF.below).Normal :=
     EF.normal
-  letI hEEFinite : Finite
+  let hEEFinite : Finite
       (B.toSubgroup ⧸ extensionSubgroup B EE.field EE.below) :=
     EE.finite
-  letI hEFFinite : Finite
+  let hEFFinite : Finite
       (B.toSubgroup ⧸ extensionSubgroup B EF.field EF.below) :=
     EF.finite
-  letI hBBFinite : Finite
+  let hBBFinite : Finite
       (B.toSubgroup ⧸ extensionSubgroup B B le_rfl) := by
     have htop : extensionSubgroup B B le_rfl = ⊤ := by
       ext sigma
@@ -297,26 +299,31 @@ theorem concreteNormResidueAutomorphism_restrict
     base := BF
     below := le_rfl
     finiteQuotient := hBBFinite }
-  letI : (extensionSubgroup T.base.field EE.field EE.below).Normal := by
+  let : (extensionSubgroup T.base.field EE.field EE.below).Normal := by
     change (extensionSubgroup B EE.field EE.below).Normal
     exact hEENormal
-  letI : (extensionSubgroup T.field.field EF.field EF.below).Normal := by
+  let : (extensionSubgroup T.field.field EF.field EF.below).Normal := by
     change (extensionSubgroup B EF.field EF.below).Normal
     exact hEFNormal
-  letI : Finite
+  let : Finite
       (T.base.field.toSubgroup ⧸
         extensionSubgroup T.base.field EE.field EE.below) := by
     change Finite (B.toSubgroup ⧸ extensionSubgroup B EE.field EE.below)
     exact hEEFinite
-  letI : Finite
+  let : Finite
       (T.field.field.toSubgroup ⧸
         extensionSubgroup T.field.field EF.field EF.below) := by
     change Finite (B.toSubgroup ⧸ extensionSubgroup B EF.field EF.below)
     exact hEFFinite
   have hnorm : finiteReciprocityNaturalityNormMap (absoluteUnits K)
         B B EE.field EF.field EE.below EF.below le_rfl hFE xF = xE := by
-    dsimp only [xF, xE, embeddedBaseNormClass]
-    rw [finiteReciprocityNaturalityNormMap_finiteNormClass, relativeNorm_self]
+    let aB := baseUnitsEquivGaloisAmbientFixed K (SeparableClosure K)
+      (Additive.ofMul a)
+    have hmap := finiteReciprocityNaturalityNormMap_finiteNormClass
+      (absoluteUnits K) B B EE.field EF.field EE.below EF.below le_rfl hFE aB
+    exact hmap.trans (congrArg
+      (finiteNormClass (absoluteUnits K) B EE.field EE.below)
+      (relativeNorm_self (absoluteUnits K) B aB))
   have hraw := D.normResidueNaturality_norm_restriction
     (absoluteUnits K) v hcf
     T EE.field EF.field EE.below EF.below hFE

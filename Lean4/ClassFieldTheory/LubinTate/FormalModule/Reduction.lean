@@ -1,8 +1,10 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.FormalModule.CoefficientEquation
-import LubinTate.FormalModule.Intertwiner
+import ClassFieldTheory.LubinTate.FormalModule.CoefficientEquation
+import ClassFieldTheory.LubinTate.FormalModule.Intertwiner
 import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.RingTheory.MvPowerSeries.Expand
+
+set_option autoImplicit false
 
 /-!
 # Reduction of a Lubin--Tate intertwining defect
@@ -28,10 +30,10 @@ theorem mvPowerSeries_expand_natCard
     {σ : Type w} [Finite σ] (f : MvPowerSeries σ k) :
     MvPowerSeries.expand (Nat.card k) (Nat.ne_of_gt Nat.card_pos) f =
       f ^ Nat.card k := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   obtain ⟨p, hp⟩ := CharP.exists k
   rcases FiniteField.card k p with ⟨⟨n, npos⟩, ⟨hpprime, hn⟩⟩
-  letI : Fact p.Prime := ⟨hpprime⟩
+  let : Fact p.Prime := ⟨hpprime⟩
   have hncard : Fintype.card k = p ^ n := by
     simpa using hn
   have hn' : Nat.card k = p ^ n := by

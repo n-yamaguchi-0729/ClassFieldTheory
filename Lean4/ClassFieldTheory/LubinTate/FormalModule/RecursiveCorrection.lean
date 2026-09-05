@@ -1,4 +1,6 @@
-import LubinTate.FormalModule.RecursiveCoefficient
+import ClassFieldTheory.LubinTate.FormalModule.RecursiveCoefficient
+
+set_option autoImplicit false
 
 /-!
 # Recursive monomial corrections for Lubin--Tate intertwiners

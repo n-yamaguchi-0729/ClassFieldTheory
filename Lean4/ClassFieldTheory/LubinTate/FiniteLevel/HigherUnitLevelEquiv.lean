@@ -1,11 +1,13 @@
-import LubinTate.FiniteLevel.ChangedPrimitiveEvaluation
-import LubinTate.FiniteLevel.ChangedLevelCompositum
-import LubinTate.FiniteLevel.PrimitiveDisplacement
-import LocalFieldTheory.DiscreteValuationField.PolynomialRootProximity
-import RamificationTheory.HilbertRamification.GaloisStabilizer
-import RamificationTheory.HilbertRamification.ValuationKrasner
-import RamificationTheory.HilbertRamification.ValuationRestriction
-import ValuationTheory.DiscreteValuationField.AddVal
+import ClassFieldTheory.LubinTate.FiniteLevel.ChangedPrimitiveEvaluation
+import ClassFieldTheory.LubinTate.FiniteLevel.ChangedLevelCompositum
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveDisplacement
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PolynomialRootProximity
+import ValuedFieldTheory.Ramification.HilbertRamification.GaloisStabilizer
+import ValuedFieldTheory.Ramification.HilbertRamification.ValuationKrasner
+import ValuedFieldTheory.Ramification.HilbertRamification.ValuationRestriction
+import ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+
+set_option autoImplicit false
 
 /-!
 # Stability of a standard Lubin--Tate level under a deep unit change
@@ -98,7 +100,7 @@ theorem
       (root a : standardLubinTateLevelField hπ n) =
         (root b : standardLubinTateLevelField hπ n)
     exact congrArg Subtype.val hab
-  letI := Fintype.ofFinite (standardLubinTateUnitParameter F n)
+  let := Fintype.ofFinite (standardLubinTateUnitParameter F n)
   let rootEmbedding :
       standardLubinTateUnitParameter F n ↪ target.valuationSubring :=
     ⟨root, hroot_injective⟩
@@ -191,7 +193,7 @@ private theorem standardLubinTate_iterate_derivative_factor_addVal
   let d := (q - 1) * q ^ n
   have hqres :
       F.residueMap (q : F.valuationSubring) = 0 := by
-    letI := Fintype.ofFinite F.residueField
+    let := Fintype.ofFinite F.residueField
     change (Nat.card F.residueField : F.residueField) = 0
     rw [Nat.card_eq_fintype_card]
     exact Nat.cast_card_eq_zero F.residueField
@@ -314,7 +316,7 @@ theorem standardLubinTatePrimitivePolynomial_derivative_eval₂_addVal
     exact map_natCast F.residueMap (q - 1)
   have hqsubres_ne :
       F.residueMap (q - 1 : ℕ) ≠ 0 := by
-    letI := Fintype.ofFinite F.residueField
+    let := Fintype.ofFinite F.residueField
     rw [hqsubres]
     have hqzero : (q : F.residueField) = 0 := by
       change (Nat.card F.residueField : F.residueField) = 0
@@ -396,9 +398,9 @@ theorem
     (standardLubinTatePrimitivePolynomial F π n).map
       (standardLubinTateLevelCoefficientHom hπ n)
   let lambda := standardLubinTatePrimitivePointInteger hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
   have hpne : p ≠ 0 :=
     ((standardLubinTatePrimitivePolynomial_monic F π n).map
@@ -566,13 +568,13 @@ private theorem
   let L := standardLubinTateLevelField hπ n
   let L' := standardLubinTateChangedLevelField hπ u n
   let M := standardLubinTateChangedLevelCompositumField hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : Algebra L' M :=
+  let : Algebra L' M :=
     standardLubinTateChangedLevelToCompositumAlgebra hπ u n
-  letI : IsScalarTower K L M :=
+  let : IsScalarTower K L M :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : IsScalarTower K L' M :=
+  let : IsScalarTower K L' M :=
     IsScalarTower.of_algebraMap_eq' rfl
   apply RingHom.ext
   intro a
@@ -807,12 +809,12 @@ private theorem
   let level := standardLubinTateLevelCompleteDVF hπ n
   let target :=
     standardLubinTateChangedLevelCompositumCompleteDVF hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateLevelToChangedLevelCompositum_hasExtension
       hπ u n
-  letI : Module.IsTorsionFree
+  let : Module.IsTorsionFree
       level.valuationSubring target.valuationSubring :=
     Module.IsTorsionFree.of_smul_eq_zero fun a b hab => by
       rw [Algebra.smul_def] at hab
@@ -964,7 +966,7 @@ theorem
         IsDiscreteValuationRing.addVal target.valuationSubring
           (alpha - beta) := by
     have h := hsubtracted
-    rw [← ENat.coe_sub, hnatSub] at h
+    rw [← ENat.natCast_sub, hnatSub] at h
     exact h
   have hqpow : q ^ n < q ^ (n + 1) :=
     pow_lt_pow_right₀
@@ -979,7 +981,7 @@ theorem
   have hstrict :
       ((e * q ^ n : ℕ) : ℕ∞) <
         ((e * q ^ (n + 1) : ℕ) : ℕ∞) := by
-    exact (ENat.coe_lt_coe).2 hstrictNat
+    exact (ENat.natCast_lt_natCast).2 hstrictNat
   exact hstrict.trans_le hdeep
 
 /-- A nontrivial displacement of the old primitive point by a Galois
@@ -1034,13 +1036,13 @@ private theorem
         F.toCompleteDVF.toDVF target.toDVF :=
     standardLubinTateChangedLevelCompositumCompleteDVF_hasUniqueDVFValuationExtension
       hπ u n
-  letI : Algebra L M :=
+  let : Algebra L M :=
     standardLubinTateLevelToChangedLevelCompositumAlgebra hπ u n
-  letI : IsScalarTower K L M :=
+  let : IsScalarTower K L M :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
-  letI : level.valuation.HasExtension target.valuation :=
+  let : level.valuation.HasExtension target.valuation :=
     standardLubinTateLevelToChangedLevelCompositum_hasExtension
       hπ u n
   let tau : Gal(L / K) := σ.restrictNormal L
@@ -1251,10 +1253,10 @@ private theorem
   let alpha :=
     standardLubinTateOriginalPrimitivePointInChangedLevelCompositum
       hπ u n
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     standardLubinTateChangedLevelCompositumField_finiteDimensional
       hπ u n
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     standardLubinTateChangedLevelCompositumField_isGalois hπ u n
   obtain ⟨beta, hbeta, hclose⟩ :=
     exists_standardLubinTateChangedPrimitiveRootInCompositum_close
@@ -1287,9 +1289,9 @@ private theorem
         (hadjoin
           (IntermediateField.mem_adjoin_simple_self K (alpha : M)))
   let oldEquiv : L ≃ₐ[K] oldLevel :=
-    IntermediateField.restrict_algEquiv (le_sup_left : L ≤ M)
+    IntermediateField.restrictAlgEquiv (le_sup_left : L ≤ M)
   let changedEquiv : L' ≃ₐ[K] changedLevel :=
-    IntermediateField.restrict_algEquiv (le_sup_right : L' ≤ M)
+    IntermediateField.restrictAlgEquiv (le_sup_right : L' ≤ M)
   let oldPowerBasis : PowerBasis K oldLevel :=
     (standardLubinTateLevelPowerBasis hπ n).map oldEquiv
   let oldInclusion : oldLevel →ₐ[K] M := oldLevel.val
@@ -1376,9 +1378,9 @@ noncomputable def standardLubinTateHigherUnitChangedLevelAlgEquiv
   let changedLevel : IntermediateField K M :=
     IntermediateField.restrict (le_sup_right : L' ≤ M)
   let oldEquiv : L ≃ₐ[K] oldLevel :=
-    IntermediateField.restrict_algEquiv (le_sup_left : L ≤ M)
+    IntermediateField.restrictAlgEquiv (le_sup_left : L ≤ M)
   let changedEquiv : L' ≃ₐ[K] changedLevel :=
-    IntermediateField.restrict_algEquiv (le_sup_right : L' ≤ M)
+    IntermediateField.restrictAlgEquiv (le_sup_right : L' ≤ M)
   have heq : changedLevel = oldLevel := by
     exact
       standardLubinTateHigherUnit_restrict_changedLevel_eq_originalLevel

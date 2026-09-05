@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.DivisionPolynomial
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.DivisionPolynomial
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: primitive equal-characteristic division points

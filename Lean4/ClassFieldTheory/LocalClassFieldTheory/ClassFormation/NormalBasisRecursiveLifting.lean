@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.ClassFormation.FilteredLiftingSequence
-import LocalClassFieldTheory.ClassFormation.NormalBasisGradedLifting
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.FilteredLiftingSequence
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.NormalBasisGradedLifting
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open CyclicCohomology
@@ -52,7 +54,7 @@ theorem exists_chosenNormalBasisPrincipalUnit_fixed_is_tateNorm :
       (∀ sigma : Gal(L / K), sigma • a = a) →
       ∃ b : 𝒪[L]ˣ, b ∈ chosenNormalBasisPrincipalUnitSet K L n ∧
         a = tateNorm (Gal(L / K)) 𝒪[L]ˣ b := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   rcases exists_chosenNormalBasisPrincipalUnit_h0_oneStep_lifting
       (K := K) (L := L) with ⟨cStep, hStep⟩
   rcases exists_tendsto_chosenNormalBasisPrincipalUnitCorrectionProduct
@@ -149,7 +151,7 @@ theorem exists_chosenNormalBasisPrincipalUnit_normOne_is_sigmaMinusOne
       tateNorm (Gal(L / K)) 𝒪[L]ˣ a = 1 →
       ∃ b : 𝒪[L]ˣ, b ∈ chosenNormalBasisPrincipalUnitSet K L n ∧
         a = sigmaMinusOne (Gal(L / K)) 𝒪[L]ˣ g b := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   rcases exists_chosenNormalBasisPrincipalUnit_hMinusOne_oneStep_lifting
       (K := K) (L := L) g hgen with ⟨cStep, hStep⟩
   rcases exists_tendsto_chosenNormalBasisPrincipalUnitCorrectionProduct

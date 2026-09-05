@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.ChangedCompletedLevel
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveIrreducible
-import LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedCompletedLevel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveIrreducible
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: primitive action for the changed completed level
@@ -371,7 +373,7 @@ theorem equalCharacteristicChangedCompletedUnitRoot_isRoot
   let c := PowerSeries.coeff 0 (a : F.residueField⟦X⟧)
   have hc : c ≠ 0 := powerSeries_unit_coeff_zero_ne_zero a
   have hcpow : c ^ (Nat.card F.residueField - 1) = 1 := by
-    letI := Fintype.ofFinite F.residueField
+    let := Fintype.ofFinite F.residueField
     simpa only [Nat.card_eq_fintype_card] using
       FiniteField.pow_card_sub_one_eq_one c hc
   have hziterate :

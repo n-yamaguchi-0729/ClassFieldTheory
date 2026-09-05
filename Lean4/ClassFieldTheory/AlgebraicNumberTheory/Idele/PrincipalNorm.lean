@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.Core
-import AlgebraicNumberTheory.Idele.NormCore
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormCore
 import Mathlib.RingTheory.FractionalIdeal.Norm
+
+set_option autoImplicit false
 
 /-!
 # The product formula for principal ideles

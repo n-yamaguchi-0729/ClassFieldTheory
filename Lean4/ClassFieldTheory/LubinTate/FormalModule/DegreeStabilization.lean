@@ -1,5 +1,7 @@
-import LubinTate.FormalModule.RecursiveCoefficient
+import ClassFieldTheory.LubinTate.FormalModule.RecursiveCoefficient
 import Mathlib.RingTheory.MvPowerSeries.Trunc
+
+set_option autoImplicit false
 
 /-!
 # Finite-degree stabilization for Lubin--Tate intertwining defects

@@ -1,13 +1,15 @@
-import AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
-import AlgebraicNumberTheory.Idele.Extension.OnePlaceBaseNorm
-import AbstractClassFieldTheory.Degree.FrobeniusLift
-import AbstractClassFieldTheory.Degree.ProfiniteIntegerPrimeProduct
-import GlobalClassFieldTheory.Reciprocity.CyclotomicPrincipalIdele
-import GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalPrimeFactor
-import LocalFieldTheory.Padic.ClosedAddSubgroup
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.OnePlaceBaseNorm
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
+import GaloisCohomology.ProfiniteIntegers.ProfiniteIntegerPrimeProduct
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicPrincipalIdele
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalPrimeFactor
+import ValuedFieldTheory.LocalField.Padic.ClosedAddSubgroup
 import Mathlib.GroupTheory.Nilpotent
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
+
+set_option autoImplicit false
 
 /-!
 # Decomposition-compatible cyclotomic Frobenius lifts
@@ -38,14 +40,35 @@ namespace Reciprocity
 local instance (p : Nat.Primes) : Fact p.1.Prime :=
   ⟨p.2⟩
 
-noncomputable local instance (priority := 2000)
+local instance rationalCyclotomicFrobeniusLiftPrimePowerNumberField
+    (p : Nat.Primes) (k : ℕ) :
+    NumberField (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  KummerTheory.rationalCyclotomicLevel_numberField
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicFrobeniusLiftPrimePowerFiniteDimensional
+    (p : Nat.Primes) (k : ℕ) :
+    FiniteDimensional ℚ (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  rationalCyclotomicPrincipalPrimeLevelFiniteDimensional
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+local instance rationalCyclotomicFrobeniusLiftPrimePowerIsAbelianGalois
+    (p : Nat.Primes) (k : ℕ) :
+    IsAbelianGalois ℚ (KummerTheory.rationalCyclotomicLevel
+      ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
+  rationalCyclotomicLevelIsAbelianGalois
+    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+
+noncomputable local instance
     rationalCyclotomicFrobeniusLiftLevelFiniteDimensional
     (m : ℕ+) :
     FiniteDimensional ℚ
       (KummerTheory.rationalCyclotomicLevel m) :=
   rationalCyclotomicPrincipalPrimeLevelFiniteDimensional m
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     rationalCyclotomicFrobeniusLiftLevelIsAbelianGalois
     (m : ℕ+) :
     IsAbelianGalois ℚ
@@ -157,7 +180,7 @@ theorem
   intro y
   let M : IntermediateField F A :=
     IntermediateField.adjoin F {y}
-  letI : FiniteDimensional F M :=
+  let : FiniteDimensional F M :=
     IntermediateField.adjoin.finiteDimensional
       (Algebra.IsIntegral.isIntegral y)
   let E :
@@ -168,9 +191,9 @@ theorem
         normalClosure.is_finiteDimensional F M A
       isGalois :=
         IsGalois.normalClosure F M A }
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite F E
-  letI : IsAbelianGalois F E :=
+  let : IsAbelianGalois F E :=
     IsAbelianGalois.of_algHom
       (E : IntermediateField F A).val
   let vF :=
@@ -260,17 +283,17 @@ theorem
     Function.Injective
       (numberFieldCyclotomicZHatFiniteCompositumRestriction
         (F := F) E) := by
-  letI : Normal ℚ E := E.isGalois.to_normal
+  let : Normal ℚ E := E.isGalois.to_normal
   let C :=
     numberFieldCyclotomicZHatFiniteCompositum F E
-  letI : Algebra ℚ C := C.algebra'
-  letI : Algebra F C :=
+  let : Algebra ℚ C := C.algebra'
+  let : Algebra F C :=
     numberFieldCyclotomicZHatFiniteCompositum_algebra F E
-  letI : IsScalarTower ℚ F C :=
+  let : IsScalarTower ℚ F C :=
     numberFieldCyclotomicZHatFiniteCompositum_scalarTower F E
-  letI : Algebra E C :=
+  let : Algebra E C :=
     rationalCyclotomicZHatFiniteLayerCompositum_algebra F E
-  letI : IsScalarTower ℚ E C :=
+  let : IsScalarTower ℚ E C :=
     rationalCyclotomicZHatFiniteLayerCompositum_scalarTower F E
   let A : IntermediateField ℚ C :=
     (numberFieldInRationalSeparableClosure F).restrict
@@ -282,14 +305,14 @@ theorem
       (show
         IntermediateField.lift E.toIntermediateField ≤ C from
         le_sup_right)
-  letI : Algebra ℚ B := B.algebra'
+  let : Algebra ℚ B := B.algebra'
   let eF : F ≃ₐ[ℚ] A :=
     (numberFieldSeparableClosureEmbedding F).equivFieldRange.trans
-      (IntermediateField.restrict_algEquiv le_sup_left)
+      (IntermediateField.restrictAlgEquiv le_sup_left)
   let eE : E ≃ₐ[ℚ] B :=
     (IntermediateField.liftAlgEquiv E.toIntermediateField).trans
-      (IntermediateField.restrict_algEquiv le_sup_right)
-  letI : Normal ℚ B := Normal.of_algEquiv eE
+      (IntermediateField.restrictAlgEquiv le_sup_right)
+  let : Normal ℚ B := Normal.of_algEquiv eE
   have hsup : B ⊔ A = ⊤ := by
     apply IntermediateField.lift_injective C
     rw [IntermediateField.lift_sup,
@@ -452,16 +475,16 @@ theorem numberFieldCyclotomicZHatCompositumRestriction_range
             dsimp only [numberFieldCyclotomicZHatIntersection]
             exact inf_le_right)).fixingSubgroup := by
   let C := numberFieldCyclotomicZHatCompositum F
-  letI : Algebra ℚ C := C.algebra'
-  letI : Algebra F C :=
+  let : Algebra ℚ C := C.algebra'
+  let : Algebra F C :=
     numberFieldCyclotomicZHatCompositum_algebra F
-  letI : IsScalarTower ℚ F C :=
+  let : IsScalarTower ℚ F C :=
     numberFieldCyclotomicZHatCompositum_scalarTower F
-  letI : Algebra rationalCyclotomicZHatField C :=
+  let : Algebra rationalCyclotomicZHatField C :=
     rationalCyclotomicZHatCompositum_algebra F
-  letI : IsScalarTower ℚ rationalCyclotomicZHatField C :=
+  let : IsScalarTower ℚ rationalCyclotomicZHatField C :=
     rationalCyclotomicZHatCompositum_scalarTower F
-  letI : Normal ℚ rationalCyclotomicZHatField :=
+  let : Normal ℚ rationalCyclotomicZHatField :=
     rationalCyclotomicZHatField_normal
   let eF : F →ₐ[ℚ] C :=
     numberFieldCyclotomicZHatCompositumEmbedding F
@@ -701,7 +724,7 @@ theorem MonoidHom.ext_of_eq_on_finitePrimaryComponents
         f x = g x) :
     f = g := by
   classical
-  letI sylowFintype (p : ℕ) : Fintype (Sylow p G) :=
+  let sylowFintype (p : ℕ) : Fintype (Sylow p G) :=
     Fintype.ofFinite _
   let e :
       (∀ p : (Nat.card G).primeFactors,
@@ -754,7 +777,7 @@ theorem MonoidHom.ext_of_eq_on_finitePrimaryComponents
           (Pi.mulSingle P (y p P)))) =
         g (e (Pi.mulSingle p
           (Pi.mulSingle P (y p P)))) := by
-    letI hpFact : Fact (Nat.Prime p.1) :=
+    let hpFact : Fact (Nat.Prime p.1) :=
       ⟨Nat.prime_of_mem_primeFactors p.2⟩
     let u :
         ∀ q : (Nat.card G).primeFactors,
@@ -920,7 +943,7 @@ theorem
       ((numberFieldCyclotomicPadicDecompositionCoordinate
         F wC p).range :
         Set (Multiplicative ℤ_[p.1])) := by
-  letI :
+  let :
       CompactSpace
         (absoluteValueDecompositionGroup F wC) :=
     isCompact_iff_compactSpace.mp
@@ -1018,7 +1041,7 @@ theorem
   apply Units.ext
   apply PadicInt.ext_of_toZModPow.mp
   intro k
-  letI hpFact : Fact (Nat.Prime p.1) := ⟨p.2⟩
+  let hpFact : Fact (Nat.Prime p.1) := ⟨p.2⟩
   have hred :=
     rationalCyclotomicCharacterPrimeProduct_finitePlaceIdele_principalComponent_toZModPow
       p p k d x
@@ -1066,7 +1089,7 @@ theorem
   apply Units.ext
   apply PadicInt.ext_of_toZModPow.mp
   intro k
-  letI hpFact : Fact (Nat.Prime p.1) := ⟨p.2⟩
+  let hpFact : Fact (Nat.Prime p.1) := ⟨p.2⟩
   have hlocal :
       rationalCyclotomicPrincipalFinitePlaceCharacter
           p k x q =
@@ -1323,7 +1346,7 @@ theorem
   have hopen : IsOpen (H : Set ℤ_[p.1]) :=
     PadicInt.addSubgroup_isOpen_of_isClosed_of_ne_bot
       p.1 H hclosed hne
-  letI : Finite (ℤ_[p.1] ⧸ H) :=
+  let : Finite (ℤ_[p.1] ⧸ H) :=
     AddSubgroup.quotient_finite_of_isOpen H hopen
   exact H.index_ne_zero_of_finite
 
@@ -1764,7 +1787,7 @@ theorem rationalCyclotomicPadicLevelKernel_isOpen
             rationalCyclotomicZHatField)) := by
   let q :=
     rationalCyclotomicPadicReduction p n
-  letI :
+  let :
       Finite
         ((rationalCyclotomicZHatField ≃ₐ[ℚ]
             rationalCyclotomicZHatField) ⧸ q.ker) :=
@@ -1775,7 +1798,7 @@ theorem rationalCyclotomicPadicLevelKernel_isOpen
       (QuotientGroup.quotientKerEquivOfSurjective
         q
         (rationalCyclotomicPadicReduction_surjective p n)).injective
-  letI : q.ker.FiniteIndex :=
+  let : q.ker.FiniteIndex :=
     Subgroup.finiteIndex_of_finite_quotient
   change
     IsOpen
@@ -1918,7 +1941,7 @@ theorem rationalCyclotomicPadicFiniteLevel_finrank
     Module.finrank ℚ
         (rationalCyclotomicPadicFiniteLevel p n) =
       p.1 ^ n := by
-  letI :
+  let :
       FiniteDimensional ℚ
         (rationalCyclotomicPadicFiniteLevel p n).toIntermediateField :=
     (rationalCyclotomicPadicFiniteLevel p n).finiteDimensional

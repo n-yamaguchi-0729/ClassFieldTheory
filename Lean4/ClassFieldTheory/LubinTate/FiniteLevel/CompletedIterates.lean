@@ -1,4 +1,6 @@
-import LubinTate.FiniteLevel.CompletedEvaluation
+import ClassFieldTheory.LubinTate.FiniteLevel.CompletedEvaluation
+
+set_option autoImplicit false
 
 /-!
 # Valuations of standard Lubin--Tate iterates at a primitive point

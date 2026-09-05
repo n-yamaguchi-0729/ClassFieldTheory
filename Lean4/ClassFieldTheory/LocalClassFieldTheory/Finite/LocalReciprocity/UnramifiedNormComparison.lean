@@ -1,8 +1,10 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
-import LocalClassFieldTheory.Finite.LocalReciprocity.Main
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableNormValuation
-import LocalFieldTheory.NonarchimedeanLocalField.UnramifiedFrobenius
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Main
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.SeparableNormValuation
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
+
+set_option autoImplicit false
 
 /-!
 # Norm quotients for unramified local extensions
@@ -108,7 +110,7 @@ noncomputable local instance unramifiedNormComparisonNormQuotientFinite :
 
 private theorem normQuotient_card_eq_finrank :
     Nat.card (NormQuotient K L) = Module.finrank K L := by
-  letI : Finite (Abelianization (Gal(L / K))) :=
+  let : Finite (Abelianization (Gal(L / K))) :=
     Finite.of_surjective Abelianization.of QuotientGroup.mk_surjective
   calc
     Nat.card (NormQuotient K L) =
@@ -124,8 +126,8 @@ private theorem normQuotient_card_eq_finrank :
 theorem normQuotientToUnramifiedNormQuotient_injective :
     Function.Injective
       (normQuotientToUnramifiedNormQuotient K L) := by
-  letI : NeZero (Module.finrank K L) := ⟨Module.finrank_pos.ne'⟩
-  letI : Finite (NormQuotient K L) :=
+  let : NeZero (Module.finrank K L) := ⟨Module.finrank_pos.ne'⟩
+  let : Finite (NormQuotient K L) :=
     Finite.of_equiv (Gal(L / K))
       ((galoisGroupEquivAbelianizationOfUnramifiedValuation K L).trans
         (abelianizationEquivNormQuotient K L)).toEquiv

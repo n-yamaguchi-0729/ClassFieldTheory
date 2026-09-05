@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeWitness
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeWitness
+
+set_option autoImplicit false
 
 /-!
 # Ambient prime symbol setup
@@ -37,8 +39,6 @@ noncomputable def ambientEmbeddedPrimeTransportValue
     Abelianization Gal(E / F) := by
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   let H₀ :=
@@ -116,8 +116,6 @@ noncomputable def ambientEmbeddedPrimeSymbolProperty
     (z : Abelianization Gal(E / F)) : Prop := by
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
   letI : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   let jF : E →ₐ[F] SeparableClosure K :=
@@ -351,9 +349,9 @@ theorem
   intro hsymbol
   let i :=
     j.comp (IsScalarTower.toAlgHom K F E)
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
-  letI : Algebra F (SeparableClosure K) :=
+  let : Algebra F (SeparableClosure K) :=
     i.toRingHom.toAlgebra
   let H₀ :=
     closedFixingSubgroup K (SeparableClosure K)
@@ -369,7 +367,7 @@ theorem
     intro x hx
     rcases hx with ⟨y, rfl⟩
     exact ⟨algebraMap F E y, rfl⟩
-  letI hTargetNormal :
+  let hTargetNormal :
       (extensionSubgroup H₀ J₀ hJH).Normal :=
     ambientEmbeddedExtensionSubgroup_normal K F E j e
   exact

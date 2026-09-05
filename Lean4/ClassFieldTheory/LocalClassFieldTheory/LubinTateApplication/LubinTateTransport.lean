@@ -1,8 +1,10 @@
 import Mathlib.Algebra.CharP.Subring
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
-import LocalClassFieldTheory.LubinTateApplication.NormSubgroup
-import ValuationTheory.LocalRingEquiv
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.NormSubgroup
+import ValuedFieldTheory.Valuation.LocalRingEquiv
+
+set_option autoImplicit false
 
 /-!
 # Lubin--Tate application: transport to an equal-characteristic local field
@@ -265,7 +267,7 @@ theorem equalCharacteristicTargetLaurentRingEquiv_uniformizer
           (equalCharacteristicTargetLocalField K)) =
       ((ϖ⁻¹ : Kˣ) : K) := by
   let F := equalCharacteristicTargetLocalField K
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   change
     equalCharacteristicLaurentRingEquiv F
@@ -336,9 +338,9 @@ theorem equalCharacteristicTargetLaurentUnitsEquiv_mem_fieldPrincipalUnits_of_me
       LocalFieldTheory.fieldPrincipalUnits K (m + 1) := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
   let π := equalCharacteristicTargetUniformizer K ϖ hϖ
   let hπ := equalCharacteristicTargetUniformizer_isUniformizer K ϖ hϖ
   let eval :=
@@ -435,7 +437,7 @@ theorem equalCharacteristicTargetLaurent_fieldPrincipalUnits_map_le
       LocalFieldTheory.fieldPrincipalUnits K (m + 1) := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
   change
     (LocalFieldTheory.fieldPrincipalUnits B (m + 1)).map
         (equalCharacteristicTargetLaurentUnitsEquiv
@@ -467,7 +469,7 @@ theorem equalCharacteristicTargetLaurent_uniformizerPrincipalSubgroup_map_le
       LocalFieldTheory.uniformizerPrincipalSubgroup K ϖ 1 (m + 1) := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
   change
     (LocalFieldTheory.uniformizerPrincipalSubgroup B
         (equalCharacteristicLaurentUniformizerUnit F)⁻¹
@@ -536,12 +538,12 @@ theorem equalCharacteristicTransportedLubinTateLevelAlgebra_comp
       (RingEquiv.refl E).toRingHom.comp (algebraMap B E) := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let E := equalCharacteristicLubinTateLevelField F m
-  letI : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
-  letI : CharP K p := hKp
-  letI : Algebra K E :=
+  let : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
+  let : CharP K p := hKp
+  let : Algebra K E :=
     equalCharacteristicTransportedLubinTateLevelAlgebra K p ϖ hϖ m
   apply RingHom.ext
   intro x
@@ -569,19 +571,19 @@ theorem equalCharacteristicTransportedLubinTateLevel_finiteDimensional
     Module.Finite K E := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let E := equalCharacteristicLubinTateLevelField F m
   let algBE : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
-  letI : Algebra B E := algBE
-  letI : Module B E := algBE.toModule
-  letI : Module.Finite B E :=
+  let : Algebra B E := algBE
+  let : Module B E := algBE.toModule
+  let : Module.Finite B E :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F m
-  letI : CharP K p := hKp
+  let : CharP K p := hKp
   let algKE : Algebra K E :=
     equalCharacteristicTransportedLubinTateLevelAlgebra K p ϖ hϖ m
-  letI : Algebra K E := algKE
-  letI : Module K E := algKE.toModule
+  let : Algebra K E := algKE
+  let : Module K E := algKE.toModule
   exact Module.Finite.of_equiv_equiv
     (equalCharacteristicTargetLaurentRingEquiv K p ϖ hϖ)
     (RingEquiv.refl E)
@@ -604,14 +606,14 @@ theorem equalCharacteristicTransportedLubinTateLevel_isGalois
     IsGalois K E := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let E := equalCharacteristicLubinTateLevelField F m
-  letI : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
-  letI : IsGalois B E :=
+  let : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
+  let : IsGalois B E :=
     equalCharacteristicLubinTateLevelField_isGalois F m
-  letI : CharP K p := hKp
-  letI : Algebra K E :=
+  let : CharP K p := hKp
+  let : Algebra K E :=
     equalCharacteristicTransportedLubinTateLevelAlgebra K p ϖ hϖ m
   exact IsGalois.of_equiv_equiv
     (F := B) («E» := E)
@@ -637,14 +639,14 @@ theorem equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
     IsAbelianGalois K E := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let E := equalCharacteristicLubinTateLevelField F m
-  letI : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
-  letI : IsAbelianGalois B E :=
+  let : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
+  let : IsAbelianGalois B E :=
     equalCharacteristicLubinTateLevelField_isAbelianGalois F m
-  letI : CharP K p := hKp
-  letI : Algebra K E :=
+  let : CharP K p := hKp
+  let : Algebra K E :=
     equalCharacteristicTransportedLubinTateLevelAlgebra K p ϖ hϖ m
   let e := equalCharacteristicTargetLaurentRingEquiv K p ϖ hϖ
   have he (x : B) :
@@ -654,7 +656,7 @@ theorem equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
         (equalCharacteristicTransportedLubinTateLevelAlgebra_comp
           K p ϖ hϖ m) x
     simpa [e] using hcomp
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     equalCharacteristicTransportedLubinTateLevel_isGalois
       K p ϖ hϖ m
   let restrictToLaurent :
@@ -721,12 +723,12 @@ private theorem equalCharacteristicTransported_normUnits
       LocalFieldTheory.normUnits K E x := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let E := equalCharacteristicLubinTateLevelField F m
-  letI : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
-  letI : CharP K p := hKp
-  letI : Algebra K E :=
+  let : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
+  let : CharP K p := hKp
+  let : Algebra K E :=
     equalCharacteristicTransportedLubinTateLevelAlgebra K p ϖ hϖ m
   have hnorm :=
     Algebra.norm_eq_of_equiv_equiv
@@ -761,12 +763,12 @@ theorem equalCharacteristicLubinTateNormSubgroup_map_eq_transported
       equalCharacteristicTransportedLubinTateNormSubgroup K p ϖ hϖ m := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let E := equalCharacteristicLubinTateLevelField F m
-  letI : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
-  letI : CharP K p := hKp
-  letI : Algebra K E :=
+  let : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
+  let : CharP K p := hKp
+  let : Algebra K E :=
     equalCharacteristicTransportedLubinTateLevelAlgebra K p ϖ hϖ m
   change
     (_root_.LocalFieldTheory.localNormSubgroup B E).map
@@ -794,9 +796,9 @@ theorem equalCharacteristicTransportedLubinTateNormSubgroup_le_uniformizerPrinci
       LocalFieldTheory.uniformizerPrincipalSubgroup K ϖ 1 (m + 1) := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
   have hLubinTateNormSubgroup :
       equalCharacteristicLubinTateNormSubgroup F m =
         LocalFieldTheory.uniformizerPrincipalSubgroup B
@@ -804,7 +806,7 @@ theorem equalCharacteristicTransportedLubinTateNormSubgroup_le_uniformizerPrinci
           1 (m + 1) :=
     equalCharacteristicLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup
       F m
-  letI : CharP K p := hKp
+  let : CharP K p := hKp
   rw [← equalCharacteristicLubinTateNormSubgroup_map_eq_transported
       K p ϖ hϖ m,
     hLubinTateNormSubgroup]

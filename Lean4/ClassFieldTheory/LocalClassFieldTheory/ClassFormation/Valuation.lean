@@ -1,7 +1,9 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalFieldTheory.NonarchimedeanLocalField.ValuationExactSequence
-import LocalFieldTheory.NonarchimedeanLocalField.IdealQuotients
-import LocalFieldTheory.NonarchimedeanLocalField.GaloisIntegerRing
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.GaloisIntegerRing
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.ClassFormation.Valuation` Lean module. -/
 
 namespace LocalClassFieldTheory
@@ -121,8 +123,8 @@ theorem integerUnitsToFieldUnits_galoisGroup_equivariant
     letI := galoisGroupFieldUnitsMulDistribMulAction K L
     integerUnitsToFieldUnits L (σ • x) =
       σ • integerUnitsToFieldUnits L x := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := galoisGroupFieldUnitsMulDistribMulAction K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupFieldUnitsMulDistribMulAction K L
   ext
   rfl
 
@@ -208,8 +210,8 @@ theorem valuationUnitsMulHom_galoisGroup_equivariant
     letI := galoisGroupValueGroupMulDistribMulAction K L
     valuationUnitsMulHom L (σ • x) =
       σ • valuationUnitsMulHom L x := by
-  letI := galoisGroupFieldUnitsMulDistribMulAction K L
-  letI := galoisGroupValueGroupMulDistribMulAction K L
+  let := galoisGroupFieldUnitsMulDistribMulAction K L
+  let := galoisGroupValueGroupMulDistribMulAction K L
   exact congrArg Multiplicative.ofAdd
     (valuationMap_unitsMapEquiv_galoisGroup K L σ x)
 

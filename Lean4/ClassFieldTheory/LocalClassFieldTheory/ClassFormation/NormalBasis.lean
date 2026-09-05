@@ -1,7 +1,9 @@
-import CyclicCohomology.Herbrand.NormalBasisLattice
-import CyclicCohomology.Herbrand.HerbrandLowDegree
+import GaloisCohomology.Cyclic.Herbrand.NormalBasisLattice
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
 import Mathlib.FieldTheory.Galois.NormalBasis
 import Mathlib.LinearAlgebra.Quotient.Pi
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.ClassFormation.NormalBasis` Lean module. -/
 
 namespace LocalClassFieldTheory
@@ -674,7 +676,7 @@ theorem chosenNormalBasisLatticeSuccQuotRightRegularAddEquiv_commutes
     letI := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
     chosenNormalBasisLatticeSuccQuotRightRegularAddEquiv K L n (τ • q) σ =
       chosenNormalBasisLatticeSuccQuotRightRegularAddEquiv K L n q (σ * τ) := by
-  letI := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
+  let := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
   refine chosenNormalBasisLatticeSuccQuot.inductionOn K L n
     (motive := fun q =>
       chosenNormalBasisLatticeSuccQuotRightRegularAddEquiv K L n (τ • q) σ =
@@ -701,7 +703,7 @@ theorem chosenNormalBasisLatticeSuccQuot_herbrandH0_subsingleton (n : Nat) :
         Gal(L / K) (chosenNormalBasisLatticeSuccQuot K L n)
     Subsingleton (CyclicCohomology.ProfiniteCohomology.Herbrand.HerbrandH0
       Gal(L / K) (Multiplicative (chosenNormalBasisLatticeSuccQuot K L n))) := by
-  letI := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
+  let := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
   exact
     CyclicCohomology.ProfiniteCohomology.Herbrand.herbrandH0_subsingleton_of_addEquiv_rightRegularFunction
       (G := Gal(L / K)) (M := chosenNormalBasisLatticeSuccQuot K L n) (D := 𝓀[K])
@@ -719,7 +721,7 @@ theorem chosenNormalBasisLatticeSuccQuot_herbrandHMinusOne_subsingleton
         Gal(L / K) (chosenNormalBasisLatticeSuccQuot K L n)
     Subsingleton (CyclicCohomology.ProfiniteCohomology.Herbrand.HerbrandHMinusOne
       Gal(L / K) (Multiplicative (chosenNormalBasisLatticeSuccQuot K L n)) τ) := by
-  letI := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
+  let := galoisGroupChosenNormalBasisLatticeSuccQuotDistribMulAction K L n
   exact
     CyclicCohomology.ProfiniteCohomology.Herbrand.herbrandHMinusOne_subsingleton_of_addEquiv_rightRegularFunction
       (G := Gal(L / K)) (M := chosenNormalBasisLatticeSuccQuot K L n) (D := 𝓀[K])

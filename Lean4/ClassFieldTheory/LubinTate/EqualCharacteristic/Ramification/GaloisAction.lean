@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelAbelian
-import LocalFieldTheory.DiscreteValuationField.Basic
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAbelian
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
+
+set_option autoImplicit false
 
 /-!
 # Galois action at an equal-characteristic Lubin--Tate level

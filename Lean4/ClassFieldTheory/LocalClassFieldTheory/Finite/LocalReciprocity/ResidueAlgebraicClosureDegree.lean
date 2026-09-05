@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAbsoluteDegree
-import RamificationTheory.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAbsoluteDegree
+import ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -50,8 +52,12 @@ algebraic closure.  This choice is used only to prove that all profinite
 coordinates are detected. -/
 noncomputable def finiteResidueExtensionEmbeddingInto
     (n : ℕ) [NeZero n] :
-    FiniteField.Extension k (ringChar k) n →ₐ[k] Omega :=
-  IsAlgClosed.lift
+    FiniteField.Extension k (ringChar k) n →ₐ[k] Omega := by
+  letI : Module.IsTorsionFree k Omega :=
+    Module.isTorsionFree_iff_algebraMap_injective.mpr
+      (algebraMap k Omega).injective
+  exact IsAlgClosed.lift (R := k)
+    (S := FiniteField.Extension k (ringChar k) n) (M := Omega)
 
 /-- The image of the degree-`n` finite extension in the given residue
 algebraic closure. -/
@@ -104,12 +110,12 @@ theorem residueAbsoluteFrobenius_isAlgClosure_injective :
   apply Multiplicative.ext
   apply ZHat.ext
   intro n hn
-  letI : NeZero n := ⟨Nat.ne_of_gt hn⟩
+  let : NeZero n := ⟨Nat.ne_of_gt hn⟩
   let E := finiteResidueGaloisIntermediateFieldIn k Omega n
   have hrestriction := congrArg (AlgEquiv.restrictNormalHom E) hzw
   rw [restrictNormalHom_residueAbsoluteFrobenius (z := z) (E := E),
     restrictNormalHom_residueAbsoluteFrobenius (z := w) (E := E)] at hrestriction
-  letI : Finite E := Module.finite_of_finite k
+  let : Finite E := Module.finite_of_finite k
   change finiteResidueFrobeniusFromZHat k E z =
     finiteResidueFrobeniusFromZHat k E w at hrestriction
   rw [finiteResidueFrobeniusFromZHat_apply,
@@ -373,8 +379,8 @@ theorem residueAbsoluteFrobenius_restrictScalars
       residueAbsoluteFrobenius k Omega
         (Multiplicative.ofAdd
           ((Module.finrank k E) • z.toAdd)) := by
-  letI : Finite E := Module.finite_of_finite k
-  letI : Fintype E := Fintype.ofFinite E
+  let : Finite E := Module.finite_of_finite k
+  let : Fintype E := Fintype.ofFinite E
   let scaleHom : ZHatMul →* ZHatMul :=
     AddMonoidHom.toMultiplicative
       (zHatMulNat (Module.finrank k E)).toAddMonoidHom
@@ -461,8 +467,8 @@ theorem residueAbsoluteDegreeIn_restrictScalars
       Multiplicative.ofAdd
         ((Module.finrank k E) •
           (residueAbsoluteDegreeIn E Omega sigma).toAdd) := by
-  letI : Finite E := Module.finite_of_finite k
-  letI : Fintype E := Fintype.ofFinite E
+  let : Finite E := Module.finite_of_finite k
+  let : Fintype E := Fintype.ofFinite E
   apply (residueAbsoluteFrobeniusEquivIn k Omega).injective
   change
     (residueAbsoluteFrobeniusEquivIn k Omega)
@@ -507,7 +513,7 @@ theorem finiteResidueFrobeniusExponentEquiv_symm_restrict_in
       Multiplicative.ofAdd
         (zHatReduction (Module.finrank k E) Module.finrank_pos
           (residueAbsoluteDegreeIn k Omega sigma).toAdd) := by
-  letI : Finite E := Module.finite_of_finite k
+  let : Finite E := Module.finite_of_finite k
   apply (finiteResidueFrobeniusExponentEquiv k E).injective
   rw [(finiteResidueFrobeniusExponentEquiv k E).apply_symm_apply]
   change AlgEquiv.restrictNormalHom E sigma =

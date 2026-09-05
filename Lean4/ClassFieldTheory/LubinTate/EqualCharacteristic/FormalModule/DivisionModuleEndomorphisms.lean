@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.FiniteLevel.FreeRankOne
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FreeRankOne
 import Mathlib.LinearAlgebra.GeneralLinearGroup.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
+
+set_option autoImplicit false
 
 /-!
 # The endomorphism-ring equivalence: endomorphisms and automorphisms of division modules

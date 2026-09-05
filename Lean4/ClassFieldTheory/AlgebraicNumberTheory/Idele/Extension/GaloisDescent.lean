@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.Extension.ClassGroup
-import KummerTheory.Concrete.GaloisCohomology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+import GaloisCohomology.Kummer.Concrete.GaloisCohomology
 import Mathlib.Algebra.Group.Action.Basic
 import Mathlib.GroupTheory.GroupAction.Quotient
+
+set_option autoImplicit false
 
 /-!
 # Galois descent for idele classes
@@ -117,7 +119,7 @@ theorem exists_fixed_representative_of_fixed_class
           (principalSubgroup K L) a ∧
       ∀ σ : L ≃ₐ[K] L, σ • a' = a' := by
   classical
-  letI := relativeIdeleMulDistribMulAction K L
+  let := relativeIdeleMulDistribMulAction K L
   have hex :
       ∀ σ : L ≃ₐ[K] L,
         ∃ x : Lˣ,

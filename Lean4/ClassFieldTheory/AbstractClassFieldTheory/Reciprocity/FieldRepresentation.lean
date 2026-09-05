@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Degree.NormLaws
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.NormLaws
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -85,7 +87,7 @@ theorem extensionFixedRepresentation_action_coe
     ((extensionFixedRepresentation A K L hLK hnormal).ρ q a).1 =
       relativeCosetAction A K L hLK
         (extensionFixedRepresentationEquiv A K L hLK hnormal a) q := by
-  letI := hnormal
+  let := hnormal
   refine Quotient.inductionOn' q ?_
   intro k
   rw [relativeCosetAction_mk]
@@ -106,13 +108,13 @@ theorem extensionFixedRepresentation_norm_coe
       ((relativeNorm A K L hLK
         (extensionFixedRepresentationEquiv A K L hLK hnormal a) :
           ambientFixedAddSubgroup A K) : A.V) := by
-  letI := hnormal
-  letI := Fintype.ofFinite
+  let := hnormal
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K L hLK)
   rw [relativeNorm_apply_coe]
   simp only [Rep.norm, Representation.norm, relativeNormValue]
   let M := extensionFixedRepresentation A K L hLK hnormal
-  letI : Module ℤ M.V := M.hV2
+  let : Module ℤ M.V := M.hV2
   change ((∑ q, M.ρ q) a).1 =
     ∑ q, relativeCosetAction A K L hLK
       (extensionFixedRepresentationEquiv A K L hLK hnormal a) q

@@ -1,7 +1,11 @@
-import KummerTheory.Concrete.SUnitPreparation
-import KummerTheory.Concrete.SimpleExtensionLocalBehavior
-import AlgebraicNumberTheory.Completion.UnramifiedComparison
-import RamificationTheory.HilbertRamification.Dedekind.CompositumUnramified
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.Core
+import ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.CompositumUnramified
+
+set_option autoImplicit false
 
 /-!
 # Unramifiedness of the full `S`-unit Kummer extension
@@ -337,9 +341,9 @@ theorem fullSUnitKummerRoot_internalAdjoin_isGalois
     exists_sUnitRootUnit_generating_internalAdjoin
       (K := K) E n hn hmu S beta hbeta
   let L := chosenSimpleKummerExtension K n hn u.1
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hn u.1
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hn hmu u.1
   exact IsGalois.of_algEquiv eSimple.symm
 
@@ -377,13 +381,13 @@ theorem
   let E :=
     fullSUnitKummerExtension
       (K := K) (Omega := Omega) n S
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hn hmu S
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite K E
   let w := chosenFinitePlaceExtension (L := E) v
   let Q :=
@@ -397,7 +401,7 @@ theorem
         Normal K (IntermediateField.adjoin K {x}) := by
     intro x hx
     let B := IntermediateField.adjoin K {x}
-    letI : IsGalois K B :=
+    let : IsGalois K B :=
       fullSUnitKummerRoot_internalAdjoin_isGalois
         (K := K) E n hn hmu S x (hTroot x hx)
     exact inferInstance
@@ -410,10 +414,10 @@ theorem
           ⊥ := by
     intro x hx
     let B := IntermediateField.adjoin K {x}
-    letI : IsGalois K B :=
+    let : IsGalois K B :=
       fullSUnitKummerRoot_internalAdjoin_isGalois
         (K := K) E n hn hmu S x (hTroot x hx)
-    letI : NumberField B :=
+    let : NumberField B :=
       NumberField.of_module_finite K B
     obtain ⟨u, alpha, _, halpha, hgenerate⟩ :=
       exists_sUnitRootUnit_generating_internalAdjoin
@@ -496,13 +500,13 @@ theorem
   let E :=
     fullSUnitKummerExtension
       (K := K) (Omega := Omega) n S
-  letI : FiniteDimensional K E :=
+  let _ : FiniteDimensional K E :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hn hmu S
-  letI : IsGalois K E :=
+  let _ : IsGalois K E :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S
-  letI : NumberField E :=
+  let _ : NumberField E :=
     NumberField.of_module_finite K E
   intro P hPS hnP
   let v := finitePlaceBelow (K := K) P

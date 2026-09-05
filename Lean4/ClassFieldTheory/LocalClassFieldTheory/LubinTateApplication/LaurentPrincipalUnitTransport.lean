@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+
+set_option autoImplicit false
 
 /-!
 # Exact principal-unit transport from the Laurent model
@@ -64,7 +66,7 @@ theorem equalCharacteristicTargetPowerSeriesEvalSubringHom_coe
   let eval := equalCharacteristicTargetPowerSeriesEvalSubringHom K p ϖ hϖ
   let π := equalCharacteristicTargetUniformizer K ϖ hϖ
   let hπ := equalCharacteristicTargetUniformizer_isUniformizer K ϖ hϖ
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   have hcomp :=
     congrArg DFunLike.coe
@@ -101,7 +103,7 @@ theorem equalCharacteristicTargetPowerSeriesEvalSubringHom_bijective
   let π := equalCharacteristicTargetUniformizer K ϖ hϖ
   let hπ := equalCharacteristicTargetUniformizer_isUniformizer K ϖ hϖ
   change Function.Bijective eval
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   constructor
   · intro f g hfg
@@ -146,11 +148,11 @@ theorem equalCharacteristicTargetLaurentRingEquiv_val_le_one_iff
   have hbij : Function.Bijective eval :=
     equalCharacteristicTargetPowerSeriesEvalSubringHom_bijective
       K p ϖ hϖ
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
   let vB : Valuation B (WithZero (Multiplicative ℤ)) := Valued.v
-  letI : vB.Compatible := Valuation.Compatible.ofValuation vB
+  let : vB.Compatible := Valuation.Compatible.ofValuation vB
   change
     ValuativeRel.valuation B x ≤ 1 ↔
       ValuativeRel.valuation K (e x) ≤ 1
@@ -318,7 +320,7 @@ theorem equalCharacteristicTargetLaurent_fieldPrincipalUnits_map_eq
       LocalFieldTheory.fieldPrincipalUnits K (m + 1) := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
   let H := equalCharacteristicLubinTateHigherUnitSubgroup F m
   let source :=
     equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F

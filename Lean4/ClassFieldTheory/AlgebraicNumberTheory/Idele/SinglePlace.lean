@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Adele.RestrictedProduct
-import AlgebraicNumberTheory.Idele.Topology
-import AlgebraicNumberTheory.RayClass.Approximation
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedProduct
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Approximation
+
+set_option autoImplicit false
 
 /-!
 # Ideles supported at one place
@@ -220,6 +222,7 @@ def finitePlaceIdele
     · rfl
     · apply RestrictedProduct.ext
       intro w
+      change finitePlaceValue v 1 w = (1 : (w.adicCompletion K)ˣ)
       by_cases hw : w = v
       · subst w
         simp
@@ -229,6 +232,8 @@ def finitePlaceIdele
     · simp
     · apply RestrictedProduct.ext
       intro w
+      change finitePlaceValue v (x * y) w =
+        finitePlaceValue v x w * finitePlaceValue v y w
       by_cases hw : w = v
       · subst w
         simp

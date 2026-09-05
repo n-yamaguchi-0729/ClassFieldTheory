@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizer
-import LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: normalization of a changed Laurent uniformizer
@@ -40,7 +42,7 @@ theorem equalCharacteristicChangedLaurentUniformizerInteger_coe
     letI := equalCharacteristicLaurentValuativeRel F
     (equalCharacteristicChangedLaurentUniformizerInteger F a).1 =
       equalCharacteristicChangedLaurentUniformizer F a := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   rfl
 
@@ -50,7 +52,7 @@ theorem equalCharacteristicChangedLaurentUniformizerInteger_irreducible
     (F : LocalField.{u, v} K) (a : F.residueField⟦X⟧ˣ) :
     letI := equalCharacteristicLaurentValuativeRel F
     Irreducible (equalCharacteristicChangedLaurentUniformizerInteger F a) := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   change Irreducible
     (powerSeriesEquivLaurentValuativeInteger F.residueField
@@ -85,8 +87,8 @@ theorem equalCharacteristicChangedLaurentUniformizerUnit_inv_valuationMap
       (Additive.ofMul
         (equalCharacteristicChangedLaurentUniformizerUnit F a)⁻¹) = 1 := by
   let L := F.residueField⸨X⸩
-  letI : ValuativeRel L := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField L :=
+  let : ValuativeRel L := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField L :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
   rw [LocalFieldTheory.IsNonarchimedeanLocalField.valuationMap_apply]
   exact LocalFieldTheory.v_integerRingIrreducibleFieldUnit_inv L

@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Theta.ThetaUniqueness
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaUniqueness
+
+set_option autoImplicit false
 
 /-!
 # The Lubin–Tate endomorphism commutation law: the first theta identity in equal characteristic
@@ -60,7 +62,7 @@ noncomputable def equalCharacteristicSourceBracketNumerator
 theorem equalCharacteristicSourceBracketNumerator_constantCoeff
     (a : k⟦X⟧) :
     PowerSeries.coeff 0 (equalCharacteristicSourceBracketNumerator a) = 0 := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   rw [PowerSeries.coeff_zero_eq_constantCoeff_apply,
     equalCharacteristicSourceBracketNumerator,
     map_sub, map_pow, Nat.card_eq_fintype_card,
@@ -276,7 +278,7 @@ theorem equalCharacteristicPowerSeriesFrobenius_map_algebraMap
     equalCharacteristicPowerSeriesFrobenius k
         (PowerSeries.map (algebraMap k (AlgebraicClosure k)) a) =
       PowerSeries.map (algebraMap k (AlgebraicClosure k)) a := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   apply PowerSeries.ext
   intro n
   rw [equalCharacteristicPowerSeriesFrobenius_coeff,

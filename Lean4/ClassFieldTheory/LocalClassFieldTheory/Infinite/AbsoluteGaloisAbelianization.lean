@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Galois.AbsoluteAbelianization
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteAbelianization
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Compatibility names for the absolute abelianization

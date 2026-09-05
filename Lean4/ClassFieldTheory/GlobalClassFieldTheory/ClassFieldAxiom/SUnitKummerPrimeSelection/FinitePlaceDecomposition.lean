@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Completion.ChosenLocalization
-import AlgebraicNumberTheory.Completion.ExtensionIndex
-import AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
-import LocalFieldTheory.NonarchimedeanLocalField.UnramifiedFrobenius
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
+
+set_option autoImplicit false
 
 /-!
 # Finite-place decomposition groups in Galois towers
@@ -157,7 +159,7 @@ theorem finitePlaceDecompositionGroup_isCyclic_of_chosenUnramified
   let Lv :=
     _root_.ChosenFinitePlaceLocalizedCompletion
       (K := F) (L := L) v
-  letI :
+  let :
       LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
         Fv Lv := by
     simpa [Fv, Lv, _root_.ChosenFinitePlaceIsUnramified] using hunram

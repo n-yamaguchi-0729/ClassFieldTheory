@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.RayClass.Narrow
-import GlobalClassFieldTheory.GlobalClassFields.ConductorLattice
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorLattice
+
+set_option autoImplicit false
 
 /-!
 # The big Hilbert class field
@@ -29,8 +31,10 @@ def bigHilbertClassFieldNormSubgroup :
     (0 : RayClass.FiniteModulus K)).congruenceSubgroup
 
 instance bigHilbertClassFieldNormSubgroup_normal :
-    (bigHilbertClassFieldNormSubgroup (K := K)).Normal :=
-  Subgroup.normal_of_isMulCommutative _
+    (bigHilbertClassFieldNormSubgroup (K := K)).Normal := by
+  let : IsMulCommutative (IdeleClassGroup K) :=
+    IsMulCommutative.of_comm (fun a b => mul_comm a b)
+  exact Subgroup.normal_of_isMulCommutative _
 
 /-- The norm subgroup defining the big Hilbert class field is closed. -/
 theorem bigHilbertClassFieldNormSubgroup_isClosed :

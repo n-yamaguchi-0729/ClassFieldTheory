@@ -1,7 +1,9 @@
-import AbstractClassFieldTheory.Reciprocity.NormTopology
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import AbstractClassFieldTheory.Reciprocity.IntermediateExtension
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.IntermediateExtension
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 /-!
 # A finite class-field candidate from a norm-open subgroup
@@ -77,7 +79,7 @@ theorem finiteNormClass_mem_normQuotientSubgroup_iff
     finiteNormClass A K E.field E.below a ∈
         normQuotientSubgroup A E H ↔
       a ∈ H := by
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K E.field E.below) := E.finite
   constructor
   · rintro ⟨b, hb, hba⟩
@@ -126,7 +128,7 @@ theorem mem_reciprocityAbelianizedSubgroup_iff
     q ∈ reciprocityAbelianizedSubgroup A E H rE ↔
       ∃ z ∈ normQuotientSubgroup A E H,
         rE z = Additive.ofMul q := by
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K E.field E.below) := E.finite
   rfl
 
@@ -218,7 +220,7 @@ def intermediateFiniteAbelianOfCommutatorLe
     { toFiniteGaloisExtension := M
       commutative := ?_ }
   let e := E.upperQuotientEquiv S
-  letI : IsMulCommutative (E.extensionQuotient ⧸ S) :=
+  let : IsMulCommutative (E.extensionQuotient ⧸ S) :=
     (Subgroup.Normal.quotient_commutative_iff_commutator_le).2 hS
   refine ⟨⟨?_⟩⟩
   intro x y
@@ -310,7 +312,7 @@ theorem candidateQuotient_eq_one_iff
           (reciprocityAbelianizedClassHom A E rE a))) = 1 ↔
       a ∈ H := by
   dsimp only
-  letI : (reciprocityPreimageSubgroup A E H rE).Normal :=
+  let : (reciprocityPreimageSubgroup A E H rE).Normal :=
     Subgroup.Normal.of_commutator_le E.extensionQuotient
       (commutator_le_reciprocityPreimageSubgroup A E H rE)
   constructor
@@ -348,7 +350,10 @@ theorem classFieldCandidate_field
     (classFieldCandidate A E H rE).field =
       E.intermediateField
         (reciprocityPreimageSubgroup A E H rE) :=
-  by simp [classFieldCandidate]
+  by
+    exact intermediateFiniteAbelianOfCommutatorLe_field E
+      (reciprocityPreimageSubgroup A E H rE)
+      (commutator_le_reciprocityPreimageSubgroup A E H rE)
 
 end FiniteGaloisSubextension
 

@@ -1,9 +1,11 @@
 import Mathlib.GroupTheory.Index
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.FiniteLevel.StandardLocalField
-import LocalFieldTheory.NonarchimedeanLocalField.UniformizerPrincipalQuotient
-import LubinTate.FiniteLevel.FiniteParameters
-import LubinTate.FiniteLevel.NormSubgroup
+import ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UniformizerPrincipalQuotient
+import ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameters
+import ClassFieldTheory.LubinTate.FiniteLevel.NormSubgroup
+
+set_option autoImplicit false
 
 /-!
 # The canonical standard subgroup index
@@ -118,7 +120,7 @@ theorem subgroup_eq_of_le_of_index_eq_of_ne_zero
     (hHN : H ≤ N) (hindex : H.index = N.index)
     (hindex_ne : H.index ≠ 0) :
     H = N := by
-  letI : H.FiniteIndex := ⟨hindex_ne⟩
+  let _ : H.FiniteIndex := ⟨hindex_ne⟩
   apply le_antisymm hHN
   by_contra hNH
   have hne : H ≠ N := by

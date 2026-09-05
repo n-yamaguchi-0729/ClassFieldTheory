@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.Finite.Existence.LubinTateUniformizerDiagonal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.LubinTateUniformizerDiagonal
+
+set_option autoImplicit false
 
 /-!
 # The unramified--Lubin--Tate diagonal field

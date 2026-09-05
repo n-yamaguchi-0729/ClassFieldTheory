@@ -1,0 +1,4 @@
+import GaloisCohomology.GroupTheory.Transfer.RelativeAugmentation
+import GaloisCohomology.GroupTheory.Transfer.Witt
+
+set_option autoImplicit false

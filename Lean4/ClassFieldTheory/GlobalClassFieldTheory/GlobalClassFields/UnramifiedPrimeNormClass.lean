@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.GlobalClassFields.ConductorFrobenius
-import GlobalClassFieldTheory.GlobalClassFields.FinitePlaceArtinQuotient
-import GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
-import GlobalClassFieldTheory.Reciprocity.ProductFormula
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorFrobenius
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FinitePlaceArtinQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ProductFormula
+
+set_option autoImplicit false
 
 /-!
 # Prime norm classes at unramified finite places
@@ -26,6 +28,13 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField IsDedekindDomain
+
+private theorem unramifiedPrimeNormClassGroupIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] unramifiedPrimeNormClassGroupIsMulCommutative
 
 variable
     {K L : Type}

@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Degree.Fields
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -67,7 +69,7 @@ def normalizedDegree (D : DegreeData G) (K : FiniteResidueAbstractField D) :
       (D.restrictedDegreeInMulNatRange K 1) = 0
     rw [show D.restrictedDegreeInMulNatRange K 1 = 0 by
       apply Subtype.ext
-      simp]
+      exact congrArg Multiplicative.toAdd (map_one D.degree)]
     exact map_zero (zHatDivide (K.residueDegree : ℕ) K.residueDegree.property)
   map_mul' x y := by
     apply Multiplicative.ext

@@ -1,11 +1,13 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedIdeleIndex
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.NormContainment
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedPrincipalQuotient
-import AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import AlgebraicNumberTheory.Idele.Cohomology.Herbrand
-import GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
-import AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedIdeleIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.NormContainment
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedPrincipalQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
+import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
 import Mathlib.FieldTheory.IsSepClosed
+
+set_option autoImplicit false
 
 /-!
 # Prime-power Kummer norm index
@@ -328,7 +330,7 @@ theorem
     (RelativeIdeleGroup.Cohomology.ideleClassNorm K E).range.index =
       Module.finrank K E := by
   classical
-  letI : NumberField E :=
+  let _ : NumberField E :=
     NumberField.of_module_finite K E
   let eCyclic :
       Gal(E/K) ≃* Multiplicative (ZMod (n : ℕ)) :=
@@ -336,7 +338,7 @@ theorem
       (MulEquiv.piUnique
         (fun _ : Fin 1 =>
           Multiplicative (ZMod (n : ℕ))))
-  letI : IsCyclic Gal(E/K) :=
+  let : IsCyclic Gal(E/K) :=
     eCyclic.isCyclic.mpr inferInstance
   let S : Finset (HeightOneSpectrum (𝓞 K)) :=
     _root_.ideleClassHerbrandSupport
@@ -485,7 +487,7 @@ theorem ideleClassNorm_index_eq_finrank_primePowerKummer
     (RelativeIdeleGroup.Cohomology.ideleClassNorm K E).range.index =
       Module.finrank K E := by
   classical
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite K E
   let i : E →ₐ[K] SeparableClosure K :=
     IsSepClosed.lift
@@ -493,13 +495,18 @@ theorem ideleClassNorm_index_eq_finrank_primePowerKummer
     AlgHom.fieldRange i
   let e : E ≃ₐ[K] R :=
     AlgHom.equivFieldRange i
-  letI : FiniteDimensional K R :=
+  let _ : FiniteDimensional K R :=
     e.toLinearEquiv.finiteDimensional
-  letI : IsGalois K R :=
+  let _ : IsGalois K R :=
     IsGalois.of_algEquiv e
-  letI : NumberField R :=
+  let _ : NumberField R :=
     NumberField.of_module_finite K R
-  letI : Group (RelativeIdeleGroup.ClassGroup K R) :=
+  let _ : (RelativeIdeleGroup.principalSubgroup K R).Normal :=
+    ⟨fun n hn g => by
+      have hconj : g * n * g⁻¹ = n := by
+        rw [mul_comm g n, mul_assoc, mul_inv_cancel, mul_one]
+      rwa [hconj]⟩
+  let _ : Group (RelativeIdeleGroup.ClassGroup K R) :=
     QuotientGroup.Quotient.group
       (RelativeIdeleGroup.principalSubgroup K R)
   let eG' :

@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
-import LocalFieldTheory.NonarchimedeanLocalField.IdealQuotients
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+
+set_option autoImplicit false
 
 /-!
 # Actual unramified norm quotient uniformizer

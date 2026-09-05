@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import CyclicCohomology.Herbrand.HerbrandFiniteness
-import LocalClassFieldTheory.ClassFormation.NormalBasisFiniteQuotient
+import GaloisCohomology.Cyclic.Herbrand.HerbrandFiniteness
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.NormalBasisFiniteQuotient
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -57,9 +59,9 @@ theorem chosenNormalBasisIntegerUnitsHerbrand_shortExact
         (chosenNormalBasisPrincipalUnitSubgroupInclusion (L := L) V) ∧
       Function.Surjective
         (chosenNormalBasisIntegerUnitsQuotientMap (L := L) V) := by
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction K L n V hV
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := chosenNormalBasisIntegerUnitsQuotMulDistribMulAction K L n V hV
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction K L n V hV
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := chosenNormalBasisIntegerUnitsQuotMulDistribMulAction K L n V hV
   refine ⟨chosenNormalBasisPrincipalUnitSubgroupInclusion_equivariant K L n V hV,
     chosenNormalBasisIntegerUnitsQuotientMap_equivariant K L n V hV, ?_,
     chosenNormalBasisPrincipalUnitSubgroupInclusion_injective (L := L) V,
@@ -106,28 +108,30 @@ theorem integerUnits_herbrandQuotient_eq_one_of_chosenNormalBasis
       @herbrandQuotient (Gal(L / K)) 𝒪[L]ˣ _ _ _
         (galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L)
         g hU.1 hU.2 = 1 := by
-  letI := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction K L n V hV
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
-  letI := chosenNormalBasisIntegerUnitsQuotMulDistribMulAction K L n V hV
-  letI : Finite (𝒪[L]ˣ ⧸ V) := hfinite
-  letI : Subsingleton (HerbrandH0 (Gal(L / K)) V) := hH0
-  letI : Subsingleton (HerbrandHMinusOne (Gal(L / K)) V g) := hHminusOne
-  letI : Finite (HerbrandH0 (Gal(L / K)) V) := inferInstance
-  letI : Finite (HerbrandHMinusOne (Gal(L / K)) V g) := inferInstance
+  let := chosenNormalBasisPrincipalUnitSubgroupMulDistribMulAction K L n V hV
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := chosenNormalBasisIntegerUnitsQuotMulDistribMulAction K L n V hV
+  let : Finite (𝒪[L]ˣ ⧸ V) := hfinite
+  let : Subsingleton (HerbrandH0 (Gal(L / K)) V) := hH0
+  let : Subsingleton (HerbrandHMinusOne (Gal(L / K)) V g) := hHminusOne
   let hVdefined : HerbrandQuotientDefined (Gal(L / K)) V g :=
     ⟨inferInstance, inferInstance⟩
   let hQdefined : HerbrandQuotientDefined (Gal(L / K)) (𝒪[L]ˣ ⧸ V) g :=
     ⟨inferInstance, inferInstance⟩
   let hseq := chosenNormalBasisIntegerUnitsHerbrand_shortExact K L n V hV
+  have hsurj : ∀ c : 𝒪[L]ˣ ⧸ V, ∃ b : 𝒪[L]ˣ,
+      chosenNormalBasisIntegerUnitsQuotientMap (L := L) V b = c := by
+    intro c
+    exact hseq.2.2.2.2 c
   let hU := herbrandQuotientDefined_middle_of_left_right
     (G := Gal(L / K)) (A := V) (B := 𝒪[L]ˣ) (C := 𝒪[L]ˣ ⧸ V)
     (chosenNormalBasisPrincipalUnitSubgroupInclusion (L := L) V)
     (chosenNormalBasisIntegerUnitsQuotientMap (L := L) V)
-    hseq.1 hseq.2.1 hseq.2.2.1 hseq.2.2.2.1 hseq.2.2.2.2
+    hseq.1 hseq.2.1 hseq.2.2.1 hseq.2.2.2.1 hsurj
     g hg hVdefined hQdefined
   refine ⟨hU, ?_⟩
-  letI : Finite (HerbrandH0 (Gal(L / K)) 𝒪[L]ˣ) := hU.1
-  letI : Finite (HerbrandHMinusOne (Gal(L / K)) 𝒪[L]ˣ g) := hU.2
+  let : Finite (HerbrandH0 (Gal(L / K)) 𝒪[L]ˣ) := hU.1
+  let : Finite (HerbrandHMinusOne (Gal(L / K)) 𝒪[L]ˣ g) := hU.2
   have hVone : herbrandQuotient (G := Gal(L / K)) (A := V) g = 1 := by
     exact herbrandQuotient_eq_one_of_card_eq
       (G := Gal(L / K)) (A := V) g
@@ -136,12 +140,15 @@ theorem integerUnits_herbrandQuotient_eq_one_of_chosenNormalBasis
       herbrandQuotient (G := Gal(L / K)) (A := 𝒪[L]ˣ ⧸ V) g = 1 := by
     exact herbrandQuotient_eq_one_of_finite_module
       (G := Gal(L / K)) (A := 𝒪[L]ˣ ⧸ V) g hg
-  rw [herbrandQuotient_multiplicative_of_shortExact
-    (G := Gal(L / K)) (A := V) (B := 𝒪[L]ˣ) (C := 𝒪[L]ˣ ⧸ V)
-    (chosenNormalBasisPrincipalUnitSubgroupInclusion (L := L) V)
-    (chosenNormalBasisIntegerUnitsQuotientMap (L := L) V)
-    hseq.1 hseq.2.1 hseq.2.2.1 hseq.2.2.2.1 hseq.2.2.2.2 g hg,
-    hVone, hQone, one_mul]
+  have hmul : herbrandQuotient (G := Gal(L / K)) (A := 𝒪[L]ˣ) g =
+      herbrandQuotient (G := Gal(L / K)) (A := V) g *
+        herbrandQuotient (G := Gal(L / K)) (A := 𝒪[L]ˣ ⧸ V) g :=
+    herbrandQuotient_multiplicative_of_shortExact
+      (G := Gal(L / K)) (A := V) (B := 𝒪[L]ˣ) (C := 𝒪[L]ˣ ⧸ V)
+      (chosenNormalBasisPrincipalUnitSubgroupInclusion (L := L) V)
+      (chosenNormalBasisIntegerUnitsQuotientMap (L := L) V)
+      hseq.1 hseq.2.1 hseq.2.2.1 hseq.2.2.2.1 hsurj g hg
+  exact hmul.trans (by rw [hVone, hQone, one_mul])
 
 variable [TopologicalSpace L] [IsNonarchimedeanLocalField L]
   [Module.Finite 𝒪[K] 𝒪[L]]

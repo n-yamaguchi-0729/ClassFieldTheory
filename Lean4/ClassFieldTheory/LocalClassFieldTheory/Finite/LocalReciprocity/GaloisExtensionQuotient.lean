@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.AbsoluteUnitsFixedField
-import AbstractClassFieldTheory.Degree.Valuation
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbsoluteUnitsFixedField
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory CyclicCohomology

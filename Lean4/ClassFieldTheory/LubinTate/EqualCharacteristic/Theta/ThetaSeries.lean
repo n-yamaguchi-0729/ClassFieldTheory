@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Theta.ThetaCoefficients
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaCoefficients
 import Mathlib.RingTheory.PowerSeries.Expand
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the equal-characteristic theta construction: the equal-characteristic theta series
@@ -196,7 +198,7 @@ additive power series. -/
 theorem add_pow_natCard_pow (a b : A) (j : ℕ) :
     (a + b) ^ (Nat.card k ^ j) =
       a ^ (Nat.card k ^ j) + b ^ (Nat.card k ^ j) := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   induction j with
   | zero => simp
   | succ j ih =>
@@ -218,7 +220,7 @@ noncomputable def equalCharacteristicCardFrobenius
 theorem equalCharacteristicCardFrobenius_apply
     {B : Type w} [CommRing B] [Algebra k B] (x : B) :
     equalCharacteristicCardFrobenius k x = x ^ Nat.card k := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   simp [equalCharacteristicCardFrobenius, Nat.card_eq_fintype_card]
 
 /-- Frobenius on a power-series algebra is coefficient Frobenius followed by
@@ -229,11 +231,11 @@ theorem powerSeries_pow_natCard_eq_expand_map_cardFrobenius
     f ^ Nat.card k =
       PowerSeries.expand (Nat.card k) Nat.card_pos.ne'
         (PowerSeries.map (equalCharacteristicCardFrobenius k) f) := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   obtain ⟨p, hpchar, n, hp, hcard⟩ := FiniteField.card' k
-  letI : CharP k p := hpchar
-  letI : ExpChar k p := ExpChar.prime hp
-  letI : ExpChar B p :=
+  let : CharP k p := hpchar
+  let : ExpChar k p := ExpChar.prime hp
+  let : ExpChar B p :=
     expChar_of_injective_algebraMap (algebraMap k B).injective p
   have hiter :
       iterateFrobenius B p (n : ℕ) =

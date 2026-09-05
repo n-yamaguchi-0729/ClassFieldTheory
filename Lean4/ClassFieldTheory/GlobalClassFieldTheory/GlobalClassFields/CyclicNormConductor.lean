@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+
+set_option autoImplicit false
 
 /-!
 # Narrow finite conductors of cyclic class-norm subgroups

@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
-import GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidueAbelianization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidueAbelianization
+
+set_option autoImplicit false
 
 /-!
 # Arithmetic normalization of global reciprocity
@@ -28,6 +30,13 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
+private theorem arithmeticNormIdeleClassIsMulCommutative
+    (K : Type) [Field K] [NumberField K] :
+    IsMulCommutative (IdeleClassGroup K) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] arithmeticNormIdeleClassIsMulCommutative
+
 /-- Inversion as a topological multiplicative automorphism of a
 commutative topological group. -/
 def commutativeGroupInversionContinuousMulEquiv
@@ -46,7 +55,7 @@ variable
     [FiniteDimensional K L] [IsGalois K L]
 
 /-- Reuse the quotient topology chosen by topological global reciprocity. -/
-local instance (priority := 2000)
+local instance
     arithmeticGlobalNormResidueAbelianization_galoisAbelianizationTopology :
     TopologicalSpace (Abelianization (Gal(L / K))) :=
   topologicalGlobalNormResidueAbelianization_galoisAbelianizationTopology
@@ -54,7 +63,7 @@ local instance (priority := 2000)
 
 /-- The quotient topology above carries the quotient topological-group
 structure. -/
-local instance (priority := 2000)
+local instance
     arithmeticGlobalNormResidueAbelianization_galoisAbelianizationIsTopologicalGroup :
     IsTopologicalGroup (Abelianization (Gal(L / K))) := by
   change

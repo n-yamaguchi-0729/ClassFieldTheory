@@ -1,6 +1,10 @@
-import AlgebraicNumberTheory.Completion.UnramifiedComparison
-import AlgebraicNumberTheory.Idele.FinitePrime
-import GlobalClassFieldTheory.Reciprocity.GlobalArtin
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+
+set_option autoImplicit false
 
 /-!
 # Prime Artin elements at unramified finite places

@@ -1,5 +1,7 @@
-import ValuationTheory.DiscreteValuationField.FiniteIntegralClosure
-import RamificationTheory.GaloisValuation.AbsoluteGalois.FiniteExtensionCorrespondence
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
+import ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.FiniteExtensionCorrespondence
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -35,13 +37,13 @@ theorem ValuationSubring.restrictIntermediateField_eq_of_finite_separable
     (C : ValuationSubring E) [base.valuation.HasExtension C.valuation] :
     A.restrictIntermediateField E = C := by
   let B := A.restrictIntermediateField E
-  letI : base.valuation.HasExtension B.valuation :=
+  let : base.valuation.HasExtension B.valuation :=
     RamificationTheory.ValuationSubring.restrictIntermediateField_hasExtension
       base.valuation A E
   obtain ⟨target, hExt, _hIntegralClosure, _hFundamental⟩ :=
     DiscreteValuationField.ValuedExtension.exists_integralClosure_standard_fundamental_identity
       (K := K) (L := E) base
-  letI : base.valuation.HasExtension target.valuation := hExt
+  let : base.valuation.HasExtension target.valuation := hExt
   have hB : target.valuation.valuationSubring = B :=
     DiscreteValuationField.ValuedExtension.target_valuationSubring_eq_of_finite_separable
       base target B

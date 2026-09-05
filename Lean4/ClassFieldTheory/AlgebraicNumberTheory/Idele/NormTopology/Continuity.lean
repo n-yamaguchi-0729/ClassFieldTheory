@@ -1,8 +1,15 @@
-import AlgebraicNumberTheory.Idele.Topology
-import AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport
-import LocalFieldTheory.NonarchimedeanLocalField.NormContinuity
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.IdeleSupport
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Localization
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.AbsoluteValue
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.FinitePlaceCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
+
+set_option autoImplicit false
 
 /-!
 # Continuity of the global idele norm
@@ -42,7 +49,7 @@ theorem finitePlace_normUnits_mem_integerUnits
         (v₀.adicCompletion K) (W.1.adicCompletion L)
         ((W.1.adicCompletionIntegers L).units.subtype z) ∈
       (v₀.adicCompletionIntegers K).units := by
-  letI : Algebra
+  let : Algebra
       (v₀.adicCompletion K) (W.1.adicCompletion L) :=
     (finitePlaceAdicCompletionMap K L v₀ W).toAlgebra
   apply
@@ -65,20 +72,20 @@ private theorem finitePlace_normUnits_continuous
     Continuous
       (LocalFieldTheory.normUnits
         (v₀.adicCompletion K) (W.1.adicCompletion L)) := by
-  letI : Algebra (v₀.adicCompletion K) (W.1.adicCompletion L) :=
+  let : Algebra (v₀.adicCompletion K) (W.1.adicCompletion L) :=
     (finitePlaceAdicCompletionMap K L v₀ W).toAlgebra
-  letI : IsScalarTower
+  let : IsScalarTower
       K (v₀.adicCompletion K) (W.1.adicCompletion L) :=
     finitePlaceAdicCompletionMap_isScalarTower K L v₀ W
-  letI : ContinuousSMul
+  let : ContinuousSMul
       (v₀.adicCompletion K) (W.1.adicCompletion L) :=
     continuousSMul_of_algebraMap _ _ (by
       change Continuous (finitePlaceAdicCompletionMap K L v₀ W)
       exact finitePlaceAdicCompletionMap_continuous K L v₀ W)
-  letI : FiniteDimensional
+  let : FiniteDimensional
       (v₀.adicCompletion K) (W.1.adicCompletion L) :=
     inferInstance
-  letI : NontriviallyNormedField (v₀.adicCompletion K) :=
+  let : NontriviallyNormedField (v₀.adicCompletion K) :=
     NontriviallyNormedField.ofNormNeOne (by
       obtain ⟨ϖ, hϖ⟩ :=
         IsDiscreteValuationRing.exists_irreducible
@@ -150,13 +157,13 @@ private theorem integralFiniteNormComponents_continuous :
   let eAbove :=
     finitePlaceExtensionEquivAbove
       (K := K) (L := L) v₀
-  letI :=
+  let :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK0
-  letI : Fintype {W : HeightOneSpectrum (𝓞 L) //
+  let : Fintype {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v₀} :=
     Fintype.ofEquiv (AbsoluteValueExtension vK L) eAbove
-  letI : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
+  let : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v₀},
       Algebra (v₀.adicCompletion K) (W.1.adicCompletion L) :=
     fun W =>
@@ -209,9 +216,9 @@ private theorem infinitePlace_normUnits_continuous
         (v := v₀) (w := W.1)).toAlgebra
     Continuous
       (LocalFieldTheory.normUnits v₀.Completion W.1.Completion) := by
-  letI : W.1.1.LiesOver v₀.1 :=
+  let : W.1.1.LiesOver v₀.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) W.2⟩
-  letI : Algebra v₀.Completion W.1.Completion :=
+  let : Algebra v₀.Completion W.1.Completion :=
     (NumberField.LiesOver.completionMap
       (v := v₀) (w := W.1)).toAlgebra
   rcases v₀.isReal_or_isComplex with hvReal | hvComplex
@@ -224,7 +231,7 @@ private theorem infinitePlace_normUnits_continuous
         Units.mapEquiv eBase.toMulEquiv
       let eExtensionUnits : W.1.Completionˣ ≃* ℝˣ :=
         Units.mapEquiv eExtension.toMulEquiv
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (InfinitePlace.Completion.extensionEmbedding W.1)
             (InfinitePlace.Completion.extensionEmbedding v₀) :=
@@ -288,7 +295,7 @@ private theorem infinitePlace_normUnits_continuous
         Units.mapEquiv eBase.toMulEquiv
       let eExtensionUnits : W.1.Completionˣ ≃* ℂˣ :=
         Units.mapEquiv eExtension.toMulEquiv
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (InfinitePlace.Completion.extensionEmbedding W.1)
             (InfinitePlace.Completion.extensionEmbedding v₀) :=
@@ -352,10 +359,10 @@ private theorem infinitePlace_normUnits_continuous
         InfinitePlace.Completion.ringEquivComplexOfIsComplex hWComplex
       let eExtensionUnits : W.1.Completionˣ ≃* ℂˣ :=
         Units.mapEquiv eExtension.toMulEquiv
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver W.1.embedding v₀.embedding :=
         ⟨hEmbedding⟩
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (InfinitePlace.Completion.extensionEmbedding W.1)
             (InfinitePlace.Completion.extensionEmbedding v₀) :=
@@ -408,11 +415,11 @@ private theorem infinitePlace_normUnits_continuous
           (starRingAut (R := ℂ))
       let eExtensionUnits : W.1.Completionˣ ≃* ℂˣ :=
         Units.mapEquiv eExtension.toMulEquiv
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (ComplexEmbedding.conjugate W.1.embedding) v₀.embedding :=
         ⟨hConjugate⟩
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (ComplexEmbedding.conjugate
               (InfinitePlace.Completion.extensionEmbedding W.1))
@@ -468,12 +475,12 @@ private theorem integralInfiniteNormComponents_continuous :
   rw [continuous_pi_iff]
   intro v₀
   classical
-  letI : ∀ W : {W : InfinitePlace L //
+  let : ∀ W : {W : InfinitePlace L //
       _root_.infinitePlaceBelow (K := K) W = v₀},
       W.1.1.LiesOver v₀.1 :=
     fun W =>
       ⟨congrArg (fun q : InfinitePlace K => q.1) W.2⟩
-  letI : ∀ W : {W : InfinitePlace L //
+  let : ∀ W : {W : InfinitePlace L //
       _root_.infinitePlaceBelow (K := K) W = v₀},
       Algebra v₀.Completion W.1.Completion :=
     fun W =>
@@ -538,13 +545,13 @@ private theorem norm_integralIdeleEmbedding_finite
   let eAbove :=
     finitePlaceExtensionEquivAbove
       (K := K) (L := L) v₀
-  letI :=
+  let :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK0
-  letI : Fintype {W : HeightOneSpectrum (𝓞 L) //
+  let : Fintype {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v₀} :=
     Fintype.ofEquiv (AbsoluteValueExtension vK L) eAbove
-  letI : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
+  let : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v₀},
       Algebra (v₀.adicCompletion K) (W.1.adicCompletion L) :=
     fun W =>
@@ -573,14 +580,14 @@ private theorem norm_integralIdeleEmbedding_infinite
   classical
   apply ContinuousMulEquiv.piUnits.injective
   funext v₀
-  letI : ∀ W : {W : InfinitePlace L //
+  let : ∀ W : {W : InfinitePlace L //
       _root_.infinitePlaceBelow (K := K) W = v₀},
       W.1.1.LiesOver v₀.1 :=
     fun W =>
       ⟨congrArg (fun q : InfinitePlace K => q.1) W.2⟩
   let vK := v₀.1
   let hvK : vK.IsNontrivial := v₀.isNontrivial
-  letI :=
+  let :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK
   change

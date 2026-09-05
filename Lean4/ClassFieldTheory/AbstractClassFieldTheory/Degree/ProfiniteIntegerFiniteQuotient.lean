@@ -3,7 +3,9 @@ import Mathlib.GroupTheory.Archimedean
 import Mathlib.GroupTheory.FiniteIndexNormalSubgroup
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
-import AbstractClassFieldTheory.Degree.ProfiniteIntegerCore
+import GaloisCohomology.ProfiniteIntegers.ProfiniteIntegerCore
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -96,8 +98,7 @@ noncomputable def zHatFiniteIndexQuotientDiagramLeg
       (FiniteAddGrp.of (ℤ ⧸ H.toAddSubgroup))
   let Q := FiniteAddGrp.of (ℤ ⧸ H.toAddSubgroup)
   letI : TopologicalSpace Q := ⊥
-  letI : DiscreteTopology Q := ⟨rfl⟩
-  letI : IsTopologicalAddGroup Q := {}
+  letI : DiscreteTopology Q := discreteTopology_bot Q
   let quotientReduction : ZMod H.toAddSubgroup.index →ₜ+ Q :=
     { toAddMonoidHom := zHatFiniteIndexQuotientReduction H
       continuous_toFun := continuous_of_discreteTopology }
@@ -303,7 +304,6 @@ profinite completion of the additive group of integers. -/
 noncomputable def zHatContinuousAddEquivIntegerProfiniteCompletion :
     ZHat ≃ₜ+
       ProfiniteAddGrp.ProfiniteCompletion.completion (AddGrpCat.of ℤ) := by
-  letI : CompactSpace ZHat := ClassFormation.instCompactSpaceZHat
   have hcontinuous :
       Continuous (fun z : ZHat => zHatToIntegerProfiniteCompletion z) := by
     exact zHatToIntegerProfiniteCompletion.hom.continuous_toFun

@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.PrincipalTopology
-import AlgebraicNumberTheory.Idele.NormOneCompact
-import AlgebraicNumberTheory.Idele.PositiveArchimedeanSection
-import Topology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalTopology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormOneCompact
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PositiveArchimedeanSection
+import GaloisCohomology.Topology.TotallyDisconnectedQuotients
+
+set_option autoImplicit false
 
 /-!
 # The identity component of the idele class group
@@ -34,7 +36,10 @@ theorem ideleClassIdentityComponent_isClosed :
 
 instance ideleClassIdentityComponent_normal :
     (ideleClassIdentityComponent K).Normal := by
-  infer_instance
+  change (Subgroup.connectedComponentOfOne (IdeleClassGroup K)).Normal
+  exact
+    QuotientGroup.Subgroup.Normal.connectedComponentOfOne
+      (IdeleClassGroup K)
 
 /-- The idele class group modulo its identity component. -/
 abbrev ideleClassComponentQuotient :=
@@ -42,7 +47,7 @@ abbrev ideleClassComponentQuotient :=
 
 noncomputable instance ideleClassComponentQuotientT2Space :
     T2Space (ideleClassComponentQuotient K) := by
-  letI : IsClosed
+  let : IsClosed
       (ideleClassIdentityComponent K : Set (IdeleClassGroup K)) :=
     ideleClassIdentityComponent_isClosed K
   infer_instance
@@ -98,7 +103,7 @@ private theorem continuous_positiveRealNNRealUnit :
 /-- The multiplicative group of positive nonnegative reals is connected. -/
 private theorem nnrealUnits_connectedSpace :
     ConnectedSpace ℝ≥0ˣ := by
-  letI : ConnectedSpace (Set.Ioi (0 : ℝ)) :=
+  let : ConnectedSpace (Set.Ioi (0 : ℝ)) :=
     isConnected_iff_connectedSpace.mp isConnected_Ioi
   apply Function.Surjective.connectedSpace
       (f := positiveRealNNRealUnit)
@@ -121,7 +126,7 @@ theorem ideleClassPositiveArchimedeanSection_mem_identityComponent
   change
     ideleClassPositiveArchimedeanSection K r ∈
       connectedComponent (1 : IdeleClassGroup K)
-  letI : ConnectedSpace ℝ≥0ˣ :=
+  let : ConnectedSpace ℝ≥0ˣ :=
     nnrealUnits_connectedSpace
   have hr : r ∈ connectedComponent (1 : ℝ≥0ˣ) := by
     rw [PreconnectedSpace.connectedComponent_eq_univ]

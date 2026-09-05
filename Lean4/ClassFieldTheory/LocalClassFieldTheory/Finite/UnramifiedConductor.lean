@@ -1,8 +1,10 @@
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.GroupTheory.Abelianization.Defs
-import LocalClassFieldTheory.Finite.Conductor
-import LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
+
+set_option autoImplicit false
 
 /-!
 # Conductors and unramified extensions
@@ -99,9 +101,9 @@ theorem card_normQuotient_eq_finrank_of_isAbelianGalois
     letI : Finite (NormQuotient K L) :=
       normQuotientFiniteOfIsAbelianGalois K L
     Nat.card (NormQuotient K L) = Module.finrank K L := by
-  letI : Finite (NormQuotient K L) :=
+  let : Finite (NormQuotient K L) :=
     normQuotientFiniteOfIsAbelianGalois K L
-  letI : Finite (Abelianization Gal(L / K)) :=
+  let : Finite (Abelianization Gal(L / K)) :=
     Finite.of_equiv Gal(L / K)
       (Abelianization.equivOfComm (H := Gal(L / K))).toEquiv
   calc
@@ -192,7 +194,7 @@ theorem isFiniteUnramifiedValuationExtension_of_localConductorIdeal_eq_one
   let hequiv :=
     chosenNormQuotientEquivZModResidueFinrank_of_fieldPrincipalUnits_zero_le
       K L hU
-  letI : Finite (NormQuotient K L) :=
+  let : Finite (NormQuotient K L) :=
     normQuotientFiniteOfIsAbelianGalois K L
   have hcardResidue :
       Nat.card (NormQuotient K L) = Module.finrank 𝓀[K] 𝓀[L] := by
@@ -245,7 +247,7 @@ theorem isFiniteUnramifiedValuationExtension_iff_localConductorIdeal_eq_one
       localConductorIdeal K L = 1 := by
   constructor
   · intro hunramified
-    letI : LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension K L :=
+    let : LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension K L :=
       hunramified
     exact localConductorIdeal_eq_one_of_unramifiedValuation K L
   · exact isFiniteUnramifiedValuationExtension_of_localConductorIdeal_eq_one K L

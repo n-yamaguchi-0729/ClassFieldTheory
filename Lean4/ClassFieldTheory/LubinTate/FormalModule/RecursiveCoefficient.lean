@@ -1,4 +1,6 @@
-import LubinTate.FormalModule.Reduction
+import ClassFieldTheory.LubinTate.FormalModule.Reduction
+
+set_option autoImplicit false
 
 /-!
 # Recursive coefficients for Lubin--Tate intertwiners

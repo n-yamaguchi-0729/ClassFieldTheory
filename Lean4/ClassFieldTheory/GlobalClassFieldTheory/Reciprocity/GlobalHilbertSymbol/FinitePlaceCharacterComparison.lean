@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceLocalGlobal
-import LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
-import RamificationTheory.HilbertRamification.AlgebraicLocalization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceLocalGlobal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+import ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
+
+set_option autoImplicit false
 
 /-!
 # Finite-place Kummer root-character comparison
@@ -83,7 +85,7 @@ private theorem finitePlaceArtin_apply_localized
           (K := K) (L := L) v w x) z) := by
   let vK := NumberField.HeightOneSpectrum.adicAbv K v
   let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
-  letI : Algebra vK.Completion E :=
+  let : Algebra vK.Completion E :=
     finitePlaceLocalArtinLocalizedAlgebra v w
   let sigmaE := @abelianLocalArtinMonoidHom vK.Completion E
     (inferInstance : Field vK.Completion) (inferInstance : Field E)
@@ -194,7 +196,7 @@ private theorem finitePlaceKummerGlobalToLocalRingHom_commutes
   let L := chosenSimpleKummerExtension K n hnK b
   let S := finitePlaceKummerLocalExtension K n hnK v b
   let E := finitePlaceKummerLocalizedCompletion K n hnK v b w
-  letI : Algebra C E :=
+  let : Algebra C E :=
     finitePlaceKummerLocalizedAlgebra K n hnK v b w
   let e := finitePlaceKummerLocalGlobalAlgEquiv K n hnK hmu v b w
   let toE : L →+* E :=
@@ -267,23 +269,23 @@ private theorem finitePlaceKummerLocalArtin_eq_transported
   let hmuC := finitePlaceHilbert_primitiveRoots_nonempty K n hmu v
   let aC := finitePlaceHilbert_completionUnit K v a
   let bC := finitePlaceHilbert_completionUnit K v b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
-  letI : FiniteDimensional C S :=
+  let : FiniteDimensional C S :=
     finitePlaceKummerLocalFiniteDimensional K n hnK v b
-  letI : IsAbelianGalois C S :=
+  let : IsAbelianGalois C S :=
     chosenSimpleKummerExtension_isAbelianGalois C n hnC hmuC bC
-  letI : Algebra C E :=
+  let : Algebra C E :=
     finitePlaceKummerLocalizedAlgebra K n hnK v b w
-  letI : FiniteDimensional C E :=
+  let : FiniteDimensional C E :=
     finitePlaceKummerLocalizedFiniteDimensional K n hnK v b w
-  letI : IsAbelianGalois C E :=
+  let : IsAbelianGalois C E :=
     finitePlaceLocalArtinIsAbelianGalois
       (K := K) (L := L) v w
         (chosenSimpleKummerExtension_finiteDimensional K n hnK b)
@@ -305,6 +307,29 @@ private theorem finitePlaceKummerLocalArtin_eq_transported
         exact ((AlgEquiv.autCongr e).apply_symm_apply sigmaE).symm
   change sigmaS = tauS
   exact hsigma
+
+private noncomputable def localizedDirectActionValue
+    {L : Type} [Field L] [Algebra K L]
+    [hfin : FiniteDimensional K L] [hab : IsAbelianGalois K L]
+    (v : HeightOneSpectrum (𝓞 K))
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v) L)
+    (y : (NumberField.HeightOneSpectrum.adicAbv K v).Completionˣ)
+    (t : AlgebraicNumberTheory.Valuations.LocalizedCompletion
+      (NumberField.HeightOneSpectrum.adicAbv K v) w) :
+    AlgebraicNumberTheory.Valuations.LocalizedCompletion
+      (NumberField.HeightOneSpectrum.adicAbv K v) w := by
+  let C := (NumberField.HeightOneSpectrum.adicAbv K v).Completion
+  let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion
+    (NumberField.HeightOneSpectrum.adicAbv K v) w
+  let _ : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
+  let _ : IsNonarchimedeanLocalField C :=
+    finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
+  let _ : Algebra C E := finitePlaceLocalArtinLocalizedAlgebra v w
+  let _ : FiniteDimensional C E := finitePlaceLocalArtinFiniteDimensional v w
+  let _ : IsAbelianGalois C E :=
+    finitePlaceLocalArtinIsAbelianGalois v w hfin
+  exact abelianLocalArtinMonoidHom C E y t
 
 private noncomputable def finitePlaceKummerCommonRootAction
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
@@ -340,8 +365,7 @@ private noncomputable def finitePlaceKummerCommonRootAction
   let toE : L →+* E :=
     AbsoluteValue.toAlgebraicLocalization vK w.1 w.2
   let uL : Lˣ := chosenSimpleKummerRootUnit K n hnK b
-  let sigmaE : Gal(E/C) := abelianLocalArtinMonoidHom C E aC
-  exact e.symm (sigmaE (toE (uL : L)))
+  exact e.symm (localizedDirectActionValue K v w aC (toE (uL : L)))
 
 private theorem finitePlaceKummerTransportedArtinRoot_eq_common
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
@@ -363,19 +387,19 @@ private theorem finitePlaceKummerTransportedArtinRoot_eq_common
   let S := finitePlaceKummerLocalExtension K n hnK v b
   let E := finitePlaceKummerLocalizedCompletion K n hnK v b w
   let aC := finitePlaceHilbert_completionUnit K v a
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
-  letI : Algebra C E :=
+  let : Algebra C E :=
     finitePlaceKummerLocalizedAlgebra K n hnK v b w
-  letI : FiniteDimensional C E :=
+  let : FiniteDimensional C E :=
     finitePlaceKummerLocalizedFiniteDimensional K n hnK v b w
-  letI : IsAbelianGalois C E :=
+  let : IsAbelianGalois C E :=
     finitePlaceLocalArtinIsAbelianGalois
       (K := K) (L := L) v w
         (chosenSimpleKummerExtension_finiteDimensional K n hnK b)
@@ -385,6 +409,7 @@ private theorem finitePlaceKummerTransportedArtinRoot_eq_common
   let f : L →+* S := e.symm.toRingHom.comp toE
   let uL : Lˣ := chosenSimpleKummerRootUnit K n hnK b
   let sigmaE : Gal(E/C) := abelianLocalArtinMonoidHom C E aC
+  let directE : E := localizedDirectActionValue K v w aC (toE (uL : L))
   let tauS : Gal(S/C) := (AlgEquiv.autCongr e).symm sigmaE
   have hArtinEquiv :
       (AlgEquiv.autCongr e).toMonoidHom tauS = sigmaE :=
@@ -403,18 +428,182 @@ private theorem finitePlaceKummerTransportedArtinRoot_eq_common
   have hef : e (f (uL : L)) = toE (uL : L) := by
     change e (e.symm (toE (uL : L))) = toE (uL : L)
     exact e.apply_symm_apply _
-  change tauS (f (uL : L)) =
-    e.symm (sigmaE (toE (uL : L)))
+  have hdirect : directE = sigmaE (toE (uL : L)) := rfl
+  change tauS (f (uL : L)) = e.symm directE
   apply e.injective
   calc
     e (tauS (f (uL : L))) = sigmaE (e (f (uL : L))) :=
       hlocalNaturality (f (uL : L))
     _ = sigmaE (toE (uL : L)) :=
       congrArg (fun t : E => sigmaE t) hef
-    _ = e (e.symm (sigmaE (toE (uL : L)))) :=
-      (e.apply_symm_apply _).symm
+    _ = directE := hdirect.symm
+    _ = e (e.symm directE) := (e.apply_symm_apply _).symm
 
-set_option maxHeartbeats 4000000 in
+private noncomputable def localizedInputActionValue
+    {L : Type} [Field L] [Algebra K L]
+    [hfin : FiniteDimensional K L] [hab : IsAbelianGalois K L]
+    (v : HeightOneSpectrum (𝓞 K))
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v) L)
+    (x : (v.adicCompletion K)ˣ) (z : L) :
+    AlgebraicNumberTheory.Valuations.LocalizedCompletion
+      (NumberField.HeightOneSpectrum.adicAbv K v) w :=
+  localizedDirectActionValue K v w (finitePlaceLocalArtinInput v x)
+    (AbsoluteValue.toAlgebraicLocalization
+      (NumberField.HeightOneSpectrum.adicAbv K v) w.1 w.2 z)
+
+private noncomputable def localizedGlobalActionValue
+    {L : Type} [Field L] [Algebra K L]
+    [hfin : FiniteDimensional K L] [hab : IsAbelianGalois K L]
+    (v : HeightOneSpectrum (𝓞 K))
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v) L)
+    (x : (v.adicCompletion K)ˣ) (z : L) :
+    AlgebraicNumberTheory.Valuations.LocalizedCompletion
+      (NumberField.HeightOneSpectrum.adicAbv K v) w :=
+  AbsoluteValue.toAlgebraicLocalization
+    (NumberField.HeightOneSpectrum.adicAbv K v) w.1 w.2
+    (finitePlaceArtinMonoidHomOfExtension
+      (K := K) (L := L) v w x z)
+
+private theorem localizedActionValue_eq
+    {L : Type} [Field L] [Algebra K L]
+    [hfin : FiniteDimensional K L] [hab : IsAbelianGalois K L]
+    (v : HeightOneSpectrum (𝓞 K))
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v) L)
+    (x : (v.adicCompletion K)ˣ) (z : L) :
+    localizedInputActionValue K v w x z =
+      localizedGlobalActionValue K v w x z := by
+  exact finitePlaceArtin_apply_localized (K := K) (L := L) v w x z
+
+private noncomputable def finitePlaceKummerLocalizedInputValue
+    (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
+    (v : HeightOneSpectrum (𝓞 K)) (a b : Kˣ)
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v)
+      (chosenSimpleKummerExtension K n hnK b)) :
+    finitePlaceKummerLocalizedCompletion K n hnK v b w :=
+  localizedInputActionValue (K := K)
+    (hfin := chosenSimpleKummerExtension_finiteDimensional K n hnK b)
+    (hab := chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b)
+    v w
+    (Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom a)
+    (chosenSimpleKummerRootUnit K n hnK b :
+      chosenSimpleKummerExtension K n hnK b)
+
+private noncomputable def finitePlaceKummerLocalizedGlobalValue
+    (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
+    (v : HeightOneSpectrum (𝓞 K)) (a b : Kˣ)
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v)
+      (chosenSimpleKummerExtension K n hnK b)) :
+    finitePlaceKummerLocalizedCompletion K n hnK v b w :=
+  localizedGlobalActionValue (K := K)
+    (hfin := chosenSimpleKummerExtension_finiteDimensional K n hnK b)
+    (hab := chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b)
+    v w
+    (Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom a)
+    (chosenSimpleKummerRootUnit K n hnK b :
+      chosenSimpleKummerExtension K n hnK b)
+
+private theorem finitePlaceKummerLocalizedValue_eq
+    (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
+    (v : HeightOneSpectrum (𝓞 K)) (a b : Kˣ)
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v)
+      (chosenSimpleKummerExtension K n hnK b)) :
+    finitePlaceKummerLocalizedInputValue K n hnK hmu v a b w =
+      finitePlaceKummerLocalizedGlobalValue K n hnK hmu v a b w := by
+  exact localizedActionValue_eq
+    (K := K) (L := chosenSimpleKummerExtension K n hnK b)
+    (hfin := chosenSimpleKummerExtension_finiteDimensional K n hnK b)
+    (hab := chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b)
+    v w
+    (Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom a)
+    (chosenSimpleKummerRootUnit K n hnK b :
+      chosenSimpleKummerExtension K n hnK b)
+
+private theorem finitePlaceKummerCommonImage_eq_localizedInputValue
+    (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
+    (v : HeightOneSpectrum (𝓞 K)) (a b : Kˣ)
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v)
+      (chosenSimpleKummerExtension K n hnK b)) :
+    finitePlaceKummerLocalGlobalAlgEquiv K n hnK hmu v b w
+        (finitePlaceKummerCommonRootAction K n hnK hmu v a b w) =
+      finitePlaceKummerLocalizedInputValue K n hnK hmu v a b w := by
+  let L := chosenSimpleKummerExtension K n hnK b
+  let C := finitePlaceKummerBaseCompletion K v
+  let E := finitePlaceKummerLocalizedCompletion K n hnK v b w
+  let _ : FiniteDimensional K L :=
+    chosenSimpleKummerExtension_finiteDimensional K n hnK b
+  let _ : IsAbelianGalois K L :=
+    chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
+  let _ : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
+  let _ : IsNonarchimedeanLocalField C :=
+    finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
+  let _ : Algebra C E := finitePlaceKummerLocalizedAlgebra K n hnK v b w
+  let _ : FiniteDimensional C E :=
+    finitePlaceKummerLocalizedFiniteDimensional K n hnK v b w
+  let _ : IsAbelianGalois C E :=
+    finitePlaceLocalArtinIsAbelianGalois
+      (K := K) (L := L) v w
+        (chosenSimpleKummerExtension_finiteDimensional K n hnK b)
+  let vK := NumberField.HeightOneSpectrum.adicAbv K v
+  let x : (v.adicCompletion K)ˣ :=
+    Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom a
+  let aC : Cˣ := finitePlaceHilbert_completionUnit K v a
+  let z : L := chosenSimpleKummerRootUnit K n hnK b
+  let toE : L →+* E := AbsoluteValue.toAlgebraicLocalization vK w.1 w.2
+  let e := finitePlaceKummerLocalGlobalAlgEquiv K n hnK hmu v b w
+  let directFor (y : Cˣ) : E :=
+    localizedDirectActionValue K v w y (toE z)
+  have hinput : finitePlaceLocalArtinInput v x = aC :=
+    finitePlaceLocalArtinInput_globalUnit K v a
+  calc
+    e (finitePlaceKummerCommonRootAction K n hnK hmu v a b w) =
+        directFor aC := by
+      change e (e.symm (directFor aC)) = directFor aC
+      exact e.apply_symm_apply _
+    _ = directFor (finitePlaceLocalArtinInput v x) :=
+      congrArg directFor hinput.symm
+    _ = finitePlaceKummerLocalizedInputValue K n hnK hmu v a b w := by
+      unfold finitePlaceKummerLocalizedInputValue localizedInputActionValue
+      rfl
+
+private theorem finitePlaceKummerGlobalArtin_localized_action
+    (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
+    (v : HeightOneSpectrum (𝓞 K)) (a b : Kˣ)
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v)
+      (chosenSimpleKummerExtension K n hnK b)) :
+    finitePlaceKummerLocalGlobalAlgEquiv K n hnK hmu v b w
+        (finitePlaceKummerCommonRootAction K n hnK hmu v a b w) =
+      AbsoluteValue.toAlgebraicLocalization
+        (NumberField.HeightOneSpectrum.adicAbv K v) w.1 w.2
+        (finitePlaceKummerGlobalArtinAutomorphism
+          K n hnK hmu v a b w
+          (chosenSimpleKummerRootUnit K n hnK b)) := by
+  calc
+    finitePlaceKummerLocalGlobalAlgEquiv K n hnK hmu v b w
+        (finitePlaceKummerCommonRootAction K n hnK hmu v a b w) =
+        finitePlaceKummerLocalizedInputValue K n hnK hmu v a b w :=
+      finitePlaceKummerCommonImage_eq_localizedInputValue
+        K n hnK hmu v a b w
+    _ = finitePlaceKummerLocalizedGlobalValue K n hnK hmu v a b w :=
+      finitePlaceKummerLocalizedValue_eq K n hnK hmu v a b w
+    _ = AbsoluteValue.toAlgebraicLocalization
+        (NumberField.HeightOneSpectrum.adicAbv K v) w.1 w.2
+        (finitePlaceKummerGlobalArtinAutomorphism
+          K n hnK hmu v a b w
+          (chosenSimpleKummerRootUnit K n hnK b)) := rfl
+
 private theorem finitePlaceKummerCommonRootAction_eq_global
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
@@ -437,22 +626,21 @@ private theorem finitePlaceKummerCommonRootAction_eq_global
   let aC := finitePlaceHilbert_completionUnit K v a
   let x : (v.adicCompletion K)ˣ :=
     Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom a
-  letI : FiniteDimensional K L :=
+  let hKLfinite : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let hKLgalois : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
-  letI : Algebra C E :=
+  let : Algebra C E :=
     finitePlaceKummerLocalizedAlgebra K n hnK v b w
-  letI : FiniteDimensional C E :=
+  let : FiniteDimensional C E :=
     finitePlaceKummerLocalizedFiniteDimensional K n hnK v b w
-  letI : IsAbelianGalois C E :=
+  let : IsAbelianGalois C E :=
     finitePlaceLocalArtinIsAbelianGalois
-      (K := K) (L := L) v w
-        (chosenSimpleKummerExtension_finiteDimensional K n hnK b)
+      (K := K) (L := L) v w hKLfinite
   let e := finitePlaceKummerLocalGlobalAlgEquiv K n hnK hmu v b w
   let toE : L →+* E :=
     AbsoluteValue.toAlgebraicLocalization vK w.1 w.2
@@ -461,22 +649,13 @@ private theorem finitePlaceKummerCommonRootAction_eq_global
   let sigmaG : Gal(L/K) :=
     finitePlaceArtinMonoidHomOfExtension
       (K := K) (L := L) v w x
-  let sigmaE : Gal(E/C) := abelianLocalArtinMonoidHom C E aC
-  have hinput : finitePlaceLocalArtinInput v x = aC := by
-    simpa only [x, aC] using finitePlaceLocalArtinInput_globalUnit K v a
-  have hglobalAction :=
-    finitePlaceArtin_apply_localized
-      (K := K) (L := L) v w x (uL : L)
-  rw [hinput] at hglobalAction
-  change sigmaE (toE (uL : L)) =
-    toE (sigmaG (uL : L)) at hglobalAction
-  change e.symm (sigmaE (toE (uL : L))) =
-    f (sigmaG (uL : L))
+  have himage := finitePlaceKummerGlobalArtin_localized_action
+    K n hnK hmu v a b w
   apply e.injective
   calc
-    e (e.symm (sigmaE (toE (uL : L)))) =
-        sigmaE (toE (uL : L)) := e.apply_symm_apply _
-    _ = toE (sigmaG (uL : L)) := hglobalAction
+    e (finitePlaceKummerCommonRootAction
+        K n hnK hmu v a b w) =
+        toE (sigmaG (uL : L)) := himage
     _ = e (f (sigmaG (uL : L))) := by
       change toE (sigmaG (uL : L)) =
         e (e.symm (toE (sigmaG (uL : L))))
@@ -715,13 +894,13 @@ private theorem finitePlaceKummerLocalHilbert_units
   let hmuC := finitePlaceHilbert_primitiveRoots_nonempty K n hmu v
   let aC := finitePlaceHilbert_completionUnit K v a
   let bC := finitePlaceHilbert_completionUnit K v b
-  letI : ValuativeRel C :=
+  let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
+  let : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
-  letI : FiniteDimensional C S :=
+  let : FiniteDimensional C S :=
     finitePlaceKummerLocalFiniteDimensional K n hnK v b
-  letI : IsAbelianGalois C S :=
+  let : IsAbelianGalois C S :=
     chosenSimpleKummerExtension_isAbelianGalois C n hnC hmuC bC
   let uS : Sˣ := chosenSimpleKummerRootUnit C n hnC bC
   let sigmaS : Gal(S/C) :=
@@ -817,9 +996,9 @@ theorem finitePlaceKummerRootCharacter_localGlobal
     finitePlaceKummerRootCharacter K n hnK hmu v a b =
       finitePlaceHilbertSymbol K n hnK hmu v a b := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   let w := chosenFinitePlaceExtension (L := L) v
   calc

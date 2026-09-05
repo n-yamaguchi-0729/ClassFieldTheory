@@ -1,6 +1,7 @@
-import ValuationTheory.DiscreteValuationField.Complete
-import ValuationTheory.AbsoluteValue.Theory.ExponentialValuations
-import LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+import ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
+import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+
+set_option autoImplicit false
 
 /-!
 # Comparing exponential and canonical ramification indices
@@ -30,12 +31,16 @@ private theorem map_maximalIdeal_ringEquiv
   · rintro ⟨x, hx, rfl⟩
     rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff] at hx ⊢
     intro hy
-    exact hx (by simpa using hy.map (e.symm : S →+* R))
+    apply hx
+    rw [← e.symm_apply_apply x]
+    exact hy.map (e.symm : S →+* R)
   · intro hy
-    refine ⟨e.symm y, ?_, by simp⟩
+    refine ⟨e.symm y, ?_, e.apply_symm_apply y⟩
     rw [IsLocalRing.mem_maximalIdeal, mem_nonunits_iff] at hy ⊢
     intro hx
-    exact hy (by simpa using hx.map (e : R →+* S))
+    apply hy
+    rw [← e.apply_symm_apply y]
+    exact hx.map (e : R →+* S)
 
 private theorem ramificationIdx_eq_of_map_eq
     {R R' S : Type*} [CommRing R] [CommRing R'] [CommRing S]
@@ -77,10 +82,10 @@ theorem exponentialRamificationIndex_eq_ramificationIndex_of_valuationSubrings_e
   have hWSub : LubinTate.Valuations.exponentialValuationSubring vL =
       target.valuation.valuationSubring.toSubring :=
     congrArg ValuationSubring.toSubring hW
-  letI : IsDiscreteValuationRing (LubinTate.Valuations.exponentialValuationSubring vK) := by
+  let : IsDiscreteValuationRing (LubinTate.Valuations.exponentialValuationSubring vK) := by
     rw [hVSub]
     exact base.valuationSubring_isDiscreteValuationRing
-  letI : IsDiscreteValuationRing (LubinTate.Valuations.exponentialValuationSubring vL) := by
+  let : IsDiscreteValuationRing (LubinTate.Valuations.exponentialValuationSubring vL) := by
     rw [hWSub]
     exact target.valuationSubring_isDiscreteValuationRing
   have hvdisc : LubinTate.Valuations.DiscreteExponentialValuation vK :=
@@ -95,8 +100,8 @@ theorem exponentialRamificationIndex_eq_ramificationIndex_of_valuationSubrings_e
   let eV : V ≃+* B := RingEquiv.subringCongr hVSub
   let eW : W ≃+* T := RingEquiv.subringCongr hWSub
   let g : V →+* T := iCan.comp eV.toRingHom
-  letI : Algebra V W := iValuationExtension.toAlgebra
-  letI : Algebra V T := g.toAlgebra
+  let : Algebra V W := iValuationExtension.toAlgebra
+  let : Algebra V T := g.toAlgebra
   let eWAlg : W ≃ₐ[V] T :=
     AlgEquiv.ofRingEquiv (f := eW) (by
       intro a

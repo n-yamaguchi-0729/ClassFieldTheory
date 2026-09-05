@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.FiniteAbelianCompositum
-import LubinTate.Padic.CompletedChangedUniformizerFixedField
-import LubinTate.Padic.CompletedStandardLevelTransport
+import ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
+import ClassFieldTheory.LubinTate.Padic.CompletedChangedUniformizerFixedField
+import ClassFieldTheory.LubinTate.Padic.CompletedStandardLevelTransport
+
+set_option autoImplicit false
 
 /-!
 # The finite standard/changed compositum in the completed p-adic level
@@ -48,7 +50,7 @@ noncomputable instance
     FiniteDimensional ℚ_[p]
       (padicCompletedStandardLevelField p n) := by
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
-  letI : FiniteDimensional ℚ_[p]
+  let : FiniteDimensional ℚ_[p]
       (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let e := padicStandardLevelEquivCompletedStandardLevelField p n
@@ -58,8 +60,12 @@ noncomputable instance
     padicCompletedStandardLevelField_isAbelianGalois
     (p : ℕ) [Fact p.Prime] (n : ℕ) :
     IsAbelianGalois ℚ_[p]
-      (padicCompletedStandardLevelField p n) :=
-  IsAbelianGalois.of_algHom
+      (padicCompletedStandardLevelField p n) := by
+  let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
+  let : IsAbelianGalois ℚ_[p] (standardLubinTateLevelField hπ n) :=
+    standardLubinTateLevelField_isAbelianGalois (padicLocalField p)
+      (π := padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n
+  exact IsAbelianGalois.of_algHom
     (padicStandardLevelEquivCompletedStandardLevelField p n).symm.toAlgHom
 
 noncomputable instance
@@ -71,7 +77,7 @@ noncomputable instance
   let hπ :=
     standardLubinTateChangedUniformizer_isUniformizer
       (padicMultiplicativeLubinTateSeries_isUniformizer p) u
-  letI : FiniteDimensional ℚ_[p]
+  let : FiniteDimensional ℚ_[p]
       (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let e := padicChangedUniformizerLevelEquivCompletedFixedField p u n

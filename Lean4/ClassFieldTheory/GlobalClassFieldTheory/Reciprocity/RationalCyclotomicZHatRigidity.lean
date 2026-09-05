@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.CyclotomicPrincipalIdele
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicCharacterRigidity
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicPrincipalIdele
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicCharacterRigidity
+
+set_option autoImplicit false
 
 /-!
 # Prime-power detection for the rational cyclotomic `ZHat`-Artin map
@@ -43,13 +45,13 @@ theorem
   have hσ : σ ^ 2 = 1 :=
     rationalCyclotomicAutomorphism_sq_eq_one_of_character_reductions
       σ h
-  letI
+  let
       (E :
         FiniteGaloisIntermediateField
           ℚ rationalCyclotomicZHatField) :
       NumberField E :=
     NumberField.of_module_finite ℚ E
-  letI
+  let
       (E :
         FiniteGaloisIntermediateField
           ℚ rationalCyclotomicZHatField) :
@@ -76,37 +78,37 @@ theorem
       1
   obtain ⟨n, F, e, hF⟩ :=
     finiteSubfieldOfRationalCyclotomicZHatField_mapsIntoLevel E.unop
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     e.toLinearEquiv.finiteDimensional
-  letI : NumberField F :=
+  let : NumberField F :=
     NumberField.of_module_finite ℚ F
-  letI : IsAbelianGalois ℚ F :=
+  let : IsAbelianGalois ℚ F :=
     IsAbelianGalois.of_algHom e.symm.toAlgHom
   let algEF : Algebra E.unop F :=
     e.toRingHom.toAlgebra
-  letI : SMul E.unop F :=
+  let : SMul E.unop F :=
     @Algebra.toSMul E.unop F _ _ algEF
-  letI : Algebra E.unop F := algEF
-  letI : Module E.unop F := Algebra.toModule
-  letI : IsScalarTower ℚ E.unop F :=
+  let : Algebra E.unop F := algEF
+  let : Module E.unop F := Algebra.toModule
+  let : IsScalarTower ℚ E.unop F :=
     IsScalarTower.of_algebraMap_eq'
       e.toAlgHom.comp_algebraMap.symm
-  letI : FiniteDimensional E.unop F :=
+  let : FiniteDimensional E.unop F :=
     FiniteDimensional.right ℚ E.unop F
   let algFN :
       Algebra F
         (KummerTheory.rationalCyclotomicLevel n) :=
     (IntermediateField.inclusion hF).toRingHom.toAlgebra
-  letI :
+  let :
       SMul F
         (KummerTheory.rationalCyclotomicLevel n) :=
     @Algebra.toSMul F
       (KummerTheory.rationalCyclotomicLevel n) _ _ algFN
-  letI :
+  let :
       Algebra F
         (KummerTheory.rationalCyclotomicLevel n) :=
     algFN
-  letI :
+  let :
       IsScalarTower ℚ F
         (KummerTheory.rationalCyclotomicLevel n) :=
     IsScalarTower.of_algebraMap_eq'
@@ -117,9 +119,9 @@ theorem
         KummerTheory.rationalCyclotomicLevel n
       finiteDimensional := inferInstance
       isGalois := inferInstance }
-  letI : NumberField N :=
+  let : NumberField N :=
     NumberField.of_module_finite ℚ N
-  letI : IsAbelianGalois ℚ N :=
+  let : IsAbelianGalois ℚ N :=
     IsAbelianGalois.of_algHom N.toIntermediateField.val
   have hlevel :
       globalArtinMonoidHom

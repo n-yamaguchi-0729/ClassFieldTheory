@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "scope": "Compiled presence and kind only; does not compare theorem statements.",
+  "declarations": [
+    {
+      "name": "GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueContinuousMulEquiv",
+      "kind": "definition",
+      "module": "ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization"
+    },
+    {
+      "name": "GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom_ker",
+      "kind": "theorem"
+    },
+    {
+      "name": "GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom_surjective",
+      "kind": "theorem"
+    },
+    {
+      "name": "GlobalClassFieldTheory.GlobalClassFields.arithmeticClosedFiniteIndexClassFieldGaloisContinuousMulEquivNormQuotient",
+      "kind": "definition",
+      "module": "ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticClassFieldCorrespondence"
+    },
+    {
+      "name": "GlobalClassFieldTheory.GlobalClassFields.closedFiniteIndexClassField_ideleClassNorm_range",
+      "kind": "theorem"
+    },
+    {
+      "name": "GlobalClassFieldTheory.GlobalClassFields.closedFiniteIndexClassField_finrank_eq_index",
+      "kind": "theorem"
+    },
+    {
+      "name": "GlobalClassFieldTheory.GlobalClassFields.infiniteAbelianClassFieldCorrespondence",
+      "kind": "definition",
+      "module": "ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.InfiniteAbelianClassFieldCorrespondence"
+    },
+    {
+      "name": "GlobalClassFieldTheory.GlobalClassFields.infiniteAbelianClassFieldCorrespondence_finite_iff_open",
+      "kind": "theorem"
+    },
+    {
+      "name": "LocalClassFieldTheory.localReciprocityEquiv",
+      "kind": "definition",
+      "module": "ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity"
+    },
+    {
+      "name": "LocalClassFieldTheory.localArtinMap_surjective",
+      "kind": "theorem"
+    },
+    {
+      "name": "LocalClassFieldTheory.localArtinMap_ker",
+      "kind": "theorem"
+    },
+    {
+      "name": "LocalClassFieldTheory.profiniteLocalReciprocity",
+      "kind": "definition",
+      "module": "ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity"
+    },
+    {
+      "name": "LocalClassFieldTheory.profiniteLocalReciprocityHom_injective",
+      "kind": "theorem"
+    },
+    {
+      "name": "LocalClassFieldTheory.profiniteLocalReciprocity_completionMap",
+      "kind": "theorem"
+    },
+    {
+      "name": "LocalClassFieldTheory.absoluteLocalArtinMap_injective",
+      "kind": "theorem"
+    },
+    {
+      "name": "KroneckerWeber.exists_cyclotomicEmbedding",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.KroneckerWeber.Core"
+    }
+  ]
+}

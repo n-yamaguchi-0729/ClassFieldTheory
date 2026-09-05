@@ -1,8 +1,10 @@
-import LubinTate.FiniteLevel.PrimitiveUniformizer
-import LubinTate.FormalModule.StandardFormalGroup
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveUniformizer
+import ClassFieldTheory.LubinTate.FormalModule.StandardFormalGroup
 import Mathlib.RingTheory.AdicCompletion.Topology
 import Mathlib.RingTheory.PowerSeries.Evaluation
 import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
+
+set_option autoImplicit false
 
 /-!
 # Analytic evaluation in standard Lubin--Tate level fields

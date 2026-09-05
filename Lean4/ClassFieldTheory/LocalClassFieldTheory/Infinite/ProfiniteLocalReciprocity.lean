@@ -1,9 +1,11 @@
-import LocalClassFieldTheory.Infinite.FiniteAbelianQuotientKernels
-import LocalClassFieldTheory.Infinite.LocalMultiplicativeCompletion
-import LocalClassFieldTheory.Infinite.AbsoluteArtin
-import LocalClassFieldTheory.Infinite.TopologicalAbelianizationCongr
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import RamificationTheory.GaloisValuation.AbsoluteGalois.FiniteExtensionCorrespondence
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.FiniteAbelianQuotientKernels
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.LocalMultiplicativeCompletion
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteArtin
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.TopologicalAbelianizationCongr
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.FiniteExtensionCorrespondence
+
+set_option autoImplicit false
 
 /-!
 # Profinite local reciprocity
@@ -310,7 +312,7 @@ theorem profiniteLocalReciprocity_finiteProjection
     fun y => topologicalProfiniteCompletionFiniteProjection
       (standardLocalAbsoluteAbelianProfinite K) (absoluteLocalArtinMap K) N y
   have hlhs : Continuous lhs := by
-    letI : DiscreteTopology
+    let : DiscreteTopology
         (standardLocalAbsoluteAbelianProfinite K ⧸ N.toSubgroup) :=
       QuotientGroup.discreteTopology N.isOpen'
     let q :

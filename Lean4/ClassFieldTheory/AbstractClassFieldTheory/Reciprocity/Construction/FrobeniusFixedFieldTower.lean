@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusPowerFixedField
-import AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusPowerFixedField
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
+
+set_option autoImplicit false
 /-!
 Bundles finite towers of Frobenius fixed fields together with the normality and finiteness data
 needed for norm and unit calculations.

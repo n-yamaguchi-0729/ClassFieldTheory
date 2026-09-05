@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.Core
-import AlgebraicNumberTheory.Idele.SPlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SPlaces
 import Mathlib.Topology.Algebra.IsUniformGroup.Basic
+
+set_option autoImplicit false
 
 /-!
 # The topology of the principal ideles
@@ -48,12 +50,10 @@ theorem continuous_infiniteMixedEmbedding :
         Continuous (fun a : IdeleGroup K =>
           ((a.1 : NumberField.InfiniteAdeleRing K)
             (v : InfinitePlace K))) := by
-      change Continuous
-        ((fun p : NumberField.InfiniteAdeleRing K =>
-            p (v : InfinitePlace K)) ∘
-          Units.val ∘ Prod.fst)
-      exact (continuous_apply (v : InfinitePlace K)).comp
-        (Units.continuous_val.comp continuous_fst)
+      exact
+        Units.continuous_val.comp
+          (infiniteComponentContinuous
+            (v : InfinitePlace K)).continuous
     exact
       (NumberField.InfinitePlace.Completion.isometry_extensionEmbeddingOfIsReal
         v.2).continuous.comp hcomponent
@@ -63,12 +63,10 @@ theorem continuous_infiniteMixedEmbedding :
         Continuous (fun a : IdeleGroup K =>
           ((a.1 : NumberField.InfiniteAdeleRing K)
             (v : InfinitePlace K))) := by
-      change Continuous
-        ((fun p : NumberField.InfiniteAdeleRing K =>
-            p (v : InfinitePlace K)) ∘
-          Units.val ∘ Prod.fst)
-      exact (continuous_apply (v : InfinitePlace K)).comp
-        (Units.continuous_val.comp continuous_fst)
+      exact
+        Units.continuous_val.comp
+          (infiniteComponentContinuous
+            (v : InfinitePlace K)).continuous
     exact
       (NumberField.InfinitePlace.Completion.isometry_extensionEmbedding
         v.1).continuous.comp hcomponent

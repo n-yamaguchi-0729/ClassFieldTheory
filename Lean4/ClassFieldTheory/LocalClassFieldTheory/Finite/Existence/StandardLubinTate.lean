@@ -1,9 +1,11 @@
-import LocalClassFieldTheory.Finite.Existence.OrderReversal
-import LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
-import LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
-import LocalClassFieldTheory.LubinTateApplication.StandardNormSubgroupExact
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormSubgroupExact
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+
+set_option autoImplicit false
 
 /-!
 # Standard Lubin--Tate factors for finite local existence
@@ -89,9 +91,9 @@ theorem
         (inverseIntegerRingUniformizerFieldUnit K) 1 (m + 1)).toAddSubgroup := by
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let E := standardLubinTateLevelField hπ m
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     standardLubinTateLevelField_finiteDimensional hπ m
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     standardLubinTateLevelField_isAbelianGalois
       (standardLocalField K) hπ m
   let i : E →ₐ[K] SeparableClosure K := E.val

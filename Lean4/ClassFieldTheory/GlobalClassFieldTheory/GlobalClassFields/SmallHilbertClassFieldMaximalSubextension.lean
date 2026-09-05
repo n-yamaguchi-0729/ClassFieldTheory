@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
-import GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
-import GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerConjugation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerConjugation
+
+set_option autoImplicit false
 
 /-!
 # The maximal everywhere-unramified abelian subextension
@@ -22,6 +24,16 @@ namespace GlobalClassFields
 
 open ClassFormation KummerTheory
 open IdealClassFieldTheory LocalClassFieldTheory NumberField Reciprocity
+
+/-- Fix the canonical quotient structure at the boundary between ordinary
+idele classes and additive fixed subgroups. -/
+@[instance_reducible]
+private noncomputable def smallHilbertMaximalSubextensionIdeleClassCommGroup
+    (F : Type) [Field F] [NumberField F] :
+    CommGroup (IdeleClassGroup F) :=
+  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
+
+attribute [local instance] smallHilbertMaximalSubextensionIdeleClassCommGroup
 
 private structure SmallHilbertTransportedAddSubgroupData
     {A B : Type} [AddGroup A] [AddGroup B]
@@ -113,7 +125,7 @@ private theorem smallHilbertClassFieldMaximalNormSubgroup_map_symm
   let e :=
     rationalAbstractFixedFieldIdeleClassEquivFixed
       (smallHilbertClassFieldBaseSubgroup K)
-  letI hLfinite : Finite
+  let hLfinite : Finite
       ((smallHilbertClassFieldBaseSubgroup K).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           (smallHilbertClassFieldBaseSubgroup K)
@@ -171,11 +183,14 @@ private theorem smallHilbertClassFieldMaximalNormSubgroup_eq_endpoint
       smallHilbertClassFieldMaximalNormEndpoint K := by
   exact
     smallHilbertAddSubgroup_eq_of_map_symm_eq
-      (smallHilbertClassFieldMaximalIdeleClassEquiv K)
-      ((smallHilbertClassFieldSubextension K).normSubgroup
+      (A := Additive (IdeleClassGroup (smallHilbertClassFieldBase K)))
+      (B := ambientFixedAddSubgroup rationalIdeleClassRepresentation
+        (smallHilbertClassFieldBaseSubgroup K))
+      (e := smallHilbertClassFieldMaximalIdeleClassEquiv K)
+      (H := (smallHilbertClassFieldSubextension K).normSubgroup
         rationalIdeleClassRepresentation)
-      (smallHilbertClassFieldMaximalNormEndpoint K)
-      (smallHilbertClassFieldMaximalNormSubgroup_map_eq_endpoint_map K)
+      (J := smallHilbertClassFieldMaximalNormEndpoint K)
+      (h := smallHilbertClassFieldMaximalNormSubgroup_map_eq_endpoint_map K)
 
 /-- The selected small Hilbert class-field subextension realizes exactly
 the intrinsic small-Hilbert norm subgroup in the rational absolute class
@@ -251,24 +266,24 @@ theorem
   let E :=
     abstractRelativeFixedField
       ℚ (SeparableClosure ℚ) P.below
-  letI hPfinite : Finite
+  let hPfinite : Finite
       ((smallHilbertClassFieldBaseSubgroup K).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
           (smallHilbertClassFieldBaseSubgroup K)
           P.field P.below) :=
     P.finite
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ)
       (smallHilbertClassFieldBaseSubgroup K)
       P.field P.below inferInstance hPfinite
-  letI : IsScalarTower ℚ F E :=
+  let : IsScalarTower ℚ F E :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     FiniteDimensional.trans ℚ F E
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       ℚ (SeparableClosure ℚ)
       (smallHilbertClassFieldBaseSubgroup K)

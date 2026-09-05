@@ -1,7 +1,9 @@
 import Mathlib.RingTheory.Norm.Transitivity
-import LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
-import AbstractClassFieldTheory.Reciprocity.Construction.FiniteNormQuotient
-import CyclicCohomology.TateH0.NormImage
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FiniteNormQuotient
+import GaloisCohomology.Cyclic.TateH0.NormImage
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory KummerTheory
@@ -123,7 +125,7 @@ theorem relativeNorm_intermediateFieldUnit_val (x : Eˣ) :
       (closedFixingSubgroup K Ω (⊥ : IntermediateField K Ω))
       (closedFixingSubgroup K Ω E)
       (fixingSubgroupLeBase K Ω E)
-  letI := Fintype.ofFinite Q
+  let := Fintype.ofFinite Q
   change
     ((Additive.toMul
       (relativeNormValue (galoisAmbientUnitsRep K Ω)
@@ -132,21 +134,15 @@ theorem relativeNorm_intermediateFieldUnit_val (x : Eˣ) :
         (intermediateFieldUnitsEquivGaloisFixed K Ω E
           (Additive.ofMul x))) : Ωˣ) : Ω) = _
   rw [relativeNormValue]
-  change
-    (↑(Additive.toMul (∑ q : Q,
-      relativeCosetAction (galoisAmbientUnitsRep K Ω)
-        (closedFixingSubgroup K Ω (⊥ : IntermediateField K Ω))
-        (closedFixingSubgroup K Ω E) (fixingSubgroupLeBase K Ω E)
-        (intermediateFieldUnitsEquivGaloisFixed K Ω E
-          (Additive.ofMul x)) q) : Ωˣ) : Ω) = _
+  let action : Q → Additive Ωˣ := fun q =>
+    relativeCosetAction (galoisAmbientUnitsRep K Ω)
+      (closedFixingSubgroup K Ω (⊥ : IntermediateField K Ω))
+      (closedFixingSubgroup K Ω E) (fixingSubgroupLeBase K Ω E)
+      (intermediateFieldUnitsEquivGaloisFixed K Ω E
+        (Additive.ofMul x)) q
+  change (↑(Additive.toMul (∑ q : Q, action q)) : Ω) = _
   rw [toMul_sum]
-  change (Units.coeHom Ω) (∏ q : Q,
-    Additive.toMul
-      (relativeCosetAction (galoisAmbientUnitsRep K Ω)
-        (closedFixingSubgroup K Ω (⊥ : IntermediateField K Ω))
-        (closedFixingSubgroup K Ω E) (fixingSubgroupLeBase K Ω E)
-        (intermediateFieldUnitsEquivGaloisFixed K Ω E
-          (Additive.ofMul x)) q)) = _
+  change (Units.coeHom Ω) (∏ q : Q, Additive.toMul (action q)) = _
   rw [map_prod]
   change
     (∏ q : Q,
@@ -160,13 +156,7 @@ theorem relativeNorm_intermediateFieldUnit_val (x : Eˣ) :
     _ = ∏ σ : Gal(E / K), E.val (σ (x : E)) := by
       exact Fintype.prod_equiv
         (baseFixingExtensionQuotientEquivGaloisGroup K Ω E).toEquiv
-        (fun q : Q =>
-          ((Additive.toMul
-            (relativeCosetAction (galoisAmbientUnitsRep K Ω)
-              (closedFixingSubgroup K Ω (⊥ : IntermediateField K Ω))
-              (closedFixingSubgroup K Ω E) (fixingSubgroupLeBase K Ω E)
-              (intermediateFieldUnitsEquivGaloisFixed K Ω E
-                (Additive.ofMul x)) q) : Ωˣ) : Ω))
+        (fun q : Q => ((Additive.toMul (action q) : Ωˣ) : Ω))
         (fun σ : Gal(E / K) => E.val (σ (x : E)))
         (relativeCosetAction_intermediateFieldUnit_val K Ω E x)
     _ = E.val (algebraMap K E (Algebra.norm K (x : E))) := by
@@ -399,16 +389,12 @@ theorem relativeNorm_embeddedExtensionUnit (x : Lˣ) :
         (embeddedFieldUnitsEquivGaloisFixed K Ω L i (Additive.ofMul x)) =
       baseUnitsEquivGaloisAmbientFixed K Ω
         (Additive.ofMul (normUnits K L x)) := by
-  change relativeNorm (galoisAmbientUnitsRep K Ω)
-      (closedFixingSubgroup K Ω (⊥ : IntermediateField K Ω))
-      (closedFixingSubgroup K Ω (AlgHom.fieldRange i))
-      (fixingSubgroupLeBase K Ω (AlgHom.fieldRange i))
-      (intermediateFieldUnitsEquivGaloisFixed K Ω
-        (AlgHom.fieldRange i)
-        (Additive.ofMul (Units.mapEquiv
-          (AlgEquiv.ofInjectiveField i).toMulEquiv x))) = _
-  rw [relativeNorm_intermediateFieldUnit,
-    normUnits_embeddedExtensionAlgEquiv]
+  let e : L ≃ₐ[K] i.fieldRange := AlgEquiv.ofInjectiveField i
+  let y : i.fieldRangeˣ := Units.mapEquiv e.toMulEquiv x
+  exact (relativeNorm_intermediateFieldUnit K Ω i.fieldRange y).trans
+    (congrArg (fun u : Kˣ =>
+      baseUnitsEquivGaloisAmbientFixed K Ω (Additive.ofMul u))
+      (normUnits_embeddedExtensionAlgEquiv K Ω L i x))
 
 /-- For an embedded finite Galois extension `L/K`, the finite norm quotient
 in the abstract class formation is the actual quotient `Kˣ/N_{L/K}Lˣ`. -/

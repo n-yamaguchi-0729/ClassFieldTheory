@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationCore
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationCore
+
+set_option autoImplicit false
 
 /-!
 # The finite Galois subextension attached to a number-field tower
@@ -39,7 +41,7 @@ theorem numberFieldTowerExtensionSubgroup_normal :
   let j := numberFieldSeparableClosureEmbedding L
   let i :=
     j.comp (IsScalarTower.toAlgHom ℚ K L)
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     i.toRingHom.toAlgebra
   let e := numberFieldTowerSeparableClosureEquiv K L
   change
@@ -67,7 +69,7 @@ theorem numberFieldTowerExtensionQuotient_finite :
   let j := numberFieldSeparableClosureEmbedding L
   let i :=
     j.comp (IsScalarTower.toAlgHom ℚ K L)
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     i.toRingHom.toAlgebra
   let e := numberFieldTowerSeparableClosureEquiv K L
   change
@@ -93,7 +95,7 @@ noncomputable def numberFieldTowerFiniteGaloisSubextension :
   below := numberFieldTowerTopSubgroup_le_baseSubgroup K L
   normal := numberFieldTowerExtensionSubgroup_normal K L
   finite := by
-    letI :=
+    let :=
       numberFieldTowerExtensionSubgroup_normal K L
     exact numberFieldTowerExtensionQuotient_finite K L
 
@@ -181,15 +183,15 @@ theorem
       AlgEquiv.restrictNormalHom L σ := by
   let j :=
     numberFieldSeparableClosureEmbedding L
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   let e :=
     numberFieldTowerSeparableClosureEquiv K L
-  letI :=
+  let :=
     numberFieldTowerExtensionSubgroup_normal K L
   apply AlgEquiv.ext
   intro x

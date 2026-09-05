@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.Idele.LocallyCompact
-import AlgebraicNumberTheory.Idele.PrincipalNorm
-import AlgebraicNumberTheory.Idele.PrincipalTopology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalTopology
 import Mathlib.Algebra.Module.ZLattice.Basic
 import Mathlib.Analysis.Normed.Field.ProperSpace
 import Mathlib.NumberTheory.NumberField.ClassNumber
 import Mathlib.NumberTheory.NumberField.Units.DirichletTheorem
+
+set_option autoImplicit false
 
 /-!
 # Compactness of norm-one idele classes
@@ -60,7 +62,7 @@ theorem isCompact_integralSubgroup :
     intro v
     exact isCompact_iff_compactSpace.mp
       (isCompact_finiteLocalUnits K v)
-  letI (v : HeightOneSpectrum (𝓞 K)) :
+  let (v : HeightOneSpectrum (𝓞 K)) :
       CompactSpace (v.adicCompletionIntegers K).units :=
     hlocal v
   have hdomain :
@@ -99,7 +101,7 @@ theorem isCompact_localAnnulus (w : InfinitePlace K) (B : ℝ) :
       _ = 2 := by
         rw [map_ofNat]
         norm_num
-  letI : NontriviallyNormedField w.Completion :=
+  let : NontriviallyNormedField w.Completion :=
     NontriviallyNormedField.ofNormNeOne
       ⟨2, by
         intro h
@@ -107,7 +109,7 @@ theorem isCompact_localAnnulus (w : InfinitePlace K) (B : ℝ) :
         rw [hnorm_two] at hz
         norm_num at hz,
        by rw [hnorm_two]; norm_num⟩
-  letI : ProperSpace w.Completion :=
+  let : ProperSpace w.Completion :=
     ProperSpace.of_nontriviallyNormedField_of_weaklyLocallyCompactSpace
       w.Completion
   let A : Set w.Completion :=
@@ -159,7 +161,9 @@ theorem mem_annulus_iff (a : InfiniteIdeleGroup K) (B : ℝ) :
             Real.exp B := by
   constructor
   · rintro ⟨u, hu, rfl⟩ w
-    simpa [localAnnulus] using hu w (Set.mem_univ w)
+    change Real.exp (-B) ≤ ‖(u w : w.Completion)‖ ∧
+      ‖(u w : w.Completion)‖ ≤ Real.exp B
+    exact hu w (Set.mem_univ w)
   · intro ha
     refine ⟨ContinuousMulEquiv.piUnits a, ?_, ?_⟩
     · intro w _

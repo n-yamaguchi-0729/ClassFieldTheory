@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.FamilyFinite
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.FamilyFinite
+
+set_option autoImplicit false
 
 /-!
 # Cardinalities of finite unrestricted local-block families
@@ -75,15 +77,15 @@ theorem
   let d :=
     relativeUnrestrictedSPlaceDatum
       (K := K) (L := L) S
-  letI localAction :=
+  let localAction :=
     localBlockFamilyLocalAction d
-  letI blockAction :=
+  let blockAction :=
     localBlockFamilyBlockAction d
-  letI familyAction :=
+  let familyAction :=
     localBlockFamilyAction d
-  letI decompositionFintype :=
+  let decompositionFintype :=
     localBlockFamilyDecompositionFintype d
-  letI localFinite : ∀ i, Finite
+  let localFinite : ∀ i, Finite
       (HerbrandH0
         (absoluteValueDecompositionGroup K (d i).extension.1)
         (LocalizedCompletion
@@ -91,7 +93,7 @@ theorem
     fun i =>
       relativeUnrestrictedLocalHerbrandH0Finite
         S i σ hgen
-  letI familyFinite : Finite
+  let familyFinite : Finite
       (HerbrandH0 (L ≃ₐ[K] L)
         (LocalBlockFamily d)) :=
     relativeUnrestrictedLocalBlockFamilyHerbrandH0Finite
@@ -173,15 +175,15 @@ theorem
   let d :=
     relativeUnrestrictedSPlaceDatum
       (K := K) (L := L) S
-  letI localAction :=
+  let localAction :=
     localBlockFamilyLocalAction d
-  letI blockAction :=
+  let blockAction :=
     localBlockFamilyBlockAction d
-  letI familyAction :=
+  let familyAction :=
     localBlockFamilyAction d
-  letI decompositionFintype :=
+  let decompositionFintype :=
     localBlockFamilyDecompositionFintype d
-  letI localFinite : ∀ i, Finite
+  let localFinite : ∀ i, Finite
       (HerbrandHMinusOne
         (absoluteValueDecompositionGroup K (d i).extension.1)
         (LocalizedCompletion
@@ -193,7 +195,7 @@ theorem
     fun i =>
       relativeUnrestrictedLocalHerbrandHMinusOneFinite
         S i σ hgen
-  letI familyFinite : Finite
+  let familyFinite : Finite
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (LocalBlockFamily d) σ) :=
     relativeUnrestrictedLocalBlockFamilyHerbrandHMinusOneFinite

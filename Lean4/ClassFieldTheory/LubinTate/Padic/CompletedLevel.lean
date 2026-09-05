@@ -1,10 +1,12 @@
-import LubinTate.FiniteLevel.PrimitiveUniformizer
-import LubinTate.Padic.CompletedUnramifiedField
-import LubinTate.Padic.MultiplicativeSeries
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveUniformizer
+import ClassFieldTheory.LubinTate.Padic.CompletedUnramifiedField
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeSeries
 import Mathlib.FieldTheory.SplittingField.Construction
 import Mathlib.RingTheory.AdicCompletion.Topology
 import Mathlib.RingTheory.PowerSeries.Evaluation
 import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
+
+set_option autoImplicit false
 
 /-!
 # Completed p-adic Lubin--Tate levels
@@ -113,11 +115,20 @@ theorem padicCompletedPrimitivePolynomial_natDegree
       Nat.card (padicLocalField p).residueField = p := by
     simpa [padicLocalField] using
       padicCompleteDVF_residueField_card p
-  rw [padicCompletedPrimitivePolynomial,
-    (standardLubinTatePrimitivePolynomialOverField_monic
-      (padicLocalField p)
-      (padicIntEquivValuationSubring p (p : ℤ_[p])) n).natDegree_map,
-    standardLubinTatePrimitivePolynomialOverField_natDegree, hcard]
+  let π : (padicLocalField p).valuationSubring :=
+    padicIntEquivValuationSubring p (p : ℤ_[p])
+  calc
+    (padicCompletedPrimitivePolynomial p n).natDegree =
+        (standardLubinTatePrimitivePolynomialOverField
+          (padicLocalField p) π n).natDegree :=
+      (standardLubinTatePrimitivePolynomialOverField_monic
+        (padicLocalField p) π n).natDegree_map
+          (algebraMap ℚ_[p] (padicCompletedUnramifiedField p))
+    _ = (Nat.card (padicLocalField p).residueField - 1) *
+        Nat.card (padicLocalField p).residueField ^ n :=
+      standardLubinTatePrimitivePolynomialOverField_natDegree
+        (padicLocalField p) π n
+    _ = (p - 1) * p ^ n := by rw [hcard]
 
 /-- The completed primitive polynomial remains separable after base change. -/
 theorem padicCompletedPrimitivePolynomial_separable
@@ -148,6 +159,16 @@ noncomputable instance padicCompletedLevelField_algebra
     (padicCompletedPrimitivePolynomial p n).SplittingField
   infer_instance
 
+section
+
+local instance padicCompletedLevelField_module
+    (p : ℕ) [Fact p.Prime] (n : ℕ) :
+    @Module (padicCompletedUnramifiedField p) (padicCompletedLevelField p n)
+      (inferInstance : DivisionRing (padicCompletedUnramifiedField p)).toRing.toSemiring
+      (inferInstance : AddCommGroup (padicCompletedLevelField p n)).toAddCommMonoid :=
+  @Algebra.toModule (padicCompletedUnramifiedField p) (padicCompletedLevelField p n)
+    _ _ (padicCompletedLevelField_algebra p n)
+
 instance padicCompletedLevelField_finiteDimensional
     (p : ℕ) [Fact p.Prime] (n : ℕ) :
     FiniteDimensional (padicCompletedUnramifiedField p)
@@ -155,6 +176,8 @@ instance padicCompletedLevelField_finiteDimensional
   change FiniteDimensional (padicCompletedUnramifiedField p)
     (padicCompletedPrimitivePolynomial p n).SplittingField
   infer_instance
+
+end
 
 /-- The completed level is the splitting field of a separable polynomial,
 hence is Galois over its completed-unramified base. -/
@@ -331,7 +354,7 @@ theorem padicCompletedPrimitiveRoot_mem_valuationSubring
     (p : ℕ) [Fact p.Prime] (n : ℕ) :
     padicCompletedPrimitiveRoot p n ∈
       (padicCompletedLevelCompleteDVF p n).valuation.valuationSubring := by
-  letI : IsIntegralClosure
+  let : IsIntegralClosure
       (padicCompletedLevelCompleteDVF p n).valuationSubring
       (padicCompletedUnramifiedCompleteDVF p).valuationSubring
       (padicCompletedLevelField p n) :=
@@ -500,8 +523,6 @@ theorem padicCompletedLevelWittCoefficientHom_apply
           (padicCompletedLevelField p n)
           (algebraMap (padicCompletedUnramifiedWittRing p)
             (padicCompletedUnramifiedField p) a) := by
-  rw [padicCompletedLevelWittCoefficientHom, RingHom.comp_apply,
-    integerMap_apply]
   rfl
 
 /-- With the discrete coefficient topology, the canonical Witt map into

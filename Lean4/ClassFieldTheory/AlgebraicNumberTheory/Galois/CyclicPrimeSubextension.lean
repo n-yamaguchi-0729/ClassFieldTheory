@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
+
+set_option autoImplicit false
 
 /-!
 # The prime-degree subextension of a cyclic prime-power extension
@@ -104,7 +106,7 @@ theorem absoluteValueDecompositionGroup_map_restrictNormalHom
       absoluteValueDecompositionGroup F
         (w.1.comp (f := algebraMap M E)
           (algebraMap M E).injective) := by
-  letI : IsGalois M E :=
+  let : IsGalois M E :=
     IsGalois.tower_top_of_isGalois F M E
   let vM : AbsoluteValueExtension vF M :=
     { val :=
@@ -405,7 +407,7 @@ theorem exists_index_prime_normal_subgroup
     rw [hcard]
     exact
       one_lt_pow₀ hp.one_lt hexponent.ne'
-  letI : Nontrivial (L ≃ₐ[K] L) :=
+  let : Nontrivial (L ≃ₐ[K] L) :=
     Finite.one_lt_card_iff_nontrivial.mp
       hgroupCard
   obtain
@@ -511,7 +513,7 @@ noncomputable instance cyclicPrimeSubextension_isGalois
     cyclicPrimeIndexSubgroup
       (K := K) (L := L)
       hp hexponent hcard
-  letI : P.Normal :=
+  let : P.Normal :=
     cyclicPrimeIndexSubgroup_normal
       (K := K) (L := L)
       hp hexponent hcard
@@ -539,11 +541,11 @@ theorem cyclicPrimeSubextension_finrank
     cyclicPrimeSubextension
       (K := K) (L := L)
       hp hexponent hcard
-  letI : P.Normal :=
+  let : P.Normal :=
     cyclicPrimeIndexSubgroup_normal
       (K := K) (L := L)
       hp hexponent hcard
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     cyclicPrimeSubextension_isGalois
       (K := K) (L := L)
       hp hexponent hcard
@@ -580,7 +582,7 @@ theorem cyclicPrimeSubextension_isCyclic
     cyclicPrimeIndexSubgroup
       (K := K) (L := L)
       hp hexponent hcard
-  letI : P.Normal :=
+  let : P.Normal :=
     cyclicPrimeIndexSubgroup_normal
       (K := K) (L := L)
       hp hexponent hcard
@@ -655,11 +657,11 @@ theorem cyclicPrimeSubextensionDecompositionGroup_eq_quotient_image
     cyclicPrimeSubextension
       (K := K) (L := L)
       hp hexponent hcard
-  letI : P.Normal :=
+  let : P.Normal :=
     cyclicPrimeIndexSubgroup_normal
       (K := K) (L := L)
       hp hexponent hcard
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     cyclicPrimeSubextension_isGalois
       (K := K) (L := L)
       hp hexponent hcard
@@ -723,7 +725,7 @@ theorem finitePlaceSplitsCompletely_in_cyclicPrimeSubextension_actual
     cyclicPrimeSubextension
       (K := K) (L := L)
       hp hexponent hcard
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     cyclicPrimeSubextension_isGalois
       (K := K) (L := L)
       hp hexponent hcard

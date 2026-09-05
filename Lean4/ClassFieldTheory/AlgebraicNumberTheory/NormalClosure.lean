@@ -2,6 +2,8 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.Normal.Closure
 import Mathlib.NumberTheory.NumberField.Basic
 
+set_option autoImplicit false
+
 /-!
 # A finite normal closure of a number-field extension
 
@@ -33,9 +35,9 @@ noncomputable instance finiteNormalClosure_isGalois :
     IsGalois K (finiteNormalClosure K L) := by
   let f : L →ₐ[K] AlgebraicClosure K :=
     IsAlgClosed.lift
-  letI : Algebra L (AlgebraicClosure K) :=
+  let : Algebra L (AlgebraicClosure K) :=
     f.toRingHom.toAlgebra
-  letI : IsScalarTower K L (AlgebraicClosure K) :=
+  let : IsScalarTower K L (AlgebraicClosure K) :=
     IsScalarTower.of_algebraMap_eq'
       f.comp_algebraMap.symm
   infer_instance
@@ -99,7 +101,7 @@ theorem finiteNormalClosureOriginalField_normalClosure_eq_top :
         (finiteNormalClosureOriginalField K L)
         (finiteNormalClosure K L) =
       ⊤ := by
-  letI : Nonempty (L →ₐ[K] AlgebraicClosure K) :=
+  let : Nonempty (L →ₐ[K] AlgebraicClosure K) :=
     ⟨IsAlgClosed.lift⟩
   have hAbstract :
       IntermediateField.normalClosure K L

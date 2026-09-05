@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.UnitCohomologyAxiom
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.UnitCohomologyAxiom
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -81,10 +83,10 @@ theorem tateHMinusOne_isZero
     (K : FiniteAbstractField G) (E : FiniteCyclicSubextension K) :
     Limits.IsZero (tateCohomology (E.fixedRepresentation A) (-1)) := by
   let H := tateCohomology (E.fixedRepresentation A) (-1)
-  letI : Finite H := (hcf K E).finiteTateHMinusOne
+  let : Finite H := (hcf K E).finiteTateHMinusOne
   have hcard : Nat.card H = 1 := by
     simpa [H] using hcf.tateHMinusOne_card K E
-  letI : Subsingleton H := (Nat.card_eq_one_iff_unique.mp hcard).1
+  let : Subsingleton H := (Nat.card_eq_one_iff_unique.mp hcard).1
   exact ModuleCat.isZero_of_subsingleton H
 
 end SatisfiesClassFieldAxiom

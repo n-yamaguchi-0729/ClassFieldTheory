@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.AbstractFixedFieldGlobalNormResidue
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.AbstractFixedFieldGlobalNormResidue
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
+
+set_option autoImplicit false
 
 /-!
 # Naturality of the global norm-residue symbol
@@ -26,12 +28,19 @@ open RamificationTheory
 
 universe u
 
-local instance (priority := 2000) ideleClassGroupIsMulCommutative
+@[instance_reducible]
+private noncomputable def naturalityIdeleClassCommGroup
+    (F : Type) [Field F] [NumberField F] : CommGroup (IdeleClassGroup F) :=
+  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
+
+attribute [local instance] naturalityIdeleClassCommGroup
+
+local instance ideleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F]
     : IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
-local instance (priority := 2000) ideleClassSubgroupNormal
+local instance ideleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
   N.normal_of_isMulCommutative
@@ -132,6 +141,27 @@ private theorem rationalIdeleClassEquivFixed_congr_apply_val
     | ofMul c =>
         exact congrArg Additive.ofMul (ideleClassCongr_refl c)
   rw [hc]
+
+/-- Transporting the target intermediate field of a base-field equivalence
+preserves its rational fixed-part representative. -/
+private theorem rationalIdeleClassEquivFixed_transport_baseEquiv_val
+    {T : Type} [Field T] [NumberField T]
+    {A B : IntermediateField ℚ (SeparableClosure ℚ)}
+    [FiniteDimensional ℚ A] [FiniteDimensional ℚ B]
+    (h : A = B) (e : T ≃ₐ[ℚ] B)
+    (c : IdeleClassGroup T) :
+    ((rationalIdeleClassEquivFixed A)
+      (Additive.ofMul
+        (ideleClassCongr (K := T) (M := A)
+          (e.trans (IntermediateField.equivOfEq h).symm) c))).1 =
+    ((rationalIdeleClassEquivFixed B)
+      (Additive.ofMul (ideleClassCongr (K := T) (M := B) e c))).1 := by
+  cases h
+  have he :
+      e.trans (IntermediateField.equivOfEq (rfl : A = A)).symm = e := by
+    ext x
+    rfl
+  rw [he]
 
 /-- Equality of the lower and upper closed subgroups transports the raw
 extension quotient without exposing dependent rewrites to clients. -/
@@ -484,7 +514,7 @@ noncomputable local instance
 /-- Use the same direct fixed-field Galois witness as the intrinsic
 norm-residue construction.  This prevents the dependent Galois-group type
 from being synthesized through a second `IsAbelianGalois` instance path. -/
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     naturalityAbstractRelativeFixedFieldIsGalois :
     IsGalois
       (abstractFixedField ℚ (SeparableClosure ℚ) H.field)
@@ -828,9 +858,9 @@ private theorem
     apply Subtype.ext
     change x.1 = x.1
     rfl
-  letI hEmbeddedQuotientFinite :=
+  let hEmbeddedQuotientFinite :=
     numberFieldEmbeddedAbsoluteQuotientFinite F E j
-  letI hEmbeddedFixedFiniteDimensional :=
+  let hEmbeddedFixedFiniteDimensional :=
     numberFieldEmbeddedAbstractFixedFieldFiniteDimensional F E j
   apply Subtype.ext
   rw [rationalAmbientFixedAddEquiv_transport_apply_val
@@ -1100,14 +1130,40 @@ private theorem
     abstractFixedFieldInclusionEmbeddedExtensionQuotientValue H P
         (P.toFiniteGaloisExtension.extensionQuotientMk σ) =
       abstractFixedFieldInclusionAmbientEmbeddedQuotientMkValue H P σ := by
+  let F :=
+    abstractFixedField ℚ (SeparableClosure ℚ) H.field
+  let E :=
+    abstractRelativeFixedField
+      ℚ (SeparableClosure ℚ) P.below
+  let j : E →ₐ[ℚ] SeparableClosure ℚ :=
+    E.val.restrictScalars ℚ
+  have hBase :
+      numberFieldEmbeddedBaseSubgroup F E j = H.field :=
+    numberFieldEmbeddedBaseSubgroup_abstractFixedFieldInclusion H P
+  have hTop :
+      numberFieldEmbeddedTopSubgroup F E j = P.field :=
+    numberFieldEmbeddedTopSubgroup_abstractFixedFieldInclusion H P
+  let hAlgebra : Algebra F (SeparableClosure ℚ) :=
+    numberFieldEmbeddedSeparableClosureAlgebra F E j
+  let eSep :=
+    numberFieldEmbeddedSeparableClosureEquiv F E j
+  let hEmbeddedExtensionNormal :
+      (CyclicCohomology.extensionSubgroup
+        (numberFieldEmbeddedBaseSubgroup F E j)
+        (numberFieldEmbeddedTopSubgroup F E j)
+        (numberFieldEmbeddedTopSubgroup_le_baseSubgroup F E j)).Normal :=
+    numberFieldEmbeddedExtensionSubgroup_normal F E j
   simp only [
     abstractFixedFieldInclusionEmbeddedExtensionQuotientValue,
     abstractFixedFieldInclusionEmbeddedExtensionQuotientEquiv,
     abstractFixedFieldInclusionAmbientEmbeddedQuotientMkValue,
     MulEquiv.trans_apply,
-    FiniteGaloisSubextension.extensionQuotientMk_apply,
-    extensionQuotientMulEquivOfEq_mk]
-  rfl
+    FiniteGaloisSubextension.extensionQuotientMk_apply]
+  exact congrArg
+    (ambientEmbeddedExtensionQuotientEquivGaloisGroup ℚ F E j eSep)
+    (extensionQuotientMulEquivOfEq_mk
+      hBase.symm hTop.symm P.below
+      (numberFieldEmbeddedTopSubgroup_le_baseSubgroup F E j) σ)
 
 /-- The packaged ambient endpoint evaluates to the action of the rebundled
 representative. -/
@@ -1131,11 +1187,11 @@ private theorem
   have hBase :
       numberFieldEmbeddedBaseSubgroup F E j = H.field :=
     numberFieldEmbeddedBaseSubgroup_abstractFixedFieldInclusion H P
-  letI hAlgebra : Algebra F (SeparableClosure ℚ) :=
+  let hAlgebra : Algebra F (SeparableClosure ℚ) :=
     numberFieldEmbeddedSeparableClosureAlgebra F E j
   let eSep :=
     numberFieldEmbeddedSeparableClosureEquiv F E j
-  letI hEmbeddedExtensionNormal :
+  let hEmbeddedExtensionNormal :
       (CyclicCohomology.extensionSubgroup
         (numberFieldEmbeddedBaseSubgroup F E j)
         (numberFieldEmbeddedTopSubgroup F E j)
@@ -1356,6 +1412,9 @@ private theorem
   have hBase :
       numberFieldEmbeddedBaseSubgroup F E j = H.field :=
     numberFieldEmbeddedBaseSubgroup_abstractFixedFieldInclusion H P
+  have hTop :
+      numberFieldEmbeddedTopSubgroup F E j = P.field :=
+    numberFieldEmbeddedTopSubgroup_abstractFixedFieldInclusion H P
   let HEmbedded :=
     numberFieldEmbeddedFiniteAbstractField F E j
   let PEmbedded : FiniteGaloisSubextension HEmbedded.field :=
@@ -1372,11 +1431,11 @@ private theorem
           PEmbedded =
         P.toFiniteGaloisExtension :=
     numberFieldEmbeddedFiniteGaloisSubextension_transport_eq H P
-  letI hAlgebra : Algebra F (SeparableClosure ℚ) :=
+  let hAlgebra : Algebra F (SeparableClosure ℚ) :=
     numberFieldEmbeddedSeparableClosureAlgebra F E j
   let eSep :=
     numberFieldEmbeddedSeparableClosureEquiv F E j
-  letI hEmbeddedExtensionNormal :
+  let hEmbeddedExtensionNormal :
       (CyclicCohomology.extensionSubgroup
         (numberFieldEmbeddedBaseSubgroup F E j)
         (numberFieldEmbeddedTopSubgroup F E j)
@@ -1393,7 +1452,6 @@ private theorem
     MulEquiv.trans_apply,
     extensionQuotientMulEquiv_transportFiniteGalois_mk,
     FiniteGaloisSubextension.extensionQuotientMk_apply,
-    extensionQuotientMulEquivOfEq_mk,
     numberFieldEmbeddedExtensionQuotientEquivGaloisGroup]
   rw [hFieldEq]
   change
@@ -1401,7 +1459,12 @@ private theorem
         (QuotientGroup.mk
           ((MulEquiv.subgroupCongr
             (congrArg ClosedSubgroup.toSubgroup hBase.symm)) σ)) = _
-  rfl
+  exact
+    (congrArg
+      (ambientEmbeddedExtensionQuotientEquivGaloisGroup ℚ F E j eSep)
+      (extensionQuotientMulEquivOfEq_mk
+        hBase.symm hTop.symm P.below
+        (numberFieldEmbeddedTopSubgroup_le_baseSubgroup F E j) σ)).symm
 
 /-- Transporting the embedded finite Galois package preserves the value of
 its extension-quotient comparison. -/
@@ -1624,7 +1687,7 @@ private theorem
       Additive.ofMul
         (abstractFixedFieldInclusionCanonicalExtensionQuotientValue
           H P q) := by
-  letI hRawQuotientCommGroup :
+  let hRawQuotientCommGroup :
       CommGroup P.toFiniteGaloisExtension.extensionQuotient :=
     { (inferInstance :
         Group P.toFiniteGaloisExtension.extensionQuotient) with
@@ -2102,7 +2165,7 @@ private theorem numberFieldEmbeddedBaseChangeExtensionSubgroup_normal
     K K' L L' j] at hNormal
   exact hNormal
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldEmbeddedBaseChangeExtensionSubgroupNormal
     [FiniteDimensional K K'] [IsGalois K K']
     (j : L' →ₐ[ℚ] SeparableClosure ℚ) :
@@ -2141,12 +2204,12 @@ private theorem numberFieldEmbeddedBaseChangeExtensionQuotient_finite
         (j.comp (IsScalarTower.toAlgHom ℚ L L')))
       (numberFieldEmbeddedBaseSubgroup K' L' j)
       (numberFieldEmbeddedBaseSubgroup_le_of_tower K K' L L' j)
-  letI hNNormal : N.Normal :=
+  let hNNormal : N.Normal :=
     numberFieldEmbeddedExtensionSubgroup_normal K K'
       (numberFieldEmbeddedLowerEmbedding K' L' j)
-  letI hMNormal : M.Normal :=
+  let hMNormal : M.Normal :=
     numberFieldEmbeddedBaseChangeExtensionSubgroup_normal K K' L L' j
-  letI hNFinite :
+  let hNFinite :
       Finite
         ((numberFieldEmbeddedBaseSubgroup K K'
             (numberFieldEmbeddedLowerEmbedding K' L' j)).toSubgroup ⧸ N) :=
@@ -2175,7 +2238,7 @@ private theorem numberFieldEmbeddedBaseChangeExtensionQuotient_finite
       (N := N) M e.toMonoidHom hmk hle
   exact Finite.of_surjective f hsurj
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldEmbeddedBaseChangeExtensionQuotientFinite
     [FiniteDimensional K K'] [IsGalois K K']
     (j : L' →ₐ[ℚ] SeparableClosure ℚ) :
@@ -2192,7 +2255,7 @@ noncomputable local instance (priority := 2000)
 /-- Reuse the canonical absolute fixed-field witness for the lower embedded
 tower.  The base-change relative witness below needs this exact instance path
 when forming the absolute finite-dimensional tower. -/
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldEmbeddedBaseChangeBaseFixedFieldFiniteDimensional
     (j : L' →ₐ[ℚ] SeparableClosure ℚ) :
     FiniteDimensional ℚ
@@ -2202,7 +2265,7 @@ noncomputable local instance (priority := 2000)
   numberFieldEmbeddedAbstractFixedFieldFiniteDimensional K L
     (j.comp (IsScalarTower.toAlgHom ℚ L L'))
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldEmbeddedBaseChangeRelativeFixedFieldFiniteDimensional
     [FiniteDimensional K K'] [IsGalois K K']
     (j : L' →ₐ[ℚ] SeparableClosure ℚ) :
@@ -2222,7 +2285,7 @@ noncomputable local instance (priority := 2000)
       (j.comp (IsScalarTower.toAlgHom ℚ L L')))
     (numberFieldEmbeddedBaseChangeExtensionQuotientFinite K K' L L' j)
 
-local instance (priority := 2000)
+local instance
     numberFieldEmbeddedBaseChangeRelativeFixedFieldScalarTower
     [FiniteDimensional K K'] [IsGalois K K']
     (j : L' →ₐ[ℚ] SeparableClosure ℚ) :
@@ -2234,7 +2297,7 @@ local instance (priority := 2000)
         (numberFieldEmbeddedBaseSubgroup_le_of_tower K K' L L' j)) :=
   IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldEmbeddedBaseChangeRelativeFixedFieldAbsoluteFiniteDimensional
     [FiniteDimensional K K'] [IsGalois K K']
     (j : L' →ₐ[ℚ] SeparableClosure ℚ) :
@@ -2248,7 +2311,7 @@ noncomputable local instance (priority := 2000)
     (abstractRelativeFixedField ℚ (SeparableClosure ℚ)
       (numberFieldEmbeddedBaseSubgroup_le_of_tower K K' L L' j))
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldEmbeddedBaseChangeRelativeFixedFieldNumberField
     [FiniteDimensional K K'] [IsGalois K K']
     (j : L' →ₐ[ℚ] SeparableClosure ℚ) :
@@ -2259,7 +2322,7 @@ noncomputable local instance (priority := 2000)
     (abstractRelativeFixedField ℚ (SeparableClosure ℚ)
       (numberFieldEmbeddedBaseSubgroup_le_of_tower K K' L L' j))
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     numberFieldEmbeddedBaseChangeRelativeFixedFieldIsGalois
     [FiniteDimensional K K'] [IsGalois K K']
     (j : L' →ₐ[ℚ] SeparableClosure ℚ) :
@@ -2348,10 +2411,10 @@ theorem
   let hJ'H' :=
     numberFieldEmbeddedTopSubgroup_le_baseSubgroup
       K' L' j
-  letI hLowerNormal :
+  let hLowerNormal :
       (CyclicCohomology.extensionSubgroup H J hJH).Normal :=
     numberFieldEmbeddedExtensionSubgroup_normal K L jLower
-  letI hUpperNormal :
+  let hUpperNormal :
       (CyclicCohomology.extensionSubgroup H' J' hJ'H').Normal :=
     numberFieldEmbeddedExtensionSubgroup_normal K' L' j
   let qLower :=
@@ -2402,11 +2465,11 @@ theorem
   apply AlgEquiv.ext
   intro x
   apply jLower.injective
-  letI hUpperAlgebra : Algebra K' (SeparableClosure ℚ) :=
+  let hUpperAlgebra : Algebra K' (SeparableClosure ℚ) :=
     numberFieldEmbeddedSeparableClosureAlgebra K' L' j
   let eUpper :=
     numberFieldEmbeddedSeparableClosureEquiv K' L' j
-  letI hLowerAlgebra : Algebra K (SeparableClosure ℚ) :=
+  let hLowerAlgebra : Algebra K (SeparableClosure ℚ) :=
     numberFieldEmbeddedSeparableClosureAlgebra K L jLower
   let eLower :=
     numberFieldEmbeddedSeparableClosureEquiv K L jLower
@@ -2464,13 +2527,7 @@ theorem numberFieldEmbeddedIdeleClassEquivAmbientFixed_relativeNorm
       numberFieldEmbeddedIdeleClassEquivAmbientFixed
         K L jLower
         (Additive.ofMul (_root_.ideleClassNorm K K' c)) := by
-  dsimp only
-  let jLower : L →ₐ[ℚ] SeparableClosure ℚ :=
-    j.comp (IsScalarTower.toAlgHom ℚ L L')
-  let H :=
-    numberFieldEmbeddedBaseSubgroup K L jLower
-  let H' :=
-    numberFieldEmbeddedBaseSubgroup K' L' j
+  intro jLower H H'
   let hH'H :=
     numberFieldEmbeddedBaseSubgroup_le_of_tower K K' L L' j
   let hnormal :=
@@ -2479,16 +2536,16 @@ theorem numberFieldEmbeddedIdeleClassEquivAmbientFixed_relativeNorm
     abstractFixedField ℚ (SeparableClosure ℚ) H
   let E :=
     abstractRelativeFixedField ℚ (SeparableClosure ℚ) hH'H
-  letI _ :
+  let _ :
       (CyclicCohomology.extensionSubgroup H H' hH'H).Normal :=
     hnormal
-  letI _ :
+  let _ :
       Finite
         (H.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup H H' hH'H) :=
     numberFieldEmbeddedBaseChangeExtensionQuotientFinite
       K K' L L' j
-  letI _ :
+  let _ :
       Finite
         ((baseField
           (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -2497,17 +2554,17 @@ theorem numberFieldEmbeddedIdeleClassEquivAmbientFixed_relativeNorm
               (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
             H (le_baseField H)) :=
     numberFieldEmbeddedAbsoluteQuotientFinite K L jLower
-  letI _ : NumberField F :=
+  let _ : NumberField F :=
     numberFieldEmbeddedAbstractFixedFieldNumberField K L jLower
-  letI _ : NumberField E :=
+  let _ : NumberField E :=
     numberFieldEmbeddedBaseChangeRelativeFixedFieldNumberField
       K K' L L' j
-  letI _ : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
+  let _ : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
     change FiniteDimensional ℚ E
     exact
       numberFieldEmbeddedBaseChangeRelativeFixedFieldAbsoluteFiniteDimensional
         K K' L L' j
-  letI _ : NumberField
+  let _ : NumberField
       (abstractFixedField ℚ (SeparableClosure ℚ) H') :=
     numberFieldEmbeddedAbstractFixedFieldNumberField K' L' j
   have hE :
@@ -2529,15 +2586,6 @@ theorem numberFieldEmbeddedIdeleClassEquivAmbientFixed_relativeNorm
     numberFieldEmbeddedAbstractBaseFieldEquiv K' L' j
   let eK' : K' ≃ₐ[ℚ] E :=
     eK'Base.trans eRel.symm
-  have heK' : eK'.trans eRel = eK'Base := by
-    ext x
-    simp only [eK', AlgEquiv.trans_apply,
-      AlgEquiv.apply_symm_apply]
-  have heRel :
-      eRel.trans (IntermediateField.equivOfEq hE.symm) =
-        (AlgEquiv.refl : E ≃ₐ[ℚ] E) := by
-    cases hE
-    rfl
   have hcompat (x : K) :
       eK' (algebraMap K K' x) =
         algebraMap F E (eK x) := by
@@ -2554,40 +2602,16 @@ theorem numberFieldEmbeddedIdeleClassEquivAmbientFixed_relativeNorm
           (Additive.ofMul (ideleClassCongr eK' c)) =
         numberFieldEmbeddedIdeleClassEquivAmbientFixed
           K' L' j (Additive.ofMul c) := by
-    simp only [
-      numberFieldEmbeddedIdeleClassEquivAmbientFixed,
-      AddEquiv.trans_apply]
     apply Subtype.ext
-    have hcongr :=
-      ideleClassCongr_trans eK' eRel c
-    have hcongrBase :
-        ideleClassCongr (eK'.trans eRel) c =
-          ideleClassCongr eK'Base c :=
-      congrArg (fun e => ideleClassCongr e c) heK'
     change
       ((rationalIdeleClassEquivFixed (E.restrictScalars ℚ))
           (Additive.ofMul (ideleClassCongr eK' c))).1 =
         ((rationalIdeleClassEquivFixed
             (abstractFixedField ℚ (SeparableClosure ℚ) H'))
           (Additive.ofMul (ideleClassCongr eK'Base c))).1
-    calc
-      _ =
-          ((rationalIdeleClassEquivFixed
-              (abstractFixedField ℚ (SeparableClosure ℚ) H'))
-            (MulEquiv.toAdditive (ideleClassCongr eRel)
-              (Additive.ofMul (ideleClassCongr eK' c)))).1 := by
-        exact
-          (rationalIdeleClassEquivFixed_congr_apply_val
-            hE.symm eRel heRel
-            (Additive.ofMul (ideleClassCongr eK' c))).symm
-      _ = _ := by
-        apply congrArg
-          (fun d =>
-            ((rationalIdeleClassEquivFixed
-              (abstractFixedField ℚ (SeparableClosure ℚ) H')) d).1)
-        exact congrArg Additive.ofMul
-          (hcongr.trans hcongrBase)
-  rw [← hupper]
+    exact rationalIdeleClassEquivFixed_transport_baseEquiv_val
+      (T := K') (A := E.restrictScalars ℚ)
+      (B := abstractFixedField ℚ (SeparableClosure ℚ) H') hE eK'Base c
   have hrelative :=
     rationalAbstractRelativeFixedFieldIdeleClassEquivFixed_relativeNorm
       H H' hH'H hnormal
@@ -2602,24 +2626,32 @@ theorem numberFieldEmbeddedIdeleClassEquivAmbientFixed_relativeNorm
           (_root_.ideleClassNorm F E
             (ideleClassCongr eK' c)))
     at hrelative
-  rw [hrelative]
-  simp only [numberFieldEmbeddedIdeleClassEquivAmbientFixed,
-    AddEquiv.trans_apply]
-  change
-    rationalAbstractFixedFieldIdeleClassEquivFixed H
+  calc
+    relativeNorm rationalIdeleClassRepresentation H H' hH'H
+        (numberFieldEmbeddedIdeleClassEquivAmbientFixed
+          K' L' j (Additive.ofMul c)) =
+      relativeNorm rationalIdeleClassRepresentation H H' hH'H
+        (rationalAbstractRelativeFixedFieldIdeleClassEquivFixed
+          H H' hH'H (Additive.ofMul (ideleClassCongr eK' c))) :=
+      congrArg (relativeNorm rationalIdeleClassRepresentation H H' hH'H)
+        hupper.symm
+    _ = rationalAbstractFixedFieldIdeleClassEquivFixed H
         (Additive.ofMul
-          (_root_.ideleClassNorm F E
-            (ideleClassCongr eK' c))) =
-      rationalAbstractFixedFieldIdeleClassEquivFixed H
-        (Additive.ofMul
-          (ideleClassCongr eK
-            (_root_.ideleClassNorm K K' c)))
-  apply congrArg
-    (rationalAbstractFixedFieldIdeleClassEquivFixed H)
-  apply congrArg Additive.ofMul
-  exact
-    (ideleClassCongr_ideleClassNorm
-      eK eK' hcompat c).symm
+          (_root_.ideleClassNorm F E (ideleClassCongr eK' c))) := hrelative
+    _ = numberFieldEmbeddedIdeleClassEquivAmbientFixed
+        K L jLower (Additive.ofMul (_root_.ideleClassNorm K K' c)) := by
+      change
+        rationalAbstractFixedFieldIdeleClassEquivFixed H
+            (Additive.ofMul
+              (_root_.ideleClassNorm F E (ideleClassCongr eK' c))) =
+          rationalAbstractFixedFieldIdeleClassEquivFixed H
+            (Additive.ofMul
+              (ideleClassCongr eK (_root_.ideleClassNorm K K' c)))
+      apply congrArg (rationalAbstractFixedFieldIdeleClassEquivFixed H)
+      apply congrArg Additive.ofMul
+      exact
+        (ideleClassCongr_ideleClassNorm
+          (K := K) (K' := F) (L := K') (L' := E) eK eK' hcompat c).symm
 
 /-- For one common compatible embedding of a Galois base-change
 diamond, the genuine global norm-residue maps commute with ordinary
@@ -2655,18 +2687,18 @@ theorem globalNormResidueMonoidHomOfEmbedding_norm_restriction
     numberFieldEmbeddedBaseSubgroup_le_of_tower K K' L L' j
   let hJ'J :=
     numberFieldEmbeddedTopSubgroup_le_of_tower K K' L L' j
-  letI _ :
+  let _ :
       (CyclicCohomology.extensionSubgroup H J hJH).Normal :=
     numberFieldEmbeddedExtensionSubgroup_normal K L jLower
-  letI _ :
+  let _ :
       Finite
         (H.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup H J hJH) :=
     numberFieldEmbeddedExtensionQuotient_finite K L jLower
-  letI _ :
+  let _ :
       (CyclicCohomology.extensionSubgroup H' J' hJ'H').Normal :=
     numberFieldEmbeddedExtensionSubgroup_normal K' L' j
-  letI _ :
+  let _ :
       Finite
         (H'.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup H' J' hJ'H') :=
@@ -2680,13 +2712,13 @@ theorem globalNormResidueMonoidHomOfEmbedding_norm_restriction
       base := numberFieldEmbeddedFiniteAbstractField K L jLower
       below := hH'H
       finiteQuotient := hHH'finite }
-  letI hTBaseNormal :
+  let hTBaseNormal :
       (CyclicCohomology.extensionSubgroup
         T.base.field J hJH).Normal := by
     change
       (CyclicCohomology.extensionSubgroup H J hJH).Normal
     exact numberFieldEmbeddedExtensionSubgroup_normal K L jLower
-  letI hTBaseFinite :
+  let hTBaseFinite :
       Finite
         (T.base.field.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup
@@ -2696,13 +2728,13 @@ theorem globalNormResidueMonoidHomOfEmbedding_norm_restriction
         (H.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup H J hJH)
     exact numberFieldEmbeddedExtensionQuotient_finite K L jLower
-  letI hTFieldNormal :
+  let hTFieldNormal :
       (CyclicCohomology.extensionSubgroup
         T.field.field J' hJ'H').Normal := by
     change
       (CyclicCohomology.extensionSubgroup H' J' hJ'H').Normal
     exact numberFieldEmbeddedExtensionSubgroup_normal K' L' j
-  letI hTFieldFinite :
+  let hTFieldFinite :
       Finite
         (T.field.field.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup
@@ -2908,12 +2940,12 @@ theorem normResidueSymbol_restriction_sameBase
         QL →+ AM) =
       (normEM.comp projection :
         QL →+ AM) := by
-  letI _ : Finite
+  let _ : Finite
       (M.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup M L hLM) :=
     abstractReciprocity_lowerExtension_finite
       K.field M L hLM hMK
-  letI hIntermediateFinite : Finite
+  let hIntermediateFinite : Finite
       (K.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup K.field M hMK) :=
     abstractReciprocity_intermediateQuotient_finite

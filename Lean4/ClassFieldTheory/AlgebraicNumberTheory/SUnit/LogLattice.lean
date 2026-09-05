@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.SUnit.Rank
+import ClassFieldTheory.AlgebraicNumberTheory.SUnit.Rank
 import Mathlib.Algebra.Module.PID
 import Mathlib.Algebra.Module.ZLattice.Basic
 import Mathlib.NumberTheory.NumberField.ProductFormula
+
+set_option autoImplicit false
 
 /-!
 # The logarithmic lattice of `S`-units
@@ -256,7 +258,7 @@ ordinary Dirichlet unit lattice. -/
 instance instDiscreteTopology_reducedLogLattice :
     DiscreteTopology (reducedLogLattice (K := K) S) := by
   classical
-  letI :
+  let :
       DiscreteTopology
         {x :
           NumberField.Units.dirichletUnitTheorem.logSpace K //
@@ -392,7 +394,7 @@ theorem reducedLogLattice_span_eq_top :
       (reducedLogLattice (K := K) S :
         Set (ReducedLogSpace (K := K) S)) = ⊤ := by
   classical
-  letI :
+  let :
       DiscreteTopology
         (Submodule.span ℤ
           (reducedLogLattice (K := K) S :

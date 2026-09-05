@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
+
+set_option autoImplicit false
 
 /-!
 # Finite-place Artin quotients

@@ -1,4 +1,6 @@
-import LubinTate.FiniteLevel.FiniteParameters
+import ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameters
+
+set_option autoImplicit false
 
 /-!
 # Principal-unit filtration on finite Lubin--Tate parameters
@@ -57,7 +59,7 @@ theorem standardLubinTateUnitParameterSubgroup_natCard
       Nat.card F.residueField ^ (n + 1 - k) := by
   let D := F.toCompleteDVF
   let U := higherPrincipalUnitGroup.toPrincipalUnitFiltration D
-  letI hfinite (i j : ℕ) : Finite (U.principalUnitSubquotient i j) :=
+  let hfinite (i j : ℕ) : Finite (U.principalUnitSubquotient i j) :=
     higherPrincipalUnitGroup.finite_principalUnitSubquotient_of_finite_residue D i j
   have hnormal : ∀ i : ℕ, (U.principalUnitSubgroup i).Normal := by
     intro i

@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.ClassFormation.ArchimedeanNormQuotient
-import AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
-import AlgebraicNumberTheory.Idele.Extension.LocalComponent
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.ArchimedeanNormQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalComponent
+
+set_option autoImplicit false
 
 /-!
 # The norm image of an archimedean tensor factor
@@ -30,27 +32,27 @@ is the field-norm subgroup of any completion above the base place. -/
 theorem infiniteTensorNormSubgroup_eq_localNormSubgroup
     (v : InfinitePlace K) (w : InfinitePlace L)
     (hw : w.comap (algebraMap K L) = v) :
-    letI : w.1.LiesOver v.1 :=
+    let : w.1.LiesOver v.1 :=
       ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
     infiniteTensorNormSubgroup (K := K) (L := L) v =
       localNormSubgroup v.Completion w.Completion := by
-  letI : w.1.LiesOver v.1 :=
+  let : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
   let u :=
     infinitePlaceAbsoluteValueExtension v w hw
-  letI hL :=
+  let hL :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) u.1
-  letI : SMul K u.1.Completion :=
+  let : SMul K u.1.Completion :=
     hL.toSMul
-  letI : Algebra v.1.Completion u.1.Completion :=
+  let : Algebra v.1.Completion u.1.Completion :=
     AbsoluteValue.completionAlgebra v.1 u.1 u.2
-  letI : Algebra v.1.Completion w.1.Completion :=
+  let : Algebra v.1.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra v.1 w.1
       (infinitePlaceAbsoluteValueExtension v w hw).2
   let E :=
     AlgebraicNumberTheory.Valuations.LocalizedCompletion v.1 u
-  letI : Module.Finite v.1.Completion E :=
+  let : Module.Finite v.1.Completion E :=
     AlgebraicNumberTheory.Valuations.localizedCompletionModuleFinite
       v.1 v.isNontrivial u
   let eVField :

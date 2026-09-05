@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormCore
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormCore
+
+set_option autoImplicit false
 
 /-!
 # Ordinary norms in finite towers of rational fixed fields

@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
-import AbstractClassFieldTheory.Reciprocity.Construction.CanonicalUnramifiedNormQuotient
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.CanonicalUnramifiedNormQuotient
+
+set_option autoImplicit false
 
 /-!
 # Norm-class relations for reciprocity multiplicativity
@@ -107,16 +109,16 @@ theorem relativeNorm_frobeniusPowerSum_alternating
   let s₄ := D.frobeniusPowerSum A K.field L hLK φ.1
     (D.frobeniusExponent K L hLK σ₄) p₄
   let u := s₄ + s₁ - s₃
-  letI hS₁finite : Finite
+  let hS₁finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S₁ hS₁K) :=
     D.frobeniusFixedField_finite K L hLK σ₁
-  letI hS₃finite : Finite
+  let hS₃finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S₃ hS₃K) :=
     D.frobeniusFixedField_finite K L hLK σ₃
-  letI hS₄finite : Finite
+  let hS₄finite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S₄ hS₄K) :=
     D.frobeniusFixedField_finite K L hLK σ₄
-  letI hIfinite : Finite
+  let hIfinite : Finite
       ((D.maximalUnramifiedField K.field).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K.field)
           (D.maximalUnramifiedField L)
@@ -239,20 +241,20 @@ theorem reciprocityMap_mul_of_primeNormClass_eq
       D.reciprocityMap A v K L hLK σ₁ +
         D.reciprocityMap A v K L hLK σ₂ := by
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
-  letI hS₁finite : Finite (K.field.toSubgroup ⧸ extensionSubgroup K.field
+  let hS₁finite : Finite (K.field.toSubgroup ⧸ extensionSubgroup K.field
       (D.frobeniusFixedField KR L hLK σ₁)
       (D.frobeniusFixedField_le KR L hLK σ₁)) :=
     D.frobeniusFixedField_finite KR L hLK σ₁
-  letI hS₂finite : Finite (K.field.toSubgroup ⧸ extensionSubgroup K.field
+  let hS₂finite : Finite (K.field.toSubgroup ⧸ extensionSubgroup K.field
       (D.frobeniusFixedField KR L hLK σ₂)
       (D.frobeniusFixedField_le KR L hLK σ₂)) :=
     D.frobeniusFixedField_finite KR L hLK σ₂
-  letI hS₃finite : Finite (K.field.toSubgroup ⧸ extensionSubgroup K.field
+  let hS₃finite : Finite (K.field.toSubgroup ⧸ extensionSubgroup K.field
       (D.frobeniusFixedField KR L hLK (σ₁ * σ₂))
       (D.frobeniusFixedField_le KR L hLK (σ₁ * σ₂))) :=
     D.frobeniusFixedField_finite KR L hLK (σ₁ * σ₂)

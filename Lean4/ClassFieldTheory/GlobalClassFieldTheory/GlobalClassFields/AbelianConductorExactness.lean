@@ -1,9 +1,14 @@
-import GlobalClassFieldTheory.GlobalClassFields.AbelianConductorRamification
-import GlobalClassFieldTheory.GlobalClassFields.AbelianLocalConductorComparison
-import GlobalClassFieldTheory.GlobalClassFields.ConductorInfinitePart
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
-import GlobalClassFieldTheory.Reciprocity.InfiniteLocalGlobalArtinCompatibility
-import GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorRamification
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianLocalConductorComparison
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorInfinitePart
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteLocalGlobalArtinCompatibility
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.SeparableClosurePadicLift
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.FinitePadicCyclicData
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.FinitePadicAuxiliaryField
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
+
+set_option autoImplicit false
 
 /-!
 # Exact finite ramification loci for abelian norm data
@@ -255,7 +260,7 @@ private theorem infiniteTensorNormSubgroup_ne_top_of_isRamified
     (hramified : w.IsRamified K) :
     _root_.infiniteTensorNormSubgroup
       (K := K) (L := L) v ≠ ⊤ := by
-  letI : w.1.LiesOver v.1 :=
+  let : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
   rw [
     _root_.infiniteTensorNormSubgroup_eq_localNormSubgroup
@@ -279,7 +284,7 @@ private theorem infiniteTensorNormSubgroup_ne_top_of_isRamified
   let eComplexUnits :
       w.Completionˣ ≃* ℂˣ :=
     Units.mapEquiv eComplexField.toMulEquiv
-  letI :
+  let :
       NumberField.ComplexEmbedding.LiesOver
         (InfinitePlace.Completion.extensionEmbedding w)
         (InfinitePlace.Completion.extensionEmbedding v) :=
@@ -374,7 +379,7 @@ theorem infiniteTensorNormSubgroup_eq_top_iff_isUnramifiedIn
         (K := K) (L := L) v w hw hRamified)
         htop
   · intro hunramified
-    letI : w.1.LiesOver v.1 :=
+    let : w.1.LiesOver v.1 :=
       ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
     rw [
       _root_.infiniteTensorNormSubgroup_eq_localNormSubgroup
@@ -393,7 +398,7 @@ theorem infiniteTensorNormSubgroup_eq_top_iff_isUnramifiedIn
         (x : v.Completion)
     rw [
       Algebra.norm_algebraMap,
-      InfinitePlace.Completion.finrank_eq_one_of_isUnramified
+      InfinitePlace.IsUnramified.finrank_eq_one
         v hunramified,
       pow_one]
 
@@ -462,7 +467,7 @@ theorem
           (w.comap (algebraMap K L))).1
           (htop (w.comap (algebraMap K L))) w rfl⟩
   · intro hunramified
-    letI : IsUnramifiedAtInfinitePlaces K L :=
+    let : IsUnramifiedAtInfinitePlaces K L :=
       hunramified
     exact fun v =>
       infiniteTensorNormSubgroup_eq_top_of_isUnramifiedAtInfinitePlaces

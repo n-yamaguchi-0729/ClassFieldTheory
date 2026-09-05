@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+
+set_option autoImplicit false
 
 /-!
 # Finite norm-class evaluation after fixed-field inclusion
@@ -21,13 +23,13 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance (priority := 2000)
+local instance
     finiteNormClassIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
-local instance (priority := 2000)
+local instance
     finiteNormClassIdeleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=

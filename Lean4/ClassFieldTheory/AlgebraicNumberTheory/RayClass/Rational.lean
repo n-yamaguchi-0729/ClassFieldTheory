@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.RayClass.Ideal
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.Data.Nat.GCD.BigOperators
 import Mathlib.Data.ZMod.Units
 import Mathlib.NumberTheory.NumberField.Units.Basic
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Mathlib.NumberTheory.Padics.RingHoms
+
+set_option autoImplicit false
 
 /-!
 # Ray class groups of the rational numbers
@@ -281,7 +283,7 @@ theorem not_dvd_den_of_principal_count_eq_zero
           FractionalIdeal (nonZeroDivisors (𝓞 ℚ)) ℚ) = 0) :
     ¬ Rat.HeightOneSpectrum.natGenerator v ∣ (x : ℚ).den := by
   let p := Rat.HeightOneSpectrum.natGenerator v
-  letI : Fact p.Prime :=
+  let : Fact p.Prime :=
     ⟨Rat.HeightOneSpectrum.prime_natGenerator v⟩
   have hequiv :=
     Rat.HeightOneSpectrum.valuation_equiv_padicValuation v
@@ -301,7 +303,7 @@ theorem not_dvd_num_of_principal_count_eq_zero
           FractionalIdeal (nonZeroDivisors (𝓞 ℚ)) ℚ) = 0) :
     ¬ Rat.HeightOneSpectrum.natGenerator v ∣ (x : ℚ).num.natAbs := by
   let p := Rat.HeightOneSpectrum.natGenerator v
-  letI : Fact p.Prime :=
+  let : Fact p.Prime :=
     ⟨Rat.HeightOneSpectrum.prime_natGenerator v⟩
   have hpval :
       Rat.padicValuation p (x : ℚ) = 1 :=
@@ -330,10 +332,13 @@ theorem positiveGenerator_den_coprime
   obtain ⟨p, hp, hpm, hpden⟩ :=
     Nat.Prime.not_coprime_iff_dvd.mp hcop
   let v := rationalPrime ⟨p, hp⟩
+  have hvgen : Rat.HeightOneSpectrum.natGenerator v = p :=
+    natGenerator_rationalPrime ⟨p, hp⟩
   have hv : v ∈ (rationalModulus m).finitePart.support := by
     rw [rationalModulus, Modulus.finitePart_narrowOfFinite]
     rw [mem_rationalFiniteModulus_support_iff hm]
-    simpa [v] using hpm
+    rw [hvgen]
+    exact hpm
   have hcount := I.property v hv
   rw [← toPrincipalIdeal_positiveRationalIdealGeneratorUnit
     (I : FractionalIdealGroup ℚ)] at hcount
@@ -341,7 +346,9 @@ theorem positiveGenerator_den_coprime
     (not_dvd_den_of_principal_count_eq_zero
       (positiveRationalIdealGeneratorUnit
         (I : FractionalIdealGroup ℚ)) v hcount)
-      (by simpa [v] using hpden)
+      (by
+        rw [hvgen]
+        exact hpden)
 
 theorem positiveGenerator_num_coprime
     {m : ℕ} (hm : m ≠ 0)
@@ -354,10 +361,13 @@ theorem positiveGenerator_num_coprime
   obtain ⟨p, hp, hpm, hpnum⟩ :=
     Nat.Prime.not_coprime_iff_dvd.mp hcop
   let v := rationalPrime ⟨p, hp⟩
+  have hvgen : Rat.HeightOneSpectrum.natGenerator v = p :=
+    natGenerator_rationalPrime ⟨p, hp⟩
   have hv : v ∈ (rationalModulus m).finitePart.support := by
     rw [rationalModulus, Modulus.finitePart_narrowOfFinite]
     rw [mem_rationalFiniteModulus_support_iff hm]
-    simpa [v] using hpm
+    rw [hvgen]
+    exact hpm
   have hcount := I.property v hv
   rw [← toPrincipalIdeal_positiveRationalIdealGeneratorUnit
     (I : FractionalIdealGroup ℚ)] at hcount
@@ -365,7 +375,9 @@ theorem positiveGenerator_num_coprime
     (not_dvd_num_of_principal_count_eq_zero
       (positiveRationalIdealGeneratorUnit
         (I : FractionalIdealGroup ℚ)) v hcount)
-      (by simpa [v] using hpnum)
+      (by
+        rw [hvgen]
+        exact hpnum)
 
 /-- The numerator of a rational number as a residue-class unit. -/
 def rationalNumeratorResidueUnit
@@ -564,7 +576,7 @@ theorem principalNat_mem_primeToModulusIdeals
   have hpa : ¬ p ∣ a :=
     hp.coprime_iff_not_dvd.mp
       (hcop.coprime_dvd_right hpm).symm
-  letI : Fact p.Prime := ⟨hp⟩
+  let : Fact p.Prime := ⟨hp⟩
   have hpval : Rat.padicValuation p (a : ℚ) = 1 := by
     rw [← Int.cast_natCast, Rat.padicValuation_cast]
     exact Int.padicValuation_eq_one_iff.mpr
@@ -677,7 +689,7 @@ theorem primeToIdealResidueHom_surjective
           (rationalResidueUnit_congr m hgen _ _ hanum haden)
     _ = (a : ZMod m) := rationalResidueUnit_natCast m a hcop
     _ = (u : ZMod m) := by
-      letI : NeZero m := ⟨hm⟩
+      let : NeZero m := ⟨hm⟩
       change (((u : ZMod m).val + m : ℕ) : ZMod m) =
         (u : ZMod m)
       rw [Nat.cast_add, ZMod.natCast_self, add_zero,
@@ -925,7 +937,7 @@ theorem not_dvd_den_of_valuation_eq_one
     (hx : v.valuation ℚ (x : ℚ) = 1) :
     ¬ Rat.HeightOneSpectrum.natGenerator v ∣ (x : ℚ).den := by
   let p := Rat.HeightOneSpectrum.natGenerator v
-  letI : Fact p.Prime :=
+  let : Fact p.Prime :=
     ⟨Rat.HeightOneSpectrum.prime_natGenerator v⟩
   have hpval : Rat.padicValuation p (x : ℚ) = 1 :=
     (Rat.HeightOneSpectrum.valuation_equiv_padicValuation v).eq_one_iff_eq_one.mp hx
@@ -1122,11 +1134,14 @@ theorem principalIdele_positiveGenerator_mem_primeTo_iff_modEq
     let v : HeightOneSpectrum (𝓞 ℚ) :=
       rationalPrime
         ⟨p, (Nat.mem_primeFactors.mp p.2).1⟩
+    have hvgen : Rat.HeightOneSpectrum.natGenerator v = (p : ℕ) :=
+      natGenerator_rationalPrime
+        ⟨p, (Nat.mem_primeFactors.mp p.2).1⟩
     have hv : v ∈ (rationalModulus m).finitePart.support := by
       rw [rationalModulus, Modulus.finitePart_narrowOfFinite]
       rw [mem_rationalFiniteModulus_support_iff hm]
-      simpa only [v, natGenerator_rationalPrime] using
-        (Nat.mem_primeFactors.mp p.2).2.1
+      rw [hvgen]
+      exact (Nat.mem_primeFactors.mp p.2).2.1
     have hcount := I.property v hv
     rw [← toPrincipalIdeal_positiveRationalIdealGeneratorUnit
       (I : FractionalIdealGroup ℚ)] at hcount
@@ -1136,8 +1151,8 @@ theorem principalIdele_positiveGenerator_mem_primeTo_iff_modEq
       (principalLocalHigherUnit_iff_modEq v
         ((rationalModulus m).finitePart v) x hxval).1
         (hx.2 v hv)
-    simpa only [x, positiveRationalIdealGeneratorUnit_val,
-      rationalModulus_finitePart_apply, v, natGenerator_rationalPrime] using hlocal
+    rw [rationalModulus_finitePart_apply, hvgen] at hlocal
+    simpa only [x, positiveRationalIdealGeneratorUnit_val] using hlocal
   · intro hmod
     constructor
     · change

@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.AbelianNormConductor
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianNormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+
+set_option autoImplicit false
 
 /-!
 # Comparison of global and local conductor exponents
@@ -44,10 +46,10 @@ theorem finitePlaceFieldPrincipalUnits_map_eq_localHigherUnitGroup
   let vK := HeightOneSpectrum.adicAbv K v
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K v
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     _root_.GlobalClassFieldTheory.Reciprocity.finitePlaceArtinCompletionValued
       vK hvKna
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     _root_.GlobalClassFieldTheory.Reciprocity.finitePlaceLocalArtinCompletionValuativeRel v
   let eField : vK.Completion ≃+* v.adicCompletion K :=
     _root_.finitePlaceCompletionRingEquiv v
@@ -133,9 +135,9 @@ theorem finitePlaceCompletion_valuationMap_eq_zero_of_mem_localHigherUnitGroup
           ((_root_.finitePlaceCompletionUnitsContinuousMulEquiv v).symm x)) =
       0 := by
   let vK := HeightOneSpectrum.adicAbv K v
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     _root_.GlobalClassFieldTheory.Reciprocity.finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField vK.Completion :=
+  let : IsNonarchimedeanLocalField vK.Completion :=
     _root_.GlobalClassFieldTheory.Reciprocity.finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   have hxMap :
       x ∈
@@ -211,22 +213,22 @@ theorem
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K v
   let w := _root_.chosenFinitePlaceExtension (L := L) v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI :=
+  let :=
     LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK w
-  letI :=
+  let :=
     LocalClassFieldTheory.localizedCompletionIsScalarTower vK w
   let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
-  letI : FiniteDimensional vK.Completion E :=
+  let : FiniteDimensional vK.Completion E :=
     AlgebraicNumberTheory.Valuations.localizedCompletionModuleFinite vK hvK w
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     _root_.finitePlaceCompletionValued vK hvKna
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     _root_.finitePlaceCompletionValuativeRel vK hvKna
   let e :
       vK.Completionˣ ≃ₜ* (v.adicCompletion K)ˣ :=
@@ -337,48 +339,48 @@ theorem ideleClassNormLocalHigherUnitExponent_eq_localConductorExponent
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     HeightOneSpectrum.isNonarchimedean_adicAbv K v
   let w := _root_.chosenFinitePlaceExtension (L := L) v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI :=
+  let :=
     LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK w
-  letI :=
+  let :=
     LocalClassFieldTheory.localizedCompletionIsScalarTower vK w
   let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
-  letI : FiniteDimensional vK.Completion E :=
+  let : FiniteDimensional vK.Completion E :=
     AlgebraicNumberTheory.Valuations.localizedCompletionModuleFinite vK hvK w
-  letI : IsAbelianGalois vK.Completion E :=
+  let : IsAbelianGalois vK.Completion E :=
     LocalClassFieldTheory.localizedCompletion_isAbelianGalois
       vK hvK w
-  letI : NontriviallyNormedField vK.Completion :=
+  let : NontriviallyNormedField vK.Completion :=
     _root_.AlgebraicNumberTheory.Valuations.absoluteValueExtension_completionNontriviallyNormedField
       vK hvK
-  letI : LocallyCompactSpace vK.Completion :=
+  let : LocallyCompactSpace vK.Completion :=
     AbsoluteValue.Completion.locallyCompactSpace
       (_root_.finitePlaceCompletionBaseMap_isometry v)
-  letI : IsUltrametricDist vK.Completion :=
+  let : IsUltrametricDist vK.Completion :=
     completionIsUltrametricDist vK hvKna
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     _root_.finitePlaceCompletionValued vK hvKna
   let vBase : Valuation vK.Completion ℝ≥0 := Valued.v
-  letI : vBase.IsNontrivial :=
+  let : vBase.IsNontrivial :=
     (inferInstance :
       (NormedField.valuation
         (K := vK.Completion)).IsNontrivial)
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     _root_.finitePlaceCompletionValuativeRel vK hvKna
-  letI : vBase.Compatible :=
+  let : vBase.Compatible :=
     Valuation.Compatible.ofValuation vBase
-  letI : ValuativeRel.IsNontrivial vK.Completion :=
+  let : ValuativeRel.IsNontrivial vK.Completion :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vBase).2
       inferInstance
-  letI : IsValuativeTopology vK.Completion :=
+  let : IsValuativeTopology vK.Completion :=
     isValuativeTopology_of_valued_ofValuation
       vK.Completion ℝ≥0
-  letI : IsNonarchimedeanLocalField vK.Completion :=
+  let : IsNonarchimedeanLocalField vK.Completion :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }

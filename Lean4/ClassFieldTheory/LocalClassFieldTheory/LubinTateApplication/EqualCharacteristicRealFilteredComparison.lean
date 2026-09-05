@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import LubinTate.EqualCharacteristic.RealIndexSteps
-import LocalClassFieldTheory.LubinTateApplication.StandardArtinComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+import ClassFieldTheory.LubinTate.EqualCharacteristic.RealIndexSteps
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardArtinComparison
+
+set_option autoImplicit false
 
 /-!
 # Real filtered reciprocity on equal-characteristic Lubin--Tate levels
@@ -100,10 +102,10 @@ theorem
     localUpperRamificationGroup B L 0 = ⊤ := by
   let B := F.residueField⸨X⸩
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   calc
     localUpperRamificationGroup B L 0 =
@@ -131,10 +133,10 @@ theorem
   let B := F.residueField⸨X⸩
   let L := equalCharacteristicLubinTateLevelField F n
   let pi : Bˣ := (equalCharacteristicLaurentUniformizerUnit F)⁻¹
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   have hpi :
       valuationMap B (Additive.ofMul pi) = 1 := by
@@ -220,10 +222,10 @@ theorem
     localUpperRamificationGroup B L ((n + 1 : ℕ) : ℝ) = ⊥ := by
   let B := F.residueField⸨X⸩
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   calc
     localUpperRamificationGroup B L ((n + 1 : ℕ) : ℝ) =
@@ -251,10 +253,10 @@ theorem
     artinPrincipalUnitGroup B L (n + 1) = ⊥ := by
   let B := F.residueField⸨X⸩
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   change
     (LocalFieldTheory.fieldPrincipalUnits B (n + 1)).map
@@ -282,10 +284,10 @@ theorem
     artinPrincipalUnitStepGroup B L t = ⊥ := by
   let B := F.residueField⸨X⸩
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   unfold artinPrincipalUnitStepGroup RamificationTheory.natCeilStepFiltration
   apply le_antisymm
@@ -314,10 +316,10 @@ theorem
     localUpperRamificationGroup B L t = ⊥ := by
   let B := F.residueField⸨X⸩
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   have ht :
       (((n + 1 : ℕ) : ℝ)) ≤ t := by
@@ -353,10 +355,10 @@ theorem
   let B := F.residueField⸨X⸩
   let L := equalCharacteristicLubinTateLevelField F n
   let k : ℕ := ⌈t⌉₊
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   by_cases hkzero : k = 0
   · have hceilzero : ⌈t⌉₊ = 0 := by

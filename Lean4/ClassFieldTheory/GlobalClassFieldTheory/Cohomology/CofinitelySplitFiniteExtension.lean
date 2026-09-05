@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.NormalClosure
-import AlgebraicNumberTheory.Ramification.Splitting.NormalClosure
-import AlgebraicNumberTheory.Ramification.Splitting.PrimeOrderFixedField
-import GlobalClassFieldTheory.Cohomology.CyclicPrimePowerFullDecomposition
+import ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.NormalClosure
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.PrimeOrderFixedField
+import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.CyclicPrimePowerFullDecomposition
+
+set_option autoImplicit false
 
 /-!
 # Cofinitely split finite extensions are trivial
@@ -43,9 +45,9 @@ theorem finrank_eq_one_of_finite_nonSplittingPlaces
           (K := K) (E := L) v}.Finite) :
     Module.finrank K L = 1 := by
   let M := finiteNormalClosure K L
-  letI : NumberField M :=
+  let : NumberField M :=
     finiteNormalClosure_numberField K L
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     finiteNormalClosure_isGalois K L
   have hfiniteM :
       {v : HeightOneSpectrum (𝓞 K) |

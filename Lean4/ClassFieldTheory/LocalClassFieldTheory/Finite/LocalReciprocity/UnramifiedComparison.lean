@@ -1,8 +1,10 @@
-import LocalFieldTheory.NonarchimedeanLocalField.UnramifiedFrobenius
-import ValuationTheory.DiscreteValuationField.FiniteIntegralClosure
-import LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteResidueFinrankTransfer
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteResidueFinrankTransfer
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Abstract and concrete unramified Frobenius
@@ -162,7 +164,6 @@ theorem localSeparableValuationSubring_comap_embedding
       x ∈ (localCompleteDVF K).valuation.valuationSubring
     rw [i.commutes]
     exact localSeparableValuationSubring_pullback K x
-  letI : (localCompleteDVF K).valuation.HasExtension B.valuation := hBext
   have hCext : (localCompleteDVF K).valuation.HasExtension C.valuation := by
     apply
       ValuationTheory.DiscreteValuationField.Valuation.hasExtension_valuation_of_valuationSubring_pullback
@@ -172,12 +173,10 @@ theorem localSeparableValuationSubring_comap_embedding
     rw [_root_.Valuation.HasExtension.val_map_le_one_iff
       (ValuativeRel.valuation K) (ValuativeRel.valuation L)]
     rfl
-  letI : (localCompleteDVF K).valuation.HasExtension C.valuation := hCext
   obtain ⟨target, htarget, _hintegral, _hFundamental⟩ :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.exists_integralClosure_standard_fundamental_identity
       (K := K) (L := L) (localCompleteDVF K)
-  letI : (localCompleteDVF K).valuation.HasExtension target.valuation := htarget
-  letI : IsScalarTower (localCompleteDVF K).valuationSubring
+  let : IsScalarTower (localCompleteDVF K).valuationSubring
       target.valuationSubring L :=
     ValuationTheory.DiscreteValuationField.Valuation.valuationSubring_isScalarTower_of_hasExtension
       (localCompleteDVF K).valuation target.valuation
@@ -347,6 +346,19 @@ theorem finiteGaloisAbstractExtensionOfEmbedding_isUnramified :
 
 /-! ## Frobenius normalization -/
 
+section AbstractUnramifiedFrobenius
+
+omit [ValuativeRel L] [TopologicalSpace L] [IsNonarchimedeanLocalField L]
+  [Valuation.HasExtension (ValuativeRel.valuation K) (ValuativeRel.valuation L)]
+  [LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension K L] in
+private theorem finiteGaloisResidueBaseExtension_normal :
+    (extensionSubgroup (finiteResidueAbstractBase K).field
+      (finiteGaloisAbstractExtensionOfEmbedding K L i).field
+      (finiteGaloisAbstractExtensionOfEmbedding K L i).below).Normal :=
+  (finiteGaloisAbstractExtensionOfEmbedding K L i).normal
+
+attribute [local instance] finiteGaloisResidueBaseExtension_normal
+
 /-- Under the field-facing quotient equivalence, the abstract degree-one
 unramified Frobenius is the actual arithmetic Frobenius of the unramified
 valuation extension. -/
@@ -396,6 +408,8 @@ theorem finiteGaloisAbstractUnramifiedFrobenius_eq_arithmeticFrobenius :
     exact hresidue
   change q = arithmeticFrobeniusOfUnramifiedValuation K L
   exact hq
+
+end AbstractUnramifiedFrobenius
 
 end
 

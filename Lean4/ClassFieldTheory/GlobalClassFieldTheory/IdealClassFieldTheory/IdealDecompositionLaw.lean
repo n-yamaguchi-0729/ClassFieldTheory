@@ -1,8 +1,10 @@
-import GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
-import GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
-import GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
-import RamificationTheory.HilbertRamification.Dedekind.Basic
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
+import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+
+set_option autoImplicit false
 
 /-!
 # The ideal-theoretic unramified decomposition law
@@ -36,7 +38,7 @@ variable
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
 
-attribute [local instance 1000] idealArtinKernelNormal
+attribute [local instance] idealArtinKernelNormal
 
 /-- The actual idèlic and ideal-theoretic Artin maps form the
 commutative square of the ideal formulation of global reciprocity.
@@ -145,21 +147,21 @@ theorem ramificationIndex_eq_one_of_chosenFinitePlaceUnramified
   let W :=
     _root_.finitePlaceExtensionCentre
       (K := K) (L := L) v w
-  letI : Finite (L ≃ₐ[K] L) :=
+  let : Finite (L ≃ₐ[K] L) :=
     IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-  letI :
+  let :
       IsGaloisGroup
         (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
     IsGaloisGroup.of_isFractionRing
       (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) K L
-  letI : W.asIdeal.LiesOver v.asIdeal :=
+  let : W.asIdeal.LiesOver v.asIdeal :=
     _root_.finitePlaceExtensionCentre_liesOver
       (K := K) (L := L) v w
   have hUnramifiedAt :
       Algebra.IsUnramifiedAt (𝓞 K) W.asIdeal :=
     _root_.isUnramifiedAt_of_chosenFinitePlaceIsUnramified
       (K := K) (L := L) v hunram
-  letI : Algebra.IsUnramifiedAt (𝓞 K) W.asIdeal :=
+  let : Algebra.IsUnramifiedAt (𝓞 K) W.asIdeal :=
     hUnramifiedAt
   rw [
     Ideal.ramificationIdxIn_eq_ramificationIdx
@@ -181,17 +183,17 @@ theorem finitePlaceLocalDegree_eq_inertiaDegree_of_chosenUnramified
   let W :=
     _root_.finitePlaceExtensionCentre
       (K := K) (L := L) v w
-  letI : Finite (L ≃ₐ[K] L) :=
+  let : Finite (L ≃ₐ[K] L) :=
     IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-  letI :
+  let :
       IsGaloisGroup
         (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
     IsGaloisGroup.of_isFractionRing
       (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) K L
-  letI : W.asIdeal.LiesOver v.asIdeal :=
+  let : W.asIdeal.LiesOver v.asIdeal :=
     _root_.finitePlaceExtensionCentre_liesOver
       (K := K) (L := L) v w
-  letI := _root_.finitePlaceMulAction K L
+  let := _root_.finitePlaceMulAction K L
   have hGroup :
       _root_.finitePlaceDecompositionGroup
           (K := K) (L := L) v =
@@ -314,9 +316,9 @@ theorem unramifiedPrime_numberOfPrimes_eq_extensionDegree_div_inertiaDegree
     (v.asIdeal.primesOver (𝓞 L)).ncard =
       Module.finrank K L /
         Ideal.inertiaDegIn v.asIdeal (𝓞 L) := by
-  letI : Finite (L ≃ₐ[K] L) :=
+  let : Finite (L ≃ₐ[K] L) :=
     IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-  letI :
+  let :
       IsGaloisGroup
         (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
     IsGaloisGroup.of_isFractionRing
@@ -339,9 +341,9 @@ theorem unramifiedPrime_idealMap_eq_product_primesOver
         (K := K) (L := L) v) :
     Ideal.map (algebraMap (𝓞 K) (𝓞 L)) v.asIdeal =
       ∏ P ∈ v.asIdeal.primesOver (𝓞 L), P := by
-  letI : Finite (L ≃ₐ[K] L) :=
+  let : Finite (L ≃ₐ[K] L) :=
     IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-  letI :
+  let :
       IsGaloisGroup
         (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
     IsGaloisGroup.of_isFractionRing
@@ -363,15 +365,15 @@ theorem primeAbove_inertiaDegree_eq_common
     (hP : P ∈ v.asIdeal.primesOver (𝓞 L)) :
     P.inertiaDeg (𝓞 K) =
       Ideal.inertiaDegIn v.asIdeal (𝓞 L) := by
-  letI : Finite (L ≃ₐ[K] L) :=
+  let : Finite (L ≃ₐ[K] L) :=
     IsGaloisGroup.finite (L ≃ₐ[K] L) K L
-  letI :
+  let :
       IsGaloisGroup
         (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) :=
     IsGaloisGroup.of_isFractionRing
       (L ≃ₐ[K] L) (𝓞 K) (𝓞 L) K L
-  letI : P.IsPrime := hP.1
-  letI : P.LiesOver v.asIdeal := hP.2
+  let : P.IsPrime := hP.1
+  let : P.LiesOver v.asIdeal := hP.2
   exact
     (Ideal.inertiaDegIn_eq_inertiaDeg
       v.asIdeal P (L ≃ₐ[K] L)).symm

@@ -1,12 +1,14 @@
 import Mathlib.GroupTheory.Abelianization.Defs
-import AlgebraicNumberTheory.SeparableClosureEmbedding
-import LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityPrimeNorm
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
-import LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedComparison
-import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
-import LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedReciprocity
-import ValuationTheory.DiscreteValuationField.FiniteIntegralClosure
+import ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityPrimeNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedReciprocity
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
+
+set_option autoImplicit false
 
 /-!
 # Canonical unramified normalization
@@ -61,7 +63,7 @@ private theorem localHenselianValuation_valuationAt_baseUnit
       Int.castRingHom ZHat
         (LocalFieldTheory.IsNonarchimedeanLocalField.valuationMap K
           (Additive.ofMul x)) := by
-  letI : Finite ((baseField (G K)).toSubgroup ⧸
+  let : Finite ((baseField (G K)).toSubgroup ⧸
       extensionSubgroup (baseField (G K)) (B K) (le_baseField (B K))) :=
     (intrinsicFiniteAbstractBase K).finite
   have h :=
@@ -203,10 +205,10 @@ theorem localArtinMonoidHom_localAbstractPrimeFieldUnit :
   let E := finiteGaloisAbstractExtensionOfEmbedding K L i
   let Kbase := intrinsicFiniteAbstractBase K
   let KR := Kbase.toFiniteResidueAbstractField D
-  letI hEfinite : Finite ((B K).toSubgroup ⧸
+  let hEfinite : Finite ((B K).toSubgroup ⧸
       extensionSubgroup (B K) E.field E.below) :=
     E.finite
-  letI hKbaseEfinite : Finite (Kbase.field.toSubgroup ⧸
+  let hKbaseEfinite : Finite (Kbase.field.toSubgroup ⧸
       extensionSubgroup Kbase.field E.field E.below) := by
     exact Finite.of_equiv
       ((B K).toSubgroup ⧸
@@ -215,7 +217,7 @@ theorem localArtinMonoidHom_localAbstractPrimeFieldUnit :
         (K := B K) (L := E.field)
         (K' := Kbase.field) (L' := E.field)
         E.below E.below rfl rfl)
-  letI hKREfinite : Finite (KR.field.toSubgroup ⧸
+  let hKREfinite : Finite (KR.field.toSubgroup ⧸
       extensionSubgroup KR.field E.field E.below) := by
     exact Finite.of_equiv
       ((B K).toSubgroup ⧸
@@ -232,12 +234,12 @@ theorem localArtinMonoidHom_localAbstractPrimeFieldUnit :
   let S := D.frobeniusFixedField KR E.field E.below sigma
   let hSB := D.frobeniusFixedField_le
     KR E.field E.below sigma
-  letI hSBfinite :
+  let hSBfinite :
       Finite ((B K).toSubgroup ⧸
         extensionSubgroup (B K) S hSB) :=
     D.frobeniusFixedField_finite
       KR E.field E.below sigma
-  letI hSabsoluteFinite :
+  let hSabsoluteFinite :
       Finite ((baseField (G K)).toSubgroup ⧸
         extensionSubgroup (baseField (G K)) S (le_baseField S)) :=
     D.frobeniusFixedField_absoluteFinite

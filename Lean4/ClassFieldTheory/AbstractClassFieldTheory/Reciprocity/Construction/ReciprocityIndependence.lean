@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.UnitCohomologyAxiom
-import AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityDefinition
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.UnitCohomologyAxiom
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityDefinition
+
+set_option autoImplicit false
 
 universe u
 
@@ -95,9 +97,9 @@ def galoisRefinement [IsTopologicalGroup G]
   below := M.normalCoreField_le
   finite := by
     let H := extensionSubgroup K M.field M.below
-    letI : H.FiniteIndex :=
+    let : H.FiniteIndex :=
       @Subgroup.finiteIndex_of_finite_quotient K.toSubgroup _ H M.finite
-    letI : H.normalCore.FiniteIndex := inferInstance
+    let : H.normalCore.FiniteIndex := inferInstance
     rw [M.extensionSubgroup_normalCoreField]
     infer_instance
 
@@ -154,7 +156,7 @@ theorem compositumWith_finite
     (S : ClosedSubgroup G) (hSK : S.toSubgroup ≤ K.toSubgroup) :
     Finite (S.toSubgroup ⧸
       extensionSubgroup S (M.compositumWith S) (M.compositumWith_le_right S)) := by
-  letI : Finite (K.toSubgroup ⧸
+  let : Finite (K.toSubgroup ⧸
       extensionSubgroup K M.field M.below) := M.finite
   have hMK : M.field.toSubgroup.relIndex K.toSubgroup ≠ 0 := by
     rw [Subgroup.relIndex]
@@ -399,19 +401,19 @@ theorem reciprocityValueOfPrime_eq_reciprocityMap
           simpa only [FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite) σ π =
       D.reciprocityMap A v K L hLK σ := by
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
   let S := D.frobeniusFixedField KR L hLK σ
   let E := D.maximalUnramifiedField L
   have hSK : S.toSubgroup ≤ K.field.toSubgroup :=
     D.frobeniusFixedField_le KR L hLK σ
-  letI hSfinite : Finite
+  let hSfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field S hSK) :=
     D.frobeniusFixedField_finite KR L hLK σ
-  letI hSabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hSabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S (le_baseField S)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK σ
   let Sigma : FiniteAbstractField G := ⟨S, hSabsolute⟩
@@ -429,7 +431,7 @@ theorem reciprocityValueOfPrime_eq_reciprocityMap
     infiniteNormSubgroup A E K.field
   rw [mem_infiniteNormSubgroup_iff]
   intro M
-  letI hEnormal :
+  let hEnormal :
       (extensionSubgroup K.field E
         (D.maximalUnramifiedField_le_of_le hLK)).Normal :=
     D.extensionSubgroup_maximalUnramifiedField_normal K.field L hLK
@@ -442,15 +444,15 @@ theorem reciprocityValueOfPrime_eq_reciprocityMap
   have hPK : P.toSubgroup ≤ K.field.toSubgroup := hPS.trans hSK
   have hPM : P.toSubgroup ≤ M.field.toSubgroup :=
     (R.compositumWith_le_left S).trans M.galoisRefinement_le_field
-  letI hRnormal :
+  let hRnormal :
       (extensionSubgroup K.field R.field R.below).Normal := inferInstance
-  letI hPSnormal :
+  let hPSnormal :
       (extensionSubgroup S P hPS).Normal :=
     FiniteIntermediateField.compositumWith_normal R S hSK
-  letI hPSfinite : Finite
+  let hPSfinite : Finite
       (S.toSubgroup ⧸ extensionSubgroup S P hPS) :=
     R.compositumWith_finite S hSK
-  letI hPKfinite : Finite
+  let hPKfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field P hPK) :=
     R.compositumWith_finite_over_base S hSK
   have hSinertia : D.fieldInertia S = E := by
@@ -466,11 +468,11 @@ theorem reciprocityValueOfPrime_eq_reciprocityMap
     rw [hSinertia] at hxI
     exact hxI
   let Sresidue := Sigma.toFiniteResidueAbstractField D
-  letI hPSnormalResidue :
+  let hPSnormalResidue :
       (extensionSubgroup Sresidue.field P hPS).Normal := by
     simpa only [Sresidue, Sigma,
       FiniteAbstractField.toFiniteResidueAbstractField] using hPSnormal
-  letI hPSfiniteResidue : Finite
+  let hPSfiniteResidue : Finite
       (Sresidue.field.toSubgroup ⧸
         extensionSubgroup Sresidue.field P hPS) := by
     simpa only [Sresidue, Sigma,
@@ -480,10 +482,10 @@ theorem reciprocityValueOfPrime_eq_reciprocityMap
       Sresidue P hPS (by
         simpa only [Sresidue, Sigma,
           FiniteAbstractField.toFiniteResidueAbstractField] using hPSunramified)
-  letI hPabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hPabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) P (le_baseField P)) :=
     relativeTowerQuotientFinite (baseField G) S P hPS (le_baseField S)
-  letI : Fintype (S.toSubgroup ⧸ extensionSubgroup S P hPS) :=
+  let : Fintype (S.toSubgroup ⧸ extensionSubgroup S P hPS) :=
     Fintype.ofFinite _
   let Kuc : FiniteAbstractField G := Sigma
   let Euc : FiniteUnramifiedCyclicExtension D Kuc :=
@@ -505,10 +507,10 @@ theorem reciprocityValueOfPrime_eq_reciprocityMap
       Euc.toFiniteAbstractFieldExtension Euc.normal
         Euc.toFiniteAbstractFieldExtension_isUnramified
         g hg hzero.1 u
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field M.field M.below) := M.finite
-  letI hPMfinite : Finite
+  let hPMfinite : Finite
       (M.field.toSubgroup ⧸ extensionSubgroup M.field P hPM) :=
     FiniteIntermediateField.finite_extension_of_le hPK M.below hPM
   change relativeNorm A K.field S hSK u.1 ∈

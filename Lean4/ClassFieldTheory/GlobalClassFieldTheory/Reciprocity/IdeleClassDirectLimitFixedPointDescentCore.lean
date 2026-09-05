@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
-import AlgebraicNumberTheory.Idele.Cohomology.Herbrand
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteLevel
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteLevel
+
+set_option autoImplicit false
 
 /-!
 # Descent of fixed rational idele classes
@@ -176,7 +178,7 @@ theorem rationalIntermediateIdeleClassEquivGaloisFixed_coe
         RelativeIdeleGroup.galoisFixedClassSubgroup K U) :
       RelativeIdeleGroup.ClassGroup K U) =
         RelativeIdeleGroup.classInclusion K U q := by
-  letI :
+  let :
       MulDistribMulAction (U ≃ₐ[K] U)
         (RelativeIdeleGroup.ClassGroup K U) :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction K U

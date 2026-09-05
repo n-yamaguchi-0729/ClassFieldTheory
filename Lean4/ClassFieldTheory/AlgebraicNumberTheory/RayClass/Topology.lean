@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.RayClass.FullModulus
-import AlgebraicNumberTheory.Idele.NormOneCompact
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormOneCompact
 import Mathlib.Analysis.Complex.Convex
 import Mathlib.Data.Sign.Basic
 import Mathlib.Topology.Algebra.Ring.Compact
 import Mathlib.Topology.Connected.Clopen
 import Mathlib.Topology.Instances.Sign
+
+set_option autoImplicit false
 
 /-!
 # The congruence topology on the idele class group
@@ -88,7 +90,7 @@ theorem isOpen_localHigherUnitGroup
     apply continuous_induced_rng.mpr
     exact Units.continuous_val.comp continuous_subtype_val
   let W : Set D := {y | toInteger y - 1 ∈ I}
-  haveI : CompactSpace (v.adicCompletionIntegers K) :=
+  have : CompactSpace (v.adicCompletionIntegers K) :=
     Valued.integer.properSpace_iff_compactSpace_integer.mp inferInstance
   have hIOpen : IsOpen (I : Set (v.adicCompletionIntegers K)) := by
     exact IsLocalRing.isOpen_maximalIdeal_pow
@@ -202,7 +204,7 @@ theorem isOpen_infinitePositiveSubgroup (v : InfinitePlace K) :
             InfinitePlace.Completion.extensionEmbeddingOfIsReal
               hv (x : v.Completion)} by
         ext x
-        simp only [Set.mem_setOf_eq]
+        simp only [Set.mem_ofPred_eq]
         constructor
         · intro h
           exact h hv
@@ -300,7 +302,7 @@ theorem localHigherUnit_norm_sub_one_le
           (v.adicCompletionIntegers K)) ^ n :=
     (localHigherUnitMap_eq_one_iff v n y).1 hy
   have hIdealSet :=
-    Valuation.Integers.maximalIdeal_pow_eq_setOf_le_v_algebraMap_pow
+    Valuation.Integers.maximalIdeal_pow_eq_setOfPred_le_v_algebraMap_pow
       (IsDedekindDomain.HeightOneSpectrum.adicCompletionIntegers.integers
         K v) hϖ n
   have hyVal :
@@ -560,7 +562,7 @@ theorem isConnected_infinitePositiveSubgroup
             0 < ((e (e.symm (positiveRealUnit x)) : ℝˣ) : ℝ)
           rw [e.apply_symm_apply]
           exact x.2⟩
-    letI : ConnectedSpace (Set.Ioi (0 : ℝ)) :=
+    let : ConnectedSpace (Set.Ioi (0 : ℝ)) :=
       isConnected_iff_connectedSpace.mp isConnected_Ioi
     apply Function.Surjective.connectedSpace (f := f)
     · intro z
@@ -607,7 +609,7 @@ theorem isConnected_narrowInfiniteCongruenceSubgroup :
         Subgroup (InfiniteIdeleGroup K)) :
           Set (InfiniteIdeleGroup K)) := by
   rw [isConnected_iff_connectedSpace]
-  letI (v : InfinitePlace K) :
+  let (v : InfinitePlace K) :
       ConnectedSpace (infinitePositiveSubgroup v) :=
     isConnected_iff_connectedSpace.mp
       (isConnected_infinitePositiveSubgroup v)
@@ -733,13 +735,13 @@ instance finiteCongruenceSubgroupFiniteRelIndex
   have hJU : J ≤ U :=
     finiteCongruenceSubgroup_le_integralSubgroup m
   let J' : Subgroup U := J.subgroupOf U
-  haveI : CompactSpace U :=
+  have : CompactSpace U :=
     isCompact_iff_compactSpace.mp
       (FiniteIdeleGroup.isCompact_integralSubgroup (K := K))
   have hJOpen : IsOpen (J' : Set U) := by
     exact Subgroup.subgroupOf_isOpen U J
       (isOpen_finiteCongruenceSubgroup m)
-  haveI : Finite (U ⧸ J') :=
+  have : Finite (U ⧸ J') :=
     J'.quotient_finite_of_isOpen hJOpen
   exact Subgroup.finiteIndex_of_finite_quotient
 
@@ -828,7 +830,7 @@ instance ideleCongruenceSubgroupFiniteRelIndex
       (IdeleGroup.integralAtFinitePlaces (K := K))).map
         (integralIdeleEquiv (K := K)).toMonoidHom).index ≠ 0
   rw [map_ideleCongruenceSubgroup_subgroupOf_integral]
-  letI :
+  let :
       ((finiteCongruenceSubgroup m.finitePart).subgroupOf
         (FiniteIdeleGroup.integralSubgroup (K := K))).FiniteIndex :=
     Subgroup.IsFiniteRelIndex.to_finiteIndex_subgroupOf
@@ -844,7 +846,7 @@ instance ideleCongruenceSubgroupFiniteRelIndex
 instance ordinaryIdealClassSubgroupFiniteIndex :
     (IdeleGroup.integralAtFinitePlaces (K := K) ⊔
       IdeleGroup.principalSubgroup K).FiniteIndex := by
-  letI : Finite
+  let : Finite
       (IdeleGroup K ⧸
         (IdeleGroup.integralAtFinitePlaces (K := K) ⊔
           IdeleGroup.principalSubgroup K)) :=
@@ -868,9 +870,9 @@ instance ideleCongruenceSupPrincipalFiniteIndex
     exact finiteCongruenceSubgroup_le_integralSubgroup m.finitePart ha.2
   have hHV : H ≤ V :=
     sup_le (hJU.trans le_sup_left) le_sup_right
-  haveI hJUfinite : J.IsFiniteRelIndex U :=
+  have hJUfinite : J.IsFiniteRelIndex U :=
     ideleCongruenceSubgroupFiniteRelIndex m
-  haveI hHUfinite : H.IsFiniteRelIndex U :=
+  have hHUfinite : H.IsFiniteRelIndex U :=
     Subgroup.isFiniteRelIndex_of_le_left U le_sup_left
   have hsup : U ⊔ H = V := by
     dsimp only [H, V]
@@ -914,7 +916,7 @@ theorem isClosed_congruenceSubgroup (m : Modulus K) :
 /-- Every ray congruence subgroup has finite index. -/
 instance congruenceSubgroupFiniteIndex (m : Modulus K) :
     m.congruenceSubgroup.FiniteIndex := by
-  letI : Finite (RayClassGroup m) :=
+  let : Finite (RayClassGroup m) :=
     Finite.of_equiv
     (IdeleGroup K ⧸
       (m.ideleCongruenceSubgroup ⊔
@@ -931,7 +933,7 @@ theorem narrowInfiniteCongruenceSubgroup_mapsTo_openSubgroup
     (ha : a ∈ narrowInfiniteCongruenceSubgroup (K := K)) :
     (((a, (1 : FiniteIdeleGroup K)) : IdeleGroup K) :
       IdeleClassGroup K) ∈ H := by
-  letI : ConnectedSpace
+  let : ConnectedSpace
       (narrowInfiniteCongruenceSubgroup (K := K)) :=
     isConnected_iff_connectedSpace.mp
       isConnected_narrowInfiniteCongruenceSubgroup
@@ -1075,13 +1077,13 @@ theorem isClosed_and_finiteIndex_iff_exists_congruenceSubgroup_le
       ∃ m : Modulus K, m.congruenceSubgroup ≤ H := by
   constructor
   · rintro ⟨hHclosed, hHfinite⟩
-    letI : H.FiniteIndex := hHfinite
+    let : H.FiniteIndex := hHfinite
     exact exists_congruenceSubgroup_le_of_isOpen H
       (H.isOpen_of_isClosed_of_finiteIndex hHclosed)
   · rintro ⟨m, hm⟩
     have hHopen : IsOpen (H : Set (IdeleClassGroup K)) :=
       Subgroup.isOpen_mono hm (isOpen_congruenceSubgroup m)
-    haveI : H.FiniteIndex :=
+    have : H.FiniteIndex :=
       Subgroup.finiteIndex_of_le hm
     exact ⟨H.isClosed_of_isOpen hHopen, inferInstance⟩
 

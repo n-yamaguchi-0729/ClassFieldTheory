@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
-import GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
+
+set_option autoImplicit false
 
 /-!
 # Splitting in the small Hilbert class field
@@ -17,6 +19,14 @@ namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
 open NumberField IsDedekindDomain
+
+/-- Canonical class-group commutativity supplies normality for the quotient. -/
+private theorem smallHilbertSplittingClassGroupIsMulCommutative
+    (F : Type*) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] smallHilbertSplittingClassGroupIsMulCommutative
 
 variable {K : Type*} [Field K] [NumberField K]
 

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.NormalClosure
-import GroupTheory.Quotient
+import ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
+import GaloisCohomology.GroupTheory.Quotient
 import Mathlib.FieldTheory.Galois.Abelian
+
+set_option autoImplicit false
 
 /-!
 # Maximal abelian subextensions inside finite normal closures
@@ -86,8 +88,8 @@ noncomputable instance
   let M : IntermediateField K N :=
     IntermediateField.fixedField S
   change IsAbelianGalois K M
-  letI : S.Normal := inferInstance
-  letI hM : IsGalois K M :=
+  let : S.Normal := inferInstance
+  let hM : IsGalois K M :=
     IsGalois.of_fixedField_normal_subgroup S
   let e :
       Gal(M/K) ≃*

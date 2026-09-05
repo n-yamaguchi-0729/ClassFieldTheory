@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.CyclicNormConductor
-import GlobalClassFieldTheory.GlobalClassFields.NormRayClassMaximality
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicNormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormRayClassMaximality
+
+set_option autoImplicit false
 
 /-!
 # Maximal cyclic quotients at the narrow finite conductor
@@ -22,6 +24,14 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
+
+/-- The canonical idèle-class multiplication makes every subgroup normal. -/
+private theorem cyclicRayClassMaximalityClassGroupIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] cyclicRayClassMaximalityClassGroupIsMulCommutative
 
 variable
     {K L : Type}

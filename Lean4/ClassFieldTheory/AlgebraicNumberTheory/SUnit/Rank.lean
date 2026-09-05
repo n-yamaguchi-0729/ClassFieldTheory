@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.Idele.SPlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SPlaces
 import Mathlib.Algebra.Exact.Basic
 import Mathlib.LinearAlgebra.Dimension.Torsion.Finite
 import Mathlib.LinearAlgebra.StdBasis
 import Mathlib.NumberTheory.NumberField.ClassNumber
 import Mathlib.NumberTheory.NumberField.Units.Regulator
 import Mathlib.RingTheory.DedekindDomain.Factorization
+
+set_option autoImplicit false
 
 /-!
 # Torsion and rank sources for `S`-units
@@ -384,7 +386,7 @@ private theorem span_primePowerGenerator (v : S) :
   let I :=
     (v : HeightOneSpectrum (𝓞 K)).asIdeal ^
       NumberField.classNumber K
-  letI : I.IsPrincipal :=
+  let : I.IsPrincipal :=
     primeIdealPower_classNumber_isPrincipal (K := K) S v
   simp [primePowerGenerator]
 
@@ -502,8 +504,8 @@ theorem finrank_divisor_range :
     Module.finrank ℤ
         (LinearMap.range (divisorLinearMap (K := K) S)) =
       S.card := by
-  letI : Module.Finite ℤ (S → ℤ) := inferInstance
-  letI : Module.Finite ℤ
+  let : Module.Finite ℤ (S → ℤ) := inferInstance
+  let : Module.Finite ℤ
       (LinearMap.range (divisorLinearMap (K := K) S)) :=
     Module.Finite.of_fg
       (IsNoetherian.noetherian
@@ -522,8 +524,8 @@ theorem finrank_divisor_range :
 /-- The additive group of `S`-units is finitely generated over `ℤ`. -/
 theorem moduleFinite :
     Module.Finite ℤ (Additive (SUnitGroup (K := K) S)) := by
-  letI : Module.Finite ℤ (S → ℤ) := inferInstance
-  haveI : Module.Finite ℤ
+  let : Module.Finite ℤ (S → ℤ) := inferInstance
+  have : Module.Finite ℤ
       (LinearMap.range (divisorLinearMap (K := K) S)) :=
     Module.Finite.of_fg
       (IsNoetherian.noetherian
@@ -566,16 +568,16 @@ the number of finite places in `S`. -/
 theorem finrank :
     Module.finrank ℤ (Additive (SUnitGroup (K := K) S)) =
       NumberField.Units.rank K + S.card := by
-  letI : Module.Finite ℤ
+  let : Module.Finite ℤ
       (Additive (SUnitGroup (K := K) S)) :=
     moduleFinite (K := K) S
-  letI : Module.Finite ℤ (S → ℤ) := inferInstance
-  letI : Module.Finite ℤ
+  let : Module.Finite ℤ (S → ℤ) := inferInstance
+  let : Module.Finite ℤ
       (LinearMap.range (divisorLinearMap (K := K) S)) :=
     Module.Finite.of_fg
       (IsNoetherian.noetherian
         (LinearMap.range (divisorLinearMap (K := K) S)))
-  letI : Module.Finite ℤ
+  let : Module.Finite ℤ
       (LinearMap.ker (divisorLinearMap (K := K) S)) :=
     Module.Finite.of_fg
       (IsNoetherian.noetherian

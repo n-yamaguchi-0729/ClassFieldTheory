@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.ClassFormation.ArchimedeanNormQuotient
-import AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
-import AlgebraicNumberTheory.Idele.Cohomology.Decomposition
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.ArchimedeanNormQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Decomposition
+
+set_option autoImplicit false
 
 /-!
 # The local blocks occurring in a relative `S`-idele
@@ -176,13 +178,13 @@ theorem
         infinitePlaceAbsoluteValueExtension
           v (chosenInfinitePlaceAbove (L := L) v)
           (chosenInfinitePlaceAbove_comap (L := L) v)
-      letI :=
+      let :=
         scalarTensorUnitsAction
           (K := K) (L := L) (A := v.Completion)
-      letI :=
+      let :=
         decompositionGroupLocalUnitsAction
           v.1 v.isNontrivial u
-      letI : MulDistribMulAction (L ≃ₐ[K] L)
+      let : MulDistribMulAction (L ≃ₐ[K] L)
           (LocalPlaceBlock v.1 v.isNontrivial u) :=
         inducedMulDistribMulAction
           (absoluteValueDecompositionGroup K u.1)
@@ -200,14 +202,14 @@ theorem
           σ (z (Sum.inl v))
   | inr v =>
       let u := chosenFinitePlaceExtension (L := L) v.1
-      letI :=
+      let :=
         scalarTensorUnitsAction
           (K := K) (L := L) (A := v.1.adicCompletion K)
-      letI :=
+      let :=
         decompositionGroupLocalUnitsAction
           (HeightOneSpectrum.adicAbv K v.1)
           (RayClass.adicAbv_isNontrivial v.1) u
-      letI : MulDistribMulAction (L ≃ₐ[K] L)
+      let : MulDistribMulAction (L ≃ₐ[K] L)
           (LocalPlaceBlock
             (HeightOneSpectrum.adicAbv K v.1)
             (RayClass.adicAbv_isNontrivial v.1) u) :=

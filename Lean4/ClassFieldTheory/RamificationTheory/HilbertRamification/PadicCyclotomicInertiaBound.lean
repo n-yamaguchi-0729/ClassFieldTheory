@@ -1,7 +1,9 @@
-import LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
-import RamificationTheory.HilbertRamification.InertiaRamificationCard
-import RamificationTheory.HilbertRamification.PadicCyclotomicRamificationIndexBound
-import RamificationTheory.RamificationIndexComparison
+import ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+import ValuedFieldTheory.Ramification.HilbertRamification.InertiaRamificationCard
+import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicRamificationIndexBound
+import ClassFieldTheory.RamificationTheory.RamificationIndexComparison
+
+set_option autoImplicit false
 
 /-!
 # Canonical p-adic inertia bounds
@@ -37,33 +39,33 @@ theorem natCard_padicCanonicalInertia_eq_exponentialRamificationIndex
   obtain ⟨target, hExt, hTarget, _hFundamental⟩ :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.exists_integralClosure_standard_fundamental_identity
       (K := ℚ_[p]) (L := E) base
-  letI : base.valuation.HasExtension target.valuation := hExt
-  letI : IsIntegralClosure target.valuationSubring base.valuationSubring E := hTarget
-  letI : IsScalarTower base.valuationSubring target.valuationSubring E := by
+  let : base.valuation.HasExtension target.valuation := hExt
+  let : IsIntegralClosure target.valuationSubring base.valuationSubring E := hTarget
+  let : IsScalarTower base.valuationSubring target.valuationSubring E := by
     apply IsScalarTower.of_algebraMap_eq
     intro x
     rfl
-  letI : Module.Finite base.valuationSubring target.valuationSubring :=
+  let : Module.Finite base.valuationSubring target.valuationSubring :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.moduleFinite_target_valuationSubring_of_finite_separable
       base target
-  letI : FiniteDimensional
+  let : FiniteDimensional
       (base.valuationSubring ⧸ base.maximalIdeal)
       (target.valuationSubring ⧸ target.maximalIdeal) :=
     ValuationTheory.DiscreteValuationField.ValuedExtension.residueField_finiteDimensional_of_moduleFinite
       base target
-  letI : Algebra.IsAlgebraic
+  let : Algebra.IsAlgebraic
       (base.valuationSubring ⧸ base.maximalIdeal)
       (target.valuationSubring ⧸ target.maximalIdeal) :=
     Algebra.IsAlgebraic.of_finite
       (base.valuationSubring ⧸ base.maximalIdeal)
       (target.valuationSubring ⧸ target.maximalIdeal)
-  letI : Finite (base.valuationSubring ⧸ base.maximalIdeal) := by
+  let : Finite (base.valuationSubring ⧸ base.maximalIdeal) := by
     change Finite base.residueField
     simpa only [base] using
       LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF_residueField_finite p
-  letI : PerfectField (base.valuationSubring ⧸ base.maximalIdeal) :=
+  let : PerfectField (base.valuationSubring ⧸ base.maximalIdeal) :=
     PerfectField.ofFinite
-  letI : Algebra.IsSeparable
+  let : Algebra.IsSeparable
       (base.valuationSubring ⧸ base.maximalIdeal)
       (target.valuationSubring ⧸ target.maximalIdeal) := by
     exact Algebra.IsAlgebraic.isSeparable_of_perfectField
@@ -133,11 +135,11 @@ theorem natCard_padicCanonicalInertia_le_totient_primePow_of_coprimeEmbedding
       (Fact.out : Nat.Prime p).ne_one
         ((Nat.coprime_zero_right p).mp (hr0 ▸ hpr)))
   have hpPow : 0 < p ^ n := pow_pos (Fact.out : Nat.Prime p).pos n
-  letI : NeZero (r * p ^ n) := ⟨(mul_pos hr hpPow).ne'⟩
-  letI hDcyclo : IsCyclotomicExtension {r * p ^ n} ℚ_[p]
+  let : NeZero (r * p ^ n) := ⟨(mul_pos hr hpPow).ne'⟩
+  let hDcyclo : IsCyclotomicExtension {r * p ^ n} ℚ_[p]
       (CyclotomicField (r * p ^ n) ℚ_[p]) :=
     CyclotomicField.isCyclotomicExtension (r * p ^ n) ℚ_[p]
-  letI : FiniteDimensional ℚ_[p]
+  let : FiniteDimensional ℚ_[p]
       (CyclotomicField (r * p ^ n) ℚ_[p]) :=
     IsCyclotomicExtension.finiteDimensional {r * p ^ n} ℚ_[p]
       (CyclotomicField (r * p ^ n) ℚ_[p])

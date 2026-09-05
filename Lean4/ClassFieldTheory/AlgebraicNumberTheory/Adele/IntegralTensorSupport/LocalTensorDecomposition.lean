@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Adele.IntegralTensorSupport.FinitePlaceCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.FinitePlaceCompletion
+
+set_option autoImplicit false
 
 /-!
 # Integral comparison for local tensor decompositions
@@ -103,8 +105,7 @@ theorem scaledRelativeBasisDiscriminantInteger_ne_zero :
   intro h
   apply Algebra.discr_not_zero_of_basis K
     (scaledRelativeExtensionBasis (K := K) (L := L))
-  simpa [scaledRelativeBasisDiscriminantInteger] using
-    congrArg (fun x : 𝓞 K => (x : K)) h
+  exact congrArg (fun x : 𝓞 K => (x : K)) h
 
 /-- The principal discriminant ideal of the scaled relative basis. -/
 noncomputable def scaledRelativeBasisDiscriminantIdeal :
@@ -177,7 +178,8 @@ theorem adicAbv_scaledRelativeBasisDiscriminant_eq_one_of_notMem
         (K := K) (L := L))).2
       (scaledRelativeBasisDiscriminantInteger_not_mem_of_notMem
         (K := K) (L := L) w hw)
-  simpa [FinitePlace.norm_embedding] using hnorm
+  exact (FinitePlace.norm_embedding w
+    (scaledRelativeBasisDiscriminantInteger (K := K) (L := L) : K)).symm.trans hnorm
 
 /-- The finite set controlling both the integral lattice and the
 inverse discriminant needed for the Cramer-rule converse. -/
@@ -376,16 +378,16 @@ theorem scaledRelativeTensorCoordinates_isIntegral_of_localTensorDecompositionIn
     NumberField.HeightOneSpectrum.isNonarchimedean_adicAbv K w
   let hvK0 : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial w
-  letI : Fintype (AbsoluteValueExtension vK L) :=
+  let : Fintype (AbsoluteValueExtension vK L) :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK0
-  letI : ∀ wL : AbsoluteValueExtension vK L,
+  let : ∀ wL : AbsoluteValueExtension vK L,
       Algebra vK.Completion wL.1.Completion :=
     fun wL => AbsoluteValue.completionAlgebra vK wL.1 wL.2
-  letI : ∀ wL : AbsoluteValueExtension vK L,
+  let : ∀ wL : AbsoluteValueExtension vK L,
       Module.Finite vK.Completion wL.1.Completion :=
     fun wL => completionModuleFinite vK hvK0 wL
-  letI : ∀ wL : AbsoluteValueExtension vK L,
+  let : ∀ wL : AbsoluteValueExtension vK L,
       Module.Free vK.Completion wL.1.Completion :=
     fun wL => Module.Free.of_divisionRing
       vK.Completion wL.1.Completion

@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
-import AlgebraicNumberTheory.Idele.PrincipalNorm
-import AlgebraicNumberTheory.Idele.Extension.IdealClass
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
+
+set_option autoImplicit false
 
 /-!
 # The ordinary norm on idele classes

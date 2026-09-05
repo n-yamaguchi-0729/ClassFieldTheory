@@ -1,7 +1,9 @@
-import AbstractClassFieldTheory.Reciprocity.Main
-import AbstractClassFieldTheory.Reciprocity.ValuationContinuity
-import AbstractClassFieldTheory.Reciprocity.NormContinuity
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ValuationContinuity
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormContinuity
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 /-!
 # The norm-topology characterization
@@ -42,10 +44,10 @@ theorem normTopology_open_iff_closed_finiteIndex
     A K _ H
   intro L
   let KF : FiniteAbstractField G := ⟨K, hKabsolute⟩
-  letI : (extensionSubgroup K L.field L.below).Normal := L.normal
-  letI : Finite
+  let : (extensionSubgroup K L.field L.below).Normal := L.normal
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L.field L.below) := L.finite
-  letI : Finite (Abelianization L.extensionQuotient) :=
+  let : Finite (Abelianization L.extensionQuotient) :=
     Finite.of_surjective Abelianization.of QuotientGroup.mk_surjective
   change Finite (FiniteNormQuotient A K L.field L.below)
   exact Finite.of_equiv

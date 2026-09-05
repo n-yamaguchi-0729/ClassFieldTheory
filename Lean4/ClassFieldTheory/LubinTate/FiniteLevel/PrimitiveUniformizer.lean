@@ -1,10 +1,12 @@
-import LubinTate.FiniteLevel.PrimitiveTorsion
-import LocalFieldTheory.DiscreteValuationField.RamificationAddVal
-import ValuationTheory.DiscreteValuationField.AddVal
-import ValuationTheory.DiscreteValuationField.FiniteIntegralClosure
+import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveTorsion
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationAddVal
+import ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
 import Mathlib.RingTheory.Finiteness.Cardinality
 import Mathlib.RingTheory.Discriminant
 import Mathlib.RingTheory.Polynomial.Eisenstein.IsIntegral
+
+set_option autoImplicit false
 
 /-!
 # Uniformizers in standard Lubin--Tate level fields
@@ -284,15 +286,15 @@ noncomputable instance
     (hπ : F.toCompleteDVF.valuation.IsUniformizer (π : K)) (n : ℕ) :
     Module.Finite F.valuationSubring
       (standardLubinTateLevelCompleteDVF hπ n).valuationSubring := by
-  letI : IsIntegralClosure
+  let : IsIntegralClosure
       (standardLubinTateLevelCompleteDVF hπ n).valuationSubring
       F.valuationSubring (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelCompleteDVF_isIntegralClosure hπ n
-  letI : IsFractionRing F.valuationSubring K :=
+  let : IsFractionRing F.valuationSubring K :=
     base_valuationSubring_isFractionRing (K := K) F.toCompleteDVF
-  letI : IsIntegrallyClosed F.valuationSubring :=
+  let : IsIntegrallyClosed F.valuationSubring :=
     base_valuationSubring_isIntegrallyClosed (K := K) F.toCompleteDVF
-  letI : IsNoetherianRing F.valuationSubring :=
+  let : IsNoetherianRing F.valuationSubring :=
     base_valuationSubring_isNoetherianRing (K := K) F.toCompleteDVF
   exact IsIntegralClosure.finite F.valuationSubring K
     (standardLubinTateLevelField hπ n)
@@ -351,7 +353,7 @@ theorem standardLubinTateLevelGenerator_mem_valuationSubring
     (hπ : F.toCompleteDVF.valuation.IsUniformizer (π : K)) (n : ℕ) :
     standardLubinTateLevelGenerator hπ n ∈
       (standardLubinTateLevelCompleteDVF hπ n).valuation.valuationSubring := by
-  letI : IsIntegralClosure
+  let : IsIntegralClosure
       (standardLubinTateLevelCompleteDVF hπ n).valuationSubring
       F.valuationSubring (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelCompleteDVF_isIntegralClosure hπ n
@@ -399,13 +401,13 @@ theorem standardLubinTatePrimitivePointInteger_adjoin_eq_top
           Set
             (standardLubinTateLevelCompleteDVF hπ n).valuationSubring) =
       ⊤ := by
-  letI : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
+  let : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsScalarTower F.valuationSubring
+  let : IsScalarTower F.valuationSubring
       (standardLubinTateLevelCompleteDVF hπ n).valuationSubring
       (standardLubinTateLevelField hπ n) :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : IsIntegralClosure
+  let : IsIntegralClosure
       (standardLubinTateLevelCompleteDVF hπ n).valuationSubring
       F.valuationSubring (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelCompleteDVF_isIntegralClosure hπ n
@@ -729,7 +731,7 @@ private theorem
     simpa using hcast
   have hvle :
       IsDiscreteValuationRing.addVal target.valuationSubring lambda ≤ 1 :=
-    (ENat.mul_le_mul_left_iff hdcoe (ENat.coe_ne_top d)).1 hmul_le
+    (ENat.mul_le_mul_left_iff hdcoe (ENat.natCast_ne_top d)).1 hmul_le
   have hlambdaVal :
       IsDiscreteValuationRing.addVal target.valuationSubring lambda = 1 :=
     le_antisymm hvle honele

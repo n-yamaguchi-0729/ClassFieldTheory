@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.LowerRamification
-import RamificationTheory.HilbertRamification.HerbrandFunction
+import ClassFieldTheory.LubinTate.FiniteLevel.LowerRamification
+import ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
+
+set_option autoImplicit false
 
 /-!
 # Herbrand functions and upper groups of standard Lubin--Tate levels

@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
-import LocalClassFieldTheory.Finite.LocalReciprocity.HenselianValuationBase
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableFixedFieldNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.HenselianValuationBase
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableFixedFieldNorm
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory CyclicCohomology KummerTheory ClassFormation

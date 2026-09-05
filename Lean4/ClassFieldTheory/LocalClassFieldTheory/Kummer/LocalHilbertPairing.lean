@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Kummer.MaximalLocalKummerPairing
-import LocalClassFieldTheory.Kummer.LocalHilbertSymbolLaws
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
-import KummerTheory.Concrete.SimpleExtensionNorm
+import ClassFieldTheory.LocalClassFieldTheory.Kummer.MaximalLocalKummerPairing
+import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbolLaws
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+import GaloisCohomology.Kummer.Concrete.SimpleExtensionNorm
+
+set_option autoImplicit false
 
 /-!
 # Comparison of maximal and simple local Kummer pairings
@@ -87,13 +89,13 @@ theorem maximalLocalArtin_restrict_chosenSimpleKummer
   let hEF : E ≤ F :=
     chosenSimpleKummerExtension_le_maximalKummerExtension K n hnK b
   let Delta := maximalKummerSubgroup K n
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     maximalKummerRadicalExtension_finiteDimensional K n hnK hmu
-  letI : IsAbelianGalois K F :=
+  let : IsAbelianGalois K F :=
     kummerRadicalExtension_isAbelianGalois
       (K := K) (Omega := SeparableClosure K) n hmu Delta.1
   change intermediateFieldRestrictNormalHom E F hEF
@@ -120,9 +122,9 @@ theorem maximalLocalKummerPairingRightHom_eq_localHilbertSymbolHom
     maximalLocalKummerNormResidueAutomorphism K n hnK hmu a
   let sigmaE : Gal(E / K) :=
     chosenSimpleKummerNormResidueAutomorphism K n hnK hmu b a
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   have hbetaF :
       betaF ^ (n : ℕ) = Units.map (algebraMap K F).toMonoidHom b := by

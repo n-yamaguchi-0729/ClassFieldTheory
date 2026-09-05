@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
-import AlgebraicNumberTheory.NormalClosure
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
+import ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
 import Mathlib.FieldTheory.Normal.Closure
+
+set_option autoImplicit false
 
 /-!
 # Complete splitting and normal closures
@@ -48,7 +50,7 @@ noncomputable def extendAbsoluteValueExtensionFromIntermediate
     (L : IntermediateField K M)
     (u : AbsoluteValueExtension vK L) :
     AbsoluteValueExtension vK M := by
-  letI : Module.IsTorsionFree L
+  let : Module.IsTorsionFree L
       (absoluteValueExtension_algebraicCompletionClosure u.1) :=
     DivisionSemiring.to_moduleIsTorsionFree
   let hu : u.1.IsNontrivial :=
@@ -73,7 +75,7 @@ theorem extendAbsoluteValueExtensionFromIntermediate_apply
     (x : L) :
     (extendAbsoluteValueExtensionFromIntermediate
       vK hvK L u).1 x = u.1 x := by
-  letI : Module.IsTorsionFree L
+  let : Module.IsTorsionFree L
       (absoluteValueExtension_algebraicCompletionClosure u.1) :=
     DivisionSemiring.to_moduleIsTorsionFree
   change
@@ -360,7 +362,7 @@ theorem leftCosetDoubleCoset_card_eq_finrank
       L.fixingSubgroup.index_eq_card.symm
     _ = Module.finrank K L :=
       (IntermediateField.finrank_eq_fixingSubgroup_index
-        L).symm
+        (F := K) (E' := M) L).symm
 
 variable [FiniteDimensional K M]
 
@@ -448,7 +450,7 @@ theorem fixingSubgroup_normalCore_eq_bot_of_normalClosure_eq_top
     L.fixingSubgroup.normalCore = ⊥ := by
   let N : Subgroup (M ≃ₐ[K] M) :=
     L.fixingSubgroup.normalCore
-  letI : N.Normal :=
+  let : N.Normal :=
     L.fixingSubgroup.normalCore_normal
   have hLle :
       L ≤ IntermediateField.fixedField N := by
@@ -456,7 +458,7 @@ theorem fixingSubgroup_normalCore_eq_bot_of_normalClosure_eq_top
     exact
       IntermediateField.fixedField_le
         L.fixingSubgroup.normalCore_le
-  letI :
+  let :
       IsGalois K (IntermediateField.fixedField N) :=
     IsGalois.of_fixedField_normal_subgroup N
   have hclosureLe :
@@ -777,9 +779,9 @@ theorem
     (IsScalarTower.toAlgHom K E N).fieldRange
   let e : E ≃ₐ[K] M :=
     (IsScalarTower.toAlgHom K E N).equivFieldRange
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     e.toLinearEquiv.finiteDimensional
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     IsGalois.of_algEquiv e
   let vK :=
     NumberField.HeightOneSpectrum.adicAbv K v

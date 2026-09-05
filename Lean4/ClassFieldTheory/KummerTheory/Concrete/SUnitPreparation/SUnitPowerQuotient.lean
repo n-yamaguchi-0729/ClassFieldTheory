@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.SUnit.LogLattice
-import KummerTheory.Concrete.KummerCorrespondenceFormula
-import LocalFieldTheory.GroupTheory.PowerIndex
+import ClassFieldTheory.AlgebraicNumberTheory.SUnit.LogLattice
+import GaloisCohomology.Kummer.Concrete.KummerCorrespondenceFormula
+import ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
 import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
+
+set_option autoImplicit false
 
 /-!
 # Power quotients of S-unit groups
@@ -155,7 +157,7 @@ noncomputable instance finite_finsupp_nsmulQuotient
       ((Fin d →₀ ℤ) ⧸
         LocalFieldTheory.nsmulAddSubgroup
           (Fin d →₀ ℤ) (n : ℕ)) := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let _ : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   exact Finite.of_equiv
     (Fin d → ZMod (n : ℕ))
     (finsuppNsmulQuotientEquivPiZMod d n).symm
@@ -168,7 +170,7 @@ theorem card_finsupp_nsmulQuotient
           LocalFieldTheory.nsmulAddSubgroup
             (Fin d →₀ ℤ) (n : ℕ)) =
       (n : ℕ) ^ d := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let _ : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   rw [Nat.card_congr
     (finsuppNsmulQuotientEquivPiZMod d n).toEquiv,
     Nat.card_pi]
@@ -181,7 +183,7 @@ theorem n_dvd_numberField_torsionOrder
     (n : ℕ+)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) :
     (n : ℕ) ∣ NumberField.Units.torsionOrder K := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let _ : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   obtain ⟨ζ, hζ⟩ := hmu
   have hζprim : IsPrimitiveRoot ζ (n : ℕ) :=
     (mem_primitiveRoots n.pos).mp hζ
@@ -315,7 +317,7 @@ theorem card_sUnit_nthPowerQuotient
       (n : ℕ) ^ totalPlaceCard (K := K) S := by
   let F :=
     Fin (SUnitGroup.logRank (K := K) S) →₀ ℤ
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let _ : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   have hfree :
       Nat.card
           (Multiplicative F ⧸

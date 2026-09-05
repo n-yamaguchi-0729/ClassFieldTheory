@@ -1,0 +1,22 @@
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Frobenius
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusFixedField
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Indices
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Norm
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.NormConjugation
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.NormLaws
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.PadicCyclicClosure
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.PrimeElements
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.ProfiniteIntegerFiniteQuotient
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.ValuationLaws
+
+set_option autoImplicit false
+
+/-!
+# Degree and valuation data
+
+Focused aggregate for abstract fields, normalized degrees, Frobenius, norms, prime elements, and
+valuation laws used by class formations.
+-/

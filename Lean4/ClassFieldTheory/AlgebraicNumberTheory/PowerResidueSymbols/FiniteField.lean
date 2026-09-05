@@ -1,6 +1,8 @@
 import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.FieldTheory.Finite.Basic
 
+set_option autoImplicit false
+
 /-!
 # Power-residue symbols over finite fields
 

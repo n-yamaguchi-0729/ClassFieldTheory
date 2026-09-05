@@ -1,4 +1,7 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Evaluation
+
+set_option autoImplicit false
 
 /-!
 # Norm-residue evaluation for a closed finite-index class field
@@ -15,6 +18,14 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open Reciprocity
+
+/-- Canonical class-group commutativity supplies normality for quotient evaluation. -/
+private theorem closedFiniteIndexNormResidueClassGroupIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] closedFiniteIndexNormResidueClassGroupIsMulCommutative
 
 variable {K : Type} [Field K] [NumberField K]
 

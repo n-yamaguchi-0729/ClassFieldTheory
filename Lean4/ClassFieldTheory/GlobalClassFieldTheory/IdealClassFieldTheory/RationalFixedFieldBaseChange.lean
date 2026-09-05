@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalAbstractExtensionToOrdinary
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalAbstractExtensionToOrdinary
+
+set_option autoImplicit false
 
 /-!
 # Rational fixed-field base-change transport
@@ -76,20 +78,20 @@ theorem rationalFixedFieldInclusion_baseChange_eq_ideleClassExtension
   dsimp only
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI := hnormal
-  letI : FiniteDimensional ℚ F :=
+  let := hnormal
+  let : FiniteDimensional ℚ F :=
     abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) K hKfinite
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) K L hLK hKfinite hfinite
-  letI : IsScalarTower ℚ F E :=
+  let : IsScalarTower ℚ F E :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     FiniteDimensional.trans ℚ F E
-  letI : NumberField F :=
+  let : NumberField F :=
     NumberField.of_module_finite ℚ F
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite ℚ E
   let q : IdeleClassGroup F :=
     _root_.relativeIdeleClassBaseChangeMulEquiv

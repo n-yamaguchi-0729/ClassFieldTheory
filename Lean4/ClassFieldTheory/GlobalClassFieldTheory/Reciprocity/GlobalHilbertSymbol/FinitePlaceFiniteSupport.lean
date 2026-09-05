@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
-import GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+
+set_option autoImplicit false
 
 /-!
 # Finite support of finite-place Hilbert symbols
@@ -34,11 +36,11 @@ theorem finitePlaceHilbertSymbol_hasFiniteMulSupport
       (fun v : HeightOneSpectrum (𝓞 K) =>
         finitePlaceHilbertSymbol K n hnK hmu v a b) := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let _ : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let _ : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L := NumberField.of_module_finite K L
+  let _ : NumberField L := NumberField.of_module_finite K L
   let chi : Gal(L/K) →* nthRootsSubgroup K (n : ℕ) :=
     (nthRootsSubgroupEquivOfPrimitiveRoots K L n hmu).symm.toMonoidHom.comp
       (chosenSimpleKummerRootCharacter K n hnK hmu b)

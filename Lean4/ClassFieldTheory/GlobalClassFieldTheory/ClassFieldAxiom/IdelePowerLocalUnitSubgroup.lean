@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Principal
-import KummerTheory.Concrete.SUnitPreparation.SUnitPowerQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Principal
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.SUnitPowerQuotient
+
+set_option autoImplicit false
 
 /-!
 # Power-local-unit subgroups of the idele group

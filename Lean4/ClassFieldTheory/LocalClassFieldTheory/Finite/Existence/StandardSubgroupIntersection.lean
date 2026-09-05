@@ -1,9 +1,11 @@
-import LocalFieldTheory.NonarchimedeanLocalField.StandardOpenSubgroups
-import AbstractClassFieldTheory.Reciprocity.NormTopology
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+
+set_option autoImplicit false
 
 /-!
 # Intersecting standard norm conditions

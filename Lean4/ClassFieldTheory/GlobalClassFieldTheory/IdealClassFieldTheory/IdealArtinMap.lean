@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.RayClass.IdealNorm
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
-import GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+
+set_option autoImplicit false
 
 /-!
 # The ideal-theoretic Artin map
@@ -27,7 +29,7 @@ open NumberField
 
 variable {K : Type} [Field K] [NumberField K]
 
-local instance (priority := 2000)
+local instance
     idealArtinMap_ideleClassGroupIsMulCommutative :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
@@ -304,7 +306,7 @@ theorem ideleNorm_mem_idelePrimeToModulusSubgroup
       (RayClass.Modulus.mem_infiniteCongruenceSubgroup_iff m
         (IdeleGroup.norm K L (a : IdeleGroup L)).1).2
     intro v _hv
-    letI : ∀ W : {W : InfinitePlace L //
+    let : ∀ W : {W : InfinitePlace L //
         _root_.infinitePlaceBelow (K := K) W = v.1},
         W.1.1.LiesOver v.1.1 :=
       fun W =>

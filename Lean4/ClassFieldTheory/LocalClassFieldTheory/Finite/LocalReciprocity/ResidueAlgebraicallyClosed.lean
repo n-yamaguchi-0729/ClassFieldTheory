@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAlgebraicClosureDegree
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAlgebraicClosureDegree
 import Mathlib.FieldTheory.PurelyInseparable.Basic
 import Mathlib.RingTheory.Valuation.Integral
 import Mathlib.RingTheory.Valuation.ValuationSubring
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -152,13 +154,13 @@ theorem valuationSubring_comap_residueField_isPurelyInseparable
       (IsLocalRing.ResidueField A) := by
   let B := A.comap (algebraMap F Omega)
   let barI := valuationSubringComapResidueMap (F := F) A
-  letI : Algebra (IsLocalRing.ResidueField B)
+  let : Algebra (IsLocalRing.ResidueField B)
       (IsLocalRing.ResidueField A) := barI.toAlgebra
   obtain ⟨q, hqF⟩ := ExpChar.exists F
-  letI : ExpChar F q := hqF
+  let : ExpChar F q := hqF
   cases hqF with
   | zero =>
-      letI : Algebra.IsSeparable F Omega := inferInstance
+      let : Algebra.IsSeparable F Omega := inferInstance
       rw [isPurelyInseparable_iff_pow_mem
         (IsLocalRing.ResidueField B)
         (ringExpChar (IsLocalRing.ResidueField B))]
@@ -180,14 +182,14 @@ theorem valuationSubring_comap_residueField_isPurelyInseparable
       apply Subtype.ext
       exact hz
   | prime hq =>
-      letI : CharP Omega q :=
+      let : CharP Omega q :=
         charP_of_injective_algebraMap (algebraMap F Omega).injective q
-      letI : CharP A q := A.subtype.charP A.subtype_injective q
-      letI : CharP (IsLocalRing.ResidueField A) q :=
+      let : CharP A q := A.subtype.charP A.subtype_injective q
+      let : CharP (IsLocalRing.ResidueField A) q :=
         CharP.of_ringHom_of_ne_zero (IsLocalRing.residue A) q hq.ne_zero
-      letI : CharP (IsLocalRing.ResidueField B) q :=
+      let : CharP (IsLocalRing.ResidueField B) q :=
         barI.charP barI.injective q
-      letI : ExpChar (IsLocalRing.ResidueField B) q := ExpChar.prime hq
+      let : ExpChar (IsLocalRing.ResidueField B) q := ExpChar.prime hq
       rw [isPurelyInseparable_iff_pow_mem
         (IsLocalRing.ResidueField B) q]
       intro y

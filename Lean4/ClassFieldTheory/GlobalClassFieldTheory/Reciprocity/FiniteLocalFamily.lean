@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.NormQuotient
-import AlgebraicNumberTheory.Idele.SinglePlace
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.NormQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+
+set_option autoImplicit false
 
 /-!
 # Finite local families of ideles
@@ -110,6 +112,15 @@ section NormQuotient
 variable
     (L : Type*) [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]
+
+local instance finiteLocalFamilyIdeleClassGroupIsMulCommutative :
+    IsMulCommutative (IdeleClassGroup K) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+local instance finiteLocalFamilyIdeleClassGroupCommGroup :
+    CommGroup (IdeleClassGroup K) :=
+  open scoped IsMulCommutative in
+  inferInstance
 
 omit [FiniteDimensional K L] in
 /-- The finite-support product formula for the global

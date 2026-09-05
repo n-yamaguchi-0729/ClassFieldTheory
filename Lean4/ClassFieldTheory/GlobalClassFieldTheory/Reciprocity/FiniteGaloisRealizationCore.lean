@@ -1,9 +1,15 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import AlgebraicNumberTheory.Galois.FixedFieldLattice
-import GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison
-import ValuationTheory.Completion.AbsoluteValueExtensions
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.FixedFieldLattice
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.EmbeddedExtensionQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.EmbeddedInertiaComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.FixedFieldNormQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.FixedFieldSpecialization
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.IntrinsicBaseEquivalence
+import ValuedFieldTheory.Valuation.Completion.AbsoluteValueExtensions
+
+set_option autoImplicit false
 
 /-!
 # Finite Galois number-field extensions in the rational separable closure
@@ -102,7 +108,7 @@ theorem numberFieldTowerFieldRangeEquiv_algebraMap (x : K) :
 noncomputable instance numberFieldTowerTopField_isGalois :
     IsGalois (numberFieldTowerBaseField K L)
       (numberFieldInRationalSeparableClosure L) := by
-  letI : Algebra
+  let _ : Algebra
       (numberFieldTowerLowerEmbedding K L).fieldRange
       (numberFieldSeparableClosureEmbedding L).fieldRange :=
     numberFieldTowerBaseFieldAlgebra K L
@@ -159,7 +165,7 @@ noncomputable def numberFieldTowerSeparableClosureEquiv :
     SeparableClosure K ≃ₐ[K] SeparableClosure ℚ := by
   dsimp only
   let i := numberFieldTowerLowerEmbedding K L
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let _ : Algebra K (SeparableClosure ℚ) :=
     i.toRingHom.toAlgebra
   letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     IsScalarTower.of_algebraMap_eq' i.comp_algebraMap.symm
@@ -193,7 +199,7 @@ theorem numberFieldTowerSeparableClosureBaseScalarTower :
     letI : Algebra K (SeparableClosure ℚ) :=
       numberFieldTowerSeparableClosureBaseAlgebra K L
     IsScalarTower ℚ K (SeparableClosure ℚ) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
   exact
     IsScalarTower.of_algebraMap_eq'
@@ -205,7 +211,7 @@ theorem numberFieldTowerSeparableClosureTopScalarTower :
     letI : Algebra L (SeparableClosure ℚ) :=
       numberFieldTowerSeparableClosureTopAlgebra L
     IsScalarTower ℚ L (SeparableClosure ℚ) := by
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
   exact
     IsScalarTower.of_algebraMap_eq'
@@ -218,14 +224,14 @@ theorem numberFieldSeparableClosureTop_isGalois :
     letI : Algebra L (SeparableClosure ℚ) :=
       numberFieldTowerSeparableClosureTopAlgebra L
     IsGalois L (SeparableClosure ℚ) := by
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower ℚ L (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopScalarTower L
-  letI : Algebra.IsSeparable L (SeparableClosure ℚ) :=
+  let : Algebra.IsSeparable L (SeparableClosure ℚ) :=
     Algebra.isSeparable_tower_top_of_isSeparable
       ℚ L (SeparableClosure ℚ)
-  letI : IsSepClosure L (SeparableClosure ℚ) :=
+  let : IsSepClosure L (SeparableClosure ℚ) :=
     ⟨inferInstance, inferInstance⟩
   exact
     IsGalois.of_algEquiv
@@ -241,7 +247,7 @@ theorem
     IsScalarTower L
       (numberFieldCyclotomicZHatCompositum L)
       (SeparableClosure ℚ) := by
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
   exact IsScalarTower.of_algebraMap_eq' rfl
 
@@ -254,9 +260,9 @@ theorem numberFieldTowerSeparableClosureScalarTower :
     letI : Algebra L (SeparableClosure ℚ) :=
       numberFieldTowerSeparableClosureTopAlgebra L
     IsScalarTower K L (SeparableClosure ℚ) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
   exact IsScalarTower.of_algebraMap_eq' rfl
 
@@ -267,7 +273,7 @@ theorem numberFieldTowerSeparableClosure_isGalois :
     letI : Algebra K (SeparableClosure ℚ) :=
       numberFieldTowerSeparableClosureBaseAlgebra K L
     IsGalois K (SeparableClosure ℚ) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
   exact
     IsGalois.of_algEquiv
@@ -287,9 +293,9 @@ noncomputable def numberFieldTowerSeparableClosureRestriction :
       Gal(L / K) := by
   letI : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let _ : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let _ : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   let eL : L →ₐ[K] SeparableClosure ℚ :=
     IsScalarTower.toAlgHom K L (SeparableClosure ℚ)
@@ -371,11 +377,11 @@ theorem numberFieldTowerSeparableClosureRestriction_apply
       numberFieldTowerSeparableClosureScalarTower K L
     numberFieldTowerSeparableClosureRestriction K L σ =
       AlgEquiv.restrictNormalHom L σ := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let _ : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let _ : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let _ : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   change
     (numberFieldTowerSeparableClosureRestriction K L).toMonoidHom σ =
@@ -393,13 +399,13 @@ theorem numberFieldTowerSeparableClosureRestriction_surjective :
       numberFieldTowerSeparableClosureScalarTower K L
     Function.Surjective
       (numberFieldTowerSeparableClosureRestriction K L) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsGalois K (SeparableClosure ℚ) :=
+  let _ : IsGalois K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosure_isGalois K L
   intro τ
   obtain ⟨σ, hσ⟩ :=
@@ -417,7 +423,7 @@ noncomputable def numberFieldTowerSeparableClosureToBaseSubgroup :
       numberFieldTowerSeparableClosureBaseAlgebra K L
     Gal(SeparableClosure ℚ / K) →*
       (numberFieldTowerBaseSubgroup K L).toSubgroup := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let _ : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
   refine
     { toFun := fun σ =>
@@ -491,7 +497,7 @@ theorem numberFieldTowerSeparableClosureEquivBaseSubgroup_apply_coe
         (numberFieldTowerBaseSubgroup K L).toSubgroup) :
       Gal(SeparableClosure ℚ / ℚ)) =
       AlgEquiv.restrictScalars ℚ σ := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
   change
     (numberFieldTowerSeparableClosureToBaseSubgroup K L σ).1 =

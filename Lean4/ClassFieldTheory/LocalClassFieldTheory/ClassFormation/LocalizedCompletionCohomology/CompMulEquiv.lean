@@ -1,8 +1,12 @@
-import CyclicCohomology.TateH0
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Induced
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom
-import RamificationTheory.HilbertRamification.DecompositionFieldLocalization
+import GaloisCohomology.Cyclic.TateH0.Invariants
+import GaloisCohomology.Cyclic.TateH0.NormImage
+import GaloisCohomology.Cyclic.TateH0.Main
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Induced
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteExtensionClassFieldAxiom
+import ValuedFieldTheory.Ramification.HilbertRamification.DecompositionFieldLocalization
 import Mathlib.FieldTheory.Galois.Infinite
+
+set_option autoImplicit false
 
 /-!
 # The local class-field axiom for decomposition-group blocks
@@ -43,7 +47,7 @@ variable {H : Type uH} {G : Type uG} {A : Type uA}
 theorem tateNorm_compMulEquiv (e : H ≃* G) (a : A) :
     letI := MulDistribMulAction.compHom A e.toMonoidHom
     tateNorm H A a = tateNorm G A a := by
-  letI := MulDistribMulAction.compHom A e.toMonoidHom
+  let := MulDistribMulAction.compHom A e.toMonoidHom
   change (∏ h : H, e h • a) = ∏ g : G, g • a
   exact e.toEquiv.prod_comp fun g ↦ g • a
 

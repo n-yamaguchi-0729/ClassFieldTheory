@@ -1,6 +1,8 @@
 import Mathlib.NumberTheory.Padics.HeightOneSpectrum
 import Mathlib.NumberTheory.NumberField.Ideal.Basic
 
+set_option autoImplicit false
+
 /-!
 # Rational prime ideals
 

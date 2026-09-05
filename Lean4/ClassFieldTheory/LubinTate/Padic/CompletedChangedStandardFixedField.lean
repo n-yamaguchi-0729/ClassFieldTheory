@@ -1,4 +1,6 @@
-import LubinTate.Padic.CompletedChangedStandardCompositum
+import ClassFieldTheory.LubinTate.Padic.CompletedChangedStandardCompositum
+
+set_option autoImplicit false
 
 /-!
 # Fixed field of the finite changed-uniformizer Artin candidate

@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RationalComplexification
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RationalComplexification
+
+set_option autoImplicit false
 
 /-!
 # The complex-conjugation overfield at an infinite place
@@ -61,7 +63,7 @@ def infinitePlaceComplexificationOverfield
     complexFourthRootField
 
 @[reducible]
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     infinitePlaceComplexificationOverfieldRationalAlgebra
     (v : InfinitePlace K) :
     Algebra ℚ
@@ -79,7 +81,7 @@ noncomputable instance
   let φ :=
     (InfinitePlace.embedding
       (chosenInfinitePlaceAbove (L := L) v)).toRatAlgHom
-  letI : FiniteDimensional ℚ φ.fieldRange :=
+  let : FiniteDimensional ℚ φ.fieldRange :=
     φ.equivFieldRange.toLinearEquiv.finiteDimensional
   exact
     IntermediateField.finiteDimensional_sup
@@ -549,13 +551,13 @@ noncomputable instance
   let B :=
     infinitePlaceBaseFourthRootField
       (K := K) (L := L) v
-  letI : FiniteDimensional K A :=
+  let : FiniteDimensional K A :=
     (IsScalarTower.toAlgHom K L C).equivFieldRange.toLinearEquiv
       |>.finiteDimensional
-  letI : FiniteDimensional K B :=
+  let : FiniteDimensional K B :=
     IsCyclotomicExtension.finiteDimensional
       ({4} : Set ℕ) K B
-  letI :
+  let :
       IsAbelianGalois K
         (⊤ : IntermediateField K C) := by
     rw [← infinitePlaceComplexificationFactors_sup

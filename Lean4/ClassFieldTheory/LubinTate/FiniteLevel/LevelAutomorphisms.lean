@@ -1,6 +1,8 @@
-import LubinTate.FiniteLevel.FiniteParameters
+import ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameters
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.SetTheory.Cardinal.Finite
+
+set_option autoImplicit false
 
 /-!
 # Automorphisms of standard Lubin--Tate level fields
@@ -226,10 +228,10 @@ private theorem
       σ x ∈
         (standardLubinTateLevelCompleteDVF hπ n).valuation.valuationSubring := by
   let target := standardLubinTateLevelCompleteDVF hπ n
-  letI : IsScalarTower F.valuationSubring target.valuationSubring
+  let : IsScalarTower F.valuationSubring target.valuationSubring
       (standardLubinTateLevelField hπ n) :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : IsIntegralClosure target.valuationSubring F.valuationSubring
+  let : IsIntegralClosure target.valuationSubring F.valuationSubring
       (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelCompleteDVF_isIntegralClosure hπ n
   have hforward
@@ -575,11 +577,11 @@ noncomputable instance standardLubinTateLevelField_galFinite
     {F : LocalField.{u, v} K} {π : F.valuationSubring}
     (hπ : F.toCompleteDVF.valuation.IsUniformizer (π : K)) (n : ℕ) :
     Finite (Gal((standardLubinTateLevelField hπ n) / K)) := by
-  letI : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
+  let : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : Module.Free K (standardLubinTateLevelField hπ n) :=
+  let : Module.Free K (standardLubinTateLevelField hπ n) :=
     Module.Free.of_divisionRing _ _
-  letI : Finite
+  let : Finite
       ((standardLubinTateLevelField hπ n) →ₐ[K]
         (standardLubinTateLevelField hπ n)) :=
     Finite.algHom _ _ _
@@ -592,7 +594,7 @@ theorem standardLubinTateLevelField_natCard_gal_le_finrank
     (hπ : F.toCompleteDVF.valuation.IsUniformizer (π : K)) (n : ℕ) :
     Nat.card (Gal((standardLubinTateLevelField hπ n) / K)) ≤
       Module.finrank K (standardLubinTateLevelField hπ n) := by
-  letI : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
+  let : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
   rw [Nat.card_eq_fintype_card]
   exact AlgEquiv.card_le
@@ -604,7 +606,7 @@ theorem standardLubinTateLevelField_natCard_gal
     (hπ : F.toCompleteDVF.valuation.IsUniformizer (π : K)) (n : ℕ) :
     Nat.card (Gal((standardLubinTateLevelField hπ n) / K)) =
       Module.finrank K (standardLubinTateLevelField hπ n) := by
-  letI : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
+  let : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
   apply Nat.le_antisymm
   · exact standardLubinTateLevelField_natCard_gal_le_finrank hπ n
@@ -649,7 +651,7 @@ theorem standardLubinTateLevelField_isGalois
     {F : LocalField.{u, v} K} {π : F.valuationSubring}
     (hπ : F.toCompleteDVF.valuation.IsUniformizer (π : K)) (n : ℕ) :
     IsGalois K (standardLubinTateLevelField hπ n) := by
-  letI : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
+  let : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
   exact IsGalois.of_card_aut_eq_finrank K
     (standardLubinTateLevelField hπ n)

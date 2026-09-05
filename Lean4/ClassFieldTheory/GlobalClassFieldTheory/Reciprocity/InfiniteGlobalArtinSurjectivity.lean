@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.NormOneCompact
-import AlgebraicNumberTheory.Idele.PositiveArchimedeanSection
-import GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtinDescent
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormOneCompact
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PositiveArchimedeanSection
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteGlobalArtinDescent
+
+set_option autoImplicit false
 
 /-!
 # Surjectivity of the infinite global Artin homomorphism
@@ -119,11 +121,11 @@ theorem infiniteGlobalArtinMonoidHom_positiveArchimedeanSection
     infiniteGlobalArtinMonoidHom K Ω
         (IdeleGroup.positiveArchimedeanSection K r) =
       1 := by
-  letI
+  let
       (E : FiniteGaloisIntermediateField K Ω) :
       NumberField E :=
     NumberField.of_module_finite K E
-  letI
+  let
       (E : FiniteGaloisIntermediateField K Ω) :
       IsAbelianGalois K E :=
     IsAbelianGalois.of_algHom E.toIntermediateField.val

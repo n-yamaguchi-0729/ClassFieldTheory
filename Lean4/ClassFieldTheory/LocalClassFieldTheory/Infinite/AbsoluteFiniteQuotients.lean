@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Infinite.AbsoluteGaloisAbelianization
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteGaloisAbelianization
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
+
+set_option autoImplicit false
 
 /-!
 # Finite quotients of the absolute abelianized Galois group
@@ -175,31 +177,29 @@ theorem absoluteFiniteQuotientEquiv_mk_mk
         (QuotientGroup.mk
           (QuotientGroup.mk σ : localAbsoluteAbelianProfinite K)) =
       AlgEquiv.restrictNormalHom (absoluteFiniteQuotientField K N) σ := by
-  change absoluteFiniteQuotientMulEquiv K N
-      (QuotientGroup.mk
-        (QuotientGroup.mk σ : localAbsoluteAbelianProfinite K)) = _
-  rw [absoluteFiniteQuotientMulEquiv, MulEquiv.trans_apply,
-    QuotientGroup.quotientMulEquivOfEq_mk]
-  change
-    (InfiniteGalois.normalAutEquivQuotient
-      (absoluteFiniteQuotientClosedPreimage K N))
-        (QuotientGroup.quotientQuotientEquivQuotientAux
-          (commutator (intrinsicAbsoluteGalois K)).topologicalClosure
-          (absoluteFiniteQuotientPreimage K N).toSubgroup
-          (localAbsoluteCommutatorClosure_le_finiteQuotientPreimage K N)
-          (QuotientGroup.mk
-            (QuotientGroup.mk σ : localAbsoluteAbelianProfinite K))) = _
-  rw [QuotientGroup.quotientQuotientEquivQuotientAux_mk_mk]
-  have h :=
-    InfiniteGalois.normalAutEquivQuotient_apply
-      (absoluteFiniteQuotientClosedPreimage K N) σ
-  convert h using 1 <;> rfl
+  let q := QuotientGroup.quotientQuotientEquivQuotient
+    (commutator (intrinsicAbsoluteGalois K)).topologicalClosure
+    (absoluteFiniteQuotientPreimage K N).toSubgroup
+    (localAbsoluteCommutatorClosure_le_finiteQuotientPreimage K N)
+  let e := InfiniteGalois.normalAutEquivQuotient
+    (absoluteFiniteQuotientClosedPreimage K N)
+  have hcast := QuotientGroup.quotientMulEquivOfEq_mk
+    (finiteQuotientPreimage_map_eq K N).symm
+    (QuotientGroup.mk σ : localAbsoluteAbelianProfinite K)
+  have hquot := QuotientGroup.quotientQuotientEquivQuotientAux_mk_mk
+    (commutator (intrinsicAbsoluteGalois K)).topologicalClosure
+    (absoluteFiniteQuotientPreimage K N).toSubgroup
+    (localAbsoluteCommutatorClosure_le_finiteQuotientPreimage K N) σ
+  have hrestrict := InfiniteGalois.normalAutEquivQuotient_apply
+    (absoluteFiniteQuotientClosedPreimage K N) σ
+  exact (congrArg (fun z => e (q z)) hcast).trans
+    ((congrArg e hquot).trans hrestrict)
 
 /-- The fixed field attached to a finite quotient of the abelianization is abelian Galois. -/
 instance absoluteFiniteQuotientField_isAbelianGalois
     (N : OpenNormalSubgroup (localAbsoluteAbelianProfinite K)) :
     IsAbelianGalois K (absoluteFiniteQuotientField K N) := by
-  letI : N.toSubgroup.Normal := N.isNormal'
+  let : N.toSubgroup.Normal := N.isNormal'
   have hquotient_comm
       (x y : localAbsoluteAbelianProfinite K ⧸ N.toSubgroup) :
       x * y = y * x := by

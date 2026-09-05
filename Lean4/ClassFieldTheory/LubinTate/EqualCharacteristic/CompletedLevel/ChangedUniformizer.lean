@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
 import Mathlib.FieldTheory.IsSepClosed
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: changing the equal-characteristic uniformizer

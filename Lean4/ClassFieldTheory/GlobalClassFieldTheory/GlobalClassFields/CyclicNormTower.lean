@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
-import GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+
+set_option autoImplicit false
 
 /-!
 # Exact norm quotients in a cyclic tower
@@ -19,6 +21,20 @@ namespace GlobalClassFields
 
 open NumberField
 open RelativeIdeleGroup.Cohomology
+
+private theorem cyclicNormTower_relativeClassGroupIsMulCommutative
+    (A B : Type) [Field A] [NumberField A] [Field B] [Algebra A B] :
+    IsMulCommutative (RelativeIdeleGroup.ClassGroup A B) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] cyclicNormTower_relativeClassGroupIsMulCommutative
+
+private theorem cyclicNormTower_ideleClassGroupIsMulCommutative
+    (A : Type) [Field A] [NumberField A] :
+    IsMulCommutative (IdeleClassGroup A) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] cyclicNormTower_ideleClassGroupIsMulCommutative
 
 variable
     (K M L : Type)
@@ -88,15 +104,15 @@ theorem intermediateToCompositeNormQuotient_injective_of_cyclicTower :
       _ = Module.finrank K M :=
         GlobalClassFieldTheory.ClassFieldAxiom.relativeIdeleClassNorm_index_eq_finrank_cyclic
           K M
-  letI : Finite A :=
+  let : Finite A :=
     Nat.finite_of_card_ne_zero (by
       rw [hA]
       exact Nat.ne_of_gt Module.finrank_pos)
-  letI : Finite B :=
+  let : Finite B :=
     Nat.finite_of_card_ne_zero (by
       rw [hB]
       exact Nat.ne_of_gt Module.finrank_pos)
-  letI : Finite C :=
+  let : Finite C :=
     Nat.finite_of_card_ne_zero (by
       rw [hC]
       exact Nat.ne_of_gt Module.finrank_pos)

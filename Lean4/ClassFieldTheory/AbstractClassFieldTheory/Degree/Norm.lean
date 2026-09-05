@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.Index
-import CyclicCohomology.IntegralRepUniverse
-import KummerTheory.Abstract.KummerDelta
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+import GaloisCohomology.Kummer.Abstract.KummerDelta
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -112,7 +114,7 @@ theorem relativeNormValue_fixed
     (a : ambientFixedAddSubgroup A L) (k : K.toSubgroup) :
     A.ρ k.1 (relativeNormValue A K L hLK a) =
       relativeNormValue A K L hLK a := by
-  letI := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
+  let := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
   have hterm : ∀ q : K.toSubgroup ⧸ extensionSubgroup K L hLK,
       A.ρ k.1 (relativeCosetAction A K L hLK a q) =
         relativeCosetAction A K L hLK a
@@ -143,11 +145,11 @@ def relativeNorm
     relativeNormValue_fixed A K L hLK a⟩
   map_zero' := by
     apply Subtype.ext
-    letI := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
+    let := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
     simp [relativeNormValue]
   map_add' a b := by
     apply Subtype.ext
-    letI := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
+    let := Fintype.ofFinite (K.toSubgroup ⧸ extensionSubgroup K L hLK)
     simp only [AddSubgroup.coe_add, relativeNormValue]
     rw [← Finset.sum_add_distrib]
     apply Finset.sum_congr rfl

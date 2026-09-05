@@ -1,8 +1,10 @@
-import AbstractClassFieldTheory.Degree.TopologicalGeneration
-import AbstractClassFieldTheory.Degree.Indices
-import LocalFieldTheory.Padic.ClosedAddSubgroup
+import GaloisCohomology.ProfiniteIntegers.TopologicalGeneration
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.Indices
+import ValuedFieldTheory.LocalField.Padic.ClosedAddSubgroup
 import Mathlib.GroupTheory.Index
 import Mathlib.NumberTheory.Padics.ProperSpace
+
+set_option autoImplicit false
 
 /-!
 # Cyclic closures detected by a p-adic degree
@@ -61,7 +63,6 @@ theorem padicCyclicClosure_isOpen_of_degree_ne_one
     R.toAddSubgroup'
   have hRclosed :
       IsClosed (R : Set (Multiplicative ℤ_[p])) := by
-    letI : CompactSpace Γ := inferInstance
     change
       IsClosed (Set.range restrictedDegree)
     exact
@@ -119,7 +120,7 @@ theorem padicCyclicClosure_isOpen_of_degree_ne_one
           Set degree.toMonoidHom.range) :=
     Subgroup.subgroupOf_isOpen
       degree.toMonoidHom.range R hRopen
-  letI :
+  let :
       Finite
         (degree.toMonoidHom.range ⧸
           R.subgroupOf degree.toMonoidHom.range) :=
@@ -153,7 +154,7 @@ theorem padicCyclicClosure_isOpen_of_degree_ne_one
     (⊤ : Subgroup G) ⊓ degree.toMonoidHom.ker
   let toKernel : T → degree.toMonoidHom.ker :=
     fun x => ⟨x.1, x.2.2⟩
-  letI : Finite T :=
+  let : Finite T :=
     Finite.of_injective toKernel (by
       intro x y hxy
       apply Subtype.ext
@@ -174,7 +175,7 @@ theorem padicCyclicClosure_isOpen_of_degree_ne_one
     exact Nat.mul_ne_zero himage hkernel
   have hindex : Γ.toSubgroup.index ≠ 0 := by
     simpa only [Subgroup.relIndex_top_right] using hrel
-  letI : Γ.toSubgroup.FiniteIndex :=
+  let : Γ.toSubgroup.FiniteIndex :=
     ⟨hindex⟩
   exact
     Γ.toSubgroup.isOpen_of_isClosed_of_finiteIndex

@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.FiniteParameterFiltration
-import LubinTate.FiniteLevel.LevelAbelian
+import ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameterFiltration
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
+
+set_option autoImplicit false
 
 /-!
 # Principal-unit filtration on finite Lubin--Tate Galois groups

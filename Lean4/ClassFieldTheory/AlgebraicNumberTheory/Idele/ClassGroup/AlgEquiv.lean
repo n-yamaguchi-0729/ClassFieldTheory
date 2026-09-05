@@ -1,8 +1,10 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
-import AlgebraicNumberTheory.Idele.Extension.LocalComponent
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalComponent
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Maps
 import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+
+set_option autoImplicit false
 
 /-!
 # Relative idele classes under an isomorphic realization
@@ -424,8 +426,8 @@ theorem adeleCongr_finiteComponent
     (adeleCongr e a).2 W =
       finitePlaceAdicCompletionCongrHom e W
         (a.2 ((finitePlaceCongr e).symm W)) := by
-  letI : Algebra K M := e.toRingHom.toAlgebra
-  letI : IsScalarTower ℚ K M :=
+  let : Algebra K M := e.toRingHom.toAlgebra
+  let : IsScalarTower ℚ K M :=
     IsScalarTower.of_algHom e.toAlgHom
   let componentK :=
     (finiteAdeleComponentAlgHom
@@ -608,7 +610,7 @@ private theorem finitePlaceCongr_ramificationIdx
     letI : Algebra K M := e.toRingHom.toAlgebra
     ((finitePlaceCongr e).symm W).asIdeal.ramificationIdx'
         W.asIdeal = 1 := by
-  letI : Algebra K M := e.toRingHom.toAlgebra
+  let : Algebra K M := e.toRingHom.toAlgebra
   let w : HeightOneSpectrum (𝓞 K) :=
     (finitePlaceCongr e).symm W
   have hmap :
@@ -641,7 +643,7 @@ theorem ideleCongr_localOrder
         ((finitePlaceCongr e).symm W)
         (IdeleGroup.finiteComponent
           ((finitePlaceCongr e).symm W) a)).toAdd := by
-  letI : Algebra K M := e.toRingHom.toAlgebra
+  let : Algebra K M := e.toRingHom.toAlgebra
   let w : HeightOneSpectrum (𝓞 K) :=
     (finitePlaceCongr e).symm W
   have hW :
@@ -921,7 +923,7 @@ private theorem
     let V := infinitePlaceBelow (K := K) W
     have hV : V = W :=
       infinitePlaceBelow_self (K := K) W
-    letI : W.1.LiesOver V.1 := ⟨rfl⟩
+    let : W.1.LiesOver V.1 := ⟨rfl⟩
     change
       NumberField.LiesOver.completionMap
           (v := V) (w := W) (a.1 V) =
@@ -1504,6 +1506,12 @@ theorem ordinaryIdeleClassNorm_range_map_congrOfAlgEquiv
   exact
     relativeIdeleClassNorm_range_map_congrOfAlgEquiv
       eK eL h
+
+-- Fix the canonical commutativity proof used by the norm-range quotients.
+local instance normIdeleClassGroup_isMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
 
 /-- Compatible equivalences of finite Galois number-field extensions
 induce the canonical equivalence of their ordinary idele-class norm

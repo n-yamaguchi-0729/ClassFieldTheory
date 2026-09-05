@@ -1,9 +1,18 @@
-import LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
-import LocalFieldTheory.Padic.PrincipalUnits
-import LocalFieldTheory.NonarchimedeanLocalField.ValuedTopology
-import LocalClassFieldTheory.Finite.Unramified
-import LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
-import ValuationTheory.LocalRingEquiv
+import ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+import ValuedFieldTheory.LocalField.Padic.PrincipalUnits
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Basic
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Trace
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Lift
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.ResidueNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Uniformizer
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Cohomology
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
+import ValuedFieldTheory.Valuation.LocalRingEquiv
+
+set_option autoImplicit false
 
 /-!
 # The unramified cyclotomic norm subgroup over `ℚ_p`
@@ -40,34 +49,34 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
     {ζ : L} (hζ : IsPrimitiveRoot ζ (p ^ f - 1))
     (hζgen : Algebra.adjoin ℚ_[p] ({ζ} : Set L) = ⊤) :
     LocalFieldTheory.localNormSubgroup ℚ_[p] L = unramifiedNormSubgroup ℚ_[p] f := by
-  letI : NontriviallyNormedField L :=
+  let : NontriviallyNormedField L :=
     spectralNorm.nontriviallyNormedField ℚ_[p] L
-  letI : NormedSpace ℚ_[p] L := spectralNorm.normedSpace ℚ_[p] L
-  letI : CompleteSpace L := spectralNorm.completeSpace ℚ_[p] L
-  letI : LocallyCompactSpace L :=
+  let : NormedSpace ℚ_[p] L := spectralNorm.normedSpace ℚ_[p] L
+  let : CompleteSpace L := spectralNorm.completeSpace ℚ_[p] L
+  let : LocallyCompactSpace L :=
     LocallyCompactSpace.of_finiteDimensional_of_complete ℚ_[p] L
-  letI : IsUltrametricDist L :=
+  let : IsUltrametricDist L :=
     ⟨fun x y z => by
       change ‖x - z‖ ≤ max ‖x - y‖ ‖y - z‖
       rw [← sub_add_sub_cancel x y z]
       exact isNonarchimedean_spectralNorm
         (K := ℚ_[p]) (L := L) (x - y) (y - z)⟩
-  letI : Valued L ℝ≥0 := NormedField.toValued
+  let : Valued L ℝ≥0 := NormedField.toValued
   let vL : Valuation L ℝ≥0 := Valued.v
-  letI : vL.IsNontrivial :=
+  let : vL.IsNontrivial :=
     (inferInstance : (NormedField.valuation (K := L)).IsNontrivial)
-  letI : ValuativeRel L := ValuativeRel.ofValuation vL
-  letI : vL.Compatible := Valuation.Compatible.ofValuation vL
-  letI : ValuativeRel.IsNontrivial L :=
+  let : ValuativeRel L := ValuativeRel.ofValuation vL
+  let : vL.Compatible := Valuation.Compatible.ofValuation vL
+  let : ValuativeRel.IsNontrivial L :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vL).2 inferInstance
-  letI : IsValuativeTopology L :=
+  let : IsValuativeTopology L :=
     LocalFieldTheory.isValuativeTopology_of_valued_ofValuation L ℝ≥0
-  letI : IsNonarchimedeanLocalField L :=
+  let : IsNonarchimedeanLocalField L :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
 
-  letI : (ValuativeRel.valuation ℚ_[p]).HasExtension
+  let : (ValuativeRel.valuation ℚ_[p]).HasExtension
       (ValuativeRel.valuation L) := by
     apply Valuation.HasExtension.ofComapInteger
     ext x
@@ -81,7 +90,7 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
       Valuation.mem_integer_iff]
 
   let base := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p
-  letI : base.valuation.HasExtension vL := by
+  let : base.valuation.HasExtension vL := by
     apply Valuation.HasExtension.ofComapInteger
     ext x
     change vL (algebraMap ℚ_[p] L x) ≤ 1 ↔ base.valuation x ≤ 1
@@ -111,7 +120,7 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
         (integer_mem_iff_norm_le_one p (u : ℚ_[p])).1 humem
       simpa [hu] using hunorm
 
-  letI : Algebra.IsIntegral 𝒪[ℚ_[p]] 𝒪[L] := ⟨by
+  let : Algebra.IsIntegral 𝒪[ℚ_[p]] 𝒪[L] := ⟨by
     intro y
     apply IsIntegral.tower_bot
       (R := 𝒪[ℚ_[p]]) (A := 𝒪[L]) (B := L)
@@ -154,7 +163,7 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
         exact minpoly.aeval ℚ_[p] (y : L)
       rwa [Polynomial.aeval_map_algebraMap ℚ_[p] (y : L) q] at hmaproot⟩
 
-  letI : Algebra.IsIntegral
+  let : Algebra.IsIntegral
       (ValuativeRel.valuation ℚ_[p]).valuationSubring
       (ValuativeRel.valuation L).valuationSubring := by
     change Algebra.IsIntegral 𝒪[ℚ_[p]] 𝒪[L]
@@ -162,16 +171,16 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
   let hIntegralClosure : IsIntegralClosure 𝒪[L] 𝒪[ℚ_[p]] L :=
     ValuationTheory.DiscreteValuationField.Valuation.valuationSubring_isIntegralClosure_of_isIntegral
       (ValuativeRel.valuation ℚ_[p]) (ValuativeRel.valuation L)
-  letI : IsIntegralClosure 𝒪[L] 𝒪[ℚ_[p]] L := hIntegralClosure
-  letI : Module.Finite 𝒪[ℚ_[p]] 𝒪[L] :=
+  let : IsIntegralClosure 𝒪[L] 𝒪[ℚ_[p]] L := hIntegralClosure
+  let : Module.Finite 𝒪[ℚ_[p]] 𝒪[L] :=
     LocalFieldTheory.integerRing_moduleFinite_of_isIntegralClosure ℚ_[p] L
 
   obtain ⟨target, hExt, hTarget, _hUnram, _hdegree⟩ :=
     AlgebraicNumberTheory.Valuations.exists_padicCyclotomic_completeDVF_isFiniteUnramified_degree_eq
       p f hf hζ hζgen
-  letI : base.valuation.HasExtension target.valuation := hExt
-  letI : IsIntegralClosure target.valuationSubring base.valuationSubring L := hTarget
-  letI : base.valuation.HasExtension vL.valuationSubring.valuation := by
+  let : base.valuation.HasExtension target.valuation := hExt
+  let : IsIntegralClosure target.valuationSubring base.valuationSubring L := hTarget
+  let : base.valuation.HasExtension vL.valuationSubring.valuation := by
     apply
       ValuationTheory.DiscreteValuationField.Valuation.hasExtension_valuation_of_valuationSubring_pullback
     intro x
@@ -204,9 +213,9 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
   let iCanonical : base.valuationSubring →+* target.valuationSubring :=
     algebraMap base.valuationSubring target.valuationSubring
   let iLocal : 𝒪[ℚ_[p]] →+* 𝒪[L] := algebraMap 𝒪[ℚ_[p]] 𝒪[L]
-  letI : IsDiscreteValuationRing base.valuationSubring :=
+  let : IsDiscreteValuationRing base.valuationSubring :=
     base.valuationSubring_isDiscreteValuationRing
-  letI : IsDiscreteValuationRing target.valuationSubring :=
+  let : IsDiscreteValuationRing target.valuationSubring :=
     target.valuationSubring_isDiscreteValuationRing
   have hramCanonical :
       Ideal.ramificationIdx'
@@ -275,7 +284,7 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
           (IsLocalRing.maximalIdeal 𝒪[ℚ_[p]]) =
         IsLocalRing.maximalIdeal 𝒪[L] := by
     simpa only [iLocal] using hmapLocal
-  letI : LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
+  let : LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
       ℚ_[p] L := ⟨by
     have hp : (IsLocalRing.maximalIdeal 𝒪[ℚ_[p]]) ≠ ⊥ :=
       IsDiscreteValuationRing.not_a_field 𝒪[ℚ_[p]]

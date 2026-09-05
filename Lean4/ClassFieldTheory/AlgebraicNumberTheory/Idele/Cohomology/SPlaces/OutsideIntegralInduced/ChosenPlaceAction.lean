@@ -1,6 +1,11 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction
-import AlgebraicNumberTheory.Idele.Cohomology.Decomposition
-import AlgebraicNumberTheory.Completion.ChosenLocalization
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Spine
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Action
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Equiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.LocalInduction.Inclusion
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Decomposition
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
+
+set_option autoImplicit false
 
 /-!
 # The action at a chosen finite place
@@ -212,7 +217,7 @@ theorem chosenFinitePlaceLocalizedIntegerUnits_unramifiedHerbrand_subsingleton
   let vK := HeightOneSpectrum.adicAbv K w₀
   let E := ChosenFinitePlaceLocalizedCompletion
     (K := K) (L := L) w₀
-  letI :
+  let :
       IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
         vK.Completion E := by
     simpa [ChosenFinitePlaceIsUnramified] using hunram

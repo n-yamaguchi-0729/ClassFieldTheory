@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.ClassFieldCandidate
-import AbstractClassFieldTheory.Reciprocity.Main
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassFieldCandidate
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+
+set_option autoImplicit false
 
 /-!
 # Finite abelian classification by norm subgroups
@@ -117,7 +119,7 @@ private theorem normSubgroup_compositum_eq_inf_of_reciprocity_bijective
       base := K
       below := le_rfl
       finiteQuotient := (FiniteGaloisSubextension.refl K.field).finite }
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field K.field le_rfl) :=
     (FiniteGaloisSubextension.refl K.field).finite
   apply le_antisymm
@@ -431,17 +433,17 @@ private theorem le_iff_normSubgroup_le_of_compositum_and_reciprocity
       calc
         P.normSubgroup A = L₁.normSubgroup A ⊓ L₂.normSubgroup A := hcomp
         _ = L₂.normSubgroup A := inf_eq_right.mpr hnorm
-    letI hPfinite : Finite
+    let hPfinite : Finite
         (K.field.toSubgroup ⧸ extensionSubgroup K.field P.field P.below) :=
       P.finite
-    letI hL₂finite : Finite
+    let hL₂finite : Finite
         (K.field.toSubgroup ⧸ extensionSubgroup K.field L₂.field L₂.below) :=
       L₂.finite
-    letI hPNormFinite : Finite
+    let hPNormFinite : Finite
         (FiniteNormQuotient A K.field P.field P.below) :=
       Finite.of_surjective
         (D.finiteReciprocityHom A v hAxiom K P.field P.below) hbijP.2
-    letI hL₂NormFinite : Finite
+    let hL₂NormFinite : Finite
         (FiniteNormQuotient A K.field L₂.field L₂.below) :=
       Finite.of_surjective
         (D.finiteReciprocityHom A v hAxiom K L₂.field L₂.below) hbij₂.2
@@ -615,7 +617,7 @@ private theorem classFieldCandidate_normSubgroup_eq_of_reciprocity
       base := K
       below := le_rfl
       finiteQuotient := (FiniteGaloisSubextension.refl K.field).finite }
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field K.field le_rfl) :=
     (FiniteGaloisSubextension.refl K.field).finite
   have hnat := D.finiteReciprocityNaturality_restriction_norm_commutes
@@ -717,8 +719,8 @@ theorem upperQuotientEquiv_quotientMk_eq_restriction
       abstractReciprocityRestriction K (E.intermediateField S) E.field
         (E.field_le_intermediateField S)
         (E.intermediateField_le_base S) q := by
-  letI : (extensionSubgroup K E.field E.below).Normal := E.normal
-  letI : (extensionSubgroup K (E.intermediateField S)
+  let : (extensionSubgroup K E.field E.below).Normal := E.normal
+  let : (extensionSubgroup K (E.intermediateField S)
       (E.intermediateField_le_base S)).Normal :=
     E.intermediateField_normal S hS
   refine QuotientGroup.induction_on q ?_
@@ -755,10 +757,10 @@ private theorem reciprocityEquiv_bijective
           extensionSubgroup K.field L.field L.below) := L.finite
     Function.Bijective
       (D.finiteReciprocityHom A v hAxiom K L.field L.below) := by
-  letI : (extensionSubgroup K.field L.field L.below).Normal := L.normal
-  letI : Finite
+  let : (extensionSubgroup K.field L.field L.below).Normal := L.normal
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L.field L.below) := L.finite
-  letI : IsMulCommutative L.toFiniteGaloisExtension.extensionQuotient :=
+  let : IsMulCommutative L.toFiniteGaloisExtension.extensionQuotient :=
     L.commutative
   exact ⟨
     v.abstractReciprocity_abelian_finiteReciprocityHom_injective
@@ -838,8 +840,8 @@ theorem classFieldCandidate_normSubgroup_eq
     let rE := D.normResidueSymbol A v hcf K E
     (ClassFormation.FiniteGaloisSubextension.classFieldCandidate A E H rE).normSubgroup A = H := by
   dsimp only
-  letI : (extensionSubgroup K.field E.field E.below).Normal := E.normal
-  letI : Finite
+  let : (extensionSubgroup K.field E.field E.below).Normal := E.normal
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field E.field E.below) := E.finite
   let hAxiom := v.classFieldAxiom_implies_unramifiedUnitCohomology hcf
   let rE := D.normResidueSymbol A v hcf K E
@@ -870,8 +872,8 @@ theorem normSubgroupMap_surjective
   intro H
   obtain ⟨E, hEH⟩ := normOpenAddSubgroup_contains_finiteNormSubgroup
     A K.field H.1 H.2
-  letI : (extensionSubgroup K.field E.field E.below).Normal := E.normal
-  letI : Finite
+  let : (extensionSubgroup K.field E.field E.below).Normal := E.normal
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field E.field E.below) := E.finite
   let rE := D.normResidueSymbol A v hcf K E
   let M := ClassFormation.FiniteGaloisSubextension.classFieldCandidate A E H.1 rE

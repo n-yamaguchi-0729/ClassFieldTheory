@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Adele.Coordinates
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.Coordinates
+
+set_option autoImplicit false
 
 /-!
 # Joint local components of relative adeles and ideles
@@ -103,6 +105,8 @@ theorem relativeAdele_ext_of_components
             (relativeExtensionBasis
               (K := K) (L := L))).repr z i)
         (hinfinite w)
+    change (relativeAdeleCoefficient (K := K) (L := L) x i).1 w =
+      (relativeAdeleCoefficient (K := K) (L := L) y i).1 w
     simpa using h
   · apply DFunLike.coe_injective
     funext w
@@ -114,6 +118,8 @@ theorem relativeAdele_ext_of_components
             (relativeExtensionBasis
               (K := K) (L := L))).repr z i)
         (hfinite w)
+    change (relativeAdeleCoefficient (K := K) (L := L) x i).2 w =
+      (relativeAdeleCoefficient (K := K) (L := L) y i).2 w
     simpa using h
 
 /-- The unrestricted family of every archimedean and finite local

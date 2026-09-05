@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationStatement
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationStatement
+
+set_option autoImplicit false
 
 /-!
 # Proof core for ideal norm limitation

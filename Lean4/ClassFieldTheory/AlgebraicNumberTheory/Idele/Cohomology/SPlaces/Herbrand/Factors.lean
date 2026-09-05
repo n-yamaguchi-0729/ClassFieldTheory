@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.FamilyCardinality
-import CyclicCohomology.Herbrand.HerbrandLowDegree.EquivariantEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.FamilyCardinality
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.EquivariantEquiv
+
+set_option autoImplicit false
 
 /-!
 # Transport from local blocks to unrestricted factors
@@ -147,13 +149,13 @@ theorem relativeUnrestrictedSPlaceFactorsHerbrandH0Finite
   let d :=
     relativeUnrestrictedSPlaceDatum
       (K := K) (L := L) S
-  letI sourceAction :=
+  let sourceAction :=
     relativeUnrestrictedSPlaceFactorsActionProvider
       (K := K) (L := L) S
-  letI targetAction :=
+  let targetAction :=
     relativeUnrestrictedSPlaceLocalBlockFamilyActionProvider
       (K := K) (L := L) S
-  letI targetFinite : Finite
+  let targetFinite : Finite
       (HerbrandH0 (L ≃ₐ[K] L)
         (LocalBlockFamily d)) :=
     relativeUnrestrictedLocalBlockFamilyHerbrandH0Finite
@@ -183,13 +185,13 @@ theorem relativeUnrestrictedSPlaceFactorsHerbrandHMinusOneFinite
   let d :=
     relativeUnrestrictedSPlaceDatum
       (K := K) (L := L) S
-  letI sourceAction :=
+  let sourceAction :=
     relativeUnrestrictedSPlaceFactorsActionProvider
       (K := K) (L := L) S
-  letI targetAction :=
+  let targetAction :=
     relativeUnrestrictedSPlaceLocalBlockFamilyActionProvider
       (K := K) (L := L) S
-  letI targetFinite : Finite
+  let targetFinite : Finite
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (LocalBlockFamily d) σ) :=
     relativeUnrestrictedLocalBlockFamilyHerbrandHMinusOneFinite
@@ -229,19 +231,19 @@ theorem
   let d :=
     relativeUnrestrictedSPlaceDatum
       (K := K) (L := L) S
-  letI sourceAction :=
+  let sourceAction :=
     relativeUnrestrictedSPlaceFactorsActionProvider
       (K := K) (L := L) S
-  letI targetAction :=
+  let targetAction :=
     relativeUnrestrictedSPlaceLocalBlockFamilyActionProvider
       (K := K) (L := L) S
-  letI sourceFinite : Finite
+  let sourceFinite : Finite
       (HerbrandH0 (L ≃ₐ[K] L)
         (RelativeUnrestrictedSPlaceFactors
           (K := K) (L := L) S)) :=
     relativeUnrestrictedSPlaceFactorsHerbrandH0Finite
       S σ hgen
-  letI targetFinite : Finite
+  let targetFinite : Finite
       (HerbrandH0 (L ≃ₐ[K] L)
         (LocalBlockFamily d)) :=
     relativeUnrestrictedLocalBlockFamilyHerbrandH0Finite
@@ -288,19 +290,19 @@ theorem
   let d :=
     relativeUnrestrictedSPlaceDatum
       (K := K) (L := L) S
-  letI sourceAction :=
+  let sourceAction :=
     relativeUnrestrictedSPlaceFactorsActionProvider
       (K := K) (L := L) S
-  letI targetAction :=
+  let targetAction :=
     relativeUnrestrictedSPlaceLocalBlockFamilyActionProvider
       (K := K) (L := L) S
-  letI sourceFinite : Finite
+  let sourceFinite : Finite
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeUnrestrictedSPlaceFactors
           (K := K) (L := L) S) σ) :=
     relativeUnrestrictedSPlaceFactorsHerbrandHMinusOneFinite
       S σ hgen
-  letI targetFinite : Finite
+  let targetFinite : Finite
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (LocalBlockFamily d) σ) :=
     relativeUnrestrictedLocalBlockFamilyHerbrandHMinusOneFinite
@@ -349,16 +351,16 @@ theorem relativeUnrestrictedSPlaceFactors_herbrandQuotient
       ∏ i,
         (relativeUnrestrictedSPlaceLocalDegree
           (K := K) (L := L) S i : ℚ) := by
-  letI :=
+  let :=
     relativeUnrestrictedSPlaceFactorsAction
       (K := K) (L := L) S
-  letI : Finite
+  let : Finite
       (HerbrandH0 (L ≃ₐ[K] L)
         (RelativeUnrestrictedSPlaceFactors
           (K := K) (L := L) S)) :=
     relativeUnrestrictedSPlaceFactorsHerbrandH0Finite
       S σ hgen
-  letI : Finite
+  let : Finite
       (HerbrandHMinusOne (L ≃ₐ[K] L)
         (RelativeUnrestrictedSPlaceFactors
           (K := K) (L := L) S) σ) :=

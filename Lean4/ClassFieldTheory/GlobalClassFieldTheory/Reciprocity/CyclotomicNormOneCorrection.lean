@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.NormTopology.ExtensionBehavior
-import GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleValue
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ExtensionBehavior
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleValue
 import Mathlib.Analysis.SpecialFunctions.Pow.NNReal
+
+set_option autoImplicit false
 
 /-!
 # Norm-one correction for the normalized cyclotomic idele value

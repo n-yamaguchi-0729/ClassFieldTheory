@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.NormTopology.FiniteNormArithmetic
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.FiniteNormArithmetic
+
+set_option autoImplicit false
 
 /-!
 # Archimedean behavior of idele norms
@@ -62,14 +64,14 @@ private theorem nnnormUnitHom_normUnits_infinitePlace
         (LocalFieldTheory.normUnits
           v₀.Completion W.Completion x) ^ v₀.mult =
       nnnormUnitHom W.Completion x ^ W.mult := by
-  letI : W.1.LiesOver v₀.1 := hW
+  let : W.1.LiesOver v₀.1 := hW
   rcases v₀.isReal_or_isComplex with hvReal | hvComplex
   · rcases W.isReal_or_isComplex with hWReal | hWComplex
     · let eBase :=
         InfinitePlace.Completion.ringEquivRealOfIsReal hvReal
       let eExtension :=
         InfinitePlace.Completion.ringEquivRealOfIsReal hWReal
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (InfinitePlace.Completion.extensionEmbedding W)
             (InfinitePlace.Completion.extensionEmbedding v₀) :=
@@ -129,7 +131,7 @@ private theorem nnnormUnitHom_normUnits_infinitePlace
         InfinitePlace.Completion.ringEquivRealOfIsReal hvReal
       let eExtension :=
         InfinitePlace.Completion.ringEquivComplexOfIsComplex hWComplex
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (InfinitePlace.Completion.extensionEmbedding W)
             (InfinitePlace.Completion.extensionEmbedding v₀) :=
@@ -232,10 +234,10 @@ private theorem nnnormUnitHom_normUnits_infinitePlace
           W v₀ with hEmbedding | hConjugate
     · let eExtension :=
         InfinitePlace.Completion.ringEquivComplexOfIsComplex hWComplex
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver W.embedding v₀.embedding :=
         ⟨hEmbedding⟩
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (InfinitePlace.Completion.extensionEmbedding W)
             (InfinitePlace.Completion.extensionEmbedding v₀) :=
@@ -259,11 +261,11 @@ private theorem nnnormUnitHom_normUnits_infinitePlace
     · let eExtension :=
         (InfinitePlace.Completion.ringEquivComplexOfIsComplex hWComplex).trans
           (starRingAut (R := ℂ))
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (ComplexEmbedding.conjugate W.embedding) v₀.embedding :=
         ⟨hConjugate⟩
-      letI :
+      let :
           NumberField.ComplexEmbedding.LiesOver
             (ComplexEmbedding.conjugate
               (InfinitePlace.Completion.extensionEmbedding W))
@@ -298,13 +300,13 @@ theorem archimedeanNorm_norm
         (norm K L a).1 =
       InfiniteIdeleGroup.archimedeanNorm a.1 := by
   classical
-  letI : ∀ (v₀ : InfinitePlace K)
+  let : ∀ (v₀ : InfinitePlace K)
       (W : {W : InfinitePlace L //
         _root_.infinitePlaceBelow (K := K) W = v₀}),
       W.1.1.LiesOver v₀.1 :=
     fun v₀ W =>
       ⟨congrArg (fun q : InfinitePlace K => q.1) W.2⟩
-  letI : ∀ (v₀ : InfinitePlace K)
+  let : ∀ (v₀ : InfinitePlace K)
       (W : {W : InfinitePlace L //
         _root_.infinitePlaceBelow (K := K) W = v₀}),
       Algebra v₀.Completion W.1.Completion :=
@@ -336,7 +338,7 @@ theorem archimedeanNorm_norm
       rw [infiniteComponent_norm_eq_prod]
       let vK := v₀.1
       let hvK : vK.IsNontrivial := v₀.isNontrivial
-      letI :=
+      let :=
         AlgebraicNumberTheory.Valuations.completionTensorDecomposition_extensionFintype
           (K := K) (L := L) vK hvK
       let eAbove :=

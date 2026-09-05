@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.Padic.CompletedChangedUniformizerPrimitive
-import LubinTate.Padic.CompletedChangedUniformizerThetaFixed
-import LubinTate.Padic.CompletedUnramifiedFrobeniusFixed
+import ClassFieldTheory.LubinTate.Padic.CompletedChangedUniformizerPrimitive
+import ClassFieldTheory.LubinTate.Padic.CompletedChangedUniformizerThetaFixed
+import ClassFieldTheory.LubinTate.Padic.CompletedUnramifiedFrobeniusFixed
+
+set_option autoImplicit false
 
 /-!
 # The changed p-adic Lubin--Tate level as a completed Frobenius fixed field
@@ -414,11 +416,11 @@ theorem padicCompletedChangedUniformizerFixedField_finrank
         padicCompletedLevelField p n)
   let S := IntermediateField.adjoin ℚ_[p] ({y} :
     Set (padicCompletedLevelField p n))
-  letI SAlgebra : Algebra ℚ_[p] S :=
+  let SAlgebra : Algebra ℚ_[p] S :=
     Subalgebra.algebra S.toSubalgebra
-  letI SSMul : SMul ℚ_[p] S :=
+  let SSMul : SMul ℚ_[p] S :=
     @Algebra.toSMul _ _ _ _ SAlgebra
-  letI SModule : Module ℚ_[p] S :=
+  let SModule : Module ℚ_[p] S :=
     @Algebra.toModule _ _ _ _ SAlgebra
   have hfield :
       padicCompletedChangedUniformizerFixedField p u n = S :=
@@ -497,8 +499,7 @@ theorem
             padicCompletedLevelField p n),
         padicChangedUniformizerThetaValue_mem_completedFixedField
           p u n⟩ := by
-  simp only [padicChangedUniformizerLevelEquivCompletedFixedField,
-    AlgEquiv.ofBijective_apply]
+  simp only [padicChangedUniformizerLevelEquivCompletedFixedField]
   exact
     padicChangedUniformizerLevelToCompletedFixedField_apply_gen p u n
 

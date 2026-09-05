@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInducedSmul
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockTensorSmul
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquivApply
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockInducedSmul
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockTensorSmul
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceIntegralBlockEquivApply
+
+set_option autoImplicit false
 
 /-!
 # Equivariance facade for the integral induced block
@@ -49,13 +51,13 @@ theorem
       τ •
         (relativeLocalTensorDecompositionIntegralUnitSubgroupEquivInducedIntegerUnits
           (K := K) (L := L) w₀ x) := by
-  letI :=
+  let :=
     relativeLocalTensorDecompositionIntegralUnitSubgroupAction
       (K := K) (L := L) w₀
-  letI :=
+  let :=
     chosenFinitePlaceInducedIntegerUnitsAction
       (K := K) (L := L) w₀
-  letI :=
+  let :=
     chosenFinitePlaceLocalPlaceBlockAction
       (K := K) (L := L) w₀
   apply

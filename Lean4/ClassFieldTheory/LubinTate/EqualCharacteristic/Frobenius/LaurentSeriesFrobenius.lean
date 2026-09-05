@@ -1,9 +1,11 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LocalFieldTheory.DiscreteValuationField.FiniteCoefficientLaurent
+import ValuedFieldTheory.LocalField.DiscreteValuationField.FiniteCoefficientLaurent
 import Mathlib.FieldTheory.Finite.Extension
 import Mathlib.FieldTheory.Galois.Profinite
 import Mathlib.LinearAlgebra.Basis.Basic
 import Mathlib.LinearAlgebra.Dimension.Free
+
+set_option autoImplicit false
 
 /-!
 # The equal-characteristic completed-unramified construction: finite unramified coefficient extensions in equal characteristic
@@ -122,7 +124,7 @@ theorem laurentSeriesCoefficientCoord_coeff
     (x : l⸨X⸩) (i : ι) (m : ℤ) :
     (laurentSeriesCoefficientCoord b x i).coeff m =
       b.repr (x.coeff m) i := by
-  simp [laurentSeriesCoefficientCoord]
+  rfl
 
 section FiniteBasis
 
@@ -133,7 +135,7 @@ private theorem laurentSeriesCoefficientBasis_linearIndependent
     (b : Module.Basis ι k l) :
     LinearIndependent k⸨X⸩
       (fun i : ι ↦ (HahnSeries.C (Γ := ℤ) (b i) : l⸨X⸩)) := by
-  letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
+  let : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
   classical
   rw [Fintype.linearIndependent_iff]
   intro g hg i
@@ -163,7 +165,7 @@ private theorem laurentSeriesCoefficientBasis_span
     Submodule.span k⸨X⸩
         (Set.range (fun i : ι ↦
           (HahnSeries.C (Γ := ℤ) (b i) : l⸨X⸩))) = ⊤ := by
-  letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
+  let : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
   classical
   rw [eq_top_iff]
   intro x _hx
@@ -183,7 +185,7 @@ private theorem laurentSeriesCoefficientBasis_span
           ((HahnSeries.map (coord i) (algebraMap k l)) *
             (HahnSeries.C (Γ := ℤ) (b i) : l⸨X⸩)).coeff m = _
         rw [mul_comm]
-        simp [coord, laurentSeriesCoefficientCoord, mul_comm]
+        simp [coord, mul_comm]
       _ = x.coeff m := by
         simpa [Algebra.smul_def] using b.sum_repr (x.coeff m)
   rw [← hsum]
@@ -207,7 +209,7 @@ theorem laurentSeriesCoefficientBasis_apply
     letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
     laurentSeriesCoefficientBasis b i =
       (HahnSeries.C (Γ := ℤ) (b i) : l⸨X⸩) := by
-  letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
+  let : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
   exact Module.Basis.mk_apply _ _ _
 
 end FiniteBasis
@@ -218,7 +220,7 @@ theorem laurentSeriesCoefficient_finiteDimensional
     [Field k] [Field l] [Algebra k l] [FiniteDimensional k l] :
     letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
     FiniteDimensional k⸨X⸩ l⸨X⸩ := by
-  letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
+  let : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
   let b : Module.Basis (Fin (Module.finrank k l)) k l := Module.finBasis k l
   exact (laurentSeriesCoefficientBasis b).finiteDimensional_of_finite
 
@@ -227,10 +229,10 @@ theorem laurentSeriesCoefficient_finrank
     [Field k] [Field l] [Algebra k l] [FiniteDimensional k l] :
     letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
     Module.finrank k⸨X⸩ l⸨X⸩ = Module.finrank k l := by
-  letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
+  let : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
   let b : Module.Basis (Fin (Module.finrank k l)) k l := Module.finBasis k l
   let B := laurentSeriesCoefficientBasis b
-  letI : FiniteDimensional k⸨X⸩ l⸨X⸩ :=
+  let : FiniteDimensional k⸨X⸩ l⸨X⸩ :=
     B.finiteDimensional_of_finite
   simpa [B] using Module.finrank_eq_card_basis B
 
@@ -345,8 +347,8 @@ theorem laurentSeriesCoefficientGalHom_surjective :
     letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
     Function.Surjective (laurentSeriesCoefficientGalHom :
       (l ≃ₐ[k] l) → (l⸨X⸩ ≃ₐ[k⸨X⸩] l⸨X⸩)) := by
-  letI : Module.Finite k l := Module.Finite.of_finite
-  letI : FiniteDimensional k⸨X⸩ l⸨X⸩ :=
+  let : Module.Finite k l := Module.Finite.of_finite
+  let : FiniteDimensional k⸨X⸩ l⸨X⸩ :=
     laurentSeriesCoefficient_finiteDimensional
   have hcard :
       Nat.card (l⸨X⸩ ≃ₐ[k⸨X⸩] l⸨X⸩) ≤ Nat.card (l ≃ₐ[k] l) := by
@@ -370,8 +372,8 @@ omit [Finite k] in
 theorem laurentSeriesCoefficient_isGalois :
     letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
     IsGalois k⸨X⸩ l⸨X⸩ := by
-  letI : Module.Finite k l := Module.Finite.of_finite
-  letI : FiniteDimensional k⸨X⸩ l⸨X⸩ :=
+  let : Module.Finite k l := Module.Finite.of_finite
+  let : FiniteDimensional k⸨X⸩ l⸨X⸩ :=
     laurentSeriesCoefficient_finiteDimensional
   apply IsGalois.of_card_aut_eq_finrank
   apply Nat.le_antisymm
@@ -404,7 +406,7 @@ theorem equalCharacteristicLaurentFrobenius_coeff
     letI : Algebra k⸨X⸩ l⸨X⸩ := laurentSeriesCoefficientAlgebra
     (equalCharacteristicLaurentFrobenius (k := k) (l := l) x).coeff m =
       (x.coeff m) ^ Nat.card k := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   simp [equalCharacteristicLaurentFrobenius,
     Nat.card_eq_fintype_card]
 
@@ -415,7 +417,7 @@ theorem equalCharacteristicLaurentFrobenius_single_one :
     equalCharacteristicLaurentFrobenius (k := k) (l := l)
         (HahnSeries.single (1 : ℤ) 1 : l⸨X⸩) =
       HahnSeries.single (1 : ℤ) 1 := by
-  letI : Fintype k := Fintype.ofFinite k
+  let : Fintype k := Fintype.ofFinite k
   ext m
   by_cases h : m = 1
   · subst m
@@ -445,11 +447,23 @@ noncomputable instance equalCharacteristicFiniteUnramifiedAlgebra :
     Algebra k⸨X⸩ (equalCharacteristicFiniteUnramifiedExtension k p n) :=
   laurentSeriesCoefficientAlgebra
 
+section
+
+local instance equalCharacteristicFiniteUnramifiedModule :
+    @Module k⸨X⸩ (equalCharacteristicFiniteUnramifiedExtension k p n)
+      (inferInstance : DivisionRing k⸨X⸩).toRing.toSemiring
+      (inferInstance : AddCommGroup
+        (equalCharacteristicFiniteUnramifiedExtension k p n)).toAddCommMonoid :=
+  @Algebra.toModule k⸨X⸩ (equalCharacteristicFiniteUnramifiedExtension k p n)
+    _ _ (equalCharacteristicFiniteUnramifiedAlgebra k p n)
+
 /-- The finite unramified Laurent extension is finite-dimensional over the base. -/
 instance equalCharacteristicFiniteUnramifiedFiniteDimensional :
     FiniteDimensional k⸨X⸩
       (equalCharacteristicFiniteUnramifiedExtension k p n) :=
   laurentSeriesCoefficient_finiteDimensional
+
+end
 
 /-- Comparison with the Laurent-series presentation over the chosen finite
 coefficient extension. -/

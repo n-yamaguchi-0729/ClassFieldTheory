@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceFiniteSupport
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealComparison
-import GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceFiniteSupport
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealComparison
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
+
+set_option autoImplicit false
 
 /-!
 # The global Hilbert product formula
@@ -53,11 +55,11 @@ theorem globalHilbertProduct_principal
     (a b : Kˣ) :
     globalHilbertProduct K n hnK hmu a b = 1 := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L := NumberField.of_module_finite K L
+  let : NumberField L := NumberField.of_module_finite K L
   let chi : Gal(L/K) →* nthRootsSubgroup K (n : ℕ) :=
     (nthRootsSubgroupEquivOfPrimitiveRoots K L n hmu).symm.toMonoidHom.comp
       (chosenSimpleKummerRootCharacter K n hnK hmu b)

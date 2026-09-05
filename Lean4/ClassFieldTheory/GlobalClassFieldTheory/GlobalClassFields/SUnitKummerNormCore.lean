@@ -1,4 +1,13 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.ArchimedeanPowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlaceCompletionInstances
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.LocalResidueArithmetic
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlacePowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.NormContainment
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedIdeleIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedPrincipalQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.PrimePowerKummerIndex
+
+set_option autoImplicit false
 
 /-!
 # The full S-unit Kummer norm core
@@ -190,17 +199,19 @@ theorem
         (principalIdelePowerLocalUnitSubgroup_le_sUnitGroup
           (K := K) n S' ∅ hb)
     let M := KummerTheory.chosenSimpleKummerExtension K n hnK b
-    letI : FiniteDimensional K M :=
+    let : FiniteDimensional K M :=
       KummerTheory.chosenSimpleKummerExtension_finiteDimensional
         K n hnK b
-    letI : IsAbelianGalois K M :=
+    let : IsAbelianGalois K M :=
       KummerTheory.chosenSimpleKummerExtension_isAbelianGalois
         K n hnK hmu b
-    letI : NumberField M :=
+    let : NumberField M :=
       NumberField.of_module_finite K M
-    letI : Group (RelativeIdeleGroup.ClassGroup K M) :=
-      QuotientGroup.Quotient.group
-        (RelativeIdeleGroup.principalSubgroup K M)
+    let : (RelativeIdeleGroup.principalSubgroup K M).Normal :=
+      ⟨fun x hx g => by
+        have hconj : g * x * g⁻¹ = x := by
+          rw [mul_comm g x, mul_assoc, mul_inv_cancel, mul_one]
+        rwa [hconj]⟩
     have hSplitS :
         ∀ w : HeightOneSpectrum (𝓞 K), w ∈ S' →
           _root_.FinitePlaceSplitsCompletely
@@ -320,8 +331,11 @@ theorem
               (IdeleGroup.principalSubgroup K) q = 1 :=
         (QuotientGroup.eq_one_iff q).mpr hq
       rw [← huq, map_mul, hqOne]
-      simp
-    letI : IsCyclic (M ≃ₐ[K] M) := by
+      exact
+        (mul_one
+          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K) u :
+            IdeleClassGroup K)).symm
+    let : IsCyclic (M ≃ₐ[K] M) := by
       simpa only [M] using
         KummerTheory.chosenSimpleKummerExtension_isCyclic
           K n hnK hmu b
@@ -484,10 +498,10 @@ theorem
       (K := K) (Omega := Omega) n S'
   let hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
   calc

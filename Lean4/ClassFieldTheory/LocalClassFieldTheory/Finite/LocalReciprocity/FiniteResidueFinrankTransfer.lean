@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteSubgroupResidueDegree
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteResidueValuationComparison
-import LocalFieldTheory.NonarchimedeanLocalField.ResidueExtension
-import ValuationTheory.UniqueRing
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteSubgroupResidueDegree
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteResidueValuationComparison
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueExtension
+import ValuedFieldTheory.Valuation.UniqueRing
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open CyclicCohomology RamificationTheory ClassFormation
@@ -145,11 +147,9 @@ theorem localResidueDatum_residueDegree_eq_residueFinrank
   let kE' := decompositionResidueField E A
   let Omega := selectedResidueField A
   let F := localAbstractFixedResidueIntermediateField K H.field
-  let standardResidueAlgebra : Algebra kK kE := by
+  let : Algebra kK kE := by
     change Algebra 𝓀[K] 𝓀[E]
     infer_instance
-  letI : Algebra kK kE := standardResidueAlgebra
-  letI : Module kK kE := Algebra.toModule
   change (H.residueDegree (localResidueDatum K) : ℕ) =
     Module.finrank kK kE
 
@@ -162,7 +162,7 @@ theorem localResidueDatum_residueDegree_eq_residueFinrank
     rw [_root_.Valuation.HasExtension.val_map_le_one_iff
       (ValuativeRel.valuation K) (ValuativeRel.valuation E)]
     rfl
-  letI : (localCompleteDVF K).valuation.HasExtension C.valuation := hExtC
+  let : (localCompleteDVF K).valuation.HasExtension C.valuation := hExtC
   have hVC : V.valuation.HasExtension C.valuation := by
     apply
       ValuationTheory.DiscreteValuationField.Valuation.hasExtension_valuation_of_valuationSubring_pullback
@@ -214,7 +214,7 @@ theorem localResidueDatum_residueDegree_eq_residueFinrank
     rw [hbase]
     congr 1
 
-  letI : Algebra k₀ kE :=
+  let : Algebra k₀ kE :=
     ((algebraMap kK kE).comp eK.symm.toRingHom).toAlgebra
   let barAlg : kE →ₐ[k₀] Omega :=
     { bar with
@@ -237,14 +237,9 @@ theorem localResidueDatum_residueDegree_eq_residueFinrank
 
   let eRange : kE ≃+* barAlg.fieldRange :=
     (AlgEquiv.ofInjectiveField barAlg).toRingEquiv
-  letI : Algebra k₀ barAlg.fieldRange := barAlg.fieldRange.algebra
-  letI : Module k₀ barAlg.fieldRange := Algebra.toModule
-  letI : Algebra k₀ F :=
+  let : Algebra k₀ barAlg.fieldRange := barAlg.fieldRange.algebra
+  let : Algebra k₀ F :=
     localAbstractFixedResidueIntermediateFieldAlgebra K H.field
-  letI : SMul k₀ F :=
-    localAbstractFixedResidueIntermediateFieldSMul K H.field
-  letI : Module k₀ F :=
-    localAbstractFixedResidueIntermediateFieldModule K H.field
   let eTop : kE ≃+* F :=
     eRange.trans
       (IntermediateField.equivOfEq hF.symm).toRingEquiv

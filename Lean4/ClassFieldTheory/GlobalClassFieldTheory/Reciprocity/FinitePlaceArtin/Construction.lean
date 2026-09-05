@@ -1,7 +1,17 @@
-import AlgebraicNumberTheory.Completion.Comparison
-import AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.Comparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Finite
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.H0
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.HMinusOne
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Quotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+
+set_option autoImplicit false
 
 /-!
 # Construction of finite-place Artin homomorphisms
@@ -76,21 +86,21 @@ theorem
     letI : ValuativeRel vF.Completion :=
       finitePlaceArtinCompletionValuativeRel vF hvF
     IsNonarchimedeanLocalField vF.Completion := by
-  letI : Valued vF.Completion ℝ≥0 :=
+  let : Valued vF.Completion ℝ≥0 :=
     finitePlaceArtinCompletionValued vF hvF
   let vC : Valuation vF.Completion ℝ≥0 := Valued.v
-  letI : vC.IsNontrivial :=
+  let : vC.IsNontrivial :=
     (inferInstance :
       (NormedField.valuation
         (K := vF.Completion)).IsNontrivial)
-  letI : ValuativeRel vF.Completion :=
+  let : ValuativeRel vF.Completion :=
     finitePlaceArtinCompletionValuativeRel vF hvF
-  letI : vC.Compatible :=
+  let : vC.Compatible :=
     Valuation.Compatible.ofValuation vC
-  letI : ValuativeRel.IsNontrivial vF.Completion :=
+  let : ValuativeRel.IsNontrivial vF.Completion :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vC).2
       inferInstance
-  letI : IsValuativeTopology vF.Completion :=
+  let : IsValuativeTopology vF.Completion :=
     isValuativeTopology_of_valued_ofValuation
       vF.Completion ℝ≥0
   exact
@@ -314,19 +324,19 @@ theorem
   let vK := NumberField.HeightOneSpectrum.adicAbv K v
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI : NontriviallyNormedField vK.Completion :=
+  let : NontriviallyNormedField vK.Completion :=
     absoluteValueExtension_completionNontriviallyNormedField
       vK hvK
-  letI : LocallyCompactSpace vK.Completion :=
+  let : LocallyCompactSpace vK.Completion :=
     AbsoluteValue.Completion.locallyCompactSpace
       (finitePlaceCompletionBaseMap_isometry v)
   let hvKna : IsNonarchimedean (vK : K → ℝ) :=
     NumberField.HeightOneSpectrum.isNonarchimedean_adicAbv K v
-  letI : IsUltrametricDist vK.Completion :=
+  let : IsUltrametricDist vK.Completion :=
     finitePlaceArtinCompletionIsUltrametricDist vK hvKna
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     finitePlaceArtinCompletionValued vK hvKna
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceLocalArtinCompletionValuativeRel v
   exact
     finitePlaceArtinCompletionIsNonarchimedeanLocalField
@@ -366,14 +376,14 @@ theorem finitePlaceLocalArtinFiniteDimensional
   let vK := NumberField.HeightOneSpectrum.adicAbv K v
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
-  letI : Algebra vK.Completion E :=
+  let : Algebra vK.Completion E :=
     finitePlaceLocalArtinLocalizedAlgebra v w
   exact
     AlgebraicNumberTheory.Valuations.localizedCompletionModuleFinite
@@ -392,21 +402,21 @@ theorem finitePlaceLocalArtinIsAbelianGalois
     letI : Algebra vK.Completion E :=
       finitePlaceLocalArtinLocalizedAlgebra v w
     IsAbelianGalois vK.Completion E := by
-  letI : FiniteDimensional K L := _hKLfinite
+  let : FiniteDimensional K L := _hKLfinite
   let vK := NumberField.HeightOneSpectrum.adicAbv K v
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
   let E :=
     AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
-  letI : Algebra vK.Completion E :=
+  let : Algebra vK.Completion E :=
     finitePlaceLocalArtinLocalizedAlgebra v w
-  letI : FiniteDimensional vK.Completion E :=
+  let : FiniteDimensional vK.Completion E :=
     finitePlaceLocalArtinFiniteDimensional
       (hKLfinite := _hKLfinite) v w
   exact

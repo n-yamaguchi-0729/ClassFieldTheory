@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.AbstractFixedFieldGlobalNormResidue
-import GlobalClassFieldTheory.Reciprocity.CyclotomicAbstractFixedFieldArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.AbstractFixedFieldGlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicAbstractFixedFieldArtin
+
+set_option autoImplicit false
 
 /-!
 # Finite restriction of cyclotomic fixed-field reciprocity
@@ -31,7 +33,7 @@ noncomputable local instance
     NumberField
       (LocalClassFieldTheory.abstractFixedField
         ℚ (SeparableClosure ℚ) H.field) := by
-  letI : FiniteDimensional ℚ
+  let : FiniteDimensional ℚ
       (LocalClassFieldTheory.abstractFixedField
         ℚ (SeparableClosure ℚ) H.field) :=
     LocalClassFieldTheory.abstractFixedField_finiteDimensional
@@ -58,7 +60,7 @@ theorem
           (LocalClassFieldTheory.abstractExtensionQuotientEquivGaloisGroup
             ℚ (SeparableClosure ℚ)
             H.field L.field L.below L.normal)) q) := by
-  letI : IsMulCommutative L.extensionQuotient :=
+  let : IsMulCommutative L.extensionQuotient :=
     L.commutative
   apply Additive.toMul.injective
   change
@@ -108,27 +110,30 @@ noncomputable def abstractFixedFieldCyclotomicFiniteRestrictionMonoidHom
     Gal(U / F) →* Gal(E / F) := by
   dsimp only
   let qFinite :
-      L.extensionQuotient ≃*
+      L.toFiniteGaloisExtension.extensionQuotient ≃*
         Gal(
           LocalClassFieldTheory.abstractRelativeFixedField
             ℚ (SeparableClosure ℚ) L.below /
           LocalClassFieldTheory.abstractFixedField
             ℚ (SeparableClosure ℚ) H.field) :=
-    L.extensionQuotientMulEquiv.trans
+    L.toFiniteGaloisExtension.extensionQuotientMulEquiv.trans
       (LocalClassFieldTheory.abstractExtensionQuotientEquivGaloisGroup
         ℚ (SeparableClosure ℚ)
         H.field L.field L.below L.normal)
+  let finiteRestriction :=
+    DegreeData.finiteUnramifiedRestriction
+      rationalCyclotomicDegreeData
+      (H.toFiniteResidueAbstractField rationalCyclotomicDegreeData)
+      L.toFiniteGaloisExtension hUnramified
+  let degreeEquiv :=
+    rationalCyclotomicDegreeData.maximalUnramifiedDegreeEquiv
+      (H.toFiniteResidueAbstractField rationalCyclotomicDegreeData)
+  let galEquiv := abstractFixedFieldCyclotomicGalEquivZHat H
   exact
-    qFinite.toMonoidHom.comp
-      ((DegreeData.finiteUnramifiedRestriction
-        rationalCyclotomicDegreeData
-        (H.toFiniteResidueAbstractField
-          rationalCyclotomicDegreeData)
-        L.toFiniteGaloisExtension hUnramified).comp
-          ((rationalCyclotomicDegreeData.maximalUnramifiedDegreeEquiv
-            (H.toFiniteResidueAbstractField
-              rationalCyclotomicDegreeData)).symm.toMonoidHom.comp
-            (abstractFixedFieldCyclotomicGalEquivZHat H).toMonoidHom))
+    @MonoidHom.comp _ _ _ _ _ _ qFinite.toMonoidHom
+      (@MonoidHom.comp _ _ _ _ _ _ finiteRestriction
+        (@MonoidHom.comp _ _ _ _ _ _
+          degreeEquiv.symm.toMonoidHom galEquiv.toMonoidHom))
 
 /-- In the canonical `ZHat` coordinate, the genuine cyclotomic Artin
 symbol recovers the abstract maximal-unramified quotient class. -/
@@ -145,7 +150,8 @@ private theorem
         (abstractFixedFieldCyclotomicGalEquivZHat H
           (abstractFixedFieldCyclotomicIdeleClassArtinMonoidHom H
             (Additive.toMul
-              ((rationalAbstractFixedFieldIdeleClassEquivFixed H.field).symm
+              ((rationalAbstractFixedFieldIdeleClassEquivFixed H.field
+                (hfinite := H.finite)).symm
                 a)))) =
       (ClassFormation.ValuationData.maximalUnramifiedNormResidueSymbol
         rationalCyclotomicIdeleClassValuationData H a).toMul := by
@@ -153,11 +159,19 @@ private theorem
     (rationalCyclotomicDegreeData.maximalUnramifiedDegreeEquiv
       (H.toFiniteResidueAbstractField
         rationalCyclotomicDegreeData)).injective
-  rw [
-    MulEquiv.apply_symm_apply,
-    abstractFixedFieldCyclotomicIdeleClassArtin_eq_maximalUnramifiedNormResidue,
-    abstractFixedFieldCyclotomicGalEquivZHat_quotientClass]
-  rfl
+  refine ((rationalCyclotomicDegreeData.maximalUnramifiedDegreeEquiv
+    (H.toFiniteResidueAbstractField rationalCyclotomicDegreeData)).apply_symm_apply
+      (abstractFixedFieldCyclotomicGalEquivZHat H
+        (abstractFixedFieldCyclotomicIdeleClassArtinMonoidHom H
+          (Additive.toMul
+            ((rationalAbstractFixedFieldIdeleClassEquivFixed H.field
+              (hfinite := H.finite)).symm a))))).trans ?_
+  exact (congrArg (abstractFixedFieldCyclotomicGalEquivZHat H)
+    (abstractFixedFieldCyclotomicIdeleClassArtin_eq_maximalUnramifiedNormResidue
+      H a)).trans
+        (abstractFixedFieldCyclotomicGalEquivZHat_quotientClass H
+          (ClassFormation.ValuationData.maximalUnramifiedNormResidueSymbol
+            rationalCyclotomicIdeleClassValuationData H a).toMul)
 
 /-- On a fixed-part idele class, finite restriction of the genuine
 cyclotomic Artin symbol is the finite restriction of the
@@ -177,7 +191,8 @@ theorem
         H L hUnramified
         (abstractFixedFieldCyclotomicIdeleClassArtinMonoidHom H
           (Additive.toMul
-            ((rationalAbstractFixedFieldIdeleClassEquivFixed H.field).symm
+            ((rationalAbstractFixedFieldIdeleClassEquivFixed H.field
+              (hfinite := H.finite)).symm
               a))) =
       (L.extensionQuotientMulEquiv.trans
         (LocalClassFieldTheory.abstractExtensionQuotientEquivGaloisGroup
@@ -191,7 +206,7 @@ theorem
           (ClassFormation.ValuationData.maximalUnramifiedNormResidueSymbol
             rationalCyclotomicIdeleClassValuationData H a).toMul) := by
   let qFinite :=
-    L.extensionQuotientMulEquiv.trans
+    L.toFiniteGaloisExtension.extensionQuotientMulEquiv.trans
       (LocalClassFieldTheory.abstractExtensionQuotientEquivGaloisGroup
         ℚ (SeparableClosure ℚ)
         H.field L.field L.below L.normal)
@@ -200,23 +215,25 @@ theorem
       rationalCyclotomicDegreeData
       (H.toFiniteResidueAbstractField rationalCyclotomicDegreeData)
       L.toFiniteGaloisExtension hUnramified
-  change
-    qFinite
-        (finiteRestriction
-          ((rationalCyclotomicDegreeData.maximalUnramifiedDegreeEquiv
-            (H.toFiniteResidueAbstractField
-              rationalCyclotomicDegreeData)).symm
-            (abstractFixedFieldCyclotomicGalEquivZHat H
-              (abstractFixedFieldCyclotomicIdeleClassArtinMonoidHom H
-                (Additive.toMul
-                  ((rationalAbstractFixedFieldIdeleClassEquivFixed
-                    H.field).symm a)))))) =
-      qFinite
+  let degreeEquiv :=
+    rationalCyclotomicDegreeData.maximalUnramifiedDegreeEquiv
+      (H.toFiniteResidueAbstractField rationalCyclotomicDegreeData)
+  let galEquiv := abstractFixedFieldCyclotomicGalEquivZHat H
+  let c :=
+    abstractFixedFieldCyclotomicIdeleClassArtinMonoidHom H
+      (Additive.toMul
+        ((rationalAbstractFixedFieldIdeleClassEquivFixed H.field
+          (hfinite := H.finite)).symm a))
+  calc
+    abstractFixedFieldCyclotomicFiniteRestrictionMonoidHom
+        H L hUnramified c =
+      qFinite (finiteRestriction (degreeEquiv.symm (galEquiv c))) := rfl
+    _ = qFinite
         (finiteRestriction
           (ClassFormation.ValuationData.maximalUnramifiedNormResidueSymbol
-            rationalCyclotomicIdeleClassValuationData H a).toMul)
-  exact congrArg (fun q => qFinite (finiteRestriction q))
-    (abstractFixedFieldCyclotomicIdeleClassArtin_fixed_coordinate H a)
+            rationalCyclotomicIdeleClassValuationData H a).toMul) :=
+      congrArg (fun q ↦ qFinite (finiteRestriction q))
+        (abstractFixedFieldCyclotomicIdeleClassArtin_fixed_coordinate H a)
 
 /-- The actual fixed-field global norm-residue value on a fixed-part
 class is the finite restriction of the maximal-unramified cyclotomic
@@ -234,7 +251,8 @@ theorem
         rationalIdeleClassRepresentation H.field) :
     abstractFixedFieldGlobalNormResidueMonoidHom H L
         (Additive.toMul
-          ((rationalAbstractFixedFieldIdeleClassEquivFixed H.field).symm
+          ((rationalAbstractFixedFieldIdeleClassEquivFixed H.field
+            (hfinite := H.finite)).symm
             a)) =
       (L.extensionQuotientMulEquiv.trans
         (LocalClassFieldTheory.abstractExtensionQuotientEquivGaloisGroup
@@ -247,13 +265,13 @@ theorem
           L.toFiniteGaloisExtension hUnramified
           (ClassFormation.ValuationData.maximalUnramifiedNormResidueSymbol
             rationalCyclotomicIdeleClassValuationData H a).toMul) := by
-  letI : Finite
+  let : Finite
       (H.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup H.field L.field L.below) :=
     L.finite
-  letI : IsMulCommutative L.extensionQuotient :=
+  let : IsMulCommutative L.extensionQuotient :=
     L.commutative
-  let q :=
+  let q : L.extensionQuotient :=
     DegreeData.finiteUnramifiedRestriction
       rationalCyclotomicDegreeData
       (H.toFiniteResidueAbstractField rationalCyclotomicDegreeData)
@@ -311,6 +329,7 @@ theorem
         (abstractFixedFieldCyclotomicIdeleClassArtinMonoidHom H c) := by
   let e :=
     rationalAbstractFixedFieldIdeleClassEquivFixed H.field
+      (hfinite := H.finite)
   let a :
       ambientFixedAddSubgroup
         rationalIdeleClassRepresentation H.field :=

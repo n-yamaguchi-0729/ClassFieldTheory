@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Frobenius.CompletedUnramifiedField
-import LubinTate.EqualCharacteristic.Theta.ThetaSeries
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CompletedUnramifiedField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaSeries
+
+set_option autoImplicit false
 
 /-!
 # Analytic evaluation for theta

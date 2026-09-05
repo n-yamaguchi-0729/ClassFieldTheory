@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldEmbedding
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldDegree
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldEmbedding
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldDegree
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: surjectivity of the higher-unit fixed-field embedding
@@ -58,10 +60,10 @@ theorem equalCharacteristicLubinTateLevelFieldToFixedFieldOfHigherUnit_surjectiv
   let f :=
     equalCharacteristicLubinTateLevelFieldToFixedFieldOfHigherUnitRingHom
       F a n ha
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicCompletedFrobeniusFixedField F a n) :=
     FiniteDimensional.of_finrank_pos (by
       rw [equalCharacteristicCompletedFrobeniusFixedField_finrank]

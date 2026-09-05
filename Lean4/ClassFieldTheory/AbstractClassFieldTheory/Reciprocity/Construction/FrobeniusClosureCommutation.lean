@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.CoreFrobeniusNorm
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.CoreFrobeniusNorm
+
+set_option autoImplicit false
 
 universe u
 
@@ -39,10 +41,10 @@ theorem frobeniusClosure_commutes_of_commutes_generator (D : DegreeData G)
     (hq : q * σ.1 = σ.1 * q)
     (c : D.frobeniusClosure K L hLK σ) :
     q * c.1 = c.1 * q := by
-  letI : IsClosed
+  let : IsClosed
       (D.extensionInertiaWithin K.field L hLK : Set K.field.toSubgroup) :=
     D.extensionInertiaWithin_isClosed K L hLK
-  letI : T2Space
+  let : T2Space
       (K.field.toSubgroup ⧸ D.extensionInertiaWithin K.field L hLK) := by
     infer_instance
   let Q := K.field.toSubgroup ⧸ D.extensionInertiaWithin K.field L hLK

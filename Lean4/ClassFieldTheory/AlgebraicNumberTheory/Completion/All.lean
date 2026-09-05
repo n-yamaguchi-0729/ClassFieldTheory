@@ -1,0 +1,12 @@
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionMap
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.Comparison
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.IntegerRingComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.LocalizedValuation
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.All
+
+set_option autoImplicit false
+
+/-! # Completions of number fields and their local comparisons -/

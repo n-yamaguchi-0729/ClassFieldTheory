@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedRealFilteredComparison
-import LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
-import LocalClassFieldTheory.Finite.LocalReciprocity.Core
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedRealFilteredComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Core
+
+set_option autoImplicit false
 
 /-!
 # Filtered reciprocity on the named transported Lubin--Tate fixed field
@@ -75,17 +77,17 @@ theorem
     artinPrincipalUnitStepGroup K M t =
       localUpperRamificationGroup K M t := by
   let F := equalCharacteristicTargetLocalField K
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let E := equalCharacteristicLubinTateLevelField F m
-  letI : CharP K p := hKp
-  letI : Algebra K E :=
+  let : CharP K p := hKp
+  let : Algebra K E :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ m
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ m
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
       K p ϖ hϖ m
   let T :=
@@ -93,11 +95,11 @@ theorem
       K p ϖ hϖ m
   let M :=
     abstractFixedField K (SeparableClosure K) T.field
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) T.field
         (finiteAbelianSubextension_finite_over_absoluteBase K T)
-  letI : IsAbelianGalois K M :=
+  let : IsAbelianGalois K M :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K T
   let e : E ≃ₐ[K] M :=
     equalCharacteristicTransportedLubinTateFixedFieldEquiv

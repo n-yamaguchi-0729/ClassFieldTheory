@@ -1,7 +1,9 @@
-import LubinTate.FiniteLevel.LevelValuation
-import RamificationTheory.HilbertRamification.RamificationNumber
-import RamificationTheory.HilbertRamification.RealLowerGroups
-import ValuationTheory.DiscreteValuationField.AddVal
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelValuation
+import ValuedFieldTheory.Ramification.HilbertRamification.RamificationNumber
+import ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
+import ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+
+set_option autoImplicit false
 
 /-!
 # Lower ramification groups of standard Lubin--Tate levels

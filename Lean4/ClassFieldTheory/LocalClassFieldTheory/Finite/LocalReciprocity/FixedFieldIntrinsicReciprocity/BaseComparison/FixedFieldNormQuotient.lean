@@ -1,7 +1,9 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.EmbeddedInertiaComparison
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldNormResidueNaturality
-import LocalFieldTheory.NonarchimedeanLocalField.NormQuotient
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.EmbeddedInertiaComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldNormResidueNaturality
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+
+set_option autoImplicit false
 
 /-!
 # Fixed-field norm quotients
@@ -40,7 +42,7 @@ theorem map_fixedFieldFiniteNormSubgroup_eq_additiveNormSubgroup
     abstractFixedField k Ω K
   let E : IntermediateField F Ω :=
     abstractRelativeFixedField k Ω hLK
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       k Ω K L hLK hKabsolute hfinite
   let e := abstractFixedFieldUnitsEquivGaloisFixed k Ω K
@@ -202,7 +204,7 @@ theorem fixedFieldFiniteNormQuotientEquivNormQuotient_finiteNormClass
     abstractFixedField k Ω K
   let E : IntermediateField F Ω :=
     abstractRelativeFixedField k Ω hLK
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       k Ω K L hLK hKabsolute hfinite
   let S := finiteNormSubgroup (galoisAmbientUnitsRep k Ω) K L hLK
@@ -301,7 +303,7 @@ theorem abstractFixedFieldNormResidueSymbol_apply_primeNorm
   let KR := KF.toFiniteResidueAbstractField D
   let S := D.frobeniusFixedField KR L hLK σ
   let hSK := D.frobeniusFixedField_le KR L hLK σ
-  letI hSfinite : Finite
+  let hSfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K S hSK) :=
     D.frobeniusFixedField_finite KR L hLK σ
   let qGal :=
@@ -337,8 +339,12 @@ theorem abstractFixedFieldNormResidueSymbol_apply_primeNorm
       Additive.ofMul
         (qGal.abelianizationCongr (Abelianization.of q))
   rw [hbase, ← hprime]
-  rw [D.normResidueSymbol_finiteReciprocityHom]
-  rfl
+  exact congrArg
+    (fun z : Additive (Abelianization E.extensionQuotient) =>
+      MulEquiv.toAdditive qGal.abelianizationCongr z)
+    (D.normResidueSymbol_finiteReciprocityHom
+      (galoisAmbientUnitsRep k Ω) v hcf KF E
+      (show E.extensionQuotient from q))
 
 /-- The abstract fixed-field norm-residue symbol depends only on the norm
 class of the input unit. -/
@@ -370,7 +376,7 @@ theorem abstractFixedFieldNormResidueSymbol_eq_of_normClass_eq
         k Ω D v hcf K L hLK (Additive.ofMul y) := by
   let F := abstractFixedField k Ω K
   let E := abstractRelativeFixedField k Ω hLK
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       k Ω K L hLK hKabsolute hfinite
   let b :=
@@ -451,14 +457,14 @@ theorem fixedFieldQuotientEquiv_mk_compatibility
           F E i (QuotientGroup.mk τ) := by
   dsimp only
   let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
+  let : Algebra F (SeparableClosure F) :=
     (separableClosure F (AlgebraicClosure F)).algebra
   intro e τ
   let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       K (SeparableClosure K) H.field J hJH hJnormal
   let i : E →ₐ[F] SeparableClosure F :=

@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.RestrictionEquiv
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.RestrictionEquiv
+
+set_option autoImplicit false
 
 /-!
 # Frobenius actions and relative norms in a totally ramified tower
@@ -75,7 +77,7 @@ theorem abstractReciprocityTotallyRamifiedFrobeniusInM_restriction
     K L hTot q
   let hML := D.abstractReciprocityTotallyRamifiedFiniteGaloisExtension_le_L
     K L hTot q
-  letI : (extensionSubgroup K.field M.field M.below).Normal := M.normal
+  let : (extensionSubgroup K.field M.field M.below).Normal := M.normal
   have hIM : D.extensionInertiaWithin K.field L.field L.below ≤
       extensionSubgroup K.field M.field M.below := by
     intro x hx
@@ -105,9 +107,9 @@ theorem abstractReciprocityTotallyRamifiedFrobeniusInM_restriction
     refine Quotient.inductionOn' z ?_
     intro x
     rfl
-  rw [hcompat]
-  exact D.frobeniusRestriction_chosenDegreeOneFrobeniusLiftOfFiniteTotallyRamified_underlying
-    K L hTot q
+  exact (hcompat σ.1).trans
+    (D.frobeniusRestriction_chosenDegreeOneFrobeniusLiftOfFiniteTotallyRamified_underlying
+      K L hTot q)
 
 /-- Including the lower generator and then restricting recovers its prescribed action. -/
 @[simp]
@@ -147,9 +149,8 @@ theorem abstractReciprocityTotallyRamifiedLowerGenerator_inclusion_restriction
     rw [M.lowerInclusionHom_mk S m]
     dsimp [e, abstractReciprocityTotallyRamifiedRestrictionEquiv]
     rfl
-  rw [hcompat]
-  exact D.abstractReciprocityTotallyRamifiedRestrictionEquiv_lowerGenerator
-    K L hTot q
+  exact (hcompat g).trans
+    (D.abstractReciprocityTotallyRamifiedRestrictionEquiv_lowerGenerator K L hTot q)
 
 /-- The lower cyclic generator commutes with the selected Frobenius element. -/
 theorem abstractReciprocityTotallyRamified_generator_commutes_frobenius
@@ -181,7 +182,7 @@ theorem abstractReciprocityTotallyRamified_generator_commutes_frobenius
     field := L.field
     base := K.field
     below := L.below }
-  letI : (extensionSubgroup EL.base EL.field EL.below).Normal := by
+  let : (extensionSubgroup EL.base EL.field EL.below).Normal := by
     change (extensionSubgroup K.field L.field L.below).Normal
     exact L.normal
   have hresBundled :
@@ -240,7 +241,7 @@ theorem abstractReciprocityTotallyRamified_frobenius_fixes_sigma
   let hMSigma :=
     D.abstractReciprocityTotallyRamifiedFiniteGaloisExtension_le_sigma
       K L hTot q
-  letI : (extensionSubgroup K.field M.field M.below).Normal := M.normal
+  let : (extensionSubgroup K.field M.field M.below).Normal := M.normal
   have hIM : D.extensionInertiaWithin K.field L.field L.below ≤
       extensionSubgroup K.field M.field M.below := by
     intro x hx
@@ -310,7 +311,7 @@ theorem abstractReciprocityTotallyRamified_actions_agree_on_L
     field := L.field
     base := K.field
     below := L.below }
-  letI : (extensionSubgroup EL.base EL.field EL.below).Normal := by
+  let : (extensionSubgroup EL.base EL.field EL.below).Normal := by
     change (extensionSubgroup K.field L.field L.below).Normal
     exact L.normal
   apply M.relativeCosetAction_eq_of_restriction_eq A EL hML
@@ -359,7 +360,7 @@ theorem abstractReciprocity_totallyRamified_relativeNorm_L
     K L hTot q
   let hML := D.abstractReciprocityTotallyRamifiedFiniteGaloisExtension_le_L
     K L hTot q
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L.field L.below) :=
     L.finite
   have hInertia : ∀ i : K.field.toSubgroup,
@@ -414,14 +415,14 @@ theorem abstractReciprocity_totallyRamified_relativeNorm_sigma
         (fixedFieldInclusion A Sigma M.field hMSigma a) =
       fixedFieldInclusion A K.field M₀ hM₀K
         (relativeNorm A K.field Sigma hSigmaK a) := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L.field L.below) :=
     L.finite
   let σ := D.chosenDegreeOneFrobeniusLiftOfFiniteTotallyRamified
     K L hTot q
   let Sigma := D.frobeniusFixedField K L.field L.below σ
   let hSigmaK := D.frobeniusFixedField_le K L.field L.below σ
-  letI hSigmaFinite : Finite
+  let hSigmaFinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field Sigma hSigmaK) :=
     D.frobeniusFixedField_finite K L.field L.below σ
   let ESigma : DegreeData.FiniteAbstractExtension G :=

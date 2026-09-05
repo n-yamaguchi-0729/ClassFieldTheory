@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.GlobalClassFields.SUnitKummerNormCore
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
-import KummerTheory.Concrete.SUnitKummerUnramified
-import LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SUnitKummerNormCore
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.KummerTheory.Concrete.SUnitKummerUnramified
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
+
+set_option autoImplicit false
 
 /-!
 # Exact norm realization by the full S-unit Kummer extension
@@ -60,13 +62,13 @@ theorem fullSUnitKummerExtension_ideleClassNormRange_eq_powerLocalUnit
       (K := K) (Omega := Omega) n S
   let hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     KummerTheory.fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     KummerTheory.fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite K E
   let r := totalPlaceCard (K := K) S
   let eG :
@@ -75,7 +77,7 @@ theorem fullSUnitKummerExtension_ideleClassNormRange_eq_powerLocalUnit
     simpa only [E, r] using
       (KummerTheory.fullSUnitKummerExtensionGaloisEquivPiZMod
         (K := K) (Omega := Omega) n hnK hmu S)
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     { is_comm.comm := fun σ τ => by
         apply eG.injective
         simpa only [map_mul] using

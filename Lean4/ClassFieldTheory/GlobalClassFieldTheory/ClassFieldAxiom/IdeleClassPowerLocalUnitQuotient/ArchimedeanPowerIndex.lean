@@ -1,8 +1,10 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitSubgroup
-import AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitSubgroup
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
 import Mathlib.Algebra.Group.Equiv.Basic
 import Mathlib.Data.Sign.Basic
 import Mathlib.NumberTheory.NumberField.ProductFormula
+
+set_option autoImplicit false
 
 /-!
 # Archimedean power indices in idele class quotients
@@ -181,7 +183,7 @@ theorem card_realInfinitePositiveQuotient
         (realInfinitePositiveQuotientEquivSign w hw).toEquiv
     _ = 2 := by
       rw [Nat.card_eq_fintype_card]
-      native_decide
+      decide
 
 omit [NumberField K] in
 /-- In the even-real or complex cases, the local power subgroup is
@@ -281,7 +283,7 @@ theorem card_infinitePlace_nthPowerQuotient
     · have hodd : Odd (n : ℕ) :=
         (Nat.even_or_odd (n : ℕ)).resolve_left hn
       rw [nthPowerSubgroup_eq_top_of_real_odd n w hw hodd]
-      letI :
+      let :
           Subsingleton
             (w.Completionˣ ⧸ (⊤ : Subgroup w.Completionˣ)) :=
         QuotientGroup.subsingleton_quotient_top
@@ -297,7 +299,7 @@ theorem card_infinitePlace_nthPowerQuotient
       ext x
       simp [RayClass.mem_infinitePositiveSubgroup_iff, hw]
     rw [hpower, hpositive]
-    letI :
+    let :
         Subsingleton
           (w.Completionˣ ⧸ (⊤ : Subgroup w.Completionˣ)) :=
       QuotientGroup.subsingleton_quotient_top

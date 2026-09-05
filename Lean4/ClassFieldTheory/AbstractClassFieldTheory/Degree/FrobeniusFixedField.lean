@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Degree.FrobeniusLift
-import AbstractClassFieldTheory.Degree.TopologicalGeneration
-import Topology
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
+import GaloisCohomology.ProfiniteIntegers.TopologicalGeneration
+import GaloisCohomology.Topology.TotallyDisconnectedQuotients
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -146,16 +148,16 @@ private theorem injective_of_topologicallyGenerates_zHat_one
     rw [map_mul, map_inv, hab, inv_mul_cancel]
   by_contra hy
   obtain ⟨U, hyU⟩ := exists_openNormalSubgroup_not_mem hy
-  letI : Finite (A ⧸ (U : Subgroup A)) :=
+  let : Finite (A ⧸ (U : Subgroup A)) :=
     Subgroup.quotient_finite_of_isOpen (U : Subgroup A)
       U.toOpenSubgroup.isOpen'
-  letI : DiscreteTopology (A ⧸ (U : Subgroup A)) :=
+  let : DiscreteTopology (A ⧸ (U : Subgroup A)) :=
     QuotientGroup.discreteTopology U.toOpenSubgroup.isOpen'
   let m := Nat.card (A ⧸ (U : Subgroup A))
   have hm : 0 < m := by
     dsimp [m]
     exact Nat.card_pos
-  letI : NeZero m := ⟨hm.ne'⟩
+  let : NeZero m := ⟨hm.ne'⟩
   let q : A →ₜ* (A ⧸ (U : Subgroup A)) :=
     continuousQuotientMk (U : Subgroup A)
   have hqx :
@@ -168,7 +170,6 @@ private theorem injective_of_topologicallyGenerates_zHat_one
     exact pow_card_eq_one'
   let H : ClosedSubgroup A :=
     closedSubgroupGenerated ({x ^ m} : Set A)
-  letI : (H.toSubgroup).Normal := by infer_instance
   have hHU : H.toSubgroup ≤ (U : Subgroup A) := by
     apply Subgroup.topologicalClosure_minimal
     · rw [Subgroup.closure_le]
@@ -180,7 +181,7 @@ private theorem injective_of_topologicallyGenerates_zHat_one
       rw [map_pow]
       simpa only [hqx] using hqpow
     · exact Subgroup.isClosed_of_isOpen (U : Subgroup A) U.isOpen'
-  letI : IsClosed (H.toSubgroup : Set A) := H.isClosed'
+  let : IsClosed (H.toSubgroup : Set A) := H.isClosed'
   let B := A ⧸ H.toSubgroup
   let qH : A →ₜ* B := continuousQuotientMk H.toSubgroup
   have hqHx :
@@ -214,9 +215,9 @@ private theorem injective_of_topologicallyGenerates_zHat_one
     rw [TopologicallyGenerates, ← Subgroup.zpowers_eq_closure,
       hzpowersTopologicalClosure] at hqHgen
     exact hqHgen
-  letI : Finite (Subgroup.zpowers (qH x)) :=
+  let : Finite (Subgroup.zpowers (qH x)) :=
     (finite_zpowers.mpr hqHfiniteOrder).to_subtype
-  letI : Finite B :=
+  let : Finite B :=
     Finite.of_injective
       (fun b : B =>
         (⟨b, by rw [hzpowersTop]; trivial⟩ : Subgroup.zpowers (qH x)))
@@ -246,7 +247,7 @@ private theorem injective_of_topologicallyGenerates_zHat_one
       apply Multiplicative.ext
       simp
     · change IsClosed {z : A | r z = 1}
-      letI : T2Space (Multiplicative (ZMod m)) := by
+      let : T2Space (Multiplicative (ZMod m)) := by
         change T2Space (ZMod m)
         infer_instance
       exact isClosed_eq r.continuous_toFun continuous_const
@@ -444,7 +445,7 @@ theorem extensionInertiaWithin_isClosed (D : DegreeData G)
     change IsClosed ((fun x : K.field.toSubgroup => (x : G)) ⁻¹' (L : Set G))
     exact L.isClosed'.preimage continuous_subtype_val
   have hI : IsClosed (D.fieldInertiaWithin K.field : Set K.field.toSubgroup) := by
-    letI : T2Space ZHatMul := by
+    let : T2Space ZHatMul := by
       change T2Space ZHat
       infer_instance
     change IsClosed {x : K.field.toSubgroup | D.degree x.1 = 1}
@@ -495,7 +496,6 @@ instance frobeniusClosure_isTopologicalGroup
     [hLnormal : (extensionSubgroup K.field L hLK).Normal]
     (σ : D.FrobeniusElements K L hLK) :
     CommGroup (D.frobeniusClosure K L hLK σ) := by
-  letI : T2Space K.field.toSubgroup := by infer_instance
   letI : IsClosed
       (D.extensionInertiaWithin K.field L hLK : Set K.field.toSubgroup) :=
     D.extensionInertiaWithin_isClosed K L hLK
@@ -517,9 +517,9 @@ instance frobeniusClosure_isTopologicalGroup
       apply Subtype.ext
       change (a : Q) * (b : Q) = (b : Q) * (a : Q)
       rw [← hm, ← hn, ← zpow_add, add_comm, zpow_add])
-  exact
-    { (inferInstance : Group (D.frobeniusClosure K L hLK σ)) with
-      mul_comm := c.mul_comm }
+  letI : IsMulCommutative (D.frobeniusClosure K L hLK σ) :=
+    isMulCommutative_iff.mpr c.mul_comm
+  exact open scoped IsMulCommutative in inferInstance
 
 /-- By construction, `σ` topologically generates `Γ`. -/
 theorem frobeniusInClosure_topologicallyGenerates
@@ -596,7 +596,7 @@ theorem frobeniusClosureDegree_range (D : DegreeData G)
     (D.frobeniusClosureDegree K L hLK σ).toMonoidHom.range =
       AddSubgroup.toSubgroup
         ((zHatMulNat (D.frobeniusExponent K L hLK σ)).toAddMonoidHom.range) := by
-  letI : CompactSpace K.field.toSubgroup := by
+  let : CompactSpace K.field.toSubgroup := by
     change CompactSpace K.field
     infer_instance
   let Γ := D.frobeniusClosure K L hLK σ
@@ -667,14 +667,11 @@ theorem frobeniusClosureDegree_range (D : DegreeData G)
         subst w
         exact ⟨x, hfx⟩
       · have hcompact : IsCompact (Set.range f) :=
-          letI : CompactSpace Γ := by
-            dsimp [Γ]
-            infer_instance
           isCompact_range f.continuous_toFun
         have hrange : Set.range f = (f.toMonoidHom.range : Set ZHatMul) := by
           ext w
           constructor <;> rintro ⟨a, rfl⟩ <;> exact ⟨a, rfl⟩
-        letI : T2Space ZHatMul := by
+        let : T2Space ZHatMul := by
           change T2Space ZHat
           infer_instance
         exact (hrange ▸ hcompact).isClosed
@@ -746,7 +743,8 @@ def fixedFieldNormalizedDegree (D : DegreeData G)
     apply Multiplicative.ext
     rw [show D.frobeniusClosureDegreeInMulNatRange K L hLK σ 1 = 0 by
       apply Subtype.ext
-      simp]
+      exact congrArg Multiplicative.toAdd
+        (map_one (D.frobeniusClosureDegree K L hLK σ))]
     exact map_zero (zHatDivide
       (D.frobeniusExponent K L hLK σ)
       (D.frobeniusExponent_pos K L hLK σ))
@@ -848,20 +846,11 @@ theorem frobeniusClosure_totallyDisconnectedSpace (D : DegreeData G)
     [hLnormal : (extensionSubgroup K.field L hLK).Normal]
     (σ : D.FrobeniusElements K L hLK) :
     TotallyDisconnectedSpace (D.frobeniusClosure K L hLK σ) := by
-  letI : CompactSpace K.field.toSubgroup := by
+  let : CompactSpace K.field.toSubgroup := by
     change CompactSpace K.field
     infer_instance
-  letI : T2Space K.field.toSubgroup := by
-    change T2Space K.field
-    infer_instance
-  letI : TotallyDisconnectedSpace K.field.toSubgroup := by
-    change TotallyDisconnectedSpace K.field
-    infer_instance
-  letI : IsClosed
-      (D.extensionInertiaWithin K.field L hLK : Set K.field.toSubgroup) :=
-    D.extensionInertiaWithin_isClosed K L hLK
   let Q := K.field.toSubgroup ⧸ D.extensionInertiaWithin K.field L hLK
-  letI : TotallyDisconnectedSpace Q :=
+  let : TotallyDisconnectedSpace Q :=
     QuotientGroup.totallyDisconnectedSpace_of_isClosed
       (D.extensionInertiaWithin K.field L hLK)
       (D.extensionInertiaWithin_isClosed K L hLK)
@@ -908,13 +897,13 @@ theorem frobeniusFixedField_finiteIndex (D : DegreeData G)
         (D.frobeniusExponent_pos K L hLK σ)]
     exact (D.frobeniusExponent_pos K L hLK σ).ne'
   let j := D.extensionDegreeKernelRestriction K L hLK
-  letI : Finite dQ.toMonoidHom.ker :=
+  let : Finite dQ.toMonoidHom.ker :=
     Finite.of_injective j
       (D.extensionDegreeKernelRestriction_injective K L hLK)
   let T : Subgroup Q := (⊤ : Subgroup Q) ⊓ dQ.toMonoidHom.ker
   let toKer : T → dQ.toMonoidHom.ker :=
     fun t => ⟨t.1, t.2.2⟩
-  letI : Finite T := Finite.of_injective toKer (by
+  let : Finite T := Finite.of_injective toKer (by
     intro a b hab
     apply Subtype.ext
     exact congrArg (fun x : dQ.toMonoidHom.ker => x.1) hab)
@@ -943,19 +932,16 @@ theorem frobeniusFixedField_normalizedDegree_injective (D : DegreeData G)
     Function.Injective
       (D.fixedFieldNormalizedDegree K L hLK σ) := by
   let Γ := D.frobeniusClosure K L hLK σ
-  letI : CompactSpace K.field.toSubgroup := by
+  let : CompactSpace K.field.toSubgroup := by
     change CompactSpace K.field
     infer_instance
-  letI : IsClosed
+  let : IsClosed
       (D.extensionInertiaWithin K.field L hLK : Set K.field.toSubgroup) :=
     D.extensionInertiaWithin_isClosed K L hLK
-  letI : CompactSpace Γ := by infer_instance
-  letI : T2Space Γ := by infer_instance
-  letI : TotallyDisconnectedSpace Γ :=
+  let : TotallyDisconnectedSpace Γ :=
     D.frobeniusClosure_totallyDisconnectedSpace K L hLK σ
-  letI : CommGroup Γ :=
+  let : CommGroup Γ :=
     D.frobeniusClosureCommGroup K L hLK σ
-  letI : IsTopologicalGroup Γ := by infer_instance
   apply injective_of_topologicallyGenerates_zHat_one
     (D.fixedFieldNormalizedDegree K L hLK σ)
     (D.frobeniusInClosure K L hLK σ)
@@ -984,7 +970,7 @@ theorem frobeniusClosure_index_le_extensionIndex_of_exponent_eq_one
   let Γ : Subgroup Q :=
     (D.frobeniusClosure K L hLK σ).toSubgroup
   let j := D.extensionDegreeKernelRestriction K L hLK
-  letI : Finite H :=
+  let : Finite H :=
     Finite.of_injective j
       (D.extensionDegreeKernelRestriction_injective K L hLK)
   have hΓmap : Γ.map dQ.toMonoidHom =
@@ -1068,14 +1054,12 @@ def frobeniusFixedField_normalizedDegreeEquiv (D : DegreeData G)
     [hLnormal : (extensionSubgroup K.field L hLK).Normal]
     (σ : D.FrobeniusElements K L hLK) :
     D.frobeniusClosure K L hLK σ ≃ₜ* ZHatMul := by
-  let Γ := D.frobeniusClosure K L hLK σ
   letI : CompactSpace K.field.toSubgroup := by
     change CompactSpace K.field
     infer_instance
   letI : IsClosed
       (D.extensionInertiaWithin K.field L hLK : Set K.field.toSubgroup) :=
     D.extensionInertiaWithin_isClosed K L hLK
-  letI : CompactSpace Γ := by infer_instance
   letI : T2Space ZHatMul := by
     change T2Space ZHat
     infer_instance

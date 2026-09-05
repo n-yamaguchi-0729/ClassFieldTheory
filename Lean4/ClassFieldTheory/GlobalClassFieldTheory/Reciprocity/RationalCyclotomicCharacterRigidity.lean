@@ -1,4 +1,6 @@
-import KummerTheory.Concrete.Cyclotomic.RationalCyclotomicCharacterEquiv
+import GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicCharacterEquiv
+
+set_option autoImplicit false
 
 /-!
 # Rigidity of the rational cyclotomic character

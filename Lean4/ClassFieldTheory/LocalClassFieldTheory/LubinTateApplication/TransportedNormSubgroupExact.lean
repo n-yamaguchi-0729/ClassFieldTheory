@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.LubinTateApplication.LaurentPrincipalUnitTransport
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LaurentPrincipalUnitTransport
+
+set_option autoImplicit false
 
 /-!
 # Exact transported Lubin--Tate norm subgroup
@@ -53,9 +55,9 @@ theorem
     equalCharacteristicTargetLaurent_fieldPrincipalUnits_map_eq
       K p ϖ hϖ m
   rw [← htransport]
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
   rw [
     equalCharacteristicLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup]
   unfold LocalFieldTheory.uniformizerPrincipalSubgroup

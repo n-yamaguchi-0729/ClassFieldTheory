@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
-import AlgebraicNumberTheory.Idele.NormCore
-import AlgebraicNumberTheory.Idele.SinglePlace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormCore
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+
+set_option autoImplicit false
 
 /-!
 # Positive archimedean section of the idele norm

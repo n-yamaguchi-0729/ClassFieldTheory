@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
-import LocalClassFieldTheory.Finite.Existence.OrderReversal
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Equal-characteristic dominating extensions
@@ -55,16 +57,16 @@ theorem exists_equalCharacteristicFiniteAbelianDominatingStandardCompositum
         K p (localNormSubgroup K L) ϖ d n hϖ hd hn hstandard)
   refine ⟨ϖ, d, n, hϖ, hd, hn, ?_⟩
   let E := abstractFixedField K (SeparableClosure K) P.field
-  letI : Finite
+  let : Finite
       ((baseField (intrinsicAbsoluteGalois K)).toSubgroup ⧸
         extensionSubgroup
           (baseField (intrinsicAbsoluteGalois K)) P.field
           (le_baseField P.field)) :=
     finiteAbelianSubextension_finite_over_absoluteBase K P
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) P.field inferInstance
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K P
   apply nonempty_algHom_of_normSubgroup_le K L E
   simpa [E, P, finiteAbelianNormSubgroup] using hP

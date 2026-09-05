@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
+
+set_option autoImplicit false
 
 /-!
 # Compatibility of rational finite-norm representatives
@@ -20,13 +22,13 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance (priority := 2000)
+local instance
     compatibilityIdeleClassGroupIsMulCommutative
     {F : Type} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
-local instance (priority := 2000)
+local instance
     compatibilityIdeleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
@@ -140,28 +142,28 @@ theorem rationalFiniteNormTransferCanonicalToOrdinaryCompatibility_proof
       K L hLK hnormal c := by
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     RationalFiniteNormTransferInternal.fixedFiniteDimensional K
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     RationalFiniteNormTransferInternal.relativeFiniteDimensional
       K L hLK
-  letI : IsScalarTower ℚ F E :=
+  let : IsScalarTower ℚ F E :=
     RationalFiniteNormTransferInternal.relativeScalarTower
       K L hLK
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
       K L hLK
-  letI : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
+  let : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
     change FiniteDimensional ℚ
       (abstractFixedField ℚ (SeparableClosure ℚ) L)
     change FiniteDimensional ℚ E
     infer_instance
-  letI : NumberField F :=
+  let : NumberField F :=
     RationalFiniteNormTransferInternal.fixedNumberField K
-  letI : NumberField E :=
+  let : NumberField E :=
     RationalFiniteNormTransferInternal.relativeNumberField
       K L hLK
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     RationalFiniteNormTransferInternal.relativeIsGalois
       K L hLK hnormal
   let eL :=

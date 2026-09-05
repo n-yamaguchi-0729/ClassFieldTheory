@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.DecompositionFields
-import KummerTheory.Concrete.FinitePlaceDecomposition
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeSelection.DecompositionFields
+import ClassFieldTheory.KummerTheory.Concrete.FinitePlaceDecomposition
+
+set_option autoImplicit false
 
 /-!
 # The conclusion of S-unit Kummer prime selection
@@ -65,18 +67,18 @@ theorem
       (K := K) (Omega := Omega) n S'
   have hnK : ((n : ℕ) : K) ≠ 0 := by
     exact_mod_cast n.ne_zero
-  letI : FiniteDimensional K N :=
+  let : FiniteDimensional K N :=
     fullSUnitKummerExtension_finiteDimensional
       (K := K) (Omega := Omega) n hnK hmu S'
-  letI : IsGalois K N :=
+  let : IsGalois K N :=
     fullSUnitKummerExtension_isGalois
       (K := K) (Omega := Omega) n S'
-  letI : Algebra E N :=
+  let : Algebra E N :=
     enlargedSUnitKummerAlgebra
       (K := K) (Omega := Omega) E n hmu
       (galois_pow_eq_one_of_equiv_pi_zmod
         (K := K) E n r eG) S
-  letI : IsScalarTower K E N := by
+  let : IsScalarTower K E N := by
     infer_instance
   change
     sUnitLocalPowerKernel (K := K) n S' T =

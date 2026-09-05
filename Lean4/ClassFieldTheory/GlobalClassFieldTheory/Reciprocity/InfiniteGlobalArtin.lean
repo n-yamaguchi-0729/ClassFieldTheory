@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
-import GlobalClassFieldTheory.Reciprocity.GlobalArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicZHatBaseChange
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
 import Mathlib.FieldTheory.Galois.Profinite
+
+set_option autoImplicit false
 
 /-!
 # The infinite global Artin homomorphism
@@ -280,7 +282,7 @@ noncomputable def infiniteGlobalArtinLimitPoint
       property := by
         intro E F f
         algebraize [Subsemiring.inclusion <| leOfHom f.1]
-        haveI : IsScalarTower K F.unop E.unop :=
+        have : IsScalarTower K F.unop E.unop :=
           IsScalarTower.of_algebraMap_eq (congrFun rfl)
         change
           AlgEquiv.restrictNormalHom F.unop
@@ -335,7 +337,7 @@ noncomputable def infiniteGlobalArtinToLimit
                 (K := K) (L := E.unop)) :=
           globalArtinMonoidHom_continuous
             (K := K) (L := E.unop)
-        letI
+        let
             (E :
               (FiniteGaloisIntermediateField
                 K Ω)ᵒᵖ) :
@@ -391,7 +393,7 @@ theorem restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField
         (infiniteGlobalArtinMonoidHom K Ω a) =
       globalArtinMonoidHom
         (K := K) (L := E) a := by
-  letI : NumberField E := hE
+  let : NumberField E := hE
   have hcomponent :=
     congrArg
       (InfiniteGalois.proj
@@ -417,8 +419,8 @@ theorem restrictNormalHom_infiniteGlobalArtinMonoidHom_of_structures
         (infiniteGlobalArtinMonoidHom K Ω a) =
       globalArtinMonoidHom
         (K := K) (L := E) a := by
-  letI : NumberField E := hE
-  letI : IsAbelianGalois K E := hAbelian
+  let : NumberField E := hE
+  let : IsAbelianGalois K E := hAbelian
   exact
     restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField
       K Ω a E hE
@@ -439,7 +441,7 @@ theorem restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField_apply
         (infiniteGlobalArtinMonoidHom K Ω a) x =
       globalArtinMonoidHom
         (K := K) (L := E) a x := by
-  letI : NumberField E := hE
+  let : NumberField E := hE
   exact DFunLike.congr_fun
     (restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField
       K Ω a E hE) x
@@ -459,7 +461,7 @@ theorem map_restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField
         (infiniteGlobalArtinMonoidHom K Ω a)) =
       f (globalArtinMonoidHom
         (K := K) (L := E) a) := by
-  letI : NumberField E := hE
+  let : NumberField E := hE
   exact congrArg f
     (restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField
       K Ω a E hE)
@@ -493,7 +495,7 @@ theorem globalArtinMonoidHomOfNumberField_norm_restriction
         (globalArtinMonoidHomOfNumberField K' L' hL') =
       (globalArtinMonoidHom (K := K) (L := L)).comp
         (IdeleGroup.norm K K') := by
-  letI : NumberField L' := hL'
+  let : NumberField L' := hL'
   exact globalArtinMonoidHom_norm_restriction
 
 /-- Monoid-hom postcomposition of a finite projection, stated at the hom
@@ -511,7 +513,7 @@ theorem comp_restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField
     f (AlgEquiv.restrictNormalHom E
         (infiniteGlobalArtinMonoidHom K Ω a)) =
       (f.comp (globalArtinMonoidHomOfNumberField K E hE)) a := by
-  letI : NumberField E := hE
+  let : NumberField E := hE
   exact
     (map_restrictNormalHom_infiniteGlobalArtinMonoidHom_of_numberField
       K Ω a E hE f).trans rfl
@@ -625,7 +627,7 @@ theorem infiniteGlobalArtinMonoidHom_denseRange
     (InfiniteGalois.krullTopology_mem_nhds_one_iff_of_isGalois
         (k := K) (K := Ω) V).mp
       hVnhds
-  letI : NumberField E :=
+  let : NumberField E :=
     NumberField.of_module_finite K E
   obtain ⟨a, ha⟩ :=
     globalArtinMonoidHom_surjective
@@ -701,8 +703,8 @@ theorem restrictNormalHom_rationalCyclotomicZHatGlobalArtin_of_structures
         (rationalCyclotomicZHatGlobalArtin a) =
       globalArtinMonoidHom
         (K := ℚ) (L := E) a := by
-  letI : NumberField E := hE
-  letI : IsAbelianGalois ℚ E := hAbelian
+  let : NumberField E := hE
+  let : IsAbelianGalois ℚ E := hAbelian
   exact
     restrictNormalHom_infiniteGlobalArtinMonoidHom_of_structures
       ℚ rationalCyclotomicZHatField a E hE hAbelian
@@ -779,13 +781,13 @@ theorem
     rationalCyclotomicZHatGlobalArtin
         (rationalPositiveArchimedeanIdele r) =
       1 := by
-  letI
+  let
       (E :
         FiniteGaloisIntermediateField
           ℚ rationalCyclotomicZHatField) :
       NumberField E :=
     NumberField.of_module_finite ℚ E
-  letI
+  let
       (E :
         FiniteGaloisIntermediateField
           ℚ rationalCyclotomicZHatField) :

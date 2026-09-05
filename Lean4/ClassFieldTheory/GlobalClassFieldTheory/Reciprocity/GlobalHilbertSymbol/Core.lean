@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Conjugation
-import LocalClassFieldTheory.Kummer.LocalHilbertSymbol
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Conjugation
+import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
 import Mathlib.FieldTheory.KummerExtension
+
+set_option autoImplicit false
 
 /-!
 # Global-place Hilbert symbols
@@ -224,9 +226,9 @@ theorem finitePlaceKummerRootCharacterOfExtension_eq_of_extensions
       finitePlaceKummerRootCharacterOfExtension
         K n hnK hmu v a b w' := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   let a_v : (v.adicCompletion K)ˣ :=
     Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom a
@@ -269,9 +271,9 @@ theorem finitePlaceKummerRootCharacterOfExtension_eq
         K n hnK hmu v a b w =
       finitePlaceKummerRootCharacter K n hnK hmu v a b := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   let w' := chosenFinitePlaceExtension (L := L) v
   unfold finitePlaceKummerRootCharacter

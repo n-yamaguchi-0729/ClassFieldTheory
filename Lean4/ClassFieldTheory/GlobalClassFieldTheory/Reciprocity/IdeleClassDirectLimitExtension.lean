@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitAbstractFixedField
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitAbstractFixedField
+
+set_option autoImplicit false
 
 /-!
 # Finite extensions in the rational idele-class representation
@@ -16,7 +18,7 @@ open ClassFormation
 open LocalClassFieldTheory
 open CyclicCohomology
 
-private noncomputable instance (priority := 2000)
+private noncomputable instance
     rationalAbstractTowerClassGroupCommGroup
     (F E : Type)
     [Field F] [NumberField F]
@@ -31,7 +33,7 @@ private noncomputable instance (priority := 2000)
     QuotientGroup.Quotient.commGroup
       (TowerRelativeIdeleGroup.principalSubgroup ℚ F E)
 
-private noncomputable instance (priority := 2001)
+private noncomputable instance
     rationalAbstractTowerClassGroupMul
     (F E : Type)
     [Field F] [NumberField F]
@@ -42,7 +44,7 @@ private noncomputable instance (priority := 2001)
     Mul (TowerRelativeIdeleGroup.ClassGroup ℚ F E) :=
   (rationalAbstractTowerClassGroupCommGroup F E).toMul
 
-private noncomputable instance (priority := 2002)
+private noncomputable instance
     rationalAbstractTowerClassGroupMulOneClass
     (F E : Type)
     [Field F] [NumberField F]
@@ -53,7 +55,7 @@ private noncomputable instance (priority := 2002)
     MulOneClass (TowerRelativeIdeleGroup.ClassGroup ℚ F E) :=
   (rationalAbstractTowerClassGroupCommGroup F E).toMulOneClass
 
-private noncomputable instance (priority := 2000)
+private noncomputable instance
     rationalAbstractRelativeClassGroupCommGroup
     (F E : Type)
     [Field F] [NumberField F]
@@ -66,7 +68,7 @@ private noncomputable instance (priority := 2000)
     QuotientGroup.Quotient.commGroup
       (RelativeIdeleGroup.principalSubgroup F E)
 
-private noncomputable instance (priority := 2001)
+private noncomputable instance
     rationalAbstractRelativeClassGroupMul
     (F E : Type)
     [Field F] [NumberField F]
@@ -75,7 +77,7 @@ private noncomputable instance (priority := 2001)
     Mul (RelativeIdeleGroup.ClassGroup F E) :=
   (rationalAbstractRelativeClassGroupCommGroup F E).toMul
 
-private noncomputable instance (priority := 2002)
+private noncomputable instance
     rationalAbstractRelativeClassGroupMulOneClass
     (F E : Type)
     [Field F] [NumberField F]
@@ -315,10 +317,10 @@ theorem rationalIdeleClassEquivFixed_relativeNorm_coe
             ℚ (rationalNormalClosure K)
             (RelativeIdeleGroup.Cohomology.ideleClassNorm ℚ K c))) := by
   classical
-  letI : Algebra K (rationalNormalClosure K) :=
+  let : Algebra K (rationalNormalClosure K) :=
     (IntermediateField.inclusion
       (IntermediateField.le_normalClosure K)).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ K (rationalNormalClosure K) :=
+  let : IsScalarTower ℚ K (rationalNormalClosure K) :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
   let Q :=
     (RamificationTheory.closedFixingSubgroup
@@ -332,7 +334,7 @@ theorem rationalIdeleClassEquivFixed_relativeNorm_coe
           ℚ (SeparableClosure ℚ) K)
         (LocalClassFieldTheory.fixingSubgroupLeBase
           ℚ (SeparableClosure ℚ) K)
-  letI := Fintype.ofFinite Q
+  let := Fintype.ofFinite Q
   let term : Q → Additive rationalIdeleClassDirectLimit :=
     fun q =>
       (relativeCosetAction rationalIdeleClassRepresentation
@@ -495,7 +497,7 @@ theorem
   let F :=
     LocalClassFieldTheory.abstractFixedField
       ℚ (SeparableClosure ℚ) H
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     LocalClassFieldTheory.abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) H hfinite
   let x :

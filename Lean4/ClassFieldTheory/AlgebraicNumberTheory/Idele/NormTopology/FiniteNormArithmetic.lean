@@ -1,10 +1,12 @@
-import AlgebraicNumberTheory.Idele.Norm
-import AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import AlgebraicNumberTheory.Idele.Extension.IdealClass
-import AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Norm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
 import Mathlib.Algebra.BigOperators.Finprod
 import Mathlib.NumberTheory.NumberField.Completion.Ramification
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
+
+set_option autoImplicit false
 
 /-!
 # Finite-place arithmetic of idele norms
@@ -125,7 +127,7 @@ theorem primeNorm_above
     FiniteIdeleGroup.primeNorm W.1 =
       FiniteIdeleGroup.primeNorm v₀ ^
         W.1.asIdeal.inertiaDeg (𝓞 K) := by
-  letI : W.1.asIdeal.LiesOver v₀.asIdeal := by
+  let : W.1.asIdeal.LiesOver v₀.asIdeal := by
     constructor
     exact congrArg HeightOneSpectrum.asIdeal W.2.symm
   apply Units.ext
@@ -187,16 +189,16 @@ theorem finiteComponentOrder_norm
   let vK := HeightOneSpectrum.adicAbv K v₀
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v₀
-  letI :=
+  let :=
     completionTensorDecomposition_extensionFintype
       (K := K) (L := L) vK hvK
   let eAbove :=
     finitePlaceExtensionEquivAbove
       (K := K) (L := L) v₀
-  letI : Fintype {W : HeightOneSpectrum (𝓞 L) //
+  let : Fintype {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v₀} :=
     Fintype.ofEquiv (AbsoluteValueExtension vK L) eAbove
-  letI : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
+  let : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
       _root_.finitePlaceBelow (K := K) W = v₀},
       Algebra (v₀.adicCompletion K) (W.1.adicCompletion L) :=
     fun W =>
@@ -278,16 +280,16 @@ theorem finiteAbsoluteNorm_norm
       let vK := HeightOneSpectrum.adicAbv K v₀
       let hvK : vK.IsNontrivial :=
         RayClass.adicAbv_isNontrivial v₀
-      letI :=
+      let :=
         completionTensorDecomposition_extensionFintype
           (K := K) (L := L) vK hvK
       let eAbove :=
         finitePlaceExtensionEquivAbove
           (K := K) (L := L) v₀
-      letI : Fintype {W : HeightOneSpectrum (𝓞 L) //
+      let : Fintype {W : HeightOneSpectrum (𝓞 L) //
           _root_.finitePlaceBelow (K := K) W = v₀} :=
         Fintype.ofEquiv (AbsoluteValueExtension vK L) eAbove
-      letI : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
+      let : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
           _root_.finitePlaceBelow (K := K) W = v₀},
           Algebra (v₀.adicCompletion K) (W.1.adicCompletion L) :=
         fun W =>
@@ -361,7 +363,7 @@ theorem fractionalIdealAbsoluteNorm_extension_prime
       FractionalIdealGroup.absoluteNorm
           (FractionalIdealGroup.prime v₀) ^
         Module.finrank K L := by
-  letI : Algebra
+  let : Algebra
       (FractionRing (𝓞 K)) (FractionRing (𝓞 L)) :=
     FractionRing.liftAlgebra _ _
   have hfinrank :
@@ -382,7 +384,11 @@ theorem fractionalIdealAbsoluteNorm_extension_prime
           (v₀.asIdeal.map
             (algebraMap (𝓞 K) (𝓞 L))) =
         Ideal.absNorm v₀.asIdeal ^ Module.finrank K L := by
-    simpa only [hfinrank] using
+    simpa only [
+      ← IsFractionRing.finrank_eq
+        (𝓞 K) (FractionRing (𝓞 K))
+        (𝓞 L) (FractionRing (𝓞 L)),
+      hfinrank] using
       (Ideal.absNorm_algebraMap
         (𝓞 K) (𝓞 L) v₀.asIdeal)
   have hFractional :

@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Extension.GaloisNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisNorm
 import Mathlib.FieldTheory.Normal.Basic
+
+set_option autoImplicit false
 
 /-!
 # Norms through an ambient Galois extension
@@ -180,7 +182,7 @@ theorem norm_eq_prod_embeddings_in_galoisExtension
     [IsGalois K M] (x : L) :
     algebraMap K M (Algebra.norm K x) =
       ∏ f : L →ₐ[K] M, f x := by
-  letI : Algebra.IsSeparable K L :=
+  let : Algebra.IsSeparable K L :=
     Algebra.isSeparable_tower_bot_of_isSeparable K L M
   apply
     (algebraMap M
@@ -198,9 +200,7 @@ theorem norm_eq_prod_embeddings_in_galoisExtension
         (AlgebraicClosure M) x
     _ = ∏ f : L →ₐ[K] M,
         algebraMap M (AlgebraicClosure M) (f x) := by
-      simpa [embeddingToAlgebraicClosureEquiv,
-        embeddingToAlgebraicClosure] using
-        ((embeddingToAlgebraicClosureEquiv
+      exact ((embeddingToAlgebraicClosureEquiv
           (K := K) (L := L) (M := M)).prod_comp
             (fun f ↦ f x)).symm
 

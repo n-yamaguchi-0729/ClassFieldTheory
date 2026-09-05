@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.FormalModule.LubinTateEndomorphism
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateEndomorphism
+
+set_option autoImplicit false
 
 /-!
 # Equal-characteristic Lubin--Tate action

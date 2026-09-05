@@ -1,8 +1,15 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainTransfer
-import AbstractClassFieldTheory.Reciprocity.Core
-import AbstractClassFieldTheory.Reciprocity.Sylow
-import AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase
-import CyclicCohomology.IntegralRepUniverse
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainTransfer
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Core
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Sylow
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.FrobeniusLift
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.RestrictionCosets
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.RestrictionEquiv
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.FrobeniusNorms
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.FixedSource
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.Conclusion
+import GaloisCohomology.Cyclic.IntegralRepUniverse
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -37,7 +44,7 @@ private theorem abstractReciprocity_galois_functionExact
     Function.Exact
       (MonoidHom.toAdditive (abstractReciprocityInclusion K M L hLM hMK))
       (MonoidHom.toAdditive (abstractReciprocityRestriction K M L hLM hMK)) := by
-  letI : (extensionSubgroup M L hLM).Normal :=
+  let : (extensionSubgroup M L hLM).Normal :=
     transferNormNaturality_intermediateExtension_normal K M L hLM hMK
   intro q
   constructor
@@ -61,18 +68,15 @@ private theorem abstractReciprocity_galois_functionExact
 private theorem abstractReciprocity_subgroup_card_lt_of_ne_top
     {Q : Type*} [Group Q] [Finite Q] (S : Subgroup Q) (hS : S ≠ ⊤) :
     Nat.card S < Nat.card Q := by
-  letI := Fintype.ofFinite Q
-  letI := Fintype.ofFinite S
-  simpa only [Nat.card_eq_fintype_card] using
-    (Fintype.card_lt_of_injective_not_surjective
-      S.subtype S.subtype_injective (by
-        intro hsurj
-        apply hS
-        rw [eq_top_iff]
-        intro q _
-        obtain ⟨s, hs⟩ := hsurj q
-        rw [← hs]
-        exact s.property))
+  by_contra hlt
+  have hsurj : Function.Surjective S.subtype :=
+    (S.subtype_injective.bijective_of_nat_card_le (Nat.le_of_not_gt hlt)).2
+  apply hS
+  rw [eq_top_iff]
+  intro q _
+  obtain ⟨s, hs⟩ := hsurj q
+  rw [← hs]
+  exact s.property
 
 /-- Quotienting a finite group by a nontrivial normal subgroup strictly
 decreases its cardinality. -/
@@ -80,15 +84,13 @@ private theorem abstractReciprocity_quotient_card_lt_of_ne_bot
     {Q : Type*} [Group Q] [Finite Q] (S : Subgroup Q) [S.Normal]
     (hS : S ≠ ⊥) :
     Nat.card (Q ⧸ S) < Nat.card Q := by
-  letI := Fintype.ofFinite Q
-  letI := Fintype.ofFinite (Q ⧸ S)
-  simpa only [Nat.card_eq_fintype_card] using
-    (Fintype.card_lt_of_surjective_not_injective
-      (QuotientGroup.mk' S) (QuotientGroup.mk'_surjective S) (by
-        intro hinj
-        apply hS
-        rw [← QuotientGroup.ker_mk' S]
-        exact (MonoidHom.ker_eq_bot_iff (QuotientGroup.mk' S)).2 hinj))
+  by_contra hlt
+  have hinj : Function.Injective (QuotientGroup.mk' S) :=
+    ((QuotientGroup.mk'_surjective S).bijective_of_nat_card_le
+      (Nat.le_of_not_gt hlt)).1
+  apply hS
+  rw [← QuotientGroup.ker_mk' S]
+  exact (MonoidHom.ker_eq_bot_iff (QuotientGroup.mk' S)).2 hinj
 
 /-- A subgroup of a finite commutative group which contains every Sylow
 subgroup is the whole group. -/
@@ -102,8 +104,7 @@ private theorem abstractReciprocity_subgroup_eq_top_of_sylow_le
   apply (Subgroup.index_eq_one (H := H)).1
   apply Nat.eq_one_iff_not_exists_prime_dvd.mpr
   intro p hp hpdvd
-  letI : Fact p.Prime := ⟨hp⟩
-  letI : H.Normal := H.normal_of_isMulCommutative
+  let : Fact p.Prime := ⟨hp⟩
   let quotientMap : B →* B ⧸ H := QuotientGroup.mk' H
   have hquotientMap : Function.Surjective quotientMap :=
     QuotientGroup.mk'_surjective H
@@ -141,7 +142,7 @@ private theorem abstractReciprocity_addSubgroup_eq_top_of_exponent_and_sylow_le
       apply Multiplicative.toAdd.injective
       simpa [b] using hexponent b⟩
   let C := Subgroup.zpowers g
-  letI : Fintype C :=
+  let : Fintype C :=
     Fintype.ofEquiv (Fin (orderOf g)) (finEquivZPowers hgfinite)
   let J : Subgroup C := H.toSubgroup.comap C.subtype
   have hJ : J = ⊤ := by
@@ -252,7 +253,7 @@ theorem abstractReciprocity_cyclic_finiteReciprocityHom_bijective
           extensionSubgroup K.field L.field L.below) := L.finite
     Function.Bijective
       (D.finiteReciprocityHom A v hAxiom K L.field L.below) := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   let S := L.inertiaImage D
@@ -261,28 +262,28 @@ theorem abstractReciprocity_cyclic_finiteReciprocityHom_bijective
     L.field_le_intermediateField S
   let hMK : M.toSubgroup ≤ K.field.toSubgroup :=
     L.intermediateField_le_base S
-  letI hLnormal :
+  let hLnormal :
       (extensionSubgroup K.field L.field (hLM.trans hMK)).Normal := by
     simpa only using L.normal
-  letI hLfinite : Finite
+  let hLfinite : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field (hLM.trans hMK)) := by
     simpa only using L.finite
-  letI hMnormal : (extensionSubgroup K.field M hMK).Normal :=
+  let hMnormal : (extensionSubgroup K.field M hMK).Normal :=
     L.intermediateField_normal S inferInstance
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field M hMK) :=
     L.intermediateField_finite S
-  letI hLMnormal : (extensionSubgroup M L.field hLM).Normal :=
+  let hLMnormal : (extensionSubgroup M L.field hLM).Normal :=
     L.extensionSubgroup_over_intermediate_normal S
-  letI hLMfinite : Finite
+  let hLMfinite : Finite
       (M.toSubgroup ⧸ extensionSubgroup M L.field hLM) :=
     L.extension_over_intermediate_finite S
-  letI hMabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hMabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) M (le_baseField M)) :=
     FiniteGaloisSubextension.finite_extension_trans hMK (le_baseField K.field)
   let MF : FiniteAbstractField G := ⟨M, hMabsolute⟩
-  letI hLowerCyclic : IsCyclic
+  let hLowerCyclic : IsCyclic
       (M.toSubgroup ⧸ extensionSubgroup M L.field hLM) :=
     L.lowerQuotient_isCyclic S
   obtain ⟨g, hg⟩ := IsCyclic.exists_generator
@@ -356,30 +357,30 @@ private theorem abstractReciprocity_finiteReciprocityHom_surjective_of_intermedi
       Function.Surjective
         (D.finiteReciprocityHom A v hAxiom K L.field L.below) := by
   dsimp only
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   let M := L.intermediateField S
   let hLM := L.field_le_intermediateField S
   let hMK := L.intermediateField_le_base S
-  letI hLnormal :
+  let hLnormal :
       (extensionSubgroup K.field L.field (hLM.trans hMK)).Normal := by
     simpa only using L.normal
-  letI hLfinite : Finite
+  let hLfinite : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field (hLM.trans hMK)) := by
     simpa only using L.finite
-  letI hMnormal : (extensionSubgroup K.field M hMK).Normal :=
+  let hMnormal : (extensionSubgroup K.field M hMK).Normal :=
     L.intermediateField_normal S hSnormal
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field M hMK) :=
     L.intermediateField_finite S
-  letI hLMnormal : (extensionSubgroup M L.field hLM).Normal :=
+  let hLMnormal : (extensionSubgroup M L.field hLM).Normal :=
     L.extensionSubgroup_over_intermediate_normal S
-  letI hLMfinite : Finite
+  let hLMfinite : Finite
       (M.toSubgroup ⧸ extensionSubgroup M L.field hLM) :=
     L.extension_over_intermediate_finite S
-  letI hMabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hMabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) M (le_baseField M)) :=
     FiniteGaloisSubextension.finite_extension_trans hMK (le_baseField K.field)
   let MF : FiniteAbstractField G := ⟨M, hMabsolute⟩
@@ -401,6 +402,10 @@ private theorem abstractReciprocity_finiteReciprocityHom_surjective_of_intermedi
     (abstractReciprocity_normQuotient_exact A K.field M L.field hLM hMK)
     hpQ hleft hright hr₀ hr₁
 
+section SolvableReciprocity
+
+local notation "IsSolvable" => Group.IsSolvable
+
 /-- The degree induction in the first reduction for solvable
 Galois groups.  In the abelian noncyclic case one cuts out one of the
 faithful cyclic coordinates; in the nonabelian case one cuts out the
@@ -418,25 +423,25 @@ private theorem abstractReciprocity_solvable_finiteReciprocityHom_surjective
     Function.Surjective
       (D.finiteReciprocityHom A v hAxiom K L.field L.below) := by
   classical
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   let Q := L.extensionQuotient
   by_cases hcyclic : IsCyclic Q
-  · letI : IsCyclic Q := hcyclic
+  · let : IsCyclic Q := hcyclic
     exact (v.abstractReciprocity_cyclic_finiteReciprocityHom_bijective
       hcf hAxiom K L).2
   have hQnotSubsingleton : ¬ Subsingleton Q := by
     intro hQ
-    letI : Subsingleton Q := hQ
+    let : Subsingleton Q := hQ
     exact hcyclic inferInstance
-  letI hQnontrivial : Nontrivial Q :=
+  let hQnontrivial : Nontrivial Q :=
     not_subsingleton_iff_nontrivial.mp hQnotSubsingleton
   by_cases hcommutative : IsMulCommutative Q
-  · letI : IsMulCommutative Q := hcommutative
+  · let : IsMulCommutative Q := hcommutative
     obtain ⟨I, hIfinite, _, _, f, _, hfaithful, hfactorCyclic,
         _⟩ := L.exists_cyclicIntermediateFields
-    letI : Fintype I := hIfinite
+    let : Fintype I := hIfinite
     obtain ⟨q, hq⟩ := exists_ne (1 : Q)
     have hnotAll : ¬ ∀ i, f i q = 1 := by
       intro hall
@@ -449,7 +454,7 @@ private theorem abstractReciprocity_solvable_finiteReciprocityHom_surjective
     push Not at hnotAll
     obtain ⟨i, hi⟩ := hnotAll
     let S := MonoidHom.ker (f i)
-    letI hSnormal : S.Normal := inferInstance
+    let hSnormal : S.Normal := inferInstance
     have hSneTop : S ≠ ⊤ := by
       intro htop
       have hmem : q ∈ S := by rw [htop]; trivial
@@ -457,20 +462,20 @@ private theorem abstractReciprocity_solvable_finiteReciprocityHom_surjective
     let M := L.intermediateField S
     let N := L.lowerFiniteGalois S
     let U := L.intermediateFiniteGalois S hSnormal
-    letI hMabsolute : Finite ((baseField G).toSubgroup ⧸
+    let hMabsolute : Finite ((baseField G).toSubgroup ⧸
         extensionSubgroup (baseField G) M (le_baseField M)) :=
       FiniteGaloisSubextension.finite_extension_trans
         (L.intermediateField_le_base S) (le_baseField K.field)
     let MF : FiniteAbstractField G := ⟨M, hMabsolute⟩
-    letI hNsolvable : IsSolvable N.extensionQuotient :=
-      solvable_of_solvable_injective
+    let hNsolvable : Group.IsSolvable N.extensionQuotient :=
+      Group.isSolvable_of_isSolvable_injective
         (f := (L.lowerQuotientEquiv S).toMonoidHom)
         (L.lowerQuotientEquiv S).injective
-    letI hUcyclic : IsCyclic U.extensionQuotient := hfactorCyclic i
-    letI : Finite
+    let hUcyclic : IsCyclic U.extensionQuotient := hfactorCyclic i
+    let : Finite
         (MF.field.toSubgroup ⧸
           extensionSubgroup MF.field N.field N.below) := N.finite
-    letI : Finite
+    let : Finite
         (K.field.toSubgroup ⧸
           extensionSubgroup K.field U.field U.below) := U.finite
     have hNcard : Nat.card N.extensionQuotient < Nat.card Q := by
@@ -490,7 +495,7 @@ private theorem abstractReciprocity_solvable_finiteReciprocityHom_surjective
     exact abstractReciprocity_finiteReciprocityHom_surjective_of_intermediate
       v hAxiom K L S hrN hrU
   · let S := commutator Q
-    letI hSnormal : S.Normal := inferInstance
+    let hSnormal : S.Normal := inferInstance
     have hSneBot : S ≠ ⊥ := by
       intro hbot
       apply hcommutative
@@ -500,34 +505,34 @@ private theorem abstractReciprocity_solvable_finiteReciprocityHom_surjective
         Group.commGroupOfCenterEqTop hcenter
       exact ⟨⟨fun x y => hcommGroup.mul_comm x y⟩⟩
     have hSlt : S < ⊤ :=
-      IsSolvable.commutator_lt_top_of_nontrivial Q
+      Group.IsSolvable.commutator_lt_top_of_nontrivial Q
     let M := L.intermediateField S
     let N := L.lowerFiniteGalois S
     let U := L.intermediateFiniteGalois S hSnormal
-    letI hMfinite : Finite
+    let hMfinite : Finite
         (K.field.toSubgroup ⧸ extensionSubgroup K.field M
           (L.intermediateField_le_base S)) :=
       L.intermediateField_finite S
-    letI hMabsolute : Finite ((baseField G).toSubgroup ⧸
+    let hMabsolute : Finite ((baseField G).toSubgroup ⧸
         extensionSubgroup (baseField G) M (le_baseField M)) :=
       FiniteGaloisSubextension.finite_extension_trans
         (L.intermediateField_le_base S) (le_baseField K.field)
     let MF : FiniteAbstractField G := ⟨M, hMabsolute⟩
-    letI hNsolvable : IsSolvable N.extensionQuotient :=
-      solvable_of_solvable_injective
+    let hNsolvable : Group.IsSolvable N.extensionQuotient :=
+      Group.isSolvable_of_isSolvable_injective
         (f := (L.lowerQuotientEquiv S).toMonoidHom)
         (L.lowerQuotientEquiv S).injective
-    letI hUpperSolvable : IsSolvable (L.upperQuotient S) := by
-      change IsSolvable (Q ⧸ S)
+    let hUpperSolvable : Group.IsSolvable (L.upperQuotient S) := by
+      change Group.IsSolvable (Q ⧸ S)
       infer_instance
-    letI hUsolvable : IsSolvable U.extensionQuotient :=
-      solvable_of_solvable_injective
+    let hUsolvable : Group.IsSolvable U.extensionQuotient :=
+      Group.isSolvable_of_isSolvable_injective
         (f := (L.upperQuotientEquiv S).symm.toMonoidHom)
         (L.upperQuotientEquiv S).symm.injective
-    letI : Finite
+    let : Finite
         (MF.field.toSubgroup ⧸
           extensionSubgroup MF.field N.field N.below) := N.finite
-    letI : Finite
+    let : Finite
         (K.field.toSubgroup ⧸
           extensionSubgroup K.field U.field U.below) := U.finite
     have hNcard : Nat.card N.extensionQuotient < Nat.card Q := by
@@ -555,6 +560,8 @@ private theorem abstractReciprocity_solvable_finiteReciprocityHom_surjective
 termination_by Nat.card L.extensionQuotient
 decreasing_by all_goals assumption
 
+end SolvableReciprocity
+
 /-- The Sylow step in the first reduction.  The norm quotient
 need not be known finite here: the unramified cohomology consequence kills every element by the
 extension degree, so the Sylow argument is performed inside the finite
@@ -571,7 +578,7 @@ theorem abstractReciprocity_finiteReciprocityHom_surjective
     Function.Surjective
       (D.finiteReciprocityHom A v hAxiom K L.field L.below) := by
   classical
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   let r := D.finiteReciprocityHom A v hAxiom K L.field L.below
@@ -590,15 +597,15 @@ theorem abstractReciprocity_finiteReciprocityHom_surjective
   let hLM := L.field_le_intermediateField S
   let hMK := L.intermediateField_le_base S
   let N := L.lowerFiniteGalois S
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field M hMK) :=
     L.intermediateField_finite S
-  letI hLMnormal : (extensionSubgroup M L.field hLM).Normal :=
+  let hLMnormal : (extensionSubgroup M L.field hLM).Normal :=
     L.extensionSubgroup_over_intermediate_normal S
-  letI hLMfinite : Finite
+  let hLMfinite : Finite
       (M.toSubgroup ⧸ extensionSubgroup M L.field hLM) :=
     L.extension_over_intermediate_finite S
-  letI hMabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hMabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) M (le_baseField M)) :=
     FiniteGaloisSubextension.finite_extension_trans hMK (le_baseField K.field)
   let MF : FiniteAbstractField G := ⟨M, hMabsolute⟩
@@ -607,7 +614,7 @@ theorem abstractReciprocity_finiteReciprocityHom_surjective
       base := K
       below := hMK
       finiteQuotient := hMfinite }
-  letI hNsolvable : IsSolvable N.extensionQuotient :=
+  let hNsolvable : Group.IsSolvable N.extensionQuotient :=
     L.abstractReciprocity_sylow_lowerQuotient_isSolvable Psource
   let rLower := D.finiteReciprocityHom A v hAxiom MF L.field hLM
   have hrLower : Function.Surjective rLower :=
@@ -625,20 +632,19 @@ theorem abstractReciprocity_finiteReciprocityHom_surjective
   have hcomm := D.finiteReciprocityNaturality_restriction_norm_commutes
     A v hAxiom EMK L.field L.field
       L.below hLM le_rfl
-  calc
-    r (MonoidHom.toAdditive
+  have hrecip : r (MonoidHom.toAdditive
         (finiteReciprocityNaturalityRestriction K.field M L.field L.field
           L.below hLM hMK le_rfl) g) =
-        finiteReciprocityNaturalityNormMap A K.field M L.field L.field
-          L.below hLM hMK le_rfl (rLower g) := by
-            simpa only [r, rLower, AddMonoidHom.comp_apply] using
-              (congrArg (fun f => f g) hcomm).symm
-    _ = L.intermediateNormMap A S (rLower g) := rfl
-    _ = L.intermediateNormMap A S
-          (L.intermediateNormQuotientInclusion A S y) := by rw [hg]
-    _ = ((L.intermediateFiniteAbstractExtension S).degree : ℕ) • y :=
-      L.intermediateNormMap_comp_inclusion A S y
-    _ = x := hy
+      L.intermediateNormMap A S (rLower g) := by
+    change r (MonoidHom.toAdditive
+        (finiteReciprocityNaturalityRestriction K.field M L.field L.field
+          L.below hLM hMK le_rfl) g) =
+      finiteReciprocityNaturalityNormMap A K.field M L.field L.field
+        L.below hLM hMK le_rfl (rLower g)
+    simpa only [r, rLower, AddMonoidHom.comp_apply] using
+      (congrArg (fun f => f g) hcomm).symm
+  exact hrecip.trans ((congrArg (L.intermediateNormMap A S) hg).trans
+    ((L.intermediateNormMap_comp_inclusion A S y).trans hy))
 
 /-- The second reduction: for an abelian Galois group, the
 cyclic quotient coordinates are jointly faithful, hence the reciprocity
@@ -656,7 +662,7 @@ theorem abstractReciprocity_abelian_finiteReciprocityHom_injective
     Function.Injective
       (D.finiteReciprocityHom A v hAxiom K L.field L.below) := by
   classical
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   let EKK : FiniteAbstractFieldExtension G :=
@@ -666,23 +672,23 @@ theorem abstractReciprocity_abelian_finiteReciprocityHom_injective
       finiteQuotient := (FiniteGaloisSubextension.refl K.field).finite }
   obtain ⟨I, hIfinite, _, _, f, _, hfaithful, hfactorCyclic,
       _⟩ := L.exists_cyclicIntermediateFields
-  letI : Fintype I := hIfinite
+  let : Fintype I := hIfinite
   rw [injective_iff_map_eq_zero]
   intro q hq
   have hrestriction (i : I) :
       L.upperRestrictionHom (MonoidHom.ker (f i)) q.toMul = 1 := by
     let S := MonoidHom.ker (f i)
-    letI hSnormal : S.Normal := inferInstance
+    let hSnormal : S.Normal := inferInstance
     let M := L.intermediateField S
     let hLM := L.field_le_intermediateField S
     let hMK := L.intermediateField_le_base S
     let U := L.intermediateFiniteGalois S hSnormal
-    letI hMnormal : (extensionSubgroup K.field M hMK).Normal :=
+    let hMnormal : (extensionSubgroup K.field M hMK).Normal :=
       L.intermediateField_normal S hSnormal
-    letI hMfinite : Finite
+    let hMfinite : Finite
         (K.field.toSubgroup ⧸ extensionSubgroup K.field M hMK) :=
       L.intermediateField_finite S
-    letI hUcyclic : IsCyclic U.extensionQuotient := hfactorCyclic i
+    let hUcyclic : IsCyclic U.extensionQuotient := hfactorCyclic i
     let rFactor := D.finiteReciprocityHom A v hAxiom K M hMK
     have hrFactor : Function.Injective rFactor :=
       (v.abstractReciprocity_cyclic_finiteReciprocityHom_bijective
@@ -713,8 +719,10 @@ theorem abstractReciprocity_abelian_finiteReciprocityHom_injective
       intro k
       rw [L.upperRestrictionHom_mk,
         abstractReciprocityRestriction_mk]
-    rw [hbridge]
-    exact Additive.ofMul.injective (by simpa using hadd)
+    have hmul :
+        abstractReciprocityRestriction K.field M L.field hLM hMK q.toMul = 1 :=
+      congrArg Additive.toMul hadd
+    exact (hbridge (show L.extensionQuotient from q.toMul)).trans hmul
   have hqone : q.toMul = 1 :=
     (L.upperRestrictionHom_jointlyFaithful f hfaithful q.toMul).1
       hrestriction
@@ -735,19 +743,19 @@ theorem abstractReciprocity_abelianizedReciprocity_bijective
       (D.transferNormNaturalityAbelianizedReciprocity
         A v hAxiom K L.field L.below) := by
   classical
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   let Q := L.extensionQuotient
   let S := commutator Q
-  letI hSnormal : S.Normal := inferInstance
+  let hSnormal : S.Normal := inferInstance
   let M := L.intermediateField S
   let hLM := L.field_le_intermediateField S
   let hMK := L.intermediateField_le_base S
   let U := L.intermediateFiniteGalois S hSnormal
-  letI hMnormal : (extensionSubgroup K.field M hMK).Normal :=
+  let hMnormal : (extensionSubgroup K.field M hMK).Normal :=
     L.intermediateField_normal S hSnormal
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field M hMK) :=
     L.intermediateField_finite S
   let EKK : FiniteAbstractFieldExtension G :=
@@ -756,11 +764,11 @@ theorem abstractReciprocity_abelianizedReciprocity_bijective
       below := le_rfl
       finiteQuotient := (FiniteGaloisSubextension.refl K.field).finite }
   let upperEquiv := L.upperQuotientEquiv S
-  letI hUpperCommutative : IsMulCommutative (Q ⧸ S) := by
+  let hUpperCommutative : IsMulCommutative (Q ⧸ S) := by
     dsimp only [S]
     exact
       (Subgroup.Normal.quotient_commutative_iff_commutator_le).2 le_rfl
-  letI hUcommutative : IsMulCommutative U.extensionQuotient :=
+  let hUcommutative : IsMulCommutative U.extensionQuotient :=
     ⟨⟨fun x y => by
       obtain ⟨x', rfl⟩ := upperEquiv.surjective x
       obtain ⟨y', rfl⟩ := upperEquiv.surjective y
@@ -888,7 +896,7 @@ theorem abstractReciprocityEquiv_apply_of
       D.finiteReciprocityHom A v (v.classFieldAxiom_implies_unramifiedUnitCohomology hcf)
         K L.field L.below
         (Additive.ofMul q) := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   exact D.transferNormNaturalityAbelianizedReciprocity_of
@@ -931,7 +939,7 @@ theorem normResidueSymbol_finiteReciprocityHom
           K L.field L.below
           (Additive.ofMul q)) =
       Additive.ofMul (Abelianization.of q) := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   rw [← D.abstractReciprocityEquiv_apply_of A v hcf K L q]
@@ -952,7 +960,7 @@ theorem abstractReciprocity_normResidueSymbol
     ∀ a : FiniteNormQuotient A K.field L.field L.below,
     D.abstractReciprocityEquiv A v hcf K L
         (D.normResidueSymbol A v hcf K L a) = a := by
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸
         extensionSubgroup K.field L.field L.below) := L.finite
   intro a
@@ -1228,7 +1236,7 @@ theorem normResidueNaturalityConjugationPairMap_on_representatives
           (conjugateClosedSubgroup L s) hConjLK
           (conjugateFixedElement A K s a)) := by
   dsimp only
-  letI : Finite ((conjugateClosedSubgroup K s).toSubgroup ⧸
+  let : Finite ((conjugateClosedSubgroup K s).toSubgroup ⧸
       extensionSubgroup (conjugateClosedSubgroup K s)
         (conjugateClosedSubgroup L s)
         (conjugateClosedSubgroup_mono hLK s)) :=
@@ -1314,9 +1322,9 @@ theorem normResidueNaturalityTransferInclusionPairMap_on_representatives
             (Abelianization.of σ)),
         finiteNormClass A K' L hLK'
           (fixedFieldInclusion A K K' hK'K a)) := by
-  letI : (extensionSubgroup K' L hLK').Normal :=
+  let : (extensionSubgroup K' L hLK').Normal :=
     transferNormNaturality_intermediateExtension_normal K K' L hLK' hK'K
-  letI : Finite
+  let : Finite
       (K'.toSubgroup ⧸ extensionSubgroup K' L hLK') :=
     Finite.of_injective
       (transferNormNaturalityIntermediateInclusion K K' L hLK' hK'K)
@@ -1434,7 +1442,7 @@ theorem normResidueNaturality_conjugation
       (D.normResidueSymbol A v hcf Ks Es).toAddMonoidHom.comp
         (finiteReciprocityNaturalityConjugationNormMap A K.field L hLK s) := by
   dsimp only
-  letI hLsfinite : Finite
+  let hLsfinite : Finite
       ((conjugateClosedSubgroup K.field s).toSubgroup ⧸
         extensionSubgroup (conjugateClosedSubgroup K.field s)
           (conjugateClosedSubgroup L s)
@@ -1514,10 +1522,10 @@ theorem normResidueNaturality_transfer_inclusion
         (transferNormNaturalityNormQuotientInclusion A
           T.base.field T.field.field L hLK' T.below) := by
   dsimp only
-  letI : (extensionSubgroup T.field.field L hLK').Normal :=
+  let : (extensionSubgroup T.field.field L hLK').Normal :=
     transferNormNaturality_intermediateExtension_normal
       T.base.field T.field.field L hLK' T.below
-  letI : Finite
+  let : Finite
       (T.field.field.toSubgroup ⧸
         extensionSubgroup T.field.field L hLK') :=
     Finite.of_injective

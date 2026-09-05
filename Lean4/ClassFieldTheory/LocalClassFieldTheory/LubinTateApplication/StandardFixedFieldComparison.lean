@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.LubinTateApplication.StandardFilteredArtinComparison
-import LocalClassFieldTheory.Finite.Existence.StandardLubinTate
-import LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFilteredArtinComparison
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+
+set_option autoImplicit false
 
 /-!
 # Filtered reciprocity on the named standard Lubin--Tate fixed field
@@ -59,19 +61,19 @@ theorem standardLubinTateFiniteAbelianSubextension_filteredLocalReciprocity
       localUpperRamificationGroup K M t := by
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let E := standardLubinTateLevelField hπ m
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     standardLubinTateLevelField_finiteDimensional hπ m
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     standardLubinTateLevelField_isAbelianGalois
       (standardLocalField K) hπ m
   let T := standardLubinTateFiniteAbelianSubextension K m
   let M :=
     abstractFixedField K (SeparableClosure K) T.field
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) T.field
         (finiteAbelianSubextension_finite_over_absoluteBase K T)
-  letI : IsAbelianGalois K M :=
+  let : IsAbelianGalois K M :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K T
   let e : E ≃ₐ[K] M :=
     standardLubinTateFiniteAbelianSubextensionFixedFieldEquiv K m

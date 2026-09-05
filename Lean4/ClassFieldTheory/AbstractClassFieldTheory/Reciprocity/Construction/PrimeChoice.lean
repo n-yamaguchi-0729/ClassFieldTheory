@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Degree.PrimeElements
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.PrimeElements
+
+set_option autoImplicit false
 
 namespace ClassFormation
 

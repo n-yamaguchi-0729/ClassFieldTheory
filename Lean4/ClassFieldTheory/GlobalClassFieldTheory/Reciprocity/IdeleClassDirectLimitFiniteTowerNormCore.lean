@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtensionNorm
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldRelativeNorm
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtensionNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldRelativeNorm
+
+set_option autoImplicit false
 
 /-!
 # Core comparisons for finite-tower idèle-class norms
@@ -21,6 +23,15 @@ open LocalClassFieldTheory
 open CyclicCohomology
 
 universe u
+
+private theorem finiteTowerIdeleIsMulCommutative
+    {K M L : Type u}
+    [Field K] [NumberField K] [Field M] [Field L]
+    [Algebra K M] [Algebra M L] :
+    IsMulCommutative (TowerRelativeIdeleGroup K M L) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance] finiteTowerIdeleIsMulCommutative
 
 /-- Algebra homomorphisms into an ambient field are equivalent to algebra
 homomorphisms into the normal closure inside that field. -/
@@ -109,7 +120,7 @@ private theorem relativeIdeleEmbedding_toAlgHom_unflatten
           (relativeAdeleRingIntermediateAlgebra K M)
           (smulCommClass_self M (RelativeAdeleRing K M))).toRingHom a :
         TowerRelativeIdeleGroup K M L) := by
-  letI : Algebra M (RelativeAdeleRing K M) :=
+  let _ : Algebra M (RelativeAdeleRing K M) :=
     relativeAdeleRingIntermediateAlgebra K M
   apply Units.ext
   exact relativeAdeleEmbedding_toAlgHom_unflatten
@@ -132,7 +143,7 @@ private theorem
       RelativeIdeleGroup.classInclusion M L
         (_root_.relativeIdeleClassBaseChangeMulEquiv
           (K := K) (L := M) c) := by
-  letI : Algebra M (RelativeAdeleRing K M) :=
+  let _ : Algebra M (RelativeAdeleRing K M) :=
     relativeAdeleRingIntermediateAlgebra K M
   refine QuotientGroup.induction_on c ?_
   intro a

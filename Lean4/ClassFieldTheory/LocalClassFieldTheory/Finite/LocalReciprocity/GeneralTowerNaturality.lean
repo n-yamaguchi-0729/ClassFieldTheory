@@ -1,7 +1,9 @@
 import Mathlib.GroupTheory.Abelianization.Defs
-import AlgebraicNumberTheory.SeparableClosureEmbedding
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+import ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+
+set_option autoImplicit false
 
 /-!
 # Restriction naturality in an arbitrary finite abelian tower
@@ -175,8 +177,8 @@ private theorem towerRestrict_abstractAbelianization
       K E (towerLowerEmbedding K E L iL)
   let qL :=
     finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L iL
-  letI : (extensionSubgroup B EE.field EE.below).Normal := EE.normal
-  letI : (extensionSubgroup B EL.field EL.below).Normal := EL.normal
+  let : (extensionSubgroup B EE.field EE.below).Normal := EE.normal
+  let : (extensionSubgroup B EL.field EL.below).Normal := EL.normal
   obtain ⟨q, rfl⟩ := QuotientGroup.mk_surjective z
   obtain ⟨sigma, rfl⟩ := QuotientGroup.mk_surjective q
   change
@@ -254,17 +256,17 @@ theorem concreteNormResidueAutomorphism_restrict_tower
   let xL := towerEmbeddedBaseNormClass K L iL a
   have hLE : EL.field.toSubgroup ≤ EE.field.toSubgroup :=
     towerEmbeddedAbstractExtension_field_le K E L iL
-  letI hEENormal : (extensionSubgroup B EE.field EE.below).Normal :=
+  let hEENormal : (extensionSubgroup B EE.field EE.below).Normal :=
     EE.normal
-  letI hELNormal : (extensionSubgroup B EL.field EL.below).Normal :=
+  let hELNormal : (extensionSubgroup B EL.field EL.below).Normal :=
     EL.normal
-  letI hEEFinite : Finite
+  let hEEFinite : Finite
       (B.toSubgroup ⧸ extensionSubgroup B EE.field EE.below) :=
     EE.finite
-  letI hELFinite : Finite
+  let hELFinite : Finite
       (B.toSubgroup ⧸ extensionSubgroup B EL.field EL.below) :=
     EL.finite
-  letI hBBFinite : Finite
+  let hBBFinite : Finite
       (B.toSubgroup ⧸ extensionSubgroup B B le_rfl) := by
     have htop : extensionSubgroup B B le_rfl = ⊤ := by
       ext sigma
@@ -280,18 +282,18 @@ theorem concreteNormResidueAutomorphism_restrict_tower
     base := BF
     below := le_rfl
     finiteQuotient := hBBFinite }
-  letI : (extensionSubgroup T.base.field EE.field EE.below).Normal := by
+  let : (extensionSubgroup T.base.field EE.field EE.below).Normal := by
     change (extensionSubgroup B EE.field EE.below).Normal
     exact hEENormal
-  letI : (extensionSubgroup T.field.field EL.field EL.below).Normal := by
+  let : (extensionSubgroup T.field.field EL.field EL.below).Normal := by
     change (extensionSubgroup B EL.field EL.below).Normal
     exact hELNormal
-  letI : Finite
+  let : Finite
       (T.base.field.toSubgroup ⧸
         extensionSubgroup T.base.field EE.field EE.below) := by
     change Finite (B.toSubgroup ⧸ extensionSubgroup B EE.field EE.below)
     exact hEEFinite
-  letI : Finite
+  let : Finite
       (T.field.field.toSubgroup ⧸
         extensionSubgroup T.field.field EL.field EL.below) := by
     change Finite (B.toSubgroup ⧸ extensionSubgroup B EL.field EL.below)
@@ -409,8 +411,8 @@ theorem restrictNormalHom_eq_autCongr
     (AlgEquiv.restrictNormalHom M :
         Gal(L / K) →* Gal(M / K)) =
       (AlgEquiv.autCongr e).toMonoidHom := by
-  letI : Algebra M L := e.symm.toRingHom.toAlgebra
-  letI : IsScalarTower K M L :=
+  let : Algebra M L := e.symm.toRingHom.toAlgebra
+  let : IsScalarTower K M L :=
     IsScalarTower.of_algebraMap_eq' (by
       apply RingHom.ext
       intro x
@@ -442,8 +444,8 @@ theorem abelianLocalArtinMonoidHom_autCongr
     (AlgEquiv.autCongr e).toMonoidHom.comp
         (abelianLocalArtinMonoidHom K L) =
       abelianLocalArtinMonoidHom K M := by
-  letI : Algebra M L := e.symm.toRingHom.toAlgebra
-  letI : IsScalarTower K M L :=
+  let : Algebra M L := e.symm.toRingHom.toAlgebra
+  let : IsScalarTower K M L :=
     IsScalarTower.of_algebraMap_eq' (by
       apply RingHom.ext
       intro x

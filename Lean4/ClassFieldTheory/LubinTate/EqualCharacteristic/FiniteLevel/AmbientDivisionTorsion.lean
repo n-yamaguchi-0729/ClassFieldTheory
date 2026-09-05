@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.FormalModule.AmbientBracketAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.AmbientBracketAction
+
+set_option autoImplicit false
 
 /-!
 # Ambient Lubin--Tate division groups

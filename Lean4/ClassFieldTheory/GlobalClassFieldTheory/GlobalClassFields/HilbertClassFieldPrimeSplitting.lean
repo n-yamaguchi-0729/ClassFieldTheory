@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldMaximality
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
-import AlgebraicNumberTheory.Idele.FinitePrime
-import GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertSplitting
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldMaximality
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertSplitting
+
+set_option autoImplicit false
 
 /-!
 # Prime splitting for a maximal everywhere-unramified cyclic norm quotient
@@ -22,6 +24,14 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField IsDedekindDomain IdeleGroup
+
+/-- The canonical idèle-class multiplication makes every subgroup normal. -/
+private theorem hilbertPrimeSplittingClassGroupIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] hilbertPrimeSplittingClassGroupIsMulCommutative
 
 variable
     {K L : Type}

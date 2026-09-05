@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Family.Instances
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Family.Instances
+
+set_option autoImplicit false
 
 /-!
 # Degree-zero cohomology of finite local-block families

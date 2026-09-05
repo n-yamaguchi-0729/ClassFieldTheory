@@ -1,0 +1,12 @@
+import ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.All
+import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicInertiaBound
+import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicRamificationIndexBound
+import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+
+set_option autoImplicit false
+
+/-!
+# Ramification groups of valuation subrings
+
+Focused aggregate for valuation-subring actions and their ramification groups.
+-/

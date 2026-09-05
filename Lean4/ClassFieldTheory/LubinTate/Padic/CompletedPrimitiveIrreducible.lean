@@ -1,5 +1,7 @@
-import LubinTate.Padic.CompletedLevel
+import ClassFieldTheory.LubinTate.Padic.CompletedLevel
 import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
+
+set_option autoImplicit false
 
 /-!
 # Irreducibility of the completed p-adic primitive polynomial
@@ -67,15 +69,13 @@ theorem padicCompletedPrimitivePolynomialInteger_natDegree
     (p : ℕ) [Fact p.Prime] (n : ℕ) :
     (padicCompletedPrimitivePolynomialInteger p n).natDegree =
       (p - 1) * p ^ n := by
-  have hcard :
-      Nat.card (padicLocalField p).residueField = p := by
-    simpa [padicLocalField] using
-      padicCompleteDVF_residueField_card p
-  rw [padicCompletedPrimitivePolynomialInteger,
-    (standardLubinTatePrimitivePolynomial_monic
-      (padicLocalField p)
-      (padicIntEquivValuationSubring p (p : ℤ_[p])) n).natDegree_map,
-    standardLubinTatePrimitivePolynomial_natDegree, hcard]
+  exact ((padicCompletedPrimitivePolynomialInteger_monic p n).natDegree_map
+    (algebraMap
+      (padicCompletedUnramifiedCompleteDVF p).valuationSubring
+      (padicCompletedUnramifiedField p))).symm.trans
+    ((congrArg Polynomial.natDegree
+      (padicCompletedPrimitivePolynomialInteger_map p n)).trans
+      (padicCompletedPrimitivePolynomial_natDegree p n))
 
 /-- The completed integral primitive polynomial is genuinely Eisenstein at
 the maximal ideal of the completed-unramified valuation ring. -/
@@ -84,7 +84,8 @@ theorem padicCompletedPrimitivePolynomialInteger_isEisensteinAt
     (padicCompletedPrimitivePolynomialInteger p n).IsEisensteinAt
       (padicCompletedUnramifiedCompleteDVF p).maximalIdeal := by
   let target := padicCompletedUnramifiedCompleteDVF p
-  let π := padicIntEquivValuationSubring p (p : ℤ_[p])
+  let π : (padicLocalField p).valuationSubring :=
+    padicIntEquivValuationSubring p (p : ℤ_[p])
   let πE : target.valuationSubring :=
     padicCompletedUnramifiedIntegerMap p π
   have hmonic :
@@ -105,10 +106,10 @@ theorem padicCompletedPrimitivePolynomialInteger_isEisensteinAt
     have hnotMem :
         πE ∉ target.maximalIdeal ^ 2 :=
       target.uniformizer_not_mem_maximalIdeal_sq hπE
-    simpa only [padicCompletedPrimitivePolynomialInteger,
-      Polynomial.coeff_map,
-      standardLubinTatePrimitivePolynomial_coeff_zero,
-      π, πE] using hnotMem
+    change ((standardLubinTatePrimitivePolynomial (padicLocalField p) π n).map
+      (padicCompletedUnramifiedIntegerMap p)).coeff 0 ∉ target.maximalIdeal ^ 2
+    rw [Polynomial.coeff_map, standardLubinTatePrimitivePolynomial_coeff_zero]
+    exact hnotMem
 
 /-- The completed integral primitive polynomial is irreducible in the
 completed-unramified valuation ring. -/

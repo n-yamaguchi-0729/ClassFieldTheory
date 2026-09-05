@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
 import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
+
+set_option autoImplicit false
 
 /-!
 # Positive global units are local squares at real places

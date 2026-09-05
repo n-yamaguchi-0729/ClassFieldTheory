@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+
+set_option autoImplicit false
 
 /-!
 # Ideles in the ordinary idele-class norm quotient
@@ -19,6 +21,10 @@ variable
     (K L : Type*) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]
+
+local instance normQuotientIdeleClassGroupIsMulCommutative :
+    IsMulCommutative (IdeleClassGroup K) :=
+  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- The composite from ideles to the canonical class norm quotient
 `C_K / N_{L/K} C_L`. -/

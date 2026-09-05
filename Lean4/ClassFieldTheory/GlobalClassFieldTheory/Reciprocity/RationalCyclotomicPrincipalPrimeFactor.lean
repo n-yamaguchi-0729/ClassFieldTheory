@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalAwayProduct
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalAwayProduct
+
+set_option autoImplicit false
 
 /-!
 # The ramified prime factor of a rational cyclotomic principal idele

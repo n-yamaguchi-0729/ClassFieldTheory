@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.Ramification
-import LocalFieldTheory.DiscreteValuationField.Basic
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
+
+set_option autoImplicit false
 
 /-!
 # Real-index steps for equal-characteristic Lubin--Tate levels

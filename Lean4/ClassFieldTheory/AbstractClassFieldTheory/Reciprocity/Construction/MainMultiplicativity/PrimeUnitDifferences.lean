@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.FrobeniusActionRemainder
+
+set_option autoImplicit false
 
 /-!
 # Finite-stage unit differences of Frobenius primes
@@ -63,9 +65,9 @@ theorem frobeniusPrimeDifference_mem_infiniteUnitAddSubgroup
       (D.maximalUnramifiedField_le_of_le hLK) := by
   dsimp only
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
   let E := D.maximalUnramifiedField L
@@ -82,21 +84,21 @@ theorem frobeniusPrimeDifference_mem_infiniteUnitAddSubgroup
     M.compositum_le_left N
   let hPT : P.field.toSubgroup ≤ T.toSubgroup :=
     M.compositum_le_right N
-  letI hSabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hSabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S (le_baseField S)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK σ
-  letI hTabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hTabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) T (le_baseField T)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK τ
   let Sigma : FiniteAbstractField G := ⟨S, hSabsolute⟩
   let Tau : FiniteAbstractField G := ⟨T, hTabsolute⟩
-  letI hPfinite : Finite
+  let hPfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field P.field P.below) := P.finite
   let Pi : FiniteAbstractField G := P.toFiniteAbstractField K
-  letI hPSfinite : Finite
+  let hPSfinite : Finite
       (S.toSubgroup ⧸ extensionSubgroup S P.field hPS) :=
     FiniteIntermediateField.finite_extension_of_le P.below hSK hPS
-  letI hPTfinite : Finite
+  let hPTfinite : Finite
       (T.toSubgroup ⧸ extensionSubgroup T P.field hPT) :=
     FiniteIntermediateField.finite_extension_of_le P.below hTK hPT
   let EPS : FiniteAbstractFieldExtension G :=
@@ -171,9 +173,9 @@ theorem frobeniusPrime_actionDifference_mem_infiniteUnitAddSubgroup
         (D.maximalUnramifiedField_le_of_le hLK) := by
   dsimp only
   let KR := K.toFiniteResidueAbstractField D
-  letI hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
+  let hLnormalKR : (extensionSubgroup KR.field L hLK).Normal := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLnormal
-  letI hLfiniteKR : Finite
+  let hLfiniteKR : Finite
       (KR.field.toSubgroup ⧸ extensionSubgroup KR.field L hLK) := by
     simpa only [KR, FiniteAbstractField.toFiniteResidueAbstractField] using hLfinite
   let E := D.maximalUnramifiedField L
@@ -181,23 +183,23 @@ theorem frobeniusPrime_actionDifference_mem_infiniteUnitAddSubgroup
   let hSK : S.toSubgroup ≤ K.field.toSubgroup :=
     D.frobeniusFixedField_le KR L hLK σ
   let M := D.frobeniusFixedIntermediateField KR L hLK σ
-  letI hEnormal : (extensionSubgroup K.field E
+  let hEnormal : (extensionSubgroup K.field E
       (D.maximalUnramifiedField_le_of_le hLK)).Normal :=
     D.extensionSubgroup_maximalUnramifiedField_normal K.field L hLK
   let P := M.galoisRefinement
   let hPS : P.field.toSubgroup ≤ S.toSubgroup :=
     M.galoisRefinement_le_field
-  letI hSabsolute : Finite ((baseField G).toSubgroup ⧸
+  let hSabsolute : Finite ((baseField G).toSubgroup ⧸
       extensionSubgroup (baseField G) S (le_baseField S)) :=
     D.frobeniusFixedField_absoluteFinite K L hLK σ
   let Sigma : FiniteAbstractField G := ⟨S, hSabsolute⟩
-  letI hPfinite : Finite
+  let hPfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field P.field P.below) := P.finite
   let Pi : FiniteAbstractField G := P.toFiniteAbstractField K
-  letI hPSfinite : Finite
+  let hPSfinite : Finite
       (S.toSubgroup ⧸ extensionSubgroup S P.field hPS) :=
     FiniteIntermediateField.finite_extension_of_le P.below hSK hPS
-  letI hPnormal : (extensionSubgroup K.field P.field P.below).Normal := by
+  let hPnormal : (extensionSubgroup K.field P.field P.below).Normal := by
     exact FiniteIntermediateField.galoisRefinement_normal M
   let EPS : FiniteAbstractFieldExtension G :=
     { field := Pi
@@ -223,7 +225,8 @@ theorem frobeniusPrime_actionDifference_mem_infiniteUnitAddSubgroup
   let k : K.field.toSubgroup := Quotient.out q
   let πqP := normalExtensionAction A K.field P.field P.below hPnormal k πP
   have hπqP : v.IsPrimeElement Pi πqP := by
-    rw [ValuationData.IsPrimeElement] at hπP ⊢
+    change v.valuationAt Pi πP = v.oneValue at hπP
+    change v.valuationAt Pi πqP = v.oneValue
     calc
       v.valuationAt Pi πqP = v.valuationAt Pi πP := by
         have hvaluation :=

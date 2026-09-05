@@ -1,11 +1,13 @@
-import LubinTate.FiniteLevel.ChangedUniformizer
-import LubinTate.FiniteLevel.CompletedEvaluation
-import LubinTate.FiniteLevel.ParameterCongruence
-import LocalFieldTheory.DiscreteValuationField.PrincipalUnits.ResidueQuotient
-import LocalFieldTheory.DiscreteValuationField.PrincipalUnits.TeichmullerDecomposition
-import LocalFieldTheory.DiscreteValuationField.RamificationIdeal
-import RamificationTheory.HilbertRamification.RamificationNumber
-import ValuationTheory.DiscreteValuationField.AddVal
+import ClassFieldTheory.LubinTate.FiniteLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.FiniteLevel.CompletedEvaluation
+import ClassFieldTheory.LubinTate.FiniteLevel.ParameterCongruence
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.ResidueQuotient
+import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.TeichmullerDecomposition
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationIdeal
+import ValuedFieldTheory.Ramification.HilbertRamification.RamificationNumber
+import ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+
+set_option autoImplicit false
 
 /-!
 # Evaluating a changed primitive polynomial at the original primitive point

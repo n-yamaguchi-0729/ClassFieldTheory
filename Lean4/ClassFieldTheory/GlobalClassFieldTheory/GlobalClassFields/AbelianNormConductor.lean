@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
-import LocalClassFieldTheory.Finite.UnramifiedConductor
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
+import ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+
+set_option autoImplicit false
 
 /-!
 # Unramified finite places and abelian norm conductors
@@ -60,59 +62,59 @@ theorem
       RayClass.adicAbv_isNontrivial v
     let hvKna : IsNonarchimedean (vK : K → ℝ) :=
       HeightOneSpectrum.isNonarchimedean_adicAbv K v
-    letI hK :=
+    let hK :=
       AbsoluteValue.extensionCompletionAlgebra
         (K := K) w.1
-    letI : SMul K w.1.Completion := hK.toSMul
-    letI : Algebra vK.Completion w.1.Completion :=
+    let : SMul K w.1.Completion := hK.toSMul
+    let : Algebra vK.Completion w.1.Completion :=
       AbsoluteValue.completionAlgebra vK w.1 w.2
-    letI :=
+    let :=
       LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK w
-    letI :=
+    let :=
       LocalClassFieldTheory.localizedCompletionIsScalarTower vK w
     let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
-    letI : FiniteDimensional vK.Completion E :=
+    let : FiniteDimensional vK.Completion E :=
       AlgebraicNumberTheory.Valuations.localizedCompletionModuleFinite vK hvK w
-    letI : IsAbelianGalois vK.Completion E :=
+    let : IsAbelianGalois vK.Completion E :=
       LocalClassFieldTheory.localizedCompletion_isAbelianGalois
         vK hvK w
-    letI : NontriviallyNormedField vK.Completion :=
+    let : NontriviallyNormedField vK.Completion :=
       absoluteValueExtension_completionNontriviallyNormedField
         vK hvK
-    letI : LocallyCompactSpace vK.Completion :=
+    let : LocallyCompactSpace vK.Completion :=
       AbsoluteValue.Completion.locallyCompactSpace
         (_root_.finitePlaceCompletionBaseMap_isometry v)
-    letI : IsUltrametricDist vK.Completion :=
+    let : IsUltrametricDist vK.Completion :=
       completionIsUltrametricDist vK hvKna
-    letI : Valued vK.Completion ℝ≥0 :=
+    let : Valued vK.Completion ℝ≥0 :=
       _root_.finitePlaceCompletionValued vK hvKna
     let vBase : Valuation vK.Completion ℝ≥0 := Valued.v
-    letI : vBase.IsNontrivial :=
+    let : vBase.IsNontrivial :=
       (inferInstance :
         (NormedField.valuation
           (K := vK.Completion)).IsNontrivial)
-    letI : ValuativeRel vK.Completion :=
+    let : ValuativeRel vK.Completion :=
       _root_.finitePlaceCompletionValuativeRel vK hvKna
-    letI : vBase.Compatible :=
+    let : vBase.Compatible :=
       Valuation.Compatible.ofValuation vBase
-    letI : ValuativeRel.IsNontrivial vK.Completion :=
+    let : ValuativeRel.IsNontrivial vK.Completion :=
       (ValuativeRel.isNontrivial_iff_isNontrivial vBase).2
         inferInstance
-    letI : IsValuativeTopology vK.Completion :=
+    let : IsValuativeTopology vK.Completion :=
       isValuativeTopology_of_valued_ofValuation
         vK.Completion ℝ≥0
-    letI : IsNonarchimedeanLocalField vK.Completion :=
+    let : IsNonarchimedeanLocalField vK.Completion :=
       { toIsValuativeTopology := inferInstance
         toLocallyCompactSpace := inferInstance
         toIsNontrivial := inferInstance }
-    letI : FiniteDimensional vK.Completion w.1.Completion :=
+    let : FiniteDimensional vK.Completion w.1.Completion :=
       AlgebraicNumberTheory.Valuations.completionModuleFinite
         vK hvK w
-    letI : ContinuousSMul vK.Completion w.1.Completion :=
+    let : ContinuousSMul vK.Completion w.1.Completion :=
       continuousSMul_of_algebraMap _ _
         (AbsoluteValue.completionMap_isometry
           vK w.1 w.2).continuous
-    letI : LocallyCompactSpace w.1.Completion :=
+    let : LocallyCompactSpace w.1.Completion :=
       LocallyCompactSpace.of_finiteDimensional_of_complete
         vK.Completion w.1.Completion
     let eCompletion : E ≃ᵢ w.1.Completion :=
@@ -120,47 +122,47 @@ theorem
           (AlgebraicNumberTheory.Valuations.localizedCompletionEquivCompletion
             vK hvK w).toEquiv
         isometry_toFun := Isometry.of_dist_eq fun _ _ => rfl }
-    letI : LocallyCompactSpace E :=
+    let : LocallyCompactSpace E :=
       (eCompletion.toHomeomorph.locallyCompactSpace_iff).2
         inferInstance
-    letI : IsUltrametricDist E :=
+    let : IsUltrametricDist E :=
       _root_.localizedCompletionIsUltrametricDist
         vK w hvKna
-    letI : Valued E ℝ≥0 :=
+    let : Valued E ℝ≥0 :=
       _root_.localizedCompletionFinitePlaceValued
         vK w hvKna
-    letI : ValuativeRel E :=
+    let : ValuativeRel E :=
       _root_.localizedCompletionFinitePlaceValuativeRel
         vK w hvKna
     let vExtension : Valuation E ℝ≥0 := Valued.v
-    letI : vExtension.Compatible :=
+    let : vExtension.Compatible :=
       Valuation.Compatible.ofValuation vExtension
     let vExtensionRel := ValuativeRel.valuation E
-    letI : Valuation.HasExtension
+    let : Valuation.HasExtension
         (ValuativeRel.valuation vK.Completion)
         vExtensionRel :=
       _root_.localizedCompletionValuationHasExtension
         vK w hvKna
-    letI : vExtensionRel.IsNontrivial :=
+    let : vExtensionRel.IsNontrivial :=
       Valuation.IsNontrivial.of_hasExtension
         (ValuativeRel.valuation vK.Completion)
         vExtensionRel
-    letI : ValuativeRel.IsNontrivial E :=
+    let : ValuativeRel.IsNontrivial E :=
       (ValuativeRel.isNontrivial_iff_isNontrivial
         vExtensionRel).2 inferInstance
-    letI : IsValuativeTopology E :=
+    let : IsValuativeTopology E :=
       isValuativeTopology_of_valued_ofValuation E ℝ≥0
-    letI : IsNonarchimedeanLocalField E :=
+    let : IsNonarchimedeanLocalField E :=
       { toIsValuativeTopology := inferInstance
         toLocallyCompactSpace := inferInstance
         toIsNontrivial := inferInstance }
-    letI : Algebra 𝒪[vK.Completion] E :=
+    let : Algebra 𝒪[vK.Completion] E :=
       Algebra.ofSubsemiring 𝒪[vK.Completion]
-    letI :
+    let :
         IsIntegralClosure 𝒪[E] 𝒪[vK.Completion] E :=
       _root_.localizedCompletionIsIntegralClosureWithExtension
         vK w hvK hvKna
-    letI : Module.Finite 𝒪[vK.Completion] 𝒪[E] :=
+    let : Module.Finite 𝒪[vK.Completion] 𝒪[E] :=
       integerRing_moduleFinite_of_isIntegralClosure
         vK.Completion E
     let eField :

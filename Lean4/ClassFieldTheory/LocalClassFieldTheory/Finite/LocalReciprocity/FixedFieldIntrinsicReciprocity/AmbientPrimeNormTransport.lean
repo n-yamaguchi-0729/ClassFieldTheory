@@ -1,5 +1,7 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
+
+set_option autoImplicit false
 
 /-!
 # Valuation-one units and abstract prime norm-residue transport
@@ -258,7 +260,10 @@ theorem
               (Additive.ofMul p)) := by
   dsimp only
   intro p hp
-  rw [ValuationData.IsPrimeElement]
+  change (localHenselianValuation K).valuationAt H
+      (abstractFixedFieldUnitsEquivGaloisFixed K (SeparableClosure K) H.field
+        (Additive.ofMul p)) =
+    (localHenselianValuation K).oneValue
   apply Subtype.ext
   change
     ((((localHenselianValuation K).valuationAt H
@@ -309,7 +314,7 @@ theorem
       (intrinsicAbsoluteUnits F) S :=
     abstractFixedFieldUnitsEquivGaloisFixed
       F (SeparableClosure F) S (Additive.ofMul p)
-  letI _hS'Finite : Finite
+  let _hS'Finite : Finite
       ((intrinsicAbstractBase F).toSubgroup ⧸
         extensionSubgroup
           (intrinsicAbstractBase F) S' hS'B) :=
@@ -460,7 +465,7 @@ theorem
                 J hJH sigma))) := by
   dsimp only
   intro p x hprime hnorm
-  letI hHabsolute : Finite
+  let hHabsolute : Finite
       ((baseField
         Gal(SeparableClosure K / K)).toSubgroup ⧸
         extensionSubgroup
@@ -478,7 +483,7 @@ theorem
   let hSabsolute :=
     (localResidueDatum K).frobeniusFixedField_absoluteFinite
       H J hJH sigma
-  letI hSfinite : Finite
+  let hSfinite : Finite
       (H.field.toSubgroup ⧸
         extensionSubgroup H.field S hSH) :=
     (localResidueDatum K).frobeniusFixedField_finite

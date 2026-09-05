@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.NormUniformizer
-import LocalFieldTheory.NonarchimedeanLocalField.NormQuotient
+import ClassFieldTheory.LubinTate.FiniteLevel.NormUniformizer
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+
+set_option autoImplicit false
 
 /-!
 # The norm subgroup of a standard Lubin--Tate level
@@ -56,7 +58,7 @@ theorem standardLubinTateBaseUniformizerUnit_mem_normSubgroup
     (n : ℕ) :
     standardLubinTateBaseUniformizerUnit hπ ∈
       standardLubinTateNormSubgroup hπ n := by
-  letI : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
+  let : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let y : (standardLubinTateLevelField hπ n)ˣ :=
     Units.mk0 (-standardLubinTateLevelGenerator hπ n)

@@ -1,0 +1,17 @@
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.InfinitePlaceCompatibility
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.InfinitePlaceOverfield
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.NumberFieldComplexification
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.OverextensionArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RamifiedOverextension
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RationalComplexification
+
+set_option autoImplicit false
+
+/-!
+# Artin reciprocity for the cyclotomic complexification
+
+This compatibility module reexports the semantic layers constructing the
+rational fourth-root complexification, its compositum with a number field,
+the complex-conjugation overextension at a ramified real place, and the
+resulting infinite-place local-global Artin comparison.
+-/

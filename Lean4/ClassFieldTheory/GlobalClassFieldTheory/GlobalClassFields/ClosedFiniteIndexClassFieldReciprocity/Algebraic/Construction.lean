@@ -1,4 +1,10 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.QuotientTransport
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationCore
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Evaluation
+
+set_option autoImplicit false
 
 /-!
 # Underlying algebraic closed finite-index reciprocity
@@ -14,6 +20,14 @@ noncomputable section
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
+
+/-- Canonical class-group commutativity supplies normality of the defining subgroup. -/
+private theorem closedFiniteIndexAlgebraicClassGroupIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] closedFiniteIndexAlgebraicClassGroupIsMulCommutative
 
 variable {K : Type} [Field K] [NumberField K]
 

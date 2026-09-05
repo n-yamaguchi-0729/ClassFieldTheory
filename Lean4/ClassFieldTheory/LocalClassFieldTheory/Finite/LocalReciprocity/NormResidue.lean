@@ -1,5 +1,7 @@
 import Mathlib.GroupTheory.Abelianization.Defs
-import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+
+set_option autoImplicit false
 
 /-!
 # The actual abelian local Artin map

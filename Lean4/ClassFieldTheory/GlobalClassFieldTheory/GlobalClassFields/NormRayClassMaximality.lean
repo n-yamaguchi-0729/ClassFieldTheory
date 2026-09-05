@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.NormConductor
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+
+set_option autoImplicit false
 
 /-!
 # Exact narrow finite ray-class presentations of norm quotients
@@ -18,6 +20,14 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
+
+/-- Canonical class-group commutativity supplies normality for the quotient. -/
+private theorem normRayClassMaximalityClassGroupIsMulCommutative
+    (F : Type*) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] normRayClassMaximalityClassGroupIsMulCommutative
 
 variable
     {K L : Type}

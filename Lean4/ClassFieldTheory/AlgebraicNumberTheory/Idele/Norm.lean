@@ -1,8 +1,10 @@
-import AlgebraicNumberTheory.Idele.NormCore
-import AlgebraicNumberTheory.Idele.BaseChange
-import AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import AlgebraicNumberTheory.Idele.Relative.FiniteIntegralNormPreimage
-import AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormCore
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FiniteIntegralNormPreimage
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+
+set_option autoImplicit false
 
 /-!
 # Absolute and relative norms of ideles

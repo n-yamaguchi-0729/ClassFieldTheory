@@ -1,4 +1,6 @@
-import KummerTheory.Concrete.SUnitPreparation.SUnitLocalPowerKernel
+import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.SUnitLocalPowerKernel
+
+set_option autoImplicit false
 
 /-!
 # Finite support for Kummer radicals
@@ -129,13 +131,13 @@ theorem finite_chosenFiniteKummerRadicalQuotient
     Finite
       ((KummerTheory.chosenFiniteKummerRadicalDatum
         (K := K) (L := L) n).RadicalQuotient) := by
-  letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   let D :=
     KummerTheory.chosenFiniteKummerRadicalDatum
       (K := K) (L := L) n
   let H :=
     Gal(L/K) →* KummerTheory.nthRootsSubgroup L (n : ℕ)
-  letI : Finite H :=
+  let : Finite H :=
     Finite.of_injective
       (fun chi : H =>
         (chi : Gal(L/K) →
@@ -254,10 +256,10 @@ theorem chosenFiniteKummerRadicalRepresentative_mem_enlargedSUnitGroup
     let D :=
       KummerTheory.chosenFiniteKummerRadicalDatum
         (K := K) (L := L) n
-    letI : Finite D.RadicalQuotient :=
+    let : Finite D.RadicalQuotient :=
       finite_chosenFiniteKummerRadicalQuotient
         (K := K) (L := L) n hmu
-    letI : Fintype D.RadicalQuotient :=
+    let : Fintype D.RadicalQuotient :=
       Fintype.ofFinite D.RadicalQuotient
     exact Finset.mem_biUnion.mpr
       ⟨q, Finset.mem_univ q, hv⟩

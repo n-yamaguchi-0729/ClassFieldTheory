@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
-import AlgebraicNumberTheory.Idele.Norm
-import GroupTheory.Finite
-import GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Norm
+import GaloisCohomology.GroupTheory.Finite
+import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
+
+set_option autoImplicit false
 
 /-!
 # Full decomposition places in cyclic prime-power extensions
@@ -59,7 +61,7 @@ theorem
     cyclicPrimeIndexSubgroup
       (K := K) (L := L)
       hp hexponent hcard
-  letI : P.Normal :=
+  let : P.Normal :=
     cyclicPrimeIndexSubgroup_normal
       (K := K) (L := L)
       hp hexponent hcard
@@ -108,7 +110,7 @@ theorem
     cyclicPrimeSubextension
       (K := K) (L := L)
       hp hexponent hcard
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     cyclicPrimeSubextension_isGalois
       (K := K) (L := L)
       hp hexponent hcard
@@ -310,11 +312,11 @@ theorem cyclic_prime_power_infinite_fullDecompositionPlaces
     cyclicPrimeSubextension
       (K := K) (L := L)
       hp hexponent hcard
-  letI : IsGalois K M :=
+  let : IsGalois K M :=
     cyclicPrimeSubextension_isGalois
       (K := K) (L := L)
       hp hexponent hcard
-  letI : IsCyclic (M ≃ₐ[K] M) := by
+  let : IsCyclic (M ≃ₐ[K] M) := by
     simpa [M] using
       cyclicPrimeSubextension_isCyclic
         (K := K) (L := L)

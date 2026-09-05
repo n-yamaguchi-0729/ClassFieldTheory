@@ -1,10 +1,12 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Frobenius.CompletedUnramifiedField
-import LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
-import LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CompletedUnramifiedField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
 import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
 import Mathlib.FieldTheory.SplittingField.Construction
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: a completed Lubin--Tate level field
@@ -20,7 +22,7 @@ evaluation point for the theta series of the completed theta-intertwining theore
 noncomputable section
 
 open Filter
-open scoped LaurentSeries NNReal Polynomial PowerSeries Topology Valued WithZero
+open scoped LaurentSeries NNReal Polynomial PowerSeries Topology WithZero
 
 
 universe u v
@@ -141,14 +143,14 @@ def equalCharacteristicCompletedLevelField
   (equalCharacteristicCompletedPrimitivePolynomial F n).SplittingField
 
 /-- The splitting field of the completed primitive polynomial is a field. -/
-@[reducible] instance equalCharacteristicCompletedLevelField_field
+instance equalCharacteristicCompletedLevelField_field
     (F : LocalField.{u, v} K) (n : ℕ) :
     Field (equalCharacteristicCompletedLevelField F n) := by
   change Field (equalCharacteristicCompletedPrimitivePolynomial F n).SplittingField
   infer_instance
 
 /-- The completed level field is an algebra over the completed unramified field. -/
-@[reducible] noncomputable instance equalCharacteristicCompletedLevelField_algebra
+noncomputable instance equalCharacteristicCompletedLevelField_algebra
     (F : LocalField.{u, v} K) (n : ℕ) :
     Algebra (equalCharacteristicCompletedUnramifiedField F.residueField)
       (equalCharacteristicCompletedLevelField F n) := by
@@ -182,6 +184,21 @@ private instance equalCharacteristicCompletedLevelCharP
       (equalCharacteristicCompletedLevelField F n)).injective
     F.residueCharacteristic
 
+section
+
+local instance equalCharacteristicCompletedLevelField_module
+    (F : LocalField.{u, v} K) (n : ℕ) :
+    @Module (equalCharacteristicCompletedUnramifiedField F.residueField)
+      (equalCharacteristicCompletedLevelField F n)
+      (inferInstance : DivisionRing
+        (equalCharacteristicCompletedUnramifiedField F.residueField)).toRing.toSemiring
+      (inferInstance : AddCommGroup
+        (equalCharacteristicCompletedLevelField F n)).toAddCommMonoid :=
+  @Algebra.toModule
+    (equalCharacteristicCompletedUnramifiedField F.residueField)
+    (equalCharacteristicCompletedLevelField F n) _ _
+    (equalCharacteristicCompletedLevelField_algebra F n)
+
 /-- The completed level field is finite-dimensional over its completed base. -/
 instance equalCharacteristicCompletedLevelField_finiteDimensionalInstance
     (F : LocalField.{u, v} K) (n : ℕ) :
@@ -192,6 +209,18 @@ instance equalCharacteristicCompletedLevelField_finiteDimensionalInstance
     (equalCharacteristicCompletedUnramifiedField F.residueField)
     (equalCharacteristicCompletedPrimitivePolynomial F n).SplittingField
   infer_instance
+
+/-- The completed level field is algebraic over its completed base. -/
+instance equalCharacteristicCompletedLevelField_isAlgebraic
+    (F : LocalField.{u, v} K) (n : ℕ) :
+    Algebra.IsAlgebraic
+      (equalCharacteristicCompletedUnramifiedField F.residueField)
+      (equalCharacteristicCompletedLevelField F n) :=
+  @Algebra.IsAlgebraic.of_finite
+    (equalCharacteristicCompletedUnramifiedField F.residueField)
+    (equalCharacteristicCompletedLevelField F n) _ _ _
+    (equalCharacteristicCompletedLevelField_algebra F n)
+    (equalCharacteristicCompletedLevelField_finiteDimensionalInstance F n)
 
 /-- Comparison with the library splitting-field model. -/
 noncomputable def equalCharacteristicCompletedLevelFieldEquivSplittingField
@@ -298,7 +327,7 @@ theorem equalCharacteristicCompletedLevelIsUltrametric
     (F : LocalField.{u, v} K) (n : ℕ) :
     IsUltrametricDist (equalCharacteristicCompletedLevelField F n) :=
   ⟨fun x y z ↦ by
-    change ‖x - z‖ ≤ max ‖x - y‖ ‖y - z‖
+    rw [dist_eq_norm, dist_eq_norm, dist_eq_norm]
     rw [← sub_add_sub_cancel x y z]
     exact isNonarchimedean_spectralNorm
       (K := equalCharacteristicCompletedUnramifiedField F.residueField)
@@ -327,7 +356,7 @@ noncomputable local instance equalCharacteristicCompletedLevelCompleteSpaceInsta
 @[reducible] noncomputable def equalCharacteristicCompletedLevelValued
     (F : LocalField.{u, v} K) (n : ℕ) :
     Valued (equalCharacteristicCompletedLevelField F n) ℝ≥0 :=
-  NormedField.toValued
+  NormedField.toValued (K := equalCharacteristicCompletedLevelField F n)
 
 noncomputable local instance equalCharacteristicCompletedLevelValuedInstance
     (F : LocalField.{u, v} K) (n : ℕ) :
@@ -458,7 +487,7 @@ noncomputable def equalCharacteristicLubinTateLevelFieldToCompleted
     (n : ℕ) :
     equalCharacteristicLubinTateLevelField F n →ₐ[F.residueField⸨X⸩]
       equalCharacteristicCompletedLevelField F n := by
-  have hroot : Polynomial.aeval
+  have hrootAeval : Polynomial.aeval
       (equalCharacteristicCompletedPrimitiveRoot F n)
       (minpoly F.residueField⸨X⸩
         (chosenEqualCharacteristicLubinTatePrimitiveRoot F n)) = 0 := by
@@ -476,11 +505,22 @@ noncomputable def equalCharacteristicLubinTateLevelFieldToCompleted
         (algebraMap (equalCharacteristicCompletedUnramifiedField F.residueField)
           (equalCharacteristicCompletedLevelField F n))) = 0 at hc
     rwa [Polynomial.map_map, Polynomial.eval_map] at hc
+  let baseHom :
+      F.residueField⸨X⸩ →ₐ[F.residueField⸨X⸩]
+        equalCharacteristicCompletedLevelField F n :=
+    Algebra.ofId F.residueField⸨X⸩
+      (equalCharacteristicCompletedLevelField F n)
+  have hroot :
+      Polynomial.eval₂ baseHom
+          (equalCharacteristicCompletedPrimitiveRoot F n)
+          (minpoly F.residueField⸨X⸩
+            (chosenEqualCharacteristicLubinTatePrimitiveRoot F n)) = 0 := by
+    simpa only [baseHom, Polynomial.aeval_def, Algebra.toRingHom_ofId] using hrootAeval
   let lift :
       AdjoinRoot (minpoly F.residueField⸨X⸩
         (chosenEqualCharacteristicLubinTatePrimitiveRoot F n)) →ₐ[F.residueField⸨X⸩]
           equalCharacteristicCompletedLevelField F n :=
-    AdjoinRoot.liftAlgHom _ _
+    AdjoinRoot.liftAlgHom _ baseHom
       (equalCharacteristicCompletedPrimitiveRoot F n) hroot
   exact lift.comp
     (IntermediateField.adjoinRootEquivAdjoin F.residueField⸨X⸩
@@ -668,6 +708,8 @@ theorem equalCharacteristicCompletedPrimitiveRootInteger_hasEval
   apply tendsto_pow_atTop_nhds_zero_of_norm_lt_one
   change ‖equalCharacteristicCompletedPrimitiveRoot F n‖ < 1
   exact equalCharacteristicCompletedPrimitiveRoot_norm_lt_one F n
+
+end
 
 end EqualCharacteristic
 end LubinTate

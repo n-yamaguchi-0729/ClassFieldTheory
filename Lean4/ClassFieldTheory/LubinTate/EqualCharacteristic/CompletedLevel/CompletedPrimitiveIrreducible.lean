@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedLevel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedLevel
 import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
 import Mathlib.RingTheory.PowerSeries.Ideal
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: irreducibility after completed unramified base change

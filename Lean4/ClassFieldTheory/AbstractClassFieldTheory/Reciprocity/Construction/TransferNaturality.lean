@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.Transfer
 import Mathlib.GroupTheory.Abelianization.Defs
 
+set_option autoImplicit false
+
 namespace ClassFormation
 
 /-!
@@ -71,7 +73,8 @@ theorem leftCosetEquivMapOfSurjective_smul
       f p • leftCosetEquivMapOfSurjective f hf H hker q := by
   refine Quotient.inductionOn' q ?_
   intro x
-  simp [leftCosetEquivMapOfSurjective]
+  simp only [MulAction.Quotient.smul_mk, leftCosetEquivMapOfSurjective_mk,
+    smul_eq_mul, map_mul]
 
 /-- A left transversal descends along the same quotient map.  It is built
 from the induced equivalence of left-coset spaces, so its chosen
@@ -192,12 +195,12 @@ private theorem leftTransversals_diff_natural_of_surjective
         (leftTransversalMapOfSurjective f hf H hker S)
         (leftTransversalMapOfSurjective f hf H hker T) := by
   dsimp only
-  letI : (H.map f).FiniteIndex := by
+  let : (H.map f).FiniteIndex := by
     rw [Subgroup.finiteIndex_iff, H.index_map_eq hf hker]
     exact Subgroup.FiniteIndex.index_ne_zero
   classical
-  letI : Fintype (P ⧸ H) := H.fintypeQuotientOfFiniteIndex
-  letI : Fintype (Q ⧸ H.map f) :=
+  let : Fintype (P ⧸ H) := H.fintypeQuotientOfFiniteIndex
+  let : Fintype (Q ⧸ H.map f) :=
     (H.map f).fintypeQuotientOfFiniteIndex
   let e := leftCosetEquivMapOfSurjective f hf H hker
   simp only [Subgroup.leftTransversals.diff, map_prod,
@@ -229,7 +232,7 @@ theorem abelianization_transfer_natural_of_surjective
             (Abelianization.of : J →* Abelianization J))).comp
         (Abelianization.map f) := by
   dsimp only
-  letI : (H.map f).FiniteIndex := by
+  let : (H.map f).FiniteIndex := by
     rw [Subgroup.finiteIndex_iff, H.index_map_eq hf hker]
     exact Subgroup.FiniteIndex.index_ne_zero
   apply Abelianization.hom_ext

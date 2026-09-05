@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.LevelAutomorphisms
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelAutomorphisms
 import Mathlib.FieldTheory.SplittingField.IsSplittingField
+
+set_option autoImplicit false
 
 /-!
 # The tower of standard Lubin--Tate level fields
@@ -104,9 +106,9 @@ theorem standardLubinTateLevelField_mono
       (standardLubinTatePrimitivePolynomialOverField_irreducible hπ m)
       _ (standardLubinTatePrimitivePolynomialOverField_monic F π m)
     simpa [Polynomial.IsRoot, Polynomial.aeval_def] using hyp
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsGalois K E :=
+  let : IsGalois K E :=
     standardLubinTateLevelField_isGalois hπ n
   have hp_split_E : (p.map (algebraMap K E)).Splits := by
     rw [hp_minpoly]

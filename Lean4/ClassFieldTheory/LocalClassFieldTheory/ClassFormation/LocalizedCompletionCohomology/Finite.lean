@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
+
+set_option autoImplicit false
 
 /-!
 # Finiteness of localized-completion Herbrand groups
@@ -51,16 +53,16 @@ theorem localHerbrandH0Finite
     Finite
       (HerbrandH0 (absoluteValueDecompositionGroup k w.1)
         (LocalizedCompletion vK w)ˣ) := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : FiniteDimensional vK.Completion
+  let := localizedCompletionBaseAlgebra vK w
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
+  let : FiniteDimensional vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionFiniteDimensional vK hvK w
-  letI : IsGalois vK.Completion
+  let : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionIsGalois vK w
-  letI := localizedCompletionDecompositionGroupFintype vK w
+  let := localizedCompletionDecompositionGroupFintype vK w
   let g :=
     localizedCompletionGaloisGenerator
       vK hvK w σ hgen
@@ -71,7 +73,7 @@ theorem localHerbrandH0Finite
     finiteExtensionUnits_tate_card_of_generator
       vK.Completion (LocalizedCompletion vK w)
       g hg
-  letI : Finite
+  let : Finite
       (tateCohomology
         (Rep.ofAlgebraAutOnUnits vK.Completion
           (LocalizedCompletion vK w)) 0) :=
@@ -117,16 +119,16 @@ theorem localHerbrandHMinusOneFinite
         (subgroupGeneratorOfGenerator
           (absoluteValueDecompositionGroup k w.1)
           σ hgen)) := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : FiniteDimensional vK.Completion
+  let := localizedCompletionBaseAlgebra vK w
+  let := localizedCompletionGlobalAlgebra vK w
+  let := localizedCompletionIsScalarTower vK w
+  let : FiniteDimensional vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionFiniteDimensional vK hvK w
-  letI : IsGalois vK.Completion
+  let : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionIsGalois vK w
-  letI := localizedCompletionDecompositionGroupFintype vK w
+  let := localizedCompletionDecompositionGroupFintype vK w
   let g :=
     localizedCompletionGaloisGenerator
       vK hvK w σ hgen
@@ -137,7 +139,7 @@ theorem localHerbrandHMinusOneFinite
     finiteExtensionUnits_tate_card_of_generator
       vK.Completion (LocalizedCompletion vK w)
       g hg
-  letI : Finite
+  let : Finite
       (tateCohomology
         (Rep.ofAlgebraAutOnUnits vK.Completion
           (LocalizedCompletion vK w)) (-1)) := by

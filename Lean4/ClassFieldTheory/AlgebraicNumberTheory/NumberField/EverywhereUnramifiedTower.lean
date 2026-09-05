@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
+import ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+
+set_option autoImplicit false
 
 /-!
 # Everywhere-unramified towers of number fields
@@ -51,9 +53,9 @@ theorem trans
     IsUnramifiedAtFinitePlaces.trans
       hkK.finitePlaces hKF.finitePlaces
   infinitePlaces := by
-    letI : IsUnramifiedAtInfinitePlaces k K :=
+    let : IsUnramifiedAtInfinitePlaces k K :=
       hkK.infinitePlaces
-    letI : IsUnramifiedAtInfinitePlaces K F :=
+    let : IsUnramifiedAtInfinitePlaces K F :=
       hKF.infinitePlaces
     exact
       IsUnramifiedAtInfinitePlaces.trans k K F
@@ -67,7 +69,7 @@ theorem top
   finitePlaces :=
     IsUnramifiedAtFinitePlaces.top hkF.finitePlaces
   infinitePlaces := by
-    letI : IsUnramifiedAtInfinitePlaces k F :=
+    let : IsUnramifiedAtInfinitePlaces k F :=
       hkF.infinitePlaces
     exact
       IsUnramifiedAtInfinitePlaces.top k K F
@@ -81,7 +83,7 @@ theorem bot
   finitePlaces :=
     IsUnramifiedAtFinitePlaces.bot hkF.finitePlaces
   infinitePlaces := by
-    letI : IsUnramifiedAtInfinitePlaces k F :=
+    let : IsUnramifiedAtInfinitePlaces k F :=
       hkF.infinitePlaces
     exact
       IsUnramifiedAtInfinitePlaces.bot k K F

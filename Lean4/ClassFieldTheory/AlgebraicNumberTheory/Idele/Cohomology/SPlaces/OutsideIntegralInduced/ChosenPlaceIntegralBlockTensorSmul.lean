@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
-import AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.OutsideIntegralInduced.ChosenPlaceAction
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
+
+set_option autoImplicit false
 
 /-!
 # Equivariance of the integral tensor block
@@ -52,10 +54,10 @@ theorem
           (K := K) (L := L) w₀
           (chosenFinitePlaceExtension (L := L) w₀)
           (x : (w₀.adicCompletion K ⊗[K] L)ˣ) := by
-  letI :=
+  let :=
     relativeLocalTensorDecompositionIntegralUnitSubgroupAction
       (K := K) (L := L) w₀
-  letI tensorUnitsAction :=
+  let tensorUnitsAction :=
     scalarTensorUnitsAction
       (K := K) (L := L) (A := w₀.adicCompletion K)
   calc

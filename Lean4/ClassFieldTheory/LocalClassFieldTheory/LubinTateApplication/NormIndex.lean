@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNorm
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelAbelian
-import LocalClassFieldTheory.Finite.UnramifiedConductor
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNorm
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAbelian
+import ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
+
+set_option autoImplicit false
 
 /-!
 # Lubin--Tate application: index of the explicit level norm subgroup
@@ -30,8 +32,8 @@ private theorem normSubgroup_index_eq_finrank_of_isAbelianGalois
     [ValuativeRel B] [TopologicalSpace B]
     [IsNonarchimedeanLocalField B] :
     (localNormSubgroup B E).index = Module.finrank B E := by
-  letI : IsAbelianGalois B E := hab
-  letI : FiniteDimensional B E := hfd
+  let : IsAbelianGalois B E := hab
+  let : FiniteDimensional B E := hfd
   rw [Subgroup.index_eq_card]
   exact LocalClassFieldTheory.card_normQuotient_eq_finrank_of_isAbelianGalois B E
 
@@ -47,10 +49,10 @@ theorem equalCharacteristicLubinTateNormSubgroup_index
       (Nat.card F.residueField - 1) * Nat.card F.residueField ^ n := by
   let B := F.residueField⸨X⸩
   let E := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F n
+  let : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F n
   change (localNormSubgroup B E).index = _
   calc
     (localNormSubgroup B E).index = Module.finrank B E :=

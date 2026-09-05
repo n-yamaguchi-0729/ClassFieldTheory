@@ -1,5 +1,7 @@
-import LubinTate.FiniteLevel.DivisionPolynomial
+import ClassFieldTheory.LubinTate.FiniteLevel.DivisionPolynomial
 import Mathlib.RingTheory.Polynomial.Eisenstein.Basic
+
+set_option autoImplicit false
 
 /-!
 # Eisenstein property of the standard primitive division polynomials

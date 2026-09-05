@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.UniversalNormDescent
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.UniversalNormDescent
+
+set_option autoImplicit false
 
 universe u v
 
@@ -123,13 +125,8 @@ theorem birkhoffSum_eq_frobeniusPowerSum (D : DegreeData G)
   apply Finset.sum_congr rfl
   intro i hi
   simp only [id_eq, Finset.mem_range.mp hi, dite_true]
-  calc
-    (((D.frobeniusQuotientRepresentation A K L hLK).ρ φ)^[i]) a =
-        (D.frobeniusQuotientRepresentation A K L hLK).ρ (φ ^ i) a :=
-      (rep_action_pow_eq_iterate
-        (D.frobeniusQuotientRepresentation A K L hLK) φ i a).symm
-    _ = D.frobeniusQuotientAction A K L hLK (φ ^ i) a :=
-      D.frobeniusQuotientRepresentation_apply A K L hLK (φ ^ i) a
+  exact (rep_action_pow_eq_iterate
+    (D.frobeniusQuotientRepresentation A K L hLK) φ i a).symm
 
 /-- A Frobenius power sum splits into its first `n` terms and a translated
 block of `m` terms. -/
@@ -144,17 +141,21 @@ theorem frobeniusPowerSum_add (D : DegreeData G) (A : Rep ℤ G)
         D.frobeniusPowerSum A K L hLK φ m
           (D.frobeniusQuotientAction A K L hLK (φ ^ n) x) := by
   let B := D.frobeniusQuotientRepresentation A K L hLK
-  have h := birkhoffSum_add (B.ρ φ) id n m x
-  rw [D.birkhoffSum_eq_frobeniusPowerSum,
-    D.birkhoffSum_eq_frobeniusPowerSum,
-    D.birkhoffSum_eq_frobeniusPowerSum,
-    ← rep_action_pow_eq_iterate B φ n x] at h
-  change
-    D.frobeniusPowerSum A K L hLK φ (n + m) x =
-      D.frobeniusPowerSum A K L hLK φ n x +
-        D.frobeniusPowerSum A K L hLK φ m
-          (D.frobeniusQuotientAction A K L hLK (φ ^ n) x) at h
-  exact h
+  have hsum (r : ℕ)
+      (a : ambientFixedAddSubgroup A (D.maximalUnramifiedField L)) :
+      birkhoffSum (B.ρ φ) id r a =
+        D.frobeniusPowerSum A K L hLK φ r a :=
+    D.birkhoffSum_eq_frobeniusPowerSum A K L hLK φ r a
+  have hiterate : ((B.ρ φ)^[n]) x =
+      D.frobeniusQuotientAction A K L hLK (φ ^ n) x :=
+    (rep_action_pow_eq_iterate B φ n x).symm
+  exact ((hsum (n + m) x).symm.trans
+    (birkhoffSum_add (B.ρ φ) id n m x)).trans
+      (congrArg₂
+        (fun a b : ambientFixedAddSubgroup A (D.maximalUnramifiedField L) => a + b)
+        (hsum n x)
+        ((hsum m (((B.ρ φ)^[n]) x)).trans
+          (congrArg (D.frobeniusPowerSum A K L hLK φ m) hiterate)))
 
 /-- Actual additive telescoping identity for the Frobenius power sum. -/
 theorem frobeniusPowerSum_action_sub (D : DegreeData G)
@@ -262,7 +263,7 @@ theorem maximalUnramifiedNorm_frobeniusQuotientAction (D : DegreeData G)
           (relativeNorm A (D.maximalUnramifiedField K)
             (D.maximalUnramifiedField L) (D.maximalUnramifiedField_mono hLK)
             a)) := by
-  letI : Finite
+  let : Finite
       ((D.maximalUnramifiedField K).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K)
           (D.maximalUnramifiedField L)
@@ -336,7 +337,7 @@ theorem maximalUnramifiedNorm_fixed_of_hstar (D : DegreeData G)
       (D.maximalUnramifiedField L) (D.maximalUnramifiedField_mono hLK) (N u)
     D.frobeniusQuotientAction A K.field L hLK φ b = b := by
   dsimp only
-  letI : Finite
+  let : Finite
       ((D.maximalUnramifiedField K.field).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K.field)
           (D.maximalUnramifiedField L)
@@ -404,7 +405,7 @@ theorem descend_maximalUnramified_fixed_of_finiteSupport (D : DegreeData G)
     ∃ aK : ambientFixedAddSubgroup A K.field,
       fixedFieldInclusion A K.field (D.maximalUnramifiedField K.field)
         (D.maximalUnramifiedField_le K.field) aK = aI := by
-  letI hPfinite : Finite
+  let hPfinite : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field P.field P.below) := P.finite
   let f : K.field.toSubgroup := Quotient.out φ.1
   have hfφ :

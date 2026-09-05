@@ -1,5 +1,7 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldGeneration
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldGeneration
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: degree of the completed Frobenius fixed field
@@ -124,11 +126,11 @@ theorem equalCharacteristicCompletedFrobeniusFixedField_finrank
     ({(equalCharacteristicDirectThetaAtCompletedPrimitiveRoot F a n :
       equalCharacteristicCompletedLevelField F n)} :
       Set (equalCharacteristicCompletedLevelField F n))
-  letI EAlgebra : Algebra F.residueField⸨X⸩ E :=
+  let EAlgebra : Algebra F.residueField⸨X⸩ E :=
     Subalgebra.algebra E.toSubalgebra
-  letI ESMul : SMul F.residueField⸨X⸩ E :=
+  let ESMul : SMul F.residueField⸨X⸩ E :=
     @Algebra.toSMul _ _ _ _ EAlgebra
-  letI EModule : Module F.residueField⸨X⸩ E :=
+  let EModule : Module F.residueField⸨X⸩ E :=
     @Algebra.toModule _ _ _ _ EAlgebra
   have hfield : equalCharacteristicCompletedFrobeniusFixedField F a n = E :=
     equalCharacteristicCompletedFrobeniusFixedField_eq_adjoin_directTheta F a n

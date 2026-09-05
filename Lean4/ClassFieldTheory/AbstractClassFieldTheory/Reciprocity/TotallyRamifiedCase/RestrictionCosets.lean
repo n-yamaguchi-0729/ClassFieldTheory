@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Reduction
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
+
+set_option autoImplicit false
 
 /-!
 # Restriction transport for finite Galois subextensions
@@ -282,28 +284,26 @@ theorem abstractReciprocity_relativeNorm_fixedFieldInclusion
     M.field_le_intermediateField S
   let hM₀K : M₀.toSubgroup ≤ E.base.toSubgroup :=
     M.intermediateField_le_base S
-  letI hMfinite : Finite
+  let hMfinite : Finite
       (M₀.toSubgroup ⧸ extensionSubgroup M₀ M.field hMM₀) :=
     M.extension_over_intermediate_finite S
-  letI : Finite E.toAbstractExtension.quotient := by
-    change Finite
-      (E.base.toSubgroup ⧸ extensionSubgroup E.base E.field E.below)
-    exact E.finiteQuotient
-  let e := M.abstractReciprocityRestrictionCosetEquiv
-    D E.toAbstractExtension hME hTot hInertia
+  let : Finite
+      (E.base.toSubgroup ⧸ extensionSubgroup E.base E.field E.below) :=
+    E.finiteQuotient
+  let e : (M₀.toSubgroup ⧸ extensionSubgroup M₀ M.field hMM₀) ≃
+      (E.base.toSubgroup ⧸ extensionSubgroup E.base E.field E.below) :=
+    M.abstractReciprocityRestrictionCosetEquiv
+      D E.toAbstractExtension hME hTot hInertia
   apply Subtype.ext
-  letI : Fintype
+  let : Fintype
       (M₀.toSubgroup ⧸ extensionSubgroup M₀ M.field hMM₀) :=
     Fintype.ofFinite _
-  letI : Fintype
+  let : Fintype
       (E.base.toSubgroup ⧸ extensionSubgroup E.base E.field E.below) :=
     Fintype.ofFinite _
-  letI : Fintype E.quotient :=
-    Fintype.ofFinite _
-  letI : Fintype E.toAbstractExtension.quotient :=
-    Fintype.ofFinite _
-  simp only [fixedFieldInclusion_coe, relativeNorm_apply_coe,
-    relativeNormValue]
+  change (∑ r, relativeCosetAction A M₀ M.field hMM₀
+      (fixedFieldInclusion A E.field M.field hME a) r) =
+    ∑ q, relativeCosetAction A E.base E.field E.below a q
   calc
     ∑ r, relativeCosetAction A M₀ M.field hMM₀
         (fixedFieldInclusion A E.field M.field hME a) r =

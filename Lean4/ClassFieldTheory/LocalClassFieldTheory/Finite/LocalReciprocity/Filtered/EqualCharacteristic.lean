@@ -1,8 +1,12 @@
-import LocalClassFieldTheory.Finite.Existence.EqualCharacteristicDominatingExtension
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.EqualCharacteristicStandardCompositum
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedFixedFieldComparison
-import RamificationTheory.LocalField
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristicDominatingExtension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.EqualCharacteristicStandardCompositum
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedFixedFieldComparison
+import ValuedFieldTheory.Ramification.LocalField.Core
+import ValuedFieldTheory.Ramification.LocalField.BaseChange
+import ValuedFieldTheory.Ramification.LocalField.Unramified
+
+set_option autoImplicit false
 
 /-!
 # Filtered local reciprocity in equal characteristic
@@ -45,11 +49,11 @@ theorem equalCharacteristic_filteredLocalReciprocity
       K p ϖ hϖ d n hd
   let F :=
     abstractFixedField K (SeparableClosure K) P.field
-  letI : FiniteDimensional K F :=
+  let : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
       K (SeparableClosure K) P.field
         (finiteAbelianSubextension_finite_over_absoluteBase K P)
-  letI : IsAbelianGalois K F :=
+  let : IsAbelianGalois K F :=
     finiteAbelianSubextension_fixedField_isAbelianGalois K P
   let i : L →ₐ[K] F := hEmbed.some
   let j : L →ₐ[K] SeparableClosure K := F.val.comp i
@@ -60,9 +64,9 @@ theorem equalCharacteristic_filteredLocalReciprocity
     exact (i y).property
   let e : L ≃ₐ[K] E :=
     AlgEquiv.ofInjectiveField j
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     e.toLinearEquiv.finiteDimensional
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     IsAbelianGalois.of_algHom (IntermediateField.inclusion hEF)
   have hcover :
       ∀ s : ℝ, 0 ≤ s →

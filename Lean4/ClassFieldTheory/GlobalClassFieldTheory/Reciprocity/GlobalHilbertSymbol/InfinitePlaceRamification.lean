@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlacePositive
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlacePositive
+
+set_option autoImplicit false
 
 /-!
 # Ramification of a negative quadratic Kummer radical at a real place
@@ -33,9 +35,9 @@ theorem chosenSimpleKummerExtension_chosenInfinitePlace_isRamified_of_real_of_ra
     letI : NumberField L := NumberField.of_module_finite K L
     (chosenInfinitePlaceAbove (L := L) v).IsRamified K := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
   let beta : L :=
     (chosenSimpleKummerRootUnit K n hnK b : Lˣ)

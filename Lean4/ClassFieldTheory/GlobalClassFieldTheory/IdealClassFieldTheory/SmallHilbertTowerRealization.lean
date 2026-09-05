@@ -1,5 +1,8 @@
-import GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
-import GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerConjugation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerConjugation
+import Mathlib.Data.Rat.Cast.Defs
+
+set_option autoImplicit false
 
 /-!
 # Actual realization of the two-stage small Hilbert tower
@@ -34,6 +37,16 @@ open LocalClassFieldTheory
 open RamificationTheory
 open Reciprocity
 
+/-- The ordinary idèle-class operations used by the two-stage transport,
+fixed at the canonical principal-subgroup quotient. -/
+@[instance_reducible]
+private noncomputable def smallHilbertTowerIdeleClassCommGroup
+    (F : Type) [Field F] [NumberField F] :
+    CommGroup (IdeleClassGroup F) :=
+  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
+
+attribute [local instance] smallHilbertTowerIdeleClassCommGroup
+
 private theorem addSubgroup_comap_symm_eq_map
     {A B : Type*} [AddGroup A] [AddGroup B]
     (H : AddSubgroup A) (e : A ≃+ B) :
@@ -64,7 +77,7 @@ private noncomputable abbrev smallHilbertTowerMiddleFiniteAbstractField :
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ) :=
   { field := L.field
     finite := by
-      letI : Finite
+      let : Finite
           ((baseField
             (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
             extensionSubgroup
@@ -72,7 +85,7 @@ private noncomputable abbrev smallHilbertTowerMiddleFiniteAbstractField :
                 (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
               K.field (le_baseField K.field)) :=
         K.finite
-      letI : Finite
+      let : Finite
           (K.field.toSubgroup ⧸
             extensionSubgroup K.field L.field L.below) :=
         L.finite
@@ -117,7 +130,8 @@ noncomputable def smallHilbertTowerMiddleNormSubgroup :
         rationalIdeleClassRepresentation L.field) :=
   (smallHilbertClassFieldNormSubgroup (K := E)).toAddSubgroup.comap
     (rationalAbstractFixedFieldIdeleClassEquivFixed
-      L.field).symm.toAddMonoidHom
+      L.field
+      (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom
 
 /-- The typed `comap` endpoint is the canonical transported `map` endpoint.
 This uses only the generic additive equivalence law. -/
@@ -125,41 +139,65 @@ theorem smallHilbertTowerMiddleNormSubgroup_eq_map :
     smallHilbertTowerMiddleNormSubgroup K L =
       (smallHilbertClassFieldNormSubgroup (K := E)).toAddSubgroup.map
         (rationalAbstractFixedFieldIdeleClassEquivFixed
-          L.field).toAddMonoidHom := by
+          L.field
+          (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).toAddMonoidHom := by
   exact addSubgroup_comap_symm_eq_map
     (smallHilbertClassFieldNormSubgroup (K := E)).toAddSubgroup
-    (rationalAbstractFixedFieldIdeleClassEquivFixed L.field)
+    (rationalAbstractFixedFieldIdeleClassEquivFixed L.field
+      (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L))
 
 @[reducible]
-private noncomputable instance (priority := 2000)
+private noncomputable def
     smallHilbertTowerNormAmbientAlgebra :
     Algebra E N :=
   closedFiniteIndexNormAmbientCanonicalBaseAlgebra E
     (smallHilbertClassFieldNormSubgroup (K := E))
     (smallHilbertClassFieldNormSubgroup_isClosed (K := E))
 
+attribute [local instance] smallHilbertTowerNormAmbientAlgebra
+
 @[reducible]
-private noncomputable instance (priority := 2000)
+private noncomputable def
     smallHilbertTowerNormAmbientSMul :
     SMul E N :=
   Algebra.toSMul
     (self := smallHilbertTowerNormAmbientAlgebra K L)
 
 @[reducible]
-private noncomputable instance (priority := 2000)
+private noncomputable def
     smallHilbertTowerNormAmbientModule :
     Module E N :=
   @Algebra.toModule E N _ _
     (smallHilbertTowerNormAmbientAlgebra K L)
 
-private noncomputable instance (priority := 2000)
+private theorem
     smallHilbertTowerNormAmbientScalarTower :
-    IsScalarTower ℚ E N := by
-  apply IsScalarTower.of_algebraMap_eq'
-  ext q
-  simp
+    @IsScalarTower ℚ E N
+      (Algebra.toSMul (R := ℚ) (A := E))
+      (smallHilbertTowerNormAmbientSMul K L)
+      (Algebra.toSMul (R := ℚ) (A := N)) := by
+  exact IsScalarTower.of_algebraMap_eq'
+    (R := ℚ) (S := E) (A := N)
+    (RingHom.ext_rat (algebraMap ℚ N)
+      ((algebraMap E N).comp (algebraMap ℚ E)))
 
-private noncomputable instance (priority := 2000)
+private noncomputable def
+    smallHilbertTowerNormAmbientAlgHom :
+    E →ₐ[ℚ] N :=
+  { toRingHom := algebraMap E N
+    commutes' := fun r =>
+      (RingHom.congr_fun
+        (RingHom.ext_rat
+          ((algebraMap E N).comp (algebraMap ℚ E))
+          (algebraMap ℚ N)) r) }
+
+private theorem smallHilbertTowerNormAmbientAlgHom_apply
+    (x : E) :
+    smallHilbertTowerNormAmbientAlgHom K L x =
+      algebraMap E N x := by
+  rfl
+
+private theorem
     smallHilbertTowerNormAmbientIsGalois :
     IsGalois E N := by
   unfold smallHilbertClassFieldNormAmbient
@@ -169,13 +207,15 @@ private noncomputable instance (priority := 2000)
       (smallHilbertClassFieldNormSubgroup (K := E))
       (smallHilbertClassFieldNormSubgroup_isClosed (K := E))
 
+attribute [local instance] smallHilbertTowerNormAmbientIsGalois
+
 private noncomputable def
     smallHilbertNormNeighborhoodForwardAlignment :
     SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ := by
   let j₀ : N →ₐ[ℚ] SeparableClosure ℚ :=
     numberFieldSeparableClosureEmbedding N
   let i₀ : E →ₐ[ℚ] SeparableClosure ℚ :=
-    j₀.comp (IsScalarTower.toAlgHom ℚ E N)
+    j₀.comp (smallHilbertTowerNormAmbientAlgHom K L)
   exact
     AlgEquiv.ofBijective
       (i₀.liftNormal (SeparableClosure ℚ))
@@ -200,7 +240,7 @@ private theorem smallHilbertNormNeighborhoodForwardAlignment_apply
   let j₀ : N →ₐ[ℚ] SeparableClosure ℚ :=
     numberFieldSeparableClosureEmbedding N
   let i₀ : E →ₐ[ℚ] SeparableClosure ℚ :=
-    j₀.comp (IsScalarTower.toAlgHom ℚ E N)
+    j₀.comp (smallHilbertTowerNormAmbientAlgHom K L)
   dsimp only [smallHilbertNormNeighborhoodForwardAlignment,
     AlgEquiv.ofBijective_apply]
   calc
@@ -208,7 +248,12 @@ private theorem smallHilbertNormNeighborhoodForwardAlignment_apply
       simpa only [IntermediateField.algebraMap_apply,
         Algebra.algebraMap_self, RingHom.id_apply] using
         i₀.liftNormal_commutes (SeparableClosure ℚ) x
-    _ = j₀ (algebraMap E N x) := rfl
+    _ = j₀ (algebraMap E N x) := by
+      change
+        j₀ (smallHilbertTowerNormAmbientAlgHom K L x) =
+          j₀ (algebraMap E N x)
+      exact congrArg j₀
+        (smallHilbertTowerNormAmbientAlgHom_apply K L x)
 
 /-- A controlled embedding of the concrete finite Galois norm
 neighbourhood.  Its restriction to the middle field is the literal
@@ -240,7 +285,7 @@ private abbrev smallHilbertNormNeighborhoodEmbeddedBase :
   closedFixingSubgroup ℚ (SeparableClosure ℚ)
     (AlgHom.fieldRange
       ((smallHilbertNormNeighborhoodEmbedding K L).comp
-        (IsScalarTower.toAlgHom ℚ E N)))
+        (smallHilbertTowerNormAmbientAlgHom K L)))
 
 private abbrev smallHilbertNormNeighborhoodEmbeddedField :
     ClosedSubgroup
@@ -257,31 +302,33 @@ private theorem smallHilbertNormNeighborhoodEmbeddedField_le_base :
         (smallHilbertNormNeighborhoodEmbedding K L)).fixingSubgroup ≤
       (AlgHom.fieldRange
         ((smallHilbertNormNeighborhoodEmbedding K L).comp
-          (IsScalarTower.toAlgHom ℚ E N))).fixingSubgroup
+          (smallHilbertTowerNormAmbientAlgHom K L))).fixingSubgroup
   apply
     (AlgHom.fieldRange
       ((smallHilbertNormNeighborhoodEmbedding K L).comp
-        (IsScalarTower.toAlgHom ℚ E N))).fixingSubgroup_le
+        (smallHilbertTowerNormAmbientAlgHom K L))).fixingSubgroup_le
   exact
     AlgHom.range_comp_le_range
-      (IsScalarTower.toAlgHom ℚ E N)
+      (smallHilbertTowerNormAmbientAlgHom K L)
       (smallHilbertNormNeighborhoodEmbedding K L)
 
 private theorem smallHilbertNormNeighborhoodEmbeddedBase_eq :
     smallHilbertNormNeighborhoodEmbeddedBase K L = L.field := by
   have hi :
       (smallHilbertNormNeighborhoodEmbedding K L).comp
-          (IsScalarTower.toAlgHom ℚ E N) =
+          (smallHilbertTowerNormAmbientAlgHom K L) =
         (abstractFixedField ℚ (SeparableClosure ℚ) L.field).val := by
-    ext x
-    exact
-      congrArg Subtype.val
-        (smallHilbertNormNeighborhoodEmbedding_algebraMap K L x)
+    apply AlgHom.ext
+    intro x
+    change smallHilbertNormNeighborhoodEmbedding K L
+      (smallHilbertTowerNormAmbientAlgHom K L x) = (x : SeparableClosure ℚ)
+    rw [smallHilbertTowerNormAmbientAlgHom_apply K L x]
+    exact smallHilbertNormNeighborhoodEmbedding_algebraMap K L x
   change
     closedFixingSubgroup ℚ (SeparableClosure ℚ)
         (AlgHom.fieldRange
           ((smallHilbertNormNeighborhoodEmbedding K L).comp
-            (IsScalarTower.toAlgHom ℚ E N))) =
+            (smallHilbertTowerNormAmbientAlgHom K L))) =
       L.field
   rw [hi, IntermediateField.fieldRange_val]
   exact
@@ -291,28 +338,20 @@ private theorem smallHilbertNormNeighborhoodEmbeddedBase_eq :
 private noncomputable def
     smallHilbertNormNeighborhoodSeparableClosureEquiv :
     let j := smallHilbertNormNeighborhoodEmbedding K L
-    let i := j.comp (IsScalarTower.toAlgHom ℚ E N)
-    let alg : Algebra E (SeparableClosure ℚ) :=
+    let i := j.comp (smallHilbertTowerNormAmbientAlgHom K L)
+    let : Algebra E (SeparableClosure ℚ) :=
       i.toRingHom.toAlgebra
-    letI : Algebra E (SeparableClosure ℚ) := alg
-    letI : SMul E (SeparableClosure ℚ) := alg.toSMul
     SeparableClosure E ≃ₐ[E] SeparableClosure ℚ := by
-  dsimp only
-  let j := smallHilbertNormNeighborhoodEmbedding K L
-  let i := j.comp (IsScalarTower.toAlgHom ℚ E N)
-  let alg : Algebra E (SeparableClosure ℚ) :=
-    i.toRingHom.toAlgebra
-  letI : Algebra E (SeparableClosure ℚ) := alg
-  letI : SMul E (SeparableClosure ℚ) := alg.toSMul
-  letI : Module E (SeparableClosure ℚ) :=
-    @Algebra.toModule E (SeparableClosure ℚ) _ _ alg
-  letI : IsScalarTower ℚ E (SeparableClosure ℚ) :=
+  intro j i alg
+  let : @IsScalarTower ℚ E (SeparableClosure ℚ)
+      (Algebra.toSMul (R := ℚ) (A := E))
+      alg.toSMul
+      (Algebra.toSMul (R := ℚ) (A := SeparableClosure ℚ)) :=
     IsScalarTower.of_algebraMap_eq' i.comp_algebraMap.symm
-  letI : Algebra.IsSeparable E (SeparableClosure ℚ) :=
-    Algebra.isSeparable_tower_top_of_isSeparable
-      ℚ E (SeparableClosure ℚ)
-  letI : IsSepClosure E (SeparableClosure ℚ) :=
-    ⟨inferInstance, inferInstance⟩
+  let : IsSepClosure E (SeparableClosure ℚ) :=
+    ⟨IsSepClosure.sep_closed ℚ,
+      Algebra.isSeparable_tower_top_of_isSeparable
+        ℚ E (SeparableClosure ℚ)⟩
   exact
     IsSepClosure.equiv E
       (SeparableClosure E) (SeparableClosure ℚ)
@@ -321,36 +360,41 @@ private noncomputable def
     smallHilbertFiniteGaloisNormNeighborhoodRaw :
     FiniteGaloisSubextension
       (smallHilbertNormNeighborhoodEmbeddedBase K L) := by
-  let j := smallHilbertNormNeighborhoodEmbedding K L
-  let i := j.comp (IsScalarTower.toAlgHom ℚ E N)
-  let alg : Algebra E (SeparableClosure ℚ) :=
-    i.toRingHom.toAlgebra
-  letI : Algebra E (SeparableClosure ℚ) := alg
-  letI : SMul E (SeparableClosure ℚ) := alg.toSMul
-  letI : Module E (SeparableClosure ℚ) :=
-    @Algebra.toModule E (SeparableClosure ℚ) _ _ alg
-  let e :=
-    smallHilbertNormNeighborhoodSeparableClosureEquiv K L
-  letI hnormal :
-      (extensionSubgroup
-        (smallHilbertNormNeighborhoodEmbeddedBase K L)
-        (smallHilbertNormNeighborhoodEmbeddedField K L)
-        (smallHilbertNormNeighborhoodEmbeddedField_le_base K L)).Normal := by
-    simpa only [
-      smallHilbertNormNeighborhoodEmbeddedBase,
-      smallHilbertNormNeighborhoodEmbeddedField,
-      j, i] using
-      (ambientEmbeddedExtensionSubgroup_normal ℚ E N j e)
-  exact {
-    field := smallHilbertNormNeighborhoodEmbeddedField K L
-    below := smallHilbertNormNeighborhoodEmbeddedField_le_base K L
-    normal := hnormal
-    finite := by
-      simpa only [
-        smallHilbertNormNeighborhoodEmbeddedBase,
-        smallHilbertNormNeighborhoodEmbeddedField,
-        j, i] using
-        (ambientEmbeddedExtensionQuotient_finite ℚ E N j e) }
+  let : @IsScalarTower ℚ E N
+      (Algebra.toSMul (R := ℚ) (A := E))
+      (smallHilbertTowerNormAmbientSMul K L)
+      (Algebra.toSMul (R := ℚ) (A := N)) :=
+    smallHilbertTowerNormAmbientScalarTower K L
+  let j : N →ₐ[ℚ] SeparableClosure ℚ :=
+    smallHilbertNormNeighborhoodEmbedding K L
+  let i : E →ₐ[ℚ] SeparableClosure ℚ :=
+    j.comp (IsScalarTower.toAlgHom ℚ E N)
+  let B : ClosedSubgroup (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ) :=
+    closedFixingSubgroup ℚ (SeparableClosure ℚ) i.fieldRange
+  let T : ClosedSubgroup (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ) :=
+    smallHilbertNormNeighborhoodEmbeddedField K L
+  have hTB : T.toSubgroup ≤ B.toSubgroup := by
+    change j.fieldRange.fixingSubgroup ≤ i.fieldRange.fixingSubgroup
+    apply i.fieldRange.fixingSubgroup_le
+    exact AlgHom.range_comp_le_range (IsScalarTower.toAlgHom ℚ E N) j
+  let raw : FiniteGaloisSubextension B := {
+    field := T
+    below := hTB
+    normal := ambientEmbeddedExtensionSubgroup_normal ℚ E N j
+      (smallHilbertNormNeighborhoodSeparableClosureEquiv K L)
+    finite := ambientEmbeddedExtensionQuotient_finite ℚ E N j
+      (smallHilbertNormNeighborhoodSeparableClosureEquiv K L) }
+  have hi : IsScalarTower.toAlgHom ℚ E N =
+      smallHilbertTowerNormAmbientAlgHom K L := by
+    apply AlgHom.ext
+    intro x
+    exact (IsScalarTower.toAlgHom_apply ℚ E N x).trans
+      (smallHilbertTowerNormAmbientAlgHom_apply K L x).symm
+  have hB : B = smallHilbertNormNeighborhoodEmbeddedBase K L :=
+    congrArg
+      (fun f : E →ₐ[ℚ] N =>
+        closedFixingSubgroup ℚ (SeparableClosure ℚ) (j.comp f).fieldRange) hi
+  exact hB ▸ raw
 
 private noncomputable def rebaseFiniteGaloisSubextension
     {G : Type} [Group G] [TopologicalSpace G]
@@ -525,7 +569,8 @@ private theorem
     ((smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
         rationalIdeleClassRepresentation).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
-            L.field).symm.toAddMonoidHom =
+            L.field
+            (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (_root_.ideleClassNorm E E₂).range.toAddSubgroup := by
   change
     (finiteNormSubgroup rationalIdeleClassRepresentation
@@ -533,7 +578,8 @@ private theorem
       (smallHilbertFiniteGaloisNormNeighborhood K L).field
       (smallHilbertFiniteGaloisNormNeighborhood K L).below).map
         (rationalAbstractFixedFieldIdeleClassEquivFixed
-          L.field).symm.toAddMonoidHom =
+          L.field
+          (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (_root_.ideleClassNorm E E₂).range.toAddSubgroup
   exact
     (map_rationalFiniteNormSubgroup_eq_ordinaryIdeleClassNormRange_concrete
@@ -550,7 +596,8 @@ private theorem
     ((smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
         rationalIdeleClassRepresentation).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
-            L.field).symm.toAddMonoidHom =
+            L.field
+            (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (_root_.ideleClassNorm E N).range.toAddSubgroup :=
   (smallHilbertFiniteGaloisNormNeighborhood_abstractNormMap_eq K L).trans
     (congrArg Subgroup.toAddSubgroup
@@ -564,7 +611,8 @@ private theorem
       a ∈ ((smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
         rationalIdeleClassRepresentation).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
-            L.field).symm.toAddMonoidHom) :
+            L.field
+            (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom) :
     a ∈ (_root_.ideleClassNorm E N).range.toAddSubgroup :=
   (le_of_eq
     (smallHilbertFiniteGaloisNormNeighborhood_abstractNormMap_eq_ordinaryNormRange
@@ -585,14 +633,17 @@ theorem smallHilbertFiniteGaloisNormNeighborhood_normSubgroup_le :
       rationalIdeleClassRepresentation at ha
   have haMap :
       (rationalAbstractFixedFieldIdeleClassEquivFixed
-          L.field).symm a ∈
+          L.field
+          (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm a ∈
         ((smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
           rationalIdeleClassRepresentation).map
             (rationalAbstractFixedFieldIdeleClassEquivFixed
-              L.field).symm.toAddMonoidHom :=
+              L.field
+              (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom :=
     ⟨a, ha, rfl⟩
   have haOrdinary :
-      (rationalAbstractFixedFieldIdeleClassEquivFixed L.field).symm a ∈
+      (rationalAbstractFixedFieldIdeleClassEquivFixed L.field
+        (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm a ∈
         (_root_.ideleClassNorm E N).range.toAddSubgroup :=
     smallHilbertFiniteGaloisNormNeighborhood_abstractNormMap_mem_ordinaryNormRange
       K L _ haMap
@@ -701,7 +752,8 @@ private theorem
     ((secondSmallHilbertClassFieldSubextension K L).normSubgroup
         rationalIdeleClassRepresentation).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
-            L.field).symm.toAddMonoidHom =
+            L.field
+            (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (_root_.ideleClassNorm E T₂).range.toAddSubgroup := by
   change
     (finiteNormSubgroup rationalIdeleClassRepresentation
@@ -709,7 +761,8 @@ private theorem
         (secondSmallHilbertClassFieldSubextension K L).field
         (secondSmallHilbertClassFieldSubextension K L).below).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
-            L.field).symm.toAddMonoidHom =
+            L.field
+            (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (_root_.ideleClassNorm E T₂).range.toAddSubgroup
   exact
     map_rationalFiniteNormSubgroup_eq_ordinaryIdeleClassNormRange_concrete
@@ -723,28 +776,27 @@ private theorem
     ((secondSmallHilbertClassFieldSubextension K L).normSubgroup
         rationalIdeleClassRepresentation).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
-            L.field).symm.toAddMonoidHom =
+            L.field
+            (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (smallHilbertClassFieldNormSubgroup (K := E)).toAddSubgroup := by
-  let e := rationalAbstractFixedFieldIdeleClassEquivFixed L.field
-  let H :=
+  let e : Additive (IdeleClassGroup E) ≃+
+      ambientFixedAddSubgroup rationalIdeleClassRepresentation L.field :=
+    rationalAbstractFixedFieldIdeleClassEquivFixed L.field
+      (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)
+  let H : AddSubgroup (Additive (IdeleClassGroup E)) :=
     (smallHilbertClassFieldNormSubgroup (K := E)).toAddSubgroup
-  have hNorm :=
-    congrArg
-      (fun (n : AddSubgroup
-          (ambientFixedAddSubgroup rationalIdeleClassRepresentation L.field)) =>
-        n.map e.symm.toAddMonoidHom)
-      (secondSmallHilbertClassFieldSubextension_normSubgroup K L)
-  have hMiddle :=
-    congrArg
-      (fun (n : AddSubgroup
-          (ambientFixedAddSubgroup rationalIdeleClassRepresentation L.field)) =>
-        n.map e.symm.toAddMonoidHom)
-      (smallHilbertTowerMiddleNormSubgroup_eq_map K L)
-  have hCancel :
-      (H.map e.toAddMonoidHom).map e.symm.toAddMonoidHom = H :=
-    (AddSubgroup.map_symm_eq_iff_map_eq
-      (K := H) (H := H.map e.toAddMonoidHom) (e := e)).2 rfl
-  exact hNorm.trans (hMiddle.trans hCancel)
+  let back : AddSubgroup
+      (ambientFixedAddSubgroup rationalIdeleClassRepresentation L.field) →
+      AddSubgroup (Additive (IdeleClassGroup E)) :=
+    fun n => n.map e.symm.toAddMonoidHom
+  have hNorm :
+      back ((secondSmallHilbertClassFieldSubextension K L).normSubgroup
+        rationalIdeleClassRepresentation) =
+      back (smallHilbertTowerMiddleNormSubgroup K L) :=
+    congrArg back (secondSmallHilbertClassFieldSubextension_normSubgroup K L)
+  have hCancel : back (smallHilbertTowerMiddleNormSubgroup K L) = H :=
+    AddSubgroup.map_comap_eq_self_of_surjective e.symm.surjective H
+  exact hNorm.trans hCancel
 
 /-- The actual second small Hilbert class field has exactly the intrinsic
 small-Hilbert norm range over the literal middle fixed field. -/

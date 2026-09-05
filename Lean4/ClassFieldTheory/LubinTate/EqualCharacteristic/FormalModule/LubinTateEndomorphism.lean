@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Existence.LaurentModel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentModel
 import Mathlib.Algebra.CharP.Algebra
 import Mathlib.Algebra.CharP.Frobenius
+
+set_option autoImplicit false
 
 /-!
 # The equal-characteristic Lubin–Tate action: the equal-characteristic Lubin--Tate endomorphism
@@ -122,7 +124,7 @@ theorem equalCharacteristicLubinTatePiEnd_coefficient_mul
         (algebraMap F.residueField F.residueField⸨X⸩ a * x) =
       algebraMap F.residueField F.residueField⸨X⸩ a *
         equalCharacteristicLubinTatePiEnd F x := by
-  letI : Fintype F.residueField := Fintype.ofFinite F.residueField
+  let : Fintype F.residueField := Fintype.ofFinite F.residueField
   rw [equalCharacteristicLubinTatePiEnd_apply,
     equalCharacteristicLubinTatePiEnd_apply, mul_pow, ← map_pow]
   have ha : a ^ Nat.card F.residueField = a := by

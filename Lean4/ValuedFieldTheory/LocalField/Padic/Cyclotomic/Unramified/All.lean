@@ -1,0 +1,3 @@
+import ValuedFieldTheory.LocalField.Padic.Cyclotomic.Unramified.ArithmeticFrobenius
+
+set_option autoImplicit false

@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.Existence.CharacteristicZero
-import LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
-import LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.CharacteristicZero
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+
+set_option autoImplicit false
 
 /-!
 # Classification by open finite-index norm subgroups
@@ -27,11 +29,11 @@ theorem finiteAbelianNormSubgroupMap_surjective :
     Function.Surjective (finiteAbelianNormSubgroupMap K) := by
   classical
   by_cases hcharZero : CharZero K
-  · letI : CharZero K := hcharZero
+  · let : CharZero K := hcharZero
     exact finiteAbelianNormSubgroupMap_surjective_of_charZero K
   · obtain ⟨p, hp, hKp⟩ := (CharP.exists' K).resolve_left hcharZero
-    letI : Fact p.Prime := hp
-    letI : CharP K p := hKp
+    let : Fact p.Prime := hp
+    let : CharP K p := hKp
     exact finiteAbelianNormSubgroupMap_surjective_of_charP K p
 
 /-- **Finite local existence theorem.** Finite abelian subextensions,

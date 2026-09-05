@@ -1,5 +1,7 @@
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
-import AbstractClassFieldTheory.Reciprocity.ClassField
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassField
+
+set_option autoImplicit false
 
 /-!
 # Profinite reciprocity facade

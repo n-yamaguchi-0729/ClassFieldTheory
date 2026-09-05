@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealDecompositionLaw
+import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealDecompositionLaw
+
+set_option autoImplicit false
 
 /-!
 # Ideal norms and arithmetic Artin exactness
@@ -29,7 +31,7 @@ variable
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
 
-attribute [local instance 1000]
+attribute [local instance]
   ideleClassSubgroupNormal idealArtinKernelNormal
 
 /-- The kernel of the arithmetic, Galois-valued ideal Artin map is the

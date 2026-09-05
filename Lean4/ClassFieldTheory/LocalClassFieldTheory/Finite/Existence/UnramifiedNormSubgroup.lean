@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LocalFieldTheory.NonarchimedeanLocalField.Norm
-import LocalFieldTheory.NonarchimedeanLocalField.ValuationExactSequence
-import LocalFieldTheory.NonarchimedeanLocalField.NormQuotient
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Norm
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+
+set_option autoImplicit false
 
 /-!
 # Unramified norm subgroups

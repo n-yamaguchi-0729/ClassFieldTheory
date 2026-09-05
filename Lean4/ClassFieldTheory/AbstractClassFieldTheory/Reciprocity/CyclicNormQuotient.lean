@@ -1,6 +1,8 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FiniteNormQuotient
-import AbstractClassFieldTheory.Reciprocity.ClassFieldAxiom
-import AbstractClassFieldTheory.Reciprocity.FieldRepresentation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FiniteNormQuotient
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassFieldAxiom
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FieldRepresentation
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -80,7 +82,7 @@ def cyclicFixedCycleEquiv
       apply sub_eq_zero.mp
       exact hxzero
     have hxall : ∀ q, M.ρ q aM = aM := by
-      letI : Module ℤ M := M.hV2
+      let : Module ℤ M := M.hV2
       exact (Representation.mem_invariants_iff_of_forall_mem_zpowers
         M.ρ g hg aM).2 hxg
     refine ⟨aL.1, ?_⟩
@@ -217,13 +219,13 @@ theorem cyclicFixedCycleEquiv_relativeNorm
       T.moduleCatToCycles
         ((extensionFixedRepresentationEquiv A K L hLK hnormal).symm a) := by
   dsimp only
-  letI := hnormal
-  letI := hfinite
-  letI := Fintype.ofFinite
+  let := hnormal
+  let := hfinite
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K L hLK)
-  letI : IsCyclic (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
+  let : IsCyclic (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
     isCyclic_of_generator g hg
-  letI : CommGroup (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
+  let : CommGroup (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
     IsCyclic.commGroup
   let M := extensionFixedRepresentation A K L hLK hnormal
   let T := Rep.FiniteCyclicGroup.normHomCompSub M g
@@ -254,18 +256,18 @@ theorem cyclicNormClassHom_ker
       IsCyclic.commGroup
     (cyclicNormClassHom A K L hLK hnormal hfinite g hg).ker =
       finiteNormSubgroup A K L hLK := by
-  letI := hnormal
-  letI := hfinite
-  letI := Fintype.ofFinite
+  let := hnormal
+  let := hfinite
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K L hLK)
-  letI : IsCyclic (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
+  let : IsCyclic (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
     isCyclic_of_generator g hg
-  letI : CommGroup (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
+  let : CommGroup (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
     IsCyclic.commGroup
   let M := extensionFixedRepresentation A K L hLK hnormal
   let T := Rep.FiniteCyclicGroup.normHomCompSub M g
-  letI : Module ℤ T.X₁ := T.X₁.isModule
-  letI : Module ℤ (LinearMap.ker T.g.hom) :=
+  let : Module ℤ T.X₁ := T.X₁.isModule
+  let : Module ℤ (LinearMap.ker T.g.hom) :=
     (LinearMap.ker T.g.hom).module
   let e := cyclicFixedCycleEquiv A K L hLK hnormal hfinite g hg
   ext a
@@ -329,13 +331,13 @@ theorem cyclicNormClassHom_surjective
       IsCyclic.commGroup
     Function.Surjective
       (cyclicNormClassHom A K L hLK hnormal hfinite g hg) := by
-  letI := hnormal
-  letI := hfinite
-  letI := Fintype.ofFinite
+  let := hnormal
+  let := hfinite
+  let := Fintype.ofFinite
     (K.toSubgroup ⧸ extensionSubgroup K L hLK)
-  letI : IsCyclic (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
+  let : IsCyclic (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
     isCyclic_of_generator g hg
-  letI : CommGroup (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
+  let : CommGroup (K.toSubgroup ⧸ extensionSubgroup K L hLK) :=
     IsCyclic.commGroup
   let M := extensionFixedRepresentation A K L hLK hnormal
   let T := Rep.FiniteCyclicGroup.normHomCompSub M g
@@ -465,9 +467,9 @@ theorem finiteNormQuotientFiniteOfClassFieldAxiom
       extensionSubgroup E.base E.field E.below)
     (hg : ∀ x, x ∈ Subgroup.zpowers g) :
     Finite (FiniteNormQuotient A E.base E.field E.below) := by
-  letI := hnormal
-  letI := E.finiteQuotient
-  letI := Fintype.ofFinite
+  let := hnormal
+  let := E.finiteQuotient
+  let := Fintype.ofFinite
     (E.base.toSubgroup ⧸ extensionSubgroup E.base E.field E.below)
   let M := extensionFixedRepresentation A E.base E.field E.below hnormal
   let Kcf : FiniteAbstractField G := ⟨E.base, hKfinite⟩
@@ -478,7 +480,7 @@ theorem finiteNormQuotientFiniteOfClassFieldAxiom
       finite := E.finiteQuotient
       generator := g
       generates := hg }
-  letI : Finite (tateCohomology (Ecf.fixedRepresentation A) 0) :=
+  let : Finite (tateCohomology (Ecf.fixedRepresentation A) 0) :=
     (hcf Kcf Ecf).finiteTateHZero
   exact Finite.of_equiv (tateCohomology (Ecf.fixedRepresentation A) 0) (by
     simpa [Kcf, Ecf, FiniteCyclicSubextension.fixedRepresentation] using
@@ -498,9 +500,9 @@ theorem finiteNormQuotient_card_of_classFieldAxiom
     (hg : ∀ x, x ∈ Subgroup.zpowers g) :
     Nat.card (FiniteNormQuotient A E.base E.field E.below) =
       (E.degree : ℕ) := by
-  letI := hnormal
-  letI := E.finiteQuotient
-  letI := Fintype.ofFinite
+  let := hnormal
+  let := E.finiteQuotient
+  let := Fintype.ofFinite
     (E.base.toSubgroup ⧸ extensionSubgroup E.base E.field E.below)
   let M := extensionFixedRepresentation A E.base E.field E.below hnormal
   let Kcf : FiniteAbstractField G := ⟨E.base, hKfinite⟩
@@ -511,14 +513,14 @@ theorem finiteNormQuotient_card_of_classFieldAxiom
       finite := E.finiteQuotient
       generator := g
       generates := hg }
-  letI : Finite (tateCohomology (Ecf.fixedRepresentation A) 0) :=
+  let : Finite (tateCohomology (Ecf.fixedRepresentation A) 0) :=
     (hcf Kcf Ecf).finiteTateHZero
-  letI : Finite (tateCohomology M 0) := by
+  let : Finite (tateCohomology M 0) := by
     simpa [M, Kcf, Ecf,
       FiniteCyclicSubextension.fixedRepresentation] using
         (inferInstance :
           Finite (tateCohomology (Ecf.fixedRepresentation A) 0))
-  letI : Finite (FiniteNormQuotient A E.base E.field E.below) :=
+  let : Finite (FiniteNormQuotient A E.base E.field E.below) :=
     finiteNormQuotientFiniteOfClassFieldAxiom A hcf E hnormal g hg
   calc
     Nat.card (FiniteNormQuotient A E.base E.field E.below) =

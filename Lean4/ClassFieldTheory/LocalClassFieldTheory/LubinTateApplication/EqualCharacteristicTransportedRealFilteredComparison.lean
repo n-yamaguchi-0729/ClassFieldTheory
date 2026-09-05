@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicRealFilteredComparison
-import LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedArtinComparison
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicRealFilteredComparison
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedArtinComparison
+
+set_option autoImplicit false
 
 /-!
 # Real filtered reciprocity on transported Lubin--Tate levels
@@ -63,14 +65,14 @@ theorem
     localUpperRamificationGroup K L 0 = ⊤ := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B :=
+  let : ValuativeRel B :=
     equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI finBL : FiniteDimensional B L :=
+  let finBL : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let upperB :=
     @localUpperRamificationGroup B L
@@ -81,17 +83,17 @@ theorem
     simpa only [upperB, F, B, L] using
       equalCharacteristicLubinTateLocalUpperRamificationGroup_zero_eq_top
         F n
-  letI algBL : Algebra B L :=
+  let algBL : Algebra B L :=
     equalCharacteristicLubinTateLevelAlgebra F n
-  letI : CharP K p := hKp
-  letI algKL : Algebra K L :=
+  let : CharP K p := hKp
+  let algKL : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : Module K L := Algebra.toModule
-  letI galKL : IsGalois K L :=
+  let : Module K L := Algebra.toModule
+  let galKL : IsGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isGalois
       K p ϖ hϖ n
-  letI finKL : FiniteDimensional K L :=
+  let finKL : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
   let upperK :=
@@ -138,17 +140,17 @@ theorem
     (LocalFieldTheory.fieldPrincipalUnits K 0).map
         (abelianLocalArtinMonoidHom K L) = ⊤ := by
   let F := equalCharacteristicTargetLocalField K
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : CharP K p := hKp
-  letI : Algebra K L :=
+  let : CharP K p := hKp
+  let : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
       K p ϖ hϖ n
   have hϖKer :
@@ -243,14 +245,14 @@ theorem
     localUpperRamificationGroup K L ((n + 1 : ℕ) : ℝ) = ⊥ := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B :=
+  let : ValuativeRel B :=
     equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI finBL : FiniteDimensional B L :=
+  let finBL : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let upperB :=
     @localUpperRamificationGroup B L
@@ -261,17 +263,17 @@ theorem
     simpa only [upperB, F, B, L] using
       equalCharacteristicLubinTateLocalUpperRamificationGroup_succ_eq_bot
         F n
-  letI algBL : Algebra B L :=
+  let algBL : Algebra B L :=
     equalCharacteristicLubinTateLevelAlgebra F n
-  letI : CharP K p := hKp
-  letI algKL : Algebra K L :=
+  let : CharP K p := hKp
+  let algKL : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : Module K L := Algebra.toModule
-  letI galKL : IsGalois K L :=
+  let : Module K L := Algebra.toModule
+  let galKL : IsGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isGalois
       K p ϖ hϖ n
-  letI finKL : FiniteDimensional K L :=
+  let finKL : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
   let upperK :=
@@ -330,19 +332,19 @@ theorem
     artinPrincipalUnitGroup K L (n + 1) = ⊥ := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : Algebra B L :=
+  let : Algebra B L :=
     equalCharacteristicLubinTateLevelAlgebra F n
-  letI : CharP K p := hKp
-  letI : Algebra K L :=
+  let : CharP K p := hKp
+  let : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
       K p ϖ hϖ n
   change
@@ -392,14 +394,14 @@ theorem
       localUpperRamificationGroup K L (⌈t⌉₊ : ℝ) := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B :=
+  let : ValuativeRel B :=
     equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI finBL : FiniteDimensional B L :=
+  let finBL : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let upperB :=
     @localUpperRamificationGroup B L
@@ -424,17 +426,17 @@ theorem
         simpa only [upperB, F, B, L] using
           equalCharacteristicLubinTateRealUpperRamificationGroup_eq_localUpperRamificationGroup
             F n (⌈t⌉₊ : ℝ)
-  letI algBL : Algebra B L :=
+  let algBL : Algebra B L :=
     equalCharacteristicLubinTateLevelAlgebra F n
-  letI : CharP K p := hKp
-  letI algKL : Algebra K L :=
+  let : CharP K p := hKp
+  let algKL : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : Module K L := Algebra.toModule
-  letI galKL : IsGalois K L :=
+  let : Module K L := Algebra.toModule
+  let galKL : IsGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isGalois
       K p ϖ hϖ n
-  letI finKL : FiniteDimensional K L :=
+  let finKL : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
   let upperK :=
@@ -487,17 +489,17 @@ theorem
         K p ϖ hϖ n
     artinPrincipalUnitStepGroup K L t = ⊥ := by
   let F := equalCharacteristicTargetLocalField K
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : CharP K p := hKp
-  letI : Algebra K L :=
+  let : CharP K p := hKp
+  let : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
       K p ϖ hϖ n
   unfold artinPrincipalUnitStepGroup
@@ -535,17 +537,17 @@ theorem
         K p ϖ hϖ n
     localUpperRamificationGroup K L t = ⊥ := by
   let F := equalCharacteristicTargetLocalField K
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : CharP K p := hKp
-  letI : Algebra K L :=
+  let : CharP K p := hKp
+  let : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isGalois
       K p ϖ hϖ n
   have ht : (((n + 1 : ℕ) : ℝ)) ≤ t := by
@@ -585,18 +587,18 @@ theorem
     artinPrincipalUnitStepGroup K L t =
       localUpperRamificationGroup K L t := by
   let F := equalCharacteristicTargetLocalField K
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let L := equalCharacteristicLubinTateLevelField F n
   let k : ℕ := ⌈t⌉₊
-  letI : CharP K p := hKp
-  letI : Algebra K L :=
+  let : CharP K p := hKp
+  let : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
       K p ϖ hϖ n
   by_cases hkzero : k = 0

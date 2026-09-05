@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
-import AlgebraicNumberTheory.Idele.Extension.InfiniteOnePlaceBaseNorm
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.InfiniteOnePlaceBaseNorm
 import Mathlib.NumberTheory.NumberField.CMField
 import Mathlib.RingTheory.RootsOfUnity.Complex
+
+set_option autoImplicit false
 
 /-!
 # The rational cyclotomic complexification
@@ -65,13 +67,19 @@ noncomputable instance
   exact
     ⟨4, Set.mem_singleton 4, by norm_num⟩
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     rationalComplexificationCyclotomicField_finiteDimensional :
     FiniteDimensional ℚ rationalComplexificationCyclotomicField :=
   rationalCyclotomicPrincipalPrimeLevelFiniteDimensional
     rationalComplexificationCyclotomicOrder
 
-noncomputable local instance (priority := 2000)
+noncomputable local instance
+    rationalComplexificationCyclotomicField_numberField :
+    NumberField rationalComplexificationCyclotomicField :=
+  KummerTheory.rationalCyclotomicLevel_numberField
+    rationalComplexificationCyclotomicOrder
+
+noncomputable local instance
     rationalComplexificationCyclotomicField_isAbelianGalois :
     IsAbelianGalois ℚ rationalComplexificationCyclotomicField :=
   rationalCyclotomicPrincipalPrimeLevelIsAbelianGalois
@@ -251,7 +259,7 @@ theorem
   have hw :
       w.comap (algebraMap ℚ E) = v :=
     chosenInfinitePlaceAbove_comap (L := E) v
-  letI : w.1.LiesOver v.1 :=
+  let : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace ℚ => q.1) hw⟩
   intro htrivial
   have hnorm :

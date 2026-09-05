@@ -1,7 +1,9 @@
-import AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
-import GlobalClassFieldTheory.GlobalClassFields.ClassFieldRealization
-import GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClassFieldRealization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
+
+set_option autoImplicit false
 
 /-!
 # The ordinary finite abelian class-field correspondence
@@ -32,7 +34,7 @@ open Reciprocity
 
 /-- Fix the rational algebra structure used by every occurrence of the
 absolute Galois group in this module. -/
-noncomputable local instance (priority := 2000)
+noncomputable local instance
     finiteAbelianClassFieldCorrespondence_separableClosureAlgebra :
     Algebra ℚ (SeparableClosure ℚ) :=
   rationalSeparableClosureAlgebra
@@ -152,25 +154,41 @@ theorem le_iff_ordinaryIdeleClassNormSubgroup_le
     L₁ ≤ L₂ ↔
       ordinaryIdeleClassNormSubgroup K L₂ ≤
         ordinaryIdeleClassNormSubgroup K L₁ := by
-  change
-    L₁ ≤ L₂ ↔
-      (L₂.normSubgroup rationalIdeleClassRepresentation).map
-          (rationalAbstractFixedFieldIdeleClassEquivFixed
-            K.field).symm.toAddMonoidHom ≤
-        (L₁.normSubgroup rationalIdeleClassRepresentation).map
-          (rationalAbstractFixedFieldIdeleClassEquivFixed
-            K.field).symm.toAddMonoidHom
+  rw [ordinaryIdeleClassNormSubgroup_eq_map K L₂,
+    ordinaryIdeleClassNormSubgroup_eq_map K L₁]
+  let e :
+      KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K.field ≃+
+        Additive (IdeleClassGroup
+          (abstractFixedField ℚ (SeparableClosure ℚ) K.field)) :=
+    (rationalAbstractFixedFieldIdeleClassEquivFixed
+      (hfinite := K.finite) K.field).symm
+  let f :
+      KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K.field →+
+        Additive (IdeleClassGroup
+          (abstractFixedField ℚ (SeparableClosure ℚ) K.field)) :=
+    e.toAddMonoidHom
+  have hf : Function.Injective f := e.injective
+  have hmap :
+      f '' (L₂.normSubgroup rationalIdeleClassRepresentation : Set
+          (KummerTheory.ambientFixedAddSubgroup
+            rationalIdeleClassRepresentation K.field)) ⊆
+        f '' (L₁.normSubgroup rationalIdeleClassRepresentation : Set
+          (KummerTheory.ambientFixedAddSubgroup
+            rationalIdeleClassRepresentation K.field)) ↔
+        (L₂.normSubgroup rationalIdeleClassRepresentation : Set
+          (KummerTheory.ambientFixedAddSubgroup
+            rationalIdeleClassRepresentation K.field)) ⊆
+        (L₁.normSubgroup rationalIdeleClassRepresentation : Set
+          (KummerTheory.ambientFixedAddSubgroup
+            rationalIdeleClassRepresentation K.field)) :=
+    Set.image_subset_image_iff hf
   exact
     (FiniteAbelianSubextension.le_iff_normSubgroup_le
       rationalCyclotomicIdeleClassValuationData
       rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
-      K L₁ L₂).trans
-      (AddSubgroup.map_le_map_iff_of_injective
-        (f :=
-          (rationalAbstractFixedFieldIdeleClassEquivFixed
-            K.field).symm.toAddMonoidHom)
-        (rationalAbstractFixedFieldIdeleClassEquivFixed
-          K.field).symm.injective).symm
+      K L₁ L₂).trans hmap.symm
 
 /-- A finite abelian subextension is uniquely determined by its
 ordinary idele-class norm subgroup. -/
@@ -197,31 +215,51 @@ theorem ordinaryIdeleClassNormSubgroup_compositum
     ordinaryIdeleClassNormSubgroup K (L₁.compositum L₂) =
       ordinaryIdeleClassNormSubgroup K L₁ ⊓
         ordinaryIdeleClassNormSubgroup K L₂ := by
-  let e :=
+  let e :
+      Additive (IdeleClassGroup
+        (abstractFixedField ℚ (SeparableClosure ℚ) K.field)) ≃+
+        KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K.field :=
     rationalAbstractFixedFieldIdeleClassEquivFixed K.field
+  let f :
+      KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K.field →+
+        Additive (IdeleClassGroup
+          (abstractFixedField ℚ (SeparableClosure ℚ) K.field)) :=
+    e.symm.toAddMonoidHom
+  have hf : Function.Injective f := e.symm.injective
   calc
     ordinaryIdeleClassNormSubgroup K (L₁.compositum L₂) =
         ((L₁.compositum L₂).normSubgroup
           rationalIdeleClassRepresentation).map
-            e.symm.toAddMonoidHom :=
+            f :=
       ordinaryIdeleClassNormSubgroup_eq_map K (L₁.compositum L₂)
     _ = ((L₁.normSubgroup rationalIdeleClassRepresentation) ⊓
           (L₂.normSubgroup rationalIdeleClassRepresentation)).map
-            e.symm.toAddMonoidHom :=
+            f :=
       congrArg
-        (fun H => H.map e.symm.toAddMonoidHom)
+        (fun H : AddSubgroup
+            (KummerTheory.ambientFixedAddSubgroup
+              rationalIdeleClassRepresentation K.field) =>
+          AddSubgroup.map
+            (N := Additive (IdeleClassGroup
+              (abstractFixedField ℚ (SeparableClosure ℚ) K.field))) f H)
         (FiniteAbelianSubextension.normSubgroup_compositum
           rationalCyclotomicIdeleClassValuationData
           rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
           K L₁ L₂)
     _ = (L₁.normSubgroup rationalIdeleClassRepresentation).map
-          e.symm.toAddMonoidHom ⊓
+          f ⊓
         (L₂.normSubgroup rationalIdeleClassRepresentation).map
-          e.symm.toAddMonoidHom :=
+          f :=
       AddSubgroup.map_inf
-        (L₁.normSubgroup rationalIdeleClassRepresentation)
-        (L₂.normSubgroup rationalIdeleClassRepresentation)
-        e.symm.toAddMonoidHom e.symm.injective
+        (G := KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K.field)
+        (N := Additive (IdeleClassGroup
+          (abstractFixedField ℚ (SeparableClosure ℚ) K.field)))
+        (H := L₁.normSubgroup rationalIdeleClassRepresentation)
+        (K := L₂.normSubgroup rationalIdeleClassRepresentation)
+        (f := f) (hf := hf)
     _ = ordinaryIdeleClassNormSubgroup K L₁ ⊓
         ordinaryIdeleClassNormSubgroup K L₂ :=
       congrArg₂ (fun A B => A ⊓ B)
@@ -237,31 +275,50 @@ theorem ordinaryIdeleClassNormSubgroup_intersection
     ordinaryIdeleClassNormSubgroup K (L₁.intersection L₂) =
       ordinaryIdeleClassNormSubgroup K L₁ ⊔
         ordinaryIdeleClassNormSubgroup K L₂ := by
-  let e :=
+  let e :
+      Additive (IdeleClassGroup
+        (abstractFixedField ℚ (SeparableClosure ℚ) K.field)) ≃+
+        KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K.field :=
     rationalAbstractFixedFieldIdeleClassEquivFixed K.field
+  let f :
+      KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K.field →+
+        Additive (IdeleClassGroup
+          (abstractFixedField ℚ (SeparableClosure ℚ) K.field)) :=
+    e.symm.toAddMonoidHom
   calc
     ordinaryIdeleClassNormSubgroup K (L₁.intersection L₂) =
         ((L₁.intersection L₂).normSubgroup
           rationalIdeleClassRepresentation).map
-            e.symm.toAddMonoidHom :=
+            f :=
       ordinaryIdeleClassNormSubgroup_eq_map K (L₁.intersection L₂)
     _ = ((L₁.normSubgroup rationalIdeleClassRepresentation) ⊔
           (L₂.normSubgroup rationalIdeleClassRepresentation)).map
-            e.symm.toAddMonoidHom :=
+            f :=
       congrArg
-        (fun H => H.map e.symm.toAddMonoidHom)
+        (fun H : AddSubgroup
+            (KummerTheory.ambientFixedAddSubgroup
+              rationalIdeleClassRepresentation K.field) =>
+          AddSubgroup.map
+            (N := Additive (IdeleClassGroup
+              (abstractFixedField ℚ (SeparableClosure ℚ) K.field))) f H)
         (FiniteAbelianSubextension.normSubgroup_intersection
           rationalCyclotomicIdeleClassValuationData
           rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
           K L₁ L₂)
     _ = (L₁.normSubgroup rationalIdeleClassRepresentation).map
-          e.symm.toAddMonoidHom ⊔
+          f ⊔
         (L₂.normSubgroup rationalIdeleClassRepresentation).map
-          e.symm.toAddMonoidHom :=
+          f :=
       AddSubgroup.map_sup
-        (L₁.normSubgroup rationalIdeleClassRepresentation)
-        (L₂.normSubgroup rationalIdeleClassRepresentation)
-        e.symm.toAddMonoidHom
+        (G := KummerTheory.ambientFixedAddSubgroup
+          rationalIdeleClassRepresentation K.field)
+        (N := Additive (IdeleClassGroup
+          (abstractFixedField ℚ (SeparableClosure ℚ) K.field)))
+        (H := L₁.normSubgroup rationalIdeleClassRepresentation)
+        (K := L₂.normSubgroup rationalIdeleClassRepresentation)
+        (f := f)
     _ = ordinaryIdeleClassNormSubgroup K L₁ ⊔
         ordinaryIdeleClassNormSubgroup K L₂ :=
       congrArg₂ (fun A B => A ⊔ B)

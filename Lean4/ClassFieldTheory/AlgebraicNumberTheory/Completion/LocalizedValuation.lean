@@ -1,7 +1,9 @@
-import AlgebraicNumberTheory.Adele.IntegralLocalFactor
-import RamificationTheory.HilbertRamification.DecompositionFieldLocalization
-import ValuationTheory.Completion.FiniteLocalization
-import LocalFieldTheory.NonarchimedeanLocalField.ValuativeExtension
+import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralLocalFactor
+import ValuedFieldTheory.Ramification.HilbertRamification.DecompositionFieldLocalization
+import ValuedFieldTheory.Valuation.Completion.FiniteLocalization
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuativeExtension
+
+set_option autoImplicit false
 
 /-!
 # Valuation rings of algebraic localizations
@@ -74,10 +76,10 @@ theorem finitePlaceCompletion_mem_integers_iff_norm_le_one
     letI : ValuativeRel vK.Completion :=
       finitePlaceCompletionValuativeRel vK hvKna
     x ∈ 𝒪[vK.Completion] ↔ ‖x‖ ≤ 1 := by
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     finitePlaceCompletionValued vK hvKna
   let ν : Valuation vK.Completion ℝ≥0 := Valued.v
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceCompletionValuativeRel vK hvKna
   rw [Valuation.mem_integer_iff,
     ← map_one (ValuativeRel.valuation vK.Completion),
@@ -98,7 +100,7 @@ theorem localizedCompletionIsUltrametricDist
   let hw : IsNonarchimedean (w.1 : L → ℝ) :=
     absoluteValueExtension_isNonarchimedean
       vK hvKna w
-  letI : IsUltrametricDist w.1.Completion :=
+  let : IsUltrametricDist w.1.Completion :=
     IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
       (AbsoluteValue.completionAbsoluteValue_isNonarchimedean
         w.1 hw)
@@ -138,10 +140,10 @@ theorem localizedCompletion_mem_integers_iff_norm_le_one
     letI : ValuativeRel (LocalizedCompletion vK w) :=
       localizedCompletionFinitePlaceValuativeRel vK w hvKna
     x ∈ 𝒪[LocalizedCompletion vK w] ↔ ‖x‖ ≤ 1 := by
-  letI : Valued (LocalizedCompletion vK w) ℝ≥0 :=
+  let : Valued (LocalizedCompletion vK w) ℝ≥0 :=
     localizedCompletionFinitePlaceValued vK w hvKna
   let ν : Valuation (LocalizedCompletion vK w) ℝ≥0 := Valued.v
-  letI : ValuativeRel (LocalizedCompletion vK w) :=
+  let : ValuativeRel (LocalizedCompletion vK w) :=
     localizedCompletionFinitePlaceValuativeRel vK w hvKna
   rw [Valuation.mem_integer_iff,
     ← map_one (ValuativeRel.valuation (LocalizedCompletion vK w)),
@@ -175,16 +177,16 @@ theorem localizedCompletion_integerRing_eq_integralClosure
       (integralClosure
         (ValuativeRel.valuation vK.Completion).integer
         (LocalizedCompletion vK w)).toSubring := by
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : Valued vK.Completion ℝ≥0 :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let : Valued vK.Completion ℝ≥0 :=
     finitePlaceCompletionValued vK hvKna
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceCompletionValuativeRel vK hvKna
-  letI : Valued (LocalizedCompletion vK w) ℝ≥0 :=
+  let : Valued (LocalizedCompletion vK w) ℝ≥0 :=
     localizedCompletionFinitePlaceValued vK w hvKna
-  letI : ValuativeRel (LocalizedCompletion vK w) :=
+  let : ValuativeRel (LocalizedCompletion vK w) :=
     localizedCompletionFinitePlaceValuativeRel vK w hvKna
   let aC := AbsoluteValue.completionAbsoluteValue vK
   let bE :=
@@ -207,10 +209,10 @@ theorem localizedCompletion_integerRing_eq_integralClosure
             vK w.1 w.2⟩)
   let va := absoluteValueExponentialValuation aC haC
   let vb := absoluteValueExponentialValuation bE hbE
-  letI : Module.Finite vK.Completion
+  let : Module.Finite vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionModuleFinite vK hvK w
-  letI : Algebra.IsAlgebraic vK.Completion
+  let : Algebra.IsAlgebraic vK.Completion
       (LocalizedCompletion vK w) :=
     Algebra.IsAlgebraic.of_finite
       vK.Completion (LocalizedCompletion vK w)
@@ -274,7 +276,7 @@ theorem localizedCompletion_integerRing_eq_integralClosure
         vK w.1 w.2)
   let W :=
     LubinTate.Valuations.exponentialValuationSubringAsValuationSubring va
-  letI : Algebra W (LocalizedCompletion vK w) := inferInstance
+  let : Algebra W (LocalizedCompletion vK w) := inferInstance
   have hclosure :=
     exponentialValuationSubring_eq_integralClosure_of_henselian
       va vb hExt hhens
@@ -361,16 +363,16 @@ theorem localizedCompletionIsIntegralClosure
       𝒪[LocalizedCompletion vK w]
       𝒪[vK.Completion]
       (LocalizedCompletion vK w) := by
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : Valued vK.Completion ℝ≥0 :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let : Valued vK.Completion ℝ≥0 :=
     finitePlaceCompletionValued vK hvKna
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceCompletionValuativeRel vK hvKna
-  letI : Valued (LocalizedCompletion vK w) ℝ≥0 :=
+  let : Valued (LocalizedCompletion vK w) ℝ≥0 :=
     localizedCompletionFinitePlaceValued vK w hvKna
-  letI : ValuativeRel (LocalizedCompletion vK w) :=
+  let : ValuativeRel (LocalizedCompletion vK w) :=
     localizedCompletionFinitePlaceValuativeRel vK w hvKna
   let h :=
     localizedCompletion_integerRing_eq_integralClosure
@@ -414,16 +416,16 @@ theorem localizedCompletionValuationHasExtension
     Valuation.HasExtension
       (ValuativeRel.valuation vK.Completion)
       (ValuativeRel.valuation (LocalizedCompletion vK w)) := by
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : Valued vK.Completion ℝ≥0 :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let : Valued vK.Completion ℝ≥0 :=
     finitePlaceCompletionValued vK hvKna
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceCompletionValuativeRel vK hvKna
-  letI : Valued (LocalizedCompletion vK w) ℝ≥0 :=
+  let : Valued (LocalizedCompletion vK w) ℝ≥0 :=
     localizedCompletionFinitePlaceValued vK w hvKna
-  letI : ValuativeRel (LocalizedCompletion vK w) :=
+  let : ValuativeRel (LocalizedCompletion vK w) :=
     localizedCompletionFinitePlaceValuativeRel vK w hvKna
   apply Valuation.HasExtension.ofComapInteger
   ext x
@@ -465,20 +467,20 @@ theorem localizedCompletionIsIntegralClosureWithExtension
       𝒪[LocalizedCompletion vK w]
       𝒪[vK.Completion]
       (LocalizedCompletion vK w) := by
-  letI hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI := AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI : Valued vK.Completion ℝ≥0 :=
+  let hK := AbsoluteValue.extensionCompletionAlgebra (K := K) w.1
+  let : SMul K w.1.Completion := hK.toSMul
+  let := AbsoluteValue.completionAlgebra vK w.1 w.2
+  let : Valued vK.Completion ℝ≥0 :=
     finitePlaceCompletionValued vK hvKna
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     finitePlaceCompletionValuativeRel vK hvKna
-  letI : Valued (LocalizedCompletion vK w) ℝ≥0 :=
+  let : Valued (LocalizedCompletion vK w) ℝ≥0 :=
     localizedCompletionFinitePlaceValued vK w hvKna
-  letI : ValuativeRel (LocalizedCompletion vK w) :=
+  let : ValuativeRel (LocalizedCompletion vK w) :=
     localizedCompletionFinitePlaceValuativeRel vK w hvKna
-  letI : Algebra 𝒪[vK.Completion] (LocalizedCompletion vK w) :=
+  let : Algebra 𝒪[vK.Completion] (LocalizedCompletion vK w) :=
     Algebra.ofSubsemiring 𝒪[vK.Completion]
-  letI := localizedCompletionValuationHasExtension vK w hvKna
+  let := localizedCompletionValuationHasExtension vK w hvKna
   let h :=
     localizedCompletion_integerRing_eq_integralClosure
       vK w hvK hvKna

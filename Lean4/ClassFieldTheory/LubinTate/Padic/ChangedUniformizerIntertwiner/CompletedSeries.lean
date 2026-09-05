@@ -1,7 +1,9 @@
-import LubinTate.FiniteLevel.ChangedUniformizer
-import LubinTate.FormalModule.StandardSeries
-import LubinTate.Padic.CompletedUnramifiedField
-import LubinTate.Padic.MultiplicativeSeries
+import ClassFieldTheory.LubinTate.FiniteLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.FormalModule.StandardSeries
+import ClassFieldTheory.LubinTate.Padic.CompletedUnramifiedField
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeSeries
+
+set_option autoImplicit false
 
 /-!
 # Completed p-adic Lubin--Tate series
@@ -71,8 +73,26 @@ theorem padicCompletedChangedStandardSeries_eq
     standardLubinTateChangedUniformizer,
     map_add, map_mul, map_pow, PowerSeries.map_C,
     PowerSeries.map_X, hcard]
-  rw [padicValuationSubringToCompletedUnramifiedWittRing_uniformizer]
-  rfl
+  have hcoeff :
+      padicValuationSubringToCompletedUnramifiedWittRing p
+          ((u : (padicLocalField p).valuationSubring) *
+            (show (padicLocalField p).valuationSubring from
+              padicIntEquivValuationSubring p (p : ℤ_[p]))) =
+        padicValuationSubringToCompletedUnramifiedWittRing p u *
+          (p : padicCompletedUnramifiedWittRing p) :=
+    (map_mul (padicValuationSubringToCompletedUnramifiedWittRing p)
+      (u : (padicLocalField p).valuationSubring)
+      (show (padicLocalField p).valuationSubring from
+        padicIntEquivValuationSubring p (p : ℤ_[p]))).trans
+      (congrArg (fun z : padicCompletedUnramifiedWittRing p =>
+        padicValuationSubringToCompletedUnramifiedWittRing p u * z)
+        (padicValuationSubringToCompletedUnramifiedWittRing_uniformizer p))
+  exact congrArg (fun z : PowerSeries (padicCompletedUnramifiedWittRing p) =>
+      z * PowerSeries.X + PowerSeries.X ^ p)
+    ((congrArg PowerSeries.C hcoeff).trans
+      (map_mul PowerSeries.C
+        (padicValuationSubringToCompletedUnramifiedWittRing p u)
+        (p : padicCompletedUnramifiedWittRing p)))
 
 theorem padicCompletedMultiplicativeSeries_constantCoeff
     (p : ℕ) [Fact p.Prime] :
@@ -81,9 +101,11 @@ theorem padicCompletedMultiplicativeSeries_constantCoeff
   rw [← PowerSeries.coeff_zero_eq_constantCoeff,
     padicCompletedMultiplicativeSeries,
     PowerSeries.coeff_map,
-    PowerSeries.coeff_zero_eq_constantCoeff_apply,
-    LubinTateSeries.constantCoeff_eq_zero,
-    map_zero]
+    PowerSeries.coeff_zero_eq_constantCoeff_apply]
+  exact
+    (congrArg (padicValuationSubringToCompletedUnramifiedWittRing p)
+      (padicMultiplicativeLubinTateSeries p).constantCoeff_eq_zero).trans
+      (map_zero (padicValuationSubringToCompletedUnramifiedWittRing p))
 
 /-- The linear coefficient of the completed multiplicative series is `p`. -/
 theorem padicCompletedMultiplicativeSeries_coeff_one
@@ -92,9 +114,11 @@ theorem padicCompletedMultiplicativeSeries_coeff_one
         (padicCompletedMultiplicativeSeries p) =
       (p : padicCompletedUnramifiedWittRing p) := by
   rw [padicCompletedMultiplicativeSeries,
-    PowerSeries.coeff_map,
-    LubinTateSeries.coeff_one_eq_uniformizer,
-    padicValuationSubringToCompletedUnramifiedWittRing_uniformizer]
+    PowerSeries.coeff_map]
+  exact
+    (congrArg (padicValuationSubringToCompletedUnramifiedWittRing p)
+      (padicMultiplicativeLubinTateSeries p).coeff_one_eq_uniformizer).trans
+      (padicValuationSubringToCompletedUnramifiedWittRing_uniformizer p)
 
 theorem padicCompletedChangedStandardSeries_constantCoeff
     (p : ℕ) [Fact p.Prime]
@@ -132,7 +156,7 @@ theorem padicCompletedMultiplicativeSeries_map_constantCoeff
         (padicCompletedMultiplicativeSeries p) =
       (PowerSeries.X :
         PowerSeries (AlgebraicClosure (ZMod p))) ^ p := by
-  letI : CharP (PowerSeries (AlgebraicClosure (ZMod p))) p :=
+  let : CharP (PowerSeries (AlgebraicClosure (ZMod p))) p :=
     charP_of_injective_ringHom PowerSeries.C_injective p
   rw [padicCompletedMultiplicativeSeries_eq]
   simp only [map_sub, map_pow, map_add, map_one, PowerSeries.map_X]
@@ -148,7 +172,7 @@ theorem padicCompletedChangedStandardSeries_map_constantCoeff
         (padicCompletedChangedStandardSeries p u) =
       (PowerSeries.X :
         PowerSeries (AlgebraicClosure (ZMod p))) ^ p := by
-  letI : CharP (PowerSeries (AlgebraicClosure (ZMod p))) p :=
+  let : CharP (PowerSeries (AlgebraicClosure (ZMod p))) p :=
     charP_of_injective_ringHom PowerSeries.C_injective p
   rw [padicCompletedChangedStandardSeries_eq]
   simp only [map_add, map_mul, map_pow, PowerSeries.map_C,

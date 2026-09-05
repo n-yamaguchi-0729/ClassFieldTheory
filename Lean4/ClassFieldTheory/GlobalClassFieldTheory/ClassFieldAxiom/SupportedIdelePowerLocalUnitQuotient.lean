@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitSubgroup
-import AlgebraicNumberTheory.RayClass.Approximation
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitSubgroup
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Approximation
+
+set_option autoImplicit false
 
 /-!
 # Supported idele power-local-unit quotient
@@ -18,6 +20,16 @@ noncomputable section
 namespace GlobalClassFieldTheory.ClassFieldAxiom
 
 variable {K : Type*} [Field K] [NumberField K]
+
+private noncomputable def quotientEquivOfSurjectiveWithKernel
+    {G H : Type*} [Group G] [Group H]
+    (f : G →* H)
+    (N : Subgroup G) [N.Normal]
+    (hf : Function.Surjective f)
+    (hker : f.ker = N) :
+    G ⧸ N ≃* H :=
+  (QuotientGroup.quotientMulEquivOfEq hker.symm).trans
+    (QuotientGroup.quotientKerEquivOfSurjective f hf)
 
 /-- The power/local-unit subgroup `h(S,T)`, regarded inside
 `I_K^{S ∪ T}`. -/
@@ -240,13 +252,22 @@ noncomputable def supportedIdeleQuotientEquivLocalPowerClasses
             (powMonoidHom (n : ℕ) :
               (v.1.adicCompletion K)ˣ →*
                 (v.1.adicCompletion K)ˣ).range)) :=
-  (QuotientGroup.quotientMulEquivOfEq
-      (supportedIdelePowerClassMap_ker
-        (K := K) n S T).symm).trans
-    (QuotientGroup.quotientKerEquivOfSurjective
-      (supportedIdelePowerClassMap (K := K) n S T)
-      (supportedIdelePowerClassMap_surjective
-        (K := K) n S T))
+  quotientEquivOfSurjectiveWithKernel
+    (H :=
+      ((
+        ∀ w : InfinitePlace K,
+          w.Completionˣ ⧸
+            (powMonoidHom (n : ℕ) :
+              w.Completionˣ →* w.Completionˣ).range) ×
+        (∀ v : ↥S,
+          (v.1.adicCompletion K)ˣ ⧸
+            (powMonoidHom (n : ℕ) :
+              (v.1.adicCompletion K)ˣ →*
+                (v.1.adicCompletion K)ˣ).range)))
+    (supportedIdelePowerClassMap (K := K) n S T)
+    (supportedIdelePowerLocalUnitSubgroup (K := K) n S T)
+    (supportedIdelePowerClassMap_surjective (K := K) n S T)
+    (supportedIdelePowerClassMap_ker (K := K) n S T)
 
 /-- Cardinal form of the supported-idele index decomposition.  The subsequent
 local power-index and product-formula calculation evaluates the right-hand

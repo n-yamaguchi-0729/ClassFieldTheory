@@ -1,7 +1,9 @@
-import CyclicCohomology.Herbrand.NormalBasisLattice
-import LocalFieldTheory.NonarchimedeanLocalField.PrincipalUnitQuotients
-import CyclicCohomology.Herbrand.HerbrandLowDegree
-import LocalClassFieldTheory.ClassFormation.Valuation
+import GaloisCohomology.Cyclic.Herbrand.NormalBasisLattice
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrincipalUnitQuotients
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Valuation
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.ClassFormation.NormalBasisInfiniteProduct` Lean module. -/
 
 namespace LocalClassFieldTheory
@@ -137,7 +139,7 @@ theorem tendsto_galoisGroupIntegerUnits_tateNorm_of_tendsto
         ((tateNorm (Gal(L / K)) 𝒪[L]ˣ (f d) : 𝒪[L]ˣ) : 𝒪[L]))
       atTop
       (nhds ((tateNorm (Gal(L / K)) 𝒪[L]ˣ x : 𝒪[L]ˣ) : 𝒪[L])) := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   have hσ (sigma : Gal(L / K)) : Tendsto
       (fun d : Nat => ((sigma • f d : 𝒪[L]ˣ) : 𝒪[L])) atTop
       (nhds ((sigma • x : 𝒪[L]ˣ) : 𝒪[L])) := by
@@ -177,7 +179,7 @@ theorem tendsto_galoisGroupIntegerUnits_sigmaMinusOne_of_tendsto
         ((sigmaMinusOne (Gal(L / K)) 𝒪[L]ˣ g (f d) : 𝒪[L]ˣ) : 𝒪[L]))
       atTop
       (nhds ((sigmaMinusOne (Gal(L / K)) 𝒪[L]ˣ g x : 𝒪[L]ˣ) : 𝒪[L])) := by
-  letI := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
+  let := galoisGroupIntegerUnitsMulDistribMulActionOfIsIntegralClosure K L
   have hgO : Tendsto
       (fun d : Nat => ((g • f d : 𝒪[L]ˣ) : 𝒪[L])) atTop
       (nhds ((g • x : 𝒪[L]ˣ) : 𝒪[L])) := by

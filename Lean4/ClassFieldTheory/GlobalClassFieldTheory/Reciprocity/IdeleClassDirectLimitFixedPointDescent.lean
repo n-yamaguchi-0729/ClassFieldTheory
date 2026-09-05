@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFixedPointDescentCore
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFixedPointDescentCore
+
+set_option autoImplicit false
 
 /-!
 # Finite-level and direct-limit fixed-point descent endpoints
@@ -40,13 +42,13 @@ theorem rationalRelativeIdeleClass_descent_square
     rationalIntermediateField_algebra_eq_inclusion
       K U hKU h_algebraMap
   cases hAlgebra
-  letI : Algebra K U :=
+  let : Algebra K U :=
     (IntermediateField.inclusion hKU).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ K U :=
+  let : IsScalarTower ℚ K U :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional K U :=
+  let : FiniteDimensional K U :=
     FiniteDimensional.right ℚ K U
-  letI : IsGalois K U :=
+  let : IsGalois K U :=
     IsGalois.tower_top_of_isGalois ℚ K U
   calc
     rationalRelativeIdeleClassTowerBaseChangeEquiv K U
@@ -186,13 +188,13 @@ theorem rationalDirectLimit_fixed_exists_ideleClass
       z = (⟦⟨U, d⟩⟧ : rationalIdeleClassDirectLimit) := by
     exact hzc.trans
       (rationalIdeleClassDirectLimit_mk_apply c hEU).symm
-  letI : Algebra K U :=
+  let : Algebra K U :=
     (IntermediateField.inclusion hKU).toRingHom.toAlgebra
-  letI : IsScalarTower ℚ K U :=
+  let : IsScalarTower ℚ K U :=
     IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  letI : FiniteDimensional K U :=
+  let : FiniteDimensional K U :=
     FiniteDimensional.right ℚ K U
-  letI : IsGalois K U :=
+  let : IsGalois K U :=
     IsGalois.tower_top_of_isGalois ℚ K U
   have h_algebraMap (x : K) :
       ((algebraMap K U x : U) : SeparableClosure ℚ) =

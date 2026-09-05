@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaSeries
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracket
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaSeries
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracket
+
+set_option autoImplicit false
 
 /-!
 # First theta identity for the completed change of parameter

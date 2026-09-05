@@ -1,0 +1,10 @@
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.Continuity
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ExtensionBehavior
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.FiniteNormArithmetic
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.IdeleClassNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.NormOne
+
+set_option autoImplicit false
+
+/-! # Topological properties of idele norms -/

@@ -1,5 +1,14 @@
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient
-import AlgebraicNumberTheory.Idele.NormTopology.Continuity
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.ArchimedeanPowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlaceCompletionInstances
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.LocalResidueArithmetic
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.FinitePlacePowerIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.NormContainment
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedIdeleIndex
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.SupportedPrincipalQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassPowerLocalUnitQuotient.PrimePowerKummerIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.Continuity
+
+set_option autoImplicit false
 
 /-!
 # Descent of power-local-unit idèle subgroups
@@ -52,7 +61,7 @@ theorem ideleNorm_mem_powerLocalUnitSubgroup_of_supports_above
   obtain ⟨haInfinite, haSupported, haAway⟩ := ha
   refine ⟨?_, ?_, ?_⟩
   · intro w
-    letI : ∀ W : {W : InfinitePlace L //
+    let : ∀ W : {W : InfinitePlace L //
         _root_.infinitePlaceBelow (K := K) W = w},
         W.1.1.LiesOver w.1 :=
       fun W =>
@@ -79,13 +88,13 @@ theorem ideleNorm_mem_powerLocalUnitSubgroup_of_supports_above
     let eAbove :=
       finitePlaceExtensionEquivAbove
         (K := K) (L := L) v₀
-    letI :=
+    let :=
       completionTensorDecomposition_extensionFintype
         (K := K) (L := L) vK hvK
-    letI : Fintype {W : HeightOneSpectrum (𝓞 L) //
+    let : Fintype {W : HeightOneSpectrum (𝓞 L) //
         _root_.finitePlaceBelow (K := K) W = v₀} :=
       Fintype.ofEquiv (AbsoluteValueExtension vK L) eAbove
-    letI : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
+    let : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
         _root_.finitePlaceBelow (K := K) W = v₀},
         Algebra (v₀.adicCompletion K) (W.1.adicCompletion L) :=
       fun W =>
@@ -115,13 +124,13 @@ theorem ideleNorm_mem_powerLocalUnitSubgroup_of_supports_above
     let eAbove :=
       finitePlaceExtensionEquivAbove
         (K := K) (L := L) v₀
-    letI :=
+    let :=
       completionTensorDecomposition_extensionFintype
         (K := K) (L := L) vK hvK
-    letI : Fintype {W : HeightOneSpectrum (𝓞 L) //
+    let : Fintype {W : HeightOneSpectrum (𝓞 L) //
         _root_.finitePlaceBelow (K := K) W = v₀} :=
       Fintype.ofEquiv (AbsoluteValueExtension vK L) eAbove
-    letI : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
+    let : ∀ W : {W : HeightOneSpectrum (𝓞 L) //
         _root_.finitePlaceBelow (K := K) W = v₀},
         Algebra (v₀.adicCompletion K) (W.1.adicCompletion L) :=
       fun W =>

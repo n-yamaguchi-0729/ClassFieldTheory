@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedLevel
-import LubinTate.EqualCharacteristic.Theta.ThetaFirstIdentity
-import LubinTate.EqualCharacteristic.Theta.ThetaEvaluation
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedLevel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaFirstIdentity
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaEvaluation
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: theta at a completed Lubin--Tate level

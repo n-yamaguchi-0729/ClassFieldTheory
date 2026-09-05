@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.FiniteLevel.AmbientDivisionTorsion
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.AmbientDivisionTorsion
 import Mathlib.FieldTheory.IsSepClosed
+
+set_option autoImplicit false
 
 /-!
 # The uniformizer norm identity: equal-characteristic Lubin--Tate division polynomials
@@ -196,7 +198,7 @@ theorem equalCharacteristicLubinTatePiPolynomialIterate_eval₂
 theorem residueField_natCard_cast_eq_zero
     (F : LocalField.{u, v} K) :
     (Nat.card F.residueField : F.residueField⸨X⸩) = 0 := by
-  letI := Fintype.ofFinite F.residueField
+  let := Fintype.ofFinite F.residueField
   rw [Nat.card_eq_fintype_card]
   rw [← map_natCast
       (algebraMap F.residueField F.residueField⸨X⸩)

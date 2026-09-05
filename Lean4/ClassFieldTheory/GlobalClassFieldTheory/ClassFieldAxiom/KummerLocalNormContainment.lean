@@ -1,7 +1,11 @@
-import AlgebraicNumberTheory.Completion.UnramifiedComparison
-import AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
-import AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import KummerTheory.Concrete.SimpleExtensionLocalBehavior
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+import ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
+
+set_option autoImplicit false
 
 /-!
 # Local norm containment for Kummer extensions
@@ -66,51 +70,51 @@ private theorem
   let w := _root_.chosenFinitePlaceExtension (L := L) v
   let hvK : vK.IsNontrivial :=
     RayClass.adicAbv_isNontrivial v
-  letI hK :=
+  let hK :=
     AbsoluteValue.extensionCompletionAlgebra
       (K := K) w.1
-  letI : SMul K w.1.Completion := hK.toSMul
-  letI : Algebra vK.Completion w.1.Completion :=
+  let : SMul K w.1.Completion := hK.toSMul
+  let : Algebra vK.Completion w.1.Completion :=
     AbsoluteValue.completionAlgebra vK w.1 w.2
-  letI :=
+  let :=
     LocalClassFieldTheory.localizedCompletionGlobalAlgebra vK w
-  letI :=
+  let :=
     LocalClassFieldTheory.localizedCompletionIsScalarTower vK w
   let E := AlgebraicNumberTheory.Valuations.LocalizedCompletion vK w
-  letI : FiniteDimensional vK.Completion E :=
+  let : FiniteDimensional vK.Completion E :=
     AlgebraicNumberTheory.Valuations.localizedCompletionModuleFinite vK hvK w
-  letI : IsGalois vK.Completion E :=
+  let : IsGalois vK.Completion E :=
     HilbertRamification.algebraicLocalization_isGalois vK w
-  letI : NontriviallyNormedField vK.Completion :=
+  let : NontriviallyNormedField vK.Completion :=
     absoluteValueExtension_completionNontriviallyNormedField
       vK hvK
-  letI : LocallyCompactSpace vK.Completion :=
+  let : LocallyCompactSpace vK.Completion :=
     AbsoluteValue.Completion.locallyCompactSpace
       (_root_.finitePlaceCompletionBaseMap_isometry v)
-  letI : IsUltrametricDist vK.Completion :=
+  let : IsUltrametricDist vK.Completion :=
     IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
       (AbsoluteValue.completionAbsoluteValue_isNonarchimedean
         vK
         (NumberField.HeightOneSpectrum.isNonarchimedean_adicAbv
           K v))
-  letI : Valued vK.Completion ℝ≥0 :=
+  let : Valued vK.Completion ℝ≥0 :=
     NormedField.toValued
   let vC : Valuation vK.Completion ℝ≥0 := Valued.v
-  letI : vC.IsNontrivial :=
+  let : vC.IsNontrivial :=
     (inferInstance :
       (NormedField.valuation
         (K := vK.Completion)).IsNontrivial)
-  letI : ValuativeRel vK.Completion :=
+  let : ValuativeRel vK.Completion :=
     ValuativeRel.ofValuation vC
-  letI : vC.Compatible :=
+  let : vC.Compatible :=
     Valuation.Compatible.ofValuation vC
-  letI : ValuativeRel.IsNontrivial vK.Completion :=
+  let : ValuativeRel.IsNontrivial vK.Completion :=
     (ValuativeRel.isNontrivial_iff_isNontrivial vC).2
       inferInstance
-  letI : IsValuativeTopology vK.Completion :=
+  let : IsValuativeTopology vK.Completion :=
     isValuativeTopology_of_valued_ofValuation
       vK.Completion ℝ≥0
-  letI : IsNonarchimedeanLocalField vK.Completion :=
+  let : IsNonarchimedeanLocalField vK.Completion :=
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
@@ -208,10 +212,10 @@ theorem chosenSimpleKummerNthPowerSubgroup_le_chosenFinitePlaceLocalNormSubgroup
         (K := K) (L := E) v := by
   let E :=
     KummerTheory.chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     KummerTheory.chosenSimpleKummerExtension_finiteDimensional
       K n hnK b
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     KummerTheory.chosenSimpleKummerExtension_isAbelianGalois
       K n hnK hmu b
   exact

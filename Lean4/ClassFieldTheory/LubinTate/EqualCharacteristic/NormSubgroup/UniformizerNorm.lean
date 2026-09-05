@@ -1,5 +1,7 @@
-import LubinTate.EqualCharacteristic.NormSubgroup.LevelAlgebra
-import LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.LevelAlgebra
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: the uniformizer factor is a norm
@@ -44,7 +46,7 @@ theorem equalCharacteristicLubinTate_normalizedUniformizer_mem_normSubgroup
     (n : ℕ) :
     (equalCharacteristicLaurentUniformizerUnit F)⁻¹ ∈
       equalCharacteristicLubinTateNormSubgroup F n := by
-  letI : FiniteDimensional F.residueField⸨X⸩
+  let : FiniteDimensional F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let y : (equalCharacteristicLubinTateLevelField F n)ˣ :=

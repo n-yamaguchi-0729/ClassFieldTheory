@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.ChangedPolynomialEvaluation
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveAction
-import LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaAtCompletedLevel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedPolynomialEvaluation
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaAtCompletedLevel
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the direct target level inside the completed source level

@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Degree.FrobeniusFixedField
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusFixedField
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -175,7 +177,7 @@ theorem frobeniusFixedField_finite (D : DegreeData G)
     (D.frobeniusClosure K L hLK σ).toSubgroup
   let S : Subgroup K.field.toSubgroup :=
     D.frobeniusFixedSubgroupWithin K L hLK σ
-  letI : Finite (Q ⧸ Γ) := by
+  let : Finite (Q ⧸ Γ) := by
     simpa [Q, Γ, N] using
       D.frobeniusFixedField_finiteIndex K L hLK σ
   have hΓ : Γ.index ≠ 0 := Γ.index_ne_zero_of_finite
@@ -479,7 +481,7 @@ theorem frobeniusFixedResidueField_residueDegree (D : DegreeData G)
     base := K.field
     below := D.frobeniusFixedField_le K L hLK σ
   }
-  letI := D.frobeniusFixedField_relativeResidueQuotientFinite K L hLK σ
+  let := D.frobeniusFixedField_relativeResidueQuotientFinite K L hLK σ
   have hrelative :
       E.relativeResidueDegreeCardinal D =
         (D.frobeniusExponent K L hLK σ : Cardinal) := by
@@ -706,9 +708,11 @@ theorem frobeniusFixedField_frobenius_eq_inClosure (D : DegreeData G)
         (D.frobenius (D.frobeniusFixedResidueField K L hLK σ)) =
       D.frobeniusInClosure K L hLK σ := by
   apply D.frobeniusFixedField_normalizedDegree_injective K L hLK σ
-  rw [D.frobeniusFixedFieldQuotientEquiv_degree]
-  rw [D.maximalUnramifiedDegreeEquiv_frobenius]
-  rw [D.fixedFieldNormalizedDegree_generator]
+  exact (D.frobeniusFixedFieldQuotientEquiv_degree K L hLK σ
+    (D.frobenius (D.frobeniusFixedResidueField K L hLK σ))).trans
+      ((D.maximalUnramifiedDegreeEquiv_frobenius
+        (D.frobeniusFixedResidueField K L hLK σ)).trans
+        (D.fixedFieldNormalizedDegree_generator K L hLK σ).symm)
 
 end DegreeData
 

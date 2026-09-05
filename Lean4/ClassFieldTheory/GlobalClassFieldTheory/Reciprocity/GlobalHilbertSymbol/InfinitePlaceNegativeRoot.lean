@@ -1,5 +1,7 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRamification
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRamification
 import Mathlib.Analysis.Complex.Order
+
+set_option autoImplicit false
 
 /-!
 # Complex conjugation on a negative quadratic Kummer root
@@ -36,11 +38,11 @@ theorem chosenInfinitePlaceArtin_neg_one_apply_kummerRoot_of_real_of_radical_neg
     chosenInfinitePlaceArtinMonoidHom (K := K) (L := L) v
         (-1 : v.Completionˣ) beta = -beta := by
   let L := chosenSimpleKummerExtension K n hnK b
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  letI : NumberField L := NumberField.of_module_finite K L
+  let : NumberField L := NumberField.of_module_finite K L
   let beta : L := (chosenSimpleKummerRootUnit K n hnK b : Lˣ)
   have hbeta : beta ^ 2 = algebraMap K L (b : K) := by
     have hunit := congrArg Units.val

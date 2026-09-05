@@ -1,4 +1,6 @@
-import LubinTate.Padic.CompletedFrobeniusEvaluation
+import ClassFieldTheory.LubinTate.Padic.CompletedFrobeniusEvaluation
+
+set_option autoImplicit false
 
 /-!
 # Fixedness of completed p-adic changed-uniformizer theta values

@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.Existence.LaurentLocalField
-import LocalFieldTheory.NonarchimedeanLocalField.IdealQuotients
-import LocalFieldTheory.NonarchimedeanLocalField.ValuationExactSequence
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalField
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+
+set_option autoImplicit false
 
 /-!
 # normalization of the equal-characteristic parameter
@@ -52,7 +54,7 @@ theorem equalCharacteristicLaurentUniformizerInteger_coe
     letI := equalCharacteristicLaurentValuativeRel F
     (equalCharacteristicLaurentUniformizerInteger F).1 =
       equalCharacteristicLaurentUniformizer F := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   rfl
 
@@ -62,7 +64,7 @@ theorem equalCharacteristicLaurentUniformizerInteger_irreducible
     (F : LocalField.{u, v} K) :
     letI := equalCharacteristicLaurentValuativeRel F
     Irreducible (equalCharacteristicLaurentUniformizerInteger F) := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   change Irreducible
     (powerSeriesEquivLaurentValuativeInteger F.residueField
@@ -96,8 +98,8 @@ theorem equalCharacteristicLaurentUniformizerUnit_inv_valuationMap
     LocalFieldTheory.IsNonarchimedeanLocalField.valuationMap F.residueField⸨X⸩
       (Additive.ofMul (equalCharacteristicLaurentUniformizerUnit F)⁻¹) = 1 := by
   let L := F.residueField⸨X⸩
-  letI : ValuativeRel L := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField L :=
+  let : ValuativeRel L := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField L :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
   rw [LocalFieldTheory.IsNonarchimedeanLocalField.valuationMap_apply]
   exact LocalFieldTheory.v_integerRingIrreducibleFieldUnit_inv L

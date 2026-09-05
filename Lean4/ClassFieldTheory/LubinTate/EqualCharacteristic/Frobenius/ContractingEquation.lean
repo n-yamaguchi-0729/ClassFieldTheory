@@ -1,6 +1,8 @@
 import Mathlib.RingTheory.PowerSeries.Basic
 import Mathlib.Algebra.BigOperators.NatAntidiagonal
 
+set_option autoImplicit false
+
 /-!
 # LubinTate the contracting Frobenius equation: the contracting Frobenius equation
 

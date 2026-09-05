@@ -1,5 +1,7 @@
-import KroneckerWeber.GlobalCompositumGlobalEmbedding
-import RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+import ClassFieldTheory.KroneckerWeber.GlobalCompositumGlobalEmbedding
+import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+
+set_option autoImplicit false
 
 /-!
 # A valued global embedding of the auxiliary compositum
@@ -54,12 +56,12 @@ preserving the chosen `p`-adic place. -/
 theorem kroneckerWeberGlobalValuedLeftEmbedding
     (p : Nat.Primes) :
     kroneckerWeberGlobalValuedLeftEmbeddingProperty (L := L) p := by
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  let : Fact p.1.Prime := ⟨p.2⟩
   let N := kroneckerWeberLocalCompositumOrder (L := L) p
   have hN : 0 < N := kroneckerWeberLocalCompositumOrder_pos (L := L) p
-  letI : NeZero N := ⟨hN.ne'⟩
+  let : NeZero N := ⟨hN.ne'⟩
   let T := CyclotomicField N ℚ_[p.1]
-  letI : FiniteDimensional ℚ_[p.1] T :=
+  let : FiniteDimensional ℚ_[p.1] T :=
     IsCyclotomicExtension.finiteDimensional {N} ℚ_[p.1] T
   let w := kroneckerWeberPadicExtension (L := L) p.1
   have hi := kroneckerWeberGlobalLeftRingEmbedding (L := L) p

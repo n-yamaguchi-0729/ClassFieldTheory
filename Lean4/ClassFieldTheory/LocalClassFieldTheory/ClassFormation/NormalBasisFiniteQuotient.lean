@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.ClassFormation.NormalBasisGaloisAction
-import CyclicCohomology.Herbrand.PrincipalUnits.QuotientTower
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.NormalBasisGaloisAction
+import GaloisCohomology.Cyclic.Herbrand.PrincipalUnits.QuotientTower
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.ClassFormation.NormalBasisFiniteQuotient` Lean module. -/
 
 namespace LocalClassFieldTheory
@@ -75,7 +77,7 @@ finite. -/
 theorem finite_chosenNormalBasisIntegerUnitsQuotient_of_principalUnits_le
     (m : Nat) (V : Subgroup 𝒪[L]ˣ) (h : principalUnits L m ≤ V) :
     Finite (𝒪[L]ˣ ⧸ V) := by
-  letI : Finite (IntegerUnitsModPrincipalUnitsAtLevel L m) :=
+  let : Finite (IntegerUnitsModPrincipalUnitsAtLevel L m) :=
     integerUnitsModPrincipalUnitsAtLevel_finite_of_isNonarchimedeanLocalField L m
   exact Finite.of_surjective
     (integerUnitsModPrincipalUnitsToSubgroupQuotient L m V h)

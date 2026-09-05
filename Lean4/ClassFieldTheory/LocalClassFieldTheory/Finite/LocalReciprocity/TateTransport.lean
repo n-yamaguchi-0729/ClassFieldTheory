@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.UnitCohomologyAxiom
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.UnitCohomologyAxiom
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 

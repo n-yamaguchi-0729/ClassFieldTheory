@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Ramification.Splitting.NormalClosure
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.NormalClosure
+
+set_option autoImplicit false
 
 /-!
 # Prime-order fixed fields and complete splitting
@@ -41,7 +43,7 @@ theorem exists_prime_order_automorphism_of_one_lt_finrank
   have hcard : 1 < Nat.card G := by
     rw [IsGalois.card_aut_eq_finrank K L]
     exact hdegree
-  letI : Nontrivial G :=
+  let : Nontrivial G :=
     Finite.one_lt_card_iff_nontrivial.mp hcard
   exact exists_element_of_prime_order G
 

@@ -1,4 +1,6 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
+
+set_option autoImplicit false
 
 /-!
 # Named value of closed finite-index reciprocity
@@ -17,6 +19,14 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open Reciprocity
+
+/-- Canonical class-group commutativity supplies normality for norm-range transport. -/
+private theorem closedFiniteIndexEvaluationValueClassGroupIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] closedFiniteIndexEvaluationValueClassGroupIsMulCommutative
 
 variable {K : Type} [Field K] [NumberField K]
 

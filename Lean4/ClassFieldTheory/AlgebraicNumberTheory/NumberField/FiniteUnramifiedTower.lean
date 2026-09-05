@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Completion.ExtensionIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
 import Mathlib.NumberTheory.RamificationInertia.Unramified
+
+set_option autoImplicit false
 
 /-!
 # Finite-prime unramifiedness in towers of number fields
@@ -55,20 +57,20 @@ theorem trans
   intro P
   let p : HeightOneSpectrum (𝓞 K) :=
     finitePlaceBelow (K := K) P
-  letI hPp : P.asIdeal.LiesOver p.asIdeal := ⟨rfl⟩
-  letI : Module.Finite (𝓞 k) (𝓞 K) :=
+  let hPp : P.asIdeal.LiesOver p.asIdeal := ⟨rfl⟩
+  let : Module.Finite (𝓞 k) (𝓞 K) :=
     HilbertRamification.Dedekind.ringOfIntegers_moduleFinite
       (K := k) (L := K)
-  letI : Module.Finite (𝓞 K) (𝓞 F) :=
+  let : Module.Finite (𝓞 K) (𝓞 F) :=
     HilbertRamification.Dedekind.ringOfIntegers_moduleFinite
       (K := K) (L := F)
-  letI : Module.Finite (𝓞 k) (𝓞 F) :=
+  let : Module.Finite (𝓞 k) (𝓞 F) :=
     HilbertRamification.Dedekind.ringOfIntegers_moduleFinite
       (K := k) (L := F)
-  letI hkKp :
+  let hkKp :
       Algebra.IsUnramifiedAt (𝓞 k) p.asIdeal :=
     hkK p
-  letI hKFP :
+  let hKFP :
       Algebra.IsUnramifiedAt (𝓞 K) P.asIdeal :=
     hKF P
   have hLower :
@@ -90,9 +92,9 @@ theorem trans
       P.asIdeal.under (𝓞 k) ≠ ⊥ := by
     simpa only [finitePlaceBelow_asIdeal] using
       (finitePlaceBelow (K := k) P).ne_bot
-  letI : Finite ((𝓞 k) ⧸ P.asIdeal.under (𝓞 k)) :=
+  let : Finite ((𝓞 k) ⧸ P.asIdeal.under (𝓞 k)) :=
     Ring.HasFiniteQuotients.finiteQuotient hBasePrime
-  letI :
+  let :
       PerfectField (P.asIdeal.under (𝓞 k)).ResidueField :=
     PerfectField.ofFinite
   exact
@@ -105,7 +107,7 @@ theorem top
     (hkF : IsUnramifiedAtFinitePlaces k F) :
     IsUnramifiedAtFinitePlaces K F := by
   intro P
-  letI :
+  let :
       Algebra.IsUnramifiedAt (𝓞 k) P.asIdeal :=
     hkF P
   exact
@@ -118,26 +120,26 @@ theorem bot
     (hkF : IsUnramifiedAtFinitePlaces k F) :
     IsUnramifiedAtFinitePlaces k K := by
   intro p
-  letI : Module.Finite (𝓞 k) (𝓞 K) :=
+  let : Module.Finite (𝓞 k) (𝓞 K) :=
     HilbertRamification.Dedekind.ringOfIntegers_moduleFinite
       (K := k) (L := K)
-  letI : Module.Finite (𝓞 K) (𝓞 F) :=
+  let : Module.Finite (𝓞 K) (𝓞 F) :=
     HilbertRamification.Dedekind.ringOfIntegers_moduleFinite
       (K := K) (L := F)
-  letI : Module.Finite (𝓞 k) (𝓞 F) :=
+  let : Module.Finite (𝓞 k) (𝓞 F) :=
     HilbertRamification.Dedekind.ringOfIntegers_moduleFinite
       (K := k) (L := F)
   obtain ⟨⟨P, hPprime, hPp⟩⟩ :=
     p.asIdeal.nonempty_primesOver (S := 𝓞 F)
-  letI : P.IsPrime := hPprime
-  letI : P.LiesOver p.asIdeal := hPp
+  let : P.IsPrime := hPprime
+  let : P.LiesOver p.asIdeal := hPp
   have hPne : P ≠ ⊥ :=
     Ideal.ne_bot_of_liesOver_of_ne_bot p.ne_bot P
   let P' : HeightOneSpectrum (𝓞 F) :=
     { asIdeal := P
       isPrime := hPprime
       ne_bot := hPne }
-  letI :
+  let :
       Algebra.IsUnramifiedAt (𝓞 k) P :=
     hkF P'
   have hTop :
@@ -156,9 +158,9 @@ theorem bot
       p.asIdeal.under (𝓞 k) ≠ ⊥ := by
     simpa only [finitePlaceBelow_asIdeal] using
       (finitePlaceBelow (K := k) p).ne_bot
-  letI : Finite ((𝓞 k) ⧸ p.asIdeal.under (𝓞 k)) :=
+  let : Finite ((𝓞 k) ⧸ p.asIdeal.under (𝓞 k)) :=
     Ring.HasFiniteQuotients.finiteQuotient hBasePrime
-  letI :
+  let :
       PerfectField (p.asIdeal.under (𝓞 k)).ResidueField :=
     PerfectField.ofFinite
   exact

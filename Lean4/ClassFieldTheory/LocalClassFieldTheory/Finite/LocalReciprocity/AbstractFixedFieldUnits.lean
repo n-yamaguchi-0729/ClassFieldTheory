@@ -1,7 +1,9 @@
 import Mathlib.FieldTheory.Galois.Basic
-import LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import LocalClassFieldTheory.Finite.LocalReciprocity.TateTransport
-import AbstractClassFieldTheory.Reciprocity.FieldRepresentation
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TateTransport
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FieldRepresentation
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory CyclicCohomology KummerTheory
@@ -152,13 +154,13 @@ theorem abstractExtensionQuotientEquivGaloisGroup_mk_apply_val
           k Ω K L hLK hnormal
           (QuotientGroup.mk' (extensionSubgroup K L hLK) σ)) x :
         abstractRelativeFixedField k Ω hLK) : Ω) := by
-  letI := hnormal
-  letI : (abstractRelativeFixedField k Ω hLK).fixingSubgroup.Normal :=
+  let := hnormal
+  let : (abstractRelativeFixedField k Ω hLK).fixingSubgroup.Normal :=
     abstractRelativeFixingSubgroup_normal k Ω K L hLK hnormal
   let H : ClosedSubgroup (Gal(Ω / abstractFixedField k Ω K)) :=
     closedFixingSubgroup (abstractFixedField k Ω K) Ω
       (abstractRelativeFixedField k Ω hLK)
-  letI : H.toSubgroup.Normal :=
+  let : H.toSubgroup.Normal :=
     abstractRelativeFixingSubgroup_normal k Ω K L hLK hnormal
   have hq :
       abstractExtensionQuotientEquivAmbient k Ω K L hLK hnormal
@@ -214,7 +216,7 @@ theorem relativeCosetAction_abstractRelativeFixedFieldUnit_val
               k Ω K L hLK hnormal q) x) :
           (abstractRelativeFixedField k Ω hLK)ˣ) :
         abstractRelativeFixedField k Ω hLK) : Ω) := by
-  letI := hnormal
+  let := hnormal
   refine Quotient.inductionOn' q ?_
   intro σ
   rw [relativeCosetAction_mk]
@@ -243,7 +245,7 @@ theorem abstractExtensionFixedRepresentationUnitsEquiv_action
             k Ω K L hLK hnormal q)
           (abstractExtensionFixedRepresentationUnitsEquiv
             k Ω K L hLK hnormal x) := by
-  letI := hnormal
+  let := hnormal
   let eFixed := abstractRelativeFixedFieldUnitsEquivGaloisFixed
     k Ω K L hLK
   apply eFixed.injective

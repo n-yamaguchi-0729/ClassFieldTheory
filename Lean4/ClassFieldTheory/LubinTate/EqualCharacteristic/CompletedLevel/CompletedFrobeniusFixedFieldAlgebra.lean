@@ -1,4 +1,6 @@
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedField
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the canonical base algebra on the fixed field
@@ -24,17 +26,13 @@ noncomputable local instance equalCharacteristicFixedFieldAlgebraBaseAlgebra
     (F : LocalField K) :
     Algebra F.residueField⸨X⸩
       (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  laurentSeriesCoefficientAlgebra
+  equalCharacteristicCompletedFrobeniusFixedBaseAlgebra F
 
 noncomputable local instance equalCharacteristicFixedFieldAlgebraLevelAlgebra
     (F : LocalField K) (n : ℕ) :
     Algebra F.residueField⸨X⸩
       (equalCharacteristicCompletedLevelField F n) :=
-  RingHom.toAlgebra
-    ((algebraMap (equalCharacteristicCompletedUnramifiedField F.residueField)
-        (equalCharacteristicCompletedLevelField F n)).comp
-      (algebraMap F.residueField⸨X⸩
-        (equalCharacteristicCompletedUnramifiedField F.residueField)))
+  equalCharacteristicCompletedFrobeniusFixedLevelAlgebra F n
 
 local instance equalCharacteristicFixedFieldAlgebraScalarTower
     (F : LocalField K) (n : ℕ) :

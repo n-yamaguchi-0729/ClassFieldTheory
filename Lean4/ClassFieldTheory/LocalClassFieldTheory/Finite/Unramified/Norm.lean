@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.Finite.Unramified.ResidueNorm
-import LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.ResidueNorm
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.Finite.Unramified.Norm` Lean module. -/
 
 noncomputable section

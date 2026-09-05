@@ -1,8 +1,10 @@
-import GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
-import GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealization
-import GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
-import AbstractClassFieldTheory.Reciprocity.Main
-import AbstractClassFieldTheory.Reciprocity.MaximalUnramifiedReciprocity
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealization
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.MaximalUnramifiedReciprocity
+
+set_option autoImplicit false
 
 /-!
 # The global norm-residue symbol
@@ -35,6 +37,22 @@ namespace Reciprocity
 
 open ClassFormation
 open KummerTheory
+
+/-- Fix the canonical class-group dictionary before forming norm quotients. -/
+@[instance_reducible]
+private noncomputable def globalNormResidueIdeleClassCommGroup
+    (F : Type) [Field F] [NumberField F] :
+    CommGroup (IdeleClassGroup F) :=
+  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
+
+attribute [local instance] globalNormResidueIdeleClassCommGroup
+
+private theorem globalNormResidueIdeleClassIsMulCommutative
+    (F : Type) [Field F] [NumberField F] :
+    IsMulCommutative (IdeleClassGroup F) :=
+  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+attribute [local instance] globalNormResidueIdeleClassIsMulCommutative
 
 variable
     (K L : Type) [Field K] [NumberField K]
@@ -95,6 +113,62 @@ theorem
       Gal(L / K) ≃*
         Abelianization (Gal(L / K))).symm_apply_apply _
 
+/-- The abstract norm-residue map followed by the compatible actual
+Galois-group comparison.  Keeping this composition behind a typed boundary
+prevents the finite norm quotient from being reconstructed while composing
+with the concrete quotient comparison. -/
+private noncomputable def
+    numberFieldTowerAbstractNormResidueGaloisEquiv :
+    FiniteNormQuotient rationalIdeleClassRepresentation
+        (numberFieldTowerBaseSubgroup K L)
+        (numberFieldTowerTopSubgroup L)
+        (numberFieldTowerTopSubgroup_le_baseSubgroup K L) ≃+
+      Additive (Gal(L / K)) := by
+  letI : AddCommGroup
+      (FiniteNormQuotient rationalIdeleClassRepresentation
+        (numberFieldTowerBaseSubgroup K L)
+        (numberFieldTowerTopSubgroup L)
+        (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) :=
+    finiteNormQuotientAddCommGroup rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L)
+  exact
+    @AddEquiv.trans
+      (FiniteNormQuotient rationalIdeleClassRepresentation
+        (numberFieldTowerBaseSubgroup K L)
+        (numberFieldTowerTopSubgroup L)
+        (numberFieldTowerTopSubgroup_le_baseSubgroup K L))
+      (Additive
+        (Abelianization
+          (ClassFormation.FiniteGaloisSubextension.extensionQuotient
+            (numberFieldTowerFiniteGaloisSubextension K L))))
+      (Additive (Gal(L / K)))
+      inferInstance inferInstance inferInstance
+      (rationalCyclotomicDegreeData.normResidueSymbol
+        rationalIdeleClassRepresentation
+        rationalCyclotomicIdeleClassValuationData
+        rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+        (numberFieldTowerReciprocityFiniteAbstractField K L)
+        (numberFieldTowerFiniteGaloisSubextension K L))
+      (numberFieldTowerAbelianizedExtensionQuotientEquivGaloisGroup K L)
+
+/-- Evaluation of the typed abstract norm-residue/Galois comparison. -/
+private theorem numberFieldTowerAbstractNormResidueGaloisEquiv_apply
+    (x : FiniteNormQuotient rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) :
+    numberFieldTowerAbstractNormResidueGaloisEquiv K L x =
+      numberFieldTowerAbelianizedExtensionQuotientEquivGaloisGroup K L
+        (rationalCyclotomicDegreeData.normResidueSymbol
+          rationalIdeleClassRepresentation
+          rationalCyclotomicIdeleClassValuationData
+          rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+          (numberFieldTowerReciprocityFiniteAbstractField K L)
+          (numberFieldTowerFiniteGaloisSubextension K L) x) := by
+  rfl
+
 /-- The actual global norm-residue equivalence
 
 `C_K / N_{L/K} C_L ≃ Gal(L / K)`.
@@ -110,14 +184,21 @@ noncomputable def globalNormResidueEquiv :
   exact
     (numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient
         K L).symm.trans
-      ((rationalCyclotomicDegreeData.normResidueSymbol
-          rationalIdeleClassRepresentation
-          rationalCyclotomicIdeleClassValuationData
-          rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
-          (numberFieldTowerReciprocityFiniteAbstractField K L)
-          (numberFieldTowerFiniteGaloisSubextension K L)).trans
-        (numberFieldTowerAbelianizedExtensionQuotientEquivGaloisGroup
-          K L))
+      (numberFieldTowerAbstractNormResidueGaloisEquiv K L)
+
+/-- Evaluation after transporting an abstract finite norm class to the
+ordinary idele-class norm quotient. -/
+private theorem globalNormResidueEquiv_transport_apply
+    (x : FiniteNormQuotient rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) :
+    globalNormResidueEquiv K L
+        (numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient
+          K L x) =
+      numberFieldTowerAbstractNormResidueGaloisEquiv K L x := by
+  simp only [globalNormResidueEquiv, AddEquiv.trans_apply,
+    AddEquiv.symm_apply_apply]
 
 /-- On the genuine finite-reciprocity class of an abstract extension
 automorphism, the global norm-residue equivalence is the corresponding
@@ -145,9 +226,32 @@ theorem globalNormResidueEquiv_finiteReciprocityHom
             (Additive.ofMul q))) =
       Additive.ofMul
         (numberFieldTowerExtensionQuotientEquivGaloisGroup K L q) := by
-  simp only [globalNormResidueEquiv, AddEquiv.trans_apply,
-    AddEquiv.symm_apply_apply]
+  let x : FiniteNormQuotient rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L) :=
+    rationalCyclotomicDegreeData.finiteReciprocityHom
+      rationalIdeleClassRepresentation
+      rationalCyclotomicIdeleClassValuationData
+      (rationalCyclotomicIdeleClassValuationData.classFieldAxiom_implies_unramifiedUnitCohomology
+        rationalIdeleClassRepresentation_satisfiesClassFieldAxiom)
+      (numberFieldTowerReciprocityFiniteAbstractField K L)
+      (numberFieldTowerFiniteGaloisSubextension K L).field
+      (numberFieldTowerFiniteGaloisSubextension K L).below
+      (hLnormal :=
+        (numberFieldTowerFiniteGaloisSubextension K L).normal)
+      (hLfinite :=
+        (numberFieldTowerFiniteGaloisSubextension K L).finite)
+      (Additive.ofMul q)
+  change
+    globalNormResidueEquiv K L
+        (numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient
+          K L x) =
+      Additive.ofMul
+        (numberFieldTowerExtensionQuotientEquivGaloisGroup K L q)
   calc
+    _ = numberFieldTowerAbstractNormResidueGaloisEquiv K L x :=
+      globalNormResidueEquiv_transport_apply K L x
     _ =
         numberFieldTowerAbelianizedExtensionQuotientEquivGaloisGroup K L
           (rationalCyclotomicDegreeData.normResidueSymbol
@@ -156,19 +260,8 @@ theorem globalNormResidueEquiv_finiteReciprocityHom
             rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
             (numberFieldTowerReciprocityFiniteAbstractField K L)
             (numberFieldTowerFiniteGaloisSubextension K L)
-            (rationalCyclotomicDegreeData.finiteReciprocityHom
-              rationalIdeleClassRepresentation
-              rationalCyclotomicIdeleClassValuationData
-              (rationalCyclotomicIdeleClassValuationData.classFieldAxiom_implies_unramifiedUnitCohomology
-                  rationalIdeleClassRepresentation_satisfiesClassFieldAxiom)
-              (numberFieldTowerReciprocityFiniteAbstractField K L)
-              (numberFieldTowerFiniteGaloisSubextension K L).field
-              (numberFieldTowerFiniteGaloisSubextension K L).below
-              (hLnormal :=
-                (numberFieldTowerFiniteGaloisSubextension K L).normal)
-              (hLfinite :=
-                (numberFieldTowerFiniteGaloisSubextension K L).finite)
-              (Additive.ofMul q))) := rfl
+            x) :=
+      numberFieldTowerAbstractNormResidueGaloisEquiv_apply K L x
     _ =
         numberFieldTowerAbelianizedExtensionQuotientEquivGaloisGroup K L
           (Additive.ofMul (Abelianization.of q)) :=
@@ -249,10 +342,19 @@ theorem globalNormResidueMonoidHom_eq_maximalUnramifiedRestriction
     numberFieldTowerReciprocityFiniteAbstractField K L
   let E :=
     numberFieldTowerFiniteGaloisSubextension K L
-  let a :=
+  let a : ambientFixedAddSubgroup rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L) :=
     numberFieldTowerIdeleClassEquivAmbientFixed K L
       (Additive.ofMul c)
-  let q :=
+  let x : FiniteNormQuotient rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L) :=
+    finiteNormClass rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L) a
+  let q : E.extensionQuotient :=
     DegreeData.finiteUnramifiedRestriction
       rationalCyclotomicDegreeData
       (ClassFormation.FiniteAbstractField.toFiniteResidueAbstractField
@@ -263,24 +365,21 @@ theorem globalNormResidueMonoidHom_eq_maximalUnramifiedRestriction
   have hclass :=
     numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient_ideleClass
       K L c
-  rw [globalNormResidueMonoidHom_apply]
-  change
-    Additive.toMul
+  rw [globalNormResidueMonoidHom_apply, ← hclass]
+  calc
+    _ = Additive.toMul
+        (numberFieldTowerAbstractNormResidueGaloisEquiv K L x) :=
+      congrArg Additive.toMul
+        (globalNormResidueEquiv_transport_apply K L x)
+    _ = Additive.toMul
         (numberFieldTowerAbelianizedExtensionQuotientEquivGaloisGroup K L
           (rationalCyclotomicDegreeData.normResidueSymbol
             rationalIdeleClassRepresentation
             rationalCyclotomicIdeleClassValuationData
             rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
-            H E
-            ((numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient
-              K L).symm
-              (Additive.ofMul
-                (QuotientGroup.mk'
-                  (_root_.ideleClassNorm K L).range c))))) =
-      numberFieldTowerExtensionQuotientEquivGaloisGroup K L q
-  rw [← hclass]
-  rw [AddEquiv.symm_apply_apply]
-  calc
+            H E x)) :=
+      congrArg Additive.toMul
+        (numberFieldTowerAbstractNormResidueGaloisEquiv_apply K L x)
     _ =
         Additive.toMul
           (numberFieldTowerAbelianizedExtensionQuotientEquivGaloisGroup K L

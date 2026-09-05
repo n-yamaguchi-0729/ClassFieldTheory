@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusSemigroup
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusSemigroup
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -39,7 +41,7 @@ theorem extensionImageInInertiaQuotient_isClosed
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L hLK)] :
     IsClosed (D.extensionImageInInertiaQuotient K.field L hLK : Set
       (K.field.toSubgroup ⧸ D.extensionInertiaWithin K.field L hLK)) := by
-  letI : IsClosed
+  let : IsClosed
       (D.extensionInertiaWithin K.field L hLK : Set K.field.toSubgroup) :=
     D.extensionInertiaWithin_isClosed K L hLK
   let E := extensionSubgroup K.field L hLK
@@ -49,7 +51,7 @@ theorem extensionImageInInertiaQuotient_isClosed
       rfl
     rw [hcarrier]
     exact L.isClosed'.preimage continuous_subtype_val
-  letI : E.FiniteIndex :=
+  let : E.FiniteIndex :=
     @Subgroup.finiteIndex_of_finite_quotient K.field.toSubgroup _ E hLfinite
   have hEopen : IsOpen (E : Set K.field.toSubgroup) :=
     E.isOpen_of_isClosed_of_finiteIndex hEclosed
@@ -85,7 +87,7 @@ theorem frobeniusFixedField_le_of_inertia_le_of_lift_mem
   let E := extensionSubgroup K.field M hMK
   let Q := K.field.toSubgroup ⧸ H
   let J : Subgroup Q := E.map (QuotientGroup.mk' H)
-  letI : IsClosed (H : Set K.field.toSubgroup) :=
+  let : IsClosed (H : Set K.field.toSubgroup) :=
     D.extensionInertiaWithin_isClosed K L hLK
   have hEclosed : IsClosed (E : Set K.field.toSubgroup) := by
     have hcarrier : (E : Set K.field.toSubgroup) =
@@ -93,7 +95,7 @@ theorem frobeniusFixedField_le_of_inertia_le_of_lift_mem
       rfl
     rw [hcarrier]
     exact M.isClosed'.preimage continuous_subtype_val
-  letI : E.FiniteIndex :=
+  let : E.FiniteIndex :=
     @Subgroup.finiteIndex_of_finite_quotient K.field.toSubgroup _ E hMfinite
   have hEopen : IsOpen (E : Set K.field.toSubgroup) :=
     E.isOpen_of_isClosed_of_finiteIndex hEclosed

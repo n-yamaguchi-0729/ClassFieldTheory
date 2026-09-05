@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Degree.PrimeElements
-import CyclicCohomology.TateComparison
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.PrimeElements
+import GaloisCohomology.Cyclic.TateComparison
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -169,8 +171,8 @@ theorem exists_norm_eq_of_tateHZero_isZero
     (M : Rep ℤ Q) (g : Q) (hg : ∀ x, x ∈ Subgroup.zpowers g)
     (hzero : Limits.IsZero (tateCohomology M 0)) :
     ∀ x : M.V, M.ρ g x = x → ∃ y : M.V, M.norm.hom y = x := by
-  letI : IsCyclic Q := isCyclic_of_generator g hg
-  letI : CommGroup Q := IsCyclic.commGroup (α := Q)
+  let : IsCyclic Q := isCyclic_of_generator g hg
+  let : CommGroup Q := IsCyclic.commGroup (α := Q)
   let S := Rep.FiniteCyclicGroup.normHomCompSub M g
   have hSzero : Limits.IsZero S.homology := by
     exact Limits.IsZero.of_iso hzero
@@ -390,7 +392,7 @@ theorem unitRepresentation_norm_coe
         ambientFixedAddSubgroup A E.field.field) : A.V) =
       ((relativeNorm A E.base.field E.field.field E.below u.1 :
         ambientFixedAddSubgroup A E.base.field) : A.V) := by
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (E.base.field.toSubgroup ⧸
       extensionSubgroup E.base.field E.field.field E.below)
   rw [relativeNorm_apply_coe]
@@ -399,18 +401,20 @@ theorem unitRepresentation_norm_coe
       ambientFixedAddSubgroup A E.field.field).1 =
       relativeNormValue A E.base.field E.field.field E.below u.1
   rw [Representation.norm, relativeNormValue]
-  simp only [LinearMap.sum_apply]
   let coeToAmbient : v.unitAddSubgroup E.field →+ A.V :=
     (ambientFixedAddSubgroup A E.field.field).subtype.comp
       (v.unitAddSubgroup E.field).subtype
   change coeToAmbient
-      (∑ q, (v.unitRepresentation E hnormal).ρ q u) =
+      ((∑ q, (v.unitRepresentation E hnormal).ρ q) u) =
     ∑ q, relativeCosetAction A E.base.field E.field.field E.below u.1 q
-  rw [map_sum]
+  refine (congrArg coeToAmbient (LinearMap.sum_apply Finset.univ
+    (fun q : E.base.field.toSubgroup ⧸
+        extensionSubgroup E.base.field E.field.field E.below =>
+      (v.unitRepresentation E hnormal).ρ q) u)).trans ?_
+  refine (map_sum coeToAmbient _ _).trans ?_
   apply Finset.sum_congr rfl
   intro q _
-  simpa [coeToAmbient] using
-    v.unitRepresentation_action_coe E hnormal q u
+  exact v.unitRepresentation_action_coe E hnormal q u
 
 /-- Actual `H⁰=0` eliminator needed after the reciprocity construction: every unit of
 `K` is the relative norm of a unit of an unramified Galois extension `L`. -/
@@ -428,7 +432,7 @@ theorem exists_unit_relativeNorm_eq_of_tateHZero_isZero
         (tateCohomology (v.unitRepresentation E hnormal) 0) →
       ∀ u : v.unitAddSubgroup E.base, ∃ ε : v.unitAddSubgroup E.field,
         relativeNorm A E.base.field E.field.field E.below ε.1 = u.1 := by
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (E.base.field.toSubgroup ⧸
       extensionSubgroup E.base.field E.field.field E.below)
   intro hzero u
@@ -474,7 +478,7 @@ theorem exists_unit_sigma_sub_eq_of_tateHMinusOne_isZero
         (v.unitRepresentation E hnormal).norm.hom u = 0 →
         ∃ ε : (v.unitRepresentation E hnormal).V,
           (v.unitRepresentation E hnormal).ρ g ε - ε = u := by
-  letI := Fintype.ofFinite
+  let := Fintype.ofFinite
     (E.base.field.toSubgroup ⧸
       extensionSubgroup E.base.field E.field.field E.below)
   intro hzero u hu

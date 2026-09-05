@@ -1,8 +1,10 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import CyclicCohomology.GaloisCohomology
-import CyclicCohomology.NormKernelVanishing
-import CyclicCohomology.TateH0.NormImage
-import CyclicCohomology.Herbrand.HerbrandLowDegree
+import GaloisCohomology.Cyclic.GaloisCohomology
+import GaloisCohomology.Cyclic.NormKernelVanishing
+import GaloisCohomology.Cyclic.TateH0.NormImage
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 
@@ -35,9 +37,9 @@ theorem unitsNormLinearMap_toMul_eq_tateNorm
   have hnorm :
       unitsNormLinearMap K L (Additive.ofMul x) =
         ∑ σ : Gal(L / K), (Rep.ofAlgebraAutOnUnits K L).ρ σ (Additive.ofMul x) := by
-    change (∑ σ : Gal(L / K), (Rep.ofAlgebraAutOnUnits K L).ρ σ)
-      (Additive.ofMul x) = _
-    simp only [LinearMap.sum_apply]
+    exact LinearMap.sum_apply Finset.univ
+      (fun σ : Gal(L / K) => (Rep.ofAlgebraAutOnUnits K L).ρ σ)
+      (Additive.ofMul x : Additive Lˣ)
   rw [hnorm]
   calc
     (Additive.toMul

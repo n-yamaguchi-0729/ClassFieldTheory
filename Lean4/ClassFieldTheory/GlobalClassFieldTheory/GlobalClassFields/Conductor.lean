@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+
+set_option autoImplicit false
 
 /-!
 # Narrow finite conductors

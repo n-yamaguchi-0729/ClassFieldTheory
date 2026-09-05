@@ -1,5 +1,7 @@
-import CyclicCohomology.Herbrand.NormalBasisLattice
-import LocalFieldTheory.NonarchimedeanLocalField.PrincipalUnitQuotients
+import GaloisCohomology.Cyclic.Herbrand.NormalBasisLattice
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrincipalUnitQuotients
+
+set_option autoImplicit false
 /-! Provides the public declarations in the `LocalClassFieldTheory.ClassFormation.PrincipalUnitGraded` Lean module. -/
 
 namespace LocalClassFieldTheory

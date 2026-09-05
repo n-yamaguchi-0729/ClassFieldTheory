@@ -2,6 +2,8 @@ import Mathlib.NumberTheory.NumberField.AdeleRing
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.Topology.Algebra.Group.Units
 
+set_option autoImplicit false
+
 /-!
 # Ideles of a number field
 

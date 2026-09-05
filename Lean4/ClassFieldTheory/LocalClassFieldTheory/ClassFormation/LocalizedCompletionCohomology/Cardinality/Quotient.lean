@@ -1,4 +1,6 @@
-import LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
+
+set_option autoImplicit false
 
 /-!
 # Localized-units Herbrand quotient
@@ -70,24 +72,24 @@ theorem localUnits_herbrandQuotient_eq_localDegree
           σ hgen) =
       (Module.finrank vK.Completion
         (LocalizedCompletion vK w) : ℚ) := by
-  letI := localizedCompletionBaseAlgebra vK w
-  letI := localizedCompletionGlobalAlgebra vK w
-  letI := localizedCompletionIsScalarTower vK w
-  letI : FiniteDimensional vK.Completion
+  let _ := localizedCompletionBaseAlgebra vK w
+  let _ := localizedCompletionGlobalAlgebra vK w
+  let _ := localizedCompletionIsScalarTower vK w
+  let _ : FiniteDimensional vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionFiniteDimensional vK hvK w
-  letI : IsGalois vK.Completion
+  let _ : IsGalois vK.Completion
       (LocalizedCompletion vK w) :=
     localizedCompletionIsGalois vK w
-  letI := localizedCompletionDecompositionGroupFintype vK w
-  letI :=
+  let _ := localizedCompletionDecompositionGroupFintype vK w
+  let _ :=
     decompositionGroupLocalUnitsAction vK hvK w
-  letI : Finite
+  let _ : Finite
       (HerbrandH0
         (absoluteValueDecompositionGroup k w.1)
         (LocalizedCompletion vK w)ˣ) :=
     localHerbrandH0Finite vK hvK w σ hgen
-  letI : Finite
+  let _ : Finite
       (HerbrandHMinusOne
         (absoluteValueDecompositionGroup k w.1)
         (LocalizedCompletion vK w)ˣ

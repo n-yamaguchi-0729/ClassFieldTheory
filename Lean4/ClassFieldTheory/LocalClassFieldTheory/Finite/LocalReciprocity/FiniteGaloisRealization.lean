@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
 import Mathlib.FieldTheory.SeparableClosure
-import AlgebraicNumberTheory.SeparableClosureEmbedding
-import LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
+import ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory CyclicCohomology KummerTheory
@@ -128,7 +130,7 @@ theorem finiteGaloisExtensionSubgroupOfEmbedding_index_eq_finrank
         (fixingSubgroupLeBase K (SeparableClosure K)
           (finiteGaloisFieldRangeOfEmbedding K L i))).index =
       Module.finrank K L := by
-  letI : Finite
+  let : Finite
       ((closedFixingSubgroup K (SeparableClosure K)
           (⊥ : IntermediateField K (SeparableClosure K))).toSubgroup ⧸
         extensionSubgroup

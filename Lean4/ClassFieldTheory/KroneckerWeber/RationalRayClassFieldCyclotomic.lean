@@ -1,6 +1,8 @@
-import GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
-import GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
-import GlobalClassFieldTheory.Reciprocity.RationalCyclotomicRayNorm
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicRayNorm
+
+set_option autoImplicit false
 
 /-!
 # The rational ray class field as an actual cyclotomic field
@@ -32,7 +34,8 @@ open NumberField IsDedekindDomain
 noncomputable local instance rationalCyclotomicLevelIsAbelianGalois
     (n : ℕ+) :
     IsAbelianGalois ℚ (KummerTheory.rationalCyclotomicLevel n) :=
-  IsCyclotomicExtension.isAbelianGalois {(n : ℕ)} ℚ _
+  IsCyclotomicExtension.isAbelianGalois {(n : ℕ)} ℚ
+    (KummerTheory.rationalCyclotomicLevel n)
 
 private noncomputable def
     galoisContinuousMulEquivRayClassGroupOfNormRangeEq
@@ -109,7 +112,7 @@ private theorem
         (globalNormResidueMonoidHom ℚ L c) =
       QuotientGroup.mk'
         (RayClass.Modulus.congruenceSubgroup r) c := by
-  letI : (_root_.ideleClassNorm ℚ L).range.Normal :=
+  let : (_root_.ideleClassNorm ℚ L).range.Normal :=
     h ▸ inferInstance
   change
     QuotientGroup.quotientMulEquivOfEq h
@@ -191,6 +194,20 @@ variable (m : ℕ) [NeZero m]
 local instance : NeZero (m : ℚ) :=
   ⟨by exact_mod_cast (NeZero.ne m)⟩
 
+noncomputable local instance :
+    NumberField
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨m, NeZero.pos m⟩) :=
+  KummerTheory.rationalCyclotomicLevel_numberField
+    ⟨m, NeZero.pos m⟩
+
+noncomputable local instance :
+    IsAbelianGalois ℚ
+      (KummerTheory.rationalCyclotomicLevel
+        ⟨m, NeZero.pos m⟩) :=
+  rationalCyclotomicLevelIsAbelianGalois
+    ⟨m, NeZero.pos m⟩
+
 noncomputable local instance rationalCyclotomicLevelIsCyclotomicExtensionAtOrder :
     IsCyclotomicExtension {m} ℚ
       (KummerTheory.rationalCyclotomicLevel
@@ -201,7 +218,8 @@ noncomputable local instance rationalCyclotomicLevelIsCyclotomicExtensionAtOrder
       (KummerTheory.rationalCyclotomicLevel
         ⟨m, NeZero.pos m⟩)
   exact
-    KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension _
+    KummerTheory.rationalCyclotomicLevel_isCyclotomicExtension
+      ⟨m, NeZero.pos m⟩
 
 noncomputable local instance rationalCyclotomicFieldIsCyclotomicExtension :
     IsCyclotomicExtension {m} ℚ (CyclotomicField m ℚ) :=
@@ -209,7 +227,8 @@ noncomputable local instance rationalCyclotomicFieldIsCyclotomicExtension :
 
 noncomputable local instance rationalCyclotomicFieldIsAbelianGalois :
     IsAbelianGalois ℚ (CyclotomicField m ℚ) :=
-  IsCyclotomicExtension.isAbelianGalois {m} ℚ _
+  IsCyclotomicExtension.isAbelianGalois {m} ℚ
+    (CyclotomicField m ℚ)
 
 noncomputable local instance rationalCyclotomicLevelIdeleClassNormRangeNormal :
     (_root_.ideleClassNorm ℚ
@@ -492,9 +511,14 @@ symbol from the internal cyclotomic level. -/
 noncomputable def rationalCyclotomicPrimeArithmeticFrobenius
     (q : Nat.Primes) :
     Gal(CyclotomicField m ℚ / ℚ) := by
-  let L :=
-    KummerTheory.rationalCyclotomicLevel
-      ⟨m, NeZero.pos m⟩
+  let mp : ℕ+ := ⟨m, NeZero.pos m⟩
+  let L : Type := KummerTheory.rationalCyclotomicLevel mp
+  let : NumberField L :=
+    KummerTheory.rationalCyclotomicLevel_numberField mp
+  let : FiniteDimensional ℚ L :=
+    rationalCyclotomicPrincipalPrimeLevelFiniteDimensional mp
+  let : IsAbelianGalois ℚ L :=
+    rationalCyclotomicLevelIsAbelianGalois mp
   exact
     AlgEquiv.autCongr
       (rationalCyclotomicLevelAlgEquivCyclotomicField m)
@@ -514,9 +538,20 @@ theorem rationalCyclotomicPrimeArithmeticFrobenius_galEquivZMod
         (rationalCyclotomicPrimeArithmeticFrobenius m q) =
       ZMod.unitOfCoprime q.1
         (q.2.coprime_iff_not_dvd.mpr hq) := by
-  let L :=
-    KummerTheory.rationalCyclotomicLevel
-      ⟨m, NeZero.pos m⟩
+  let mp : ℕ+ := ⟨m, NeZero.pos m⟩
+  let L : Type := KummerTheory.rationalCyclotomicLevel mp
+  let : NumberField L :=
+    KummerTheory.rationalCyclotomicLevel_numberField mp
+  let : IsCyclotomicExtension {m} ℚ L := by
+    change
+      IsCyclotomicExtension {m} ℚ
+        (KummerTheory.rationalCyclotomicLevel
+          ⟨m, NeZero.pos m⟩)
+    exact rationalCyclotomicLevelIsCyclotomicExtensionAtOrder m
+  let : FiniteDimensional ℚ L :=
+    rationalCyclotomicPrincipalPrimeLevelFiniteDimensional mp
+  let : IsAbelianGalois ℚ L :=
+    rationalCyclotomicLevelIsAbelianGalois mp
   change
     IsCyclotomicExtension.Rat.galEquivZMod
         m (CyclotomicField m ℚ)
@@ -572,7 +607,8 @@ noncomputable local instance rationalRayClassFieldIsCyclotomicExtension :
 noncomputable local instance rationalRayClassFieldIsAbelianGalois :
     IsAbelianGalois ℚ
       (rayClassField ℚ (RayClass.rationalModulus m)) :=
-  IsCyclotomicExtension.isAbelianGalois {m} ℚ _
+  IsCyclotomicExtension.isAbelianGalois {m} ℚ
+    (rayClassField ℚ (RayClass.rationalModulus m))
 
 /-- Transporting the actual norm-residue symbol of the selected rational
 ray class field to the concrete cyclotomic realization preserves its

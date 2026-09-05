@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
-import GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
-import LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+
+set_option autoImplicit false
 
 /-!
 # The rational idele-class formation
@@ -30,26 +32,26 @@ theorem rationalIdeleClassRepresentation_satisfiesClassFieldAxiom :
     SatisfiesClassFieldAxiom rationalIdeleClassRepresentation := by
   rintro ⟨K, hKfinite⟩
   rintro ⟨L, hLK, hnormal, hfinite, g, hg⟩
-  letI := hKfinite
-  letI := hnormal
-  letI := hfinite
+  let := hKfinite
+  let := hnormal
+  let := hfinite
   let Q := K.toSubgroup ⧸ extensionSubgroup K L hLK
-  letI : Fintype Q := Fintype.ofFinite Q
+  let : Fintype Q := Fintype.ofFinite Q
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     abstractFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) K hKfinite
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     abstractRelativeFixedField_finiteDimensional
       ℚ (SeparableClosure ℚ) K L hLK hKfinite hfinite
-  letI : IsScalarTower ℚ F E :=
+  let : IsScalarTower ℚ F E :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     FiniteDimensional.trans ℚ F E
-  letI : NumberField F := NumberField.of_module_finite ℚ F
-  letI : NumberField E := NumberField.of_module_finite ℚ E
-  letI : IsGalois F E :=
+  let : NumberField F := NumberField.of_module_finite ℚ F
+  let : NumberField E := NumberField.of_module_finite ℚ E
+  let : IsGalois F E :=
     abstractRelativeFixedField_isGalois
       ℚ (SeparableClosure ℚ) K L hLK hnormal
   let eQ : Q ≃* Gal(E / F) :=
@@ -59,17 +61,17 @@ theorem rationalIdeleClassRepresentation_satisfiesClassFieldAxiom :
   have hg' : ∀ σ : Gal(E / F),
       σ ∈ Subgroup.zpowers g' :=
     map_cyclicGenerator eQ g hg
-  letI :=
+  let :=
     RelativeIdeleGroup.Cohomology.ideleClassMulDistribMulAction F E
   have hIdeleClassTateCard :=
     ClassFieldAxiom.ideleClass_tate_lowDegree_finite_card_eq_finrank_cyclic
       F E g' hg'
-  letI : IsCyclic Q :=
+  let : IsCyclic Q :=
     CyclicCohomology.isCyclic_of_generator g hg
-  letI : CommGroup Q := IsCyclic.commGroup
-  letI : IsCyclic (Gal(E / F)) :=
+  let : CommGroup Q := IsCyclic.commGroup
+  let : IsCyclic (Gal(E / F)) :=
     CyclicCohomology.isCyclic_of_generator g' hg'
-  letI : CommGroup (Gal(E / F)) := IsCyclic.commGroup
+  let : CommGroup (Gal(E / F)) := IsCyclic.commGroup
   let M :=
     extensionFixedRepresentation rationalIdeleClassRepresentation
       K L hLK hnormal
@@ -104,12 +106,12 @@ theorem rationalIdeleClassRepresentation_satisfiesClassFieldAxiom :
       tateCohomology M (-1) ≅ tateCohomology U (-1) :=
     TateCohomology.isoFiniteCyclicNegOne M g hg ≪≫ eHm1 ≪≫
       (TateCohomology.isoFiniteCyclicNegOne U g' hg').symm
-  letI : Finite (tateCohomology U 0) := hIdeleClassTateCard.1
-  letI : Finite (tateCohomology U (-1)) := hIdeleClassTateCard.2.1
-  letI : Finite (tateCohomology M 0) :=
+  let : Finite (tateCohomology U 0) := hIdeleClassTateCard.1
+  let : Finite (tateCohomology U (-1)) := hIdeleClassTateCard.2.1
+  let : Finite (tateCohomology M 0) :=
     Finite.of_equiv
       (tateCohomology U 0) eTateH0.symm.toLinearEquiv.toEquiv
-  letI : Finite (tateCohomology M (-1)) :=
+  let : Finite (tateCohomology M (-1)) :=
     Finite.of_equiv
       (tateCohomology U (-1)) eTateHm1.symm.toLinearEquiv.toEquiv
   refine

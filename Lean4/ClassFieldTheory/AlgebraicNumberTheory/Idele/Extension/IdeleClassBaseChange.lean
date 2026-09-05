@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.Idele.Extension.IdealClass
-import AlgebraicNumberTheory.Idele.Extension.ClassGroup
-import AlgebraicNumberTheory.AdeleBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+import ClassFieldTheory.AlgebraicNumberTheory.AdeleBaseChange
+
+set_option autoImplicit false
 
 /-!
 # Relative and ordinary idele classes

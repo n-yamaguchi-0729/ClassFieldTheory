@@ -1,4 +1,6 @@
-import AlgebraicNumberTheory.Idele.Relative.Support
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.Support
+
+set_option autoImplicit false
 
 /-!
 # Coordinate assembly for relative adeles

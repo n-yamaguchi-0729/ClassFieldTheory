@@ -2,6 +2,8 @@ import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
 
+set_option autoImplicit false
+
 /-!
 # Functoriality of topological abelianization under equivalence
 

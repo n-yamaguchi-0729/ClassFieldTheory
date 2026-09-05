@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Core
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Core
+
+set_option autoImplicit false
 
 namespace ClassFormation
 
@@ -206,7 +208,7 @@ theorem valuationAt_extensionFixedRepresentation_action
       v.valuationAt E.field
         (extensionFixedRepresentationEquiv A E.base.field E.field.field
           E.below hnormal a) := by
-  letI := hnormal
+  let := hnormal
   refine Quotient.inductionOn' q ?_
   intro r
   let aL : ambientFixedAddSubgroup A E.field.field :=
@@ -245,9 +247,9 @@ theorem abstractReciprocity_exists_hMinusOne_primitive
         (extensionFixedRepresentationEquiv A E.base.field E.field.field
           E.below hnormal).symm
           (w - u) := by
-  letI := hnormal
-  letI := E.finiteQuotient
-  letI := Fintype.ofFinite
+  let := hnormal
+  let := E.finiteQuotient
+  let := Fintype.ofFinite
     (E.base.field.toSubgroup ⧸
       extensionSubgroup E.base.field E.field.field E.below)
   let M := extensionFixedRepresentation A E.base.field E.field.field
@@ -327,16 +329,16 @@ theorem abstractReciprocity_totallyRamified_fixedSource
           (fixedFieldInclusion A E.base.field E.field.field E.below x) :
           v.valueGroup) : ZHat) =
           Int.castRingHom ZHat (k : ℤ) := by
-  letI := hnormal
-  letI := E.finiteQuotient
-  letI := Fintype.ofFinite
+  let := hnormal
+  let := E.finiteQuotient
+  let := Fintype.ofFinite
     (E.base.field.toSubgroup ⧸
       extensionSubgroup E.base.field E.field.field E.below)
-  letI : IsCyclic
+  let : IsCyclic
       (E.base.field.toSubgroup ⧸
         extensionSubgroup E.base.field E.field.field E.below) :=
     isCyclic_of_generator g hg
-  letI : CommGroup
+  let : CommGroup
       (E.base.field.toSubgroup ⧸
         extensionSubgroup E.base.field E.field.field E.below) :=
     IsCyclic.commGroup

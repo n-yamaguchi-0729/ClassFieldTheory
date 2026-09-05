@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.UniversalNormDescent
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusClosureCommutation
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.UniversalNormDescent
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusClosureCommutation
+
+set_option autoImplicit false
 
 universe u
 
@@ -212,8 +214,7 @@ theorem frobeniusFixedFieldAction_inclusion (D : DegreeData G) (A : Rep ℤ G)
           (D.maximalUnramifiedField L)
           (D.fieldInertia_le_frobeniusFixedField K L hLK σ) a) := by
   apply Subtype.ext
-  rw [fixedFieldInclusion_coe]
-  rw [D.frobeniusFixedFieldAction_coe]
+  refine (D.frobeniusFixedFieldAction_coe A K L hLK σ q hq a).trans ?_
   let k : K.field.toSubgroup := Quotient.out q
   have hkq : (QuotientGroup.mk k :
       K.field.toSubgroup ⧸ D.extensionInertiaWithin K.field L hLK) = q :=

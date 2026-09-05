@@ -1,10 +1,14 @@
-import LubinTate.EqualCharacteristic.Ramification
-import RamificationTheory.LocalField
-import RamificationTheory.GaloisValuation.IntermediateFieldRestriction
-import LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
-import LocalClassFieldTheory.LubinTateApplication.NormSubgroup
-import GroupTheory.RestrictionKernel
-import LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
+import ValuedFieldTheory.Ramification.LocalField.Core
+import ValuedFieldTheory.Ramification.LocalField.BaseChange
+import ValuedFieldTheory.Ramification.LocalField.Unramified
+import ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.NormSubgroup
+import GaloisCohomology.GroupTheory.RestrictionKernel
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
+
+set_option autoImplicit false
 
 /-!
 # Standard local Artin map on equal-characteristic Lubin--Tate levels
@@ -93,12 +97,12 @@ theorem
   let E := equalCharacteristicLubinTateLevelField F m
   let L := equalCharacteristicLubinTateLevelField F n
   let pi : Bˣ := (equalCharacteristicLaurentUniformizerUnit F)⁻¹
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B E :=
+  let : FiniteDimensional B E :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F m
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let hEL : E ≤ L := equalCharacteristicLubinTateLevelField_mono F hmn
   let φ := abelianLocalArtinMonoidHom B L
@@ -143,15 +147,15 @@ theorem
       localUpperRamificationGroup B L t := by
   let B := F.residueField⸨X⸩
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let base := localCompleteDVF B
   let targetLocal := chosenLocalExtensionCompleteDVF B L
   let targetLT := equalCharacteristicLubinTateLevelCompleteDVF F n
-  letI : base.valuation.HasExtension targetLT.valuation := by
+  let : base.valuation.HasExtension targetLT.valuation := by
     change
       (equalCharacteristicLubinTateBaseCompleteDVF F).valuation.HasExtension
         (equalCharacteristicLubinTateLevelCompleteDVF F n).valuation
@@ -215,16 +219,16 @@ theorem
   let m := k - 1
   let E := equalCharacteristicLubinTateLevelField F m
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : FiniteDimensional B E :=
+  let : FiniteDimensional B E :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F m
-  letI : FiniteDimensional B L :=
+  let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
-  letI : IsAbelianGalois B E :=
+  let : IsAbelianGalois B E :=
     equalCharacteristicLubinTateLevelField_isAbelianGalois F m
-  letI : IsAbelianGalois B L :=
+  let : IsAbelianGalois B L :=
     equalCharacteristicLubinTateLevelField_isAbelianGalois F n
   let hmn : m ≤ n := by
     simpa only [m] using Nat.sub_le_iff_le_add.2 hkn

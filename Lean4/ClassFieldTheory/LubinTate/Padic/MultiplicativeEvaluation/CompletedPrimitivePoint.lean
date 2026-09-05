@@ -1,5 +1,7 @@
-import LubinTate.Padic.MultiplicativeEvaluation.CompletedScalarEndomorphism
-import LubinTate.FiniteLevel.ChangedUniformizer
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.CompletedScalarEndomorphism
+import ClassFieldTheory.LubinTate.FiniteLevel.ChangedUniformizer
+
+set_option autoImplicit false
 
 /-!
 # The completed multiplicative primitive point

@@ -1,6 +1,8 @@
-import LubinTate.EqualCharacteristic.FormalModule.DivisionModuleEndomorphisms
-import LubinTate.EqualCharacteristic.Existence.LaurentLocalField
-import LocalFieldTheory.NonarchimedeanLocalField.StandardOpenSubgroups
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.DivisionModuleEndomorphisms
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalField
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: higher units in the Laurent-series model
@@ -90,7 +92,7 @@ theorem equalCharacteristicPowerSeriesUnitsEquivLaurentInteger_mem_iff
         principalUnits k⸨X⸩ n ↔
       (a : k⟦X⟧) - 1 ∈
         Ideal.span ({PowerSeries.X ^ n} : Set k⟦X⟧) := by
-  letI : ValuativeRel k⸨X⸩ := ValuativeRel.ofValuation
+  let : ValuativeRel k⸨X⸩ := ValuativeRel.ofValuation
     (Valued.v : Valuation k⸨X⸩ ℤᵐ⁰)
   rw [mem_principalUnits_iff]
   change powerSeriesEquivLaurentValuativeInteger k
@@ -112,7 +114,7 @@ theorem equalCharacteristicLubinTateHigherUnitSubgroup_map_eq_principalUnits
         (equalCharacteristicPowerSeriesUnitsEquivLaurentInteger
           F.residueField).toMonoidHom =
       principalUnits F.residueField⸨X⸩ (n + 1) := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   let E := equalCharacteristicPowerSeriesUnitsEquivLaurentInteger
     F.residueField
@@ -145,7 +147,7 @@ theorem equalCharacteristicLubinTateHigherUnitSubgroup_map_eq_fieldPrincipalUnit
           F.residueField).toMonoidHom).map
         (integerUnitsToFieldUnits F.residueField⸨X⸩) =
       LocalFieldTheory.fieldPrincipalUnits F.residueField⸨X⸩ (n + 1) := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
+  let : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
   rw [equalCharacteristicLubinTateHigherUnitSubgroup_map_eq_principalUnits]
   rfl

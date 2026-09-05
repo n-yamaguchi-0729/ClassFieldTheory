@@ -1,6 +1,16 @@
-import GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity
-import GlobalClassFieldTheory.GlobalClassFields.EmbeddedAbelianSubextension
-import GlobalClassFieldTheory.GlobalClassFields.NormTowerConductor
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.QuotientTransport
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationCore
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Evaluation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Evaluation
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.EmbeddedAbelianSubextension
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormTowerConductor
+
+set_option autoImplicit false
 
 /-!
 # Containment of finite abelian class fields
@@ -106,7 +116,7 @@ noncomputable def closedFiniteIndexClassFieldCompatibleEmbedding
     [Algebra K E] [FiniteDimensional K E] :
     E →ₐ[ℚ] SeparableClosure ℚ :=
   Classical.choose
-    (IsAlgClosed.surjective_restrictDomain_of_isAlgebraic
+    (IsAlgClosed.surjective_domRestrict_of_isAlgebraic
       (K := ℚ) (L := K) (E := E)
       (M := SeparableClosure ℚ)
       (closedFiniteIndexClassFieldBaseEmbedding
@@ -123,11 +133,11 @@ theorem
     (E : Type) [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E] :
     (closedFiniteIndexClassFieldCompatibleEmbedding
-      (K := K) H hclosed E).restrictDomain K =
+      (K := K) H hclosed E).domRestrict K =
       closedFiniteIndexClassFieldBaseEmbedding
         (K := K) H hclosed :=
   Classical.choose_spec
-    (IsAlgClosed.surjective_restrictDomain_of_isAlgebraic
+    (IsAlgClosed.surjective_domRestrict_of_isAlgebraic
       (K := ℚ) (L := K) (E := E)
       (M := SeparableClosure ℚ)
       (closedFiniteIndexClassFieldBaseEmbedding
@@ -171,7 +181,7 @@ theorem closedFiniteIndexClassFieldCompatibleEmbedding_baseSubgroup
   change
     closedFixingSubgroup ℚ (SeparableClosure ℚ)
         ((closedFiniteIndexClassFieldCompatibleEmbedding
-          (K := K) H hclosed E).restrictDomain K).fieldRange =
+          (K := K) H hclosed E).domRestrict K).fieldRange =
       closedFixingSubgroup ℚ (SeparableClosure ℚ)
         (closedFiniteIndexClassFieldBaseEmbedding
           (K := K) H hclosed).fieldRange
@@ -261,7 +271,7 @@ private theorem
   let eK :=
     closedFiniteIndexClassFieldBaseEquiv
       (K := K) H hclosed
-  letI hANumberField : NumberField A :=
+  let hANumberField : NumberField A :=
     ordinaryIdeleClassNormExtensionNumberField Q P
   let eQ :=
     numberFieldEmbeddedAbstractTopFieldEquiv K E j
@@ -675,12 +685,12 @@ theorem ideleClassNorm_range_le_of_algHom
     (f : L₁ →ₐ[K] L₂) :
     (_root_.ideleClassNorm K L₂).range ≤
       (_root_.ideleClassNorm K L₁).range := by
-  letI : Algebra L₁ L₂ :=
+  let : Algebra L₁ L₂ :=
     f.toRingHom.toAlgebra
-  letI : IsScalarTower K L₁ L₂ :=
+  let : IsScalarTower K L₁ L₂ :=
     IsScalarTower.of_algebraMap_eq fun x => by
       exact (f.commutes x).symm
-  letI : FiniteDimensional L₁ L₂ :=
+  let : FiniteDimensional L₁ L₂ :=
     FiniteDimensional.right K L₁ L₂
   exact
     ideleClassNorm_range_le_of_tower

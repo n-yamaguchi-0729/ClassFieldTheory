@@ -1,7 +1,9 @@
-import LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction
-import GroupTheory.RestrictionKernel
-import LocalClassFieldTheory.LubinTateApplication.TransportedNormSubgroupExact
-import LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction
+import GaloisCohomology.GroupTheory.RestrictionKernel
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.TransportedNormSubgroupExact
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+
+set_option autoImplicit false
 
 /-!
 # Local Artin comparison on transported Lubin--Tate levels
@@ -75,40 +77,40 @@ theorem
         K p ϖ hϖ hmn).ker := by
   let F := equalCharacteristicTargetLocalField K
   let B := F.residueField⸨X⸩
-  letI : CharP K F.residueCharacteristic :=
+  let : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   let E := equalCharacteristicLubinTateLevelField F m
   let L := equalCharacteristicLubinTateLevelField F n
-  letI : Algebra B E :=
+  let : Algebra B E :=
     equalCharacteristicLubinTateLevelAlgebra F m
-  letI : Algebra B L :=
+  let : Algebra B L :=
     equalCharacteristicLubinTateLevelAlgebra F n
   let hEL : E ≤ L :=
     equalCharacteristicLubinTateLevelField_mono F hmn
-  letI : CharP K p := hKp
-  letI : Algebra K E :=
+  let : CharP K p := hKp
+  let : Algebra K E :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ m
-  letI : Algebra K L :=
+  let : Algebra K L :=
     equalCharacteristicTransportedLubinTateLevelAlgebra
       K p ϖ hϖ n
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ m
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ n
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
       K p ϖ hϖ m
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
       K p ϖ hϖ n
-  letI ELAlgebra : Algebra E L :=
+  let ELAlgebra : Algebra E L :=
     RingHom.toAlgebra (IntermediateField.inclusion hEL).toRingHom
-  letI : SMul E L :=
+  let : SMul E L :=
     @Algebra.toSMul _ _ _ _ ELAlgebra
-  letI : IsScalarTower K E L :=
+  let : IsScalarTower K E L :=
     IsScalarTower.of_algebraMap_eq' (R := K) (S := E) (A := L) (by
       apply RingHom.ext
       intro x

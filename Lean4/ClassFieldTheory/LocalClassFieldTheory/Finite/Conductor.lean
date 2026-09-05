@@ -1,6 +1,8 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
-import LocalFieldTheory.NonarchimedeanLocalField.StandardOpenSubgroups
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
 import Mathlib.FieldTheory.Galois.Abelian
+
+set_option autoImplicit false
 
 /-!
 # Conductors of finite abelian local extensions

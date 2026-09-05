@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
-import GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
-import GlobalClassFieldTheory.Reciprocity.FinitePlaceCyclotomicFrobeniusLift
-import AbstractClassFieldTheory.Degree.PadicCyclicClosure
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceCyclotomicFrobeniusLift
+import ClassFieldTheory.AbstractClassFieldTheory.Degree.PadicCyclicClosure
+
+set_option autoImplicit false
 
 /-!
 # Separable-closure p-adic lifts for local-global Artin compatibility
@@ -41,19 +43,19 @@ theorem numberFieldTowerExtensionQuotientEquivGaloisGroup_mk_apply
           ((numberFieldTowerFiniteGaloisSubextension K L).extensionQuotientMk
             τ) x) =
       τ.1 (numberFieldSeparableClosureEmbedding L x) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseScalarTower K L
   let j :=
     numberFieldSeparableClosureEmbedding L
   let e :=
     numberFieldTowerSeparableClosureEquiv K L
-  letI quotientNormal := numberFieldTowerExtensionSubgroup_normal K L
+  let quotientNormal := numberFieldTowerExtensionSubgroup_normal K L
   convert
     (LocalClassFieldTheory.ambientEmbeddedExtensionQuotientEquivGaloisGroup_mk_apply
       ℚ K L j e τ x) using 1 <;> rfl
@@ -464,11 +466,11 @@ theorem finitePlaceSeparableClosureDecompositionRestriction_coe
         (K := K) (L := L) v) τ :
       Gal(L / K)) =
       AlgEquiv.restrictNormalHom L τ.1 := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   intro τ
   rfl
@@ -486,14 +488,14 @@ theorem finitePlaceSeparableClosureDecompositionRestriction_surjective
     Function.Surjective
       (finitePlaceSeparableClosureDecompositionRestriction
         (K := K) (L := L) v) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   dsimp only
-  letI separableClosurePadicLiftBaseIsGalois :
+  let separableClosurePadicLiftBaseIsGalois :
       IsGalois K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosure_isGalois K L
   let wL :=
@@ -594,11 +596,11 @@ theorem
         (K := K) (L := L) v).range =
       (finitePlaceSeparableClosureDecompositionRestriction
         (K := K) (L := L) v).ker := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
   let wL :=
     chosenFinitePlaceExtension (L := L) v
@@ -857,16 +859,16 @@ theorem
     Function.Surjective
       (finitePlaceSeparableClosureTopCyclotomicRestriction
         (K := K) (L := L) v) := by
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower L
+  let : IsScalarTower L
       (numberFieldCyclotomicZHatCompositum L)
       (SeparableClosure ℚ) :=
     numberFieldCyclotomicZHatCompositumSeparableClosureScalarTower L
   dsimp only
   let C :=
     numberFieldCyclotomicZHatCompositum L
-  letI separableClosurePadicLiftTopIsGalois :
+  let separableClosurePadicLiftTopIsGalois :
       IsGalois L (SeparableClosure ℚ) :=
     numberFieldSeparableClosureTop_isGalois L
   let wL :=
@@ -1011,15 +1013,15 @@ theorem
           (K := K) (L := L) v).1 p).toMonoidHom.comp
         (finitePlaceSeparableClosureTopCyclotomicRestriction
           (K := K) (L := L) v) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseScalarTower K L
-  letI : IsScalarTower L
+  let : IsScalarTower L
       (numberFieldCyclotomicZHatCompositum L)
       (SeparableClosure ℚ) :=
     numberFieldCyclotomicZHatCompositumSeparableClosureScalarTower L
@@ -1027,13 +1029,13 @@ theorem
     numberFieldCyclotomicZHatCompositum L
   let T :=
     rationalCyclotomicZHatField
-  letI : Algebra T C :=
+  let : Algebra T C :=
     rationalCyclotomicZHatCompositum_algebra L
-  letI : IsScalarTower ℚ T C :=
+  let : IsScalarTower ℚ T C :=
     rationalCyclotomicZHatCompositum_scalarTower L
-  letI : Normal ℚ T :=
+  let : Normal ℚ T :=
     rationalCyclotomicZHatField_normal
-  letI : Normal L C :=
+  let : Normal L C :=
     IsGalois.to_normal
   apply MonoidHom.ext
   intro τ
@@ -1122,15 +1124,15 @@ theorem
       (numberFieldCyclotomicPadicDecompositionCoordinate L
         (finitePlaceCyclotomicCompositumExtension
           (K := K) (L := L) v).1 p).toMonoidHom.range := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseScalarTower K L
-  letI : IsScalarTower L
+  let : IsScalarTower L
       (numberFieldCyclotomicZHatCompositum L)
       (SeparableClosure ℚ) :=
     numberFieldCyclotomicZHatCompositumSeparableClosureScalarTower L
@@ -1184,15 +1186,15 @@ theorem
         (K := K) (L := L) v p
     (restriction.ker.map degree).toAddSubgroup' =
       (degree.comp inclusion).range.toAddSubgroup' := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseScalarTower K L
-  letI : IsScalarTower L
+  let : IsScalarTower L
       (numberFieldCyclotomicZHatCompositum L)
       (SeparableClosure ℚ) :=
     numberFieldCyclotomicZHatCompositumSeparableClosureScalarTower L
@@ -1241,15 +1243,15 @@ theorem
       ((((restriction.ker.map degree).toAddSubgroup' :
           AddSubgroup ℤ_[p.1]) :
         Set ℤ_[p.1])) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseScalarTower K L
-  letI : IsScalarTower L
+  let : IsScalarTower L
       (numberFieldCyclotomicZHatCompositum L)
       (SeparableClosure ℚ) :=
     numberFieldCyclotomicZHatCompositumSeparableClosureScalarTower L
@@ -1306,15 +1308,15 @@ theorem
       ((((restriction.ker.map degree).toAddSubgroup' :
           AddSubgroup ℤ_[p.1]) :
         Set ℤ_[p.1])) := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseScalarTower K L
-  letI : IsScalarTower L
+  let : IsScalarTower L
       (numberFieldCyclotomicZHatCompositum L)
       (SeparableClosure ℚ) :=
     numberFieldCyclotomicZHatCompositumSeparableClosureScalarTower L
@@ -1345,7 +1347,7 @@ theorem
         (finitePlaceCyclotomicCompositumExtension_base_isEquiv
           (K := K) (L := L) v)
         p
-  letI finiteIndexH : H.FiniteIndex := ⟨hindex⟩
+  let finiteIndexH : H.FiniteIndex := ⟨hindex⟩
   exact AddSubgroup.isOpen_of_isClosed_of_finiteIndex H hclosed
 
 /-- A surjective restriction map admits a lift with positive integral
@@ -1445,15 +1447,15 @@ theorem
         finitePlaceSeparableClosurePadicCyclotomicDegree
             (K := K) (L := L) v p τ =
           (Multiplicative.ofAdd (1 : ℤ_[p.1])) ^ n := by
-  letI : Algebra K (SeparableClosure ℚ) :=
+  let : Algebra K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseAlgebra K L
-  letI : Algebra L (SeparableClosure ℚ) :=
+  let : Algebra L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureTopAlgebra L
-  letI : IsScalarTower K L (SeparableClosure ℚ) :=
+  let : IsScalarTower K L (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureScalarTower K L
-  letI : IsScalarTower ℚ K (SeparableClosure ℚ) :=
+  let : IsScalarTower ℚ K (SeparableClosure ℚ) :=
     numberFieldTowerSeparableClosureBaseScalarTower K L
-  letI : IsScalarTower L
+  let : IsScalarTower L
       (numberFieldCyclotomicZHatCompositum L)
       (SeparableClosure ℚ) :=
     numberFieldCyclotomicZHatCompositumSeparableClosureScalarTower L

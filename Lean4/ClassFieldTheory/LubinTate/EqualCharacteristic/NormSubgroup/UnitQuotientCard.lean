@@ -1,8 +1,10 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
-import LocalFieldTheory.NonarchimedeanLocalField.UniformizerPrincipalQuotient
-import LubinTate.EqualCharacteristic.NormSubgroup.HigherUnits
-import LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
+import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UniformizerPrincipalQuotient
+import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnits
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
+
+set_option autoImplicit false
 
 /-!
 # LubinTate the explicit norm-subgroup computation: cardinality of the standard Lubin--Tate quotient
@@ -125,7 +127,7 @@ private theorem unitQuotientFinite
     Finite
       (F.residueField⟦X⟧ˣ ⧸
         equalCharacteristicLubinTateHigherUnitSubgroup F n) := by
-  letI : Finite (equalCharacteristicLubinTateTruncatedRing F n)ˣ :=
+  let : Finite (equalCharacteristicLubinTateTruncatedRing F n)ˣ :=
     truncatedUnitsFinite F n
   exact
     Finite.of_equiv (equalCharacteristicLubinTateTruncatedRing F n)ˣ
@@ -145,11 +147,11 @@ theorem equalCharacteristicLubinTateUnitQuotient_natCard
           equalCharacteristicLubinTateHigherUnitSubgroup F n) =
       (Nat.card F.residueField - 1) *
         Nat.card F.residueField ^ n := by
-  letI : Finite
+  let : Finite
       (F.residueField⟦X⟧ˣ ⧸
         equalCharacteristicLubinTateHigherUnitSubgroup F n) :=
     unitQuotientFinite F n
-  letI : Finite (equalCharacteristicLubinTateTruncatedRing F n)ˣ :=
+  let : Finite (equalCharacteristicLubinTateTruncatedRing F n)ˣ :=
     truncatedUnitsFinite F n
   calc
     Nat.card
@@ -217,14 +219,14 @@ private theorem uniformizerPrincipalQuotientFinite
           (equalCharacteristicLaurentUniformizerUnit F)⁻¹ 1 (n + 1)) := by
   let B := F.residueField⸨X⸩
   let pi : Bˣ := (equalCharacteristicLaurentUniformizerUnit F)⁻¹
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : Finite
+  let : Finite
       (F.residueField⟦X⟧ˣ ⧸
         equalCharacteristicLubinTateHigherUnitSubgroup F n) :=
     unitQuotientFinite F n
-  letI : Finite (IntegerUnitsPrincipalQuot B (n + 1)) :=
+  let : Finite (IntegerUnitsPrincipalQuot B (n + 1)) :=
     Finite.of_equiv
       (F.residueField⟦X⟧ˣ ⧸
         equalCharacteristicLubinTateHigherUnitSubgroup F n)
@@ -258,18 +260,18 @@ theorem equalCharacteristicLubinTateUniformizerPrincipalQuotient_natCard
         Nat.card F.residueField ^ n := by
   let B := F.residueField⸨X⸩
   let pi : Bˣ := (equalCharacteristicLaurentUniformizerUnit F)⁻¹
-  letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  letI : IsNonarchimedeanLocalField B :=
+  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  let : IsNonarchimedeanLocalField B :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  letI : Finite
+  let : Finite
       (Bˣ ⧸
         LocalFieldTheory.uniformizerPrincipalSubgroup B pi 1 (n + 1)) := by
     simpa [B, pi] using uniformizerPrincipalQuotientFinite F n
-  letI : Finite
+  let : Finite
       (F.residueField⟦X⟧ˣ ⧸
         equalCharacteristicLubinTateHigherUnitSubgroup F n) :=
     unitQuotientFinite F n
-  letI : Finite (IntegerUnitsPrincipalQuot B (n + 1)) :=
+  let : Finite (IntegerUnitsPrincipalQuot B (n + 1)) :=
     Finite.of_equiv
       (F.residueField⟦X⟧ˣ ⧸
         equalCharacteristicLubinTateHigherUnitSubgroup F n)

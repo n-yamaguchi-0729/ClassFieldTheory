@@ -1,7 +1,9 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
-import AbstractClassFieldTheory.Reciprocity.ClassFieldAxiom
-import AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassFieldAxiom
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
+
+set_option autoImplicit false
 
 namespace LocalClassFieldTheory
 open RamificationTheory KummerTheory CyclicCohomology
@@ -63,9 +65,9 @@ theorem abstractFiniteClosedSubgroup_isOpen
     (hfinite : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
       extensionSubgroup (baseField (Gal(Ω / k))) H (le_baseField H))) :
     IsOpen H.carrier := by
-  letI : Finite (Gal(Ω / k) ⧸ H.toSubgroup) :=
+  let : Finite (Gal(Ω / k) ⧸ H.toSubgroup) :=
     ambientQuotientFiniteOfAbstractFinite k Ω H hfinite
-  letI : Subgroup.FiniteIndex H.toSubgroup :=
+  let : Subgroup.FiniteIndex H.toSubgroup :=
     H.toSubgroup.finiteIndex_of_finite_quotient
   exact Subgroup.isOpen_of_isClosed_of_finiteIndex H.toSubgroup H.isClosed'
 
@@ -207,7 +209,7 @@ theorem abstractRelativeToAmbientQuotient_ker
     letI := abstractRelativeFixingSubgroup_normal k Ω K L hLK hnormal
     (abstractRelativeToAmbientQuotient k Ω K L hLK hnormal).ker =
       extensionSubgroup K L hLK := by
-  letI : (abstractRelativeFixedField k Ω hLK).fixingSubgroup.Normal :=
+  let : (abstractRelativeFixedField k Ω hLK).fixingSubgroup.Normal :=
     abstractRelativeFixingSubgroup_normal k Ω K L hLK hnormal
   ext σ
   change
@@ -232,7 +234,7 @@ theorem abstractRelativeToAmbientQuotient_surjective
     letI := abstractRelativeFixingSubgroup_normal k Ω K L hLK hnormal
     Function.Surjective
       (abstractRelativeToAmbientQuotient k Ω K L hLK hnormal) := by
-  letI : (abstractRelativeFixedField k Ω hLK).fixingSubgroup.Normal :=
+  let : (abstractRelativeFixedField k Ω hLK).fixingSubgroup.Normal :=
     abstractRelativeFixingSubgroup_normal k Ω K L hLK hnormal
   intro q
   refine Quotient.inductionOn' q ?_
@@ -306,21 +308,21 @@ theorem abstractFixedField_relativeFiniteDimensional
         (IntermediateField.inclusion (abstractFixedField_le k Ω hLK))
     FiniteDimensional (abstractFixedField k Ω K)
       (abstractFixedField k Ω L) := by
-  letI : Algebra (abstractFixedField k Ω K) (abstractFixedField k Ω L) :=
+  let : Algebra (abstractFixedField k Ω K) (abstractFixedField k Ω L) :=
     RingHom.toAlgebra
       (IntermediateField.inclusion (abstractFixedField_le k Ω hLK))
-  letI : IsScalarTower k (abstractFixedField k Ω K)
+  let : IsScalarTower k (abstractFixedField k Ω K)
       (abstractFixedField k Ω L) :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
+  let : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
       extensionSubgroup (baseField (Gal(Ω / k))) K (le_baseField K)) :=
     hKfinite
-  letI : Finite
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK) := hLKfinite
-  letI : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
+  let : Finite ((baseField (Gal(Ω / k))).toSubgroup ⧸
       extensionSubgroup (baseField (Gal(Ω / k))) L (le_baseField L)) :=
     FiniteGaloisSubextension.finite_extension_trans hLK (le_baseField K)
-  letI : FiniteDimensional k (abstractFixedField k Ω L) :=
+  let : FiniteDimensional k (abstractFixedField k Ω L) :=
     abstractFixedField_finiteDimensional k Ω L inferInstance
   exact FiniteDimensional.right k
     (abstractFixedField k Ω K) (abstractFixedField k Ω L)
@@ -336,10 +338,10 @@ theorem abstractRelativeFixedField_finiteDimensional
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)) :
     FiniteDimensional (abstractFixedField k Ω K)
       (abstractRelativeFixedField k Ω hLK) := by
-  letI : Algebra (abstractFixedField k Ω K) (abstractFixedField k Ω L) :=
+  let : Algebra (abstractFixedField k Ω K) (abstractFixedField k Ω L) :=
     RingHom.toAlgebra
       (IntermediateField.inclusion (abstractFixedField_le k Ω hLK))
-  letI : FiniteDimensional (abstractFixedField k Ω K)
+  let : FiniteDimensional (abstractFixedField k Ω K)
       (abstractFixedField k Ω L) :=
     abstractFixedField_relativeFiniteDimensional
       k Ω K L hLK hKfinite hLKfinite
@@ -366,14 +368,14 @@ theorem finiteAbstractExtension_degree_eq_finrank
     ((DegreeData.FiniteAbstractExtension.ofInclusion L K hLK).degree : ℕ) =
       Module.finrank (abstractFixedField k Ω K)
         (abstractRelativeFixedField k Ω hLK) := by
-  letI := hnormal
-  letI : Finite
+  let := hnormal
+  let : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK) := hLKfinite
-  letI : FiniteDimensional (abstractFixedField k Ω K)
+  let : FiniteDimensional (abstractFixedField k Ω K)
       (abstractRelativeFixedField k Ω hLK) :=
     abstractRelativeFixedField_finiteDimensional
       k Ω K L hLK hKfinite hLKfinite
-  letI : IsGalois (abstractFixedField k Ω K)
+  let : IsGalois (abstractFixedField k Ω K)
       (abstractRelativeFixedField k Ω hLK) :=
     abstractRelativeFixedField_isGalois k Ω K L hLK hnormal
   calc

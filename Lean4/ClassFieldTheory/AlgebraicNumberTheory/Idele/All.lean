@@ -1,0 +1,33 @@
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdentityComponent
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Norm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormCore
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormOneCompact
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PositiveArchimedeanSection
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Principal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalTopology
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SPlaces
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SufficientlyLarge
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
+
+set_option autoImplicit false
+
+/-!
+# Ideles and idele classes
+
+Public aggregate for the idele group and the idele class group of a number
+field.
+-/

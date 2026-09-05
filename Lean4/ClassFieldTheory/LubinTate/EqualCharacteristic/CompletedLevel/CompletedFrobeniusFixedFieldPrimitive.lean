@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Finite
-import LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedField
-import LubinTate.EqualCharacteristic.CompletedLevel.ChangedCompletedPrimitiveAction
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedField
+import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedCompletedPrimitiveAction
+
+set_option autoImplicit false
 
 /-!
 # The completed theta-intertwining theorem: the fixed-field primitive point over the completed base

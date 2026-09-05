@@ -1,0 +1,12 @@
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteAbelianization
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeDegreeSubextension
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeSubextension
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.FixedFieldLattice
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.InfiniteBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.MaximalAbelianSubextension
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.NormalFieldRange
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.RelativeAbelianization
+
+set_option autoImplicit false
+
+/-! # Galois subextensions and fixed-field constructions -/

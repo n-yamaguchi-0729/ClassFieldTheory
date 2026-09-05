@@ -1,11 +1,13 @@
-import AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
-import AlgebraicNumberTheory.Idele.BaseChange
-import AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Reassociation
-import AlgebraicNumberTheory.Idele.Extension.IdeleClassBaseChange
-import AlgebraicNumberTheory.Idele.Extension.ClassGroup
-import AlgebraicNumberTheory.Idele.SufficientlyLarge
-import AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
-import CyclicCohomology.Herbrand.Permutation.Module
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.BaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Reassociation
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleClassBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.SufficientlyLarge
+import ClassFieldTheory.AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
+import GaloisCohomology.Cyclic.Herbrand.Permutation.Module
+
+set_option autoImplicit false
 
 /-!
 # A sufficiently large unramified support for the idele-class calculation
@@ -406,12 +408,12 @@ theorem
       σ •
         sUnitEquivRelativePrincipalSupportedIntersection
           (K := K) (L := L) S x := by
-  letI :=
+  let :=
     sUnitMulDistribMulAction K L
       (finitePlacesAbove (K := K) (L := L) S)
       (finitePlacesAbove_isGaloisStable
         (K := K) (L := L) S)
-  letI :=
+  let :=
     relativePrincipalSupportedIntersectionAction
       (K := K) (L := L) S
   apply Subtype.ext

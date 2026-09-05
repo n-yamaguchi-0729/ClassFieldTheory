@@ -1,5 +1,7 @@
-import LubinTate.Padic.CompletedFrobeniusLift
+import ClassFieldTheory.LubinTate.Padic.CompletedFrobeniusLift
 import Mathlib.Topology.Algebra.Nonarchimedean.AdicTopology
+
+set_option autoImplicit false
 
 /-!
 # Semilinear evaluation for completed p-adic Frobenius lifts
@@ -161,7 +163,7 @@ theorem padicCompletedUnitFrobeniusLiftEquiv_mem_valuationSubring
     padicCompletedUnramifiedFrobeniusIntegerEquiv p
   let σ : L ≃+* L :=
     padicCompletedUnitFrobeniusLiftEquiv p n u
-  letI : IsIntegralClosure target.valuationSubring
+  let : IsIntegralClosure target.valuationSubring
       base.valuationSubring L :=
     padicCompletedLevelCompleteDVF_isIntegralClosure p n
   have hxIntegral : IsIntegral base.valuationSubring x :=
@@ -212,7 +214,7 @@ theorem padicCompletedUnitFrobeniusLiftEquiv_symm_mem_valuationSubring
     (padicCompletedUnramifiedFrobeniusIntegerEquiv p).symm
   let σ : L ≃+* L :=
     (padicCompletedUnitFrobeniusLiftEquiv p n u).symm
-  letI : IsIntegralClosure target.valuationSubring
+  let : IsIntegralClosure target.valuationSubring
       base.valuationSubring L :=
     padicCompletedLevelCompleteDVF_isIntegralClosure p n
   have hxIntegral : IsIntegral base.valuationSubring x :=

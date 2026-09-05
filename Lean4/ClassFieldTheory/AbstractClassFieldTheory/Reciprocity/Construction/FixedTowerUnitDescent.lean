@@ -1,5 +1,7 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.FixedTowerUnitCorrection
-import AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusQuotientDescent
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FixedTowerUnitCorrection
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusQuotientDescent
+
+set_option autoImplicit false
 
 universe u v
 
@@ -122,7 +124,9 @@ theorem unitRepresentation_generator_action_eq
             (D.frobeniusFixedFieldAction A T.ambientBase T.ambient.field
               T.ambient.below T.fieldFrobenius T.baseFrobenius.1
                 T.commute y.1).1 := by
-                rw [D.frobeniusFixedFieldAction_coe]
+                exact (D.frobeniusFixedFieldAction_coe A T.ambientBase
+                  T.ambient.field T.ambient.below T.fieldFrobenius
+                  T.baseFrobenius.1 T.commute y.1).symm
         _ = A.ρ gK.1 y.1.1 := by
           exact D.frobeniusFixedFieldAction_coe_of_mk
             A T.ambientBase T.ambient.field T.ambient.below
@@ -184,13 +188,13 @@ theorem universalNormDescent_fixedTower_solution
   let TF := tower.field
   let hTS := tower.field_le_base
   let hTSnormal : (extensionSubgroup S T hTS).Normal := tower.normal
-  letI : Finite
+  let : Finite
       (K.field.toSubgroup ⧸ extensionSubgroup K.field L hLK) :=
     P.ambient.finite
-  letI : Finite
+  let : Finite
       (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
     tower.finiteQuotient
-  letI : (extensionSubgroup S T hTS).Normal := hTSnormal
+  let : (extensionSubgroup S T hTS).Normal := hTSnormal
   have hφσ : φ.1 * σ.1 = σ.1 * φ.1 :=
     P.frobenius_commute_base
   have hφσn : φ.1 * σn.1 = σn.1 * φ.1 :=
@@ -206,7 +210,7 @@ theorem universalNormDescent_fixedTower_solution
       mapsToFrobenius := hgClosure
       generates := hg }
   let g : S.toSubgroup ⧸ extensionSubgroup S T hTS := QuotientGroup.mk gS
-  letI : Fintype (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
+  let : Fintype (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
     Fintype.ofFinite _
   let Kuc : FiniteAbstractField G := SF
   let Euc : FiniteUnramifiedCyclicExtension D Kuc :=
@@ -221,9 +225,9 @@ theorem universalNormDescent_fixedTower_solution
   have hEnormal :
       (extensionSubgroup E.base.field E.field.field E.below).Normal :=
     Euc.normal
-  letI : (extensionSubgroup E.base.field E.field.field E.below).Normal :=
+  let : (extensionSubgroup E.base.field E.field.field E.below).Normal :=
     hEnormal
-  letI : Fintype
+  let : Fintype
       (E.base.field.toSubgroup ⧸
         extensionSubgroup E.base.field E.field.field E.below) :=
     Fintype.ofFinite _
@@ -269,10 +273,14 @@ theorem universalNormDescent_fixedTower_solution
               (fun i => (τ i).1) hτσn uBar uBarᵢ := by
         simp [delta, powerTowerCorrection,
           fixedTowerCorrection, tower, K, L, σn,
-          Finset.sum_sub_distrib, hfixedAction]
+          hfixedAction]
         rfl
       exact congrArg Subtype.val hdeltaUnit
     rw [hdeltaAmbient]
+    let : Finite ((baseField G).toSubgroup ⧸
+        extensionSubgroup (baseField G) (D.frobeniusFixedField K L hLK σ)
+          (le_baseField (D.frobeniusFixedField K L hLK σ))) :=
+      tower.baseAbsoluteFinite
     exact
       v.fixedTowerCorrection_relativeNorm_eq_zero K L hLK σ σn hTS
         s φ.1 hφσ hφσn (fun i => (τ i).1) hτσ hτσn
@@ -372,7 +380,7 @@ theorem maximalNorm_relativeNorm_fixedTower
   let hgClosure := generator.mapsToFrobenius
   let hg := generator.generates
   let hσσ' := FT.commute
-  letI : Finite
+  let : Finite
       ((D.maximalUnramifiedField K.field).toSubgroup ⧸
         extensionSubgroup (D.maximalUnramifiedField K.field)
           (D.maximalUnramifiedField L)
@@ -382,9 +390,9 @@ theorem maximalNorm_relativeNorm_fixedTower
   let T := FT.field.field
   let SF := FT.base
   let TF := FT.field
-  letI : Finite (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
+  let : Finite (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
     FT.finiteQuotient
-  letI : (extensionSubgroup S T hTS).Normal := hTSnormal
+  let : (extensionSubgroup S T hTS).Normal := hTSnormal
   let I := D.maximalUnramifiedField K.field
   let E := D.maximalUnramifiedField L
   let hTE : E.toSubgroup ≤ T.toSubgroup := by
@@ -404,7 +412,7 @@ theorem maximalNorm_relativeNorm_fixedTower
   have hExtNormal :
       (extensionSubgroup Ext.base.field Ext.field.field Ext.below).Normal :=
     FT.normal
-  letI : (extensionSubgroup Ext.base.field Ext.field.field Ext.below).Normal :=
+  let : (extensionSubgroup Ext.base.field Ext.field.field Ext.below).Normal :=
     hExtNormal
   let U := v.unitRepresentation Ext hExtNormal
   let g : S.toSubgroup ⧸ extensionSubgroup S T hTS := QuotientGroup.mk gS
@@ -429,9 +437,9 @@ theorem maximalNorm_relativeNorm_fixedTower
       _ = D.frobeniusQuotientAction A K.field L hLK σ.1
           (J (N (fixedFieldInclusion A T E hTE z.1))) := hNorm
       _ = act (F z) := rfl
-  letI : Fintype (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
+  let : Fintype (S.toSubgroup ⧸ extensionSubgroup S T hTS) :=
     Fintype.ofFinite _
-  letI : Fintype
+  let : Fintype
       (Ext.base.field.toSubgroup ⧸
         extensionSubgroup Ext.base.field Ext.field.field Ext.below) := by
     change Fintype (S.toSubgroup ⧸ extensionSubgroup S T hTS)

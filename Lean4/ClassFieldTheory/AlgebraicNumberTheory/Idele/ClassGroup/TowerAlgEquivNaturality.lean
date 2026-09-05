@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
+
+set_option autoImplicit false
 
 /-!
 # Naturality of tower base change under number-field equivalences

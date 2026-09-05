@@ -1,5 +1,7 @@
-import LocalClassFieldTheory.ClassFormation.LocalBlocks.Induced
-import CyclicCohomology.Herbrand.HerbrandLowDegree.Product
+import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Induced
+import GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Product
+
+set_option autoImplicit false
 
 /-!
 # Finite families of local idele blocks

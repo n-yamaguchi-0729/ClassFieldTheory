@@ -1,6 +1,8 @@
-import AlgebraicNumberTheory.NormalClosure
-import GlobalClassFieldTheory.GlobalClassFields.PowerCongruenceCore
-import GlobalClassFieldTheory.GlobalClassFields.CyclotomicKummerNormDescent
+import ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PowerCongruenceCore
+import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclotomicKummerNormDescent
+
+set_option autoImplicit false
 
 /-!
 # Class fields of closed finite-index idele-class subgroups
@@ -52,7 +54,11 @@ theorem closedFiniteIndexNormExponent_eq_index
     closedFiniteIndexNormExponent (K := K) H =
       ⟨H.index,
         Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero⟩ := by
-  simp only [closedFiniteIndexNormExponent, if_neg hH]
+  change
+    (if H = ⊤ then (2 : ℕ+) else
+      H.index.toPNat (Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero)) =
+      H.index.toPNat (Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero)
+  exact if_neg hH
 
 /-- The Kummer exponent attached to a finite-index subgroup is always
 strictly larger than one. -/
@@ -61,10 +67,19 @@ theorem one_lt_closedFiniteIndexNormExponent
     [H.FiniteIndex] :
     1 < (closedFiniteIndexNormExponent (K := K) H : ℕ) := by
   by_cases hH : H = ⊤
-  · rw [closedFiniteIndexNormExponent, if_pos hH]
+  · have hexponent : closedFiniteIndexNormExponent (K := K) H = (2 : ℕ+) := by
+      change
+        (if H = ⊤ then (2 : ℕ+) else
+          H.index.toPNat (Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero)) =
+          (2 : ℕ+)
+      exact if_pos hH
+    have hvalue : (closedFiniteIndexNormExponent (K := K) H : ℕ) = 2 :=
+      congrArg PNat.val hexponent
+    rw [hvalue]
     decide
-  · rw [closedFiniteIndexNormExponent_eq_index
-      (K := K) H hH]
+  · have hindex : (closedFiniteIndexNormExponent (K := K) H : ℕ) = H.index :=
+      congrArg PNat.val (closedFiniteIndexNormExponent_eq_index (K := K) H hH)
+    rw [hindex]
     exact Subgroup.one_lt_index_of_ne_top hH
 
 /-- The finite seed used in the norm-neighbourhood construction is the

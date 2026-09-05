@@ -1,8 +1,10 @@
-import LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
-import LubinTate.FiniteLevel.StandardLocalField
-import LubinTate.FiniteLevel.LevelAbelian
-import LocalFieldTheory.DiscreteValuationField.RamificationInvariants
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
+import ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
+import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationInvariants
 import Mathlib.FieldTheory.LinearDisjoint
+
+set_option autoImplicit false
 
 /-!
 # The unramified--Lubin--Tate diagonal field for an explicit uniformizer
@@ -71,21 +73,21 @@ theorem lubinTateLevel_spectral_inertiaDeg_eq_one
       (LocalFieldTheory.localCompleteDVF K).maximalIdeal
       (LocalFieldTheory.localCompleteDVF T).maximalIdeal = 1 := by
   let T := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : NontriviallyNormedField T :=
+  let : NontriviallyNormedField T :=
     finiteExtensionSpectralNormedField K T
-  letI : ValuativeRel T :=
+  let : ValuativeRel T :=
     finiteExtensionSpectralValuativeRel K T
-  letI : IsNonarchimedeanLocalField T :=
+  let : IsNonarchimedeanLocalField T :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K T
-  letI : Valuation.HasExtension (ValuativeRel.valuation K)
+  let : Valuation.HasExtension (ValuativeRel.valuation K)
       (ValuativeRel.valuation T) :=
     finiteExtensionSpectralValuation_hasExtension K T
   let base := (standardLocalField K).toCompleteDVF
   let chosen := standardLubinTateLevelCompleteDVF hπ n
   let spectral := LocalFieldTheory.localCompleteDVF T
-  letI : base.valuation.HasExtension spectral.valuation :=
+  let : base.valuation.HasExtension spectral.valuation :=
     explicitLocalCompleteDVFValuation_hasExtension K T
   have hValuationRing :
       chosen.valuation.valuationSubring =
@@ -155,7 +157,7 @@ private theorem explicitLocalCompleteDVF_ramificationIdx_eq_one_of_top
     (htop :
       total.maximalIdeal.ramificationIdx base.valuationSubring = 1) :
     middle.maximalIdeal.ramificationIdx base.valuationSubring = 1 := by
-  letI : IsScalarTower base.valuationSubring middle.valuationSubring
+  let : IsScalarTower base.valuationSubring middle.valuationSubring
       total.valuationSubring :=
     IsScalarTower.of_algebraMap_eq' (by
       ext x
@@ -163,20 +165,20 @@ private theorem explicitLocalCompleteDVF_ramificationIdx_eq_one_of_top
         algebraMap K U (x : K) =
           algebraMap M U (algebraMap K M (x : K))
       exact IsScalarTower.algebraMap_apply K M U (x : K))
-  letI : Algebra middle.valuationSubring U :=
+  let : Algebra middle.valuationSubring U :=
     ((algebraMap total.valuationSubring U).comp
       (algebraMap middle.valuationSubring total.valuationSubring)).toAlgebra
-  letI : IsScalarTower middle.valuationSubring
+  let : IsScalarTower middle.valuationSubring
       total.valuationSubring U :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : Module.Finite middle.valuationSubring
+  let : Module.Finite middle.valuationSubring
       total.valuationSubring :=
     moduleFinite_target_valuationSubring_of_finite_separable middle total
-  letI : Module.IsTorsionFree middle.valuationSubring
+  let : Module.IsTorsionFree middle.valuationSubring
       total.valuationSubring :=
     moduleIsTorsionFree_target_valuationSubring_of_finite_separable
       middle total
-  letI : Module.Free middle.valuationSubring
+  let : Module.Free middle.valuationSubring
       total.valuationSubring :=
     Module.free_of_finite_type_torsion_free'
   have hdiv :
@@ -220,41 +222,41 @@ private theorem
   let U := localFiniteUnramifiedField K d hd
   let T := standardLubinTateLevelField hπ n
   let M := U ⊓ T
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     FiniteDimensional.of_injective
       (M.inclusion (show M ≤ U from inf_le_left)).toLinearMap
       (M.inclusion (show M ≤ U from inf_le_left)).injective
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField K M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel K M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K M
-  letI : Valuation.HasExtension (ValuativeRel.valuation K)
+  let : Valuation.HasExtension (ValuativeRel.valuation K)
       (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension K M
-  letI : Algebra M U :=
+  let : Algebra M U :=
     (M.inclusion (show M ≤ U from inf_le_left)).toRingHom.toAlgebra
-  letI : IsScalarTower K M U :=
+  let : IsScalarTower K M U :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : Valuation.HasExtension (ValuativeRel.valuation M)
+  let : Valuation.HasExtension (ValuativeRel.valuation M)
       (ValuativeRel.valuation U) :=
     finiteExtensionSpectralValuation_hasExtension_of_tower K M U
-  letI : FiniteDimensional M U :=
+  let : FiniteDimensional M U :=
     FiniteDimensional.right K M U
-  letI : Algebra.IsSeparable M U :=
+  let : Algebra.IsSeparable M U :=
     Algebra.isSeparable_tower_top_of_isSeparable
       (F := K) (L := M) (E := U)
   let base := LocalFieldTheory.localCompleteDVF K
   let middle := LocalFieldTheory.localCompleteDVF M
   let unramified := LocalFieldTheory.localCompleteDVF U
-  letI : base.valuation.HasExtension middle.valuation :=
+  let : base.valuation.HasExtension middle.valuation :=
     explicitLocalCompleteDVFValuation_hasExtension K M
-  letI : base.valuation.HasExtension unramified.valuation :=
+  let : base.valuation.HasExtension unramified.valuation :=
     explicitLocalCompleteDVFValuation_hasExtension K U
-  letI : middle.valuation.HasExtension unramified.valuation :=
+  let : middle.valuation.HasExtension unramified.valuation :=
     explicitLocalCompleteDVFValuation_hasExtension M U
   have hramificationUnramified :
       unramified.maximalIdeal.ramificationIdx base.valuationSubring = 1 := by
@@ -300,47 +302,47 @@ private theorem
   let U := localFiniteUnramifiedField K d hd
   let T := standardLubinTateLevelField hπ n
   let M := U ⊓ T
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     FiniteDimensional.of_injective
       (M.inclusion (show M ≤ U from inf_le_left)).toLinearMap
       (M.inclusion (show M ≤ U from inf_le_left)).injective
-  letI : NontriviallyNormedField T :=
+  let : NontriviallyNormedField T :=
     finiteExtensionSpectralNormedField K T
-  letI : ValuativeRel T :=
+  let : ValuativeRel T :=
     finiteExtensionSpectralValuativeRel K T
-  letI : IsNonarchimedeanLocalField T :=
+  let : IsNonarchimedeanLocalField T :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K T
-  letI : Valuation.HasExtension (ValuativeRel.valuation K)
+  let : Valuation.HasExtension (ValuativeRel.valuation K)
       (ValuativeRel.valuation T) :=
     finiteExtensionSpectralValuation_hasExtension K T
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField K M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel K M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K M
-  letI : Valuation.HasExtension (ValuativeRel.valuation K)
+  let : Valuation.HasExtension (ValuativeRel.valuation K)
       (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension K M
-  letI : Algebra M T :=
+  let : Algebra M T :=
     (M.inclusion (show M ≤ T from inf_le_right)).toRingHom.toAlgebra
-  letI : IsScalarTower K M T :=
+  let : IsScalarTower K M T :=
     IsScalarTower.of_algebraMap_eq' rfl
-  letI : Valuation.HasExtension (ValuativeRel.valuation M)
+  let : Valuation.HasExtension (ValuativeRel.valuation M)
       (ValuativeRel.valuation T) :=
     finiteExtensionSpectralValuation_hasExtension_of_tower K M T
   let base := LocalFieldTheory.localCompleteDVF K
   let middle := LocalFieldTheory.localCompleteDVF M
   let total := LocalFieldTheory.localCompleteDVF T
-  letI : base.valuation.HasExtension middle.valuation :=
+  let : base.valuation.HasExtension middle.valuation :=
     explicitLocalCompleteDVFValuation_hasExtension K M
-  letI : base.valuation.HasExtension total.valuation :=
+  let : base.valuation.HasExtension total.valuation :=
     explicitLocalCompleteDVFValuation_hasExtension K T
-  letI : middle.valuation.HasExtension total.valuation :=
+  let : middle.valuation.HasExtension total.valuation :=
     explicitLocalCompleteDVFValuation_hasExtension M T
-  letI : IsScalarTower base.valuationSubring middle.valuationSubring
+  let : IsScalarTower base.valuationSubring middle.valuationSubring
       total.valuationSubring :=
     IsScalarTower.of_algebraMap_eq' rfl
   have htotal :
@@ -374,24 +376,24 @@ theorem localFiniteUnramifiedField_inf_lubinTateLevelField
   let U := localFiniteUnramifiedField K d hd
   let T := standardLubinTateLevelField hπ n
   let M := U ⊓ T
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : FiniteDimensional K M :=
+  let : FiniteDimensional K M :=
     FiniteDimensional.of_injective
       (M.inclusion (show M ≤ U from inf_le_left)).toLinearMap
       (M.inclusion (show M ≤ U from inf_le_left)).injective
-  letI : NontriviallyNormedField M :=
+  let : NontriviallyNormedField M :=
     finiteExtensionSpectralNormedField K M
-  letI : ValuativeRel M :=
+  let : ValuativeRel M :=
     finiteExtensionSpectralValuativeRel K M
-  letI : IsNonarchimedeanLocalField M :=
+  let : IsNonarchimedeanLocalField M :=
     finiteExtensionSpectralIsNonarchimedeanLocalField K M
-  letI : Valuation.HasExtension (ValuativeRel.valuation K)
+  let : Valuation.HasExtension (ValuativeRel.valuation K)
       (ValuativeRel.valuation M) :=
     finiteExtensionSpectralValuation_hasExtension K M
   let base := LocalFieldTheory.localCompleteDVF K
   let middle := LocalFieldTheory.localCompleteDVF M
-  letI : base.valuation.HasExtension middle.valuation :=
+  let : base.valuation.HasExtension middle.valuation :=
     explicitLocalCompleteDVFValuation_hasExtension K M
   have hramificationMiddle :
       middle.maximalIdeal.ramificationIdx base.valuationSubring = 1 := by
@@ -403,13 +405,13 @@ theorem localFiniteUnramifiedField_inf_lubinTateLevelField
     exact
       localFiniteUnramifiedField_inf_lubinTateLevelField_inertiaDeg
         K hπ d hd n
-  letI : Module.Finite base.valuationSubring middle.valuationSubring :=
+  let : Module.Finite base.valuationSubring middle.valuationSubring :=
     moduleFinite_target_valuationSubring_of_finite_separable base middle
-  letI : Module.IsTorsionFree base.valuationSubring
+  let : Module.IsTorsionFree base.valuationSubring
       middle.valuationSubring :=
     moduleIsTorsionFree_target_valuationSubring_of_finite_separable
       base middle
-  letI : Module.Free base.valuationSubring middle.valuationSubring :=
+  let : Module.Free base.valuationSubring middle.valuationSubring :=
     Module.free_of_finite_type_torsion_free'
   have hbaseMaximalIdeal_ne :
       (base.maximalIdeal : Ideal base.valuationSubring) ≠ ⊥ :=
@@ -441,7 +443,7 @@ theorem localFiniteUnramifiedField_linearDisjoint_lubinTateLevelField
     (d : ℕ) (hd : 0 < d) (n : ℕ) :
     (localFiniteUnramifiedField K d hd).LinearDisjoint
       (standardLubinTateLevelField hπ n) := by
-  letI : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
+  let : FiniteDimensional K (standardLubinTateLevelField hπ n) :=
     standardLubinTateLevelField_finiteDimensional hπ n
   apply IntermediateField.LinearDisjoint.of_inf_eq_bot
   exact localFiniteUnramifiedField_inf_lubinTateLevelField
@@ -481,7 +483,7 @@ theorem lubinTateUniformizerDiagonalCompositumField_finiteDimensional
     FiniteDimensional K
       (lubinTateUniformizerDiagonalCompositumField K hπ n u) := by
   let T := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let σ : Gal(T / K) :=
     (standardLubinTateUnitParameterEquivGal
@@ -507,7 +509,7 @@ theorem lubinTateUniformizerDiagonalCompositumField_isGalois
     IsGalois K
       (lubinTateUniformizerDiagonalCompositumField K hπ n u) := by
   let T := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let σ : Gal(T / K) :=
     (standardLubinTateUnitParameterEquivGal
@@ -518,11 +520,11 @@ theorem lubinTateUniformizerDiagonalCompositumField_isGalois
   let hd : 0 < d := orderOf_pos σ
   let U := localFiniteUnramifiedField K d hd
   let C := U ⊔ T
-  letI : IsGalois K U := inferInstance
-  letI : IsGalois K T :=
+  let : IsGalois K U := inferInstance
+  let : IsGalois K T :=
     standardLubinTateLevelField_isGalois
       (F := standardLocalField K) hπ n
-  letI : Algebra.IsSeparable K C := inferInstance
+  let : Algebra.IsSeparable K C := inferInstance
   change IsGalois K C
   exact
     { to_isSeparable := inferInstance
@@ -593,8 +595,8 @@ private theorem exists_lubinTateUniformizerDiagonalAutomorphism
     let hTC : T ≤ C := le_sup_right
     let A := U.restrict hUC
     let B := T.restrict hTC
-    let eU : U ≃ₐ[K] A := IntermediateField.restrict_algEquiv hUC
-    let eT : T ≃ₐ[K] B := IntermediateField.restrict_algEquiv hTC
+    let eU : U ≃ₐ[K] A := IntermediateField.restrictAlgEquiv hUC
+    let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
     letI : IsGalois K A := IsGalois.of_algEquiv eU
     letI : IsGalois K B := IsGalois.of_algEquiv eT
     let φ :=
@@ -605,7 +607,7 @@ private theorem exists_lubinTateUniformizerDiagonalAutomorphism
       AlgEquiv.restrictNormalHom A σ = σA ∧
         AlgEquiv.restrictNormalHom B σ = σB := by
   let T := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let σT : Gal(T / K) :=
     (standardLubinTateUnitParameterEquivGal
@@ -620,23 +622,23 @@ private theorem exists_lubinTateUniformizerDiagonalAutomorphism
   let hTC : T ≤ C := le_sup_right
   let A := U.restrict hUC
   let B := T.restrict hTC
-  let eU : U ≃ₐ[K] A := IntermediateField.restrict_algEquiv hUC
-  let eT : T ≃ₐ[K] B := IntermediateField.restrict_algEquiv hTC
-  letI : IsGalois K U := inferInstance
-  letI : IsGalois K T :=
+  let eU : U ≃ₐ[K] A := IntermediateField.restrictAlgEquiv hUC
+  let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
+  let : IsGalois K U := inferInstance
+  let : IsGalois K T :=
     standardLubinTateLevelField_isGalois
       (F := standardLocalField K) hπ n
-  letI : IsGalois K A := IsGalois.of_algEquiv eU
-  letI : IsGalois K B := IsGalois.of_algEquiv eT
-  letI : FiniteDimensional K C :=
+  let : IsGalois K A := IsGalois.of_algEquiv eU
+  let : IsGalois K B := IsGalois.of_algEquiv eT
+  let : FiniteDimensional K C :=
     lubinTateUniformizerDiagonalCompositumField_finiteDimensional
       K hπ n u
-  letI : IsGalois K C :=
+  let : IsGalois K C :=
     lubinTateUniformizerDiagonalCompositumField_isGalois
       K hπ n u
-  letI : FiniteDimensional B C :=
+  let : FiniteDimensional B C :=
     FiniteDimensional.right K B C
-  letI : IsGalois B C :=
+  let : IsGalois B C :=
     IsGalois.tower_top_of_isGalois K B C
   let φ :=
     arithmeticFrobeniusOfUnramifiedValuation K U
@@ -692,7 +694,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_restrict_unramified
     let C := U ⊔ T
     let hUC : U ≤ C := le_sup_left
     let A := U.restrict hUC
-    let eU : U ≃ₐ[K] A := IntermediateField.restrict_algEquiv hUC
+    let eU : U ≃ₐ[K] A := IntermediateField.restrictAlgEquiv hUC
     letI : IsGalois K A := IsGalois.of_algEquiv eU
     let φA : Gal(A / K) :=
       (eU.symm.trans
@@ -726,7 +728,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_restrict_level
     let C := U ⊔ T
     let hTC : T ≤ C := le_sup_right
     let B := T.restrict hTC
-    let eT : T ≃ₐ[K] B := IntermediateField.restrict_algEquiv hTC
+    let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
     letI : IsGalois K B := IsGalois.of_algEquiv eT
     let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
     AlgEquiv.restrictNormalHom B
@@ -759,7 +761,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
       let C := U ⊔ T
       let hUC : U ≤ C := le_sup_left
       let A := U.restrict hUC
-      let eU : U ≃ₐ[K] A := IntermediateField.restrict_algEquiv hUC
+      let eU : U ≃ₐ[K] A := IntermediateField.restrictAlgEquiv hUC
       letI : IsGalois K A := IsGalois.of_algEquiv eU
       let φA : Gal(A / K) :=
         (eU.symm.trans
@@ -780,13 +782,13 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
       let C := U ⊔ T
       let hTC : T ≤ C := le_sup_right
       let B := T.restrict hTC
-      let eT : T ≃ₐ[K] B := IntermediateField.restrict_algEquiv hTC
+      let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
       letI : IsGalois K B := IsGalois.of_algEquiv eT
       let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
       AlgEquiv.restrictNormalHom B σ = σB) :
     σ = lubinTateUniformizerDiagonalAutomorphism K hπ n u := by
   let T := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let σT : Gal(T / K) :=
     (standardLubinTateUnitParameterEquivGal
@@ -801,10 +803,10 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
   let hTC : T ≤ C := le_sup_right
   let A := U.restrict hUC
   let B := T.restrict hTC
-  let eU : U ≃ₐ[K] A := IntermediateField.restrict_algEquiv hUC
-  let eT : T ≃ₐ[K] B := IntermediateField.restrict_algEquiv hTC
-  letI : IsGalois K A := IsGalois.of_algEquiv eU
-  letI : IsGalois K B := IsGalois.of_algEquiv eT
+  let eU : U ≃ₐ[K] A := IntermediateField.restrictAlgEquiv hUC
+  let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
+  let : IsGalois K A := IsGalois.of_algEquiv eU
+  let : IsGalois K B := IsGalois.of_algEquiv eT
   let φA : Gal(A / K) :=
     (eU.symm.trans
       (arithmeticFrobeniusOfUnramifiedValuation K U)).trans eU
@@ -867,7 +869,7 @@ private theorem lubinTateUniformizerDiagonalAutomorphism_order
     orderOf (lubinTateUniformizerDiagonalAutomorphism K hπ n u) =
       orderOf σT := by
   let T := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let σT : Gal(T / K) :=
     (standardLubinTateUnitParameterEquivGal
@@ -882,14 +884,14 @@ private theorem lubinTateUniformizerDiagonalAutomorphism_order
   let hTC : T ≤ C := le_sup_right
   let A := U.restrict hUC
   let B := T.restrict hTC
-  let eU : U ≃ₐ[K] A := IntermediateField.restrict_algEquiv hUC
-  let eT : T ≃ₐ[K] B := IntermediateField.restrict_algEquiv hTC
-  letI : IsGalois K U := inferInstance
-  letI : IsGalois K T :=
+  let eU : U ≃ₐ[K] A := IntermediateField.restrictAlgEquiv hUC
+  let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
+  let : IsGalois K U := inferInstance
+  let : IsGalois K T :=
     standardLubinTateLevelField_isGalois
       (F := standardLocalField K) hπ n
-  letI : IsGalois K A := IsGalois.of_algEquiv eU
-  letI : IsGalois K B := IsGalois.of_algEquiv eT
+  let : IsGalois K A := IsGalois.of_algEquiv eU
+  let : IsGalois K B := IsGalois.of_algEquiv eT
   let φ :=
     arithmeticFrobeniusOfUnramifiedValuation K U
   let σA : Gal(A / K) := (eU.symm.trans φ).trans eU
@@ -979,7 +981,7 @@ theorem lubinTateUniformizerDiagonalFixedField_finrank
         (lubinTateUniformizerDiagonalFixedField K hπ n u) =
       Module.finrank K (standardLubinTateLevelField hπ n) := by
   let T := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K T :=
+  let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
   let σT : Gal(T / K) :=
     (standardLubinTateUnitParameterEquivGal
@@ -992,12 +994,12 @@ theorem lubinTateUniformizerDiagonalFixedField_finrank
   let C := U ⊔ T
   let σ := lubinTateUniformizerDiagonalAutomorphism K hπ n u
   let E := lubinTateUniformizerDiagonalFixedField K hπ n u
-  letI : FiniteDimensional K C :=
+  let : FiniteDimensional K C :=
     lubinTateUniformizerDiagonalCompositumField_finiteDimensional
       K hπ n u
-  letI : FiniteDimensional E C :=
+  let : FiniteDimensional E C :=
     FiniteDimensional.right K E C
-  letI : Module.Free E C := Module.Free.of_divisionRing E C
+  let : Module.Free E C := Module.Free.of_divisionRing E C
   have hEC : Module.finrank E C = d := by
     change Module.finrank
       (IntermediateField.fixedField (Subgroup.zpowers σ)) C = d

@@ -1,5 +1,7 @@
-import AlgebraicNumberTheory.Completion.ExtensionIndex
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
 import Mathlib.Analysis.SpecialFunctions.Pow.Continuity
+
+set_option autoImplicit false
 
 /-!
 # Comparing finite-place completion models

@@ -1,4 +1,6 @@
-import AbstractClassFieldTheory.Reciprocity.Construction.Universal
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.Universal
+
+set_option autoImplicit false
 
 universe u
 

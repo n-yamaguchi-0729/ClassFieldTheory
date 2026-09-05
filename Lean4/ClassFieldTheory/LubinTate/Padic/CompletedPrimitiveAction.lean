@@ -1,7 +1,9 @@
-import LubinTate.FiniteLevel.LevelAutomorphisms
-import LubinTate.Padic.CompletedPrimitiveIrreducible
-import LubinTate.Padic.MultiplicativeEvaluation
+import ClassFieldTheory.LubinTate.FiniteLevel.LevelAutomorphisms
+import ClassFieldTheory.LubinTate.Padic.CompletedPrimitiveIrreducible
+import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.Core
 import Mathlib.SetTheory.Cardinal.Finite
+
+set_option autoImplicit false
 
 /-!
 # Primitive unit action on a completed p-adic Lubin--Tate level
@@ -83,10 +85,13 @@ noncomputable def padicStandardLevelEmbedding
   exact
     (standardLubinTateLevelPowerBasis hπ n).lift
       (padicCompletedPrimitiveRoot p n) (by
-        rw [standardLubinTateLevelPowerBasis_minpoly]
-        exact
-          padicCompletedPrimitiveRoot_aeval_standardPrimitivePolynomial
-            p n)
+        exact (congrArg
+          (fun f : Polynomial ℚ_[p] =>
+            Polynomial.aeval (padicCompletedPrimitiveRoot p n) f)
+          (standardLubinTateLevelPowerBasis_minpoly
+            (F := padicLocalField p)
+            (π := padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n)).trans
+          (padicCompletedPrimitiveRoot_aeval_standardPrimitivePolynomial p n))
 
 /-- The standard-level embedding has the prescribed value on the canonical
 primitive generator. -/
@@ -120,9 +125,10 @@ theorem padicCompletedUnitParameterRoot_one
     padicCompletedUnitParameterRoot p n 1 =
       padicCompletedPrimitiveRoot p n := by
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
-  rw [padicCompletedUnitParameterRoot,
-    standardLubinTateUnitParameterLevelRoot_one,
-    padicStandardLevelEmbedding_apply_gen]
+  exact (congrArg (padicStandardLevelEmbedding p n)
+    (standardLubinTateUnitParameterLevelRoot_one (padicLocalField p)
+      (π := padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n)).trans
+    (padicStandardLevelEmbedding_apply_gen p n)
 
 /-- Distinct finite unit parameters give distinct roots in the completed
 level. -/
@@ -150,8 +156,13 @@ theorem padicCompletedUnitParameterRoot_aeval_standardPrimitivePolynomial
   have hlevel :=
     standardLubinTateUnitParameterLevelRoot_aeval_minpoly
       (padicLocalField p) hπ n a
-  rw [standardLubinTateLevelPowerBasis_minpoly] at hlevel
-  have hmap := congrArg (padicStandardLevelEmbedding p n) hlevel
+  have hpoly := congrArg
+    (fun f : Polynomial ℚ_[p] => Polynomial.aeval
+      (standardLubinTateUnitParameterLevelRoot (padicLocalField p) hπ n a) f)
+    (standardLubinTateLevelPowerBasis_minpoly
+      (F := padicLocalField p)
+      (π := padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n)
+  have hmap := congrArg (padicStandardLevelEmbedding p n) (hpoly.symm.trans hlevel)
   simpa only [map_zero, Polynomial.aeval_algHom_apply,
     padicCompletedUnitParameterRoot] using hmap
 
@@ -492,8 +503,10 @@ theorem padicStandardLevelUnitParameterPowerBasis_gen
         (padicLocalField p) hπ n a := by
   let hπ := padicMultiplicativeLubinTateSeries_isUniformizer p
   simp only [padicStandardLevelUnitParameterPowerBasis,
-    PowerBasis.map_gen,
-    standardLubinTateUnitParameterAlgEquiv_apply_gen]
+    PowerBasis.map_gen]
+  exact standardLubinTateUnitParameterAlgEquiv_apply_gen
+    (padicLocalField p)
+    (π := padicIntEquivValuationSubring p (p : ℤ_[p])) hπ n a
 
 private theorem padicPolynomialAeval_mem_completedUnramifiedAdjoin
     (p : ℕ) [Fact p.Prime] (n : ℕ)

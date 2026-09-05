@@ -1,7 +1,9 @@
-import GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
-import GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
-import GlobalClassFieldTheory.Cohomology.CofinitelySplitFiniteExtension
-import AlgebraicNumberTheory.Idele.Norm
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.CofinitelySplitFiniteExtension
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.Norm
+
+set_option autoImplicit false
 
 /-!
 # The preliminary global Artin homomorphism
@@ -184,11 +186,11 @@ theorem globalArtinMonoidHom_norm_eq_place_products
             (W.adicCompletion M)
             (IdeleGroup.finiteComponent W a)) := by
   classical
-  letI : ∀ W : InfinitePlace M,
+  let : ∀ W : InfinitePlace M,
       W.1.LiesOver
         (infinitePlaceBelow (K := K) W).1 :=
     fun _ => ⟨rfl⟩
-  letI : ∀ W : HeightOneSpectrum (𝓞 M),
+  let : ∀ W : HeightOneSpectrum (𝓞 M),
       Algebra
         ((finitePlaceBelow
           (K := K) W).adicCompletion K)
@@ -461,11 +463,11 @@ theorem globalArtinMonoidHom_surjective :
   let H : Subgroup (L ≃ₐ[K] L) :=
     (globalArtinMonoidHom
       (K := K) (L := L)).range
-  letI : H.Normal :=
+  let : H.Normal :=
     H.normal_of_isMulCommutative
   let E : IntermediateField K L :=
     IntermediateField.fixedField H
-  letI : IsGalois K E := by
+  let : IsGalois K E := by
     dsimp only [E]
     infer_instance
   have hsplit :

@@ -1,8 +1,10 @@
-import LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import LubinTate.FiniteLevel.LocalUpperRamification
-import LocalClassFieldTheory.LubinTateApplication.StandardNormSubgroupExact
-import RamificationTheory.Filtration
-import RamificationTheory.GaloisValuation.IntermediateFieldRestriction
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+import ClassFieldTheory.LubinTate.FiniteLevel.LocalUpperRamification
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormSubgroupExact
+import ValuedFieldTheory.Ramification.Filtration
+import ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
+
+set_option autoImplicit false
 
 /-!
 # Filtered Artin comparison for standard Lubin--Tate levels
@@ -85,13 +87,13 @@ theorem standardLubinTateNormSubgroup_map_artin_eq_restrictKer
   let F := standardLocalField K
   let E := standardLubinTateLevelField hπ m
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     standardLubinTateLevelField_finiteDimensional hπ m
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     standardLubinTateLevelField_isAbelianGalois F hπ m
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   let hEL : E ≤ L := standardLubinTateLevelField_mono hπ hmn
   let φ := abelianLocalArtinMonoidHom K L
@@ -128,9 +130,9 @@ theorem standardLubinTateBaseUniformizerUnit_zpowers_le_artinKer
       (abelianLocalArtinMonoidHom K L).ker := by
   let F := standardLocalField K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   dsimp only
   rw [abelianLocalArtinMonoidHom_ker]
@@ -169,13 +171,13 @@ theorem
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let E := standardLubinTateLevelField hπ m
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K E :=
+  let : FiniteDimensional K E :=
     standardLubinTateLevelField_finiteDimensional hπ m
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K E :=
+  let : IsAbelianGalois K E :=
     standardLubinTateLevelField_isAbelianGalois F hπ m
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   let φ := abelianLocalArtinMonoidHom K L
   let Z := Subgroup.zpowers (standardLubinTateBaseUniformizerUnit hπ)
@@ -224,9 +226,9 @@ theorem
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let L := standardLubinTateLevelField hπ n
   let m := k - 1
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   have hmn : m ≤ n := by
     dsimp only [m]
@@ -259,9 +261,9 @@ theorem
   let F := standardLocalField K
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
   have hcard :
       Nat.card
@@ -298,9 +300,9 @@ theorem
   let F := standardLocalField K
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   exact
     (standardLubinTateCanonicalArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
@@ -403,9 +405,9 @@ theorem standardLubinTateLocalUpperRamificationGroup_zero_eq_top
     localUpperRamificationGroup K L 0 = ⊤ := by
   let F := standardLocalField K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
   calc
     localUpperRamificationGroup K L 0 =
@@ -431,9 +433,9 @@ theorem
   let F := standardLocalField K
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   let varpi : Kˣ := standardLubinTateBaseUniformizerUnit hπ
   let pi : Kˣ := varpi⁻¹
@@ -486,9 +488,9 @@ theorem
   let F := standardLocalField K
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   calc
     artinPrincipalUnitStepGroup K L 0 =
@@ -516,9 +518,9 @@ theorem
   let F := standardLocalField K
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   unfold artinPrincipalUnitStepGroup natCeilStepFiltration
   apply le_antisymm
@@ -546,9 +548,9 @@ theorem
   let F := standardLocalField K
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let L := standardLubinTateLevelField hπ n
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsGalois K L :=
+  let : IsGalois K L :=
     standardLubinTateLevelField_isGalois (F := F) hπ n
   have ht : (((n + 1 : ℕ) : ℝ)) ≤ t := by
     have hsucc : n + 1 + 1 ≤ ⌈t⌉₊ := by
@@ -582,9 +584,9 @@ theorem
   let hπ := standardLocalFieldUniformizer_isUniformizer K
   let L := standardLubinTateLevelField hπ n
   let k : ℕ := ⌈t⌉₊
-  letI : FiniteDimensional K L :=
+  let : FiniteDimensional K L :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  letI : IsAbelianGalois K L :=
+  let : IsAbelianGalois K L :=
     standardLubinTateLevelField_isAbelianGalois F hπ n
   by_cases hkzero : k = 0
   · have hceilzero : ⌈t⌉₊ = 0 := by
