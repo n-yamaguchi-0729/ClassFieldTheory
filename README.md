@@ -62,6 +62,8 @@ example (L : Type) [Field L] [NumberField L] [IsAbelianGalois ℚ L] :
 commutative automorphism group. See the
 [theorem source](Lean4/ClassFieldTheory/KroneckerWeber/Core.lean).
 
+Palomar registration: [The global Kronecker–Weber theorem in Lean 4](https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-05-000006&version=1).
+
 ## Verification
 
 The [Lean workflow](.github/workflows/lean.yml) builds with warnings as errors,
