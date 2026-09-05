@@ -6,7 +6,7 @@
 A Lean 4 formalization of local class field theory and global class field theory
 for **number fields**. Required valuation and Galois cohomology support modules
 are bundled. Documentation and the library catalog:
-[YamaLeanLib](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
+[Yamaguchi Lean 4 Library](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
 
 ## Main results
 

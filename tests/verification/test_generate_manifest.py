@@ -121,16 +121,16 @@ globs = ["Aux.+"]
         self.put("src/Aux/Core.lean", "import Challenge.Bad\n")
         self.assertIn("unresolved-local-import", self.kinds())
 
-    def test_submission_exclusion_is_scoped_and_not_an_import_escape(self):
-        self.config["excludedPaths"] = ["submissions/kronecker-weber"]
-        self.put("submissions/kronecker-weber/Challenge.lean", "sorry\n")
+    def test_path_exclusion_is_scoped_and_not_an_import_escape(self):
+        self.config["excludedPaths"] = ["excluded-fixtures/private"]
+        self.put("excluded-fixtures/private/PrivateFixture.lean", "sorry\n")
         self.assertTrue(self.run_gate()[1]["staticPassed"])
-        self.put("submissions/another-package/Unowned.lean", "sorry\n")
+        self.put("excluded-fixtures/maintained/Unowned.lean", "sorry\n")
         errors = self.run_gate()[1]["errors"]
         self.assertTrue(any(e["kind"] == "source-mapping" and
-                            e["path"] == "submissions/another-package/Unowned.lean" for e in errors))
-        self.assertFalse(any(e.get("path", "").startswith("submissions/kronecker-weber/") for e in errors))
-        self.put("src/Aux/Core.lean", "import Challenge\n")
+                            e["path"] == "excluded-fixtures/maintained/Unowned.lean" for e in errors))
+        self.assertFalse(any(e.get("path", "").startswith("excluded-fixtures/private/") for e in errors))
+        self.put("src/Aux/Core.lean", "import PrivateFixture\n")
         self.assertIn("unresolved-local-import", self.kinds())
 
     def test_unowned_physical_source_fails(self):

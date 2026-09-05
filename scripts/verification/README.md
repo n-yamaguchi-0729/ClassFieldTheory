@@ -1,6 +1,6 @@
 # Verification
 
-The Lean workflow generates a manifest from every maintained physical Lean source and checks reachability, unique module names, the Lean 4.33.0 pin and the exact mathlib revision. The exclusions are .git, .lake, scripts/verification, tests, and the independent draft package submissions/kronecker-weber. Other submission folders are not excluded. The draft Challenge placeholder is outside the production proof contract; it is not reported as a verified theorem, and production imports cannot use that exclusion to bypass module coverage. Production files must use global autoImplicit false. Proof placeholders, nonstandard axioms, native_decide, unsafe/partial source declarations, nolint, and other source-level option overrides fail the static policy. Static scans do not establish proof safety.
+The Lean workflow generates a manifest from every maintained physical Lean source and checks reachability, unique module names, the Lean 4.33.0 pin and the exact mathlib revision. Only .git, .lake, scripts/verification, and tests are excluded. Production files must use global autoImplicit false. Proof placeholders, nonstandard axioms, native_decide, unsafe/partial source declarations, nolint, and other source-level option overrides fail the static policy. Static scans do not establish proof safety.
 
 The mandatory serial checks are:
 
@@ -42,13 +42,3 @@ This publication setup has passed the small Python fixtures and static workflow 
 ## Main declaration presence
 
 tests/verification/main-declarations.json requires the designated finite/infinite local and global reciprocity constructions, theorem companions, and KroneckerWeber.exists_cyclotomicEmbedding. check_main_declarations.py checks their names, declaration kinds, owner, specified origins, and proof-policy results against the successful compiled inventory. This is a presence contract, not a comparison of theorem statements. No additional production theorem wrapper is introduced.
-
-## Kronecker–Weber candidate check
-
-After the parent verification succeeds, verify_palomar.py validates the separate submissions/kronecker-weber candidate. It checks the fixed v0.4 JSON Schema and the fixed Palomar mechanical metadata profile, builds Challenge and Solution using the already built parent dependencies, and runs the exact comparator.json with NanoDa enabled. Challenge has an intentional statement hole; only the Solution build treats warnings as errors. The original theorem name, configuration, and metadata remain unchanged during the job.
-
-The reference [hosted workflow](https://github.com/PalomarRegistry/PalomarSubmission/blob/c605f23466450a52999fcfb3c6d68ed8febc56bf/.github/workflows/submission.yml) pins Comparator 575674928e239f5bc452aab72d1dd7b0f1326494 and landrun 811cfff51ceaf3d9843708aa6d22e9b84ccac8b4. Comparator uses its own Lean 4.34.0-rc1 toolchain; the submission and lean4export remain on 4.33.0. The existing pinned exporter checkout and NanoDa binary are reused. Go 1.24.0 builds landrun, and the Python schema dependencies are version/hash locked in palomar-requirements.txt.
-
-The [Comparator invocation](https://github.com/leanprover/comparator/blob/575674928e239f5bc452aab72d1dd7b0f1326494/README.md) runs from the nested project through lake env with explicit COMPARATOR_LANDRUN, COMPARATOR_LEAN4EXPORT, and COMPARATOR_NANODA paths. systemd applies RestrictAddressFamilies=~AF_UNIX, and the process runs as the CI user rather than root. Missing confinement is a failure; there is no unconfined fallback. Each required process exit and both kernel acceptance markers must succeed. Source/configuration hashes, tool revisions/binary hashes, generated nested manifest, logs, and failure receipts are preserved under the existing verification artifact.
-
-This is a local candidate check on a reviewed, prebuilt repository. The hosted Palomar service additionally protects a canonical Challenge and audits its dependency provenance. A successful local receipt does not claim hosted acceptance, submission, or registration. The full comparator candidate path has not yet been run locally; only Python fixtures and metadata validation have been exercised during preparation.

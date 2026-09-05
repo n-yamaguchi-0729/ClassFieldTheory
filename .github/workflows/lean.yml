@@ -69,15 +69,6 @@ jobs:
             --contract tests/verification/main-declarations.json \
             --verification "$RUNNER_TEMP/verification/checks" \
             --output "$RUNNER_TEMP/verification/main-declarations.json"
-      - name: Validate the Kronecker-Weber Palomar candidate without submitting it
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 -B scripts/verification/verify_palomar.py \
-            --package-root "$GITHUB_WORKSPACE" \
-            --verification "$RUNNER_TEMP/verification/checks" \
-            --tools "$RUNNER_TEMP/verification-tools" \
-            --output "$RUNNER_TEMP/verification/palomar-candidate"
       - name: Check whitespace
         run: git diff-tree --check --root -r HEAD
       - name: Preserve logs and receipts even when a check fails

@@ -34,8 +34,7 @@
   ],
   "excludedPaths": [
     "scripts/verification",
-    "tests",
-    "submissions/kronecker-weber"
+    "tests"
   ],
   "enforceSourcePolicy": true
 }
