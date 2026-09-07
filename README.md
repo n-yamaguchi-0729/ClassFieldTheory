@@ -15,6 +15,7 @@ are bundled. Documentation and the library catalog:
 - Ray and Hilbert class fields, conductor theory, norm limitation, and the principal ideal theorem.
 - Hasse–Arf and local and global Kronecker–Weber.
 - The Hilbert-symbol product formula, power-residue reciprocity, and Gauss quadratic reciprocity.
+- Completely split primes in number fields and bounds on their discriminants.
 
 The global theory concerns number fields; global function-field class field theory
 is outside this library's scope.

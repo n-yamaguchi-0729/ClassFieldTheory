@@ -71,6 +71,21 @@
       "name": "KroneckerWeber.exists_cyclotomicEmbedding",
       "kind": "theorem",
       "module": "ClassFieldTheory.KroneckerWeber.Core"
+    },
+    {
+      "name": "AlgebraicNumberTheory.PrimeSelection.exists_completelySplitPrime_modFour_one_not_mem",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.AlgebraicNumberTheory.NumberField.CompletelySplitPrimesModFour"
+    },
+    {
+      "name": "AlgebraicNumberTheory.exists_finiteGaloisIntermediateField_le_finrank_ge_of_infinite_aut",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.AlgebraicNumberTheory.Galois.UnboundedDegree"
+    },
+    {
+      "name": "AlgebraicNumberTheory.DiscriminantBounds.rootDiscr_le_of_natAbs_discr_le_pow",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.AlgebraicNumberTheory.NumberField.RootDiscriminantBound"
     }
   ]
 }
