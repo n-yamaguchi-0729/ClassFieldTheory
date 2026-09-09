@@ -148,9 +148,7 @@ source length, and starts one ordinary
 `LEAN_NUM_THREADS=1 lake build +<Module>:olean` process per module.
 `LEAN_NUM_THREADS=1` is applied only to execution builds: it limits Lake's Lean
 runtime job pool to one worker so that stale sibling dependencies cannot launch
-multiple memory-heavy Lean children concurrently.  The Lake 5.0 CLI bundled
-with Lean 4.32.1 has no `-j`/`--jobs` build option; the runtime environment
-variable is the supported limit.  The read-only
+multiple memory-heavy Lean children concurrently.  The read-only
 `lake --no-build` planner is unchanged.  The runner never deliberately rebuilds
 a green target, uses an exclusive lock, writes a separate timed log for each
 attempt, refreshes the trace-based green count after success, and stops at the
