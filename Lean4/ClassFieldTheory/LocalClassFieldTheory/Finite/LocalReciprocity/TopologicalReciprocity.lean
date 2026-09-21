@@ -88,13 +88,21 @@ private theorem integerUnitNormSubgroup_eq_localNormSubgroup_inf_baseUnits
       exact v_integerUnitsToFieldUnits K a
     have hnorm := v_normUnits_eq_residue_finrank_mul_of_isSeparable K L y
     change v K (Additive.ofMul (LocalFieldTheory.normUnits K L y)) =
-      (Module.finrank 𝓀[K] 𝓀[L] : Int) * v L (Additive.ofMul y) at hnorm
+      (@Module.finrank 𝓀[K] 𝓀[L] _ _
+        (IsLocalRing.ResidueField.instModule (R := 𝒪[K]) (S := 𝒪[L])) : Int) *
+        v L (Additive.ofMul y) at hnorm
     have hproduct :
-        (Module.finrank 𝓀[K] 𝓀[L] : Int) * v L (Additive.ofMul y) = 0 := by
+        (@Module.finrank 𝓀[K] 𝓀[L] _ _
+          (IsLocalRing.ResidueField.instModule (R := 𝒪[K]) (S := 𝒪[L])) : Int) *
+          v L (Additive.ofMul y) = 0 := by
       rw [← hnorm, hy]
       exact hxv
-    have hfinrank : (Module.finrank 𝓀[K] 𝓀[L] : Int) ≠ 0 := by
-      have hnat : Module.finrank 𝓀[K] 𝓀[L] ≠ 0 :=
+    have hfinrank :
+        (@Module.finrank 𝓀[K] 𝓀[L] _ _
+          (IsLocalRing.ResidueField.instModule (R := 𝒪[K]) (S := 𝒪[L])) : Int) ≠ 0 := by
+      have hnat :
+          @Module.finrank 𝓀[K] 𝓀[L] _ _
+            (IsLocalRing.ResidueField.instModule (R := 𝒪[K]) (S := 𝒪[L])) ≠ 0 :=
         Nat.ne_of_gt Module.finrank_pos
       exact_mod_cast hnat
     have hyv : v L (Additive.ofMul y) = 0 :=

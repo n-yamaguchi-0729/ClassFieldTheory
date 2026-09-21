@@ -1,4 +1,5 @@
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.EmbedsInRayClassFieldIffConductorLe
+import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 
 set_option autoImplicit false
 

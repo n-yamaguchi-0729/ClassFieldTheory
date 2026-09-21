@@ -155,29 +155,7 @@ noncomputable def localHenselianValuation
     exact hIntegralClosure
 
   rw [localResidueDatum_residueDegree_eq_residueFinrank K F]
-  rw [localBaseValuation_comp_normToBase_range_eq_residueFinrank K H]
-  congr 1
-  apply Nat.pow_right_injective
-    (Finite.one_lt_card : 2 ≤ Nat.card 𝓀[K])
-  calc
-    _ = Nat.card 𝓀[abstractFixedField K (SeparableClosure K) H] := by
-      symm
-      exact
-        @Module.natCard_eq_pow_finrank 𝓀[K]
-          𝓀[abstractFixedField K (SeparableClosure K) H]
-          _ _ _ _
-    _ = Nat.card
-        𝓀[abstractFixedField K (SeparableClosure K) F.field] := rfl
-    _ = _ := by
-      refine
-        @Module.natCard_eq_pow_finrank 𝓀[K]
-          𝓀[abstractFixedField K (SeparableClosure K) F.field]
-          _ _ ?_ ?_
-      refine
-        @Module.Finite.of_finite 𝓀[K]
-          𝓀[abstractFixedField K (SeparableClosure K) F.field]
-          _ _ ?_ ?_
-      infer_instance
+  exact localBaseValuation_comp_normToBase_range_eq_residueFinrank K H
 
 end
 end LocalClassFieldTheory

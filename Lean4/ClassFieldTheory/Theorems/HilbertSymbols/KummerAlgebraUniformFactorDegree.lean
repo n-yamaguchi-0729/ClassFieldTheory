@@ -1,3 +1,4 @@
+import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
 import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraUniformFieldFactors
 import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFinrank
 import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteEtale

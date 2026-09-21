@@ -1,5 +1,6 @@
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.ExistsAbelianConductor
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.IsAbelianConductorUnique
+import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 
 set_option autoImplicit false
 

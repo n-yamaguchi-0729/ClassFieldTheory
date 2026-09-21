@@ -2,7 +2,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNorm
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
-import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.FractionalIdealNormPrimeExponent
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 
 set_option autoImplicit false
@@ -69,7 +68,7 @@ private theorem fractionalIdealNorm_prime
         (W.asIdeal.inertiaDeg (𝓞 K) : ℤ) := by
   apply NumberFieldFractionalIdealGroup.ext_count
   intro v
-  rw [fractionalIdealNorm_primeExponent]
+  rw [fractionalIdealNorm_count]
   have hcount : NumberFieldFractionalIdealGroup.countVector
       (finitePrimeFractionalIdeal W) = Finsupp.single W 1 := by
     ext V

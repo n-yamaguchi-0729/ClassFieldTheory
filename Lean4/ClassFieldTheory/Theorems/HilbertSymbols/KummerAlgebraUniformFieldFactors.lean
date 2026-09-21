@@ -1,3 +1,4 @@
+import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
 import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraProductDecomposition
 import Mathlib.FieldTheory.KummerExtension
 import Mathlib.FieldTheory.SplittingField.Construction

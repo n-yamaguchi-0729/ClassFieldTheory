@@ -23,7 +23,7 @@ namespace ClassFieldTheory
 
 universe u
 
-private instance rayClassGroupCommGroup
+private local instance rayClassGroupCommGroup
     (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K) : CommGroup (RayClassGroup m) :=
   { (inferInstance : Group (RayClassGroup m)) with mul_comm := mul_comm' }

@@ -1,6 +1,4 @@
-import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNorm
-import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNormExponentMap
-import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealFactorization
+import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNorm
 
 set_option autoImplicit false
 
@@ -37,37 +35,6 @@ theorem fractionalIdealNorm_primeExponent
         if fractionalIdealNormPrimeBelow K L W = v then
           (W.asIdeal.inertiaDeg (𝓞 K) : ℤ) * n
         else 0 := by
-  classical
-  have hcount :
-      ((NumberFieldFractionalIdealGroup.factorizationEquiv
-        (K := L)).symm I).toAdd =
-        NumberFieldFractionalIdealGroup.countVector I := by
-    ext W
-    have h := NumberFieldFractionalIdealGroup.count_factorization
-      ((NumberFieldFractionalIdealGroup.factorizationEquiv
-        (K := L)).symm I) W
-    have hfac :=
-      (NumberFieldFractionalIdealGroup.factorizationEquiv
-        (K := L)).apply_symm_apply I
-    change NumberFieldFractionalIdealGroup.factorization
-      ((NumberFieldFractionalIdealGroup.factorizationEquiv
-        (K := L)).symm I) = I at hfac
-    rw [hfac] at h
-    exact h.symm.trans
-      (NumberFieldFractionalIdealGroup.countVector_apply I W).symm
-  change
-    FractionalIdeal.count K v
-        ((NumberFieldFractionalIdealGroup.factorization
-          ((fractionalIdealNormExponentMap K L).toMultiplicative
-            ((NumberFieldFractionalIdealGroup.factorizationEquiv
-              (K := L)).symm I)) :
-            NumberFieldFractionalIdealGroup K) :
-          FractionalIdeal (nonZeroDivisors (𝓞 K)) K) = _
-  rw [NumberFieldFractionalIdealGroup.count_factorization]
-  change fractionalIdealNormExponentMap K L
-    ((NumberFieldFractionalIdealGroup.factorizationEquiv
-      (K := L)).symm I).toAdd v = _
-  rw [hcount]
-  simp [fractionalIdealNormExponentMap, Finsupp.single_apply, eq_comm]
+  exact fractionalIdealNorm_count K L I v
 
 end ClassFieldTheory

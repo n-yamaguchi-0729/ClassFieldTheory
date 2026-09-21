@@ -39,9 +39,9 @@ theorem shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply
     (E : ClassFieldTheory.FiniteAbelianLocalExtension K) :
     (OrderDual.ofDual (shrinkFiniteAbelianFieldNormSubgroupOrderIso K E)).1 =
       E.normSubgroup := by
-  letI : Small.{0} K := nonarchimedeanLocalField_small K
-  letI : ValuativeRel (Shrink.{0} K) := shrinkLocalFieldValuativeRel K
-  letI : IsNonarchimedeanLocalField (Shrink.{0} K) :=
+  let : Small.{0} K := nonarchimedeanLocalField_small K
+  let : ValuativeRel (Shrink.{0} K) := shrinkLocalFieldValuativeRel K
+  let : IsNonarchimedeanLocalField (Shrink.{0} K) :=
     shrinkLocalField_isNonarchimedeanLocalField K
   let F := shrinkChosenFiniteAbelianField K E
   have hsmall := LocalClassFieldTheory.finiteAbelianFieldNormSubgroupOrderIso_apply

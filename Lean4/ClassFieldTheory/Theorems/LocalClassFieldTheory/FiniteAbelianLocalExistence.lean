@@ -1,3 +1,5 @@
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
 import ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalExistenceOrderIso
 
 set_option autoImplicit false

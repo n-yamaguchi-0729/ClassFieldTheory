@@ -199,8 +199,8 @@ private theorem ramificationIdx_mul_residue_finrank_eq_finrank_compatible
     [IsIntegralClosure 𝒪[L] 𝒪[K] L] :
     (𝓂[L] : Ideal 𝒪[L]).ramificationIdx 𝒪[K] *
         @Module.finrank 𝓀[K] 𝓀[L] _ _
-          (@Algebra.toModule 𝓀[K] 𝓀[L] _ _
-            IsLocalRing.ResidueField.algebraOfIsIntegral) =
+          (IsLocalRing.ResidueField.instModule
+            (R := 𝒪[K]) (S := 𝒪[L])) =
       Module.finrank K L := by
   have hdegree :=
     maximalIdeal_ramificationIdx_mul_residue_finrank_eq_finrank_of_isIntegralClosure
@@ -212,6 +212,20 @@ private theorem ramificationIdx_mul_residue_finrank_eq_finrank_compatible
   rw [← Ideal.ramificationIdx'_eq_ramificationIdx _ _ hp]
   rw [residueFieldModule_eq_algebraModule 𝒪[K] 𝒪[L]] at hdegree
   rw [residueFieldAlgebra_eq_of_isIntegral 𝒪[K] 𝒪[L]] at hdegree
+  have hmodule :
+      (IsLocalRing.ResidueField.instModule : Module 𝓀[K] 𝓀[L]) =
+        (IsLocalRing.ResidueField.algebraOfIsIntegral :
+          Algebra 𝓀[K] 𝓀[L]).toModule := by
+    calc
+      (IsLocalRing.ResidueField.instModule : Module 𝓀[K] 𝓀[L]) =
+          (IsLocalRing.ResidueField.instAlgebra :
+            Algebra 𝓀[K] 𝓀[L]).toModule :=
+        residueFieldModule_eq_algebraModule 𝒪[K] 𝒪[L]
+      _ = _ := congrArg
+        (fun alg : Algebra 𝓀[K] 𝓀[L] =>
+          @Algebra.toModule 𝓀[K] 𝓀[L] _ _ alg)
+        (residueFieldAlgebra_eq_of_isIntegral 𝒪[K] 𝒪[L])
+  rw [← hmodule] at hdegree
   exact hdegree
 
 universe u
@@ -391,10 +405,14 @@ theorem abstractFixedField_isUnramifiedValuedExtension
   let : Module.Finite 𝒪[K] 𝒪[E] :=
     localCompleteDVF_integerRing_moduleFinite K E
 
+  let f : ℕ :=
+    @Module.finrank 𝓀[K] 𝓀[E] _ _
+      (IsLocalRing.ResidueField.instModule
+        (R := 𝒪[K]) (S := 𝒪[E]))
   have hresidueDegree :
-      Module.finrank 𝓀[K] 𝓀[E] = Module.finrank K E := by
+      f = Module.finrank K E := by
     calc
-      Module.finrank 𝓀[K] 𝓀[E] =
+      f =
           (H.residueDegree (localResidueDatum K) : ℕ) :=
         (localResidueDatum_residueDegree_eq_residueFinrank K H).symm
       _ =
@@ -411,20 +429,21 @@ theorem abstractFixedField_isUnramifiedValuedExtension
 
   have hdegree' :
       (𝓂[E] : Ideal 𝒪[E]).ramificationIdx 𝒪[K] *
-          Module.finrank 𝓀[K] 𝓀[E] =
+          f =
         Module.finrank K E :=
     ramificationIdx_mul_residue_finrank_eq_finrank_compatible K E
-  have hpos : 0 < Module.finrank 𝓀[K] 𝓀[E] :=
-    Module.finrank_pos
+  have hpos : 0 < f := by
+    rw [hresidueDegree]
+    exact Module.finrank_pos
   apply
     LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension.mk
   apply Nat.eq_of_mul_eq_mul_right hpos
   calc
     (𝓂[E] : Ideal 𝒪[E]).ramificationIdx 𝒪[K] *
-        Module.finrank 𝓀[K] 𝓀[E] =
+        f =
       Module.finrank K E := hdegree'
-    _ = Module.finrank 𝓀[K] 𝓀[E] := hresidueDegree.symm
-    _ = 1 * Module.finrank 𝓀[K] 𝓀[E] := (one_mul _).symm
+    _ = f := hresidueDegree.symm
+    _ = 1 * f := (one_mul _).symm
 
 /-- Every nonnegative upper ramification group of an abstractly unramified
 normal finite fixed field is trivial. -/

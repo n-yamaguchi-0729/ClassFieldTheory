@@ -24,7 +24,7 @@ noncomputable section
 
 namespace ClassFieldTheory
 
-private instance rayClassGroupCommGroup
+private local instance rayClassGroupCommGroup
     {K : Type} [Field K] [NumberField K]
     (m : RayClassModulus K) : CommGroup (RayClassGroup m) :=
   { (inferInstance : Group (RayClassGroup m)) with mul_comm := mul_comm' }

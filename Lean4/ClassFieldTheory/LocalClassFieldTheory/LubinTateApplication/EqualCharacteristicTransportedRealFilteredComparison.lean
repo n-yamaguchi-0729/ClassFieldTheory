@@ -115,6 +115,34 @@ theorem
     _ = _ := congrArg (Subgroup.map q.toMonoidHom) hSource
     _ = ⊤ := Subgroup.map_top_of_surjective q.toMonoidHom q.surjective
 
+private theorem principalUnitsImage_zero_eq_top_of_uniformizer_zpowers_le_ker
+    {G : Type} [Group G]
+    (φ : Kˣ →* G)
+    (hφ : Function.Surjective φ)
+    (ϖ : Kˣ)
+    (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
+    (hϖKer :
+      Subgroup.zpowers ϖ ≤
+        φ.ker) :
+    (LocalFieldTheory.fieldPrincipalUnits K 0).map
+        φ = ⊤ := by
+  apply top_unique
+  intro σ _
+  obtain ⟨x, hx⟩ := hφ σ
+  obtain ⟨u, hdecomp⟩ :=
+    exists_integerUnit_mul_uniformizer_zpow K ϖ hϖ x
+  have hpowKer :
+      ϖ ^ valuationMap K (Additive.ofMul x) ∈
+        φ.ker :=
+    hϖKer (Subgroup.zpow_mem_zpowers ϖ _)
+  have hpow :
+      φ (ϖ ^ valuationMap K (Additive.ofMul x)) = 1 :=
+    MonoidHom.mem_ker.mp hpowKer
+  refine ⟨integerUnitsToFieldUnits K u, ?_, ?_⟩
+  · unfold LocalFieldTheory.fieldPrincipalUnits
+    exact ⟨u, by simp, rfl⟩
+  · rw [← hx, ← hdecomp, map_mul, hpow, mul_one]
+
 /-- The target-field Artin image of the valuation-ring unit group `U^0` is
 the full Galois group of a transported Lubin--Tate level. -/
 theorem
@@ -153,10 +181,14 @@ theorem
   let : IsAbelianGalois K L :=
     equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
       K p ϖ hϖ n
-  have hϖKer :
+  let φ : Kˣ →* Gal(L / K) :=
+    abelianLocalArtinMonoidHom K L
+  have hφ : Function.Surjective φ := by
+    change Function.Surjective (abelianLocalArtinMonoidHom K L)
+    exact abelianLocalArtinMonoidHom_surjective K L
+  have hNorm :
       Subgroup.zpowers ϖ ≤
-        (abelianLocalArtinMonoidHom K L).ker := by
-    rw [abelianLocalArtinMonoidHom_ker]
+        localNormSubgroup K L := by
     change
       Subgroup.zpowers ϖ ≤
         equalCharacteristicTransportedLubinTateNormSubgroup
@@ -164,24 +196,17 @@ theorem
     rw [
       equalCharacteristicTransportedLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup]
     simp [LocalFieldTheory.uniformizerPrincipalSubgroup]
-  apply top_unique
-  intro σ _
-  obtain ⟨x, hx⟩ :=
-    abelianLocalArtinMonoidHom_surjective K L σ
-  obtain ⟨u, hdecomp⟩ :=
-    exists_integerUnit_mul_uniformizer_zpow K ϖ hϖ x
-  have hpowKer :
-      ϖ ^ valuationMap K (Additive.ofMul x) ∈
-        (abelianLocalArtinMonoidHom K L).ker :=
-    hϖKer (Subgroup.zpow_mem_zpowers ϖ _)
-  have hpow :
-      abelianLocalArtinMonoidHom K L
-          (ϖ ^ valuationMap K (Additive.ofMul x)) = 1 :=
-    MonoidHom.mem_ker.mp hpowKer
-  refine ⟨integerUnitsToFieldUnits K u, ?_, ?_⟩
-  · unfold LocalFieldTheory.fieldPrincipalUnits
-    exact ⟨u, by simp, rfl⟩
-  · rw [← hx, ← hdecomp, map_mul, hpow, mul_one]
+  have hφKer : φ.ker = localNormSubgroup K L := by
+    change
+      (abelianLocalArtinMonoidHom K L).ker =
+        localNormSubgroup K L
+    exact abelianLocalArtinMonoidHom_ker K L
+  have hϖKer : Subgroup.zpowers ϖ ≤ φ.ker := by
+    rw [hφKer]
+    exact hNorm
+  exact
+    principalUnitsImage_zero_eq_top_of_uniformizer_zpowers_le_ker
+      K φ hφ ϖ hϖ hϖKer
 
 /-- The zeroth target-field Artin principal-unit group is full. -/
 theorem

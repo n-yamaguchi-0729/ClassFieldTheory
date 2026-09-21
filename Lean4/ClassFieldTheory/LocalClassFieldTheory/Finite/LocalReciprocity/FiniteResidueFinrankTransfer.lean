@@ -134,8 +134,11 @@ theorem localResidueDatum_residueDegree_eq_residueFinrank
       (ValuativeRel.valuation
         (abstractFixedField K (SeparableClosure K) H.field))] :
     (H.residueDegree (localResidueDatum K) : ℕ) =
-      Module.finrank 𝓀[K]
-        𝓀[abstractFixedField K (SeparableClosure K) H.field] := by
+      @Module.finrank 𝓀[K]
+        𝓀[abstractFixedField K (SeparableClosure K) H.field] _ _
+          (IsLocalRing.ResidueField.instModule
+            (R := 𝒪[K])
+            (S := 𝒪[abstractFixedField K (SeparableClosure K) H.field])) := by
   let E := abstractFixedField K (SeparableClosure K) H.field
   let A := localSeparableValuationSubring K
   let C := (ValuativeRel.valuation E).valuationSubring
@@ -149,7 +152,10 @@ theorem localResidueDatum_residueDegree_eq_residueFinrank
   let F := localAbstractFixedResidueIntermediateField K H.field
   let : Algebra kK kE := by
     change Algebra 𝓀[K] 𝓀[E]
-    infer_instance
+    exact IsLocalRing.ResidueField.instAlgebra
+  let : Module kK kE := by
+    change Module 𝓀[K] 𝓀[E]
+    exact IsLocalRing.ResidueField.instModule
   change (H.residueDegree (localResidueDatum K) : ℕ) =
     Module.finrank kK kE
 
