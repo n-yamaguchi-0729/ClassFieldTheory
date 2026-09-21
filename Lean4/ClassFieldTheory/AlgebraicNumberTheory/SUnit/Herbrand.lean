@@ -1,6 +1,7 @@
 import ClassFieldTheory.AlgebraicNumberTheory.SUnit.GaloisAction
 import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlace
-import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients
+import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients.Basic
+import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients.Norm
 
 set_option autoImplicit false
 

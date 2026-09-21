@@ -1,0 +1,31 @@
+import ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Field.Rat
+import Mathlib.Data.Finset.Interval
+import Mathlib.SetTheory.Cardinal.Finite
+
+set_option autoImplicit false
+
+/-!
+# The Herbrand function at integral lower indices
+-/
+
+open scoped BigOperators
+
+noncomputable section
+
+namespace ClassFieldTheory
+
+variable (K : Type*) {L : Type*} [Field K] [Field L] [Algebra K L]
+
+/-- The Herbrand value at a nonnegative integral lower index:
+`φ(n) = (1 / |G₀|) · ∑_{i=1}^{n} |Gᵢ|`.
+
+Its ramification-theoretic interpretation requires the lower groups to be
+finite.  The definition alone does not impose that hypothesis. -/
+def herbrandFunctionAtLowerIndex (A : ValuationSubring L) (n : ℕ) : ℚ :=
+  (∑ i ∈ Finset.Icc 1 n,
+      (Nat.card (lowerRamificationGroup K A i) : ℚ)) /
+    (Nat.card (lowerRamificationGroup K A 0) : ℚ)
+
+end ClassFieldTheory

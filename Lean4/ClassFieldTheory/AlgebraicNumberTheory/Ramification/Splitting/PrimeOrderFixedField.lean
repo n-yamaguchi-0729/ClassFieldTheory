@@ -190,6 +190,7 @@ variable {L : Type}
     [FiniteDimensional K L] [IsGalois K L]
     [IsGalois M L]
 
+omit [NumberField L] [FiniteDimensional K L] in
 /-- Complete splitting ascends from a base finite place to every
 finite place of an intermediate field lying above it.
 

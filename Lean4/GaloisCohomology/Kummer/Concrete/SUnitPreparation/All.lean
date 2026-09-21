@@ -1,3 +1,0 @@
-import GaloisCohomology.Kummer.Concrete.SUnitPreparation.PrimePowerKernelCoordinates
-
-set_option autoImplicit false

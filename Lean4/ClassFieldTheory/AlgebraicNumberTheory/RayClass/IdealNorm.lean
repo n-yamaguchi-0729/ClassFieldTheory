@@ -1,6 +1,7 @@
 import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNorm
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
@@ -128,7 +129,7 @@ theorem idealNormLiftedModulusExponent_pos
       _root_.finitePlaceBelow (K := K) W ∈ m.finitePart.support) :
     0 < idealNormLiftedModulusExponent
       (K := K) (L := L) m W := by
-  rw [idealNormLiftedModulusExponent, dif_pos hW]
+  rw [idealNormLiftedModulusExponent, dite_eq_left hW]
   exact Nat.zero_lt_succ _
 
 omit [FiniteDimensional K L] in
@@ -152,7 +153,7 @@ theorem localHigherUnitGroup_idealNormLiftedModulusExponent_le
   let v := _root_.finitePlaceBelow (K := K) W
   let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
     (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
-  rw [idealNormLiftedModulusExponent, dif_pos hW]
+  rw [idealNormLiftedModulusExponent, dite_eq_left hW]
   exact
     (localHigherUnitGroup_antitone W (Nat.le_succ _)).trans
       (Nat.find_spec
@@ -181,7 +182,7 @@ theorem idealNormLiftedModulusExponent_min
   let v := _root_.finitePlaceBelow (K := K) W
   let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
     (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
-  rw [idealNormLiftedModulusExponent, dif_pos hW]
+  rw [idealNormLiftedModulusExponent, dite_eq_left hW]
   exact Nat.add_le_add_right
     (Nat.find_min'
       (exists_localHigherUnitGroup_le_norm_preimage
@@ -196,7 +197,7 @@ theorem idealNormLiftedModulusExponent_eq_zero_of_not_mem
     (hW :
       _root_.finitePlaceBelow (K := K) W ∉ m.finitePart.support) :
     idealNormLiftedModulusExponent (K := K) (L := L) m W = 0 := by
-  rw [idealNormLiftedModulusExponent, dif_neg hW]
+  rw [idealNormLiftedModulusExponent, dite_eq_right hW]
 
 omit [FiniteDimensional K L] in
 /-- The finite set of primes upstairs lying over the support of `m`. -/
@@ -228,7 +229,7 @@ noncomputable def idealNormLiftedModulus
         rw [Set.Finite.mem_toFinset]
         by_contra hbelow
         apply hW
-        rw [idealNormLiftedModulusExponent, dif_neg]
+        rw [idealNormLiftedModulusExponent, dite_eq_right]
         exact hbelow)
 
 omit [FiniteDimensional K L] in
@@ -252,7 +253,7 @@ theorem mem_idealNormLiftedModulus_support_iff
   rw [Finsupp.mem_support_iff, idealNormLiftedModulus_apply]
   by_cases hW :
       _root_.finitePlaceBelow (K := K) W ∈ m.finitePart.support
-  · rw [idealNormLiftedModulusExponent, dif_pos hW]
+  · rw [idealNormLiftedModulusExponent, dite_eq_left hW]
     exact ⟨fun _ => hW, fun _ => Nat.succ_ne_zero _⟩
   · simp [idealNormLiftedModulusExponent, hW]
 
@@ -393,6 +394,49 @@ theorem count_fractionalIdealNorm
       _
   rw [factorizationEquiv_symm_toAdd]
 
+omit [FiniteDimensional K L] in
+private theorem fractionalIdealNormPrimeBelow_eq_finitePlaceBelow
+    (W : HeightOneSpectrum (𝓞 L)) :
+    ClassFieldTheory.fractionalIdealNormPrimeBelow K L W =
+      _root_.finitePlaceBelow (K := K) W := by
+  ext
+  rfl
+
+private theorem idealNormExponentMap_eq_public :
+    idealNormExponentMap (K := K) (L := L) =
+      ClassFieldTheory.fractionalIdealNormExponentMap K L := by
+  unfold idealNormExponentMap ClassFieldTheory.fractionalIdealNormExponentMap
+  simp only [fractionalIdealNormPrimeBelow_eq_finitePlaceBelow]
+
+private theorem factorizationEquiv_eq_public
+    (F : Type) [Field F] [NumberField F] :
+    FractionalIdealGroup.factorizationEquiv (K := F) =
+      ClassFieldTheory.NumberFieldFractionalIdealGroup.factorizationEquiv
+        (K := F) := by
+  apply MulEquiv.ext
+  intro exps
+  apply FractionalIdealGroup.ext_count
+  intro v
+  change FractionalIdeal.count F v
+      ((FractionalIdealGroup.factorization exps : FractionalIdealGroup F) :
+        FractionalIdeal (nonZeroDivisors (𝓞 F)) F) =
+    FractionalIdeal.count F v
+      ((ClassFieldTheory.NumberFieldFractionalIdealGroup.factorization exps :
+        FractionalIdealGroup F) :
+        FractionalIdeal (nonZeroDivisors (𝓞 F)) F)
+  rw [FractionalIdealGroup.count_factorization,
+    ClassFieldTheory.NumberFieldFractionalIdealGroup.count_factorization]
+
+/-- The Mathlib-level public fractional-ideal norm agrees with the norm used
+by the idelic and ray-class constructions. -/
+theorem fractionalIdealNorm_eq_public :
+    fractionalIdealNorm (K := K) (L := L) =
+      ClassFieldTheory.fractionalIdealNorm K L := by
+  unfold fractionalIdealNorm ClassFieldTheory.fractionalIdealNorm
+  rw [factorizationEquiv_eq_public K,
+    factorizationEquiv_eq_public L,
+    idealNormExponentMap_eq_public]
+
 /-- The exponent of the fractional ideal attached to an idèle is its
 finite local order. -/
 @[simp]
@@ -480,7 +524,7 @@ theorem fractionalIdealNorm_mem_primeToModulusIdeals
   intro W hW
   by_cases hbelow :
       _root_.finitePlaceBelow (K := K) W = v
-  · rw [if_pos hbelow]
+  · rw [ite_eq_left hbelow]
     have hLifted :
         W ∈ (idealNormLiftedModulus
           (K := K) (L := L) m).finitePart.support := by
@@ -488,7 +532,7 @@ theorem fractionalIdealNorm_mem_primeToModulusIdeals
       exact hv
     rw [FractionalIdealGroup.countVector_apply, I.property W hLifted]
     simp
-  · rw [if_neg hbelow]
+  · rw [ite_eq_right hbelow]
 
 /-- The ideal norm restricted to fractional ideals prime to the
 corresponding moduli. -/

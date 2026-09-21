@@ -99,7 +99,7 @@ theorem kroneckerWeberCompositum_finrank_le_totient :
         (L := L) p hp
     have hchosen :
         (chosen p).1 = globalPadicPrimeIdeal p.1 M wM := by
-      simp only [chosen, dif_pos hp]
+      simp only [chosen, dite_eq_left hp]
       congr 1
     rw [hchosen]
     have hbridge :=

@@ -45,9 +45,8 @@ theorem standardLubinTateLevel_spectral_inertiaDeg_eq_one
         (LocalFieldTheory.localCompleteDVF K).valuation.HasExtension
           (LocalFieldTheory.localCompleteDVF T).valuation :=
       localCompleteDVFValuation_hasExtension K T
-    Ideal.inertiaDeg'
-      (LocalFieldTheory.localCompleteDVF K).maximalIdeal
-      (LocalFieldTheory.localCompleteDVF T).maximalIdeal = 1 := by
+    (LocalFieldTheory.localCompleteDVF T).maximalIdeal.inertiaDeg
+      (LocalFieldTheory.localCompleteDVF K).valuationSubring = 1 := by
   simpa only using lubinTateLevel_spectral_inertiaDeg_eq_one K
     (standardLocalFieldUniformizer_isUniformizer K) n
 

@@ -1,0 +1,30 @@
+import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
+
+set_option autoImplicit false
+
+/-!
+# The ordinary class-group modulus
+-/
+
+namespace ClassFieldTheory
+
+universe u
+
+/-- The modulus with no finite exponent and no positivity condition.  Its ray
+class group is the ordinary ideal class group. -/
+def ordinaryRayClassModulus
+    (K : Type u) [Field K] [NumberField K] : RayClassModulus K where
+  finitePart := 0
+  infinitePart := ∅
+
+/-- The ordinary class-group modulus is below every ray modulus. -/
+theorem ordinaryRayClassModulus_le
+    (K : Type u) [Field K] [NumberField K]
+    (m : RayClassModulus K) :
+    ordinaryRayClassModulus K ≤ m := by
+  constructor
+  · change ∀ v, 0 ≤ m.finitePart v
+    exact fun _ => Nat.zero_le _
+  · exact Finset.empty_subset _
+
+end ClassFieldTheory

@@ -1,6 +1,0 @@
-import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Core
-import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Defectless
-import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Degree
-import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
-
-set_option autoImplicit false

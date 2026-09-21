@@ -77,8 +77,7 @@ theorem scalarTensorConjugation_one
     scalarTensorConjugation
         (K := K) (L := L) (A := A)
         (1 : L ≃ₐ[K] L) z = z := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a x => simp
   | add x y hx hy => simp [hx, hy]
 
@@ -93,8 +92,7 @@ theorem scalarTensorConjugation_mul
         (K := K) (L := L) (A := A) σ
         (scalarTensorConjugation
           (K := K) (L := L) (A := A) τ z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a x => simp
   | add x y hx hy => simp [hx, hy]
 
@@ -160,8 +158,7 @@ theorem relativeAdeleInfiniteComponent_conjugation
         (A := w.Completion) σ
         (relativeAdeleInfiniteComponent
           (K := K) (L := L) w z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a x => rfl
   | add x y hx hy => simp [hx, hy]
 
@@ -179,8 +176,7 @@ theorem relativeAdeleFiniteComponent_conjugation
         (A := w.adicCompletion K) σ
         (relativeAdeleFiniteComponent
           (K := K) (L := L) w z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a x => rfl
   | add x y hx hy => simp [hx, hy]
 

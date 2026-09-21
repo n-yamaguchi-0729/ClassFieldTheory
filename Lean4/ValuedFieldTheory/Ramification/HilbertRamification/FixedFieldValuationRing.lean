@@ -258,7 +258,7 @@ theorem fixedFieldValuationSubringDVF_isDiscreteValuationRing
     intro hB
     exact IsDiscreteValuationRing.not_isField base.valuationSubring
       (isField_of_isIntegral_of_isField hinj hB)
-  exact ((IsDiscreteValuationRing.TFAE B hnotField).out 1 0).mp
+  exact ((IsDiscreteValuationRing.TFAE B hnotField).out 2 1).mp
     (inferInstance : ValuationRing B)
 
 /-- The quotient automorphism on the fixed field commutes with inclusion into

@@ -105,7 +105,6 @@ theorem infinitePlaceCompletionMap_self_apply
       congrArg
         (fun z : WithAbs W.1 => (z : W.Completion)) hy
 
-omit [NumberField K] [NumberField L] [FiniteDimensional K L] in
 /-- Completion maps at infinite places compose in a tower of number
 fields. -/
 theorem infinitePlaceCompletionMap_comp_apply

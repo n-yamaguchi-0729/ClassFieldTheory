@@ -137,7 +137,23 @@ theorem localHenselianValuation_valuationAt_abstractFixedField
       (IsNonarchimedeanLocalField.valuationMap F (Additive.ofMul x))
   have hdegree :
       (H.residueDegree (localResidueDatum K) : ℕ) = f := by
-    exact localResidueDatum_residueDegree_eq_residueFinrank K H
+    have hdegreeRaw :=
+      localResidueDatum_residueDegree_eq_residueFinrank K H
+    exact hdegreeRaw.trans (by
+        apply Nat.pow_right_injective
+          (Finite.one_lt_card : 2 ≤ Nat.card 𝓀[K])
+        calc
+          _ = Nat.card 𝓀[F] := by
+            symm
+            refine @Module.natCard_eq_pow_finrank 𝓀[K] 𝓀[F] _ _ ?_ ?_
+            refine @Module.Finite.of_finite 𝓀[K] 𝓀[F] _ _ ?_ ?_
+            infer_instance
+          _ = Nat.card 𝓀[F] := rfl
+          _ = _ := by
+            dsimp only [f]
+            refine @Module.natCard_eq_pow_finrank 𝓀[K] 𝓀[F] _ _ ?_ ?_
+            refine @Module.Finite.of_finite 𝓀[K] 𝓀[F] _ _ ?_ ?_
+            infer_instance)
   have hnorm :
       (localHenselianValuation K).normCompositeAt H a =
         f • z := by

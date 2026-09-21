@@ -41,6 +41,9 @@ private abbrev A (K : Type) [Field K] : Rep ℤ (G K) :=
 private abbrev B (K : Type) [Field K] : ClosedSubgroup (G K) :=
   intrinsicAbstractBase K
 
+private noncomputable instance intrinsicAbsoluteGaloisT2 : T2Space (G K) :=
+  krullTopology_t2
+
 /-! ## Transport relative to an explicit embedding -/
 
 /-- The finite abstract extension object determined by an explicit

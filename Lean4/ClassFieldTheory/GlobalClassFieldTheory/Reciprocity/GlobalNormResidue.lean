@@ -200,6 +200,26 @@ private theorem globalNormResidueEquiv_transport_apply
   simp only [globalNormResidueEquiv, AddEquiv.trans_apply,
     AddEquiv.symm_apply_apply]
 
+/-- The global norm-residue equivalence on a finite abstract norm class,
+after transport to the ordinary idele-class norm quotient. -/
+theorem globalNormResidueEquiv_finiteNormClass
+    (x : FiniteNormQuotient rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) :
+    globalNormResidueEquiv K L
+        (numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient
+          K L x) =
+      numberFieldTowerAbelianizedExtensionQuotientEquivGaloisGroup K L
+        (rationalCyclotomicDegreeData.normResidueSymbol
+          rationalIdeleClassRepresentation
+          rationalCyclotomicIdeleClassValuationData
+          rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+          (numberFieldTowerReciprocityFiniteAbstractField K L)
+          (numberFieldTowerFiniteGaloisSubextension K L) x) :=
+  (globalNormResidueEquiv_transport_apply K L x).trans
+    (numberFieldTowerAbstractNormResidueGaloisEquiv_apply K L x)
+
 /-- On the genuine finite-reciprocity class of an abstract extension
 automorphism, the global norm-residue equivalence is the corresponding
 actual automorphism of `L / K`. -/

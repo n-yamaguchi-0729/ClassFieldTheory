@@ -1,0 +1,15 @@
+import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
+import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
+import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityQuotientEquiv
+import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
+import ClassFieldTheory.Definitions.GlobalClassFieldTheory.IdeleClassConnectedQuotient
+import ClassFieldTheory.Definitions.GlobalClassFieldTheory.IsMaximalAbelianGlobalArtin
+
+set_option autoImplicit false
+
+/-!
+# Global class field theory definitions
+
+This module collects the reader-facing finite and topological vocabulary.
+It imports definitions only; assertions are in the corresponding `Theorems` module.
+-/

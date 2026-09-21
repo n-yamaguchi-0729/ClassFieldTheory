@@ -424,7 +424,7 @@ theorem equalCharacteristicLubinTateTruncationIdeal_le_ker
   apply Finset.sum_eq_zero
   intro i hi
   rw [PowerSeries.coeff_X_pow,
-    if_neg (ne_of_lt (Finset.mem_range.mp hi)), map_zero, zero_mul]
+    ite_eq_right (ne_of_lt (Finset.mem_range.mp hi)), map_zero, zero_mul]
 
 /-- The resulting action of the actual quotient
 `κ⟦T⟧/(T^(n+1))`. -/

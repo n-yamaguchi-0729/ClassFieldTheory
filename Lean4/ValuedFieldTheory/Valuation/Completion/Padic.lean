@@ -55,7 +55,9 @@ theorem padicAbsoluteValueBaseMap_isometry :
 `ℚ` at `p` to the concrete `p`-adic field. -/
 noncomputable def padicAbsoluteValueCompletionRingHom :
     (Rat.AbsoluteValue.padic p).Completion →+* ℚ_[p] :=
-  (padicAbsoluteValueBaseMap_isometry p).extensionHom
+  UniformSpace.Completion.extensionHom
+    (padicAbsoluteValueBaseMap p)
+    (padicAbsoluteValueBaseMap_isometry p).continuous
 
 /-- On the dense rational subring, the completed map agrees with the original
 `p`-adic embedding. -/
@@ -65,7 +67,9 @@ theorem padicAbsoluteValueCompletionRingHom_coe
     padicAbsoluteValueCompletionRingHom p
         (x : (Rat.AbsoluteValue.padic p).Completion) =
       padicAbsoluteValueBaseMap p x :=
-  (padicAbsoluteValueBaseMap_isometry p).extensionHom_coe x
+  UniformSpace.Completion.extensionHom_coe
+    (padicAbsoluteValueBaseMap p)
+    (padicAbsoluteValueBaseMap_isometry p).continuous x
 
 /-- The completed map remains an isometry. -/
 theorem padicAbsoluteValueCompletionRingHom_isometry :

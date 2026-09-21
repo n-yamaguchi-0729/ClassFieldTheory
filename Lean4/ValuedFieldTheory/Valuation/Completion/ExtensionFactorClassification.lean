@@ -83,7 +83,7 @@ noncomputable def completionExtensionFactor_minpolyFactorsEquivCompletionFactors
     DistinctNormalizedFactors
         ((minpoly K α).map (algebraMap K vK.Completion)) ≃
       CompletionExtensionFactorCompletionFactors vK f :=
-  Equiv.setCongr (by
+  Set.equivOfEq (by
     ext g
     exact Finset.ext_iff.mp
       (completionExtensionFactor_completionFactors_eq_minpolyFactors

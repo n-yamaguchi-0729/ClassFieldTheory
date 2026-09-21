@@ -89,6 +89,7 @@ variable
     [Algebra K M] [Algebra M N] [Algebra K N]
     [IsScalarTower K M N]
 
+omit [NumberField M] [NumberField N] in
 private theorem
     commonTopBaseIntermediateFiniteDimensional
     [FiniteDimensional K N] : FiniteDimensional K M :=
@@ -392,12 +393,36 @@ theorem
     globalNormResidueAbelianizationMonoidHom K N =
       globalNormResidueAbelianizationMonoidHomOfEmbedding K N
         (numberFieldSeparableClosureEmbedding N) := by
-  have hSeparableClosureAlgebra :
-      (DivisionRing.toRatAlgebra : Algebra ℚ (SeparableClosure ℚ)) =
-        rationalSeparableClosureAlgebra :=
-    Subsingleton.elim _ _
-  cases hSeparableClosureAlgebra
-  rfl
+  let j := numberFieldSeparableClosureEmbedding N
+  have hIdeleClassEquiv :
+      numberFieldTowerIdeleClassEquivAmbientFixed K N =
+        numberFieldEmbeddedIdeleClassEquivAmbientFixed K N j := by
+    exact numberFieldTowerIdeleClassEquivAmbientFixed_eq_embedded_standard K N
+  have hFiniteAbstractField :
+      numberFieldTowerReciprocityFiniteAbstractField K N =
+        numberFieldEmbeddedFiniteAbstractField K N j := by
+    rfl
+  have hSubextension :
+      numberFieldTowerFiniteGaloisSubextension K N =
+        numberFieldEmbeddedFiniteGaloisSubextension K N j := by
+    rfl
+  have hGaloisComparison :
+      numberFieldTowerAbelianizedExtensionQuotientEquivGaloisAbelianization K N =
+        numberFieldEmbeddedAbelianizedExtensionQuotientEquivGaloisAbelianization
+          K N j := by
+    rfl
+  apply MonoidHom.ext
+  intro c
+  have hTower :=
+    globalNormResidueAbelianizationMonoidHom_finiteNormClass K N c
+  have hEmbedded :=
+    globalNormResidueAbelianizationMonoidHomOfEmbedding_apply K N j c
+  exact hTower.trans
+    ((show _ = _ by
+      simp only [← hIdeleClassEquiv, ← hGaloisComparison]
+      cases hFiniteAbstractField
+      cases hSubextension
+      rfl).trans hEmbedded.symm)
 
 /-- In one common top-field embedding, the abstract relative norm between
 the two base fixing subgroups is the ordinary idèle-class norm.  No

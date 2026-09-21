@@ -133,8 +133,7 @@ theorem tensorProduct_exists_list_sum_tmul
     [AddCommMonoid A] [Module R A] [AddCommMonoid B] [Module R B]
     (z : A ⊗[R] B) :
     ∃ l : List (A × B), z = (l.map (fun p => p.1 ⊗ₜ[R] p.2)).sum := by
-  refine TensorProduct.induction_on z ?zero ?tmul ?add
-  · exact ⟨[], by simp⟩
+  refine TensorProduct.inductionOn z ?tmul ?add
   · intro a b
     exact ⟨[(a, b)], by simp⟩
   · intro x y hx hy
@@ -252,9 +251,7 @@ theorem sup_left_adjoin_right_range_eq_top
   rcases exists_sup_tensor_productMap_eq (K := K) (Ω := Ω) L K' x with
     ⟨z, hz⟩
   rw [← hz]
-  refine TensorProduct.induction_on z ?zero ?tmul ?add
-  · rw [map_zero]
-    exact S.zero_mem
+  refine TensorProduct.inductionOn z ?tmul ?add
   · intro a b
     have ha : iL a ∈ S := by
       change algebraMap L (L ⊔ K' : IntermediateField K Ω) a ∈ S
@@ -457,9 +454,7 @@ theorem sup_right_adjoin_left_range_eq_top
   rcases exists_sup_flip_tensor_productMap_eq (K := K) (Ω := Ω) L K' x with
     ⟨z, hz⟩
   rw [← hz]
-  refine TensorProduct.induction_on z ?zero ?tmul ?add
-  · rw [map_zero]
-    exact S.zero_mem
+  refine TensorProduct.inductionOn z ?tmul ?add
   · intro a b
     have ha : iK' a ∈ S := by
       change algebraMap K' (L ⊔ K' : IntermediateField K Ω) a ∈ S

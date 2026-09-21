@@ -150,7 +150,7 @@ theorem frobeniusPowerSum_add (D : DegreeData G) (A : Rep ℤ G)
       D.frobeniusQuotientAction A K L hLK (φ ^ n) x :=
     (rep_action_pow_eq_iterate B φ n x).symm
   exact ((hsum (n + m) x).symm.trans
-    (birkhoffSum_add (B.ρ φ) id n m x)).trans
+    (birkhoffSum_add_right_apply (B.ρ φ) id n m x)).trans
       (congrArg₂
         (fun a b : ambientFixedAddSubgroup A (D.maximalUnramifiedField L) => a + b)
         (hsum n x)

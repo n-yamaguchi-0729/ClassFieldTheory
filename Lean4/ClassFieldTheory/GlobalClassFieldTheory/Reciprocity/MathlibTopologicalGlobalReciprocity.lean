@@ -1,0 +1,47 @@
+import ClassFieldTheory.AlgebraicNumberTheory.Galois.MathlibAbsoluteAbelianization
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.ConnectedComponentQuotientCongr
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibTopologyComparison
+import ClassFieldTheory.Definitions.GlobalClassFieldTheory.IdeleClassConnectedQuotient
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
+
+set_option autoImplicit false
+
+/-!
+# Topological global reciprocity in Mathlib's groups
+
+The existing maximal-abelian Artin isomorphism is transported through the
+topological comparison of idèle class groups and the canonical comparison of
+absolute Galois abelianizations. This module proves the small-universe case;
+universe transport for the public statement is separate.
+-/
+
+open scoped NumberField
+
+noncomputable section
+
+namespace GlobalClassFieldTheory.Reciprocity
+
+/-- The maximal-abelian Artin isomorphism, expressed entirely in Mathlib's
+idèle-class and absolute-Galois groups, for a small number-field carrier. -/
+noncomputable def mathlibIdeleClassConnectedQuotientEquivAbelianization
+    (K : Type) [Field K] [NumberField K] :
+    ClassFieldTheory.IdeleClassConnectedQuotient K ≃ₜ*
+      Field.absoluteGaloisGroupAbelianization K := by
+  let classEquiv : IdeleClassGroup K ≃ₜ*
+      NumberField.IdeleClassGroup (𝓞 K) K :=
+    IdeleGroup.ideleClassGroupContinuousMulEquivMathlib K
+  let compEquiv := ClassFieldTheory.connectedComponentQuotientCongr classEquiv
+  let e₁ : ClassFieldTheory.IdeleClassConnectedQuotient K ≃ₜ*
+      ideleClassComponentQuotient K := compEquiv.symm
+  let e₂ : ideleClassComponentQuotient K ≃ₜ*
+      Gal(maximalAbelianExtension K / K) :=
+    ideleClassComponentQuotientEquivMaximalAbelianGalois K
+  let e₃ : TopologicalAbelianization Gal(SeparableClosure K / K) ≃ₜ*
+      Gal(maximalAbelianExtension K / K) :=
+    absoluteTopologicalAbelianizationEquivMaximalAbelianGalois K
+  let e₄ : Field.absoluteGaloisGroupAbelianization K ≃ₜ*
+      TopologicalAbelianization Gal(SeparableClosure K / K) :=
+    absoluteGaloisGroupAbelianizationEquivSeparable K
+  exact e₁.trans (e₂.trans (e₃.symm.trans e₄.symm))
+
+end GlobalClassFieldTheory.Reciprocity

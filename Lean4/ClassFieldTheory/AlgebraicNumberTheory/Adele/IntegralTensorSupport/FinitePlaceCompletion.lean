@@ -70,7 +70,9 @@ noncomputable def relativeFinitePlaceCompletionRingHom
     (w : HeightOneSpectrum (𝓞 K)) :
     (NumberField.HeightOneSpectrum.adicAbv K w).Completion →+*
       w.adicCompletion K :=
-  (relativeFinitePlaceCompletionBaseMap_isometry w).extensionHom
+  UniformSpace.Completion.extensionHom
+    (relativeFinitePlaceCompletionBaseMap w)
+    (relativeFinitePlaceCompletionBaseMap_isometry w).continuous
 
 /-- Coercion, isometry, and surjectivity facts for the canonical ring homomorphism. -/
 
@@ -83,7 +85,9 @@ theorem relativeFinitePlaceCompletionRingHom_coe
         (x :
           (NumberField.HeightOneSpectrum.adicAbv K w).Completion) =
       relativeFinitePlaceCompletionBaseMap w x :=
-  (relativeFinitePlaceCompletionBaseMap_isometry w).extensionHom_coe x
+  UniformSpace.Completion.extensionHom_coe
+    (relativeFinitePlaceCompletionBaseMap w)
+    (relativeFinitePlaceCompletionBaseMap_isometry w).continuous x
 
 /-- The canonical finite-place ring homomorphism is an isometry. -/
 theorem relativeFinitePlaceCompletionRingHom_isometry

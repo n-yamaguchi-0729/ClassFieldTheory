@@ -5,6 +5,7 @@ import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
 import Mathlib.FieldTheory.KrullTopology
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
+import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Algebra.OpenSubgroup
 
 set_option autoImplicit false

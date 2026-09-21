@@ -206,9 +206,7 @@ private theorem adeleCongr_infiniteComponent
     congrArg componentM
       (relativeAdeleBaseChangeRingEquiv_relativeAdeleCongr e z)
   rw [← ha, ← htransport]
-  induction z using TensorProduct.induction_on with
-  | zero =>
-      exact (map_zero (infinitePlaceCompletionCongrHom e W)).symm
+  induction z using TensorProduct.inductionOn with
   | add x y hx hy =>
       simpa only [map_add, Prod.fst_add, Pi.add_apply] using
         congrArg₂ (· + ·) hx hy

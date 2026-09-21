@@ -69,9 +69,8 @@ theorem lubinTateLevel_spectral_inertiaDeg_eq_one
         (LocalFieldTheory.localCompleteDVF K).valuation.HasExtension
           (LocalFieldTheory.localCompleteDVF T).valuation :=
       explicitLocalCompleteDVFValuation_hasExtension K T
-    Ideal.inertiaDeg'
-      (LocalFieldTheory.localCompleteDVF K).maximalIdeal
-      (LocalFieldTheory.localCompleteDVF T).maximalIdeal = 1 := by
+    (LocalFieldTheory.localCompleteDVF T).maximalIdeal.inertiaDeg
+      (LocalFieldTheory.localCompleteDVF K).valuationSubring = 1 := by
   let T := standardLubinTateLevelField hπ n
   let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
@@ -109,8 +108,7 @@ theorem lubinTateLevel_spectral_inertiaDeg_eq_one
       residueDegree base.toDVF chosen.toDVF = 1 := by
     apply Nat.eq_of_mul_eq_mul_left hdegreePos
     simpa [hramification] using hdegree.symm
-  change
-    Ideal.inertiaDeg' base.maximalIdeal chosen.maximalIdeal = 1 at hresidue
+  change chosen.maximalIdeal.inertiaDeg base.valuationSubring = 1 at hresidue
   let e : chosen.valuationSubring ≃ₐ[base.valuationSubring]
       spectral.valuationSubring :=
     { toFun := fun x => ⟨x, by
@@ -138,11 +136,14 @@ theorem lubinTateLevel_spectral_inertiaDeg_eq_one
       chosen.maximalIdeal.map e = spectral.maximalIdeal :=
     IsLocalRing.map_ringEquiv_maximalIdeal e.toRingEquiv
   have hinertia :
-      Ideal.inertiaDeg' base.maximalIdeal spectral.maximalIdeal =
-        Ideal.inertiaDeg' base.maximalIdeal chosen.maximalIdeal := by
-    rw [← hmap]
-    exact Ideal.inertiaDeg'_map_eq base.maximalIdeal chosen.maximalIdeal e
-  change Ideal.inertiaDeg' base.maximalIdeal spectral.maximalIdeal = 1
+      spectral.maximalIdeal.inertiaDeg base.valuationSubring =
+        chosen.maximalIdeal.inertiaDeg base.valuationSubring := by
+    rw [Ideal.inertiaDeg_eq_of_isMaximal base.maximalIdeal spectral.maximalIdeal,
+      Ideal.inertiaDeg_eq_of_isMaximal base.maximalIdeal chosen.maximalIdeal]
+    exact
+      (Ideal.Quotient.algEquivOfEqMap base.maximalIdeal e
+        hmap.symm).toLinearEquiv.finrank_eq.symm
+  change spectral.maximalIdeal.inertiaDeg base.valuationSubring = 1
   exact hinertia.trans hresidue
 
 private theorem explicitLocalCompleteDVF_ramificationIdx_eq_one_of_top
@@ -346,18 +347,13 @@ private theorem
       total.valuationSubring :=
     IsScalarTower.of_algebraMap_eq' rfl
   have htotal :
-      Ideal.inertiaDeg' base.maximalIdeal total.maximalIdeal = 1 := by
-    exact lubinTateLevel_spectral_inertiaDeg_eq_one K hπ n
-  have hinertiaTotal :
       total.maximalIdeal.inertiaDeg base.valuationSubring = 1 := by
-    rw [Ideal.inertiaDeg'_eq_inertiaDeg
-      base.maximalIdeal total.maximalIdeal] at htotal
-    exact htotal
+    exact lubinTateLevel_spectral_inertiaDeg_eq_one K hπ n
   have hinertiaDvd :
       middle.maximalIdeal.inertiaDeg base.valuationSubring ∣
         total.maximalIdeal.inertiaDeg base.valuationSubring :=
     middle.maximalIdeal.inertiaDeg_below_dvd total.maximalIdeal
-  rw [hinertiaTotal] at hinertiaDvd
+  rw [htotal] at hinertiaDvd
   exact Nat.eq_one_of_dvd_one hinertiaDvd
 
 /-- A canonical finite unramified field and the Lubin--Tate level attached to
@@ -422,12 +418,10 @@ theorem localFiniteUnramifiedField_inf_lubinTateLevelField
     maximalIdeal_ramificationIdx_mul_inertiaDeg_eq_finrank K M
   change
     base.maximalIdeal.ramificationIdx' middle.maximalIdeal *
-        base.maximalIdeal.inertiaDeg' middle.maximalIdeal =
+        middle.maximalIdeal.inertiaDeg base.valuationSubring =
       Module.finrank K M at hdegree
   rw [Ideal.ramificationIdx'_eq_ramificationIdx
       base.maximalIdeal middle.maximalIdeal hbaseMaximalIdeal_ne,
-    Ideal.inertiaDeg'_eq_inertiaDeg
-      base.maximalIdeal middle.maximalIdeal,
     hramificationMiddle, hinertiaMiddle, one_mul] at hdegree
   change M = ⊥
   exact IntermediateField.finrank_eq_one_iff.mp hdegree.symm
@@ -542,6 +536,99 @@ private theorem explicitRestrictNormalHom_toAlgAut_eq_one
   apply Subtype.ext
   rw [AlgEquiv.restrictNormalHom_apply]
   exact δ.commutes x
+
+private theorem explicitRestrictNormalHom_mul_inv_eq_one
+    (K C : Type) [Field K] [Field C] [Algebra K C]
+    (A : IntermediateField K C) [Normal K A]
+    (σ τ : Gal(C / K)) (ρ : Gal(A / K))
+    (hσ : AlgEquiv.restrictNormalHom A σ = ρ)
+    (hτ : AlgEquiv.restrictNormalHom A τ = ρ) :
+    AlgEquiv.restrictNormalHom A (σ * τ⁻¹) = 1 := by
+  rw [map_mul_inv, hσ, hτ, mul_inv_cancel]
+
+private theorem explicit_mem_fixingSubgroup_of_restrictNormalHom_eq_one
+    (K C : Type) [Field K] [Field C] [Algebra K C]
+    (A : IntermediateField K C) [Normal K A]
+    (σ : Gal(C / K))
+    (hσ : AlgEquiv.restrictNormalHom A σ = 1) :
+    σ ∈ A.fixingSubgroup := by
+  rw [IntermediateField.mem_fixingSubgroup_iff]
+  intro x hx
+  let y : A := ⟨x, hx⟩
+  have hy := congrArg (fun τ : Gal(A / K) => τ y) hσ
+  have hyval := congrArg Subtype.val hy
+  rw [AlgEquiv.restrictNormalHom_apply] at hyval
+  simpa [y] using hyval
+
+private theorem explicit_eq_one_of_mem_fixingSubgroup_of_sup_eq_top
+    (K C : Type) [Field K] [Field C] [Algebra K C]
+    (A B : IntermediateField K C) (σ : Gal(C / K))
+    (hA : σ ∈ A.fixingSubgroup) (hB : σ ∈ B.fixingSubgroup)
+    (hSup : A ⊔ B = ⊤) :
+    σ = 1 := by
+  have hFixSup : σ ∈ (A ⊔ B).fixingSubgroup := by
+    rw [IntermediateField.fixingSubgroup_sup]
+    exact ⟨hA, hB⟩
+  rw [hSup, IntermediateField.fixingSubgroup_top] at hFixSup
+  exact Subgroup.mem_bot.mp hFixSup
+
+private theorem explicitAlgEquiv_eq_of_restrict_eq_of_sup_eq_top
+    (K C : Type) [Field K] [Field C] [Algebra K C]
+    (A B : IntermediateField K C) [Normal K A] [Normal K B]
+    (σ τ : Gal(C / K))
+    (hA : AlgEquiv.restrictNormalHom A σ =
+      AlgEquiv.restrictNormalHom A τ)
+    (hB : AlgEquiv.restrictNormalHom B σ =
+      AlgEquiv.restrictNormalHom B τ)
+    (hSup : A ⊔ B = ⊤) :
+    σ = τ := by
+  let δ := σ * τ⁻¹
+  have hδA : AlgEquiv.restrictNormalHom A δ = 1 := by
+    exact explicitRestrictNormalHom_mul_inv_eq_one
+      K C A σ τ (AlgEquiv.restrictNormalHom A σ) rfl hA.symm
+  have hδB : AlgEquiv.restrictNormalHom B δ = 1 := by
+    exact explicitRestrictNormalHom_mul_inv_eq_one
+      K C B σ τ (AlgEquiv.restrictNormalHom B σ) rfl hB.symm
+  have hFixA : δ ∈ A.fixingSubgroup :=
+    explicit_mem_fixingSubgroup_of_restrictNormalHom_eq_one
+      K C A δ hδA
+  have hFixB : δ ∈ B.fixingSubgroup :=
+    explicit_mem_fixingSubgroup_of_restrictNormalHom_eq_one
+      K C B δ hδB
+  have hδ : δ = 1 :=
+    explicit_eq_one_of_mem_fixingSubgroup_of_sup_eq_top
+      K C A B δ hFixA hFixB hSup
+  exact mul_inv_eq_one.mp hδ
+
+private theorem explicit_orderOf_eq_of_restrict_orders_of_sup_eq_top
+    (K C : Type) [Field K] [Field C] [Algebra K C]
+    (A B : IntermediateField K C) [Normal K A] [Normal K B]
+    [Finite (Gal(A / K))] [Finite (Gal(B / K))]
+    (σ : Gal(C / K)) (σA : Gal(A / K)) (σB : Gal(B / K)) (d : ℕ)
+    (hA : AlgEquiv.restrictNormalHom A σ = σA)
+    (hB : AlgEquiv.restrictNormalHom B σ = σB)
+    (hAOrder : orderOf σA = d) (hBOrder : orderOf σB = d)
+    (hSup : A ⊔ B = ⊤) :
+    orderOf σ = d := by
+  have hLower : d ∣ orderOf σ := by
+    rw [← hAOrder, ← hA]
+    exact orderOf_map_dvd (AlgEquiv.restrictNormalHom A) σ
+  have hPowA :
+      AlgEquiv.restrictNormalHom A (σ ^ d) = 1 := by
+    rw [map_pow, hA, ← hAOrder, pow_orderOf_eq_one]
+  have hPowB :
+      AlgEquiv.restrictNormalHom B (σ ^ d) = 1 := by
+    rw [map_pow, hB, ← hBOrder, pow_orderOf_eq_one]
+  have hFixA : σ ^ d ∈ A.fixingSubgroup :=
+    explicit_mem_fixingSubgroup_of_restrictNormalHom_eq_one
+      K C A (σ ^ d) hPowA
+  have hFixB : σ ^ d ∈ B.fixingSubgroup :=
+    explicit_mem_fixingSubgroup_of_restrictNormalHom_eq_one
+      K C B (σ ^ d) hPowB
+  have hPow : σ ^ d = 1 :=
+    explicit_eq_one_of_mem_fixingSubgroup_of_sup_eq_top
+      K C A B (σ ^ d) hFixA hFixB hSup
+  exact Nat.dvd_antisymm (orderOf_dvd_of_pow_eq_one hPow) hLower
 
 private theorem exists_explicitAlgEquiv_with_disjoint_restrictions
     (K C : Type) [Field K] [Field C] [Algebra K C]
@@ -813,43 +900,29 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
   let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
   let chosen := lubinTateUniformizerDiagonalAutomorphism K hπ n u
   have hσA : AlgEquiv.restrictNormalHom A σ = φA := by
-    simpa [T, σT, d, hd, U, C, hUC, A, eU, φA] using hσUnramified
+    change AlgEquiv.restrictNormalHom A σ = φA at hσUnramified
+    exact hσUnramified
   have hσB : AlgEquiv.restrictNormalHom B σ = σB := by
-    simpa [T, σT, d, hd, U, C, hTC, B, eT, σB] using hσLevel
+    change AlgEquiv.restrictNormalHom B σ = σB at hσLevel
+    exact hσLevel
   have hchosenA : AlgEquiv.restrictNormalHom A chosen = φA := by
-    simpa [T, σT, d, hd, U, C, hUC, A, eU, φA, chosen] using
-      lubinTateUniformizerDiagonalAutomorphism_restrict_unramified
-        K hπ n u
+    have h :=
+      lubinTateUniformizerDiagonalAutomorphism_restrict_unramified K hπ n u
+    change AlgEquiv.restrictNormalHom A chosen = φA at h
+    exact h
   have hchosenB : AlgEquiv.restrictNormalHom B chosen = σB := by
-    simpa [T, σT, d, hd, U, C, hTC, B, eT, σB, chosen] using
-      lubinTateUniformizerDiagonalAutomorphism_restrict_level
-        K hπ n u
-  let δ := σ * chosen⁻¹
-  have hδA : AlgEquiv.restrictNormalHom A δ = 1 := by
-    rw [show δ = σ * chosen⁻¹ by rfl, map_mul, map_inv,
-      hσA, hchosenA, mul_inv_cancel]
-  have hδB : AlgEquiv.restrictNormalHom B δ = 1 := by
-    rw [show δ = σ * chosen⁻¹ by rfl, map_mul, map_inv,
-      hσB, hchosenB, mul_inv_cancel]
-  have hFixA : δ ∈ A.fixingSubgroup := by
-    rw [← IntermediateField.restrictNormalHom_ker A, MonoidHom.mem_ker]
-    exact hδA
-  have hFixB : δ ∈ B.fixingSubgroup := by
-    rw [← IntermediateField.restrictNormalHom_ker B, MonoidHom.mem_ker]
-    exact hδB
+    have h := lubinTateUniformizerDiagonalAutomorphism_restrict_level K hπ n u
+    change AlgEquiv.restrictNormalHom B chosen = σB at h
+    exact h
   have hSup : A ⊔ B = ⊤ := by
     rw [← IntermediateField.lift_inj,
       IntermediateField.lift_top,
       IntermediateField.lift_sup,
       IntermediateField.lift_restrict hUC,
       IntermediateField.lift_restrict hTC]
-  have hδ : δ = 1 := by
-    have hFixSup : δ ∈ (A ⊔ B).fixingSubgroup := by
-      rw [IntermediateField.fixingSubgroup_sup]
-      exact ⟨hFixA, hFixB⟩
-    rw [hSup, IntermediateField.fixingSubgroup_top] at hFixSup
-    exact Subgroup.mem_bot.mp hFixSup
-  exact mul_inv_eq_one.mp hδ
+  exact explicitAlgEquiv_eq_of_restrict_eq_of_sup_eq_top
+    K C A B σ chosen (hσA.trans hchosenA.symm)
+      (hσB.trans hchosenB.symm) hSup
 
 private theorem lubinTateUniformizerDiagonalAutomorphism_order
     (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
@@ -916,42 +989,23 @@ private theorem lubinTateUniformizerDiagonalAutomorphism_order
     rw [show σB = transportT σT by rfl, transportT.orderOf_eq]
   have hrestrictA :
       AlgEquiv.restrictNormalHom A σ = σA := by
-    simpa [T, σT, d, hd, U, C, hUC, A, eU, φ, σA, σ] using
-      lubinTateUniformizerDiagonalAutomorphism_restrict_unramified
-        K hπ n u
+    have h :=
+      lubinTateUniformizerDiagonalAutomorphism_restrict_unramified K hπ n u
+    change AlgEquiv.restrictNormalHom A σ = σA at h
+    exact h
   have hrestrictB :
       AlgEquiv.restrictNormalHom B σ = σB := by
-    simpa [T, σT, d, hd, U, C, hTC, B, eT, σB, σ] using
-      lubinTateUniformizerDiagonalAutomorphism_restrict_level
-        K hπ n u
-  have hLower : d ∣ orderOf σ := by
-    rw [← hσAOrder, ← hrestrictA]
-    exact orderOf_map_dvd (AlgEquiv.restrictNormalHom A) σ
+    have h := lubinTateUniformizerDiagonalAutomorphism_restrict_level K hπ n u
+    change AlgEquiv.restrictNormalHom B σ = σB at h
+    exact h
   have hSup : A ⊔ B = ⊤ := by
     rw [← IntermediateField.lift_inj,
       IntermediateField.lift_top,
       IntermediateField.lift_sup,
       IntermediateField.lift_restrict hUC,
       IntermediateField.lift_restrict hTC]
-  have hPowA :
-      AlgEquiv.restrictNormalHom A (σ ^ d) = 1 := by
-    rw [map_pow, hrestrictA, ← hσAOrder, pow_orderOf_eq_one]
-  have hPowB :
-      AlgEquiv.restrictNormalHom B (σ ^ d) = 1 := by
-    rw [map_pow, hrestrictB, ← hσBOrder, pow_orderOf_eq_one]
-  have hFixA : σ ^ d ∈ A.fixingSubgroup := by
-    rw [← IntermediateField.restrictNormalHom_ker A, MonoidHom.mem_ker]
-    exact hPowA
-  have hFixB : σ ^ d ∈ B.fixingSubgroup := by
-    rw [← IntermediateField.restrictNormalHom_ker B, MonoidHom.mem_ker]
-    exact hPowB
-  have hPow : σ ^ d = 1 := by
-    have hFixSup : σ ^ d ∈ (A ⊔ B).fixingSubgroup := by
-      rw [IntermediateField.fixingSubgroup_sup]
-      exact ⟨hFixA, hFixB⟩
-    rw [hSup, IntermediateField.fixingSubgroup_top] at hFixSup
-    exact Subgroup.mem_bot.mp hFixSup
-  exact Nat.dvd_antisymm (orderOf_dvd_of_pow_eq_one hPow) hLower
+  exact explicit_orderOf_eq_of_restrict_orders_of_sup_eq_top
+    K C A B σ σA σB d hrestrictA hrestrictB hσAOrder hσBOrder hSup
 
 /-- The field fixed by the explicit-uniformizer diagonal automorphism. -/
 def lubinTateUniformizerDiagonalFixedField

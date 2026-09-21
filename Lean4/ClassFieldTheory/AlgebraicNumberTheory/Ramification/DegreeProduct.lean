@@ -61,8 +61,7 @@ theorem finrank_le_totient_prod_primePowers_of_inertia_bounds
       natCard_finsetSup_le_prod_natCard
         (G := M ≃ₐ[ℚ] M) (ι := Nat.Primes) S I
     _ ≤ ∏ p ∈ S, Nat.totient (p.1 ^ e p) := by
-      exact Finset.prod_le_prod (fun _ _ => Nat.zero_le _)
-        (fun p hp => hcard p hp)
+      exact Finset.prod_le_prod (fun p hp => hcard p hp)
     _ = Nat.totient (∏ p ∈ S, p.1 ^ e p) :=
       (totient_prod_primePowers S e).symm
 

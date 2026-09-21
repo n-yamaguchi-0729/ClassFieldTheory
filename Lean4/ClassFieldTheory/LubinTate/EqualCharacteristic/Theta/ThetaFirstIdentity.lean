@@ -437,7 +437,7 @@ theorem equalCharacteristicQAdditiveSeries_subst_qAdditiveSeries
         · have hzero :=
             equalCharacteristicQAdditiveSeries_pow_card_pow_coeff
               (k := k) a i r
-          rw [if_neg hir] at hzero
+          rw [ite_eq_right hir] at hzero
           simp [F, A, hzero] at hd
       · have hzero :=
           equalCharacteristicQAdditiveSeries_coeff_eq_zero k b d hde

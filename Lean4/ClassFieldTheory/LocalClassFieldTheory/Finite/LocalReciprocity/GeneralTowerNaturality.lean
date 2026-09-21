@@ -454,3 +454,25 @@ theorem abelianLocalArtinMonoidHom_autCongr
   exact abelianLocalArtinMonoidHom_restrict_tower K M L
 
 end LocalClassFieldTheory
+
+namespace ClassFieldTheory
+
+/-- Restriction of the canonical Artin map at the upper level is exactly the
+canonical Artin map at the lower level of a finite abelian tower. -/
+theorem finiteAbelianLocalArtinMap_restrict_tower
+    (K E L : Type)
+    [Field K] [Field E] [Field L]
+    [Algebra K E] [Algebra E L] [Algebra K L]
+    [IsScalarTower K E L]
+    [FiniteDimensional K E] [FiniteDimensional K L]
+    [IsAbelianGalois K E] [IsAbelianGalois K L]
+    [ValuativeRel K] [TopologicalSpace K]
+    [IsNonarchimedeanLocalField K] :
+    (AlgEquiv.restrictNormalHom E).comp
+        (LocalClassFieldTheory.abelianLocalArtinMap K L).toMonoidHom =
+      (LocalClassFieldTheory.abelianLocalArtinMap K E).toMonoidHom := by
+  rw [LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom K L,
+    LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom K E]
+  exact LocalClassFieldTheory.abelianLocalArtinMonoidHom_restrict_tower K E L
+
+end ClassFieldTheory

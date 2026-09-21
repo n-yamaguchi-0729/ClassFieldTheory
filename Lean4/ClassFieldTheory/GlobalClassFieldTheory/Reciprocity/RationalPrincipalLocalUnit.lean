@@ -58,7 +58,7 @@ theorem rationalPrimeUnit_heightOneValuation_eq_one
       else WithZero.exp
         (-padicValRat p.1 (rationalPrimeUnit x p : ℚ))) =
       1
-  rw [if_neg (Units.ne_zero _), padicValRat_rationalPrimeUnit]
+  rw [ite_eq_right (Units.ne_zero _), padicValRat_rationalPrimeUnit]
   rfl
 
 /-- The rational `p`-unit, expressed as a unit of the valuation subring of

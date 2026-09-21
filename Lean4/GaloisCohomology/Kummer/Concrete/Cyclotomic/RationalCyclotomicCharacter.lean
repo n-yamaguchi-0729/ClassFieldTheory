@@ -69,7 +69,7 @@ theorem rationalCyclotomicCharacterPrimeProduct_apply
 
 section PrimePowerCharacter
 
--- Expose the exact prime-power index to Lean 4.33 instance matching. Both
+-- Expose the exact prime-power index to instance synthesis. Both
 -- proposition-valued instances are supplied by the existing canonical factories.
 local instance primePowerLevelNumberField (p : Nat.Primes) (k : ℕ) :
     NumberField (rationalCyclotomicLevel ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=

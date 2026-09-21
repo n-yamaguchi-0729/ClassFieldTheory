@@ -1,4 +1,0 @@
-import ValuedFieldTheory.LocalField.DiscreteValuationField.Norm.Basic
-import ValuedFieldTheory.LocalField.DiscreteValuationField.Norm.Quotients
-
-set_option autoImplicit false

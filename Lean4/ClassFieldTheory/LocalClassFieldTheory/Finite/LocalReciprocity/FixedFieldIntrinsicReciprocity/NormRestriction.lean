@@ -124,9 +124,9 @@ theorem AmbientEmbeddedFixedFieldPresentation.quotientRestriction
         upper.extension.extensionQuotientMulEquiv.symm
             (QuotientGroup.mk sigma) =
           upper.extension.extensionQuotientMk sigma := by
-      apply upper.extension.extensionQuotientMulEquiv.injective
-      rw [MulEquiv.apply_symm_apply,
-        upper.extension.extensionQuotientMk_apply]
+      exact
+        upper.extension.extensionQuotientMulEquiv.symm_apply_eq.mpr
+          (upper.extension.extensionQuotientMk_apply sigma).symm
     rw [hmk]
   have hqLower_mk :
       qLower (QuotientGroup.mk (Subgroup.inclusion hH'H sigma)) =
@@ -139,9 +139,10 @@ theorem AmbientEmbeddedFixedFieldPresentation.quotientRestriction
             (QuotientGroup.mk (Subgroup.inclusion hH'H sigma)) =
           lower.extension.extensionQuotientMk
             (Subgroup.inclusion hH'H sigma) := by
-      apply lower.extension.extensionQuotientMulEquiv.injective
-      rw [MulEquiv.apply_symm_apply,
-        lower.extension.extensionQuotientMk_apply]
+      exact
+        lower.extension.extensionQuotientMulEquiv.symm_apply_eq.mpr
+          (lower.extension.extensionQuotientMk_apply
+            (Subgroup.inclusion hH'H sigma)).symm
     rw [hmk]
   apply AlgEquiv.ext
   intro x
@@ -547,19 +548,30 @@ theorem ambientEmbeddedNormResidueElement_norm_restriction
       (localHenselianValuation K)
       (separableClosureUnits_isClassFormation K)
       H J hJH
+  let upperSymbolValue :=
+    Additive.toMul
+      (symbolUpper (Additive.ofMul aUpper))
+  let lowerSymbolValue :=
+    Additive.toMul
+      (symbolLower (Additive.ofMul aLower))
+  let upperQuotientValue :=
+    upper.fixedFieldQuotientEquiv.abelianizationCongr.symm
+      upperSymbolValue
+  let lowerQuotientValue :=
+    lower.fixedFieldQuotientEquiv.abelianizationCongr.symm
+      lowerSymbolValue
   have hraw :
       normResidueNaturalityAbelianizedRestriction
           H H' J J' hJH hJ'H' hH'H hJ'J
           ((upper.extension.extensionQuotientMulEquiv.symm.trans
             upper.fixedFieldQuotientEquiv).abelianizationCongr.symm
-            (Additive.toMul
-              (symbolUpper (Additive.ofMul aUpper)))) =
+            upperSymbolValue) =
         (lower.extension.extensionQuotientMulEquiv.symm.trans
           lower.fixedFieldQuotientEquiv).abelianizationCongr.symm
-          (Additive.toMul
-            (symbolLower (Additive.ofMul aLower))) := by
+          lowerSymbolValue := by
     simpa only [H, H', J, J', hJH, hJ'H',
-      aUpper, aLower, aNorm, symbolUpper, symbolLower] using
+      aUpper, aLower, aNorm, symbolUpper, symbolLower,
+      upperSymbolValue, lowerSymbolValue] using
       AmbientEmbeddedFixedFieldPresentation.fixedFieldNormResidueTransport
         K K' L L' lower upper hH'H hJ'J
         hbase a
@@ -587,54 +599,40 @@ theorem ambientEmbeddedNormResidueElement_norm_restriction
           (normResidueNaturalityAbelianizedRestriction
             H H' J J' hJH hJ'H' hH'H hJ'J
             (upper.extension.extensionQuotientMulEquiv.abelianizationCongr
-              (upper.fixedFieldQuotientEquiv.abelianizationCongr.symm
-                (Additive.toMul
-                  (symbolUpper (Additive.ofMul aUpper)))))) =
-        lower.fixedFieldQuotientEquiv.abelianizationCongr.symm
-          (Additive.toMul
-            (symbolLower (Additive.ofMul aLower))) := by
-    apply lower.extension.extensionQuotientMulEquiv.abelianizationCongr.injective
-    rw [MulEquiv.apply_symm_apply]
+              upperQuotientValue)) =
+        lowerQuotientValue := by
+    refine
+      lower.extension.extensionQuotientMulEquiv.abelianizationCongr.symm_apply_eq.mpr ?_
     calc
       normResidueNaturalityAbelianizedRestriction
           H H' J J' hJH hJ'H' hH'H hJ'J
           (upper.extension.extensionQuotientMulEquiv.abelianizationCongr
-            (upper.fixedFieldQuotientEquiv.abelianizationCongr.symm
-              (Additive.toMul
-                (symbolUpper (Additive.ofMul aUpper))))) =
+            upperQuotientValue) =
           normResidueNaturalityAbelianizedRestriction
             H H' J J' hJH hJ'H' hH'H hJ'J
             ((upper.extension.extensionQuotientMulEquiv.symm.trans
               upper.fixedFieldQuotientEquiv).abelianizationCongr.symm
-              (Additive.toMul
-                (symbolUpper (Additive.ofMul aUpper)))) := by
+              upperSymbolValue) := by
         simp only [← abelianizationCongr_trans,
           ← abelianizationCongr_symm, MulEquiv.symm_trans_apply,
-          MulEquiv.symm_symm]
+          MulEquiv.symm_symm, upperQuotientValue]
       _ = (lower.extension.extensionQuotientMulEquiv.symm.trans
             lower.fixedFieldQuotientEquiv).abelianizationCongr.symm
-            (Additive.toMul
-              (symbolLower (Additive.ofMul aLower))) := hraw
+            lowerSymbolValue := hraw
       _ = lower.extension.extensionQuotientMulEquiv.abelianizationCongr
-            (lower.fixedFieldQuotientEquiv.abelianizationCongr.symm
-              (Additive.toMul
-                (symbolLower (Additive.ofMul aLower)))) := by
+            lowerQuotientValue := by
         simp only [← abelianizationCongr_trans,
           ← abelianizationCongr_symm, MulEquiv.symm_trans_apply,
-          MulEquiv.symm_symm]
+          MulEquiv.symm_symm, lowerQuotientValue]
   have hupperEval :
       upper.normResidueAbelianElement a =
         upper.quotientEquiv.abelianizationCongr
-          (upper.fixedFieldQuotientEquiv.abelianizationCongr.symm
-            (Additive.toMul
-              (symbolUpper (Additive.ofMul aUpper)))) := by
+          upperQuotientValue := by
     exact upper.normResidueAbelianElement_apply a
   have hlowerEval :
       lower.normResidueAbelianElement aNorm =
         lower.quotientEquiv.abelianizationCongr
-          (lower.fixedFieldQuotientEquiv.abelianizationCongr.symm
-            (Additive.toMul
-              (symbolLower (Additive.ofMul aLower)))) := by
+          lowerQuotientValue := by
     exact lower.normResidueAbelianElement_apply aNorm
   let ambientUpper : Gal(L' / K') :=
     ambientEmbeddedNormResidueElement K K' L' j eUpper a
@@ -651,47 +649,28 @@ theorem ambientEmbeddedNormResidueElement_norm_restriction
             (upper.normResidueAbelianElement a)) =
         (Abelianization.equivOfComm (H := Gal(L / K))).symm
           (lower.normResidueAbelianElement aNorm)
+    rw [hupperEval, hlowerEval]
     calc
       restrictActual
           ((Abelianization.equivOfComm (H := Gal(L' / K'))).symm
-            (upper.normResidueAbelianElement a)) =
-          restrictActual
-            ((Abelianization.equivOfComm (H := Gal(L' / K'))).symm
-              (upper.quotientEquiv.abelianizationCongr
-                (upper.fixedFieldQuotientEquiv.abelianizationCongr.symm
-                  (Additive.toMul
-                    (symbolUpper (Additive.ofMul aUpper)))))) :=
-        congrArg
-          (fun z =>
-            restrictActual
-              ((Abelianization.equivOfComm (H := Gal(L' / K'))).symm z))
-          hupperEval
-      _ = (Abelianization.equivOfComm (H := Gal(L / K))).symm
+            (upper.quotientEquiv.abelianizationCongr
+              upperQuotientValue)) =
+        (Abelianization.equivOfComm (H := Gal(L / K))).symm
             (lower.quotientEquiv.abelianizationCongr
               (lower.extension.extensionQuotientMulEquiv.abelianizationCongr.symm
                 (normResidueNaturalityAbelianizedRestriction
                   H H' J J' hJH hJ'H' hH'H hJ'J
                   (upper.extension.extensionQuotientMulEquiv.abelianizationCongr
-                    (upper.fixedFieldQuotientEquiv.abelianizationCongr.symm
-                      (Additive.toMul
-                        (symbolUpper (Additive.ofMul aUpper)))))))) :=
-        htarget _
+                    upperQuotientValue)))) :=
+        htarget upperQuotientValue
       _ = (Abelianization.equivOfComm (H := Gal(L / K))).symm
             (lower.quotientEquiv.abelianizationCongr
-              (lower.fixedFieldQuotientEquiv.abelianizationCongr.symm
-                (Additive.toMul
-                  (symbolLower (Additive.ofMul aLower))))) :=
+              lowerQuotientValue) :=
         congrArg
           (fun z =>
             (Abelianization.equivOfComm (H := Gal(L / K))).symm
               (lower.quotientEquiv.abelianizationCongr z))
           hambient
-      _ = (Abelianization.equivOfComm (H := Gal(L / K))).symm
-            (lower.normResidueAbelianElement aNorm) :=
-        congrArg
-          (fun z =>
-            (Abelianization.equivOfComm (H := Gal(L / K))).symm z)
-          hlowerEval.symm
   change
     restrictActual ambientUpper = ambientLower
   exact htransport

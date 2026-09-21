@@ -205,14 +205,14 @@ theorem doubleCosetExtension_injective
           L := by
     calc
       _ = doubleCosetExtension vK hvK w L q := by
-        rw [← DoubleCoset.out_eq' H D q]
+        rw [← DoubleCoset.out_eq' q]
         exact
           (doubleCosetExtension_mk
             vK hvK w L g).symm
       _ = doubleCosetExtension vK hvK w L r :=
         hqr
       _ = _ := by
-        rw [← DoubleCoset.out_eq' H D r]
+        rw [← DoubleCoset.out_eq' r]
         exact
           doubleCosetExtension_mk
             vK hvK w L s
@@ -275,8 +275,8 @@ theorem doubleCosetExtension_injective
   have hd : d ∈ D :=
     (mem_absoluteValueDecompositionGroup_iff_extensionConjugate_eq
       vK hvK w d).mpr hdEq
-  rw [← DoubleCoset.out_eq' H D q,
-    ← DoubleCoset.out_eq' H D r,
+  rw [← DoubleCoset.out_eq' q,
+    ← DoubleCoset.out_eq' r,
     DoubleCoset.eq]
   refine
     ⟨h⁻¹, L.fixingSubgroup.inv_mem hh,
@@ -764,6 +764,7 @@ variable
     [IsScalarTower K E N]
     [FiniteDimensional K N] [IsGalois K N]
 
+omit [FiniteDimensional K N] in
 /-- If the decomposition group upstairs acts trivially on a normal
 subextension, then the finite place splits completely in that
 subextension. -/

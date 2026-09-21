@@ -3,6 +3,7 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.All
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.All
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.FiniteMathlibTopologyComparison
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdentityComponent
@@ -18,6 +19,7 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalTopology
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.RestrictedProductUnitsTopology
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.SPlaces
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.SufficientlyLarge

@@ -1,0 +1,44 @@
+import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
+import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
+import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.AbelianConductorFiniteNormCriterion
+import Mathlib.RingTheory.Norm.Basic
+import Mathlib.RingTheory.TensorProduct.Basic
+
+set_option autoImplicit false
+
+/-!
+# The finite conductor exponent is a genuine local minimum
+
+The local norm condition is satisfied at the conductor exponent and at
+every larger exponent, and at no smaller exponent.  The norm is taken from
+the whole completion tensor algebra, with no arbitrary place above `v`.
+-/
+
+open scoped NumberField TensorProduct
+open NumberField IsDedekindDomain
+
+noncomputable section
+
+namespace ClassFieldTheory
+
+/-- The conductor exponent is the least index whose higher-unit group lies
+in the finite-place tensor norm image. In particular this set is nonempty. -/
+theorem IsAbelianConductor.finiteExponent_isLeast_tensorNorm
+    {K : Type} [Field K] [NumberField K]
+    {L : Type} [Field L] [NumberField L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    {c : RayClassModulus K}
+    (hc : IsAbelianConductor K L c)
+    (v : HeightOneSpectrum (𝓞 K)) :
+    IsLeast (α := ℕ) (fun n =>
+      rayLocalHigherUnitGroup v n ≤
+        (Units.map (Algebra.norm (v.adicCompletion K)) :
+          (v.adicCompletion K ⊗[K] L)ˣ →*
+            (v.adicCompletion K)ˣ).range) (c.finitePart v) := by
+  constructor
+  · exact (hc.finiteExponent_le_iff_higherUnit_le_tensorNorm v
+      (c.finitePart v)).mp le_rfl
+  · intro n hn
+    exact (hc.finiteExponent_le_iff_higherUnit_le_tensorNorm v n).mpr hn
+
+end ClassFieldTheory

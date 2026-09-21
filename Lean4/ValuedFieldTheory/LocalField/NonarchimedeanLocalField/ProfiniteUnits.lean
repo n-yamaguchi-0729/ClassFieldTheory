@@ -1,6 +1,7 @@
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Basic
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
 import Mathlib.Topology.Algebra.ClopenNhdofOne
+import Mathlib.Topology.Algebra.Group.Units
 
 set_option autoImplicit false
 

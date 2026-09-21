@@ -161,6 +161,7 @@ theorem
       vK hvK w] at hcomap
   simpa [C, E, toE] using hcomap
 
+omit [FiniteDimensional K L] in
 /-- A Kummer radicand is an `n`-th power in the finite-place completion
 exactly when its chosen root belongs to the decomposition field at the
 chosen extension of that place. -/

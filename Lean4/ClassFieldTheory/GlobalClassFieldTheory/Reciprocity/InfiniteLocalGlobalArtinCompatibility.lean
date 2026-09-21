@@ -175,7 +175,7 @@ theorem globalNormResidueMonoidHom_comp_infinitePlaceIdeleClass_of_unramified
           (K := K) (L := L) v x = 1 := by
     unfold chosenInfinitePlaceArtinMonoidHom
     unfold infinitePlaceArtinMonoidHomOfPlace
-    rw [dif_pos hUnramified]
+    rw [dite_eq_left hUnramified]
     rfl
   have hglobal :
       globalNormResidueMonoidHom K L

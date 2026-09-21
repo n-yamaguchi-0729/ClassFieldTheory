@@ -88,7 +88,9 @@ noncomputable def finitePlaceCompletionRingHom
     (v : HeightOneSpectrum (𝓞 K)) :
     (NumberField.HeightOneSpectrum.adicAbv K v).Completion →+*
       v.adicCompletion K :=
-  (finitePlaceCompletionBaseMap_isometry v).extensionHom
+  UniformSpace.Completion.extensionHom
+    (finitePlaceCompletionBaseMap v)
+    (finitePlaceCompletionBaseMap_isometry v).continuous
 
 @[simp]
 theorem finitePlaceCompletionRingHom_coe
@@ -99,7 +101,9 @@ theorem finitePlaceCompletionRingHom_coe
         (x :
           (NumberField.HeightOneSpectrum.adicAbv K v).Completion) =
       finitePlaceCompletionBaseMap v x :=
-  (finitePlaceCompletionBaseMap_isometry v).extensionHom_coe x
+  UniformSpace.Completion.extensionHom_coe
+    (finitePlaceCompletionBaseMap v)
+    (finitePlaceCompletionBaseMap_isometry v).continuous x
 
 theorem finitePlaceCompletionRingHom_isometry
     (v : HeightOneSpectrum (𝓞 K)) :
@@ -352,6 +356,7 @@ noncomputable def chosenFinitePlaceNormQuotientEquiv
           (K := K) (L := L) v)
         e heq)
 
+omit [FiniteDimensional K L] in
 @[simp]
 theorem chosenFinitePlaceNormQuotientEquiv_normClass
     (v : HeightOneSpectrum (𝓞 K))
@@ -410,6 +415,7 @@ noncomputable def principalLocalNormQuotientMap
     (fun v ↦ chosenFinitePlaceLocalNormSubgroup
       (K := K) (L := L) v.1)
 
+omit [FiniteDimensional K L] in
 @[simp]
 theorem principalLocalNormQuotientMap_apply
     (S : Finset (HeightOneSpectrum (𝓞 K)))
@@ -470,6 +476,7 @@ theorem principalIntrinsicLocalNormQuotientMap_surjective
         (K := K) (L := L) S x) = q
   rw [hx, E.symm_apply_apply]
 
+omit [FiniteDimensional K L] in
 /-- Kernel membership has the expected simultaneous local-norm
 description. -/
 theorem mem_ker_principalLocalNormQuotientMap_iff
@@ -494,6 +501,7 @@ theorem mem_ker_principalLocalNormQuotientMap_iff
       (QuotientGroup.eq_one_iff _).mpr
         (hx v)
 
+omit [FiniteDimensional K L] in
 /-- The kernel is the intersection of the pullbacks of the actual local
 norm subgroups. -/
 theorem principalLocalNormQuotientMap_ker

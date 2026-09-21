@@ -48,7 +48,7 @@ theorem dense_torsion_pi_of_finite
     by_cases hi : i ∈ S
     · rw [Pi.pow_apply]
       dsimp only [y]
-      rw [dif_pos hi]
+      rw [dite_eq_left hi]
       exact orderOf_dvd_iff_pow_eq_one.mp
         (Finset.dvd_prod_of_mem
           (fun j => orderOf (x j)) hi)

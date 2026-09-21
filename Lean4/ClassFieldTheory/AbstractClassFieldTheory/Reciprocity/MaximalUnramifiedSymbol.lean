@@ -57,9 +57,9 @@ theorem maximalUnramifiedExtensionRestriction_mk
     maximalUnramifiedExtensionRestriction D K L hUnramified
         (QuotientGroup.mk k) =
       L.extensionQuotientMk k := by
-  apply L.extensionQuotientMulEquiv.injective
-  exact (L.extensionQuotientMulEquiv.apply_symm_apply
-    (QuotientGroup.mk k)).trans (L.extensionQuotientMk_apply k).symm
+  exact
+    L.extensionQuotientMulEquiv.symm_apply_eq.mpr
+      (L.extensionQuotientMk_apply k).symm
 
 /-- Restriction sends the maximal-unramified Frobenius to the arithmetic
 Frobenius of every finite unramified quotient. -/
@@ -86,9 +86,10 @@ theorem maximalUnramifiedRestriction_frobenius
     rw [D.maximalUnramifiedDegreeEquiv_mk, hφ,
       D.maximalUnramifiedDegreeEquiv_frobenius]
   rw [← hmk, maximalUnramifiedExtensionRestriction_mk D]
-  apply L.extensionQuotientMulEquiv.injective
-  rw [MulEquiv.apply_symm_apply, L.extensionQuotientMk_apply]
-  rfl
+  symm
+  exact
+    L.extensionQuotientMulEquiv.symm_apply_eq.mpr
+      (L.extensionQuotientMk_apply φ).symm
 
 /-- Restriction to a bundled finite Galois extension.  The named comparison
 between the finite and non-finite Galois quotient boundaries is applied here,

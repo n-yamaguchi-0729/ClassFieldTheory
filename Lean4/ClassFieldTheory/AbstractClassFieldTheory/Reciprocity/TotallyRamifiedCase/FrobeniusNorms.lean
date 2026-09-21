@@ -97,8 +97,7 @@ theorem abstractReciprocityTotallyRamifiedFrobeniusInM_restriction
   change L.extensionQuotientMulEquiv.symm
       (abstractReciprocityRestriction K.field L.field M.field hML L.below
         (r σ.1)) = q
-  apply L.extensionQuotientMulEquiv.injective
-  rw [MulEquiv.apply_symm_apply]
+  refine L.extensionQuotientMulEquiv.symm_apply_eq.mpr ?_
   have hcompat : ∀ z : K.field.toSubgroup ⧸
       D.extensionInertiaWithin K.field L.field L.below,
       abstractReciprocityRestriction K.field L.field M.field hML L.below (r z) =

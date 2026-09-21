@@ -628,11 +628,29 @@ theorem
     rationalIdeleClassEquivBaseFixed_coe
       (rationalNormalClosure F)
       (_root_.ideleClassNorm ℚ F (Additive.toMul c))
-  rw [← hordinary] at hcoe
+  have hcoe' := hcoe.trans
+    (congrArg
+      (fun x : IdeleClassGroup ℚ =>
+        Additive.ofMul
+          (rationalRelativeIdeleClassToDirectLimit
+            (rationalNormalClosure F)
+            (RelativeIdeleGroup.classInclusion ℚ
+              (rationalNormalClosure F) x)))
+      hordinary.symm)
   apply rationalIdeleClassEquivBaseFixed.injective
-  rw [rationalIdeleClassEquivBaseFixed.apply_symm_apply]
-  apply Subtype.ext
-  exact hcoe.trans hbase.symm
+  calc
+    rationalIdeleClassEquivBaseFixed
+        (rationalIdeleClassEquivBaseFixed.symm
+          (normToBase rationalIdeleClassRepresentation H.field
+            (rationalAbstractFixedFieldIdeleClassEquivFixed H.field c))) =
+      normToBase rationalIdeleClassRepresentation H.field
+        (rationalAbstractFixedFieldIdeleClassEquivFixed H.field c) :=
+      rationalIdeleClassEquivBaseFixed.apply_symm_apply _
+    _ = rationalIdeleClassEquivBaseFixed
+        (Additive.ofMul
+          (_root_.ideleClassNorm ℚ F (Additive.toMul c))) := by
+      apply Subtype.ext
+      exact hcoe'.trans hbase.symm
 
 end AbstractFixedFieldOrdinaryNorm
 

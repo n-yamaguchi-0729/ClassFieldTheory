@@ -228,7 +228,7 @@ theorem doubleCosetRightProjection_surjective
   refine
     ⟨DoubleCoset.mk H (⊥ : Subgroup G) q.out, ?_⟩
   rw [doubleCosetRightProjection_mk]
-  exact DoubleCoset.out_eq' H D q
+  exact DoubleCoset.out_eq' q
 
 /-- If the left-coset to double-coset projection is injective, then
 the right subgroup lies in the normal core of the left subgroup. -/
@@ -290,8 +290,7 @@ theorem rightSubgroup_le_normalCore_of_doubleCoset_card_eq
         intro q
         exact
           ⟨q.out,
-            DoubleCoset.out_eq'
-              H (⊥ : Subgroup G) q⟩)
+            DoubleCoset.out_eq' q⟩)
   have hbij :
       Function.Bijective
         (doubleCosetRightProjection H D) :=

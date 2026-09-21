@@ -95,9 +95,13 @@ private theorem ringNormalClosure_isFractionRing :
   let L := FractionRing S
   let A := AlgebraicClosure L
   let E := IntermediateField.normalClosure K L A
+  let : Algebra L E := normalClosure.algebra K L A
   let T := Ring.NormalClosure R S
   let : Algebra S E := ((algebraMap L E).comp (algebraMap S L)).toAlgebra
-  let : IsScalarTower S L E := IsScalarTower.of_algebraMap_eq' rfl
+  let : IsScalarTower S L E := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro x
+    rfl
   let : Algebra T E := by
     change Algebra (integralClosure S E) E
     infer_instance
@@ -124,9 +128,13 @@ private theorem ringNormalClosure_isGalois_transport :
   let L := FractionRing S
   let A := AlgebraicClosure L
   let E := IntermediateField.normalClosure K L A
+  let : Algebra L E := normalClosure.algebra K L A
   let T := Ring.NormalClosure R S
   let : Algebra S E := ((algebraMap L E).comp (algebraMap S L)).toAlgebra
-  let : IsScalarTower S L E := IsScalarTower.of_algebraMap_eq' rfl
+  let : IsScalarTower S L E := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro x
+    rfl
   let : Algebra T E := by
     change Algebra (integralClosure S E) E
     infer_instance
@@ -156,9 +164,13 @@ private theorem ringNormalClosure_moduleFinite_of_isSeparable
   let L := FractionRing S
   let A := AlgebraicClosure L
   let E := IntermediateField.normalClosure K L A
+  let : Algebra L E := normalClosure.algebra K L A
   let T := Ring.NormalClosure R S
   let : Algebra S E := ((algebraMap L E).comp (algebraMap S L)).toAlgebra
-  let : IsScalarTower S L E := IsScalarTower.of_algebraMap_eq' rfl
+  let : IsScalarTower S L E := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro x
+    rfl
   let : Algebra T E := by
     change Algebra (integralClosure S E) E
     infer_instance
@@ -193,9 +205,13 @@ private theorem ringNormalClosure_isDedekindDomain_of_isSeparable
   let L := FractionRing S
   let A := AlgebraicClosure L
   let E := IntermediateField.normalClosure K L A
+  let : Algebra L E := normalClosure.algebra K L A
   let T := Ring.NormalClosure R S
   let : Algebra S E := ((algebraMap L E).comp (algebraMap S L)).toAlgebra
-  let : IsScalarTower S L E := IsScalarTower.of_algebraMap_eq' rfl
+  let : IsScalarTower S L E := by
+    apply IsScalarTower.of_algebraMap_eq
+    intro x
+    rfl
   let : Algebra T E := by
     change Algebra (integralClosure S E) E
     infer_instance
@@ -380,9 +396,8 @@ theorem relNorm_maximalIdeal_eq_pow_residue_finrank
     fractionRing_integerRing_isSeparable K L
   have h := relNorm_eq_pow_inertiaDeg_of_isSeparable
     𝒪[K] 𝒪[L] (𝓂[L] : Ideal 𝒪[L]) (𝓂[K] : Ideal 𝒪[K])
-  rw [← Ideal.inertiaDeg'_eq_inertiaDeg
-      (𝓂[K] : Ideal 𝒪[K]) (𝓂[L] : Ideal 𝒪[L]),
-    Ideal.inertiaDeg'_algebraMap] at h
+  rw [Ideal.inertiaDeg_eq_of_isMaximal
+    (𝓂[K] : Ideal 𝒪[K]) (𝓂[L] : Ideal 𝒪[L])] at h
   exact h
 
 /-- The norm of the chosen upstairs prime element has base normalized value

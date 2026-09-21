@@ -189,6 +189,8 @@ private theorem decompositionFixedMaximalIdeal_isMaximal
     Algebra.IsInvariant.isIntegral_of_profinite
       (G := decompositionGroup K A)
   exact Ideal.isMaximal_comap_of_isIntegral_of_isMaximal
+    (decompositionFixedSubring K A).subtype
+    (fun x => Algebra.IsIntegral.isIntegral x)
     (IsLocalRing.maximalIdeal A)
 
 /-- Provides the instance `instIsMaximal`. -/

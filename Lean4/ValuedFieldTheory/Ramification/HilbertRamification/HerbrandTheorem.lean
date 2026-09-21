@@ -372,7 +372,7 @@ private theorem sum_truncate_depth_eq_sum_lower_zero_of_mem
       intro sigma _
       by_cases hsigma : sigma ∈ F.lower 0
       · simp [hsigma]
-      · rw [if_neg hsigma]
+      · rw [ite_eq_right hsigma]
         exact truncate_depth_eq_zero_of_not_mem_lower_zero
           F depth hmem hs hsigma
     _ = ∑ sigma : F.lower 0, q (sigma : G) := by
@@ -512,7 +512,7 @@ private theorem truncate_depth_eq_intrinsic_summand
           norm_num [Nat.cast_add, Nat.cast_ofNat] at hsm ⊢
           linarith) hhigh
     rw [htrunc, hdepth]
-    rw [if_pos hmem]
+    rw [ite_eq_left hmem]
     ring
   · have hlt : i < ((m + 2 : ℕ) : ℕ∞) := lt_of_not_ge hhigh
     have hine : i ≠ ⊤ := ne_top_of_lt hlt
@@ -545,7 +545,7 @@ private theorem truncate_depth_eq_intrinsic_summand
       have : (k : ℝ) ≤ m + 1 := by exact_mod_cast hk_upper
       linarith
     rw [htrunc, hdepth]
-    rw [if_neg hmem]
+    rw [ite_eq_right hmem]
     simp only [mul_zero, add_zero]
     exact_mod_cast (by omega : k = 1 + (k - 1))
 
@@ -566,7 +566,7 @@ private theorem sum_truncate_depth_eq_sum_lower_zero
       intro tau _
       by_cases htau : tau ∈ F.lower 0
       · simp [htau]
-      · rw [if_neg htau]
+      · rw [ite_eq_right htau]
         have hzero : D.depth (tau : G) = (0 : ℕ∞) := by
           exact D.depth_eq_zero_of_not_mem_lower_zero H tau htau
         change truncateENatAtDVF (D.depth (tau : G)) (s + 1) = 0

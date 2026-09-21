@@ -143,8 +143,7 @@ theorem absoluteValueExtension_finiteLocalization_eq_top
   intro y _
   obtain ⟨z, rfl⟩ :=
     absoluteValueExtension_localizationTensorHom_surjective vK hvK w y
-  induction z using TensorProduct.induction_on with
-  | zero => exact E.zero_mem
+  induction z using TensorProduct.inductionOn with
   | tmul b x =>
       rw [absoluteValueExtension_localizationTensorHom_tmul]
       exact E.mul_mem (E.algebraMap_mem b)

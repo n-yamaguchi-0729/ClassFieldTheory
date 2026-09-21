@@ -139,15 +139,13 @@ theorem baseChangedLmul_eq
       (Algebra.lmul A (A ⊗[K] L)).toLinearMap := by
   apply LinearMap.ext
   intro z
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | add z₁ z₂ hz₁ hz₂ =>
       rw [map_add, map_add, hz₁, hz₂]
   | tmul a x =>
       apply LinearMap.ext
       intro y
-      induction y using TensorProduct.induction_on with
-      | zero => simp
+      induction y using TensorProduct.inductionOn with
       | add y₁ y₂ hy₁ hy₂ =>
           rw [map_add, map_add, hy₁, hy₂]
       | tmul b t =>

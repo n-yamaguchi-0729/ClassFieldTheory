@@ -32,7 +32,7 @@ def heightOnePrimeBelow (w : IsDedekindDomain.HeightOneSpectrum B) :
   isPrime := inferInstance
   ne_bot := by
     have : Algebra.IsIntegral A B := Algebra.IsIntegral.of_finite A B
-    exact mt Ideal.eq_bot_of_comap_eq_bot w.ne_bot
+    exact mt Ideal.eq_bot_of_under_eq_bot w.ne_bot
 
 variable (A B)
 

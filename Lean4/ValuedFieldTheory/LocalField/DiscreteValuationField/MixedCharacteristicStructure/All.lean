@@ -1,5 +1,0 @@
-import ValuedFieldTheory.LocalField.DiscreteValuationField.MixedCharacteristicStructure.Core
-import ValuedFieldTheory.LocalField.DiscreteValuationField.MixedCharacteristicStructure.DeepPrincipalUnits
-import ValuedFieldTheory.LocalField.DiscreteValuationField.MixedCharacteristicStructure.IntegralLattice
-
-set_option autoImplicit false

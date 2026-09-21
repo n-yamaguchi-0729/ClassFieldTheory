@@ -1,3 +1,0 @@
-import GaloisCohomology.Topology.TotallyDisconnectedQuotients
-
-set_option autoImplicit false

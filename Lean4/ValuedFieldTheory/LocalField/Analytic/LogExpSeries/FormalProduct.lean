@@ -165,7 +165,7 @@ theorem formalLogOnePlusProductArgument_pow_coeff_eq_sum_basicFactor
         formalLogOnePlusProductArgumentBasicFactor (l i)
   · rw [formalLogOnePlusProductArgument_pow_term_prod_eq_one_of_basicFactor
       A hbasic]
-    rw [if_pos hbasic]
+    rw [ite_eq_left hbasic]
   · have hprodZero :
         (∏ i ∈ Finset.range q,
           MvPowerSeries.coeff (l i) (formalLogOnePlusProductArgument A)) = 0 := by
@@ -177,7 +177,7 @@ theorem formalLogOnePlusProductArgument_pow_coeff_eq_sum_basicFactor
           intro hzero
           exact hprodNe (Finset.prod_eq_zero hi hzero))
     rw [hprodZero]
-    rw [if_neg hbasic]
+    rw [ite_eq_right hbasic]
 
 /--
 Establishes the identity `(∑ l ∈ Finset.finsuppAntidiag (Finset.range q) e, if ∀ i ∈ Finset.range

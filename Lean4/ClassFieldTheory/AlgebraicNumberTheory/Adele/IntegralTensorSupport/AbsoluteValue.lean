@@ -102,7 +102,8 @@ theorem absoluteValueExtension_isNonarchimedean
     w.1 (n : E) =
         w.1 (algebraMap F E (n : F)) := by simp
     _ = vF (n : F) := w.2 (n : F)
-    _ ≤ 1 := hvF.apply_natCast_le_one
+    _ ≤ 1 :=
+      hvF.apply_natCast_le_one (map_zero_le vF 1) (map_one vF)
 
 /-- An element integral over `ℤ` lies in the valuation subring of
 every nonarchimedean real absolute value. -/

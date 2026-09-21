@@ -105,7 +105,8 @@ theorem normFormula_extension_valuationSubring_eq_integralClosure_of_mem_or_inv
       exact
         IsLocalRing.maximalIdeal.isMaximal
           V.valuation.valuationSubring
-    exact Ideal.isMaximal_of_isIntegral_of_isMaximal_comap P hcomapMax
+    exact Ideal.isMaximal_of_isIntegral_of_isMaximal_comap i
+      (fun x => Algebra.IsIntegral.isIntegral x) P hcomapMax
   have hP :
       ValuationSubring.idealOfLE B wL.valuationSubring hBW =
         IsLocalRing.maximalIdeal B :=

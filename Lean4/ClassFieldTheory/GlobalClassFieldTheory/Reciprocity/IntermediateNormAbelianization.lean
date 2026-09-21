@@ -164,7 +164,7 @@ theorem ideleClassNorm_range_eq_artin_preimage_abelianizedFixingSubgroup
     have hnc : n c ∈ (_root_.ideleClassNorm K M).range := ⟨c, rfl⟩
     have hproduct :=
       (_root_.ideleClassNorm K M).range.mul_mem htopIntermediate hnc
-    simpa only [mul_assoc, inv_mul_cancel, mul_one] using hproduct
+    simpa only [inv_mul_cancel_right] using hproduct
 
 end Reciprocity
 end GlobalClassFieldTheory

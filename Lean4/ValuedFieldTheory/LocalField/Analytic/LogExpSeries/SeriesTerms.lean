@@ -118,7 +118,7 @@ theorem powerSeries_log_coeff_mul_pow_eq_signedLogSeriesTermField
   have hsign : (-1 : ℚ) ^ (n + 1 + 1) = (-1 : ℚ) ^ n := by
     rw [show n + 1 + 1 = n + 2 by omega, pow_add]
     norm_num
-  rw [PowerSeries.coeff_log, if_neg (Nat.succ_ne_zero n), hsign, hcoeff]
+  rw [PowerSeries.coeff_log, ite_eq_right (Nat.succ_ne_zero n), hsign, hcoeff]
   simp [signedLogSeriesTermField, logSeriesTermField, div_eq_mul_inv,
     mul_assoc, mul_left_comm, mul_comm]
 

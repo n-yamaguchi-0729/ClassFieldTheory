@@ -137,7 +137,7 @@ noncomputable def rootClassesEquivDistinctNormalizedFactors
     Quotient (rootMinpolySetoid (E := E) p) ≃
       DistinctNormalizedFactors p :=
   (Setoid.quotientKerEquivRange (rootMinpoly p)).trans
-    (Equiv.setCongr (range_rootMinpoly_eq_distinctNormalizedFactors hp))
+    (Set.equivOfEq (range_rootMinpoly_eq_distinctNormalizedFactors hp))
 
 /-- Two roots are equivalent precisely when they are conjugate roots. -/
 theorem rootMinpolySetoid_rel_iff_isConjRoot

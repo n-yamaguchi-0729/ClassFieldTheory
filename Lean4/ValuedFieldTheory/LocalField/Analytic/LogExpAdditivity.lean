@@ -453,7 +453,7 @@ theorem summable_formalLogOnePlusProductArgument_logDegree_monomialValue_pair_of
         intro hd
         apply hnotE
         exact Finset.mem_sigma.mpr ⟨Finset.mem_range.mpr hqsmall, hd⟩
-      have hpoly : MvPolynomial.coeff qd.2 (P ^ qd.1) = 0 := by
+      have hpoly : (P ^ qd.1).coeff qd.2 = 0 := by
         by_contra hp
         exact hdnot (MvPolynomial.mem_support_iff.mpr hp)
       have hcoeff :

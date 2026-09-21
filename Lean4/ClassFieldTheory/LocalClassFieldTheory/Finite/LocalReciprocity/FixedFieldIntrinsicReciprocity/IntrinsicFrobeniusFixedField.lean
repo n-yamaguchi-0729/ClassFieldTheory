@@ -610,14 +610,14 @@ theorem ambientFixedField_le_map_intrinsicFrobeniusFixedField
     have hτSF : τRF.1 ∈ SF.toSubgroup := by
       simpa only [τRF, τ,
         intrinsicAbstractBaseEquivAbsolute_symm_apply_val] using hτ₀
-    rcases
-        ((localResidueDatum F).mem_frobeniusFixedField_iff
-          RF EI.field EI.below σ τRF.1).1 hτSF with
-      ⟨k, hk, hkτ⟩
-    have hkeq : k = τRF := by
-      apply Subtype.ext
-      exact hkτ
-    simpa only [hkeq] using hk
+    have hτsub :
+        τRF ∈ extensionSubgroup RF.field
+          ((localResidueDatum F).frobeniusFixedField
+            RF EI.field EI.below σ)
+          ((localResidueDatum F).frobeniusFixedField_le
+            RF EI.field EI.below σ) := hτSF
+    simpa only [(localResidueDatum F).extensionSubgroup_frobeniusFixedField
+      RF EI.field EI.below σ] using hτsub
   let ρRH : RH.field.toSubgroup :=
     ⟨(ψ τ).1, by
       simpa only [RH,

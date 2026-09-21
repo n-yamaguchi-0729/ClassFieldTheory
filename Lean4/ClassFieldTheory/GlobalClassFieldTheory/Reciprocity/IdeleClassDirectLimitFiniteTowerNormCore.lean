@@ -238,8 +238,7 @@ theorem classEmbedding_smul_eq_classEmbedding_comp
       RelativeIdeleGroup.adeleEmbedding
         (σ.toAlgHom.comp j) (a : RelativeAdeleRing K E)
   induction (a : RelativeAdeleRing K E) using
-      TensorProduct.induction_on with
-  | zero => simp
+      TensorProduct.inductionOn with
   | tmul y x =>
       simp only [RelativeIdeleGroup.adeleEmbedding,
         RelativeIdeleGroup.scalarEmbedding_tmul,
@@ -414,8 +413,7 @@ private theorem classEmbedding_comp
       RelativeIdeleGroup.adeleEmbedding (g.comp f)
         (a : RelativeAdeleRing K E)
   induction (a : RelativeAdeleRing K E) using
-      TensorProduct.induction_on with
-  | zero => simp
+      TensorProduct.inductionOn with
   | tmul y x =>
       simp only [RelativeIdeleGroup.adeleEmbedding,
         RelativeIdeleGroup.scalarEmbedding_tmul]
@@ -477,7 +475,7 @@ theorem
     (c : IdeleClassGroup E) :
     rationalIntermediateIdeleClassToDirectLimit E c =
       rationalRelativeIdeleClassToDirectLimit U
-        (RelativeIdeleGroup.classEmbedding
+        (RelativeIdeleGroup.classEmbedding (K := ℚ) (L := E) (M := U)
           (IntermediateField.inclusion hEU)
           ((_root_.relativeIdeleClassBaseChangeMulEquiv
             (K := ℚ) (L := E)).symm c)) := by
@@ -489,7 +487,7 @@ theorem
         rationalIntermediateIdeleClassToDirectLimit U
           (_root_.relativeIdeleClassBaseChangeMulEquiv
             (K := ℚ) (L := U)
-            (RelativeIdeleGroup.classEmbedding
+            (RelativeIdeleGroup.classEmbedding (K := ℚ) (L := E) (M := U)
               (IntermediateField.inclusion hEU) d)) := by
       rw [show c = _root_.relativeIdeleClassBaseChangeMulEquiv
           (K := ℚ) (L := E) d by
@@ -498,10 +496,10 @@ theorem
       exact (rationalIntermediateIdeleClassToDirectLimit_extension
         hEU d).symm
     _ = rationalRelativeIdeleClassToDirectLimit U
-        (RelativeIdeleGroup.classEmbedding
+        (RelativeIdeleGroup.classEmbedding (K := ℚ) (L := E) (M := U)
           (IntermediateField.inclusion hEU) d) :=
       rationalFiniteGaloisIdeleClassToDirectLimit_baseChange
-        U (RelativeIdeleGroup.classEmbedding
+        U (RelativeIdeleGroup.classEmbedding (K := ℚ) (L := E) (M := U)
           (IntermediateField.inclusion hEU) d)
 
 end FiniteTowerNormCore

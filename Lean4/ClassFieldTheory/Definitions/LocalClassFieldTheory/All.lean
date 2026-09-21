@@ -1,0 +1,8 @@
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormHom
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
+
+set_option autoImplicit false

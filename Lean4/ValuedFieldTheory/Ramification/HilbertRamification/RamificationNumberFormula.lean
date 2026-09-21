@@ -215,7 +215,7 @@ theorem sum_truncate_intrinsicRamificationNumberOfUniqueExtension_eq_sum_inertia
       intro sigma _
       by_cases hsigma : sigma ∈ H
       · simp [hsigma]
-      · rw [if_neg hsigma]
+      · rw [ite_eq_right hsigma]
         exact truncate_intrinsicRamificationNumberOfUniqueExtension_eq_zero_of_not_mem_inertia
           (base := base) (target := target) huniq hs hsigma
     _ = ∑ sigma : H, q (sigma : Gal(L/K)) := by

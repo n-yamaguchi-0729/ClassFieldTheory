@@ -445,6 +445,7 @@ theorem
   rw [← IntermediateField.fixingSubgroup_fixedField D,
     htop, IntermediateField.fixingSubgroup_top]
 
+omit [NumberField K] in
 /-- At an infinite place where the radicand is already an `n`-th
 power, the determinant norm from the simple Kummer tensor algebra is
 surjective.  The proof identifies the decomposition group with the

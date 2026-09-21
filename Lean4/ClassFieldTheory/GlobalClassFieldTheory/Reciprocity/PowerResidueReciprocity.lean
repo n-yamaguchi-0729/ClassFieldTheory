@@ -1165,9 +1165,9 @@ theorem powerResidueAwayFromExponentFiniteFactor_integral_eq_idealFactors
     have hPB : ¬ P.asIdeal ∣ Ideal.span {b} := by
       intro hPB
       exact (hAwayB P hPB) hPExponent
-    simp only [if_pos hPExponent, idealPowerResidueFactor,
-      dif_neg hPA, dif_neg hPB, map_one, inv_one, mul_one]
-  · rw [if_neg hPExponent]
+    simp only [ite_eq_left hPExponent, idealPowerResidueFactor,
+      dite_eq_right hPA, dite_eq_right hPB, map_one, inv_one, mul_one]
+  · rw [ite_eq_right hPExponent]
     by_cases hPB : P.asIdeal ∣ Ideal.span {b}
     · have haP : a ∉ P.asIdeal := haB P hPB
       have hPA : ¬ P.asIdeal ∣ Ideal.span {a} := by
@@ -1178,7 +1178,7 @@ theorem powerResidueAwayFromExponentFiniteFactor_integral_eq_idealFactors
       rw [finitePlaceHilbertSymbol_integral_eq_primeIdealPowerResidueFactor
         K n hnK hmu P (hAwayB P hPB) (hcoprimeB P hPB)
           a b ha0 hb0 haP]
-      simp only [idealPowerResidueFactor, dif_pos hPB, dif_neg hPA,
+      simp only [idealPowerResidueFactor, dite_eq_left hPB, dite_eq_right hPA,
         map_pow, map_one, inv_one, mul_one]
     · by_cases hPA : P.asIdeal ∣ Ideal.span {a}
       · have hbP : b ∉ P.asIdeal := hbA P hPA
@@ -1186,7 +1186,7 @@ theorem powerResidueAwayFromExponentFiniteFactor_integral_eq_idealFactors
         rw [finitePlaceHilbertSymbol_integral_eq_primeIdealPowerResidueFactor
           K n hnK hmu P (hAwayA P hPA) (hcoprimeA P hPA)
             b a hb0 ha0 hbP]
-        simp only [idealPowerResidueFactor, dif_neg hPB, dif_pos hPA,
+        simp only [idealPowerResidueFactor, dite_eq_right hPB, dite_eq_left hPA,
           map_pow, map_one, one_mul]
       · have haP : a ∉ P.asIdeal := by
           intro haMem
@@ -1200,7 +1200,7 @@ theorem powerResidueAwayFromExponentFiniteFactor_integral_eq_idealFactors
           exact hbMem
         rw [finitePlaceHilbertSymbol_integral_units_eq_one
           K n hnK hmu P hPExponent a b ha0 hb0 haP hbP]
-        simp only [idealPowerResidueFactor, dif_neg hPB, dif_neg hPA,
+        simp only [idealPowerResidueFactor, dite_eq_right hPB, dite_eq_right hPA,
           map_one, inv_one, mul_one]
 
 /-- A concrete finite set containing every finite place where a local
@@ -1233,43 +1233,16 @@ private theorem valuation_eq_one_of_not_mem_chosenUnitFiniteSupport
       (chosenUnitFiniteSupport (K := K) x) x).mp
     (mem_sUnitGroup_chosenUnitFiniteSupport (K := K) x) v hv
 
-/-- Outside the concrete bad-place set, the finite-place Hilbert factor is
-trivial. -/
-theorem finitePlaceHilbertSymbol_eq_one_of_not_mem_powerResidueBadFinitePlaces
+/-- The finite-place Hilbert symbol is trivial when the exponent and both
+global arguments are units at this place. -/
+theorem finitePlaceHilbertSymbol_eq_one_of_valuation_eq_one
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
     (a b : Kˣ) (v : HeightOneSpectrum (𝓞 K))
-    (hv : v ∉ powerResidueBadFinitePlaces K n a b) :
+    (hva : v.valuation K (a : K) = 1)
+    (hvb : v.valuation K (b : K) = 1)
+    (hvn : v.valuation K ((n : ℕ) : K) = 1) :
     finitePlaceHilbertSymbol K n hnK hmu v a b = 1 := by
-  have hvaSupport : v ∉ chosenUnitFiniteSupport (K := K) a := by
-    intro hva
-    apply hv
-    exact Finset.mem_union_left _ (Finset.mem_union_left _ hva)
-  have hvbSupport : v ∉ chosenUnitFiniteSupport (K := K) b := by
-    intro hvb
-    apply hv
-    exact Finset.mem_union_left _ (Finset.mem_union_right _ hvb)
-  have hvnSupport :
-      v ∉ powerResidueExponentFinitePlaces K n := by
-    intro hvn
-    apply hv
-    exact Finset.mem_union_right _ hvn
-  have hva : v.valuation K (a : K) = 1 :=
-    valuation_eq_one_of_not_mem_chosenUnitFiniteSupport K a v hvaSupport
-  have hvb : v.valuation K (b : K) = 1 :=
-    valuation_eq_one_of_not_mem_chosenUnitFiniteSupport K b v hvbSupport
-  have hvn : v.valuation K ((n : ℕ) : K) = 1 := by
-    have hvnNotDvd :
-        ¬ v.asIdeal ∣ powerResidueExponentIdeal K n := by
-      simpa only [mem_powerResidueExponentFinitePlaces_iff] using hvnSupport
-    have hvnNotMem : ((n : ℕ) : 𝓞 K) ∉ v.asIdeal := by
-      intro hvnMem
-      apply hvnNotDvd
-      rw [powerResidueExponentIdeal, Ideal.dvd_span_singleton]
-      exact hvnMem
-    simpa only [map_natCast] using
-      (v.valuation_eq_one_iff_notMem (K := K)
-        (r := ((n : ℕ) : 𝓞 K))).2 hvnNotMem
   let L := chosenSimpleKummerExtension K n hnK b
   let : FiniteDimensional K L :=
     chosenSimpleKummerExtension_finiteDimensional K n hnK b
@@ -1324,6 +1297,46 @@ theorem finitePlaceHilbertSymbol_eq_one_of_not_mem_powerResidueBadFinitePlaces
   unfold chosenFinitePlaceArtinMonoidHom at hArtin
   dsimp only at hArtin ⊢
   rw [hArtin, map_one, map_one]
+
+/-- Outside the concrete bad-place set, the finite-place Hilbert factor is
+trivial. -/
+theorem finitePlaceHilbertSymbol_eq_one_of_not_mem_powerResidueBadFinitePlaces
+    (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
+    (a b : Kˣ) (v : HeightOneSpectrum (𝓞 K))
+    (hv : v ∉ powerResidueBadFinitePlaces K n a b) :
+    finitePlaceHilbertSymbol K n hnK hmu v a b = 1 := by
+  have hvaSupport : v ∉ chosenUnitFiniteSupport (K := K) a := by
+    intro hva
+    apply hv
+    exact Finset.mem_union_left _ (Finset.mem_union_left _ hva)
+  have hvbSupport : v ∉ chosenUnitFiniteSupport (K := K) b := by
+    intro hvb
+    apply hv
+    exact Finset.mem_union_left _ (Finset.mem_union_right _ hvb)
+  have hvnSupport :
+      v ∉ powerResidueExponentFinitePlaces K n := by
+    intro hvn
+    apply hv
+    exact Finset.mem_union_right _ hvn
+  have hva : v.valuation K (a : K) = 1 :=
+    valuation_eq_one_of_not_mem_chosenUnitFiniteSupport K a v hvaSupport
+  have hvb : v.valuation K (b : K) = 1 :=
+    valuation_eq_one_of_not_mem_chosenUnitFiniteSupport K b v hvbSupport
+  have hvn : v.valuation K ((n : ℕ) : K) = 1 := by
+    have hvnNotDvd :
+        ¬ v.asIdeal ∣ powerResidueExponentIdeal K n := by
+      simpa only [mem_powerResidueExponentFinitePlaces_iff] using hvnSupport
+    have hvnNotMem : ((n : ℕ) : 𝓞 K) ∉ v.asIdeal := by
+      intro hvnMem
+      apply hvnNotDvd
+      rw [powerResidueExponentIdeal, Ideal.dvd_span_singleton]
+      exact hvnMem
+    simpa only [map_natCast] using
+      (v.valuation_eq_one_iff_notMem (K := K)
+        (r := ((n : ℕ) : 𝓞 K))).2 hvnNotMem
+  exact finitePlaceHilbertSymbol_eq_one_of_valuation_eq_one
+    K n hnK hmu a b v hva hvb hvn
 
 /-- The multiplicative support of the finite-place Hilbert factors is
 contained in the explicit power-residue bad-place set. -/
@@ -1547,7 +1560,7 @@ theorem finitePlaceHilbertSymbol_finprod_eq_exponent_product_mul_away
     change exponentFactor v ≠ 1 at hv
     change v ∈ powerResidueExponentFinitePlaces K n
     by_contra hvExponent
-    exact hv (by simp only [exponentFactor, if_neg hvExponent])
+    exact hv (by simp only [exponentFactor, ite_eq_right hvExponent])
   have hExponentFinite : Function.HasFiniteMulSupport exponentFactor := by
     rw [Function.HasFiniteMulSupport]
     exact
@@ -1569,8 +1582,8 @@ theorem finitePlaceHilbertSymbol_finprod_eq_exponent_product_mul_away
         fun v => exponentFactor v * awayFactor v := by
     funext v
     by_cases hv : v ∈ powerResidueExponentFinitePlaces K n
-    · simp only [exponentFactor, awayFactor, if_pos hv, mul_one]
-    · simp only [exponentFactor, awayFactor, if_neg hv, one_mul]
+    · simp only [exponentFactor, awayFactor, ite_eq_left hv, mul_one]
+    · simp only [exponentFactor, awayFactor, ite_eq_right hv, one_mul]
   have hExponentProduct :
       (∏ᶠ v : HeightOneSpectrum (𝓞 K), exponentFactor v) =
         ∏ v ∈ powerResidueExponentFinitePlaces K n,
@@ -1578,7 +1591,7 @@ theorem finitePlaceHilbertSymbol_finprod_eq_exponent_product_mul_away
     rw [finprod_eq_prod_of_mulSupport_subset exponentFactor hExponentSupport]
     apply Finset.prod_congr rfl
     intro v hv
-    simp only [exponentFactor, if_pos hv]
+    simp only [exponentFactor, ite_eq_left hv]
   calc
     (∏ᶠ v : HeightOneSpectrum (𝓞 K),
         finitePlaceHilbertSymbol K n hnK hmu v a b) =
@@ -2240,7 +2253,7 @@ theorem jacobiSym_eq_prod_primeFactors_factorization
       (fun _ hp => Nat.prime_of_mem_primeFactorsList hp)]
     apply List.pmap_congr_left
     intro p hp hprime _
-    simp only [f, dif_pos hprime]
+    simp only [f, dite_eq_left hprime]
   rw [hmap, Finset.prod_list_map_count]
   have hrhs :
       (∏ p : b.primeFactors,
@@ -2252,7 +2265,7 @@ theorem jacobiSym_eq_prod_primeFactors_factorization
     intro p
     have hpPrime : p.1.Prime :=
       Nat.prime_of_mem_primeFactors p.2
-    simp only [f, dif_pos hpPrime]
+    simp only [f, dite_eq_left hpPrime]
   rw [hrhs]
   calc
     _ = ∏ p ∈ b.primeFactors,

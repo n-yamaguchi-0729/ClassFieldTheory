@@ -414,7 +414,7 @@ theorem finiteIdeleOfFinset_apply_mem
     finiteIdeleOfFinset S a v.1 = a v := by
   classical
   change (if hv : v.1 ∈ S then a ⟨v.1, hv⟩ else 1) = a v
-  exact dif_pos v.2
+  exact dite_eq_left v.2
 
 @[simp]
 theorem finiteIdeleOfFinset_apply_notMem
@@ -425,7 +425,7 @@ theorem finiteIdeleOfFinset_apply_notMem
   classical
   change (if hmem : v ∈ S then a ⟨v, hmem⟩ else 1) =
     (1 : (v.adicCompletion K)ˣ)
-  exact dif_neg hv
+  exact dite_eq_right hv
 
 /-- The idele whose prescribed finite components are `a` and whose other
 finite and all infinite components are `1`. -/

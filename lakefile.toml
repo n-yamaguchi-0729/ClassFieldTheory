@@ -1,6 +1,6 @@
 name = "ClassFieldTheory"
 version = "2.0.0"
-defaultTargets = ["ClassFieldTheory", "ValuedFieldTheory.All", "GaloisCohomology.All"]
+defaultTargets = ["ClassFieldTheory.All"]
 enableArtifactCache = false
 restoreAllArtifacts = false
 
@@ -11,20 +11,25 @@ relaxedAutoImplicit = false
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "6f1ef4e5dd604a435bddba4747b13970cd65d2a1"
+rev = "5ed2965256430c3649e86755f9576b54eca72435"
 
 [[lean_lib]]
-name = "ClassFieldTheory"
+name = "ClassFieldTheory.All"
 srcDir = "Lean4"
-globs = ["ClassFieldTheory.*"]
+globs = ["ClassFieldTheory.+"]
 leanOptions = {linter.missingDocs = true}
 
 [[lean_lib]]
-name = "ValuedFieldTheory.All"
+name = "ValuedFieldTheory"
 srcDir = "Lean4"
 globs = ["ValuedFieldTheory.+"]
 
 [[lean_lib]]
-name = "GaloisCohomology.All"
+name = "GaloisCohomology"
 srcDir = "Lean4"
 globs = ["GaloisCohomology.+"]
+
+[[lean_lib]]
+name = "ProCGroups"
+srcDir = "Lean4"
+globs = ["ProCGroups.+"]

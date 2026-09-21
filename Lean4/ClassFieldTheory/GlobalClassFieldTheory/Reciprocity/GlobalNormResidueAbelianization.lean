@@ -188,6 +188,29 @@ private theorem globalNormResidueAbelianizationEquiv_transport_apply
   simp only [globalNormResidueAbelianizationEquiv, AddEquiv.trans_apply,
     AddEquiv.symm_apply_apply]
 
+/-- The abelianized global norm-residue equivalence on a finite norm class. -/
+theorem globalNormResidueAbelianizationEquiv_finiteNormClass
+    (x : FiniteNormQuotient rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) :
+    letI := (numberFieldTowerReciprocityFiniteAbstractField K L).finite
+    letI := numberFieldTowerExtensionSubgroup_normal K L
+    letI := (numberFieldTowerFiniteGaloisSubextension K L).finite
+    globalNormResidueAbelianizationEquiv K L
+        (numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient
+          K L x) =
+      numberFieldTowerAbelianizedExtensionQuotientEquivGaloisAbelianization
+        K L
+        (rationalCyclotomicDegreeData.normResidueSymbol
+          rationalIdeleClassRepresentation
+          rationalCyclotomicIdeleClassValuationData
+          rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+          (numberFieldTowerReciprocityFiniteAbstractField K L)
+          (numberFieldTowerFiniteGaloisSubextension K L) x) := by
+  exact (globalNormResidueAbelianizationEquiv_transport_apply K L x).trans
+    (numberFieldTowerAbstractNormResidueGaloisAbelianizationEquiv_apply K L x)
+
 /-- On the genuine finite-reciprocity class of an abstract extension
 automorphism, the finite-Galois norm-residue equivalence gives the class of
 the corresponding actual automorphism in the Galois abelianization. -/
@@ -303,6 +326,55 @@ theorem globalNormResidueAbelianizationMonoidHom_apply
             (QuotientGroup.mk'
               (_root_.ideleClassNorm K L).range c))) :=
   rfl
+
+/-- Evaluate the finite-Galois symbol on the norm class of an idèle class. -/
+theorem globalNormResidueAbelianizationMonoidHom_finiteNormClass
+    (c : IdeleClassGroup K) :
+    letI := (numberFieldTowerReciprocityFiniteAbstractField K L).finite
+    letI := numberFieldTowerExtensionSubgroup_normal K L
+    letI := (numberFieldTowerFiniteGaloisSubextension K L).finite
+    globalNormResidueAbelianizationMonoidHom K L c =
+      Additive.toMul
+        (numberFieldTowerAbelianizedExtensionQuotientEquivGaloisAbelianization
+          K L
+          (rationalCyclotomicDegreeData.normResidueSymbol
+            rationalIdeleClassRepresentation
+            rationalCyclotomicIdeleClassValuationData
+            rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+            (numberFieldTowerReciprocityFiniteAbstractField K L)
+            (numberFieldTowerFiniteGaloisSubextension K L)
+            (finiteNormClass rationalIdeleClassRepresentation
+              (numberFieldTowerBaseSubgroup K L)
+              (numberFieldTowerTopSubgroup L)
+              (numberFieldTowerTopSubgroup_le_baseSubgroup K L)
+              (numberFieldTowerIdeleClassEquivAmbientFixed K L
+                (Additive.ofMul c))))) := by
+  let x : FiniteNormQuotient rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L) :=
+    finiteNormClass rationalIdeleClassRepresentation
+      (numberFieldTowerBaseSubgroup K L)
+      (numberFieldTowerTopSubgroup L)
+      (numberFieldTowerTopSubgroup_le_baseSubgroup K L)
+      (numberFieldTowerIdeleClassEquivAmbientFixed K L (Additive.ofMul c))
+  have hclass :=
+    numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient_ideleClass
+      K L c
+  calc
+    _ = Additive.toMul
+        (globalNormResidueAbelianizationEquiv K L
+          (Additive.ofMul
+            (QuotientGroup.mk' (_root_.ideleClassNorm K L).range c))) :=
+      globalNormResidueAbelianizationMonoidHom_apply K L c
+    _ = Additive.toMul
+        (globalNormResidueAbelianizationEquiv K L
+          (numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient
+            K L x)) :=
+      congrArg (fun q => Additive.toMul
+        (globalNormResidueAbelianizationEquiv K L q)) hclass.symm
+    _ = _ := congrArg Additive.toMul
+      (globalNormResidueAbelianizationEquiv_finiteNormClass K L x)
 
 /-- An idele class has trivial finite-Galois norm-residue symbol exactly when
 it is an actual idele-class norm from `L`. -/

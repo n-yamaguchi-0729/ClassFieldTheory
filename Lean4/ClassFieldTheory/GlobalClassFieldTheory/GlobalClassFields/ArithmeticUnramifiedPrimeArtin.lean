@@ -1,5 +1,8 @@
+import ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.UnramifiedNormalization
 
 set_option autoImplicit false
 
@@ -56,6 +59,57 @@ theorem arithmeticFinitePlacePrimeArtin_eq_inv
   rw [arithmeticFinitePlacePrimeArtin,
     Reciprocity.arithmeticGlobalArtinMonoidHom_apply,
     finitePlacePrimeArtin]
+
+/-- The arithmetic Frobenius of the actual chosen completed extension,
+transported through its decomposition group into the global Galois group.
+The unramifiedness hypothesis concerns this chosen extension, not an
+unrelated abstract local field. -/
+noncomputable def chosenFinitePlaceArithmeticFrobenius
+    (v : HeightOneSpectrum (𝓞 K))
+    (hunram :
+      _root_.ChosenFinitePlaceIsUnramified
+        (K := K) (L := L) v) :
+    L ≃ₐ[K] L := by
+  let w := chosenFinitePlaceExtension (L := L) v
+  exact Reciprocity.finitePlaceLocalToGlobalMonoidHom
+    (K := K) (L := L) v w
+    (Reciprocity.chosenFinitePlaceLocalArithmeticFrobenius
+      (K := K) (L := L) v hunram)
+
+/-- At an unramified chosen finite place, the arithmetic prime Artin
+element really is the global decomposition-group transport of local
+arithmetic Frobenius. The local input has valuation `-1` in the
+construction's convention, and arithmetic global reciprocity inverts
+that geometric local Artin value. -/
+theorem arithmeticFinitePlacePrimeArtin_eq_chosenFinitePlaceArithmeticFrobenius
+    (v : HeightOneSpectrum (𝓞 K))
+    (hunram :
+      _root_.ChosenFinitePlaceIsUnramified
+        (K := K) (L := L) v) :
+    arithmeticFinitePlacePrimeArtin (K := K) (L := L) v =
+      chosenFinitePlaceArithmeticFrobenius
+        (K := K) (L := L) v hunram := by
+  let w := chosenFinitePlaceExtension (L := L) v
+  let x : (v.adicCompletion K)ˣ :=
+    FiniteIdeleGroup.chosenLocalOrderSection v 1
+  have hgeometric :
+      Reciprocity.chosenFinitePlaceArtinMonoidHom
+          (K := K) (L := L) v x =
+        (chosenFinitePlaceArithmeticFrobenius
+          (K := K) (L := L) v hunram)⁻¹ := by
+    change Reciprocity.finitePlaceArtinMonoidHomOfExtension
+        (K := K) (L := L) v w x = _
+    rw [Reciprocity.finitePlaceArtinMonoidHomOfExtension_factor]
+    change Reciprocity.finitePlaceLocalToGlobalMonoidHom
+        (K := K) (L := L) v w
+        (Reciprocity.finitePlaceLocalArtinMonoidHom
+          (K := K) (L := L) v w x) = _
+    rw [Reciprocity.chosenFinitePlaceLocalArtin_eq_arithmeticFrobenius_inv_of_unramified
+      (K := K) (L := L) v hunram, map_inv]
+    rfl
+  rw [arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin,
+    Reciprocity.arithmeticChosenFinitePlaceArtinMonoidHom_apply]
+  rw [hgeometric, inv_inv]
 
 /-- At an unramified chosen place, the arithmetic prime Artin element
 has order equal to the local extension degree. -/

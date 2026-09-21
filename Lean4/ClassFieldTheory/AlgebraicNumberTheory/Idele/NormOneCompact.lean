@@ -623,7 +623,7 @@ private theorem idealClass_normOneIdealClassRepresentative
     (h : ∃ a : IdeleGroup K,
       a ∈ normOneSubgroup (K := K) ∧ idealClass a = c) :
     idealClass (normOneIdealClassRepresentative (K := K) c) = c := by
-  rw [normOneIdealClassRepresentative, dif_pos h]
+  rw [normOneIdealClassRepresentative, dite_eq_left h]
   exact (Classical.choose_spec h).2
 
 /-- The finite set of chosen norm-one representatives of ordinary ideal

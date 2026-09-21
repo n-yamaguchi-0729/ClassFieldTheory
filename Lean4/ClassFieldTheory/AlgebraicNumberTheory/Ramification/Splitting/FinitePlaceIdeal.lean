@@ -81,6 +81,7 @@ theorem absoluteValueDecompositionGroup_eq_finitePlaceStabilizer
         rw [← finitePlaceEquiv_mul]
         simp
 
+omit [FiniteDimensional K L] in
 /-- Complete splitting can be tested at the centre of any exact extension
 of the normalized absolute value. -/
 theorem finitePlaceSplitsCompletely_iff_centre_stabilizer_eq_bot

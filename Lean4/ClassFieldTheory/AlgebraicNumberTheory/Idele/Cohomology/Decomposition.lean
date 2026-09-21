@@ -83,7 +83,7 @@ noncomputable def finiteIdeleOfSPlaceFactors
         (v.adicCompletion F)ˣ)
   refine ⟨f, S.eventually_cofinite_notMem.mono ?_⟩
   intro v hv
-  simp only [f, dif_neg hv]
+  simp only [f, dite_eq_right hv]
   exact (x.2 ⟨v, hv⟩).2
 
 @[simp]

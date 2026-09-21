@@ -19,7 +19,7 @@ namespace Reciprocity
 
 -- Specializing the generic completion construction to `ℚ` must keep the
 -- `Algebra.id` owner fixed.  Otherwise the rational-field algebra path is
--- underdetermined after the Lean 4.33 instance changes.
+-- underdetermined during instance synthesis.
 @[reducible] noncomputable local instance
     (v : HeightOneSpectrum (𝓞 ℚ)) :
     Algebra ℚ (HeightOneSpectrum.adicAbv ℚ v).Completion := by
@@ -706,7 +706,7 @@ theorem rationalFinitePlaceHilbert_negOne_negOne_eq_negOne :
           (rationalQuadraticNegOneFieldUnit : ℚ) < 0 := by
       rw [rationalQuadraticNegOneFieldUnit_coe, map_neg, map_one]
       norm_num
-    rw [if_pos ⟨hneg, hneg⟩] at hreal
+    rw [ite_eq_left ⟨hneg, hneg⟩] at hreal
     have hreal' :
         (infinitePlaceHilbertSymbol ℚ (2 : ℕ+) Rat.infinitePlace
           rationalQuadraticNegOneFieldUnit
@@ -991,7 +991,7 @@ private theorem rationalInfinitePlaceHilbert_natural_eq_one
         InfinitePlace.embedding_of_isReal Rat.isReal_infinitePlace
           (rationalNaturalFieldUnit b hb : ℚ) < 0) :=
     fun h => (not_lt_of_ge haPos.le) h.1
-  rw [if_neg hnot] at hreal
+  rw [ite_eq_right hnot] at hreal
   exact hreal
 
 /-- Evaluation of the complete rational quadratic bad-place correction.

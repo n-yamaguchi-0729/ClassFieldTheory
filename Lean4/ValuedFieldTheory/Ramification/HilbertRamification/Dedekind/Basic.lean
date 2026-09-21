@@ -1,4 +1,5 @@
 import Mathlib.NumberTheory.RamificationInertia.Galois
+import Mathlib.NumberTheory.RamificationInertia.Inertia
 import Mathlib.Algebra.Exact.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
 
@@ -130,7 +131,7 @@ noncomputable def dedekindDecomposition_primesOverEquivQuotientDecompositionGrou
     (G : Type*) [Group G] [Finite G] [MulSemiringAction G B]
     [IsGaloisGroup G A B] :
     p.primesOver B ≃ G ⧸ decompositionGroup P G :=
-  (Equiv.setCongr
+  (Set.equivOfEq
       (IsInvariant.orbit_eq_primesOver A B G p P).symm).trans
     (MulAction.orbitEquivQuotientStabilizer G P)
 
@@ -477,8 +478,7 @@ theorem dedekindRamification_decompositionQuotientInertia_card_eq_inertiaDeg
     _ = Module.finrank (A ⧸ p) (B ⧸ P) := by
       simpa using (IsGalois.card_aut_eq_finrank (F := A ⧸ p) (E := B ⧸ P))
     _ = P.inertiaDeg A := by
-      rw [← Ideal.inertiaDeg'_eq_inertiaDeg p P,
-          Ideal.inertiaDeg'_algebraMap]
+      rw [Ideal.inertiaDeg_eq_of_isMaximal p P]
 
 /-- Prime-decomposition statement:
 the quotient cardinality is the Galois-invariant inertia degree `f`. -/

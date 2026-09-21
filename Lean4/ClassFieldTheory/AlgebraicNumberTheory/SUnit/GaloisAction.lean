@@ -185,7 +185,7 @@ theorem valuation_finitePlaceEquiv
 /-- Absolute ideal norms are invariant under a ring automorphism. -/
 theorem absNorm_map_ringEquiv
     {R : Type*} [CommRing R] [IsDedekindDomain R]
-    [Module.Free ℤ R]
+    [Module.Free ℤ R] [Infinite R]
     (e : R ≃+* R) (I : Ideal R) :
     Ideal.absNorm (I.map e) = Ideal.absNorm I := by
   rw [Ideal.absNorm_apply, Ideal.absNorm_apply,

@@ -389,6 +389,7 @@ theorem chosenFinitePlace_maximalIdeal_ramificationIdx'_eq_one_of_centre_ramific
     chosenFinitePlace_maximalIdeal_map_not_le_sq_of_centre_ramificationIdx_eq_one
       (K := K) (L := L) v hglobal
 
+omit [FiniteDimensional K L] in
 /-- Ideal-theoretic unramifiedness gives ramification index one at the actual
 centre of the chosen finite-place extension. -/
 theorem finitePlaceExtensionCentre_ramificationIdx_eq_one_of_isUnramifiedAt

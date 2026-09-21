@@ -39,7 +39,7 @@ def absoluteValueUnitBallSubring
     intro x y hx hy
     change v (x * y) ≤ 1
     rw [v.map_mul]
-    exact mul_le_one₀ hx (v.nonneg y) hy
+    exact (mul_le_of_le_one_left (v.nonneg y) hx).trans hy
 
 /-- Membership in the absolute-value valuation subring is the closed-unit-ball
 condition. -/

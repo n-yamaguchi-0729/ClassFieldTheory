@@ -1,7 +1,7 @@
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormOneCompact
 import Mathlib.Analysis.Complex.Convex
-import Mathlib.Data.Sign.Basic
+import Mathlib.Basic.Sign.Basic
 import Mathlib.Topology.Algebra.Ring.Compact
 import Mathlib.Topology.Connected.Clopen
 import Mathlib.Topology.Instances.Sign

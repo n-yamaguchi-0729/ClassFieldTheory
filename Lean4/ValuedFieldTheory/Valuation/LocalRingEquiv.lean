@@ -1,5 +1,6 @@
 import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.RingTheory.LocalRing.Basic
+import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
 
 set_option autoImplicit false
 

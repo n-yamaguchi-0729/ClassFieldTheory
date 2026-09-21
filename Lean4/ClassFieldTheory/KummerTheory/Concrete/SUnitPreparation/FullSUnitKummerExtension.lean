@@ -337,9 +337,7 @@ theorem exists_finset_fullSUnitKummerExtensionRoots_adjoin_eq_top
       (fun _ _ _ _ ihx ihy => by
         simpa using R.add_mem ihx ihy)
       (fun _ _ ihx => by
-        convert R.inv_mem ihx using 1
-        apply Subtype.ext
-        rfl)
+        convert R.inv_mem ihx using 1)
       (fun _ _ _ _ ihx ihy => by
         simpa using R.mul_mem ihx ihy)
       hx

@@ -639,7 +639,7 @@ private theorem
         Polynomial.X ^ d).coeff 0 = π
     rw [Polynomial.coeff_sub,
       standardLubinTatePrimitivePolynomial_coeff_zero]
-    simp only [Polynomial.coeff_X_pow, if_neg hdne.symm, sub_zero]
+    simp only [Polynomial.coeff_X_pow, ite_eq_right hdne.symm, sub_zero]
   have hpiIrreducible : Irreducible π := by
     exact
       (IsDiscreteValuationRing.irreducible_iff_uniformizer π).2

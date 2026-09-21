@@ -309,8 +309,7 @@ theorem
     exact (abelianizationCongr_of qF q).symm
   have hxWitness :
       ambientEmbeddedPrimeWitness K F E j e z = xPrime := by
-    exact
-      ambientEmbeddedPrimeWitness_formula K F E j e z
+    rfl
   rw [hxWitness]
   exact
     (DFunLike.congr_fun

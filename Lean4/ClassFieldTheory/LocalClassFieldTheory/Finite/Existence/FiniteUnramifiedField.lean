@@ -192,8 +192,36 @@ noncomputable instance localFiniteUnramifiedField_isUnramifiedValuedExtension
       Ring.ne_bot_of_isMaximal_of_not_isField
         (IsLocalRing.maximalIdeal.isMaximal 𝒪[K])
         (IsDiscreteValuationRing.not_isField 𝒪[K])
+    have halgebra :
+        (IsLocalRing.ResidueField.instAlgebra :
+          Algebra 𝓀[K] 𝓀[localFiniteUnramifiedField K d hd]) =
+        (IsLocalRing.ResidueField.algebraOfIsIntegral :
+          Algebra 𝓀[K] 𝓀[localFiniteUnramifiedField K d hd]) := by
+      apply Algebra.algebra_ext
+      intro r
+      obtain ⟨r, rfl⟩ := IsLocalRing.residue_surjective r
+      rfl
+    have hmodule :
+        (IsLocalRing.ResidueField.instModule :
+          Module 𝓀[K] 𝓀[localFiniteUnramifiedField K d hd]) =
+        (IsLocalRing.ResidueField.algebraOfIsIntegral :
+          Algebra 𝓀[K] 𝓀[localFiniteUnramifiedField K d hd]).toModule := by
+      calc
+        (IsLocalRing.ResidueField.instModule :
+            Module 𝓀[K] 𝓀[localFiniteUnramifiedField K d hd]) =
+            (IsLocalRing.ResidueField.instAlgebra :
+              Algebra 𝓀[K] 𝓀[localFiniteUnramifiedField K d hd]).toModule := by
+          unfold IsLocalRing.ResidueField.instModule
+            IsLocalRing.ResidueField.instAlgebra
+          rfl
+        _ = _ := congrArg
+          (fun alg : Algebra 𝓀[K]
+              𝓀[localFiniteUnramifiedField K d hd] =>
+            @Algebra.toModule 𝓀[K]
+              𝓀[localFiniteUnramifiedField K d hd] _ _ alg)
+          halgebra
     rw [Ideal.ramificationIdx'_eq_ramificationIdx _ _ hmax,
-      localFiniteUnramifiedField_residue_finrank K d hd,
+      hmodule, localFiniteUnramifiedField_residue_finrank K d hd,
       localFiniteUnramifiedField_finrank K d hd] at hfund
     apply Nat.eq_of_mul_eq_mul_right hd
     simpa only [one_mul] using hfund

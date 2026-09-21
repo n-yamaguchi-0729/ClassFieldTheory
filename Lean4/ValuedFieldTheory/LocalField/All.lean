@@ -1,9 +1,0 @@
-import ValuedFieldTheory.LocalField.Analytic.All
-import ValuedFieldTheory.LocalField.DiscreteValuationField.All
-import ValuedFieldTheory.LocalField.GroupTheory.All
-import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.All
-import ValuedFieldTheory.LocalField.NormUnits
-import ValuedFieldTheory.LocalField.Padic.All
-import ValuedFieldTheory.LocalField.Unramified.All
-
-set_option autoImplicit false

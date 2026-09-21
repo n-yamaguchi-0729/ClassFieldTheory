@@ -1368,7 +1368,7 @@ theorem padicCyclotomicUnramified_valuationSubring_adjoin_eq_top
     exact (ne_of_gt hs) hs0
   let : IsNoetherianRing W := inferInstance
   let : IsDiscreteValuationRing W :=
-    ((IsDiscreteValuationRing.TFAE W hWnotField).out 2 0).mp
+    ((IsDiscreteValuationRing.TFAE W hWnotField).out 3 1).mp
       (show IsDedekindDomain W from inferInstance)
   let k := IsLocalRing.ResidueField V
   let ell := IsLocalRing.ResidueField W

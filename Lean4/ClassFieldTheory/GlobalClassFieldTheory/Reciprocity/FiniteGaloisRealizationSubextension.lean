@@ -208,7 +208,7 @@ theorem
         (ambientEmbeddedExtensionQuotientEquivGaloisGroup_mk_apply
           ℚ K L j e
           (numberFieldTowerSeparableClosureEquivBaseSubgroup
-            K L σ) x) using 1 <;> rfl
+            K L σ) x) using 1; rfl
     _ = σ (j x) := rfl
     _ =
         j

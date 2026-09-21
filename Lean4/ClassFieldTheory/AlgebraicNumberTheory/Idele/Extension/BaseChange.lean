@@ -370,10 +370,7 @@ theorem galoisAverage_mem_adeleInclusion_range
     (z : RelativeAdeleRing K L) :
     ∃ a : NumberField.AdeleRing (𝓞 K) K,
       adeleInclusion K L a = galoisAverage K L z := by
-  induction z using TensorProduct.induction_on with
-  | zero =>
-      refine ⟨0, ?_⟩
-      simp [galoisAverage]
+  induction z using TensorProduct.inductionOn with
   | tmul a x =>
       refine ⟨a * algebraMap K
         (NumberField.AdeleRing (𝓞 K) K)

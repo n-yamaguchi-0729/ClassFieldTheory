@@ -156,7 +156,7 @@ theorem artinFiniteSupportApproximation_finiteComponent
   by_cases hv :
       v ∈ globalArtinFiniteSupport
         (K := K) (L := L) a
-  · rw [if_pos hv]
+  · rw [ite_eq_left hv]
     exact
       IdeleGroup.finiteIdeleOfFinset_apply_mem
         (globalArtinFiniteSupport
@@ -164,7 +164,7 @@ theorem artinFiniteSupportApproximation_finiteComponent
         (fun w =>
           IdeleGroup.finiteComponent w.1 a)
         ⟨v, hv⟩
-  · rw [if_neg hv]
+  · rw [ite_eq_right hv]
     exact
       IdeleGroup.finiteIdeleOfFinset_apply_notMem
         (globalArtinFiniteSupport
@@ -187,7 +187,7 @@ theorem artinFiniteSupportApproximation_finiteComponent_of_mem
           (K := K) (L := L) a) =
       IdeleGroup.finiteComponent v a := by
   rw [artinFiniteSupportApproximation_finiteComponent,
-    if_pos hv]
+    ite_eq_left hv]
 
 /-- Away from the Artin support, the finite-support approximation has trivial
 finite component. -/
@@ -203,7 +203,7 @@ theorem artinFiniteSupportApproximation_finiteComponent_of_notMem
           (K := K) (L := L) a) =
       1 := by
   rw [artinFiniteSupportApproximation_finiteComponent,
-    if_neg hv]
+    ite_eq_right hv]
 
 /-- The quotient of an idele by its finite-support Artin approximation
 is an actual relative-idele norm. -/

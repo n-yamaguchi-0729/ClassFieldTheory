@@ -1,0 +1,10 @@
+import ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
+import ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
+import ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
+import ClassFieldTheory.Definitions.HasseArf.IsUpperRamificationJump
+import ClassFieldTheory.Definitions.HasseArf.IsLowerRamificationJump
+import ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
+import ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
+import ClassFieldTheory.Definitions.HasseArf.UpperRamificationGroup
+
+set_option autoImplicit false

@@ -226,7 +226,7 @@ theorem isNonarchimedean_iff_bounded_nat
       ∃ C : ℝ, ∀ n : ℕ, v (n : K) ≤ C := by
   constructor
   · intro h
-    exact ⟨1, fun n => h.apply_natCast_le_one⟩
+    exact ⟨1, fun n => h.apply_natCast_le_one (by simp) (by simp)⟩
   · exact isNonarchimedean_of_bounded_nat v
 
 

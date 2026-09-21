@@ -1,7 +1,0 @@
-import ValuedFieldTheory.Valuation.Topology.AdicCompletionInverseLimit
-import ValuedFieldTheory.Valuation.Topology.AdicCompletionInverseLimitRing
-import ValuedFieldTheory.Valuation.Topology.AdicContractingFixedPoint
-import ValuedFieldTheory.Valuation.Topology.CompatibleInverseLimit
-import ValuedFieldTheory.Valuation.Topology.Models
-
-set_option autoImplicit false

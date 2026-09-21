@@ -1,0 +1,20 @@
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FiniteAbelianGlobalReciprocity
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FiniteAbelianGlobalReciprocityQuotient
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FiniteAbelianReciprocityQuotientEquivMk
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FinitePlaceLocalGlobalNormKernel
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FinitePlaceRayArtinNormKernel
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FinitePlaceRayArtinDecomposition
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FinitePlaceCompletionLocalArtin
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FinitePlaceRayArtinLocalValue
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity
+import ClassFieldTheory.Theorems.GlobalClassFieldTheory.MaximalAbelianGlobalArtin
+
+set_option autoImplicit false
+
+/-!
+# Global class field theory
+
+This module collects finite ideal-theoretic reciprocity and the topological
+maximal-abelian statements. The latter are proved via topological comparison
+with the existing restricted-product implementation.
+-/

@@ -1,5 +1,0 @@
-import ValuedFieldTheory.Valuation.AbsoluteValue.Theory.AbsoluteValues
-import ValuedFieldTheory.Valuation.AbsoluteValue.Theory.Core
-import ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
-
-set_option autoImplicit false

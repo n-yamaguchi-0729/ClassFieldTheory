@@ -1,4 +1,5 @@
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
+import Mathlib.LinearAlgebra.FreeModule.IdealQuotient
 import Mathlib.Topology.Algebra.Valued.LocallyCompact
 
 set_option autoImplicit false
@@ -240,7 +241,7 @@ theorem finite_adicCompletion_residueField
     (v : HeightOneSpectrum (𝓞 K)) :
     Finite (Valued.ResidueField (v.adicCompletion K)) := by
   let : Finite (𝓞 K ⧸ v.asIdeal) :=
-    v.asIdeal.finiteQuotientOfFreeOfNeBot v.ne_bot
+    Ideal.finiteQuotientOfFreeOfNeBot v.asIdeal v.ne_bot
   exact Finite.of_equiv (𝓞 K ⧸ v.asIdeal)
     (GlobalClassFieldTheory.ClassFieldAxiom.ringOfIntegersQuotientEquivAdicResidueField
       (K := K) v).toEquiv

@@ -3,77 +3,56 @@
 [![Lean](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-A Lean 4 formalization of local class field theory and global class field theory
-for **number fields**. Required valuation and Galois cohomology support modules
-are bundled. Documentation and the library catalog:
-[Yamaguchi Lean 4 Library](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
+A Lean 4 library for local and global class field theory over number fields.
+The required valuation theory, Galois cohomology, and profinite-group modules
+are included, so the repository depends only on Mathlib.
 
-## Main results
+## Scope
 
-- Local reciprocity and the local existence theorem, including profinite local reciprocity.
-- Global Artin reciprocity and finite and infinite abelian class-field correspondences.
-- Ray and Hilbert class fields, conductor theory, norm limitation, and the principal ideal theorem.
-- Hasse–Arf and local and global Kronecker–Weber.
-- The Hilbert-symbol product formula, power-residue reciprocity, and Gauss quadratic reciprocity.
-- Completely split primes in number fields and bounds on their discriminants.
+The library includes:
 
-The global theory concerns number fields; global function-field class field theory
-is outside this library's scope.
+- abstract class formations and reciprocity;
+- local reciprocity and the local existence theorem;
+- global Artin reciprocity, ray class fields, and Hilbert class fields;
+- conductor theory, norm limitation, and the principal ideal theorem;
+- Hasse--Arf and the local and global Kronecker--Weber theorems;
+- Hilbert symbols, power-residue reciprocity, and quadratic reciprocity.
 
-## Build and use
+Global function-field class field theory is not included.
 
-Use **Lean 4.33.0** and the checked-in `lake-manifest.json`, which pins Mathlib
-to `6f1ef4e5dd604a435bddba4747b13970cd65d2a1`. From the repository root:
+## Build
+
+The repository pins Lean 4.34.0 and its Mathlib revision. From the repository
+root, run:
 
 ```console
 lake exe cache get
 lake --wfail build
 ```
 
-The default build covers all maintained modules, including the bundled support
-libraries. Import the whole library:
+## Use
+
+Import the complete library with:
 
 ```lean
-import ClassFieldTheory
+import ClassFieldTheory.All
 ```
 
-For a smaller dependency closure, use a focused module or aggregate, such as:
+Focused modules and folder aggregates can be imported to reduce the dependency
+closure, for example:
 
 ```lean
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.All
 ```
 
-Module paths now use the `ClassFieldTheory.` prefix and `.All` for folder
-aggregates; the top-level `import ClassFieldTheory` is preserved.
-
-## Kronecker–Weber
-
-Every number field that is abelian Galois over the rationals embeds into a
-cyclotomic field. The exact statement and its use are:
-
-```lean
-import ClassFieldTheory.KroneckerWeber.Core
-
-example (L : Type) [Field L] [NumberField L] [IsAbelianGalois ℚ L] :
-    ∃ n : ℕ, 0 < n ∧ Nonempty (L →ₐ[ℚ] CyclotomicField n ℚ) :=
-  KroneckerWeber.exists_cyclotomicEmbedding L
-```
-
-`IsAbelianGalois` is Mathlib's standard class for a Galois extension with
-commutative automorphism group. See the
-[theorem source](Lean4/ClassFieldTheory/KroneckerWeber/Core.lean).
-
-Palomar registration: [The global Kronecker–Weber theorem in Lean 4](https://palomar-registry.org/entry.html?id=PALOMAR-2026-09-05-000006&version=1).
+API documentation is available at the
+[Yamaguchi Lean 4 Library](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
 
 ## Verification
 
-The [Lean workflow](.github/workflows/lean.yml) builds with warnings as errors,
-checks the main theorem entries, audits declaration dependencies against
-`propext`, `Classical.choice`, and `Quot.sound`, and runs NanoDa and the
-official Lean kernel replay. Workflow artifacts contain the logs and receipts;
-check the run's commit and result in GitHub Actions.
-
-This library was developed with AI assistance by a non-specialist; please review the material independently.
+GitHub Actions builds the pinned source with warnings treated as errors, checks
+the source and declaration inventories, runs NanoDa, and replays the result with
+the Lean kernel.
 
 ## License
 

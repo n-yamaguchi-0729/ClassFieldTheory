@@ -69,7 +69,7 @@ variable (f : R →+* S) [IsLocalHom f]
 maximal ideal. -/
 theorem comap_maximalIdeal_eq :
     (IsLocalRing.maximalIdeal S).comap f = IsLocalRing.maximalIdeal R :=
-  (((IsLocalRing.local_hom_TFAE f).out 0 4 rfl rfl).mp inferInstance)
+  IsLocalRing.maximalIdeal_comap f
 
 /-- A local homomorphism induces an injective map on residue fields. -/
 theorem map_injective :

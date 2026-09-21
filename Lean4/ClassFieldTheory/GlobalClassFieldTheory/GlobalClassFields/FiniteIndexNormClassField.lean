@@ -58,7 +58,7 @@ theorem closedFiniteIndexNormExponent_eq_index
     (if H = ⊤ then (2 : ℕ+) else
       H.index.toPNat (Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero)) =
       H.index.toPNat (Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero)
-  exact if_neg hH
+  exact ite_eq_right hH
 
 /-- The Kummer exponent attached to a finite-index subgroup is always
 strictly larger than one. -/
@@ -72,7 +72,7 @@ theorem one_lt_closedFiniteIndexNormExponent
         (if H = ⊤ then (2 : ℕ+) else
           H.index.toPNat (Nat.pos_of_ne_zero Subgroup.FiniteIndex.index_ne_zero)) =
           (2 : ℕ+)
-      exact if_pos hH
+      exact ite_eq_left hH
     have hvalue : (closedFiniteIndexNormExponent (K := K) H : ℕ) = 2 :=
       congrArg PNat.val hexponent
     rw [hvalue]

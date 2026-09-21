@@ -424,18 +424,18 @@ theorem idealPowerResidueFactor_mul
   · have hPIJ : P.asIdeal ∣ I * J :=
       dvd_mul_of_dvd_left hPI J
     by_cases hPJ : P.asIdeal ∣ J
-    · rw [idealPowerResidueFactor, dif_pos hPIJ,
-        idealPowerResidueFactor, dif_pos hPI,
-        idealPowerResidueFactor, dif_pos hPJ,
+    · rw [idealPowerResidueFactor, dite_eq_left hPIJ,
+        idealPowerResidueFactor, dite_eq_left hPI,
+        idealPowerResidueFactor, dite_eq_left hPJ,
         idealPrimeMultiplicity_mul K P I J hI hJ,
         pow_add]
     · have hmJ :
           idealPrimeMultiplicity K P J = 0 :=
         idealPrimeMultiplicity_eq_zero_of_not_dvd
           K P J hJ hPJ
-      rw [idealPowerResidueFactor, dif_pos hPIJ,
-        idealPowerResidueFactor, dif_pos hPI,
-        idealPowerResidueFactor, dif_neg hPJ,
+      rw [idealPowerResidueFactor, dite_eq_left hPIJ,
+        idealPowerResidueFactor, dite_eq_left hPI,
+        idealPowerResidueFactor, dite_eq_right hPJ,
         idealPrimeMultiplicity_mul K P I J hI hJ,
         hmJ, add_zero, mul_one]
   · by_cases hPJ : P.asIdeal ∣ J
@@ -445,17 +445,17 @@ theorem idealPowerResidueFactor_mul
           idealPrimeMultiplicity K P I = 0 :=
         idealPrimeMultiplicity_eq_zero_of_not_dvd
           K P I hI hPI
-      rw [idealPowerResidueFactor, dif_pos hPIJ,
-        idealPowerResidueFactor, dif_neg hPI,
-        idealPowerResidueFactor, dif_pos hPJ,
+      rw [idealPowerResidueFactor, dite_eq_left hPIJ,
+        idealPowerResidueFactor, dite_eq_right hPI,
+        idealPowerResidueFactor, dite_eq_left hPJ,
         idealPrimeMultiplicity_mul K P I J hI hJ,
         hmI, zero_add, one_mul]
     · have hPIJ : ¬ P.asIdeal ∣ I * J := by
         intro h
         exact (P.prime.dvd_mul.mp h).elim hPI hPJ
-      rw [idealPowerResidueFactor, dif_neg hPIJ,
-        idealPowerResidueFactor, dif_neg hPI,
-        idealPowerResidueFactor, dif_neg hPJ, one_mul]
+      rw [idealPowerResidueFactor, dite_eq_right hPIJ,
+        idealPowerResidueFactor, dite_eq_right hPI,
+        idealPowerResidueFactor, dite_eq_right hPJ, one_mul]
 
 /-- The subtype product defining the ideal symbol is equivalently the finite product
 over all finite primes, with factor `1` away from the denominator. -/

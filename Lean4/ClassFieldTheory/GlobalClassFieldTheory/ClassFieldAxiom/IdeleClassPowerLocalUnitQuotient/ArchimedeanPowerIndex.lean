@@ -1,7 +1,7 @@
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdelePowerLocalUnitSubgroup
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
 import Mathlib.Algebra.Group.Equiv.Basic
-import Mathlib.Data.Sign.Basic
+import Mathlib.Basic.Sign.Basic
 import Mathlib.NumberTheory.NumberField.ProductFormula
 
 set_option autoImplicit false

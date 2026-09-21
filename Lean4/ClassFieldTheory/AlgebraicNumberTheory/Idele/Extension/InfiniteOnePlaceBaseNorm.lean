@@ -43,7 +43,6 @@ noncomputable def infinitePlaceBaseUnitExtension
         (v := _root_.infinitePlaceBelow (K := K) W)
         (w := W)).toMonoidHom
 
-omit [NumberField K] [NumberField L] in
 /-- The actual completion map carries negative one to negative one. -/
 @[simp]
 theorem infinitePlaceBaseUnitExtension_neg_one
@@ -288,10 +287,12 @@ theorem ideleClassNorm_infinitePlaceIdeleClass_neg_one_of_isReal
         (_root_.infinitePlaceBelow (K := K) W)
         (-1 :
           ((_root_.infinitePlaceBelow (K := K) W).Completion)ˣ) := by
-  simpa using
-    (ideleClassNorm_infinitePlaceIdeleClass_infinitePlaceBaseUnitExtension_of_isReal
+  rw [← infinitePlaceBaseUnitExtension_neg_one
+    (K := K) (L := L) W]
+  exact
+    ideleClassNorm_infinitePlaceIdeleClass_infinitePlaceBaseUnitExtension_of_isReal
       (K := K) (L := L) W hWReal
       (-1 :
-        ((_root_.infinitePlaceBelow (K := K) W).Completion)ˣ))
+        ((_root_.infinitePlaceBelow (K := K) W).Completion)ˣ)
 
 end IdeleGroup

@@ -1,0 +1,17 @@
+import ClassFieldTheory.Theorems.NormTheorems.CyclicHasseNormTheorem
+import ClassFieldTheory.Theorems.NormTheorems.CompletionTensorNormDecomposition
+import ClassFieldTheory.Theorems.NormTheorems.CompletionTensorNormDecompositionCanonical
+import ClassFieldTheory.Theorems.NormTheorems.GlobalNormIsEverywhereLocalNorm
+import ClassFieldTheory.Theorems.NormTheorems.ComplexInfinitePlaceAllNorm
+import ClassFieldTheory.Theorems.NormTheorems.InfiniteNormIffPositive
+import ClassFieldTheory.Theorems.NormTheorems.NegativeOneNotInfiniteNorm
+import ClassFieldTheory.Theorems.NormTheorems.UnramifiedInfinitePlaceAllNorm
+import ClassFieldTheory.Theorems.NormTheorems.TensorNormBaseChange
+
+set_option autoImplicit false
+
+/-!
+# Local-to-global norm theorems
+
+This module gathers the public local-global principles for field norms.
+-/

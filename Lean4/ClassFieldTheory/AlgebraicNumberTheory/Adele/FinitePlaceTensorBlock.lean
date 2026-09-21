@@ -49,8 +49,7 @@ theorem finitePlaceLocalTensorAlgEquiv_conjugation
         (A := v.adicCompletion K) σ
         (finitePlaceLocalTensorAlgEquiv
           (K := K) (L := L) v z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a x => rfl
   | add x y hx hy => simp [hx, hy]
 

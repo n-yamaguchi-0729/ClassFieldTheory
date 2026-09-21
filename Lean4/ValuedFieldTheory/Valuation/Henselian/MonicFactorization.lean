@@ -200,7 +200,7 @@ theorem valuation_multiset_prod_lt_one_of_mem_lt_one
           (ih (fun c hc => hu c (by simp [hc])))
   have htprod : w t.prod ≤ 1 :=
     hprodle t (fun b hb => hs b (by simp [hb]))
-  exact mul_lt_one_of_nonneg_of_lt_one_left zero_le halt htprod
+  exact mul_lt_one_of_lt_of_le halt htprod
 
 /-- The boundary elementary symmetric function is dominated by the unique
 term using all roots of maximal value.  This is the valuation-theoretic
@@ -802,9 +802,7 @@ theorem not_all_roots_same_valuation_of_primitive_irreducible_endpoints_nonunit
             ((roots.map (fun x =>
               Polynomial.X - Polynomial.C x)).prod).coeff i) < 1 := by
       rw [B.valuation.map_mul]
-      exact mul_lt_one_of_nonneg_of_lt_one_left
-        (bot_le : 0 ≤ B.valuation (algebraMap K L (p.leadingCoeff : K)))
-        hleadTarget hprodCoeff
+      exact mul_lt_one_of_lt_of_le hleadTarget hprodCoeff
     have hcoeffLt :
         B.valuation (algebraMap K L (p.coeff i : K)) < 1 := by
       rw [hcoeffFactor i]

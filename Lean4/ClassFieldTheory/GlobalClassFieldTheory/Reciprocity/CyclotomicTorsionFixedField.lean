@@ -48,7 +48,7 @@ noncomputable def rationalCyclotomicTorsionFixedFieldGalEquivZHat :
     (rationalCyclotomicTorsionFixedField ≃ₐ[ℚ]
       rationalCyclotomicTorsionFixedField) ≃ₜ*
         Multiplicative ZHat := by
-  letI : T2Space
+  let _ : T2Space
       (rationalCyclotomicTorsionFixedField ≃ₐ[ℚ]
         rationalCyclotomicTorsionFixedField) :=
     krullTopology_t2
@@ -91,6 +91,10 @@ theorem
           rationalCyclotomicTorsionFixedField σ) =
       (zHatUnitsDecomposition
         (rationalCyclotomicCharacterContinuousMulEquiv σ)).1 := by
+  let _ : T2Space
+      (rationalCyclotomicTorsionFixedField ≃ₐ[ℚ]
+        rationalCyclotomicTorsionFixedField) :=
+    krullTopology_t2
   let q :
       (rationalCyclotomicField ≃ₐ[ℚ]
           rationalCyclotomicField) ⧸

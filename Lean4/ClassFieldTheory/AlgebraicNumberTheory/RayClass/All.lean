@@ -5,6 +5,9 @@ import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.LocalConductor
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.OrdinaryClassGroupComparison
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
+import ClassFieldTheory.AlgebraicNumberTheory.RayClass.PublicHigherUnitComparison
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 

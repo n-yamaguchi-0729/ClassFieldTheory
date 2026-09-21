@@ -41,8 +41,7 @@ def infinitePlaceCompletionAlgEquiv
   __ := InfinitePlace.Completion.equiv w
   commutes' _ := rfl
 
-omit [FiniteDimensional K L] in
-omit [NumberField K] [NumberField L] in
+omit [NumberField L] in
 /-- The canonical comparisons from concrete infinite-place completions to
 absolute-value completions commute with the completion maps in a tower of
 number fields. -/
@@ -141,8 +140,7 @@ theorem infinitePlaceLocalTensorAlgEquiv_conjugation
         (K := K) (L := L) w.1 σ
         (infinitePlaceLocalTensorAlgEquiv
           (K := K) (L := L) w z) := by
-  induction z using TensorProduct.induction_on with
-  | zero => simp
+  induction z using TensorProduct.inductionOn with
   | tmul a x => rfl
   | add x y hx hy => simp [hx, hy]
 

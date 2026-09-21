@@ -160,6 +160,60 @@ open ValuationTheory.DiscreteValuationField
 open ValuationTheory.DiscreteValuationField.ValuedExtension
 open scoped NNReal ValuativeRel
 
+private theorem residueFieldModule_eq_algebraModule
+    (R S : Type) [CommRing R] [IsLocalRing R]
+    [CommRing S] [IsLocalRing S] [Algebra R S]
+    [IsLocalHom (algebraMap R S)] :
+    (IsLocalRing.ResidueField.instModule :
+      Module (IsLocalRing.ResidueField R) (IsLocalRing.ResidueField S)) =
+      (Algebra.toModule :
+        Module (IsLocalRing.ResidueField R) (IsLocalRing.ResidueField S)) := by
+  apply Module.ext'
+  intro x y
+  obtain ⟨x, rfl⟩ := IsLocalRing.residue_surjective x
+  obtain ⟨y, rfl⟩ := IsLocalRing.residue_surjective y
+  simp [Algebra.smul_def]
+
+private theorem residueFieldAlgebra_eq_of_isIntegral
+    (R S : Type) [CommRing R] [IsLocalRing R]
+    [CommRing S] [IsLocalRing S] [Algebra R S]
+    [IsLocalHom (algebraMap R S)]
+    [Algebra.IsIntegral R (IsLocalRing.ResidueField S)] :
+    (IsLocalRing.ResidueField.instAlgebra :
+      Algebra (IsLocalRing.ResidueField R) (IsLocalRing.ResidueField S)) =
+      (IsLocalRing.ResidueField.algebraOfIsIntegral :
+        Algebra (IsLocalRing.ResidueField R) (IsLocalRing.ResidueField S)) := by
+  apply Algebra.algebra_ext
+  intro x
+  obtain ⟨x, rfl⟩ := IsLocalRing.residue_surjective x
+  rfl
+
+private theorem ramificationIdx_mul_residue_finrank_eq_finrank_compatible
+    (K L : Type)
+    [Field K] [ValuativeRel K] [TopologicalSpace K]
+    [IsNonarchimedeanLocalField K]
+    [Field L] [ValuativeRel L] [TopologicalSpace L]
+    [IsNonarchimedeanLocalField L]
+    [Algebra K L] [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [Valuation.HasExtension (ValuativeRel.valuation K) (ValuativeRel.valuation L)]
+    [IsIntegralClosure 𝒪[L] 𝒪[K] L] :
+    (𝓂[L] : Ideal 𝒪[L]).ramificationIdx 𝒪[K] *
+        @Module.finrank 𝓀[K] 𝓀[L] _ _
+          (@Algebra.toModule 𝓀[K] 𝓀[L] _ _
+            IsLocalRing.ResidueField.algebraOfIsIntegral) =
+      Module.finrank K L := by
+  have hdegree :=
+    maximalIdeal_ramificationIdx_mul_residue_finrank_eq_finrank_of_isIntegralClosure
+      K L
+  have hp : (𝓂[K] : Ideal 𝒪[K]) ≠ ⊥ :=
+    Ring.ne_bot_of_isMaximal_of_not_isField
+      (IsLocalRing.maximalIdeal.isMaximal 𝒪[K])
+      (IsDiscreteValuationRing.not_isField 𝒪[K])
+  rw [← Ideal.ramificationIdx'_eq_ramificationIdx _ _ hp]
+  rw [residueFieldModule_eq_algebraModule 𝒪[K] 𝒪[L]] at hdegree
+  rw [residueFieldAlgebra_eq_of_isIntegral 𝒪[K] 𝒪[L]] at hdegree
+  exact hdegree
+
 universe u
 
 private theorem baseFixingExtensionSubgroup_index_eq_finrank
@@ -355,19 +409,11 @@ theorem abstractFixedField_isUnramifiedValuedExtension
         finiteAbstractField_degree_eq_abstractFixedField_finrank
           K H hnormal
 
-  have hdegree :=
-    maximalIdeal_ramificationIdx_mul_residue_finrank_eq_finrank_of_isIntegralClosure
-      K E
-  have hp : (𝓂[K] : Ideal 𝒪[K]) ≠ ⊥ :=
-    Ring.ne_bot_of_isMaximal_of_not_isField
-      (IsLocalRing.maximalIdeal.isMaximal 𝒪[K])
-      (IsDiscreteValuationRing.not_isField 𝒪[K])
   have hdegree' :
       (𝓂[E] : Ideal 𝒪[E]).ramificationIdx 𝒪[K] *
           Module.finrank 𝓀[K] 𝓀[E] =
-        Module.finrank K E := by
-    rw [← Ideal.ramificationIdx'_eq_ramificationIdx _ _ hp]
-    exact hdegree
+        Module.finrank K E :=
+    ramificationIdx_mul_residue_finrank_eq_finrank_compatible K E
   have hpos : 0 < Module.finrank 𝓀[K] 𝓀[E] :=
     Module.finrank_pos
   apply

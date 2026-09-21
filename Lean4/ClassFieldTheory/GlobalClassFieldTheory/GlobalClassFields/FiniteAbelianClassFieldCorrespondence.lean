@@ -154,8 +154,6 @@ theorem le_iff_ordinaryIdeleClassNormSubgroup_le
     L₁ ≤ L₂ ↔
       ordinaryIdeleClassNormSubgroup K L₂ ≤
         ordinaryIdeleClassNormSubgroup K L₁ := by
-  rw [ordinaryIdeleClassNormSubgroup_eq_map K L₂,
-    ordinaryIdeleClassNormSubgroup_eq_map K L₁]
   let e :
       KummerTheory.ambientFixedAddSubgroup
           rationalIdeleClassRepresentation K.field ≃+
@@ -170,25 +168,26 @@ theorem le_iff_ordinaryIdeleClassNormSubgroup_le
           (abstractFixedField ℚ (SeparableClosure ℚ) K.field)) :=
     e.toAddMonoidHom
   have hf : Function.Injective f := e.injective
-  have hmap :
-      f '' (L₂.normSubgroup rationalIdeleClassRepresentation : Set
-          (KummerTheory.ambientFixedAddSubgroup
-            rationalIdeleClassRepresentation K.field)) ⊆
-        f '' (L₁.normSubgroup rationalIdeleClassRepresentation : Set
-          (KummerTheory.ambientFixedAddSubgroup
-            rationalIdeleClassRepresentation K.field)) ↔
-        (L₂.normSubgroup rationalIdeleClassRepresentation : Set
-          (KummerTheory.ambientFixedAddSubgroup
-            rationalIdeleClassRepresentation K.field)) ⊆
-        (L₁.normSubgroup rationalIdeleClassRepresentation : Set
-          (KummerTheory.ambientFixedAddSubgroup
-            rationalIdeleClassRepresentation K.field)) :=
-    Set.image_subset_image_iff hf
+  let S₂ := L₂.normSubgroup rationalIdeleClassRepresentation
+  let S₁ := L₁.normSubgroup rationalIdeleClassRepresentation
+  have h₂ : ordinaryIdeleClassNormSubgroup K L₂ = S₂.map f :=
+    ordinaryIdeleClassNormSubgroup_eq_map K L₂
+  have h₁ : ordinaryIdeleClassNormSubgroup K L₁ = S₁.map f :=
+    ordinaryIdeleClassNormSubgroup_eq_map K L₁
+  have htransport :
+      (S₂.map f ≤ S₁.map f) ↔
+        (ordinaryIdeleClassNormSubgroup K L₂ ≤
+          ordinaryIdeleClassNormSubgroup K L₁) :=
+    Iff.of_eq (congrArg₂
+      (fun A B : AddSubgroup (Additive (IdeleClassGroup
+        (abstractFixedField ℚ (SeparableClosure ℚ) K.field))) => A ≤ B)
+      h₂.symm h₁.symm)
   exact
     (FiniteAbelianSubextension.le_iff_normSubgroup_le
       rationalCyclotomicIdeleClassValuationData
       rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
-      K L₁ L₂).trans hmap.symm
+      K L₁ L₂).trans
+        ((AddSubgroup.map_le_map_iff_of_injective hf).symm.trans htransport)
 
 /-- A finite abelian subextension is uniquely determined by its
 ordinary idele-class norm subgroup. -/

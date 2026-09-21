@@ -1,0 +1,6 @@
+import ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
+import ClassFieldTheory.Definitions.NormTheorems.IsEverywhereLocalNorm
+import ClassFieldTheory.Definitions.NormTheorems.IsNormAtFinitePlace
+import ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
+
+set_option autoImplicit false

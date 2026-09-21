@@ -2,6 +2,8 @@ import ValuedFieldTheory.Valuation.DiscreteValuationField.ResidueField
 import ValuedFieldTheory.Valuation.DiscreteValuationField.Complete
 import Mathlib.RingTheory.Valuation.Extension
 import Mathlib.RingTheory.RamificationInertia.Basic
+import Mathlib.NumberTheory.RamificationInertia.Inertia
+import Mathlib.NumberTheory.RamificationInertia.Ramification
 import Mathlib.LinearAlgebra.FiniteDimensional.Basic
 import Mathlib.Algebra.Group.Units.Hom
 
@@ -52,9 +54,8 @@ noncomputable def ramificationIndex : ℕ :=
 /-- The canonical residue degree of the target maximal ideal over the base
 maximal ideal. -/
 noncomputable def residueDegree : ℕ :=
-  Ideal.inertiaDeg'
-    (base.maximalIdeal : Ideal base.valuationSubring)
-    (target.maximalIdeal : Ideal target.valuationSubring)
+  (target.maximalIdeal : Ideal target.valuationSubring).inertiaDeg
+    base.valuationSubring
 
 /-- The induced map between valuation subrings. -/
 def integerMap :

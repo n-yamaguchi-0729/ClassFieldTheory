@@ -197,7 +197,7 @@ theorem exists_rightFoxExpansion
         augmentation G (μ i) =
           wordExponent w i := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       refine ⟨0, ?_, ?_⟩
       · simp
       · intro i
@@ -768,16 +768,16 @@ theorem generator_mul_foxDeterminantLift_mem_mixed
     dsimp [error]
     by_cases hik : i = k
     · subst i
-      rw [if_pos rfl]
+      rw [ite_eq_left rfl]
       rw [map_sub,
         abelianizationRingMap_foxAdjugateCoefficient,
-        if_pos rfl,
+        ite_eq_left rfl,
         abelianizationRingMap_foxDeterminantLift,
         sub_self]
-    · rw [if_neg hik]
+    · rw [ite_eq_right hik]
       rw [map_sub,
         abelianizationRingMap_foxAdjugateCoefficient,
-        if_neg hik, map_zero, sub_zero]
+        ite_eq_right hik, map_zero, sub_zero]
   have hdelta (i : X) :
       groupRingDelta (φ (FreeGroup.of i)) ∈
         ideal G := by
@@ -864,7 +864,7 @@ theorem delta_word_mul_foxMatrix_det
         (foxMatrix φ hφ).det =
       0 := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp
   | of i =>
       exact delta_generator_mul_foxMatrix_det φ hφ i
@@ -1181,7 +1181,7 @@ theorem word_mul_section_norm_mem_mixed
     groupRingDelta (φ w) * S ∈
       mixedAugmentationProduct (commutator G)
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp
   | of k =>
       exact generator_mul_section_norm_mem_mixed

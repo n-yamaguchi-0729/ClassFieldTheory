@@ -203,7 +203,7 @@ private noncomputable def integralInfiniteNormComponents
           v₀.Completion W.1.Completion
           (ContinuousMulEquiv.piUnits a.1 W.1)
 
-omit [NumberField K] [NumberField L] [FiniteDimensional K L] in
+omit [NumberField L] in
 /-- A norm between completions at infinite places is continuous. -/
 private theorem infinitePlace_normUnits_continuous
     (v₀ : InfinitePlace K)
@@ -467,7 +467,6 @@ private theorem infinitePlace_normUnits_continuous
         ((LocalFieldTheory.normUnits_continuous_of_finiteDimensional ℂ ℂ).comp
           hExtensionUnitsContinuous)
 
-omit [NumberField K] [FiniteDimensional K L] in
 /-- The archimedean local norm product is continuous on the
 integral-idele chart. -/
 private theorem integralInfiniteNormComponents_continuous :

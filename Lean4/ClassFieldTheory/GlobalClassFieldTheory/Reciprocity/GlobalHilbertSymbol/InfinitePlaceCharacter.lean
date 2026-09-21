@@ -63,7 +63,7 @@ private theorem chosenInfinitePlaceArtinMonoidHom_eq_one_of_isComplex
     simpa only [w] using hwUnramified
   unfold chosenInfinitePlaceArtinMonoidHom
   unfold infinitePlaceArtinMonoidHomOfPlace
-  rw [dif_pos hwUnramified']
+  rw [dite_eq_left hwUnramified']
   rfl
 
 /-- At a complex place the infinite-place Kummer root character is

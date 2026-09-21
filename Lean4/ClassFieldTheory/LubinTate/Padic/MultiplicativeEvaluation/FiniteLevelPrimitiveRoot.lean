@@ -803,7 +803,7 @@ theorem padicMultiplicativePrimitiveRoot_galoisAction
         σ (1 + (zetaMinusOne : L)) := by
       rfl
     _ = 1 + σ (zetaMinusOne : L) := by
-      simp
+      rw [map_add, map_one]
     _ = 1 + (r zetaMinusOne : L) := by
       rw [hrApply]
     _ =

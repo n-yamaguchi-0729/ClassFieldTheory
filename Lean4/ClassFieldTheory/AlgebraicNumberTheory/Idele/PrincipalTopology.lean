@@ -218,6 +218,6 @@ theorem principalSubgroup_isClosed :
     IsClosed
       ((principalSubgroup K :
         Subgroup (IdeleGroup K)) : Set (IdeleGroup K)) :=
-  Subgroup.isClosed_of_discrete
+  Subgroup.isClosed_of_discreteTopology
 
 end IdeleGroup

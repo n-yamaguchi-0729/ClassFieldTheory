@@ -100,8 +100,10 @@ theorem mem_rationalFiniteModulus_support_iff
     v ∈ (rationalFiniteModulus m).support ↔
       Rat.HeightOneSpectrum.natGenerator v ∣ m := by
   rw [Finsupp.mem_support_iff, rationalFiniteModulus_apply]
-  simp [Nat.factorization_eq_zero_iff,
-    Rat.HeightOneSpectrum.prime_natGenerator, hm]
+  constructor
+  · exact Nat.dvd_of_factorization_pos
+  · intro hdiv
+    exact (Rat.HeightOneSpectrum.prime_natGenerator v).factorization_pos_of_dvd hm hdiv |>.ne'
 
 /-- The fractional ideal underlying a rational fractional-ideal unit. -/
 abbrev rationalFractionalIdeal (I : FractionalIdealGroup ℚ) :

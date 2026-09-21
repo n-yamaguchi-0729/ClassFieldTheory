@@ -199,10 +199,9 @@ private theorem equalCharacteristicDirectTheta_sourceIterate_norm_lt_one_aux
       · rw [norm_pow]
         exact pow_lt_one₀ (norm_nonneg x) hx Nat.card_pos.ne'
       · rw [norm_mul]
-        exact mul_lt_one_of_nonneg_of_lt_one_left
-          (norm_nonneg _)
-          (equalCharacteristicCompletedLevelUniformizer_norm_lt_one F n)
-          hx.le
+        exact
+          (mul_le_of_le_one_right (norm_nonneg _) hx.le).trans_lt
+            (equalCharacteristicCompletedLevelUniformizer_norm_lt_one F n)
 
 /-- Every direct theta source iterate has norm strictly below one. -/
 theorem equalCharacteristicDirectThetaSourceIterate_norm_lt_one

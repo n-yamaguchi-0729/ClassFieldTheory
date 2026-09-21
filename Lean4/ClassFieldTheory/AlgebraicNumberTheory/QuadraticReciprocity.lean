@@ -53,7 +53,7 @@ theorem gaussReciprocity
     by_cases hnb : b < 0
     · have hb_cast : b = -(b.natAbs : ℤ) := by
         rw [Int.natCast_natAbs, abs_of_neg hnb, neg_neg]
-      rw [if_pos hna, if_pos hnb]
+      rw [ite_eq_left hna, ite_eq_left hnb]
       rw [ha_cast, hb_cast]
       simp only [Int.natAbs_neg, Int.natAbs_natCast]
       rw [jacobiSym.neg _ hb', jacobiSym.neg _ ha', hchiA, hchiB]
@@ -74,7 +74,7 @@ theorem gaussReciprocity
     · have hb_nonneg : 0 ≤ b := le_of_not_gt hnb
       have hb_cast : (b.natAbs : ℤ) = b :=
         Int.natAbs_of_nonneg hb_nonneg
-      rw [if_pos hna, if_neg hnb]
+      rw [ite_eq_left hna, ite_eq_right hnb]
       rw [ha_cast, ← hb_cast]
       simp only [Int.natAbs_neg, Int.natAbs_natCast]
       rw [jacobiSym.neg _ hb', hchiB]
@@ -96,7 +96,7 @@ theorem gaussReciprocity
     by_cases hnb : b < 0
     · have hb_cast : b = -(b.natAbs : ℤ) := by
         rw [Int.natCast_natAbs, abs_of_neg hnb, neg_neg]
-      rw [if_neg hna, if_pos hnb]
+      rw [ite_eq_right hna, ite_eq_left hnb]
       rw [← ha_cast, hb_cast]
       simp only [Int.natAbs_neg, Int.natAbs_natCast]
       rw [jacobiSym.neg _ ha', hchiA]
@@ -116,7 +116,7 @@ theorem gaussReciprocity
     · have hb_nonneg : 0 ≤ b := le_of_not_gt hnb
       have hb_cast : (b.natAbs : ℤ) = b :=
         Int.natAbs_of_nonneg hb_nonneg
-      rw [if_neg hna, if_neg hnb]
+      rw [ite_eq_right hna, ite_eq_right hnb]
       rw [← ha_cast, ← hb_cast]
       simp only [Int.natAbs_natCast, add_zero]
       exact hpos
@@ -140,7 +140,7 @@ theorem gaussSupplement_two
     rw [Nat.odd_iff.mp hb]
     decide
   rw [jacobiSym.at_two hb, ZMod.χ₈_nat_eq_if_mod_eight,
-    if_neg hbne]
+    ite_eq_right hbne]
 
 /-- For odd `b`, the mod-eight sign is the classical exponent
 `(-1)^((b²-1)/8)`. -/
@@ -173,7 +173,7 @@ theorem twoSupplementSign_eq_neg_one_pow
     have heven : Even (8 * q ^ 2 + 2 * q) := by
       refine ⟨4 * q ^ 2 + q, ?_⟩
       ring
-    rw [if_pos (Or.inl h1), hexponent, heven.neg_one_pow]
+    rw [ite_eq_left (Or.inl h1), hexponent, heven.neg_one_pow]
   · let q := b / 8
     have hbq : b = 8 * q + 3 := by
       dsimp [q]
@@ -190,7 +190,7 @@ theorem twoSupplementSign_eq_neg_one_pow
     have hodd : Odd (8 * q ^ 2 + 6 * q + 1) := by
       refine ⟨4 * q ^ 2 + 3 * q, ?_⟩
       ring
-    rw [if_neg, hexponent, hodd.neg_one_pow]
+    rw [ite_eq_right, hexponent, hodd.neg_one_pow]
     omega
   · let q := b / 8
     have hbq : b = 8 * q + 5 := by
@@ -208,7 +208,7 @@ theorem twoSupplementSign_eq_neg_one_pow
     have hodd : Odd (8 * q ^ 2 + 10 * q + 3) := by
       refine ⟨4 * q ^ 2 + 5 * q + 1, ?_⟩
       ring
-    rw [if_neg, hexponent, hodd.neg_one_pow]
+    rw [ite_eq_right, hexponent, hodd.neg_one_pow]
     omega
   · let q := b / 8
     have hbq : b = 8 * q + 7 := by
@@ -226,7 +226,7 @@ theorem twoSupplementSign_eq_neg_one_pow
     have heven : Even (8 * q ^ 2 + 14 * q + 6) := by
       refine ⟨4 * q ^ 2 + 7 * q + 3, ?_⟩
       ring
-    rw [if_pos (Or.inr h7), hexponent, heven.neg_one_pow]
+    rw [ite_eq_left (Or.inr h7), hexponent, heven.neg_one_pow]
 
 /-- The second supplementary law, expressed by its parity exponent. -/
 theorem gaussSupplement_two_pow

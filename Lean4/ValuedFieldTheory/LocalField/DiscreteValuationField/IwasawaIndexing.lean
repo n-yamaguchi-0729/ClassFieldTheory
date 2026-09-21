@@ -1,6 +1,6 @@
 import Mathlib.NumberTheory.Padics.RingHoms
 import Mathlib.Topology.Homeomorph.Lemmas
-import Mathlib.Logic.Denumerable
+import Mathlib.Basic.Denumerable
 
 set_option autoImplicit false
 
