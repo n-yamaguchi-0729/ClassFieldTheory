@@ -86,6 +86,81 @@
       "name": "AlgebraicNumberTheory.DiscriminantBounds.rootDiscr_le_of_natAbs_discr_le_pow",
       "kind": "theorem",
       "module": "ClassFieldTheory.AlgebraicNumberTheory.NumberField.RootDiscriminantBound"
+    },
+    {
+      "name": "ClassFieldTheory.finiteAbelianLocalReciprocity",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocity"
+    },
+    {
+      "name": "ClassFieldTheory.finiteAbelianLocalExistence_orderIso",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalExistenceOrderIso"
+    },
+    {
+      "name": "ClassFieldTheory.finiteAbelianGlobalReciprocity",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.GlobalClassFieldTheory.FiniteAbelianGlobalReciprocity"
+    },
+    {
+      "name": "ClassFieldTheory.topologicalGlobalReciprocity",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity"
+    },
+    {
+      "name": "ClassFieldTheory.maximalAbelianGlobalArtin",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.GlobalClassFieldTheory.MaximalAbelianGlobalArtin"
+    },
+    {
+      "name": "ClassFieldTheory.hasseArf",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.HasseArf.HasseArf"
+    },
+    {
+      "name": "ClassFieldTheory.exists_perfectLocalHilbertPairing",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.HilbertSymbols.LocalHilbertPairingPerfectExists"
+    },
+    {
+      "name": "ClassFieldTheory.exists_globalHilbertPairingFamily_productFormula",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.HilbertSymbols.HilbertProductFormula"
+    },
+    {
+      "name": "ClassFieldTheory.cyclicHasseNormTheorem",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.NormTheorems.CyclicHasseNormTheorem"
+    },
+    {
+      "name": "ClassFieldTheory.existsUnique_abelianConductor",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.ConductorsAndRayClassFields.ExistsUniqueAbelianConductor"
+    },
+    {
+      "name": "ClassFieldTheory.rayClassField_reciprocity",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassFieldReciprocity"
+    },
+    {
+      "name": "ClassFieldTheory.bigHilbertClassField_artinEquiv",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.BigHilbertClassFieldArtinEquiv"
+    },
+    {
+      "name": "ClassFieldTheory.smallHilbertClassField_artinEquiv",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldArtinEquiv"
+    },
+    {
+      "name": "ClassFieldTheory.ideals_becomePrincipalInSmallHilbertClassField",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldPrincipalization"
+    },
+    {
+      "name": "ClassFieldTheory.kroneckerWeber",
+      "kind": "theorem",
+      "module": "ClassFieldTheory.Theorems.KroneckerWeber"
     }
   ]
 }
