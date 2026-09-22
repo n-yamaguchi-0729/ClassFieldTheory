@@ -103,9 +103,6 @@ source is reachable from `ClassFieldTheory.All`, audits all declarations for
 proof placeholders and unexpected axioms, verifies them with NanoDa, and replays
 the result with the Lean kernel.
 
-API documentation is available at the
-[Yamaguchi Lean 4 Library](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
-
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
