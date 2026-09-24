@@ -103,6 +103,11 @@ source is reachable from `ClassFieldTheory.All`, audits all declarations for
 proof placeholders and unexpected axioms, verifies them with NanoDa, and replays
 the result with the Lean kernel.
 
+## Authorship and AI assistance
+
+Astra GPT-6 Codex assisted with Lean development, statement review, and preparation of this submission interface. 
+Naganori Yamaguchi is the human author and responsible maintainer.
+
 ## License
 
 Apache License 2.0. See [LICENSE](LICENSE).
