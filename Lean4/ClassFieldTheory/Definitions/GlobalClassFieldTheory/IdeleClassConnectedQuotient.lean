@@ -1,3 +1,9 @@
+/-
+Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729). All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
+-/
+
 import Mathlib.NumberTheory.NumberField.AdeleRing
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Group.Subgroup
@@ -18,17 +24,6 @@ open scoped NumberField
 namespace ClassFieldTheory
 
 universe u
-
-/-- The identity component is normal because the idèle class group is abelian. -/
-instance instNormalIdeleClassConnectedComponent
-    (K : Type u) [Field K] [NumberField K] :
-    (Subgroup.connectedComponentOfOne (NumberField.IdeleClassGroup (𝓞 K) K)).Normal := by
-  constructor
-  intro n hn g
-  have h : g * n * g⁻¹ = n := by
-    rw [mul_comm g n, mul_assoc, mul_inv_cancel, mul_one]
-  rw [h]
-  exact hn
 
 /-- The idèle class group modulo its identity component. -/
 abbrev IdeleClassConnectedQuotient (K : Type u) [Field K] [NumberField K] :=

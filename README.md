@@ -61,6 +61,7 @@ is also the focused import module, with `/` replaced by `.` and `.lean` removed.
 | Result | Mathematical content |
 | --- | --- |
 | [`finiteAbelianLocalReciprocity`](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalReciprocity.lean) | A surjective continuous local Artin map `Kˣ → Gal(L/K)` whose kernel is the field-norm subgroup. |
+| [`profiniteLocalReciprocity`](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/ProfiniteLocalReciprocity.lean) | The topological profinite completion of `Kˣ` is continuously multiplicatively equivalent to the abelianized absolute Galois group of a nonarchimedean local field. |
 | [`finiteAbelianLocalExistence_orderIso`](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalExistenceOrderIso.lean) | The contravariant correspondence between finite abelian local extensions and open finite-index norm subgroups. |
 | [`finiteAbelianGlobalReciprocity`](Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/FiniteAbelianGlobalReciprocity.lean) | A Frobenius-normalized surjective Artin map from a ray class group for every finite abelian extension. |
 | [`topologicalGlobalReciprocity`](Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/TopologicalGlobalReciprocity.lean) | The idèle-class quotient by its identity component is topologically isomorphic to the abelianized absolute Galois group. |
@@ -106,7 +107,7 @@ the result with the Lean kernel.
 ## Authorship and AI assistance
 
 Astra GPT-6 Codex assisted with Lean development, statement review, and preparation of this repository.
-Naganori Yamaguchi is the human author and responsible maintainer.
+[Naganori Yamaguchi](https://github.com/n-yamaguchi-0729) is the human author and responsible maintainer.
 
 ## License
 

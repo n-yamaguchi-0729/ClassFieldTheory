@@ -1,3 +1,9 @@
+/-
+Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729). All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
+-/
+
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.All
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsUnramifiedOutsideModulus
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
@@ -32,10 +38,14 @@ noncomputable section
 
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
-private instance ideleClassGroupIsMulCommutative
+/-- The idèle class group is commutative.  Keeping this witness public
+stabilizes normal-subgroup arguments in exported quotient statements. -/
+theorem ideleClassGroupIsMulCommutative
     (K : Type) [Field K] [NumberField K] :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
+
+attribute [local instance 2000] ideleClassGroupIsMulCommutative
 
 /-- The ramified finite primes form a finite set.  Adding every real place
 produces a public modulus outside which a number-field extension is
