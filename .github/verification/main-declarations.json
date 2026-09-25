@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "scope": "Compiled presence and kind only; does not compare theorem statements.",
+  "primaryOwner": "ClassFieldTheory",
   "declarations": [
     {
       "name": "GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueContinuousMulEquiv",

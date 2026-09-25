@@ -11,6 +11,9 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def check(contract, declarations):
+    owner = contract.get("primaryOwner")
+    if not isinstance(owner, str) or not owner:
+        raise ValueError("Missing primary owner in main declaration contract")
     expected = contract["declarations"]
     if not expected or len({item["name"] for item in expected}) != len(expected):
         raise ValueError("Empty or duplicate main declaration contract")
@@ -24,7 +27,7 @@ def check(contract, declarations):
         if name not in rows:
             raise ValueError("Missing main declaration: " + name)
         row = rows[name]
-        if row["kind"] != item["kind"] or row["primaryOwner"] != "ClassFieldTheory":
+        if row["kind"] != item["kind"] or row["primaryOwner"] != owner:
             raise ValueError("Main declaration kind/owner changed: " + name)
         if item.get("module") and row["originModule"] != item["module"]:
             raise ValueError("Main declaration origin changed: " + name)
