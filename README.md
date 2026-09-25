@@ -1,9 +1,9 @@
-# ClassFieldTheory
+# ClassFieldTheory (Lean 4.34.0)
 
 [![Lean](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-A Lean 4 library formalizing local class field theory for nonarchimedean local
+A Lean 4.34.0 library formalizing local class field theory for nonarchimedean local
 fields and global class field theory for number fields.
 Its only Lake dependency is Mathlib; no sibling repository checkout is required.
 The exact supporting modules from valuation theory, Galois cohomology, and
