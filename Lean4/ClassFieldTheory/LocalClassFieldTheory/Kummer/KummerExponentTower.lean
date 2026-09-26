@@ -80,7 +80,7 @@ theorem chosenSimpleKummerExtension_le_of_dvd
     dsimp only [um, un, ι] at h
     simpa only [Units.val_mul, Units.val_inv_eq_inv_val,
       Units.val_pow_eq_pow_val, Units.coe_map, Units.val_mk0,
-      RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe] using h
+      RingHom.toMonoidHom_eq_coe, MonoidHom.coe_ofClass] using h
   have hαmmem : αm ∈ En := by
     rw [hαmval]
     have hζmem : algebraMap K Ω (ζ : K) ∈ En :=

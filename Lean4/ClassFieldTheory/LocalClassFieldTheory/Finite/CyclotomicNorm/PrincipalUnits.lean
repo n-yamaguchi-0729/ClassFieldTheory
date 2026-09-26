@@ -552,7 +552,9 @@ theorem padicDVR_U2_split (u :
   · right
     have hcsub : c - 1 ∈ IsLocalRing.maximalIdeal ℤ_[2] := by
       rw [← PadicInt.ker_toZMod, RingHom.mem_ker]
-      simp [hc1]
+      rw [map_sub, map_one, hc1]
+      change (1 : ZMod 2) - 1 = 0
+      decide
     rw [PadicInt.maximalIdeal_eq_span_p, Ideal.mem_span_singleton] at hcsub
     obtain ⟨d, hd⟩ := hcsub
     have hx5 : x - 5 ∈ IsLocalRing.maximalIdeal ℤ_[2] ^ 3 := by

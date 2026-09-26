@@ -32,7 +32,7 @@ theorem kummerAlgebra_norm_iff_simpleRadicalNorm
         (∃ y : (KummerAlgebra K n a)ˣ,
           Algebra.norm K (y : KummerAlgebra K n a) = (b : K)) ↔
         ∃ z : (IntermediateField.adjoin K {β})ˣ,
-          Algebra.norm K (z : IntermediateField.adjoin K {β}) = (b : K) := by
+          Algebra.norm K (z.val : IntermediateField.adjoin K {β}) = (b : K) := by
   refine ⟨KummerTheory.chosenSimpleKummerRoot K n hnK a,
     KummerTheory.chosenSimpleKummerRoot_pow K n hnK a, ?_⟩
   intro b

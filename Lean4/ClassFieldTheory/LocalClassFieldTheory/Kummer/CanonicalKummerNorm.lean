@@ -247,7 +247,7 @@ theorem adjoinRoot_factor_equiv_chosenSimpleKummer
   let β : E := KummerTheory.chosenSimpleKummerRootUnit K n hnK a
   have hβpow : β ^ (n : ℕ) = algebraMap K E (a : K) := by
     simpa only [E, β, Units.val_pow_eq_pow_val, Units.coe_map,
-      RingHom.toMonoidHom_eq_coe, MonoidHom.coe_coe] using
+      RingHom.toMonoidHom_eq_coe, MonoidHom.coe_ofClass] using
       congrArg (fun u : Eˣ => (u : E))
         (KummerTheory.chosenSimpleKummerRootUnit_pow K n hnK a)
   obtain ⟨ζ, hζ⟩ := hmu

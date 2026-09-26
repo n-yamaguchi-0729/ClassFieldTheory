@@ -117,10 +117,10 @@ theorem lubinTateLevel_spectral_inertiaDeg_eq_one
   change chosen.maximalIdeal.inertiaDeg base.valuationSubring = 1 at hresidue
   let e : chosen.valuationSubring ≃ₐ[base.valuationSubring]
       spectral.valuationSubring :=
-    { toFun := fun x => ⟨x, by
+    { toFun := fun x => ⟨x.val, by
         rw [← hValuationRing]
         exact x.property⟩
-      invFun := fun x => ⟨x, by
+      invFun := fun x => ⟨x.val, by
         rw [hValuationRing]
         exact x.property⟩
       left_inv := fun x => by
