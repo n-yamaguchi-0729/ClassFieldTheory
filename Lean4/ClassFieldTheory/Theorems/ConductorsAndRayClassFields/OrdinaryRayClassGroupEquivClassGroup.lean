@@ -11,8 +11,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFr
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.OrdinaryClassGroupComparison
 import Mathlib.RingTheory.ClassGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # The ordinary ray class group is the ideal class group
 

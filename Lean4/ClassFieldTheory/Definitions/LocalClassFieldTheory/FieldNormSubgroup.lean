@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormHom
 
-set_option autoImplicit false
-
 /-!
 # The subgroup of field norms
 -/

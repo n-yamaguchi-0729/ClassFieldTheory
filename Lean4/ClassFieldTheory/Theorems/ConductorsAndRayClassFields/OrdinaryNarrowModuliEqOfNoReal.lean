@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.NarrowRayClassModulus
 
-set_option autoImplicit false
-
 /-!
 # Ordinary and narrow moduli without real places
 -/

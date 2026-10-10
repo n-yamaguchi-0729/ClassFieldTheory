@@ -10,8 +10,6 @@ import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.Intertwine
 import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.ScalarCompatibility
 import ClassFieldTheory.LubinTate.Padic.ChangedUniformizerIntertwiner.ScalarEndomorphisms
 
-set_option autoImplicit false
-
 /-!
 # The p-adic changed-uniformizer intertwiner
 

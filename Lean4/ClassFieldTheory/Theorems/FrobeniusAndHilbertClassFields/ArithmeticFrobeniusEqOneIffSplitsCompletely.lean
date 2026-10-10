@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFro
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusOrder
 
-set_option autoImplicit false
-
 /-!
 # Trivial arithmetic Frobenius and complete splitting
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationStatement
 
-set_option autoImplicit false
-
 /-!
 # Proof core for ideal norm limitation
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
 
-set_option autoImplicit false
-
 /-!
 # Norms at a complex infinite place
 

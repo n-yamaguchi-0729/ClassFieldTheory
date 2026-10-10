@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.FieldTheory.IntermediateField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Intermediate fields under an algebra equivalence
 

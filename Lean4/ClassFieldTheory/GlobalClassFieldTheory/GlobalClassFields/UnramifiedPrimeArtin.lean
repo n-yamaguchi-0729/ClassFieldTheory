@@ -10,8 +10,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.Lo
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
 
-set_option autoImplicit false
-
 /-!
 # Prime Artin elements at unramified finite places
 
@@ -27,7 +25,9 @@ decomposition law: the prime Artin element is trivial exactly when the
 place splits completely.
 -/
 
-open scoped NumberField Classical
+
+
+open scoped NumberField
 
 noncomputable section
 

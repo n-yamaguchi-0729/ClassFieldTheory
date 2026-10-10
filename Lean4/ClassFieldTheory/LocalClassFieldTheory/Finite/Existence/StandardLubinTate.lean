@@ -11,8 +11,6 @@ import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormS
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
 
-set_option autoImplicit false
-
 /-!
 # Standard Lubin--Tate factors for finite local existence
 

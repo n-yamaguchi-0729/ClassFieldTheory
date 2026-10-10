@@ -13,8 +13,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
 import ClassFieldTheory.KroneckerWeber.LocalCyclotomicEmbedding
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
 
-set_option autoImplicit false
-
 /-!
 # Setup for the global Kronecker--Weber theorem
 

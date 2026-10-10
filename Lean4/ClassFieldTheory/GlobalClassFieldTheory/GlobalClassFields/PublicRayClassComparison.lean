@@ -25,8 +25,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroup
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
 import Mathlib.Data.Finsupp.Order
 
-set_option autoImplicit false
-
 /-!
 # Conductors and ray class fields implementation
 
@@ -34,7 +32,9 @@ This module supplies the implementation proofs for the compact conductor and
 ray-class-field statements in the parent `Theorems` directory.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -268,6 +268,10 @@ noncomputable def rayClassGroupEquivOriginalIdele
     (RayClass.rayClassGroupEquivIdealRayClassGroup
       (rayClassModulusToOriginal K m)).symm
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields (
+  finitePrimeIdele_mem_idelePrimeToModulusSubgroup
+  rayClassGroupEquivIdealRayClassGroup_mk_primeTo
+) in
 /-- A public prime ray class corresponds to the original normalized prime
 idèle class, with the same finite and infinite modulus. -/
 theorem rayClassGroupEquivOriginalIdele_prime
@@ -284,7 +288,7 @@ theorem rayClassGroupEquivOriginalIdele_prime
   have hv' : v ∉ m'.finitePart.support := hv
   let a : RayClass.idelePrimeToModulusSubgroup m' :=
     ⟨IdeleGroup.finitePrimeIdele v,
-      GlobalClassFieldTheory.GlobalClassFields.finitePrimeIdele_mem_idelePrimeToModulusSubgroup
+      finitePrimeIdele_mem_idelePrimeToModulusSubgroup
         m' v hv'⟩
   let e := RayClass.rayClassGroupEquivIdealRayClassGroup m'
   apply e.injective
@@ -304,14 +308,14 @@ theorem rayClassGroupEquivOriginalIdele_prime
           (RayClass.primeToModulusIdeal m' v hv') =
         RayClass.idealRayProjection m'
           ⟨IdeleGroup.finitePrimeIdele v,
-            GlobalClassFieldTheory.GlobalClassFields.finitePrimeIdele_mem_idelePrimeToModulusSubgroup
+            finitePrimeIdele_mem_idelePrimeToModulusSubgroup
               m' v hv'⟩
       exact (GlobalClassFieldTheory.GlobalClassFields.idealRayProjection_finitePrimeIdele
         m' v hv').symm
     _ = e (QuotientGroup.mk'
           (RayClass.Modulus.congruenceSubgroup m')
           (QuotientGroup.mk' (IdeleGroup.principalSubgroup K) (a : IdeleGroup K))) := by
-      exact (GlobalClassFieldTheory.GlobalClassFields.rayClassGroupEquivIdealRayClassGroup_mk_primeTo
+      exact (rayClassGroupEquivIdealRayClassGroup_mk_primeTo
         m' a).symm
 
 /-- The public ideal-theoretic narrow ray class group agrees with the
@@ -338,6 +342,10 @@ theorem rayClassField_normSubgroup
       RayClass.Modulus.congruenceSubgroup m :=
   GlobalClassFieldTheory.GlobalClassFields.rayClassField_ideleClassNorm_range_over_original m
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields (
+  ideleClassNormFullConductor_infinitePart_eq_realRamificationLocus
+  ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces
+) in
 /-- Any finite abelian extension whose norm group contains the ray
 congruence subgroup is unramified outside that modulus. -/
 theorem unramifiedOutsideModulus_of_definingModulus
@@ -360,10 +368,10 @@ theorem unramifiedOutsideModulus_of_definingModulus
   have hfinite := H.narrowFiniteConductor_le hDefining
   have hinfinite := H.fullConductorInfinitePart_subset_of_isDefiningModulus hDefining
   have hfiniteSupport :=
-    GlobalClassFieldTheory.GlobalClassFields.ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces
+    ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces
       (K := K) (L := E)
   have hinfiniteSupport :=
-    GlobalClassFieldTheory.GlobalClassFields.ideleClassNormFullConductor_infinitePart_eq_realRamificationLocus
+    ideleClassNormFullConductor_infinitePart_eq_realRamificationLocus
       (K := K) (L := E)
   constructor
   · intro v hv Q hQ hlie
@@ -507,6 +515,10 @@ end ClassFieldTheory.GlobalClassFieldComparison
 
 namespace ClassFieldTheory
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields (
+  finiteAbelianExtension_nonempty_algHom_of_normRange_le
+  rayModulus_normSubgroup_eq_of_arithmeticPrimeArtinEquiv
+) in
 /-- The concrete full norm conductor is the least public modulus whose ray
 class field contains the finite abelian extension. This implementation theorem
 uses the original idelic full conductor in its statement. -/
@@ -534,7 +546,7 @@ theorem normFullConductor_isAbelianConductor
     let r : RayClassGroup m ≃* (E ≃ₐ[K] E) := R.artinEquiv
     let e : RayClass.RayClassGroup m' ≃* (E ≃ₐ[K] E) :=
       (GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K m).symm.trans r
-    apply GlobalClassFieldTheory.GlobalClassFields.rayModulus_normSubgroup_eq_of_arithmeticPrimeArtinEquiv
+    apply rayModulus_normSubgroup_eq_of_arithmeticPrimeArtinEquiv
       m' e
     intro v hv
     have hvm : v ∉ m.finitePart.support := hv
@@ -603,7 +615,7 @@ theorem normFullConductor_isAbelianConductor
       rw [hR]
       exact hdef
     exact ⟨R,
-      GlobalClassFieldTheory.GlobalClassFields.finiteAbelianExtension_nonempty_algHom_of_normRange_le
+      finiteAbelianExtension_nonempty_algHom_of_normRange_le
         (K := K) L R.extension hnormLE⟩
 
 end ClassFieldTheory

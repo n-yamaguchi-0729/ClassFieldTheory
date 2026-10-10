@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
 
-set_option autoImplicit false
-
 /-!
 # Narrow finite conductors of cyclic class-norm subgroups
 
@@ -18,6 +16,8 @@ theorem into the narrow finite conductor ray-class factorization identifies
 the ray class number at the exact narrow finite conductor as the product of the
 residual norm-subgroup image order and the extension degree.
 -/
+
+
 
 open scoped NumberField
 

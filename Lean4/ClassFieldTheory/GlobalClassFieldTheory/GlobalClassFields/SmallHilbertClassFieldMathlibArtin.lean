@@ -13,8 +13,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFie
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Artin reciprocity for any small Hilbert class field
 
@@ -24,7 +22,7 @@ that of the selected class field.  Arithmetic global reciprocity then gives
 the Artin map, with its prime normalization obtained from the prime idèle.
 -/
 
-open scoped Classical NumberField IsMulCommutative
+open scoped NumberField IsMulCommutative
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -57,8 +55,8 @@ theorem smallHilbertClassField_ideleClassNorm_range_of_isSmall
       (ordinaryIdeleClassNorm_range_eq_relative
         (K := K) (L := H)).symm
     _ = _ :=
-      GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField_ideleClassNorm_range_over_original
-        (K := K)
+      (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+        smallHilbertClassField_ideleClassNorm_range_over_original (K := K))
 
 private noncomputable def arithmeticHilbertClassGroupEquivOfNormRange
     (E : FiniteAbelianExtension K)
@@ -112,8 +110,9 @@ theorem arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_globalNormResidue
           (GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom
             K E c))) = _
   have hReciprocity :=
-    GlobalClassFieldTheory.Reciprocity.arithmeticGlobalReciprocityContinuousMulEquiv_globalNormResidue
-      (K := K) (L := E) c
+    (open _root_.GlobalClassFieldTheory.Reciprocity in
+      arithmeticGlobalReciprocityContinuousMulEquiv_globalNormResidue
+        (K := K) (L := E) c)
   calc
     _ = GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup
           (K := K)
@@ -148,8 +147,9 @@ theorem arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_prime
         K E c := by
     rw [GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin]
     exact (DFunLike.congr_fun
-      (GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
-        (K := K) (L := E))
+      (open _root_.GlobalClassFieldTheory.Reciprocity in
+        arithmeticGlobalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
+          (K := K) (L := E))
       (IdeleGroup.finitePrimeIdele v)).symm
   rw [hArtin]
   rw [arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_globalNormResidue]

@@ -81,8 +81,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaUniqueness
 import ClassFieldTheory.LubinTate.EqualCharacteristic.RealIndexSteps
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
 
-set_option autoImplicit false
-
 /-!
 # Upper ramification groups on transported equal-characteristic levels
 
@@ -92,6 +90,8 @@ field.  The normalized Laurent equivalence preserves the valuation rings,
 so the general base-field transport theorem identifies the two upper
 ramification filtrations.
 -/
+
+
 
 noncomputable section
 

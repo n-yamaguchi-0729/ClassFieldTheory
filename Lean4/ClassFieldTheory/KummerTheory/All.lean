@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.KummerTheory.Concrete.All
 
-set_option autoImplicit false
-
 /-!
 # Kummer theory
 

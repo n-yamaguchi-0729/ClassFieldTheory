@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsUnramifiedOuts
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian global reciprocity data
 

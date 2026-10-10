@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Algebra.IntermediateFieldAlgEquivOrderIso
 import ClassFieldTheory.Algebra.AbelianGaloisEquiv
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian intermediate fields under an ambient algebra equivalence
 

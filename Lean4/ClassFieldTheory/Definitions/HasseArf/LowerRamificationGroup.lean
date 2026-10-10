@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.RingTheory.Valuation.RamificationGroup
 
-set_option autoImplicit false
-
 /-!
 # Lower ramification groups
 -/

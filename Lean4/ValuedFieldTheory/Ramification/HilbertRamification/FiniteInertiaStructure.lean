@@ -10,8 +10,6 @@ import ValuedFieldTheory.Ramification.HilbertRamification.CharacterMap
 import Mathlib.Algebra.CharP.Reduced
 import Mathlib.GroupTheory.Sylow
 
-set_option autoImplicit false
-
 /-!
 # Structure of finite inertia
 

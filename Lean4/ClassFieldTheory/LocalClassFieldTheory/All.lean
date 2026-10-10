@@ -10,8 +10,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Infinite.All
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.All
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.All
 
-set_option autoImplicit false
-
 /-!
 # Local class field theory
 

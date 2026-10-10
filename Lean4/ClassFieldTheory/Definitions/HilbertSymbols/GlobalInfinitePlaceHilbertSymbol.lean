@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
-set_option autoImplicit false
-
 /-!
 # Infinite-place Hilbert factors
 -/
+
+
 
 open scoped NumberField
 open NumberField

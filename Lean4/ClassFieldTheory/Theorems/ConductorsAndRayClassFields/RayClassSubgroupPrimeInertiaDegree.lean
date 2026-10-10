@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroup
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgroupQuotientEquivMk
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusOrder
 
-set_option autoImplicit false
-
 /-!
 # Residue degrees in a ray-class subgroup class field
 

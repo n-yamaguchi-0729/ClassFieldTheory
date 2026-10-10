@@ -12,8 +12,6 @@ import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.Valuation.Discrete.Basic
 import Mathlib.RingTheory.Valuation.Extension
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Frobenius in the coherent local reciprocity family
 

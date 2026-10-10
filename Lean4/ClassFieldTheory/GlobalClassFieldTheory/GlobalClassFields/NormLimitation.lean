@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Galois.MaximalAbelianSubextension
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormalClosureNorm
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IntermediateNormAbelianization
 
-set_option autoImplicit false
-
 /-!
 # The norm limitation theorem
 
@@ -107,7 +105,8 @@ theorem
           (Reciprocity.globalNormResidueAbelianizationMonoidHom K
             (finiteNormalClosure K L)) = _
       rw [
-        finiteNormalClosureMaximalAbelianSubfield_fixingSubgroup_image_eq_originalFixingSubgroup_image]
+      finiteNormalClosureMaximalAbelianSubfield_fixingSubgroup_image_eq_originalFixingSubgroup_image
+      ]
     _ =
       (_root_.ideleClassNorm K
         (finiteNormalClosureMaximalAbelianSubfield K L)).range :=

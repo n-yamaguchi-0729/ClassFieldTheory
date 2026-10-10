@@ -35,8 +35,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertC
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilbertClassField
 import ClassFieldTheory.AlgebraicNumberTheory.NumberField.MathlibUnramifiedInterface
 
-set_option autoImplicit false
-
 /-!
 # Frobenius and Hilbert class fields implementation
 
@@ -47,6 +45,8 @@ The prime element exposed below is the arithmetic-normalized prime Artin
 element.  Its residue action identifies it with Mathlib's arithmetic
 Frobenius at every unramified finite prime.
 -/
+
+
 
 open scoped NumberField
 
@@ -181,6 +181,10 @@ theorem arithmeticPrimeArtin_stabilizes_prime
             (K := K) (L := L) v) τ)
     _ = τ • W.asIdeal := by rw [hW]
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields
+  (orderOf_arithmeticFinitePlacePrimeArtin_eq_finitePlaceLocalDegree_of_chosenUnramified) in
+open _root_.GlobalClassFieldTheory.IdealClassFieldTheory
+  (finitePlaceLocalDegree_eq_inertiaDegree_of_chosenUnramified) in
 /-- At an ideal-theoretically unramified finite prime, the order of the
 arithmetic-normalized prime Artin element is the common inertia degree of the
 prime ideals above the base prime. -/
@@ -196,16 +200,18 @@ theorem orderOf_arithmeticPrimeArtin_eq_inertiaDegree
         (GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
           (K := K) (L := L) v) =
         _root_.finitePlaceLocalDegree (K := K) (L := L) v :=
-      GlobalClassFieldTheory.GlobalClassFields.orderOf_arithmeticFinitePlacePrimeArtin_eq_finitePlaceLocalDegree_of_chosenUnramified
+      orderOf_arithmeticFinitePlacePrimeArtin_eq_finitePlaceLocalDegree_of_chosenUnramified
         (K := K) (L := L) v
         (chosenFinitePlaceIsUnramified_of_isUnramifiedIn
           (K := K) (L := L) v hunram)
     _ = Ideal.inertiaDegIn v.asIdeal (𝓞 L) :=
-      GlobalClassFieldTheory.IdealClassFieldTheory.finitePlaceLocalDegree_eq_inertiaDegree_of_chosenUnramified
+      finitePlaceLocalDegree_eq_inertiaDegree_of_chosenUnramified
         (K := K) (L := L) v
         (chosenFinitePlaceIsUnramified_of_isUnramifiedIn
           (K := K) (L := L) v hunram)
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields
+  (arithmeticFinitePlacePrimeArtin_eq_one_iff_splitsCompletely_of_chosenUnramified) in
 /-- At an ideal-theoretically unramified finite prime, the arithmetic-normalized prime
 Artin element is trivial exactly when the finite place actually splits
 completely. -/
@@ -217,7 +223,7 @@ theorem arithmeticPrimeArtin_eq_one_iff_splitsCompletely
         1 ↔
       _root_.FinitePlaceSplitsCompletely
         (K := K) (L := L) v :=
-  GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin_eq_one_iff_splitsCompletely_of_chosenUnramified
+  arithmeticFinitePlacePrimeArtin_eq_one_iff_splitsCompletely_of_chosenUnramified
     (K := K) (L := L) v
     (chosenFinitePlaceIsUnramified_of_isUnramifiedIn
       (K := K) (L := L) v hunram)
@@ -317,6 +323,8 @@ theorem arithmeticFrobeniusAt_eq_of_liesOver
         mul_inv_cancel, mul_one]
     _ = arithmeticFrobeniusAt (K := K) w' := hτ
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields
+  (arithmeticFinitePlacePrimeArtin_eq_chosenFinitePlaceArithmeticFrobenius) in
 /-- At an unramified finite prime, the arithmetic-normalized prime Artin
 element is Mathlib's arithmetic Frobenius, independently of the chosen prime
 above the base prime. -/
@@ -437,7 +445,7 @@ theorem arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
         (K := K) (L := L) v =
         GlobalClassFieldTheory.GlobalClassFields.chosenFinitePlaceArithmeticFrobenius
           (K := K) (L := L) v hChosen :=
-      GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin_eq_chosenFinitePlaceArithmeticFrobenius
+      arithmeticFinitePlacePrimeArtin_eq_chosenFinitePlaceArithmeticFrobenius
         (K := K) (L := L) v hChosen
     _ = (δ : G) := hδ.symm
     _ = arithmeticFrobeniusAt (K := K) W := hδEq
@@ -550,22 +558,26 @@ private noncomputable def smallHilbertClassFieldEquiv :
       smallHilbertClassFieldFiniteAbelianExtension K :=
   (smallHilbertClassFieldEmbedding K).equivFieldRange
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields
+  (bigHilbertClassField_finrank_over_original_eq_narrowClassGroup_card) in
 /-- The selected big Hilbert class field has degree equal to the order of the
 narrow class group of the original number field. -/
 theorem bigHilbertClassField_degree_eq_narrowClassGroup_card :
     Module.finrank K
         (GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K) =
       Nat.card (RayClass.NarrowClassGroup K) :=
-  GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField_finrank_over_original_eq_narrowClassGroup_card
+  bigHilbertClassField_finrank_over_original_eq_narrowClassGroup_card
     K
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields
+  (smallHilbertClassField_finrank_over_original_eq_classNumber) in
 /-- The selected small Hilbert class field has degree equal to the ordinary
 class number of the original number field. -/
 theorem smallHilbertClassField_degree_eq_classNumber :
     Module.finrank K
         (GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K) =
       NumberField.classNumber K :=
-  GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField_finrank_over_original_eq_classNumber
+  smallHilbertClassField_finrank_over_original_eq_classNumber
     K
 
 /-- The selected big Hilbert class field is unramified at every finite
@@ -576,6 +588,8 @@ theorem bigHilbertClassField_unramifiedAtFinitePlaces :
   GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField_isUnramifiedAtFinitePlaces
     K
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields
+  (finiteUnramifiedAbelianExtension_nonempty_algHom_bigHilbertClassField) in
 /-- Every publicly represented finite-prime-unramified abelian extension
 embeds into the selected big Hilbert class field. -/
 private theorem nonempty_algHom_to_selectedBigHilbertClassField
@@ -584,7 +598,7 @@ private theorem nonempty_algHom_to_selectedBigHilbertClassField
     Nonempty (F →ₐ[K]
       GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K) := by
   obtain ⟨f⟩ :=
-    GlobalClassFieldTheory.GlobalClassFields.finiteUnramifiedAbelianExtension_nonempty_algHom_bigHilbertClassField
+    finiteUnramifiedAbelianExtension_nonempty_algHom_bigHilbertClassField
       K F ((isUnramifiedAtFinitePlaces_iff_original K F).mp hF)
   exact ⟨f⟩
 
@@ -641,6 +655,8 @@ theorem smallHilbertClassField_everywhereUnramified :
   GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField_isEverywhereUnramified
     K
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields
+  (finiteAbelianExtension_nonempty_algHom_to_smallHilbertClassField_of_everywhereUnramified) in
 /-- Any publicly represented everywhere-unramified abelian extension
 embeds into the selected small Hilbert class field. -/
 private theorem nonempty_algHom_to_selectedSmallHilbertClassField
@@ -659,7 +675,7 @@ private theorem nonempty_algHom_to_selectedSmallHilbertClassField
         (K := K) (L := F) v).1 hv
     exact hP (hFinite P)
   exact
-    @GlobalClassFieldTheory.GlobalClassFields.finiteAbelianExtension_nonempty_algHom_to_smallHilbertClassField_of_everywhereUnramified
+    @finiteAbelianExtension_nonempty_algHom_to_smallHilbertClassField_of_everywhereUnramified
       K F inferInstance inferInstance inferInstance inferInstance
       inferInstance inferInstance inferInstance hF.2 hRamifiedEmpty
 
@@ -726,6 +742,8 @@ noncomputable def smallHilbertClassFieldEquivOfIsSmall
       (f := f.toLinearMap) hdim).mp f.injective
   exact AlgEquiv.ofBijective f ⟨f.injective, hsurj⟩
 
+open _root_.GlobalClassFieldTheory.IdealClassFieldTheory
+  (finitePlaceSplitsCompletelyInSmallHilbertClassField_iff_principal) in
 /-- A finite prime actually splits completely in the selected small Hilbert
 class field exactly when its prime fractional ideal is principal. -/
 theorem finitePrime_splitsCompletelyInSmallHilbertClassField_iff_principal
@@ -736,7 +754,7 @@ theorem finitePrime_splitsCompletelyInSmallHilbertClassField_iff_principal
           v ↔
       FractionalIdealGroup.prime v ∈
         (toPrincipalIdeal (𝓞 K) K).range :=
-  GlobalClassFieldTheory.IdealClassFieldTheory.finitePlaceSplitsCompletelyInSmallHilbertClassField_iff_principal
+  finitePlaceSplitsCompletelyInSmallHilbertClassField_iff_principal
     (K := K) v
 
 /-- The complete-splitting criterion transfers from the selected small

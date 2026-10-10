@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilber
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationSubextension
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitAbstractFixedField
 
-set_option autoImplicit false
-
 /-!
 # Unramifiedness of the two-stage small Hilbert tower
 
@@ -20,6 +18,8 @@ to the ordinary idele class group of the actual middle fixed field.
 The intrinsic small-Hilbert characterization then proves genuine
 unramifiedness at both finite and infinite places.
 -/
+
+
 
 open scoped NumberField
 

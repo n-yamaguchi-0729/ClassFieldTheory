@@ -13,8 +13,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicHilber
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormulaAlgEquiv
 import Mathlib.Algebra.BigOperators.Finprod
 
-set_option autoImplicit false
-
 /-!
 # Existence of a coherent global Hilbert-pairing family
 

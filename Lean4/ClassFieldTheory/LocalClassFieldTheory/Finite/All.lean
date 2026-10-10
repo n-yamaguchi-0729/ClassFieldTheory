@@ -11,8 +11,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.All
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.All
 import ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
 
-set_option autoImplicit false
-
 /-!
 # Finite local reciprocity
 

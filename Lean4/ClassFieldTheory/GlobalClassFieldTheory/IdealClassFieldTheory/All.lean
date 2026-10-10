@@ -27,8 +27,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilber
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerRealization
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
 
-set_option autoImplicit false
-
 /-!
 # Ideal class field theory
 

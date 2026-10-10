@@ -8,14 +8,14 @@ import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.IsSepClosed
 import Mathlib.NumberTheory.NumberField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian extensions of number fields
 
 This module packages finite abelian extensions inside Mathlib's chosen
 separable closure.  It contains no class-field-theory implementation.
 -/
+
+
 
 noncomputable section
 

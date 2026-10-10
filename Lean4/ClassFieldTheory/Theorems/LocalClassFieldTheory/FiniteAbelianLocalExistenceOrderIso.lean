@@ -11,8 +11,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkLocalClassi
 import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.Order.Hom.Basic
 
-set_option autoImplicit false
-
 /-!
 # Order classification in finite abelian local existence
 

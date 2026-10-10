@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 
-set_option autoImplicit false
-
 /-!
 # The full conductor as a minimal modulus
 
@@ -17,7 +15,7 @@ class field contains `L`.  Since the public interface makes no global choice
 of ray class fields, the theorem asserts existence of this least modulus.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinite
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayPrimeGeneration
 
-set_option autoImplicit false
-
 /-!
 # Prime classes determine maps out of a ray class group
 

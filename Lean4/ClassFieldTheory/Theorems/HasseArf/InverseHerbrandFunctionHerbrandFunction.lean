@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
 import ClassFieldTheory.HasseArf
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-! # The inverse Herbrand function is a left inverse -/
 
 noncomputable section

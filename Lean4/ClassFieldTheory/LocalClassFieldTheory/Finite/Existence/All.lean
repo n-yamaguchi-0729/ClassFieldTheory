@@ -35,8 +35,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormCon
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnshrinkFiniteAbelianFields
 
-set_option autoImplicit false
-
 /-!
 # Finite local existence theorem
 

@@ -21,8 +21,6 @@ import ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
 import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.FiniteRadicalSupport
 import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
 
-set_option autoImplicit false
-
 /-!
 # Bad-place support and correction for power-residue reciprocity
 
@@ -34,7 +32,7 @@ the exponent-place and infinite-place correction in the common field-valued
 group of roots of unity.
 -/
 
-open scoped BigOperators Classical NumberField NumberTheorySymbols ValuativeRel WithZero
+open scoped BigOperators NumberField NumberTheorySymbols ValuativeRel WithZero
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -729,8 +727,8 @@ private theorem finitePlaceLocalTamePowerResidueSymbol_residueValue_eq
   rw [finitePlace_localNthRootsReduction_integralRoots]
   rw [← AlgebraicNumberTheory.PowerResidueSymbols.rootsOfUnityReductionEquiv_apply
       K v n hmu hcoprime,
-    AlgebraicNumberTheory.PowerResidueSymbols.rootsOfUnityReductionEquiv_primeIdealPowerResidueSymbol
-      K v n hmu hcoprime a ha]
+    (open _root_.AlgebraicNumberTheory.PowerResidueSymbols in
+      rootsOfUnityReductionEquiv_primeIdealPowerResidueSymbol K v n hmu hcoprime a ha)]
   rw [finitePlace_integerUnitsToResidueUnits_integralUnit]
   exact congrArg (fun u : 𝓀[C]ˣ => (u : 𝓀[C]))
     (finiteFieldPowerResidueSymbol_unitsMap_ringEquiv
@@ -875,7 +873,8 @@ theorem intValuation_eq_exp_neg_idealPrimeMultiplicity
     (v : HeightOneSpectrum (𝓞 K)) (x : 𝓞 K) (hx : x ≠ 0) :
     v.intValuation x =
       WithZero.exp
-        (-(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity K v (Ideal.span {x}) : ℤ)) := by
+        (-(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity
+          K v (Ideal.span {x}) : ℤ)) := by
   rw [v.intValuation_if_neg hx]
   rfl
 
@@ -887,7 +886,8 @@ theorem finitePlaceNormalizedValuation_nonzeroIntegralFieldUnit
     (x : 𝓞 K) (hx : x ≠ 0) :
     finitePlaceNormalizedValuation K v
         (nonzeroIntegralFieldUnit K x hx) =
-      -(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity K v (Ideal.span {x}) : ℤ) := by
+      -(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity
+        K v (Ideal.span {x}) : ℤ) := by
   let C := (HeightOneSpectrum.adicAbv K v).Completion
   let : ValuativeRel C :=
     finitePlaceLocalArtinCompletionValuativeRel v
@@ -1001,7 +1001,8 @@ theorem finitePlaceNormalizedValuation_nonzeroIntegralFieldUnit
     _ = (m : ℤ) * valuationMap C (Additive.ofMul πC) := by
       rw [valuationMap_ofMul_pow]
     _ = -(m : ℤ) := by rw [hπCValuation]; simp
-    _ = -(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity K v (Ideal.span {x}) : ℤ) := rfl
+    _ = -(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity
+        K v (Ideal.span {x}) : ℤ) := rfl
 
 /-- Prime avoidance is the common special case of the integral valuation
 formula used for numerator units. -/
@@ -1010,7 +1011,8 @@ theorem finitePlaceNormalizedValuation_primeAvoidingIntegralFieldUnit
     (x : 𝓞 K) (hx : x ∉ v.asIdeal) :
     finitePlaceNormalizedValuation K v
         (primeAvoidingIntegralFieldUnit K v x hx) =
-      -(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity K v (Ideal.span {x}) : ℤ) := by
+      -(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity
+        K v (Ideal.span {x}) : ℤ) := by
   let hx0 : x ≠ 0 := by
     intro hxzero
     apply hx
@@ -1123,6 +1125,7 @@ theorem finitePlaceHilbertSymbol_integral_units_eq_one
       (finitePlaceIntegralCompletionUnit K v a ha)
       (finitePlaceIntegralCompletionUnit K v b hb)
 
+open scoped Classical in
 /-- Primewise comparison between the tame finite-place Hilbert factor and
 the quotient of the two ideal power-residue factors. -/
 theorem powerResidueAwayFromExponentFiniteFactor_integral_eq_idealFactors
@@ -1209,6 +1212,7 @@ theorem powerResidueAwayFromExponentFiniteFactor_integral_eq_idealFactors
         simp only [idealPowerResidueFactor, dite_eq_right hPB, dite_eq_right hPA,
           map_one, inv_one, mul_one]
 
+open scoped Classical in
 /-- A concrete finite set containing every finite place where a local
 power-residue factor of `a` and `b` may be nontrivial.  Its exponent part is
 the exact set of prime divisors of `(n)`. -/
@@ -1312,6 +1316,7 @@ theorem finitePlaceHilbertSymbol_eq_one_of_not_mem_powerResidueBadFinitePlaces
     (a b : Kˣ) (v : HeightOneSpectrum (𝓞 K))
     (hv : v ∉ powerResidueBadFinitePlaces K n a b) :
     finitePlaceHilbertSymbol K n hnK hmu v a b = 1 := by
+  classical
   have hvaSupport : v ∉ chosenUnitFiniteSupport (K := K) a := by
     intro hva
     apply hv
@@ -1395,6 +1400,7 @@ theorem powerResidueBadFinitePlaces_product_eq_infinitePlaceProduct_inv
   exact (eq_inv_iff_mul_eq_one).2 (by
     simpa only [mul_comm] using hproduct)
 
+open scoped Classical in
 /-- The product of the finite-place Hilbert factors away from primes dividing
 the exponent.  C1 identifies this term with the quotient of the two ideal
 power-residue symbols; the remaining factors are exactly the correction. -/
@@ -1546,6 +1552,7 @@ theorem finitePlaceHilbertSymbol_finprod_eq_exponent_product_mul_away
       (∏ v ∈ powerResidueExponentFinitePlaces K n,
           finitePlaceHilbertSymbol K n hnK hmu v a b) *
         powerResidueAwayFromExponentFiniteProduct K n hnK hmu a b := by
+  classical
   let exponentFactor : HeightOneSpectrum (𝓞 K) →
       nthRootsSubgroup K (n : ℕ) := fun v =>
     if v ∈ powerResidueExponentFinitePlaces K n then

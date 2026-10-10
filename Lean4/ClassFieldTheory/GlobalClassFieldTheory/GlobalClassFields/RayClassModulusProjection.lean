@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRe
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 import Mathlib.Data.Finsupp.Order
 
-set_option autoImplicit false
-
 /-!
 # Projection between ray class groups
 
@@ -19,7 +17,7 @@ to a smaller one. The public ray-class groups use the comparison equivalence
 to transport this map.
 -/
 
-open scoped NumberField Classical
+open scoped NumberField
 
 noncomputable section
 

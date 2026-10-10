@@ -89,8 +89,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalQuadraticPowe
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidue
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidueAbelianization
 
-set_option autoImplicit false
-
 /-!
 # Global reciprocity
 

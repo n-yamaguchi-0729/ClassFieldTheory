@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicRealFilteredComparison
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedArtinComparison
 
-set_option autoImplicit false
-
 /-!
 # Real filtered reciprocity on transported Lubin--Tate levels
 
@@ -382,7 +380,7 @@ theorem
     (LocalFieldTheory.fieldPrincipalUnits K (n + 1)).map
         (abelianLocalArtinMonoidHom K L) = ⊥
   exact
-    (equalCharacteristicTransportedLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
+    (equalCharTransportedLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
       K p ϖ hϖ n (n + 1) (by omega) (by omega)).trans
       (equalCharacteristicTransportedLubinTateLocalUpperRamificationGroup_succ_eq_bot
         K p ϖ hϖ n)
@@ -547,7 +545,7 @@ theorem
 /-- Beyond the last visible level, the target-field upper ramification
 group is trivial. -/
 theorem
-    equalCharacteristicTransportedLubinTateLocalUpperRamificationGroup_eq_bot_of_level_lt_ceil
+    equalCharTransportedLubinTateLocalUpperRamificationGroup_eq_bot_of_level_lt_ceil
     (p : ℕ) [Fact p.Prime] [hKp : CharP K p]
     (ϖ : Kˣ)
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
@@ -596,7 +594,7 @@ theorem
 /-- Real filtered local reciprocity for every transported
 equal-characteristic Lubin--Tate level. -/
 theorem
-    equalCharacteristicTransportedLubinTateArtinPrincipalUnitStepGroup_eq_localUpperRamificationGroup
+   equalCharacteristicTransportedLubinTateArtinPrincipalUnitStepGroup_eq_localUpperRamificationGroup
     (p : ℕ) [Fact p.Prime] [hKp : CharP K p]
     (ϖ : Kˣ)
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
@@ -663,7 +661,7 @@ theorem
             (abelianLocalArtinMonoidHom K L) =
           localUpperRamificationGroup K L t
       exact
-        (equalCharacteristicTransportedLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
+        (equalCharTransportedLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
           K p ϖ hϖ n k hk hkn).trans hLocalStep.symm
     · have hlevel : n + 1 < ⌈t⌉₊ := by
         dsimp only [k] at hkn
@@ -671,7 +669,7 @@ theorem
       exact
         (equalCharacteristicTransportedLubinTateArtinPrincipalUnitStepGroup_eq_bot_of_level_lt_ceil
           K p ϖ hϖ n t hlevel).trans
-          (equalCharacteristicTransportedLubinTateLocalUpperRamificationGroup_eq_bot_of_level_lt_ceil
+          (equalCharTransportedLubinTateLocalUpperRamificationGroup_eq_bot_of_level_lt_ceil
             K p ϖ hϖ n t hlevel).symm
 
 end LocalClassFieldTheory

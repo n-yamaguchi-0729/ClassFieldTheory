@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingLaws
 import ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingNormResidueCriterion
 
-set_option autoImplicit false
-
 /-!
 # Local Hilbert pairings
 -/
+
+
 
 namespace ClassFieldTheory.HilbertPairing
 

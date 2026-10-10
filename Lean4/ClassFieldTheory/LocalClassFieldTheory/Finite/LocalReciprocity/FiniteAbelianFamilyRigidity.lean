@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.GroupTheory.OrderOfElement
 
-set_option autoImplicit false
-
 /-!
 # Rigidity from a cyclic quotient and subgroup data
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalFieldTheory.Padic.All
 
-set_option autoImplicit false
-
 /-!
 # Local field theory
 

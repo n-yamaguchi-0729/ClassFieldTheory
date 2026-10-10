@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormCore
 
-set_option autoImplicit false
-
 /-!
 # Ordinary norms in finite towers of rational fixed fields
 

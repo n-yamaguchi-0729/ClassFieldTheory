@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.All
 
-set_option autoImplicit false
-
 /-!
 # Cyclotomic extensions of p-adic fields
 

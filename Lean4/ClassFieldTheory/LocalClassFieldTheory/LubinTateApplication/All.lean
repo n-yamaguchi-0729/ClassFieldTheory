@@ -25,8 +25,6 @@ import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormS
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.TransportedNormSubgroupExact
 
-set_option autoImplicit false
-
 /-!
 # Lubin--Tate application to local class field theory
 

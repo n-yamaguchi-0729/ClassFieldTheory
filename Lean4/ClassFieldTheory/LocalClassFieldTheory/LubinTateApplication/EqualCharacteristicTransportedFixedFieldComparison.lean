@@ -6,9 +6,17 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedRealFilteredComparison
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
-import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Core
-
-set_option autoImplicit false
+import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+import ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
+import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+import ValuedFieldTheory.Ramification.Filtration
+import ValuedFieldTheory.Ramification.LocalField.Core
 
 /-!
 # Filtered reciprocity on the named transported Lubin--Tate fixed field
@@ -125,7 +133,7 @@ theorem
   have hExplicit :
       artinPrincipalUnitStepGroup K E t =
         localUpperRamificationGroup K E t :=
-    equalCharacteristicTransportedLubinTateArtinPrincipalUnitStepGroup_eq_localUpperRamificationGroup
+   equalCharacteristicTransportedLubinTateArtinPrincipalUnitStepGroup_eq_localUpperRamificationGroup
       K p ϖ hϖ m t ht
   calc
     artinPrincipalUnitStepGroup K M t =

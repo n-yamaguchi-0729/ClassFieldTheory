@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkIntermediat
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
 import ClassFieldTheory.Algebra.AbelianGaloisEquiv
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian intermediate fields under a small change of base
 

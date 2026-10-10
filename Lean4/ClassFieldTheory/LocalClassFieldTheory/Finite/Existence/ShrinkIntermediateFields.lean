@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkSeparableClosure
 import Mathlib.FieldTheory.IntermediateField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Intermediate fields under a small change of base field
 

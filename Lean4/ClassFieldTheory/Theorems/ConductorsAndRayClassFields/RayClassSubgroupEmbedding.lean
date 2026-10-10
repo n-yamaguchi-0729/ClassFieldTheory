@@ -12,8 +12,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianCl
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
 
-set_option autoImplicit false
-
 /-!
 # Antitone class fields of ray-class subgroups
 
@@ -22,7 +20,7 @@ their finite abelian class fields.  The embedding between arbitrary
 Frobenius-normalized realizations intertwines both Artin actions.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

@@ -12,8 +12,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFie
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Artin reciprocity for any big Hilbert class field
 
@@ -22,7 +20,7 @@ norm subgroup as the selected big Hilbert class field.  Arithmetic global
 reciprocity therefore gives its narrow-class-group Artin isomorphism.
 -/
 
-open scoped Classical NumberField IsMulCommutative
+open scoped NumberField IsMulCommutative
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -42,10 +40,12 @@ noncomputable def bigHilbertClassFieldEquivOfIsBig
     E ≃ₐ[K] GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K := by
   let H := GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K
   let f := Classical.choice
-    (GlobalClassFieldTheory.GlobalClassFields.finiteUnramifiedAbelianExtension_nonempty_algHom_bigHilbertClassField
-      K E ((isUnramifiedAtFinitePlaces_iff_original K E).mp hE.1))
+    (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+      finiteUnramifiedAbelianExtension_nonempty_algHom_bigHilbertClassField
+        K E ((isUnramifiedAtFinitePlaces_iff_original K E).mp hE.1))
   have hdim : Module.finrank K E = Module.finrank K H :=
-    (GlobalClassFieldComparison.bigHilbertClassField_degree_eq_narrowClassGroup_card_of_isBig K E hE).trans
+    (GlobalClassFieldComparison.bigHilbertClassField_degree_eq_narrowClassGroup_card_of_isBig
+      K E hE).trans
       (GlobalClassFieldComparison.bigHilbertClassField_degree_eq_narrowClassGroup_card K).symm
   have hsurj : Function.Surjective f :=
     (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
@@ -72,8 +72,8 @@ theorem bigHilbertClassField_ideleClassNorm_range_of_isBig
       (ordinaryIdeleClassNorm_range_eq_relative
         (K := K) (L := H)).symm
     _ = _ :=
-      GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField_ideleClassNorm_range_over_original
-        (K := K)
+      (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+        bigHilbertClassField_ideleClassNorm_range_over_original (K := K))
 
 /-- The arithmetic Artin isomorphism for an intrinsic big Hilbert class
 field, with target the narrow ideal class group. -/
@@ -122,8 +122,9 @@ theorem arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_globalNormResi
           (GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom
             K E c))) = _
   have hReciprocity :=
-    GlobalClassFieldTheory.Reciprocity.arithmeticGlobalReciprocityContinuousMulEquiv_globalNormResidue
-      (K := K) (L := E) c
+    (open _root_.GlobalClassFieldTheory.Reciprocity in
+      arithmeticGlobalReciprocityContinuousMulEquiv_globalNormResidue
+        (K := K) (L := E) c)
   calc
     _ = GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassFieldQuotientEquivNarrowClassGroup
           (K := K)
@@ -159,13 +160,14 @@ theorem arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_prime
         K E c := by
     rw [GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin]
     exact (DFunLike.congr_fun
-      (GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
-        (K := K) (L := E))
+      (open _root_.GlobalClassFieldTheory.Reciprocity in
+        arithmeticGlobalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
+          (K := K) (L := E))
       (IdeleGroup.finitePrimeIdele v)).symm
   rw [hArtin]
   rw [arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_globalNormResidue]
-  exact GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassFieldQuotientEquivNarrowClassGroup_mk
-    (IdeleGroup.finitePrimeIdele v)
+  exact (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+    bigHilbertClassFieldQuotientEquivNarrowClassGroup_mk (IdeleGroup.finitePrimeIdele v))
 
 /-- The public narrow ideal ray class of a finite prime is its normalized
 one-place prime idèle class. -/

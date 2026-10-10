@@ -26,8 +26,6 @@ import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.Valuation
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.ValuationHerbrand
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.ValueGroupCohomology
 
-set_option autoImplicit false
-
 /-!
 # The local class formation
 

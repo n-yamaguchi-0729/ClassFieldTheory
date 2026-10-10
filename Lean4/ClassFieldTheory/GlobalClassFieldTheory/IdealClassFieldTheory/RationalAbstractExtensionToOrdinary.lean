@@ -6,13 +6,13 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
 
-set_option autoImplicit false
-
 /-!
 # Rational abstract extension transport to ordinary idele classes
 
 Compatibility of abstract extension with ordinary idele classes.
 -/
+
+
 
 noncomputable section
 

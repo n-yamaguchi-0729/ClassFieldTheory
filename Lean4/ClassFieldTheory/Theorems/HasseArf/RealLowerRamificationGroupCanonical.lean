@@ -10,8 +10,6 @@ import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.RingTheory.Valuation.Extension
 import Mathlib.RingTheory.Valuation.ValuativeRel.Basic
 
-set_option autoImplicit false
-
 /-!
 # Canonical real lower ramification groups
 

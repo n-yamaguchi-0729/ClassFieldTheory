@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 
-set_option autoImplicit false
-
 /-!
 # Exact narrow finite ray-class presentations of norm quotients
 
@@ -17,6 +15,8 @@ file characterizes when that presentation has no residual kernel: the norm
 subgroup is then exactly the congruence subgroup at its narrow finite
 conductor, equivalently the two finite quotient groups have the same order.
 -/
+
+
 
 open scoped NumberField
 
@@ -45,7 +45,7 @@ variable
 subgroup at its narrow finite conductor if and only if the conductor ray
 class group and the actual norm quotient have the same order. -/
 theorem
-    ideleClassNorm_range_eq_narrowFiniteConductorCongruenceSubgroup_iff_rayClassGroup_card_eq_normQuotient_card :
+    ideleClassNorm_range_eq_narrowConductorSubgroup_iff_rayClass_card_eq_normQuotient_card :
     (_root_.ideleClassNorm K L).range =
         RayClass.Modulus.congruenceSubgroup
           (RayClass.Modulus.narrowOfFinite
@@ -103,7 +103,8 @@ theorem
 idèle-class norm quotient is injective if and only if its finite source and
 target have the same order. -/
 theorem
-    narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card :
+  narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
+    :
     Function.Injective
         (narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
           (K := K) (L := L)) ↔
@@ -151,14 +152,14 @@ def normQuotientEquivNarrowFiniteConductorRayClassGroup
         (RayClass.Modulus.narrowOfFinite
           (ideleClassNormNarrowFiniteConductor (K := K) (L := L))) :=
   QuotientGroup.quotientMulEquivOfEq
-    ((ideleClassNorm_range_eq_narrowFiniteConductorCongruenceSubgroup_iff_rayClassGroup_card_eq_normQuotient_card
+    ((ideleClassNorm_range_eq_narrowConductorSubgroup_iff_rayClass_card_eq_normQuotient_card
       (K := K) (L := L)).2 hcard)
 
 /-- Two finite Galois extensions with the same exact narrow finite
 conductor and maximal ray-class presentations have the same actual
 idèle-class norm subgroup. -/
 theorem
-    ideleClassNorm_ranges_eq_of_narrowFiniteConductors_eq_of_rayClassGroup_cards_eq_normQuotient_cards
+  ideleClassNorm_ranges_eq_of_narrowFiniteConductors_eq_of_rayClassGroup_cards_eq_normQuotient_cards
     {M : Type}
     [Field M] [NumberField M] [Algebra K M]
     [FiniteDimensional K M] [IsGalois K M]
@@ -190,7 +191,7 @@ theorem
         RayClass.Modulus.congruenceSubgroup
           (RayClass.Modulus.narrowOfFinite
             (ideleClassNormNarrowFiniteConductor (K := K) (L := L))) :=
-      (ideleClassNorm_range_eq_narrowFiniteConductorCongruenceSubgroup_iff_rayClassGroup_card_eq_normQuotient_card
+      (ideleClassNorm_range_eq_narrowConductorSubgroup_iff_rayClass_card_eq_normQuotient_card
         (K := K) (L := L)).2 hLcard
     _ =
         RayClass.Modulus.congruenceSubgroup
@@ -201,7 +202,7 @@ theorem
           (RayClass.Modulus.narrowOfFinite f))
         hconductor
     _ = (_root_.ideleClassNorm K M).range :=
-      ((ideleClassNorm_range_eq_narrowFiniteConductorCongruenceSubgroup_iff_rayClassGroup_card_eq_normQuotient_card
+      ((ideleClassNorm_range_eq_narrowConductorSubgroup_iff_rayClass_card_eq_normQuotient_card
         (K := K) (L := M)).2 hMcard).symm
 
 /-- The actual norm quotients of two maximal narrow finite conductor
@@ -237,7 +238,8 @@ def normQuotientEquivOfNarrowFiniteConductorsEqOfRayClassGroupCardsEqNormQuotien
       (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K M).range) :=
   QuotientGroup.quotientMulEquivOfEq
-    (ideleClassNorm_ranges_eq_of_narrowFiniteConductors_eq_of_rayClassGroup_cards_eq_normQuotient_cards
+    (
+  ideleClassNorm_ranges_eq_of_narrowFiniteConductors_eq_of_rayClassGroup_cards_eq_normQuotient_cards
       (K := K) (L := L) (M := M)
       hconductor hLcard hMcard)
 

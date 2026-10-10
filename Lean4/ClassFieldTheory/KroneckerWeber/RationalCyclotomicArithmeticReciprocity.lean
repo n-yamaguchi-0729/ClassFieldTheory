@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 import ClassFieldTheory.KroneckerWeber.RationalRayClassFieldCyclotomic
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic reciprocity for rational cyclotomic ray class fields
 
@@ -19,7 +17,7 @@ Galois/ray-class comparison is retained as a `ContinuousMulEquiv` with
 the native quotient and finite Krull topologies.
 -/
 
-open scoped Classical IsMulCommutative NumberField Cyclotomic
+open scoped IsMulCommutative NumberField Cyclotomic
 
 noncomputable section
 
@@ -181,7 +179,7 @@ noncomputable def
 /-- Arithmetic reciprocity sends the arithmetic norm-residue symbol
 of an idèle class to its genuine rational ray class. -/
 theorem
-    rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup_arithmeticGlobalNormResidue
+  rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup_arithmeticGlobalNormResidue
     (c : IdeleClassGroup ℚ) :
     rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup
         m
@@ -226,7 +224,8 @@ theorem
   rw [
     (rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup
       m).apply_symm_apply,
-    rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup_arithmeticGlobalNormResidue]
+  rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup_arithmeticGlobalNormResidue
+  ]
 
 /-- The inverse arithmetic ray reciprocity image of the ordinary
 uniformizer class at `q ∤ m` has direct cyclotomic exponent `q`. -/

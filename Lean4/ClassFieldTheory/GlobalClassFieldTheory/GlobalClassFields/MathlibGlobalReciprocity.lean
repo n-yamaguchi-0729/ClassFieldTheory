@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import ClassFieldTheory.Definitions.GlobalClassFieldTheory.All
+import ClassFieldTheory.AlgebraicNumberTheory.Idele.IdentityComponent
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsUnramifiedOutsideModulus
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
 import ClassFieldTheory.AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
@@ -20,11 +20,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidueAbelianization
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 
-set_option autoImplicit false
-
-open scoped NumberField
-open NumberField IsDedekindDomain
-
 /-!
 # Global class field theory implementation
 
@@ -33,6 +28,11 @@ It collects the existing finite reciprocity, maximal abelian reciprocity,
 class-field existence, and infinite correspondence modules without adding
 parallel names or existence wrappers.
 -/
+
+open scoped NumberField
+open NumberField IsDedekindDomain
+
+
 
 noncomputable section
 
@@ -122,6 +122,9 @@ theorem normConductorRayClassModulus_original
   · rfl
   · rfl
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields (
+  ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces
+) in
 /-- The actual narrow finite norm conductor, together with every real place,
 is a public modulus outside which a finite abelian extension is unramified. -/
 theorem normConductorRayClassModulus_unramifiedOutside
@@ -132,7 +135,7 @@ theorem normConductorRayClassModulus_unramifiedOutside
     IsUnramifiedOutsideModulus K L (normConductorRayClassModulus K L) := by
   classical
   have hs :=
-    GlobalClassFieldTheory.GlobalClassFields.ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces
+    ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces
       (K := K) (L := L)
   constructor
   · intro v hv Q hQ hlie
@@ -173,6 +176,9 @@ theorem unramifiedOutside_normConductorModulus
     normConductorRayClassModulus_unramifiedOutside K L⟩
   rfl
 
+open _root_.GlobalClassFieldTheory.GlobalClassFields (
+  ideleClassNorm_narrowFiniteConductor_isDefiningModulus
+) in
 /-- The public norm-conductor modulus is a defining modulus for the actual
 idèle-class norm subgroup. -/
 private theorem normConductorRayClassModulus_isDefining
@@ -184,7 +190,7 @@ private theorem normConductorRayClassModulus_isDefining
         (rayClassModulusToOriginal K (normConductorRayClassModulus K L)) ≤
       (_root_.ideleClassNorm K L).range := by
   rw [normConductorRayClassModulus_original K L]
-  exact GlobalClassFieldTheory.GlobalClassFields.ideleClassNorm_narrowFiniteConductor_isDefiningModulus
+  exact ideleClassNorm_narrowFiniteConductor_isDefiningModulus
     (K := K) (L := L)
 
 /-- Arithmetic global reciprocity, descended to the public ray class group
@@ -222,6 +228,9 @@ theorem normConductorArtin_surjective
         (normConductorRayClassModulus_isDefining K L)).comp
         (rayClassGroupEquivOriginal K (normConductorRayClassModulus K L)).surjective)
 
+open _root_.GlobalClassFieldTheory.IdealClassFieldTheory (
+  arithmeticIdealArtinGaloisMap_primeIdeal_eq_arithmeticFinitePlacePrimeArtin
+) in
 /-- At a prime away from the norm conductor, the public Artin map agrees
 with the arithmetic prime Artin element of the original idèle theory. -/
 theorem normConductorArtin_prime
@@ -250,7 +259,7 @@ theorem normConductorArtin_prime
   change GlobalClassFieldTheory.IdealClassFieldTheory.arithmeticIdealArtinGaloisMap
       (K := K) (L := L) m' hm
       (RayClass.primeToModulusIdeal m' v hv') = _
-  exact GlobalClassFieldTheory.IdealClassFieldTheory.arithmeticIdealArtinGaloisMap_primeIdeal_eq_arithmeticFinitePlacePrimeArtin
+  exact arithmeticIdealArtinGaloisMap_primeIdeal_eq_arithmeticFinitePlacePrimeArtin
     (K := K) (L := L) m' hm v hv'
 
 /-- The class field selected from a closed finite-index idèle-class subgroup

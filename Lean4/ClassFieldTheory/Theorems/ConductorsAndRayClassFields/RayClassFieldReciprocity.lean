@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassFieldRealization
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgroupExistence
 
-set_option autoImplicit false
-
 /-!
 # Ray class reciprocity
 
@@ -17,7 +15,7 @@ is the ideal-theoretic ray class group modulo `m`, compatibly with finite
 global reciprocity.  No global choice of ray class field is exposed.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 
 noncomputable section
 

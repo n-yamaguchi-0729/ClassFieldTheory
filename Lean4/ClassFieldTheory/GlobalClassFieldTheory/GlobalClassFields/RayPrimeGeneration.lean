@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
 
-set_option autoImplicit false
-
 /-!
 # Frobenius generation of ray class groups
 
@@ -17,7 +15,9 @@ ray class group.  This follows from factorization of prime-to-modulus
 fractional ideals and the idelic-to-ideal ray-class equivalence.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

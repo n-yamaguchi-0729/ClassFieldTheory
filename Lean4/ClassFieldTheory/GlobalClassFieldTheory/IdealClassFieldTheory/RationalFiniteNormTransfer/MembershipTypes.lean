@@ -7,14 +7,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
 
-set_option autoImplicit false
-
 /-!
 # Named membership endpoints for rational finite-norm transport
 
 This compiled leaf preserves the original public declarations while reusing
 the shared fixed-field instance providers.
 -/
+
+
 
 noncomputable section
 

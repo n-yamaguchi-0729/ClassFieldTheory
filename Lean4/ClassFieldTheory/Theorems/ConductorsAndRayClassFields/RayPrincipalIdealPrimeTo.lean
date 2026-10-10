@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdea
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayPrincipalIdealMembership
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
-set_option autoImplicit false
-
 /-!
 # Ray-principal ideals are prime to the modulus
 
@@ -17,7 +15,7 @@ The local congruence condition makes the corresponding principal idèle
 integral-unit-valued at every finite prime in the modulus support.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 
 noncomputable section
 

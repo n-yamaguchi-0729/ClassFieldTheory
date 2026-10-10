@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFilte
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
 
-set_option autoImplicit false
-
 /-!
 # Filtered reciprocity on the named standard Lubin--Tate fixed field
 

@@ -14,8 +14,6 @@ import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.NormSubgroup
 import GaloisCohomology.GroupTheory.RestrictionKernel
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
 
-set_option autoImplicit false
-
 /-!
 # Standard local Artin map on equal-characteristic Lubin--Tate levels
 

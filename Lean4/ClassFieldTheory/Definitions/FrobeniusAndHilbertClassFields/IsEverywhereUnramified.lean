@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsUnramifiedAtFinitePlaces
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 
-set_option autoImplicit false
-
 /-!
 # Unramifiedness at every place
 -/
+
+
 
 namespace ClassFieldTheory
 

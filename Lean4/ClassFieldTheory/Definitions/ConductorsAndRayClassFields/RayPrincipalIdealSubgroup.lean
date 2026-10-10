@@ -8,11 +8,11 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsRayCongruent
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassPrimeToIdeals
 import Mathlib.RingTheory.ClassGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # Ray-principal ideals
 -/
+
+
 
 open scoped NumberField
 open NumberField

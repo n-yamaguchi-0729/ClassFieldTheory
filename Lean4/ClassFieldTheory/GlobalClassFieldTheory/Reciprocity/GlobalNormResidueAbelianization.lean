@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 
-set_option autoImplicit false
-
 /-!
 # The global norm-residue symbol for finite Galois extensions
 
@@ -20,6 +18,8 @@ The abelian specialization in `GlobalNormResidue` identifies this target
 further with `Gal(L / K)`.  This file retains the abelianization and therefore
 states global reciprocity at its full finite-Galois generality.
 -/
+
+
 
 open scoped IsMulCommutative NumberField
 open NumberField
@@ -237,7 +237,8 @@ theorem globalNormResidueAbelianizationEquiv_finiteReciprocityHom
           (rationalCyclotomicDegreeData.finiteReciprocityHom
             rationalIdeleClassRepresentation
             rationalCyclotomicIdeleClassValuationData
-            (rationalCyclotomicIdeleClassValuationData.classFieldAxiom_implies_unramifiedUnitCohomology
+            (
+          rationalCyclotomicIdeleClassValuationData.classFieldAxiom_implies_unramifiedUnitCohomology
                 rationalIdeleClassRepresentation_satisfiesClassFieldAxiom)
             (numberFieldTowerReciprocityFiniteAbstractField K L)
             (numberFieldTowerFiniteGaloisSubextension K L).field

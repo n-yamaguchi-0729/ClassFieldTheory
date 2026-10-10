@@ -11,4 +11,9 @@ import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.FullSUnitKummerEx
 import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.SUnitLocalPowerKernel
 import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.SUnitPowerQuotient
 
-set_option autoImplicit false
+/-!
+# Preparation of S-unit Kummer extensions
+
+Collects the finite radical support, local power kernels, and power quotients
+used to prepare full S-unit Kummer extensions.
+-/

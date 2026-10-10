@@ -9,8 +9,6 @@ import Mathlib.GroupTheory.FiniteAbelian.Duality
 import Mathlib.RingTheory.RootsOfUnity.EnoughRootsOfUnity
 import Mathlib.SetTheory.Cardinal.Finite
 
-set_option autoImplicit false
-
 /-!
 # Perfectness of a finite nondegenerate Hilbert pairing
 

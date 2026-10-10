@@ -13,8 +13,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassC
 import Mathlib.NumberTheory.RamificationInertia.Galois
 import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients.Basic
 
-set_option autoImplicit false
-
 /-!
 # Tame finite conductor exponents
 
@@ -101,8 +99,9 @@ theorem IsAbelianConductor.finiteExponent_le_one_iff_residueChar_not_dvd_ramific
     · exact (hd c).mp ((hc c).mpr le_rfl)
   have hCoeff :
       c.finitePart v =
-        GlobalClassFieldTheory.GlobalClassFields.ideleClassNormChosenFinitePlaceLocalConductorExponent
-          (K := K) (L := L) v := by
+        (open GlobalClassFieldTheory.GlobalClassFields in
+          ideleClassNormChosenFinitePlaceLocalConductorExponent
+            (K := K) (L := L) v) := by
     rw [hcd]
     simpa only [d] using
       (abelianFullConductor_finiteExponent_eq_localConductorExponent

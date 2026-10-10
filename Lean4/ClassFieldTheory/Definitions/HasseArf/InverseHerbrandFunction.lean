@@ -10,8 +10,6 @@ import Mathlib.Logic.Function.Basic
 import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.RingTheory.Valuation.Extension
 
-set_option autoImplicit false
-
 /-!
 # The inverse Herbrand function for a canonical local extension
 

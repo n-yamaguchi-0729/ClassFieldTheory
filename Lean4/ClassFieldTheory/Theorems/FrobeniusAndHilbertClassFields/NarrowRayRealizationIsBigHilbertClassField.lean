@@ -11,8 +11,6 @@ import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.ExistsRayArtinModul
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.BigHilbertClassFieldExists
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.BigHilbertClassFieldNarrowRayRealization
 
-set_option autoImplicit false
-
 /-!
 # A narrow ray realization is a big Hilbert class field
 

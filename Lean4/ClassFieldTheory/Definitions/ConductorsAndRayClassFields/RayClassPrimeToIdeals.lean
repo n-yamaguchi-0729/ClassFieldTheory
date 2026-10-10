@@ -8,11 +8,11 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
 import Mathlib.RingTheory.DedekindDomain.Factorization
 
-set_option autoImplicit false
-
 /-!
 # Fractional ideals prime to a ray modulus
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

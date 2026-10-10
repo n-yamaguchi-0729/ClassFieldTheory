@@ -9,8 +9,6 @@ import ClassFieldTheory.Algebra.AbelianGaloisEquiv
 import ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
 import ClassFieldTheory.KroneckerWeber.Core
 
-set_option autoImplicit false
-
 /-!
 # Kronecker--Weber theorem
 

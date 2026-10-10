@@ -8,8 +8,6 @@ import Mathlib.FieldTheory.Galois.Basic
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.AmbientPrimeComparison
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusFixedField
 
-set_option autoImplicit false
-
 /-!
 # Intrinsic fixed-field prime comparison
 
@@ -30,8 +28,8 @@ variable
     (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
-      Gal(SeparableClosure K / K))
-    (J : ClosedSubgroup Gal(SeparableClosure K / K))
+      Gal(SeparableClosure K/K))
+    (J : ClosedSubgroup Gal(SeparableClosure K/K))
     (hJH : J.toSubgroup ≤ H.field.toSubgroup)
     [hJnormal : (extensionSubgroup H.field J hJH).Normal]
     [hJfinite : Finite
@@ -76,9 +74,9 @@ local instance intrinsicPrimeComparison_separableClosureAlgebra :
 local instance intrinsicPrimeComparison_absoluteFinite :
     Finite
       ((baseField
-        Gal(SeparableClosure K / K)).toSubgroup ⧸
+        Gal(SeparableClosure K/K)).toSubgroup ⧸
         extensionSubgroup
-          (baseField Gal(SeparableClosure K / K))
+          (baseField Gal(SeparableClosure K/K))
           H.field (le_baseField H.field)) :=
   H.finite
 
@@ -134,13 +132,13 @@ local instance intrinsicPrimeComparison_residueExtensionFinite :
 /-- The local Artin homomorphism of the actual finite fixed-field extension,
 using the canonical local structure constructed from the original field. -/
 noncomputable def intrinsicFixedFieldLocalArtinMonoidHom :
-    Additive Fˣ →+ Additive (Abelianization Gal(E / F)) :=
+    Additive Fˣ →+ Additive (Abelianization Gal(E/F)) :=
   MonoidHom.toAdditive (localArtinMonoidHom F E)
 
 /-- The concrete norm-residue symbol of the intrinsic finite extension,
 evaluated at a unit of the finite fixed field. -/
 noncomputable def intrinsicFixedFieldConcreteSymbolValue
-    (x : Fˣ) : Abelianization Gal(E / F) :=
+    (x : Fˣ) : Abelianization Gal(E/F) :=
   concreteNormResidueSymbolOfEmbedding
     F E iFE
     (localResidueDatum F)
@@ -148,13 +146,13 @@ noncomputable def intrinsicFixedFieldConcreteSymbolValue
     (separableClosureUnits_isClassFormation F) x
 
 private def intrinsicFixedFieldConcretePrimeComparison
-    (x : Fˣ) (z : Abelianization Gal(E / F)) : Prop :=
+    (x : Fˣ) (z : Abelianization Gal(E/F)) : Prop :=
   intrinsicFixedFieldConcreteSymbolValue K H J hJH e x =
     z
 
 private def intrinsicFixedFieldAmbientPrimeComparison
     (_e : intrinsicFixedFieldSeparableClosureEquiv K H)
-    (x : Fˣ) (z : Abelianization Gal(E / F)) : Prop :=
+    (x : Fˣ) (z : Abelianization Gal(E/F)) : Prop :=
   abstractFixedFieldNormResidueSymbol
       K (SeparableClosure K)
       (localResidueDatum K)
@@ -167,7 +165,7 @@ private def intrinsicFixedFieldAmbientPrimeComparison
 intrinsic finite-extension Galois group. -/
 def intrinsicFixedFieldSourceFrobeniusAbelianization
     (q : (EI).extensionQuotient) :
-    Abelianization Gal(E / F) :=
+    Abelianization Gal(E/F) :=
   Abelianization.of (qF q)
 
 /-- Restrict a transported ambient Frobenius element and map the resulting
@@ -176,7 +174,7 @@ def intrinsicFixedFieldAmbientFrobeniusAbelianization
     (σ :
       (localResidueDatum F).FrobeniusElements
         RF (EI).field (EI).below) :
-    Abelianization Gal(E / F) :=
+    Abelianization Gal(E/F) :=
   (qH).abelianizationCongr
     (Abelianization.of
       ((localResidueDatum K).frobeniusRestriction
@@ -185,7 +183,7 @@ def intrinsicFixedFieldAmbientFrobeniusAbelianization
           K H J hJH e σ)))
 
 private structure IntrinsicFixedFieldPrimeComparisonData
-    (z : Abelianization Gal(E / F)) where
+    (z : Abelianization Gal(E/F)) where
   xPrime : Fˣ
   concrete :
     intrinsicFixedFieldConcretePrimeComparison
@@ -628,7 +626,7 @@ local instance intrinsicPrimeComparison_frobeniusSourceQuotientFinite
 inside the intrinsic absolute Galois group. -/
 def intrinsicFixedFieldFrobeniusSourceAbstractField
     (σ : intrinsicFixedFieldFrobeniusElements K H J hJH e) :
-    FiniteAbstractField Gal(SeparableClosure F / F) := by
+    FiniteAbstractField Gal(SeparableClosure F/F) := by
   letI _hExtensionFinite :
       Finite
         ((intrinsicAbstractBase F).toSubgroup ⧸
@@ -706,7 +704,7 @@ private theorem intrinsicFixedFieldFrobeniusPrimeNorm_relativeNorm
 abstract field inside the ambient absolute Galois group. -/
 def intrinsicFixedFieldFrobeniusAmbientAbstractField
     (σ : intrinsicFixedFieldFrobeniusElements K H J hJH e) :
-    FiniteAbstractField Gal(SeparableClosure K / K) :=
+    FiniteAbstractField Gal(SeparableClosure K/K) :=
   ⟨intrinsicFixedFieldFrobeniusAmbientClosedField
       K H J hJH e σ,
     (localResidueDatum K).frobeniusFixedField_absoluteFinite
@@ -838,7 +836,7 @@ private theorem intrinsicFixedFieldFrobeniusPrimeNorm_ambient
 
 
 private noncomputable def intrinsicFixedFieldPrimeRepresentative
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     (EI).extensionQuotient :=
   Classical.choose
     (QuotientGroup.mk_surjective
@@ -847,7 +845,7 @@ private noncomputable def intrinsicFixedFieldPrimeRepresentative
 omit [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] in
 private theorem intrinsicFixedFieldPrimeRepresentative_abelianization
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     (qF).abelianizationCongr
         (Abelianization.of
           (intrinsicFixedFieldPrimeRepresentative
@@ -867,7 +865,7 @@ private theorem intrinsicFixedFieldPrimeRepresentative_abelianization
     _ = z := (qF).abelianizationCongr.apply_symm_apply z
 
 private noncomputable def intrinsicFixedFieldPrimeFrobeniusLift
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     intrinsicFixedFieldFrobeniusElements K H J hJH e :=
   Classical.choose
     ((localResidueDatum F).frobeniusRestriction_surjective
@@ -876,7 +874,7 @@ private noncomputable def intrinsicFixedFieldPrimeFrobeniusLift
         K H J hJH e z))
 
 private theorem intrinsicFixedFieldPrimeFrobeniusLift_restriction
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     (localResidueDatum F).frobeniusRestriction
         RF (EI).field (EI).below
         (intrinsicFixedFieldPrimeFrobeniusLift
@@ -890,14 +888,14 @@ private theorem intrinsicFixedFieldPrimeFrobeniusLift_restriction
         K H J hJH e z))
 
 private noncomputable def intrinsicFixedFieldPrimeComparisonWitness
-    (z : Abelianization Gal(E / F)) : Fˣ :=
+    (z : Abelianization Gal(E/F)) : Fˣ :=
   intrinsicFixedFieldFrobeniusPrimeNorm
     K H J hJH e
     (intrinsicFixedFieldPrimeFrobeniusLift
       K H J hJH e z)
 
 private theorem intrinsicFixedFieldPrimeComparisonWitness_concrete
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     intrinsicFixedFieldConcretePrimeComparison
       K H J hJH e
       (intrinsicFixedFieldPrimeComparisonWitness
@@ -926,18 +924,18 @@ private noncomputable def intrinsicFixedFieldAmbientQuotientResult
     (q :
       H.field.toSubgroup ⧸
         extensionSubgroup H.field J hJH) :
-    Gal(E / F) :=
+    Gal(E/F) :=
   qH q
 
 private noncomputable def intrinsicFixedFieldSourceQuotientResult
     (q : (EI).extensionQuotient) :
-    Gal(E / F) :=
+    Gal(E/F) :=
   qF q
 
 private noncomputable def
     intrinsicFixedFieldFrobeniusAmbientRestrictionResult
     (σ : intrinsicFixedFieldFrobeniusElements K H J hJH e) :
-    Gal(E / F) :=
+    Gal(E/F) :=
   intrinsicFixedFieldAmbientQuotientResult K H J hJH
     ((localResidueDatum K).frobeniusRestriction
       RH J hJH
@@ -947,7 +945,7 @@ private noncomputable def
 private noncomputable def
     intrinsicFixedFieldFrobeniusSourceRestrictionResult
     (σ : intrinsicFixedFieldFrobeniusElements K H J hJH e) :
-    Gal(E / F) :=
+    Gal(E/F) :=
   intrinsicFixedFieldSourceQuotientResult K H J hJH e
     ((localResidueDatum F).frobeniusRestriction
       RF (EI).field (EI).below σ)
@@ -1065,7 +1063,7 @@ private theorem
 
 private theorem
     intrinsicFixedFieldPrimeFrobeniusSourceRestrictionResult_eq
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     intrinsicFixedFieldFrobeniusSourceRestrictionResult
         K H J hJH e
         (intrinsicFixedFieldPrimeFrobeniusLift
@@ -1081,7 +1079,7 @@ private theorem
         K H J hJH e z)
 
 private theorem intrinsicFixedFieldPrimeFrobeniusLift_ambientRestriction
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     intrinsicFixedFieldFrobeniusAmbientRestrictionResult
         K H J hJH e
         (intrinsicFixedFieldPrimeFrobeniusLift
@@ -1110,7 +1108,7 @@ private theorem intrinsicFixedFieldPrimeFrobeniusLift_ambientRestriction
         K H J hJH e z
 
 private theorem intrinsicFixedFieldPrimeComparisonWitness_ambient
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     intrinsicFixedFieldAmbientPrimeComparison
       K H J hJH e
       (intrinsicFixedFieldPrimeComparisonWitness
@@ -1156,7 +1154,7 @@ private theorem intrinsicFixedFieldPrimeComparisonWitness_ambient
                 K H J hJH e z)))
 
 private noncomputable def intrinsicFixedFieldPrimeComparison
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     IntrinsicFixedFieldPrimeComparisonData
       K H J hJH e z :=
   { xPrime :=
@@ -1173,7 +1171,7 @@ private noncomputable def intrinsicFixedFieldPrimeComparison
 extension is represented by a unit with both its concrete norm-residue value
 and its actual ambient fixed-field norm-residue value. -/
 theorem exists_intrinsicFixedFieldPrimeComparison
-    (z : Abelianization Gal(E / F)) :
+    (z : Abelianization Gal(E/F)) :
     ∃ x : Fˣ,
       concreteNormResidueSymbolOfEmbedding
           F E iFE
@@ -1209,7 +1207,7 @@ theorem exists_intrinsicFixedFieldNormClassRepresentative
           H.field J hJH (Additive.ofMul x) =
           intrinsicFixedFieldLocalArtinMonoidHom
             K H J hJH (Additive.ofMul a) := by
-  let z : Abelianization Gal(E / F) :=
+  let z : Abelianization Gal(E/F) :=
     concreteNormResidueSymbolOfEmbedding
       F E iFE
       (localResidueDatum F)

@@ -10,8 +10,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Conjugation
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.NumberFieldPrimes
 
-set_option autoImplicit false
-
 /-!
 # Global cyclotomic inertia argument: coverage by finitely many chosen inertia groups
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.PrimeElement
 
-set_option autoImplicit false
-
 /-!
 # The Eisenstein relation for the cyclotomic uniformizer
 

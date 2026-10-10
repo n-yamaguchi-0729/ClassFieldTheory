@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFr
 import Mathlib.Algebra.BigOperators.Finsupp.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
 
-set_option autoImplicit false
-
 /-!
 # Prime factorization of nonzero fractional ideals
 
@@ -20,7 +18,9 @@ supported integer exponents of finite primes. This equivalence is formulated
 entirely in Mathlib and public Definitions vocabulary.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassFieldRealization
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
 
-set_option autoImplicit false
-
 /-!
 # Degree of a ray class field
 
@@ -17,7 +15,7 @@ the ideal-theoretic ray class group.  The realization is explicit, so this
 module does not depend on an implementation-level choice of field.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 
 noncomputable section
 

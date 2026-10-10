@@ -20,8 +20,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormProperties
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.OnePlaceBaseNorm
 
-set_option autoImplicit false
-
 /-!
 # Ideles in finite extensions of number fields
 

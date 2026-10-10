@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
 
-set_option autoImplicit false
-
 /-!
 # Norms on norm-one idele groups
 

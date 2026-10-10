@@ -9,11 +9,11 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinite
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 
-set_option autoImplicit false
-
 /-!
 # Class fields attached to ray class subgroups
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

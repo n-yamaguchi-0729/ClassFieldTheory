@@ -12,4 +12,10 @@ import ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.TopologicalProfiniteCompletion
 
-set_option autoImplicit false
+/-!
+# Local class-field definitions
+
+This aggregate collects field norm maps, subgroups and quotients, finite
+abelian local extensions, open subgroups of finite index, and topological
+profinite completions.
+-/

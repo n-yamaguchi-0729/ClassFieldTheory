@@ -6,14 +6,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalAbstractExtensionToOrdinary
 
-set_option autoImplicit false
-
 /-!
 # Rational fixed-field base-change transport
 
 Compatibility of abstract fixed-field inclusion with ordinary idele-class extension after
 base change.
 -/
+
+
 
 noncomputable section
 

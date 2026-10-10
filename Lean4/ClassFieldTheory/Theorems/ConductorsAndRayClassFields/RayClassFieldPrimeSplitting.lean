@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinite
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusEqOneIffSplitsCompletely
 
-set_option autoImplicit false
-
 /-!
 # Prime splitting in a ray class field
 
@@ -19,7 +17,7 @@ isomorphism identifies complete splitting with triviality of the
 corresponding ray class.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 
 noncomputable section
 

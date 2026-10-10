@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
 import ValuedFieldTheory.Ramification.HilbertRamification.InertiaRamificationCard
 
-set_option autoImplicit false
-
 /-!
 # Inertia order and ramification index for a chosen local extension
 

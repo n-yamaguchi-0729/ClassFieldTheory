@@ -17,8 +17,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Kummer.MaximalLocalKummerPairing
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.PowerResidueTameFormula
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
 
-set_option autoImplicit false
-
 /-!
 # Local Kummer reciprocity
 

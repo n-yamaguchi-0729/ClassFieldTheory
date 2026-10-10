@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.FieldTheory.SplittingField.IsSplittingField
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
 
-set_option autoImplicit false
-
 /-!
 # Towers of equal-characteristic Lubin--Tate level fields
 
@@ -16,6 +14,8 @@ The primitive roots used to define the finite levels are chosen independently
 inside one separable closure.  This file proves that the resulting standard
 level fields nevertheless form an increasing tower.
 -/
+
+
 
 noncomputable section
 

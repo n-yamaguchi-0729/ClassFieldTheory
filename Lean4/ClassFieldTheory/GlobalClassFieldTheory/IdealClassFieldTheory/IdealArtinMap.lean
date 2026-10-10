@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
 
-set_option autoImplicit false
-
 /-!
 # The ideal-theoretic Artin map
 
@@ -23,6 +21,8 @@ The target is kept as the concrete reciprocity quotient `C_K / N`; global
 reciprocity identifies this quotient with the corresponding abelian Galois
 group.
 -/
+
+
 
 open scoped NumberField BigOperators NumberField.LiesOver
 

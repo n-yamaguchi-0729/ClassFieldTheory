@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassField
 
-set_option autoImplicit false
-
 /-!
 # Profinite reciprocity facade
 

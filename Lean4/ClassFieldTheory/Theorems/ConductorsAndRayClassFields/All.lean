@@ -52,8 +52,6 @@ import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgroupQuo
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayPrincipalIdealMembership
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayPrincipalIdealPrimeTo
 
-set_option autoImplicit false
-
 /-!
 # Conductors and ray class fields
 

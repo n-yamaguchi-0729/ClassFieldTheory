@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
 
-set_option autoImplicit false
-
 /-!
 # Finite support of finite-place Hilbert symbols
 
@@ -19,7 +17,9 @@ theorem for those Artin factors; no second ramification-support construction
 is needed here.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

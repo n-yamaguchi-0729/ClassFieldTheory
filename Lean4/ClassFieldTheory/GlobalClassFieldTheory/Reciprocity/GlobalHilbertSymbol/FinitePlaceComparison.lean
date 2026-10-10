@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
 
-set_option autoImplicit false
-
 /-!
 # Finite-place local--global Kummer comparison
 
@@ -17,7 +15,9 @@ and splitting-field data are named separately so downstream proofs do not
 rebuild the localized-completion instance tower.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

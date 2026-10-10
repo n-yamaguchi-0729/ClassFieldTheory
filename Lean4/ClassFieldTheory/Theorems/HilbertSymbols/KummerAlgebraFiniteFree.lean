@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
 import Mathlib.RingTheory.AdjoinRoot
 
-set_option autoImplicit false
-
 /-!
 # Finite freeness of a Kummer algebra
 

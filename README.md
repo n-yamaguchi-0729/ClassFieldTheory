@@ -97,6 +97,10 @@ lake exe cache get
 lake --wfail build
 ```
 
+Elaboration and linter options are shared in `lakefile.toml`:
+`autoImplicit = false`, unused-variable and missing-documentation checks,
+and the Mathlib standard linter set. Maintained sources do not override these options.
+
 ## Verification
 
 The [GitHub Actions workflow](.github/workflows/lean.yml) checks that every
@@ -106,6 +110,15 @@ checks proofs with NanoDa, and replays them with the Lean kernel. It also checks
 that the designated declarations in the [public API contract](.github/verification/main-declarations.json)
 retain their names, kinds, and specified source modules. This API check does not compare
 theorem statements. Logs and receipts are uploaded as workflow artifacts.
+
+CI builds local modules in dependency-depth stages and saves completed project
+compiler outputs after each stage. The cache excludes downloaded dependencies,
+toolchains, and large generated `*.setup.json` inputs. It checks the available
+archive space before saving and validates cached file hashes on restoration;
+a missing or invalid cache falls back to a normal build. A separate verification
+job still runs the complete declaration, NanoDa, and Lean kernel checks on every
+run, including cache hits. Build stages stop after five hours to leave time for
+saving completed outputs and diagnostic receipts before the runner deadline.
 
 ## Authorship and AI assistance
 

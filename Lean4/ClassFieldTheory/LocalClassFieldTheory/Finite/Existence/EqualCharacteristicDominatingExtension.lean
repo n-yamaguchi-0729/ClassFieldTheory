@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacterist
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 
-set_option autoImplicit false
-
 /-!
 # Equal-characteristic dominating extensions
 

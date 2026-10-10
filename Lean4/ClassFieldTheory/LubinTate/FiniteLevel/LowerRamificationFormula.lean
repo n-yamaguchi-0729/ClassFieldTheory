@@ -8,8 +8,6 @@ import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveDisplacement
 import ClassFieldTheory.LubinTate.FiniteLevel.GaloisParameterFiltration
 import ClassFieldTheory.LubinTate.FiniteLevel.LowerRamification
 
-set_option autoImplicit false
-
 /-!
 # Explicit lower ramification groups of finite Lubin--Tate levels
 
@@ -19,6 +17,8 @@ to the finite-level Galois group.  At the break `q ^ k - 1`, and throughout
 the interval `q ^ (k - 1) ≤ r < q ^ k`, the group is the image of `U_F^k`.
 Its cardinality is therefore `q ^ (n + 1 - k)`.
 -/
+
+
 
 noncomputable section
 

@@ -18,8 +18,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNo
 import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UnitQuotientCard
 import ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UnitTransport
 
-set_option autoImplicit false
-
 /-!
 # Reusable Lubin--Tate norm calculations in equal characteristic
 

@@ -11,8 +11,6 @@ import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.Valuation.Extension
 
-set_option autoImplicit false
-
 /-!
 # Uniqueness of normalized families on unramified members
 

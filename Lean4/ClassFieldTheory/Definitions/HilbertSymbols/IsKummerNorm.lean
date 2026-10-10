@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
 import Mathlib.RingTheory.Norm.Basic
 
-set_option autoImplicit false
-
 /-!
 # Norms from Kummer algebras
 -/
+
+
 
 namespace ClassFieldTheory
 

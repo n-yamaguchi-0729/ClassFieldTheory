@@ -28,8 +28,6 @@ import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamified
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.All
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ValuationContinuity
 
-set_option autoImplicit false
-
 /-!
 # Abstract reciprocity
 

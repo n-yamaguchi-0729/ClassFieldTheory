@@ -28,8 +28,6 @@ import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.All
 import ClassFieldTheory.LubinTate.Padic.MultiplicativeIntertwiner
 import ClassFieldTheory.LubinTate.Padic.MultiplicativeSeries
 
-set_option autoImplicit false
-
 /-!
 # P-adic Lubin--Tate theory
 

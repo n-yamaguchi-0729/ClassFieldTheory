@@ -13,8 +13,6 @@ import ValuedFieldTheory.Valuation.DiscreteValuationField.ChevalleyExtension
 import ValuedFieldTheory.Ramification.HilbertRamification.LocalizationRamificationGroups
 import ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
 
-set_option autoImplicit false
-
 /-!
 # The global valuation/prime-ideal bridge in the global cyclotomic inertia argument
 
@@ -26,7 +24,8 @@ localization of `𝓞 M` at that prime.
 
 The final comparison sends ideal-theoretic inertia injectively to the
 valuation-subring inertia group.  Thus the local cardinality bound furnished
-by the localization and decomposition comparison applies to the chosen global prime without an extra compatibility
+by the localization and decomposition comparison applies to the chosen global prime without an
+extra compatibility
 hypothesis.
 -/
 
@@ -348,8 +347,9 @@ theorem globalPadicPrime_localizationValuationSubring_eq
     rw [hmk, map_div₀, hsEq, div_one]
     exact haLe
   apply
-    (ValuationTheory.DiscreteValuationField.Valuation.valuationSubring_eq_of_le_of_mem_maximalIdeal_iff
-      V A hVA ?_).symm
+    (open _root_.ValuationTheory.DiscreteValuationField in
+      Valuation.valuationSubring_eq_of_le_of_mem_maximalIdeal_iff
+        V A hVA ?_).symm
   intro x
   rcases x.property with ⟨a, s, hs, hx⟩
   have hs0 : s ≠ 0 := by
@@ -604,8 +604,10 @@ theorem globalPadicIdealInertiaToLocalizationInertia_injective
   exact h2
 
 omit [IsAbelianGalois ℚ M] in
-/-- The exact cardinal comparison needed in the global cyclotomic inertia argument: the ideal inertia group
-at the synchronized prime is no larger than the localization and decomposition comparison valuation inertia
+/-- The exact cardinal comparison needed in the global cyclotomic inertia argument: the ideal
+inertia group
+at the synchronized prime is no larger than the localization and decomposition comparison
+valuation inertia
 group attached to `w`. -/
 theorem globalPadicPrimeIdeal_inertia_natCard_le_valuationInertia
     (w : AbsoluteValueExtension (Rat.AbsoluteValue.padic p) M) :

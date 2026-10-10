@@ -15,8 +15,6 @@ import ClassFieldTheory.Theorems.GlobalClassFieldTheory.FinitePlaceRayArtinLocal
 import ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity
 import ClassFieldTheory.Theorems.GlobalClassFieldTheory.MaximalAbelianGlobalArtin
 
-set_option autoImplicit false
-
 /-!
 # Global class field theory
 

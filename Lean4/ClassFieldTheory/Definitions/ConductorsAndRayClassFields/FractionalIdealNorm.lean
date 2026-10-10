@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNormExponentMap
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealFactorization
 
-set_option autoImplicit false
-
 /-!
 # Relative norm of nonzero fractional ideals
 
@@ -16,6 +14,8 @@ The norm sends a finite-prime factor upstairs to the prime below it, with
 exponent multiplied by the inertia degree. Prime factorization extends this
 rule to a multiplicative map on all nonzero fractional ideals.
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

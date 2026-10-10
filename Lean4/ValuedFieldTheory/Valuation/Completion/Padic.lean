@@ -8,8 +8,6 @@ import ValuedFieldTheory.Valuation.AbsoluteValue.Completion
 import Mathlib.NumberTheory.Ostrowski
 import Mathlib.NumberTheory.Padics.PadicNumbers
 
-set_option autoImplicit false
-
 /-!
 # The `p`-adic completion used in the global cyclotomic argument
 

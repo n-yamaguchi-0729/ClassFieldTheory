@@ -5,12 +5,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Field.Rat
 import Mathlib.Data.Finset.Interval
 import Mathlib.SetTheory.Cardinal.Finite
-
-set_option autoImplicit false
 
 /-!
 # The Herbrand function at integral lower indices

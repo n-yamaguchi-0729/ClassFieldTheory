@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.GroupTheory.Index
 import Mathlib.Topology.Algebra.Group.Units
 
-set_option autoImplicit false
-
 /-!
 # Open finite-index subgroups of a field's multiplicative group
 -/

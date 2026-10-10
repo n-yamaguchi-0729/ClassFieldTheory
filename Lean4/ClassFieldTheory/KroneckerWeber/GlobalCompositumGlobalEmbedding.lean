@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.KroneckerWeber.GlobalCompositumLeftFactors
 
-set_option autoImplicit false
-
 /-!
 # The global cyclotomic factor inside the common local target
 

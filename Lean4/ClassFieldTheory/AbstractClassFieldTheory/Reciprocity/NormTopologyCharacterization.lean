@@ -9,8 +9,6 @@ import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ValuationContinuity
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormContinuity
 import GaloisCohomology.Cyclic.IntegralRepUniverse
 
-set_option autoImplicit false
-
 /-!
 # The norm-topology characterization
 

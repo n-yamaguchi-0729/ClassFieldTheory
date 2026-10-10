@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LubinTate.FiniteLevel.LevelAutomorphisms
 import Mathlib.FieldTheory.SplittingField.IsSplittingField
 
-set_option autoImplicit false
-
 /-!
 # The tower of standard Lubin--Tate level fields
 
@@ -16,6 +14,8 @@ The primitive roots defining the standard finite levels are chosen
 independently in one separable closure.  Exact torsion and normality show
 that the resulting simple fields nevertheless form an increasing tower.
 -/
+
+
 
 noncomputable section
 

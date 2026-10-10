@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FinitePlaceArti
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ProductFormula
 
-set_option autoImplicit false
-
 /-!
 # Prime norm classes at unramified finite places
 
@@ -26,7 +24,7 @@ corresponding prime class in the global idèle-class norm quotient, so
 the order of the global class divides the local degree.
 -/
 
-open scoped NumberField Classical
+open scoped NumberField
 
 noncomputable section
 

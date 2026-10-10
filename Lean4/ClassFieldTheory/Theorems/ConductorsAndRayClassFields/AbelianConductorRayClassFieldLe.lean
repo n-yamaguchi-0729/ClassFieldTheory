@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassFieldRealization
 
-set_option autoImplicit false
-
 /-!
 # The conductor of a ray class field
 

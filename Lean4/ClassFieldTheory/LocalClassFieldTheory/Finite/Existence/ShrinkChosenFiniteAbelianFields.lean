@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnshrinkFiniteAbelianFields
 import ClassFieldTheory.Algebra.FiniteAbelianIntermediateFieldAlgEquiv
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian fields in the chosen small-base separable closure
 

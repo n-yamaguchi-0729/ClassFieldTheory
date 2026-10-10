@@ -10,8 +10,6 @@ import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.NumberTheory.RamificationInertia.Unramified
 import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Frobenius under transport of a prime
 

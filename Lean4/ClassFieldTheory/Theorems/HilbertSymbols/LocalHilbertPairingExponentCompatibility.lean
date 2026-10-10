@@ -11,8 +11,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTranspor
 import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
-set_option autoImplicit false
-
 /-!
 # Compatibility of Hilbert pairings at divisible exponents
 

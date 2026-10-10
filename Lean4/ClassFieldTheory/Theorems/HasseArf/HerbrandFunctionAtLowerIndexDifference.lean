@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
 import ClassFieldTheory.HasseArf
 
-set_option autoImplicit false
-
 /-!
 # Herbrand-function increment at integral lower indices
 

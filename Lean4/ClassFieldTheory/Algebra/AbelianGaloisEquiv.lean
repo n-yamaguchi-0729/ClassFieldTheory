@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.FieldTheory.Galois.Abelian
 
-set_option autoImplicit false
-
 /-!
 # Abelian Galois extensions under equivalent field presentations
 

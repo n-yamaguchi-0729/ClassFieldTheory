@@ -10,8 +10,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeId
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 
-set_option autoImplicit false
-
 /-!
 # The ideal Artin map in arithmetic Frobenius normalization
 
@@ -22,7 +20,9 @@ ordinary prime ideal to arithmetic Frobenius, has the genuine idèle
 norm kernel, and induces the canonical ideal class-field isomorphism.
 -/
 
-open scoped NumberField Classical
+
+
+open scoped NumberField
 
 noncomputable section
 

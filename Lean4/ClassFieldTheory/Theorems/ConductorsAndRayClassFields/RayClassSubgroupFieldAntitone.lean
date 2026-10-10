@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgroupEmbedding
 
-set_option autoImplicit false
-
 /-!
 # Inclusion of ray-class subgroup class fields
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
 
-set_option autoImplicit false
-
 /-!
 # The abstract class-field correspondence
 

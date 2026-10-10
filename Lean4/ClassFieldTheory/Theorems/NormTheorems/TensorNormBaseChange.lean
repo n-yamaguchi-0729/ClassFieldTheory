@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 
-set_option autoImplicit false
-
 /-!
 # Determinant norm and scalar extension
 

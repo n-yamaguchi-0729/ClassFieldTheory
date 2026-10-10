@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
 
-set_option autoImplicit false
-
 /-!
 # Finite-place Artin quotients
 
@@ -19,7 +17,7 @@ identifies the concrete local norm quotient with the decomposition
 group.
 -/
 
-open scoped NumberField Classical
+open scoped NumberField
 
 noncomputable section
 

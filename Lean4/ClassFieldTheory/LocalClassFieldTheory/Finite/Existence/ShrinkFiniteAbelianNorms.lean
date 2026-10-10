@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFiniteAbelianFields
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
 
-set_option autoImplicit false
-
 /-!
 # Norm subgroups under a small change of local base field
 

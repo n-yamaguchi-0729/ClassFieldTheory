@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.PowerResidueReciprocity
 
-set_option autoImplicit false
-
 /-!
 # Rational quadratic reciprocity from global class field theory
 
@@ -15,7 +13,7 @@ The dyadic correction specializes power-residue reciprocity over `ℚ` and
 derives Gauss's quadratic reciprocity law.
 -/
 
-open scoped BigOperators Classical NumberField NumberTheorySymbols ValuativeRel WithZero
+open scoped BigOperators NumberField NumberTheorySymbols ValuativeRel WithZero
 open NumberField IsDedekindDomain
 
 noncomputable section

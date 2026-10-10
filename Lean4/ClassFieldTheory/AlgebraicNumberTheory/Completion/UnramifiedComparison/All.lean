@@ -9,6 +9,4 @@ import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.Id
 import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
 import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.RamificationIndex
 
-set_option autoImplicit false
-
 /-! # Unramified comparisons between completions and prime ideals -/

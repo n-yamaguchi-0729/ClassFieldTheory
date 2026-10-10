@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinite
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
 import Mathlib.RingTheory.ClassGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # The ordinary ray class group and the ideal class group
 

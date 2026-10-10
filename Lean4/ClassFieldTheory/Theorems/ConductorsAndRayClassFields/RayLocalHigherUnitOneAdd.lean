@@ -11,8 +11,6 @@ import Mathlib.RingTheory.LocalRing.Basic
 import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 import Mathlib.Tactic.Ring
 
-set_option autoImplicit false
-
 /-!
 # Positive-depth higher units as `1 + 𝔪ᵛⁿ`
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquivTopology
 import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
 
-set_option autoImplicit false
-
 /-!
 # Integral finite completions under a number-field equivalence
 

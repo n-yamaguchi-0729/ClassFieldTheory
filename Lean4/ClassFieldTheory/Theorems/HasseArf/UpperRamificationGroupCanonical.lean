@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HasseArf.UpperRamificationGroup
 import ClassFieldTheory.Theorems.HasseArf.InverseHerbrandFunctionHerbrandFunction
 
-set_option autoImplicit false
-
 /-!
 # Upper groups at Herbrand indices
 

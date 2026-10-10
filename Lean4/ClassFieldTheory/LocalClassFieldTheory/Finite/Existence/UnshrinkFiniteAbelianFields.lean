@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFiniteAbelianFields
 
-set_option autoImplicit false
-
 /-!
 # Returning finite abelian intermediate fields from the small base
 

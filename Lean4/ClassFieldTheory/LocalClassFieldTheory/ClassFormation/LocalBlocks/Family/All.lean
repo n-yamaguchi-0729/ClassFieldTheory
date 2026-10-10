@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Family.
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Family.HMinusOne
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Family.Instances
 
-set_option autoImplicit false
-
 /-!
 # Finite families of local idele blocks
 

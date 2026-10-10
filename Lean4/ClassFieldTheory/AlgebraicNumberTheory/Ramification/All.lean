@@ -11,8 +11,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
 import ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.All
 import ClassFieldTheory.AlgebraicNumberTheory.Ramification.UnramifiedRationals
 
-set_option autoImplicit false
-
 /-!
 # Ramification of number fields
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalFiel
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentModel
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
 
-set_option autoImplicit false
-
 /-!
 # Equal-characteristic Laurent model for Lubin--Tate theory
 

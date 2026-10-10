@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
-set_option autoImplicit false
-
 /-!
 # Independence of the chosen Kummer root
 

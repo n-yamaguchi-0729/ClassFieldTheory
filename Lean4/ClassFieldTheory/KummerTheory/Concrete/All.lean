@@ -10,8 +10,6 @@ import ClassFieldTheory.KummerTheory.Concrete.SUnitKummerUnramified
 import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.All
 import ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
 
-set_option autoImplicit false
-
 /-!
 # Concrete Kummer theory
 

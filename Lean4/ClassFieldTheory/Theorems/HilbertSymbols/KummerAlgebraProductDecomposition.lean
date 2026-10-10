@@ -10,8 +10,6 @@ import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
 import Mathlib.RingTheory.AdjoinRoot
 import Mathlib.RingTheory.Etale.Field
 
-set_option autoImplicit false
-
 /-!
 # Product decomposition of a Kummer algebra
 

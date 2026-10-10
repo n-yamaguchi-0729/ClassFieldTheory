@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Frobenius satisfies the residue-field congruence
 

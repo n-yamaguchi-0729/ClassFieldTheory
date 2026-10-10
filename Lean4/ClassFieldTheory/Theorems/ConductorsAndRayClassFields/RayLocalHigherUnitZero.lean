@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 
-set_option autoImplicit false
-
 /-!
 # The zeroth local higher-unit group
 -/

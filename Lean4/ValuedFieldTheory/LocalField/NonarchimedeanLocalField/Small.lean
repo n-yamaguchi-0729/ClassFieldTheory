@@ -8,8 +8,6 @@ import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionComp
 import ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.Core
 import Mathlib.Logic.Small.Basic
 
-set_option autoImplicit false
-
 /-!
 # The carrier of a nonarchimedean local field is universe-small
 

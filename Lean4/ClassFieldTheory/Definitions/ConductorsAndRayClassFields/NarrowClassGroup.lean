@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
 import Mathlib.RingTheory.ClassGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # Narrow ideal classes
 

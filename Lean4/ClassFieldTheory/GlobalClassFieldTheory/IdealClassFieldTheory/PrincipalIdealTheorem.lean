@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
 import Mathlib.RingTheory.ClassGroup.ExtendedHom
 
-set_option autoImplicit false
-
 /-!
 # The principal ideal theorem
 
@@ -18,6 +16,8 @@ defining the two small Hilbert class fields and proves that the resulting
 map forms the naturality square with the existing ideal-class extension
 `ClassGroup.extendedHom`.
 -/
+
+
 
 open scoped NumberField
 

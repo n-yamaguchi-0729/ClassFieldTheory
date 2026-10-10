@@ -8,8 +8,6 @@ import ClassFieldTheory.Algebra.AbelianGaloisEquiv
 import ClassFieldTheory.Algebra.FiniteAbelianIntermediateFieldAlgEquiv
 import ClassFieldTheory.Algebra.IntermediateFieldAlgEquivOrderIso
 
-set_option autoImplicit false
-
 /-!
 Aggregate of the modules and subdirectories in ClassFieldTheory.Algebra.
 -/

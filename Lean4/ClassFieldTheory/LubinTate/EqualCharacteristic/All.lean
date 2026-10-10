@@ -14,8 +14,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.All
 import ClassFieldTheory.LubinTate.EqualCharacteristic.RealIndexSteps
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.All
 
-set_option autoImplicit false
-
 /-!
 # Equal-characteristic Lubin--Tate theory
 

@@ -11,8 +11,6 @@ import Mathlib.FieldTheory.PrimitiveElement
 import Mathlib.FieldTheory.SeparableClosure
 import Mathlib.RingTheory.Adjoin.PowerBasis
 
-set_option autoImplicit false
-
 /-!
 # Separability sources for finite unramified extensions
 
@@ -35,7 +33,8 @@ variable {K : Type*} {L : Type*} [Field K] [Field L] [Algebra K L]
 /-- Reducing a base valuation-ring polynomial after mapping it to the target
 valuation ring agrees with first reducing it over the base residue field. -/
 theorem unramifiedValuationRing_polynomial_target_reduction_eq
-    (v : LubinTate.Valuations.ExponentialValuation K) (w : LubinTate.Valuations.ExponentialValuation L)
+    (v : LubinTate.Valuations.ExponentialValuation K)
+    (w : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ a : K, w (algebraMap K L a) = v a)
     (P : Polynomial (LubinTate.Valuations.exponentialValuationSubring v)) :
     let V := LubinTate.Valuations.exponentialValuationSubring v
@@ -66,7 +65,8 @@ theorem unramifiedValuationRing_polynomial_target_reduction_eq
 /-- Evaluation of a valuation-ring polynomial commutes with passage to the
 actual residue fields. -/
 theorem unramifiedValuationRing_polynomial_aeval_residue_eq
-    (v : LubinTate.Valuations.ExponentialValuation K) (w : LubinTate.Valuations.ExponentialValuation L)
+    (v : LubinTate.Valuations.ExponentialValuation K)
+    (w : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ a : K, w (algebraMap K L a) = v a)
     (P : Polynomial (LubinTate.Valuations.exponentialValuationSubring v))
     (x : LubinTate.Valuations.exponentialValuationSubring w) :
@@ -118,7 +118,8 @@ element generates `L/K`; the polynomial becomes its field minimal polynomial
 over `K`, and its residue is the separable minimal polynomial of the residue
 class. -/
 theorem exists_primitive_lift_minpoly_of_finiteUnramifiedExtension
-    (v : LubinTate.Valuations.ExponentialValuation K) (w : LubinTate.Valuations.ExponentialValuation L)
+    (v : LubinTate.Valuations.ExponentialValuation K)
+    (w : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ a : K, w (algebraMap K L a) = v a)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring v).valuation)
@@ -172,7 +173,6 @@ theorem exists_primitive_lift_minpoly_of_finiteUnramifiedExtension
     finiteUnramifiedExtension_residue_isSeparable
       v w hExt hUnramified
   let : Algebra.IsSeparable k ell := hressep
-
   obtain ⟨abar, habarPrimitive⟩ :=
     @Field.exists_primitive_element k ell _ _ _ hresfinAlgebra hressep
   have habarIntegral : IsIntegral k abar :=
@@ -228,7 +228,6 @@ theorem exists_primitive_lift_minpoly_of_finiteUnramifiedExtension
         intro j
         rw [hbL j]
         rfl }
-
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
   let : Algebra V L := algVL
@@ -268,7 +267,6 @@ theorem exists_primitive_lift_minpoly_of_finiteUnramifiedExtension
     exact a.property
   have haIntegralV : IsIntegral V (a : L) :=
     (eV.isIntegral_iff heV (a : L)).mpr haIntegralVv
-
   let pV : Polynomial V := minpoly V (a : L)
   let pK : Polynomial K := minpoly K (a : L)
   let pbar : Polynomial k := pV.map (IsLocalRing.residue V)
@@ -358,7 +356,8 @@ A finite extension satisfying the literal unramified condition is separable
 when the base valuation is Henselian.  No separability of
 `L/K` is assumed. -/
 theorem finiteUnramifiedExtension_isSeparable_of_henselian
-    (v : LubinTate.Valuations.ExponentialValuation K) (w : LubinTate.Valuations.ExponentialValuation L)
+    (v : LubinTate.Valuations.ExponentialValuation K)
+    (w : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ a : K, w (algebraMap K L a) = v a)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring v).valuation)

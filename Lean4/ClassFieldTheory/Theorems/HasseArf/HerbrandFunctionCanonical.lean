@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
 import ClassFieldTheory.HasseArf
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Strict growth of the public Herbrand function
 

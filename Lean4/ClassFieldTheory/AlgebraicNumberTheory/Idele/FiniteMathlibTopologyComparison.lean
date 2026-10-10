@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.RestrictedProductUnitsTopology
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 
-set_option autoImplicit false
-
 /-!
 # The finite idèle topology and adele units
 

@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassC
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
 
-set_option autoImplicit false
-
 /-!
 # Comparing the public and ideal-theoretic Artin kernels
 
@@ -20,7 +18,7 @@ idèle-class norm kernel.  We then compare that kernel with the established
 ideal-theoretic Artin map on the same ray modulus.
 -/
 
-open scoped Classical NumberField IsMulCommutative
+open scoped NumberField IsMulCommutative
 open NumberField IsDedekindDomain
 
 noncomputable section

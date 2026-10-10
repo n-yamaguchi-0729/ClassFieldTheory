@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsRayCongruent
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayLocalHigherUnitAntitone
 
-set_option autoImplicit false
-
 /-!
 # Ray congruence under enlargement of the modulus
 

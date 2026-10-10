@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNorm
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 
-set_option autoImplicit false
-
 /-!
 # Comparing source and public ideal-norm subgroups
 
@@ -18,7 +16,7 @@ The public ideal-norm image is its image in the ideal ray class group.  This
 file records the exact comparison, including the principal-ray kernel.
 -/
 
-open scoped Classical NumberField IsMulCommutative
+open scoped NumberField IsMulCommutative
 open NumberField IsDedekindDomain
 
 noncomputable section

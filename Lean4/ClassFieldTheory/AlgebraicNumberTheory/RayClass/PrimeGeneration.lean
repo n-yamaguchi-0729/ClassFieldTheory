@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
-set_option autoImplicit false
-
 /-!
 # Prime generation of ray ideal classes
 
@@ -16,7 +14,9 @@ away from the modulus.  This is the algebraic input for comparing
 Frobenius-normalized ray reciprocity maps.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -25,6 +25,7 @@ namespace RayClass
 
 universe u v
 
+open scoped Classical in
 /-- Two homomorphisms out of the prime-to-modulus fractional ideal group
 agree if they agree on each prime ideal away from the modulus. -/
 theorem primeToModulusIdeals_hom_ext

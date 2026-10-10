@@ -9,8 +9,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
 
-set_option autoImplicit false
-
 /-!
 # Prime idèles and ideal ray classes
 
@@ -19,6 +17,8 @@ finite support omits that prime.  Its fractional ideal is the
 corresponding prime ideal, so the idelic and ideal-theoretic ray-class
 constructions use exactly the same prime representative.
 -/
+
+
 
 open scoped NumberField
 

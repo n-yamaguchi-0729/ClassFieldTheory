@@ -9,11 +9,11 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClass
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
 
-set_option autoImplicit false
-
 /-!
 # Prime classes in ray class groups
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

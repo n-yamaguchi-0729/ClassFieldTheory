@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRamification
 import ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
 
-set_option autoImplicit false
-
 /-!
 # Towers of transported equal-characteristic Lubin--Tate levels
 
@@ -18,6 +16,8 @@ inclusions are target-field linear.  This file packages the resulting
 restriction homomorphism and its compatibility with the unchanged
 underlying Galois automorphisms.
 -/
+
+
 
 noncomputable section
 

@@ -9,8 +9,6 @@ import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.EmbedsInRayClassFie
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.IsAbelianConductorUnique
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
 
-set_option autoImplicit false
-
 /-!
 # Zero finite exponent and unramifiedness
 -/
@@ -46,8 +44,9 @@ theorem IsAbelianConductor.finiteExponent_eq_zero_iff_unramified
     rw [heq]
     change H.narrowFiniteConductor.support = _
     exact
-      GlobalClassFieldTheory.GlobalClassFields.ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces
-        (K := K) (L := L)
+      (open GlobalClassFieldTheory.GlobalClassFields in
+        ideleClassNorm_narrowFiniteConductor_support_eq_ramifiedBaseFinitePlaces
+          (K := K) (L := L))
   calc
     c.finitePart v = 0 ↔ v ∉ c.finitePart.support :=
       (Finsupp.notMem_support_iff).symm

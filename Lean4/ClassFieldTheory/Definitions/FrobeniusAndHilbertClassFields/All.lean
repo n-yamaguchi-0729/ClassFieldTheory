@@ -14,4 +14,10 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsUnramifiedA
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealFactorization
 
-set_option autoImplicit false
+/-!
+# Frobenius and Hilbert class-field definitions
+
+This aggregate collects arithmetic Frobenius, splitting and unramified
+place conditions, Hilbert class fields, and fractional ideals of number
+fields.
+-/

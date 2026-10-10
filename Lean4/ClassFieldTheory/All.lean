@@ -18,8 +18,6 @@ import ClassFieldTheory.LubinTate.All
 import ClassFieldTheory.RamificationTheory.All
 import ClassFieldTheory.Theorems.All
 
-set_option autoImplicit false
-
 /-!
 # Class field theory
 

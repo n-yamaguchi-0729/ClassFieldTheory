@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
 import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.FieldTheory.IsSepClosed
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian local extensions
 -/

@@ -34,8 +34,6 @@ import ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveUniformizer
 import ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
 import ClassFieldTheory.LubinTate.FiniteLevel.UpperRamification
 
-set_option autoImplicit false
-
 /-!
 # General finite-level Lubin--Tate theory
 

@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
-set_option autoImplicit false
-
 /-!
 # Pairings on power classes
 -/
+
+
 
 namespace ClassFieldTheory
 

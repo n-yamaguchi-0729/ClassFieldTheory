@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
 import ValuedFieldTheory.LocalField.Padic.PrincipalUnits
 
-set_option autoImplicit false
-
 /-!
 # Standard p-adic norm-subgroup intersections
 

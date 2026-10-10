@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
 
-set_option autoImplicit false
-
 /-!
 # Splitting in the small Hilbert class field
 
@@ -16,6 +14,8 @@ The small Hilbert class field has reciprocity quotient the ordinary ideal
 class group.  Thus the Frobenius class of a finite prime is its ordinary
 ideal class, and it is trivial precisely when the prime ideal is principal.
 -/
+
+
 
 open scoped NumberField
 

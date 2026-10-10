@@ -12,8 +12,6 @@ import Mathlib.RingTheory.Valuation.ValuativeRel.Basic
 import Mathlib.Topology.Algebra.Constructions
 import Mathlib.Topology.Algebra.Group.Quotient
 
-set_option autoImplicit false
-
 /-!
 # The norm quotient induced by a specified finite local Artin map
 

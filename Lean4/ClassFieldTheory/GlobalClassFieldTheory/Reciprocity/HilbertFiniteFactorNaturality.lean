@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
 
-set_option autoImplicit false
-
 /-!
 # Naturality of the finite Hilbert factor
 

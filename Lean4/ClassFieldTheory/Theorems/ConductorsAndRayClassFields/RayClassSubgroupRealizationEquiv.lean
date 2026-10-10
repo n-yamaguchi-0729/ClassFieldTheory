@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroup
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgroupEmbedding
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
 
-set_option autoImplicit false
-
 /-!
 # Independence of the realization of a ray-class subgroup
 

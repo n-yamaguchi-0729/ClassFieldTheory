@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
-set_option autoImplicit false
-
 /-!
 # Families of finite-place Hilbert pairings
 -/

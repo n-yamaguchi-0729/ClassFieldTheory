@@ -6,13 +6,13 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegative
 
-set_option autoImplicit false
-
 /-!
 # Complete infinite-place Kummer root-character comparison
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField
 
 noncomputable section
@@ -121,6 +121,7 @@ theorem infinitePlaceKummerRootCharacter_localGlobal
     (v : InfinitePlace K) (a b : Kˣ) :
     infinitePlaceKummerRootCharacter K n hnK hmu v a b =
       infinitePlaceHilbertSymbol K n v a b := by
+  classical
   by_cases hv : v.IsReal
   · have hnLe : (n : ℕ) ≤ 2 := by
       by_contra hnLarge

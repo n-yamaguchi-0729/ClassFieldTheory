@@ -9,8 +9,6 @@ import ClassFieldTheory.HasseArf
 import Mathlib.Algebra.Group.Subgroup.Ker
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Integrality of upper ramification jumps
 

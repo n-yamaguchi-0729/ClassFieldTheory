@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.FieldTheory.Galois.Basic
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.PrimeComparison
 
-set_option autoImplicit false
-
 /-!
 # Intrinsic Frobenius Artin comparison
 
@@ -30,8 +28,8 @@ variable
     (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
-      Gal(SeparableClosure K / K))
-    (J : ClosedSubgroup Gal(SeparableClosure K / K))
+      Gal(SeparableClosure K/K))
+    (J : ClosedSubgroup Gal(SeparableClosure K/K))
     (hJH : J.toSubgroup ≤ H.field.toSubgroup)
     [hJnormal : (extensionSubgroup H.field J hJH).Normal]
     [hJfinite : Finite
@@ -40,9 +38,9 @@ variable
 local instance intrinsicFixedFieldArtin_absoluteFinite :
     Finite
       ((baseField
-        Gal(SeparableClosure K / K)).toSubgroup ⧸
+        Gal(SeparableClosure K/K)).toSubgroup ⧸
         extensionSubgroup
-          (baseField Gal(SeparableClosure K / K))
+          (baseField Gal(SeparableClosure K/K))
           H.field (le_baseField H.field)) :=
   H.finite
 

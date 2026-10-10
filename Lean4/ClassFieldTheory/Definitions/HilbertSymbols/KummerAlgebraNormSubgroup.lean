@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
 import Mathlib.RingTheory.Norm.Basic
 
-set_option autoImplicit false
-
 /-!
 # Norm subgroup of a Kummer algebra
 

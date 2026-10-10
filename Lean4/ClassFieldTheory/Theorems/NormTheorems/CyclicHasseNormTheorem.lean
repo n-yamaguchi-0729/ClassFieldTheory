@@ -10,8 +10,6 @@ import Mathlib.Algebra.Group.DivInvMonoid
 import Mathlib.FieldTheory.Galois.Basic
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.MathlibNormInterface
 
-set_option autoImplicit false
-
 /-!
 # The cyclic Hasse norm theorem
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.IntegralTranslate
 
-set_option autoImplicit false
-
 /-!
 # The valuation-ring equivalence for the totally ramified cyclotomic extension
 
@@ -44,7 +42,9 @@ theorem padicCyclotomicTotallyRamified_exists_adjoin_sub_one_equiv_valuationSubr
     (hgen : Algebra.adjoin ℚ_[p] ({ζ} : Set L) = ⊤)
     [FiniteDimensional ℚ_[p] L] [Algebra.IsSeparable ℚ_[p] L]
     (target : ValuationTheory.DiscreteValuationField.CompleteDVF.{u, 0} L)
-    [hExt : (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).valuation.HasExtension
+    [hExt :
+      (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF
+        p).valuation.HasExtension
       target.valuation]
     [hTarget : IsIntegralClosure target.valuationSubring
       (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p).valuationSubring L] :

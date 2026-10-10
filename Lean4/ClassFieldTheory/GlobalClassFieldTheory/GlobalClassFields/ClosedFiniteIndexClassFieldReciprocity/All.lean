@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteInd
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.All
 
-set_option autoImplicit false
-
 /-!
 # Reciprocity for a closed finite-index class field
 

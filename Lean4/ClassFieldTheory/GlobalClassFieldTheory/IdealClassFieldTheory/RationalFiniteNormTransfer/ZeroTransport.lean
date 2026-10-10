@@ -8,14 +8,14 @@ import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFin
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
 
-set_option autoImplicit false
-
 /-!
 # Zero-class transport to norm membership
 
 This compiled leaf preserves the original public declarations while reusing
 the shared fixed-field instance providers.
 -/
+
+
 
 noncomputable section
 
@@ -44,7 +44,7 @@ local instance
 
 /-- Internal finite-norm-class-zero to quotient-zero step. -/
 private noncomputable def
-    rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_finiteNormRepresentativeQuotientZero
+rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_finiteNormRepresentativeQuotientZero
     (K H L : ClosedSubgroup
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
@@ -157,10 +157,11 @@ private noncomputable def
       (hKfinite := hHfinite) (hfinite := hHLfinite)
       H L hLH hLHnormal
   have hquotientZero :=
-    rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_finiteNormRepresentativeQuotientZero
+    (
+rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_finiteNormRepresentativeQuotientZero
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)
       (hHLfinite := hHLfinite)
-      K H L hHK hLH hLHnormal c hincludeCanonical
+      K H L hHK hLH hLHnormal c hincludeCanonical)
   let e :=
     rationalFiniteNormQuotientEquivIdeleClassNormQuotient
       (hKfinite := hHfinite) (hfinite := hHLfinite)

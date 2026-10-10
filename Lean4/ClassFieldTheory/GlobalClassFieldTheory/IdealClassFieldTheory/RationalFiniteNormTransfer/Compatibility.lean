@@ -6,14 +6,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
 
-set_option autoImplicit false
-
 /-!
 # Compatibility of rational finite-norm representatives
 
 This compiled leaf preserves the original public declarations while reusing
 the shared fixed-field instance providers.
 -/
+
+
 
 noncomputable section
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroup
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusEqOneIffSplitsCompletely
 
-set_option autoImplicit false
-
 /-!
 # Prime splitting in a ray-class subgroup class field
 
@@ -17,7 +15,7 @@ At a prime away from the modulus, complete splitting is equivalent to
 membership of the prime's ray class in the defining subgroup.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 
 noncomputable section
 

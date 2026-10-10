@@ -6,13 +6,13 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlacePositive
 
-set_option autoImplicit false
-
 /-!
 # Ramification of a negative quadratic Kummer radical at a real place
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField
 
 noncomputable section

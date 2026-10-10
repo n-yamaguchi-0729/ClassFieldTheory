@@ -10,8 +10,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNor
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 
-set_option autoImplicit false
-
 /-!
 # Ideal norms lie in the normalized Artin kernel
 
@@ -20,7 +18,7 @@ prime by prime.  The reverse inclusion needs a separate approximation
 argument and is not asserted here.
 -/
 
-open scoped Classical NumberField IsMulCommutative
+open scoped NumberField IsMulCommutative
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -72,6 +70,7 @@ private theorem fractionalIdealNorm_prime
     fractionalIdealNorm K L (finitePrimeFractionalIdeal W) =
       finitePrimeFractionalIdeal (fractionalIdealNormPrimeBelow K L W) ^
         (W.asIdeal.inertiaDeg (𝓞 K) : ℤ) := by
+  classical
   apply NumberFieldFractionalIdealGroup.ext_count
   intro v
   rw [fractionalIdealNorm_count]

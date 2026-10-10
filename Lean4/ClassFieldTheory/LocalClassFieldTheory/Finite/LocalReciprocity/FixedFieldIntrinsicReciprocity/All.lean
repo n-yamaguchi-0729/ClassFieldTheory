@@ -19,8 +19,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedField
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.PrimeComparison
 
-set_option autoImplicit false
-
 /-!
 # Intrinsic fixed-field reciprocity
 

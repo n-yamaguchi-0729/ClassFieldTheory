@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
 
-set_option autoImplicit false
-
 /-!
 # Tower compatibility of finite local reciprocity
 

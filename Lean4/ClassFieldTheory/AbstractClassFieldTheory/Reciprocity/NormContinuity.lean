@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
 
-set_option autoImplicit false
-
 /-!
 # Continuity of norms
 

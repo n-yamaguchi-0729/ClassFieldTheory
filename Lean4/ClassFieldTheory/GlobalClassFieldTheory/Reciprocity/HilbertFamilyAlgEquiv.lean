@@ -6,8 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceAdicCompletionCongrEquiv
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertFiniteFactorNaturality
-
-set_option autoImplicit false
+import ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
 
 /-!
 # Hilbert-pairing families under equivalences of number fields

@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassFieldRea
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilbertClassField
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldArtinEquiv
 
-set_option autoImplicit false
-
 /-!
 # The small Hilbert class field as an ordinary ray class field
 

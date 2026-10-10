@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFie
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertSplitting
 
-set_option autoImplicit false
-
 /-!
 # Prime splitting for a maximal everywhere-unramified cyclic norm quotient
 
@@ -21,6 +19,8 @@ This file transports prime Frobenius classes across that identification
 and proves that trivial Frobenius is equivalent to principality of the
 prime ideal.
 -/
+
+
 
 open scoped NumberField
 
@@ -320,7 +320,8 @@ theorem
       (quotientMulEquivOfEq_trans_apply_mk
         ((_root_.ideleClassNorm K L).range)
         (bigHilbertClassFieldNormSubgroup (K := K))
-        ((ideleClassNorm_range_eq_bigHilbertClassFieldNormSubgroup_iff_finrank_eq_narrowClassGroup_card
+        ((
+      ideleClassNorm_range_eq_bigHilbertClassFieldNormSubgroup_iff_finrank_eq_narrowClassGroup_card
           (K := K) (L := L) hunramified).2 hdegree)
         (bigHilbertClassFieldQuotientEquivNarrowClassGroup
           (K := K))
@@ -593,7 +594,7 @@ theorem orderOf_maximalEverywhereUnramifiedCyclicFrobeniusClass
 the small Hilbert class field is equivalent to triviality of the
 corresponding Frobenius class in the actual maximal norm quotient. -/
 theorem
-    maximalEverywhereUnramifiedCyclicFrobeniusClass_eq_one_iff_smallHilbertClassFieldSplitsCompletely
+  maximalEverywhereUnramifiedCyclicFrobeniusClass_eq_one_iff_smallHilbertClassFieldSplitsCompletely
     (hunramifiedFinite :
       _root_.ramifiedBaseFinitePlaces
           (K := K) (L := L) = ∅)
@@ -644,7 +645,8 @@ theorem
       FractionalIdealGroup.prime v ∈
         (toPrincipalIdeal (𝓞 K) K).range := by
   exact
-    (maximalEverywhereUnramifiedCyclicFrobeniusClass_eq_one_iff_smallHilbertClassFieldSplitsCompletely
+    (
+  maximalEverywhereUnramifiedCyclicFrobeniusClass_eq_one_iff_smallHilbertClassFieldSplitsCompletely
       (K := K) (L := L) hunramifiedFinite hdegree v).trans
       (IdealClassFieldTheory.splitsCompletelyInSmallHilbertClassField_iff_principal
         v)

@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciproc
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicIdealArtinKernelComparison
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicIdealNormQuotientComparison
 
-set_option autoImplicit false
-
 /-!
 # The ideal norm subgroup is the Artin kernel
 
@@ -19,7 +17,7 @@ The ideal norms are norms of fractional ideals prime to the modulus; the
 principal ray ideals are absorbed by the ray quotient.
 -/
 
-open scoped Classical NumberField IsMulCommutative
+open scoped NumberField IsMulCommutative
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -37,9 +35,10 @@ theorem rayClassIdealNormImage_eq_artinKer
     rayClassIdealNormImage K L D.modulus = D.artin.ker := by
   let m := GlobalClassFieldComparison.rayClassModulusToOriginal K D.modulus
   have hsource :=
-    GlobalClassFieldTheory.IdealClassFieldTheory.idealArtinKernel_eq_idealNormSubgroup_of_finiteExtension
-      (K := K) (L := L) m
-      (GlobalClassFieldComparison.finiteAbelianReciprocity_modulus_isDefining K L D)
+    (open _root_.GlobalClassFieldTheory.IdealClassFieldTheory in
+      idealArtinKernel_eq_idealNormSubgroup_of_finiteExtension
+        (K := K) (L := L) m
+        (GlobalClassFieldComparison.finiteAbelianReciprocity_modulus_isDefining K L D))
   have hquot :=
     GlobalClassFieldComparison.publicIdealNormImage_comap_rayQuotient
       K L D.modulus

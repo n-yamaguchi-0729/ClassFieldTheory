@@ -9,8 +9,6 @@ import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.Existence
 import ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
 import ValuedFieldTheory.Valuation.LocalRingEquiv
 
-set_option autoImplicit false
-
 /-!
 # Norm subgroups of p-adic prime-power cyclotomic extensions
 
@@ -43,32 +41,43 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_odd
     LocalFieldTheory.fieldPrincipalUnits ℚ_[p] (k + 1) ≤ localNormSubgroup ℚ_[p] L := by
   let v := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation p
   let F :=
-    LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.completeDVFOfWithZeroValuation v
+    (open _root_.LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation in
+      completeDVFOfWithZeroValuation v)
   let eO : 𝒪[ℚ_[p]] ≃+* F.valuationSubring :=
     integerRingEquivPadicDVRValuationSubring p
   let EU : 𝒪[ℚ_[p]]ˣ ≃* F.valuationSubringˣ :=
     Units.mapEquiv eO.toMulEquiv
   rintro x ⟨u, hu, rfl⟩
-  have huD : EU u ∈ LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F (k + 1) := by
+  have huD : EU u ∈
+    (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+      higherPrincipalUnitGroup F (k + 1)) := by
     change Units.mapEquiv
         (integerRingEquivPadicDVRValuationSubring p).toMulEquiv u ∈
       LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup
         (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p)
         (k + 1)
     exact (unitsMapEquiv_mem_higherPrincipalUnitGroup_iff p (k + 1) u).2 hu
-  let uD : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F (k + 1) := ⟨EU u, huD⟩
+  let uD :
+    (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+      higherPrincipalUnitGroup F (k + 1)) := ⟨EU u, huD⟩
   obtain ⟨rD, hrD⟩ :=
     padicDVR_higherPrincipalUnit_degree_is_power_odd p hp2 k uD
   let rO : 𝒪[ℚ_[p]]ˣ := EU.symm (rD : F.valuationSubringˣ)
   have hrO : rO ∈ principalUnits ℚ_[p] 1 := by
     apply (unitsMapEquiv_mem_higherPrincipalUnitGroup_iff p 1 rO).1
-    have hmapF : EU rO ∈ LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 1 := by
+    have hmapF : EU rO ∈
+      (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+        higherPrincipalUnitGroup F 1) := by
       simpa only [rO, MulEquiv.apply_symm_apply] using rD.property
     have hmap :
         Units.mapEquiv
             (integerRingEquivPadicDVRValuationSubring p).toMulEquiv rO ∈
-          LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p) 1 := by
-      change EU rO ∈ LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 1
+          LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup (
+            (open _root_.LocalFieldTheory.DiscreteValuationField.Examples.Qp in
+              padicCompleteDVF p)) 1 := by
+      change EU rO ∈
+        (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+          higherPrincipalUnitGroup F 1)
       exact hmapF
     exact hmap
   let r : ℚ_[p]ˣ := integerUnitsToFieldUnits ℚ_[p] rO
@@ -140,7 +149,8 @@ theorem localNormSubgroup_eq_uniformizerPrincipalSubgroup_cyclotomicPrimePower_o
     ⟨pow_ne_zero _ (Fact.out : Nat.Prime p).ne_zero⟩
   let : IsCyclotomicExtension {n} ℚ_[p] L := by
     simpa [n] using
-      AlgebraicNumberTheory.Valuations.padic_isCyclotomicExtension_of_primitiveRoot_adjoin_eq_top zeta hzeta hgen
+      (open _root_.AlgebraicNumberTheory.Valuations in
+        padic_isCyclotomicExtension_of_primitiveRoot_adjoin_eq_top zeta hzeta hgen)
   let : FiniteDimensional ℚ_[p] L :=
     IsCyclotomicExtension.finiteDimensional {n} ℚ_[p] L
   let : IsAbelianGalois ℚ_[p] L :=
@@ -345,7 +355,9 @@ theorem padicDVR_logExp_level_two :
     (LocalFieldTheory.DiscreteValuationField.LocalField.ramificationIndexOfWithZeroValuation
           (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2) : ℚ) /
         (((LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
-          (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2)).residueCharacteristic : ℚ) - 1) <
+          (
+            (open _root_.LocalFieldTheory.DiscreteValuationField.Examples.Qp in
+              padicDVRValuation 2))).residueCharacteristic : ℚ) - 1) <
       (2 : ℚ) := by
   let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   rw [padicDVR_ramificationIndex_eq_one 2,
@@ -358,7 +370,9 @@ theorem padicDVR_logExp_level_add_two (m : ℕ) :
     (LocalFieldTheory.DiscreteValuationField.LocalField.ramificationIndexOfWithZeroValuation
           (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2) : ℚ) /
         (((LocalFieldTheory.DiscreteValuationField.LocalField.ofWithZeroValuation
-          (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2)).residueCharacteristic : ℚ) - 1) <
+          (
+            (open _root_.LocalFieldTheory.DiscreteValuationField.Examples.Qp in
+              padicDVRValuation 2))).residueCharacteristic : ℚ) - 1) <
       ((m + 2 : ℕ) : ℚ) := by
   apply lt_of_lt_of_le padicDVR_logExp_level_two
   exact_mod_cast (Nat.le_add_left 2 m)
@@ -370,7 +384,8 @@ theorem padicDVR_higherPrincipalUnit_two_power
     (m : ℕ) :
     let v := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2
     let F :=
-      LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.completeDVFOfWithZeroValuation v
+      (open _root_.LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation in
+        completeDVFOfWithZeroValuation v)
     ∀ u : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F (m + 2),
       ∃ r : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2,
         (r : F.valuationSubringˣ) ^ (2 ^ m) =
@@ -378,8 +393,11 @@ theorem padicDVR_higherPrincipalUnit_two_power
   let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let v := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2
   let F :=
-    LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.completeDVFOfWithZeroValuation v
-  change ∀ u : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F (m + 2),
+    (open _root_.LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation in
+      completeDVFOfWithZeroValuation v)
+  change ∀ u :
+    (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+      higherPrincipalUnitGroup F (m + 2)),
     ∃ r : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2,
       (r : F.valuationSubringˣ) ^ (2 ^ m) =
         (u : F.valuationSubringˣ)
@@ -407,7 +425,9 @@ theorem padicDVR_higherPrincipalUnit_two_power
   have hdbO : (2 ^ m) • (eO b) = (a.toAdd : F.valuationSubring) := by
     rw [← map_nsmul eO (2 ^ m) b, hdb]
     simp [z]
-  let r : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2 := E2 (Multiplicative.ofAdd b2)
+  let r :
+    (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+      higherPrincipalUnitGroup F 2) := E2 (Multiplicative.ofAdd b2)
   refine ⟨r, ?_⟩
   have hua : En a = u := En.apply_symm_apply u
   have hrpow :
@@ -416,7 +436,9 @@ theorem padicDVR_higherPrincipalUnit_two_power
     change E2 (Multiplicative.ofAdd b2) ^ (2 ^ m) =
       E2 ((Multiplicative.ofAdd b2) ^ (2 ^ m))
     exact (map_pow E2 (Multiplicative.ofAdd b2) (2 ^ m)).symm
-  change ((r ^ (2 ^ m) : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+  change ((r ^ (2 ^ m) :
+    (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+      higherPrincipalUnitGroup F 2)) :
       F.valuationSubringˣ) = (u : F.valuationSubringˣ)
   rw [hrpow, ← hua]
   apply Units.ext
@@ -428,21 +450,26 @@ theorem padicDVR_higherPrincipalUnit_two_power
     (padicDVR_logExp_level_add_two m) a
   have hleft' :
       ((((E2 ((Multiplicative.ofAdd b2) ^ (2 ^ m)) :
-          LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) : F.valuationSubringˣ) :
+          (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+            higherPrincipalUnitGroup F 2)) : F.valuationSubringˣ) :
           F.valuationSubring) : ℚ_[2]) =
-        LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.expSeriesFieldOfWithZeroValuation
-          v ((((Multiplicative.ofAdd b2) ^ (2 ^ m)).toAdd :
-            F.valuationSubring) : ℚ_[2])
-            (fun q =>
-              Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero q)) := by
+        (open _root_.LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation in
+          expSeriesFieldOfWithZeroValuation
+            v ((((Multiplicative.ofAdd b2) ^ (2 ^ m)).toAdd :
+              F.valuationSubring) : ℚ_[2])
+              (fun q =>
+                Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero q))) := by
     exact hleft
   have hright' :
-      ((((En a : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F (m + 2)) : F.valuationSubringˣ) :
+      ((((En a :
+        (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+          higherPrincipalUnitGroup F (m + 2))) : F.valuationSubringˣ) :
           F.valuationSubring) : ℚ_[2]) =
-        LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.expSeriesFieldOfWithZeroValuation
-          v ((a.toAdd : F.valuationSubring) : ℚ_[2])
-            (fun q =>
-              Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero q)) := by
+        (open _root_.LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation in
+          expSeriesFieldOfWithZeroValuation
+            v ((a.toAdd : F.valuationSubring) : ℚ_[2])
+              (fun q =>
+                Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero q))) := by
     exact hright
   rw [hleft', hright']
   congr 2
@@ -478,7 +505,9 @@ noncomputable def padicDVR_five :
 @[simp] theorem padicDVR_five_val :
     letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
     let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
-    ((((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+    ((((padicDVR_five :
+      (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+        higherPrincipalUnitGroup F 2)) :
       F.valuationSubringˣ) : F.valuationSubring) : ℚ_[2]) = 5 := by
   let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
@@ -496,9 +525,13 @@ theorem padicDVR_U2_split (u :
     LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
     letI : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
     let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
-    (u : F.valuationSubringˣ) ∈ LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 3 ∨
+    (u : F.valuationSubringˣ) ∈
+      (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+        higherPrincipalUnitGroup F 3) ∨
       (u : F.valuationSubringˣ) /
-          (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) ∈
+          (padicDVR_five :
+            (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+              higherPrincipalUnitGroup F 2)) ∈
         LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 3 := by
   let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
@@ -567,7 +600,9 @@ theorem padicDVR_U2_split (u :
         _ = (2 : ℤ_[2]) ^ 3 * d := by rw [hd]; ring
     have hdiff :
         ((u : F.valuationSubringˣ) : F.valuationSubring) -
-            (((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+            (((padicDVR_five :
+              (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+                higherPrincipalUnitGroup F 2)) :
               F.valuationSubringˣ) : F.valuationSubring) ∈
           F.maximalIdeal ^ 3 := by
       have hxe : eO x =
@@ -584,18 +619,26 @@ theorem padicDVR_U2_split (u :
       rw [map_sub, hxe, hefive] at hmapped
       exact hmapped
     have hq :
-        LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup.quotientUnitHom F 3
-            (u : F.valuationSubringˣ) =
-          LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup.quotientUnitHom F 3
-            ((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
-              F.valuationSubringˣ) := by
+        (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup in
+          quotientUnitHom F 3
+              (u : F.valuationSubringˣ)) =
+          (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+            higherPrincipalUnitGroup.quotientUnitHom F 3
+              ((padicDVR_five :
+                (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+                  higherPrincipalUnitGroup F 2)) :
+                F.valuationSubringˣ)) := by
       apply Units.ext
       exact (Ideal.Quotient.mk_eq_mk_iff_sub_mem
         (I := F.maximalIdeal ^ 3)
         (((u : F.valuationSubringˣ) : F.valuationSubring))
-        ((((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+        ((((padicDVR_five :
+          (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+            higherPrincipalUnitGroup F 2)) :
           F.valuationSubringˣ) : F.valuationSubring))).2 hdiff
-    rw [← LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup.quotientUnitHom_ker_eq F 3,
+    rw [←
+      (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup in
+        quotientUnitHom_ker_eq F 3),
       MonoidHom.mem_ker]
     rw [map_div, hq]
     exact div_self' _
@@ -612,13 +655,16 @@ theorem padicDVR_U2_square_class
     ∃ r : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2,
       (u : F.valuationSubringˣ) = (r : F.valuationSubringˣ) ^ 2 ∨
       (u : F.valuationSubringˣ) =
-        (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) *
+        (padicDVR_five :
+          (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+            higherPrincipalUnitGroup F 2)) *
           (r : F.valuationSubringˣ) ^ 2 := by
   let : Fact (Nat.Prime 2) := ⟨Nat.prime_two⟩
   let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
   let F' :=
-    LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.completeDVFOfWithZeroValuation
-      (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2)
+    (open _root_.LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation in
+      completeDVFOfWithZeroValuation
+        (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2))
   have hroot :
       ∀ w : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 3,
         ∃ r : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2,
@@ -631,27 +677,39 @@ theorem padicDVR_U2_square_class
         (r : F'.valuationSubringˣ) ^ 2 = (w : F'.valuationSubringˣ)
     simpa using (padicDVR_higherPrincipalUnit_two_power 1)
   rcases padicDVR_U2_split u with hu | hu
-  · let w : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 3 := ⟨u, hu⟩
+  · let w :
+    (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+      higherPrincipalUnitGroup F 3) := ⟨u, hu⟩
     obtain ⟨r, hr⟩ := hroot w
     exact ⟨r, Or.inl hr.symm⟩
   · let w : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 3 :=
       ⟨(u : F.valuationSubringˣ) /
-          (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2), hu⟩
+          (padicDVR_five :
+            (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+              higherPrincipalUnitGroup F 2)), hu⟩
     obtain ⟨r, hr⟩ := hroot w
     have hr' : (r : F.valuationSubringˣ) ^ 2 =
         (u : F.valuationSubringˣ) /
-          (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) := by
+          (padicDVR_five :
+            (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+              higherPrincipalUnitGroup F 2)) := by
       simpa [w] using hr
     refine ⟨r, Or.inr ?_⟩
     calc
       (u : F.valuationSubringˣ) =
-          (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) *
+          (padicDVR_five :
+            (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+              higherPrincipalUnitGroup F 2)) *
             ((u : F.valuationSubringˣ) /
-              (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2)) := by
+              (padicDVR_five :
+                (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+                  higherPrincipalUnitGroup F 2))) := by
                 symm
                 rw [mul_comm]
                 exact div_mul_cancel _ _
-      _ = (padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) *
+      _ = (padicDVR_five :
+        (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+          higherPrincipalUnitGroup F 2)) *
             (r : F.valuationSubringˣ) ^ 2 := by rw [← hr']
 
 /-- At the first dyadic cyclotomic level, all first principal units are
@@ -689,8 +747,9 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_succ
     IsCyclotomicExtension.finiteDimensional {n} ℚ_[2] L
   let F := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF 2
   let F' :=
-    LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation.completeDVFOfWithZeroValuation
-      (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2)
+    (open _root_.LocalFieldTheory.DiscreteValuationField.MultiplicativeIntegerValuation in
+      completeDVFOfWithZeroValuation
+        (LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicDVRValuation 2))
   let eO : 𝒪[ℚ_[2]] ≃+* F.valuationSubring :=
     integerRingEquivPadicDVRValuationSubring 2
   let EU : 𝒪[ℚ_[2]]ˣ ≃* F.valuationSubringˣ :=
@@ -718,11 +777,15 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_succ
       (5 : ℚ_[2]) ^ (2 ^ m)
     exact hnormy
   rintro x ⟨u, hu, rfl⟩
-  have huD : EU u ∈ LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F (m + 2) := by
+  have huD : EU u ∈
+    (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+      higherPrincipalUnitGroup F (m + 2)) := by
     simpa [EU, eO, F] using
       (unitsMapEquiv_mem_higherPrincipalUnitGroup_iff
         2 (m + 2) u).2 hu
-  let uD : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F (m + 2) := ⟨EU u, huD⟩
+  let uD :
+    (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+      higherPrincipalUnitGroup F (m + 2)) := ⟨EU u, huD⟩
   have hroot :
       ∀ w : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F (m + 2),
         ∃ rD : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2,
@@ -749,7 +812,9 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_succ
       2 (u : 𝒪[ℚ_[2]])
   have hfive :
       toField
-          ((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+          ((padicDVR_five :
+            (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+              higherPrincipalUnitGroup F 2)) :
             F.valuationSubringˣ) = five := by
     apply Units.ext
     dsimp [toField, five, F]
@@ -786,20 +851,28 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_succ
     exact hsNorm
   · have huDprod :
         (uD : F.valuationSubringˣ) =
-          ((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+          ((padicDVR_five :
+            (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+              higherPrincipalUnitGroup F 2)) :
               F.valuationSubringˣ) ^ (2 ^ m) *
             (sD : F.valuationSubringˣ) ^ (2 ^ (m + 1)) := by
       calc
         (uD : F.valuationSubringˣ) =
             (rD : F.valuationSubringˣ) ^ (2 ^ m) := hrD.symm
-        _ = (((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+        _ = (((padicDVR_five :
+          (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+            higherPrincipalUnitGroup F 2)) :
                 F.valuationSubringˣ) *
               (sD : F.valuationSubringˣ) ^ 2) ^ (2 ^ m) := by rw [hsD]
-        _ = ((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+        _ = ((padicDVR_five :
+          (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+            higherPrincipalUnitGroup F 2)) :
                 F.valuationSubringˣ) ^ (2 ^ m) *
               ((sD : F.valuationSubringˣ) ^ 2) ^ (2 ^ m) := by
             rw [mul_pow]
-        _ = ((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+        _ = ((padicDVR_five :
+          (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+            higherPrincipalUnitGroup F 2)) :
                 F.valuationSubringˣ) ^ (2 ^ m) *
               (sD : F.valuationSubringˣ) ^ (2 ^ (m + 1)) := by
             rw [← pow_mul]
@@ -813,7 +886,9 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_succ
         integerUnitsToFieldUnits ℚ_[2] u =
             toField (uD : F.valuationSubringˣ) := hbase.symm
         _ = toField
-            (((padicDVR_five : LocalFieldTheory.DiscreteValuationField.CompleteDVF.higherPrincipalUnitGroup F 2) :
+            (((padicDVR_five :
+              (open _root_.LocalFieldTheory.DiscreteValuationField.CompleteDVF in
+                higherPrincipalUnitGroup F 2)) :
                   F.valuationSubringˣ) ^ (2 ^ m) *
               (sD : F.valuationSubringˣ) ^ (2 ^ (m + 1))) :=
           congrArg toField huDprod

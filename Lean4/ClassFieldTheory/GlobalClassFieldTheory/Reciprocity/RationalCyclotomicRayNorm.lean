@@ -11,8 +11,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicFin
 import ClassFieldTheory.KroneckerWeber.RayClassComparison
 import GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicCharacterEquiv
 
-set_option autoImplicit false
-
 /-!
 # Rational cyclotomic ray norm groups
 
@@ -30,7 +28,7 @@ cyclotomic character then detects that the full local Artin symbol is
 trivial.
 -/
 
-open scoped Classical NNReal NumberField ValuativeRel
+open scoped NNReal NumberField ValuativeRel
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -447,8 +445,9 @@ private theorem
             (RayClass.rationalPrime q)).symm x)) =
       0
   exact
-    _root_.GlobalClassFieldTheory.GlobalClassFields.finitePlaceCompletion_valuationMap_eq_zero_of_mem_localHigherUnitGroup
-      (K := ℚ) (RayClass.rationalPrime q) n x hx
+    (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+      finitePlaceCompletion_valuationMap_eq_zero_of_mem_localHigherUnitGroup
+        (K := ℚ) (RayClass.rationalPrime q) n x hx)
 
 /-- The rational ray-class higher-unit group at `q` consists of actual
 local norms from the chosen completion of the genuine cyclotomic level. -/
@@ -718,6 +717,7 @@ theorem
           (GlobalClassFields.ideleClassNormDefiningModulus
             (K := ℚ) (L := L)) ≤
         RayClass.rationalModulus m := by
+    classical
     refine ⟨hfinite, ?_⟩
     change
       (Finset.univ : Finset (RayClass.RealPlace ℚ)) ⊆

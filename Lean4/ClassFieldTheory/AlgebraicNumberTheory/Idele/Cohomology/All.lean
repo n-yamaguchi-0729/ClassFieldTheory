@@ -10,6 +10,4 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.HerbrandExactSequ
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.All
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
 
-set_option autoImplicit false
-
 /-! # Cohomology of ideles and supported local decompositions -/

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
 import Mathlib.Algebra.BigOperators.Field
 
-set_option autoImplicit false
-
 /-!
 # Prime-to-residue torsion in the actual ramification group
 
@@ -21,6 +19,7 @@ then send the number of terms to zero.
 The argument uses the existing ramification subgroup and its principal-unit
 condition. It requires no discreteness, Henselianity, or finite extension.
 -/
+
 
 namespace RamificationTheory.HilbertRamification.ValuationSubring
 

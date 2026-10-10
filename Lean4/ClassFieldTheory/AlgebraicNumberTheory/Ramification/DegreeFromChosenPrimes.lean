@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Ramification.DegreeProduct
 import ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.ChosenInertiaCoverage
 import ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.InertiaGeneration
 
-set_option autoImplicit false
-
 /-!
 # Global degree bound from chosen finite-prime inertia groups
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.F
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealComparison
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
 
-set_option autoImplicit false
-
 /-!
 # The global Hilbert product formula
 
@@ -20,7 +18,9 @@ of the product of the corresponding local Artin factors.  Global reciprocity
 on a principal idele therefore makes this product equal to one.
 -/
 
-open scoped BigOperators Classical IsMulCommutative NumberField
+
+
+open scoped BigOperators IsMulCommutative NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

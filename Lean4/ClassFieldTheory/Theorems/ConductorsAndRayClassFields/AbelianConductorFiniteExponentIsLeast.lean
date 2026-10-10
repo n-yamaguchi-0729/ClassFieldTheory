@@ -10,8 +10,6 @@ import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.AbelianConductorFin
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 
-set_option autoImplicit false
-
 /-!
 # The finite conductor exponent is a genuine local minimum
 

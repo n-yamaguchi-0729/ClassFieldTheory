@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorRayClassMaximality
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
 
-set_option autoImplicit false
-
 /-!
 # Prime Artin classes at an exact narrow finite conductor
 

@@ -13,8 +13,6 @@ import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.Unramified.Field
 import Mathlib.RingTheory.TensorProduct.Finite
 
-set_option autoImplicit false
-
 /-!
 # Field-theoretic composita for finite valued extensions
 

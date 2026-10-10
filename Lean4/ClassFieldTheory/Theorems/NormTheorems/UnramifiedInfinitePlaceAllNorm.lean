@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
 
-set_option autoImplicit false
-
 /-!
 # Norms at an unramified infinite place
 

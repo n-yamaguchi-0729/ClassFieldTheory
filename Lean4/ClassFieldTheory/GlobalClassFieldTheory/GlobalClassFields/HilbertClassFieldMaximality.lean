@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
 
-set_option autoImplicit false
-
 /-!
 # Maximality criteria for Hilbert class fields
 
@@ -17,6 +15,8 @@ subgroup exactly when its degree reaches the corresponding narrow or
 ordinary class number.  Thus a maximal-degree unramified cyclic
 extension has the canonical Hilbert reciprocity quotient.
 -/
+
+
 
 open scoped NumberField
 
@@ -204,7 +204,8 @@ def maximalFiniteUnramifiedCyclicNormQuotientEquivNarrowClassGroup
         (_root_.ideleClassNorm K L).range) ≃*
       RayClass.NarrowClassGroup K :=
   (QuotientGroup.quotientMulEquivOfEq
-      ((ideleClassNorm_range_eq_bigHilbertClassFieldNormSubgroup_iff_finrank_eq_narrowClassGroup_card
+      ((
+      ideleClassNorm_range_eq_bigHilbertClassFieldNormSubgroup_iff_finrank_eq_narrowClassGroup_card
         (K := K) (L := L) hunramified).2 hdegree)).trans
     (bigHilbertClassFieldQuotientEquivNarrowClassGroup
       (K := K))
@@ -399,7 +400,8 @@ theorem maximalFiniteUnramifiedCyclicNormRanges_eq
       (ideleClassNorm_range_eq_bigHilbertClassFieldNormSubgroup_iff_finrank_eq_narrowClassGroup_card
         (K := K) (L := L) hLunramifiedFinite).2 hLdegree
     _ = (_root_.ideleClassNorm K M).range :=
-      ((ideleClassNorm_range_eq_bigHilbertClassFieldNormSubgroup_iff_finrank_eq_narrowClassGroup_card
+      ((
+      ideleClassNorm_range_eq_bigHilbertClassFieldNormSubgroup_iff_finrank_eq_narrowClassGroup_card
         (K := K) (L := M) hMunramifiedFinite).2 hMdegree).symm
 
 /-- Any two everywhere-unramified cyclic extensions attaining the

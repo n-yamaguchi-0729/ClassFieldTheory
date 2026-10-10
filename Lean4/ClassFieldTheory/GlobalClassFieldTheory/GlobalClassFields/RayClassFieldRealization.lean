@@ -21,8 +21,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteInd
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidue
 
-set_option autoImplicit false
-
 /-!
 # Actual ray class fields
 
@@ -39,7 +37,9 @@ that original field, and obtain the genuine reciprocity equivalence
 `Gal(K^m / K) ≃ C_K / C_K^m`.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 
 noncomputable section
 
@@ -321,6 +321,7 @@ theorem
         (L →ₐ[K]
           rayClassField K (RayClass.Modulus.narrowOfFinite n)) ↔
       ideleClassNormNarrowFiniteConductor (K := K) (L := L) ≤ n := by
+  classical
   rw [nonempty_algHom_to_rayClassField_iff_isDefiningModulus]
   constructor
   · intro hm
@@ -433,7 +434,7 @@ general closed-finite-index reciprocity equivalence. -/
 theorem
     rayClassFieldGaloisContinuousMulEquivRayClassGroup_apply
     (m : RayClass.Modulus K)
-    (σ : Gal((rayClassField K m) / K)) :
+    (σ : Gal((rayClassField K m)/K)) :
     rayClassFieldGaloisContinuousMulEquivRayClassGroup
         (K := K) m σ =
       closedFiniteIndexClassFieldGaloisEquivNormQuotient

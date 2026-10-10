@@ -10,8 +10,6 @@ import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Group.Subgroup
 
-set_option autoImplicit false
-
 /-!
 # Connected-component quotients under topological group equivalences
 

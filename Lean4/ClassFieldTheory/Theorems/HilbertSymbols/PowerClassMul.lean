@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
 
-set_option autoImplicit false
-
 /-!
 # Multiplication of power classes
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebraNormSubgroup
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # The reducible Kummer algebra at one
 

@@ -13,8 +13,6 @@ import Mathlib.RingTheory.Valuation.Discrete.Basic
 import Mathlib.RingTheory.Valuation.Extension
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
-set_option autoImplicit false
-
 /-!
 # Frobenius normalization of one coherent finite local reciprocity family
 

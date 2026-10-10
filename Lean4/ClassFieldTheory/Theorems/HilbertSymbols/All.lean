@@ -37,8 +37,6 @@ import ClassFieldTheory.Theorems.HilbertSymbols.KummerRadicalDegreeEqPowerClassO
 import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraOneNormSurjective
 import ClassFieldTheory.Theorems.HilbertSymbols.PowerClassGroupFinite
 
-set_option autoImplicit false
-
 /-!
 # Hilbert symbols
 

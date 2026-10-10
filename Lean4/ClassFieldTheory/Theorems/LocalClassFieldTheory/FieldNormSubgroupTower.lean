@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
 import Mathlib.RingTheory.Norm.Transitivity
 
-set_option autoImplicit false
-
 /-!
 # Norm subgroups in a tower
 

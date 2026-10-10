@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
 
-set_option autoImplicit false
-
 /-!
 # Ray congruences
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

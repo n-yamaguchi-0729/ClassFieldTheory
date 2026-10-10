@@ -9,8 +9,6 @@ import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicIn
 import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicRamificationIndexBound
 import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
 
-set_option autoImplicit false
-
 /-!
 # Ramification groups of valuation subrings
 

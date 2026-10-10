@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
-set_option autoImplicit false
-
 /-!
 # Possible nontrivial finite-place Hilbert factors
 

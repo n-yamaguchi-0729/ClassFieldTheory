@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.FinitePlaceHilbertBadSet
 import ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.FiniteRadicalSupport
 
-set_option autoImplicit false
-
 /-!
 # Finiteness of the possible bad finite places
 

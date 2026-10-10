@@ -10,8 +10,6 @@ import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormS
 import ValuedFieldTheory.Ramification.Filtration
 import ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
 
-set_option autoImplicit false
-
 /-!
 # Filtered Artin comparison for standard Lubin--Tate levels
 

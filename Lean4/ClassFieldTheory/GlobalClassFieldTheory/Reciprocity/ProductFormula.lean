@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
 
-set_option autoImplicit false
-
 /-!
 # The local--global norm-symbol bridge
 
@@ -21,7 +19,7 @@ finite-support and
 principal-idèle product identities for every character of that target.
 -/
 
-open scoped NumberField Classical BigOperators
+open scoped NumberField BigOperators
 open NumberField IsDedekindDomain
 open IdeleGroup RelativeIdeleGroup
 

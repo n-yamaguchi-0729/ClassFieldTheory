@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.C
 import ClassFieldTheory.LubinTate.EqualCharacteristic.RealIndexSteps
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardArtinComparison
 
-set_option autoImplicit false
-
 /-!
 # Real filtered reciprocity on equal-characteristic Lubin--Tate levels
 

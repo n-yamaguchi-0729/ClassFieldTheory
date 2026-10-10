@@ -9,8 +9,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.C
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
 
-set_option autoImplicit false
-
 /-!
 # Filtered reciprocity for the standard finite abelian compositum
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilber
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
 
-set_option autoImplicit false
-
 /-!
 # Existence of the small Hilbert class field
 

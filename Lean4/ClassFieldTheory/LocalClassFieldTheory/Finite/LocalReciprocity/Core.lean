@@ -70,8 +70,6 @@ import ValuedFieldTheory.Ramification.GaloisValuation.CompositumRestriction
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SemilinearNaturality
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
 
-set_option autoImplicit false
-
 /-!
 # Finite local reciprocity core
 

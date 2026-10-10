@@ -8,8 +8,6 @@ import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Small
 import Mathlib.Algebra.Field.Shrink
 import Mathlib.Topology.Instances.Shrink
 
-set_option autoImplicit false
-
 /-!
 # Transporting local-field structures to a small representative
 

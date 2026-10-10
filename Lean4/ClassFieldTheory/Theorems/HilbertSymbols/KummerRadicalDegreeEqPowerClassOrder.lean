@@ -11,8 +11,6 @@ import ClassFieldTheory.Theorems.HilbertSymbols.PowerClassGroupFinite
 import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Degree of a Kummer radical and order of its power class
 

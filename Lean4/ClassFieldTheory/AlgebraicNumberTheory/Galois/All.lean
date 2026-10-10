@@ -16,6 +16,4 @@ import ClassFieldTheory.AlgebraicNumberTheory.Galois.NormalFieldRange
 import ClassFieldTheory.AlgebraicNumberTheory.Galois.RelativeAbelianization
 import ClassFieldTheory.AlgebraicNumberTheory.Galois.UnboundedDegree
 
-set_option autoImplicit false
-
 /-! # Galois subextensions and fixed-field constructions -/

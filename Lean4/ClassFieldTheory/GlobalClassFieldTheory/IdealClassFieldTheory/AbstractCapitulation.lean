@@ -11,8 +11,6 @@ import GaloisCohomology.GroupTheory.Transfer.Witt
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
 
-set_option autoImplicit false
-
 /-!
 # Transfer input for the principal ideal theorem
 
@@ -26,6 +24,8 @@ transfer used by reciprocity in exactly the form covered by Witt's transfer
 theorem.  Consequently that transfer is trivial.  No class-field
 realization or norm-subgroup equality is assumed here.
 -/
+
+
 
 noncomputable section
 

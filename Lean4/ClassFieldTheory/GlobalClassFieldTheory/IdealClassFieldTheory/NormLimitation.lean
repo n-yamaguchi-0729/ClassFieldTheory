@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationCore
 
-set_option autoImplicit false
-
 /-!
 # Ideal and ray consequences of norm limitation
 

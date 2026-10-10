@@ -12,8 +12,6 @@ import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic normalization of finite local reciprocity
 

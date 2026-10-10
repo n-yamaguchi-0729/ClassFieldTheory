@@ -9,8 +9,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTranspor
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassFiniteness
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
 
-set_option autoImplicit false
-
 /-!
 # Finiteness of local power classes
 

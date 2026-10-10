@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExte
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
 import ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalExistenceOrderIso
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian local existence
 

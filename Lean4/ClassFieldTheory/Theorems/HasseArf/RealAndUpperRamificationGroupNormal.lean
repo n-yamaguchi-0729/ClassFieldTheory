@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HasseArf.UpperRamificationGroup
 import ClassFieldTheory.Theorems.HasseArf.RealLowerRamificationGroupNormal
 
-set_option autoImplicit false
-
 /-!
 # Normality of real lower and upper ramification groups
 

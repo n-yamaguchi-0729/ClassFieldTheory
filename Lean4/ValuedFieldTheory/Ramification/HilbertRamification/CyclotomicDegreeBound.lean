@@ -8,8 +8,6 @@ import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
 import ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
 
-set_option autoImplicit false
-
 /-!
 # Cyclotomic degree bounds for inertia
 

@@ -10,8 +10,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteRe
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
 import ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
 
-set_option autoImplicit false
-
 /-!
 # Kummer criteria for openness in the norm topology
 

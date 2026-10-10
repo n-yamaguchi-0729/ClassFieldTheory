@@ -11,8 +11,6 @@ import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Operations
 import Mathlib.RingTheory.Norm.Basic
 
-set_option autoImplicit false
-
 /-!
 # Norms from an irreducible Kummer algebra
 
@@ -20,6 +18,8 @@ When `X^n - a` is irreducible, the canonical algebra obtained by adjoining a
 root is isomorphic to the chosen simple Kummer field.  This file transports
 the algebra norm through that isomorphism.
 -/
+
+
 
 noncomputable section
 

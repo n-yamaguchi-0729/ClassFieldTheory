@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameterFiltration
 import ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
 
-set_option autoImplicit false
-
 /-!
 # Principal-unit filtration on finite Lubin--Tate Galois groups
 
@@ -18,6 +16,8 @@ group.  This file records membership both for quotient parameters and for
 valuation-ring unit representatives, and preserves the expected cardinality
 `q ^ (n + 1 - k)`.
 -/
+
+
 
 noncomputable section
 

@@ -9,8 +9,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalNorm
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 
-set_option autoImplicit false
-
 /-!
 # Local norm as a product over completions
 

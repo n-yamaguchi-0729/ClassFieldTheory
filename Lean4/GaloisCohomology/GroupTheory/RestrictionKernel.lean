@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.Algebra.Group.Subgroup.Ker
 
-set_option autoImplicit false
-
 /-!
 # Images of subgroups in restriction kernels
 

@@ -7,13 +7,13 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRamification
 import Mathlib.Analysis.Complex.Order
 
-set_option autoImplicit false
-
 /-!
 # Complex conjugation on a negative quadratic Kummer root
 -/
 
-open scoped Classical ComplexConjugate ComplexOrder NumberField
+
+
+open scoped ComplexConjugate ComplexOrder NumberField
 open NumberField
 
 noncomputable section

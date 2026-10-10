@@ -8,7 +8,12 @@ import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Order.Iterate
 import ValuedFieldTheory.Ramification.HilbertRamification.CharacterMap
 
-set_option autoImplicit false
+/-!
+# Finite-order decomposition and valuation values
+
+A finite-order decomposition element fixes the original valuation's values.
+Consequently every finite inertia element lies in the value-trivial subgroup.
+-/
 
 namespace RamificationTheory.HilbertRamification.ValuationSubring
 
@@ -62,7 +67,8 @@ theorem valuation_decomposition_apply_eq_of_isOfFinOrder
     rw [hiter, hσn', AlgEquiv.one_apply]
   have hcomm : Function.Commute f id := fun _ => rfl
   have hfixed : f (A.valuation x) = A.valuation x :=
-    (hcomm.iterate_pos_eq_iff_map_eq hf strictMono_id hn).1 (by simpa only [Function.iterate_id, id_eq] using hperiod)
+    (hcomm.iterate_pos_eq_iff_map_eq hf strictMono_id hn).1
+      (by simpa only [Function.iterate_id, id_eq] using hperiod)
   rwa [hfv] at hfixed
 
 /-- Each finite-order inertia element lies in the actual value-trivial subgroup. -/

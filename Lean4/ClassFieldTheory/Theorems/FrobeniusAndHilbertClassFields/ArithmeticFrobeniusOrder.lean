@@ -9,8 +9,6 @@ import Mathlib.FieldTheory.Finite.Basic
 import Mathlib.NumberTheory.RamificationInertia.Unramified
 import Mathlib.RingTheory.Frobenius
 
-set_option autoImplicit false
-
 /-!
 # Order of arithmetic Frobenius at an unramified prime
 

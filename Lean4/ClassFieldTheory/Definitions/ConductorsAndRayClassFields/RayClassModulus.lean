@@ -10,13 +10,13 @@ import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
 
-set_option autoImplicit false
-
 /-!
 # Ray class moduli
 
 A modulus consists of finite-prime exponents and a finite set of real places.
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

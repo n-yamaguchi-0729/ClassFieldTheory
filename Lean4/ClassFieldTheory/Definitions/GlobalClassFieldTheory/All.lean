@@ -11,8 +11,6 @@ import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNorm
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.IdeleClassConnectedQuotient
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.IsMaximalAbelianGlobalArtin
 
-set_option autoImplicit false
-
 /-!
 # Global class field theory definitions
 

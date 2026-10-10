@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingPropertie
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.PowerResidueReciprocity
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicHilbertComparison
 
-set_option autoImplicit false
-
 /-!
 # An explicit support bound for every local Hilbert-pairing family
 

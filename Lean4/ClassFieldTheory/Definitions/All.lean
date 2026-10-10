@@ -12,8 +12,6 @@ import ClassFieldTheory.Definitions.HilbertSymbols.All
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.All
 import ClassFieldTheory.Definitions.NormTheorems.All
 
-set_option autoImplicit false
-
 /-!
 # Class field theory definitions
 

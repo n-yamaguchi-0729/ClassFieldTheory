@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgroupFieldAntitone
 
-set_option autoImplicit false
-
 /-!
 # Uniqueness of a ray-class subgroup field inside the fixed closure
 

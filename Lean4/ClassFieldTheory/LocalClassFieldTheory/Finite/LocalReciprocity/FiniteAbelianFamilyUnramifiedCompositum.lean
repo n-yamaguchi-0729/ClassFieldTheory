@@ -11,8 +11,6 @@ import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 import ValuedFieldTheory.Ramification.GaloisValuation.CompositumRestriction
 
-set_option autoImplicit false
-
 /-!
 # An unramified factor large enough for finite Artin rigidity
 

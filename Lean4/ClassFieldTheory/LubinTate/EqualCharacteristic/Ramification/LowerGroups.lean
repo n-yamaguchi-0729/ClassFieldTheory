@@ -9,8 +9,6 @@ import ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
 import ValuedFieldTheory.Ramification.HilbertRamification.RamificationNumber
 import ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
 
-set_option autoImplicit false
-
 /-!
 # Lower ramification groups of equal-characteristic Lubin--Tate levels
 
@@ -18,6 +16,8 @@ This module identifies the actual lower ramification groups attached to the
 chosen complete valuation, both by visible unit-parameter coefficients and by
 their exact cardinalities.
 -/
+
+
 
 noncomputable section
 
@@ -85,8 +85,7 @@ theorem
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n i : ℕ)
-    (sigma : Gal((equalCharacteristicLubinTateLevelField F n) /
-      F.residueField⸨X⸩)) :
+    (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩)) :
     sigma ∈ equalCharacteristicLubinTateRealLowerRamificationGroup
         F n (i : ℝ) ↔
       ((i + 1 : ℕ) : ℕ∞) ≤
@@ -154,8 +153,7 @@ theorem
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n i : ℕ)
-    (sigma : Gal((equalCharacteristicLubinTateLevelField F n) /
-      F.residueField⸨X⸩))
+    (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
     (a : equalCharacteristicLubinTateUnitParameter F n)
     (ha :
       sigma (equalCharacteristicLubinTateLevelPowerBasis F n).gen =
@@ -637,7 +635,8 @@ theorem equalCharacteristicLubinTateRealLowerRamificationGroup_natCard_pow_sub_o
 
 /-- On the whole interval `q^(k-1) ≤ r < q^k`, lower-group membership is
 controlled by the same first-`k` coefficient condition. -/
-theorem mem_equalCharacteristicLubinTateRealLowerRamificationGroup_nat_iff_coeff_zero_of_pow_interval
+theorem
+  mem_equalCharacteristicLubinTateRealLowerRamificationGroup_nat_iff_coeff_zero_of_pow_interval
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k r : ℕ) (hk : 1 ≤ k)

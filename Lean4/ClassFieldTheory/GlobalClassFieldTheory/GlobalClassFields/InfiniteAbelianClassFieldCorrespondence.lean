@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
 
-set_option autoImplicit false
-
 /-!
 # Infinite abelian class-field correspondence
 
@@ -17,7 +15,9 @@ Composing this transport with the infinite Galois correspondence gives the
 order-reversing infinite abelian class-field correspondence.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 
 noncomputable section
 

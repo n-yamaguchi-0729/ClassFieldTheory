@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFie
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerConjugation
 import Mathlib.Data.Rat.Cast.Defs
 
-set_option autoImplicit false
-
 /-!
 # Actual realization of the two-stage small Hilbert tower
 
@@ -27,7 +25,9 @@ conjugate closed subgroup rather than over the first-stage subgroup
 itself.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 
 noncomputable section
 

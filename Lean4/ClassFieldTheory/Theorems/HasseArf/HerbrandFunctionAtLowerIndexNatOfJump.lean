@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.HasseArf.IsLowerRamificationJump
 import ClassFieldTheory.Theorems.HasseArf.HasseArf
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Natural Herbrand values at lower ramification jumps
 

@@ -14,8 +14,6 @@ import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionTopo
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
-set_option autoImplicit false
-
 /-!
 # Tame local power-residue formula
 
@@ -24,7 +22,7 @@ identifies the arithmetic-Frobenius root quotient with the finite-field power
 residue symbol, and derives the tame formula for the local Hilbert symbol.
 -/
 
-open scoped Classical ValuativeRel
+open scoped ValuativeRel
 
 noncomputable section
 

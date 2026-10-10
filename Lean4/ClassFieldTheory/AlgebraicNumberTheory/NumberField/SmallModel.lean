@@ -11,8 +11,6 @@ import Mathlib.Data.Rat.Encodable
 import Mathlib.LinearAlgebra.Countable
 import Mathlib.NumberTheory.NumberField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Small models of number fields
 

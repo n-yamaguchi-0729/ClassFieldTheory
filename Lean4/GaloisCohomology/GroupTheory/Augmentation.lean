@@ -11,8 +11,6 @@ import Mathlib.RingTheory.TwoSidedIdeal.Kernel
 import Mathlib.RingTheory.TwoSidedIdeal.Operations
 import Mathlib.Tactic.NoncommRing
 
-set_option autoImplicit false
-
 /-!
 # Integral group-ring augmentation
 
@@ -21,6 +19,8 @@ the transfer/augmentation comparison. It is kept separate from the transfer calc
 that the group-ring identities can be reused in the proof of Witt's
 transfer theorem.
 -/
+
+
 
 open scoped Pointwise
 
@@ -213,7 +213,7 @@ theorem deltaClass_mul (g h : G) :
         square G :=
     TwoSidedIdeal.subset_span ⟨_, hg, _, hh, rfl⟩
   convert hprod using 1
-  show
+  change
     (deltaElement G (g * h) : IntegralGroupRing G) -
         ((deltaElement G g : IntegralGroupRing G) +
           (deltaElement G h : IntegralGroupRing G)) =
@@ -265,17 +265,17 @@ theorem deltaAbelianization_deltaPreimage
       Multiplicative.ofAdd
         (QuotientAddGroup.mk' (squareInIdeal G) ⟨x, hx⟩) := by
   apply Multiplicative.toAdd.injective
-  show
+  change
     Multiplicative.toAdd
         (deltaAbelianization G (deltaPreimage G x)) =
       QuotientAddGroup.mk' (squareInIdeal G) ⟨x, hx⟩
   rw [deltaPreimage, map_prod]
   simp_rw [map_zpow, deltaAbelianization_of]
-  show
+  change
     ∑ g ∈ x.coeff.support,
         x.coeff g • deltaClass G g =
       QuotientAddGroup.mk' (squareInIdeal G) ⟨x, hx⟩
-  show
+  change
     ∑ g ∈ x.coeff.support,
         x.coeff g •
           QuotientAddGroup.mk' (squareInIdeal G)
@@ -283,7 +283,7 @@ theorem deltaAbelianization_deltaPreimage
       QuotientAddGroup.mk' (squareInIdeal G) ⟨x, hx⟩
   simp_rw [← map_zsmul]
   rw [← map_sum]
-  show
+  change
     QuotientAddGroup.mk' (squareInIdeal G)
         (deltaCombinationElement G x) =
       QuotientAddGroup.mk' (squareInIdeal G) ⟨x, hx⟩

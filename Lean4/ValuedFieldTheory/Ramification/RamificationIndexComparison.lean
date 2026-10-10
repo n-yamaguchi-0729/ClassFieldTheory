@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
 import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
 
-set_option autoImplicit false
-
 /-!
 # Comparing exponential and canonical ramification indices
 

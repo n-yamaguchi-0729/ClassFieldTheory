@@ -14,6 +14,4 @@ import ClassFieldTheory.AlgebraicNumberTheory.Completion.IntegerRingComparison
 import ClassFieldTheory.AlgebraicNumberTheory.Completion.LocalizedValuation
 import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.All
 
-set_option autoImplicit false
-
 /-! # Completions of number fields and their local comparisons -/

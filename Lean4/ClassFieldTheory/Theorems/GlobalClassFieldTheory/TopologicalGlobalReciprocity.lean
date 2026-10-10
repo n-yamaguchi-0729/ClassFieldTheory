@@ -13,10 +13,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MathlibTopologicalGlobalReciprocity
 import Mathlib.FieldTheory.AbsoluteGaloisGroup
 
-set_option autoImplicit false
-
-open scoped NumberField
-
 /-!
 # Topological global reciprocity
 
@@ -24,6 +20,8 @@ For a number field `K`, the idèle class group modulo its identity component
 is topologically isomorphic to the maximal abelian quotient of the absolute
 Galois group. The statement uses Mathlib's groups on both sides.
 -/
+
+open scoped NumberField
 
 namespace ClassFieldTheory
 

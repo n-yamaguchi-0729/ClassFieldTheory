@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
 
-set_option autoImplicit false
-
 /-!
 # Comparison with the abstract profinite completion
 

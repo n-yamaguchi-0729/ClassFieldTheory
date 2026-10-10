@@ -59,8 +59,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Unramified
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedResidueUniqueness
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ValuationSemilinear
 
-set_option autoImplicit false
-
 /-!
 # Finite local reciprocity
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
 import Mathlib.Algebra.Group.Subgroup.Map
 
-set_option autoImplicit false
-
 /-!
 # Norm membership under compatible field equivalences
 

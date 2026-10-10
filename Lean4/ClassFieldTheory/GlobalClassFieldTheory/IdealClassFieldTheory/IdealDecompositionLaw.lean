@@ -10,8 +10,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFie
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
 
-set_option autoImplicit false
-
 /-!
 # The ideal-theoretic unramified decomposition law
 
@@ -28,7 +26,9 @@ to give the complete decomposition law:
 are related by the global ideal decomposition law.
 -/
 
-open scoped NumberField Classical BigOperators
+
+
+open scoped NumberField BigOperators
 
 noncomputable section
 

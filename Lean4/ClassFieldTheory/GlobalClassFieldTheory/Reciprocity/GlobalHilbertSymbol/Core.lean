@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Conj
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
 import Mathlib.FieldTheory.KummerExtension
 
-set_option autoImplicit false
-
 /-!
 # Global-place Hilbert symbols
 
@@ -23,7 +21,9 @@ local definition with the root character of the finite-place global Artin
 automorphism without building that comparison into the definition.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic reciprocity for actual ray class fields
 
@@ -19,7 +17,9 @@ idèle norm range, the finite Krull topology, and the native ray-class
 quotient topology.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 
 noncomputable section
 
@@ -112,7 +112,7 @@ global reciprocity from the transport between the equal norm quotients. -/
 private theorem
     arithmeticRayClassFieldGaloisContinuousMulEquivRayClassGroup_apply
     (m : RayClass.Modulus K)
-    (σ : Gal((rayClassField K m) / K)) :
+    (σ : Gal((rayClassField K m)/K)) :
     arithmeticRayClassFieldGaloisContinuousMulEquivRayClassGroup
         (K := K) m σ =
       QuotientGroup.quotientMulEquivOfEq

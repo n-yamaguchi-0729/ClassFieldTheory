@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 import Mathlib.NumberTheory.NumberField.AdeleRing
 
-set_option autoImplicit false
-
 /-!
 # Comparison with Mathlib's idèle class group
 

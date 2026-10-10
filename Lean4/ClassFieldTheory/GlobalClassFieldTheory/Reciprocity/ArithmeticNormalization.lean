@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidueAbelianization
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic normalization of global reciprocity
 
@@ -26,6 +24,8 @@ records that normalization explicitly, including its topology and its
 local-global compatibility.  Thus no sign convention is hidden in an
 unbundled equality.
 -/
+
+
 
 open scoped IsMulCommutative NumberField
 open NumberField IsDedekindDomain

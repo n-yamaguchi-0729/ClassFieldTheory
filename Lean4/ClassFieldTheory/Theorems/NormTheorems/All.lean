@@ -14,8 +14,6 @@ import ClassFieldTheory.Theorems.NormTheorems.NegativeOneNotInfiniteNorm
 import ClassFieldTheory.Theorems.NormTheorems.UnramifiedInfinitePlaceAllNorm
 import ClassFieldTheory.Theorems.NormTheorems.TensorNormBaseChange
 
-set_option autoImplicit false
-
 /-!
 # Local-to-global norm theorems
 

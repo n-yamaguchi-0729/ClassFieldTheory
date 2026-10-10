@@ -8,8 +8,6 @@ import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 
-set_option autoImplicit false
-
 /-!
 # Places under a number-field equivalence
 

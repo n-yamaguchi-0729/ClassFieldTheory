@@ -7,12 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.ValuationRingEquiv
 import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationIdeal
 
-set_option autoImplicit false
-
 /-!
 # The ramification index of the totally ramified cyclotomic extension
 
-This file maps the Eisenstein unit relation into the target valuation ring and proves `e = [L : ℚ_[p]]`, together with the uniformizer statement.
+This file maps the Eisenstein unit relation into the target valuation ring and proves
+`e = [L : ℚ_[p]]`, together with the uniformizer statement.
 -/
 
 noncomputable section
@@ -165,8 +164,8 @@ theorem padicCyclotomicTotallyRamified_uniformizer_and_ramificationIndex_eq_degr
       base.maximalIdeal ≤ target.maximalIdeal ^ (d + 1) := by
     rw [hmapT]
     exact
-      LocalFieldTheory.DiscreteValuationField.ValuedExtension.target_maximalIdeal_pow_not_le_pow_succ
-        target hπ d
+      (open _root_.LocalFieldTheory.DiscreteValuationField.ValuedExtension in
+        target_maximalIdeal_pow_not_le_pow_succ target hπ d)
   have he :
       ValuedExtension.ramificationIndex
         base.toDVF target.toDVF = d := by

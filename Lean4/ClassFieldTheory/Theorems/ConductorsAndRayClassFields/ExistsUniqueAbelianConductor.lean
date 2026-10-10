@@ -8,8 +8,6 @@ import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.ExistsAbelianConduc
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.IsAbelianConductorUnique
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 
-set_option autoImplicit false
-
 /-!
 # Unique existence of the abelian conductor
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.NumberField.PlaceEquiv
 import ClassFieldTheory.Definitions.HilbertSymbols.GlobalInfinitePlaceHilbertSymbol
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
 
-set_option autoImplicit false
-
 /-!
 # Naturality of the infinite Hilbert factor
 
@@ -85,24 +83,23 @@ theorem globalInfinitePlaceHilbertSymbol_congr
         rw [infinitePlace_embedding_of_isReal_congr e W hv hW]
       by_cases ha : InfinitePlace.embedding_of_isReal hv (a : F) < 0
       · have haG := haiff.mp ha
-        change InfinitePlace.embedding_of_isReal hW (e (a : F)) < 0 at haG
         by_cases hb : InfinitePlace.embedding_of_isReal hv (b : F) < 0
         · have hbG := hbiff.mp hb
-          change InfinitePlace.embedding_of_isReal hW (e (b : F)) < 0 at hbG
-          simp [globalInfinitePlaceHilbertSymbol, hn, hv,
-            hW, ha, hb, haG, hbG]
+          simp only [globalInfinitePlaceHilbertSymbol, dite_eq_left hn,
+            dite_eq_left hv, dite_eq_left hW, dite_eq_left ha, dite_eq_left hb,
+            dite_eq_left haG, dite_eq_left hbG]
           apply Subtype.ext
           apply Units.ext
           change e (-1 : F) = (-1 : G)
           simp
         · have hbG := fun h => hb (hbiff.mpr h)
-          change ¬InfinitePlace.embedding_of_isReal hW (e (b : F)) < 0 at hbG
-          simp [globalInfinitePlaceHilbertSymbol, hn, hv,
-            hW, ha, hb, haG, hbG]
+          simp only [globalInfinitePlaceHilbertSymbol, dite_eq_left hn,
+            dite_eq_left hv, dite_eq_left hW, dite_eq_left ha, dite_eq_right hb,
+            dite_eq_left haG, dite_eq_right hbG, map_one]
       · have haG := fun h => ha (haiff.mpr h)
-        change ¬InfinitePlace.embedding_of_isReal hW (e (a : F)) < 0 at haG
-        simp [globalInfinitePlaceHilbertSymbol, hn, hv,
-          hW, ha, haG]
+        simp only [globalInfinitePlaceHilbertSymbol, dite_eq_left hn,
+          dite_eq_left hv, dite_eq_left hW, dite_eq_right ha, dite_eq_right haG,
+          map_one]
     · have hv : ¬v.IsReal := fun h => hW (hviff.mp h)
       simp [globalInfinitePlaceHilbertSymbol, hn, hv, hW]
   · simp [globalInfinitePlaceHilbertSymbol, hn]

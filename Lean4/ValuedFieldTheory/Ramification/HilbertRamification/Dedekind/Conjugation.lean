@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
 
-set_option autoImplicit false
-
 /-!
 # Hilbert ramification theory: conjugate prime ideals
 

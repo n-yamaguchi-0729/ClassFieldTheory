@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibComparison
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.FiniteMathlibTopologyComparison
 import Mathlib.Topology.Algebra.Group.Quotient
 
-set_option autoImplicit false
-
 /-!
 # Continuity of the comparison with Mathlib's idèle class group
 

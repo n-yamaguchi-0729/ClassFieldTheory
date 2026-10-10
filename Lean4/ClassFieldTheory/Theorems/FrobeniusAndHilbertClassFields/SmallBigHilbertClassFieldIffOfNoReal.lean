@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilber
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 
-set_option autoImplicit false
-
 /-!
 # Hilbert class fields without real places
 

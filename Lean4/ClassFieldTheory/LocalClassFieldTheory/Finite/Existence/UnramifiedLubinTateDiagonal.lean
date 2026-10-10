@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.LubinTateUniformizerDiagonal
 
-set_option autoImplicit false
-
 /-!
 # The unramified--Lubin--Tate diagonal field
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
 
-set_option autoImplicit false
-
 /-!
 # Adic completions under a number-field equivalence
 

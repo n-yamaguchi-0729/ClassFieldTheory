@@ -16,8 +16,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerPrimeS
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitLocalPowerMap
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SupportedIdelePowerLocalUnitQuotient
 
-set_option autoImplicit false
-
 /-!
 # The global class-field axiom and its arithmetic consequences
 

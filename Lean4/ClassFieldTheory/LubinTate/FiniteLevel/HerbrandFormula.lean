@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LubinTate.FiniteLevel.LowerRamificationFormula
 import ClassFieldTheory.LubinTate.FiniteLevel.UpperRamification
 
-set_option autoImplicit false
-
 /-!
 # Herbrand formula for finite Lubin--Tate levels
 
@@ -18,6 +16,8 @@ integral upper breaks `k`.  Consequently the upper ramification group at `k`
 is the Galois image of the `k`-th principal-unit subgroup and has order
 `q ^ (n + 1 - k)`.
 -/
+
+
 
 noncomputable section
 

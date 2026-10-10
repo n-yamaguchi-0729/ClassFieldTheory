@@ -21,6 +21,4 @@ import ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
 import ClassFieldTheory.AlgebraicNumberTheory.NumberField.SupportedDiscriminantBound
 import ClassFieldTheory.AlgebraicNumberTheory.NumberField.TameDifferentTrace
 
-set_option autoImplicit false
-
 /-! # Finite and everywhere-unramified towers of number fields -/

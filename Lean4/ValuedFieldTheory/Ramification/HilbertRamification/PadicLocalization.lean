@@ -12,8 +12,6 @@ import ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
 import ValuedFieldTheory.Ramification.HilbertRamification.DecompositionFieldLocalization
 import Mathlib.FieldTheory.Galois.Abelian
 
-set_option autoImplicit false
-
 /-!
 # Localizations at rational p-adic absolute values
 

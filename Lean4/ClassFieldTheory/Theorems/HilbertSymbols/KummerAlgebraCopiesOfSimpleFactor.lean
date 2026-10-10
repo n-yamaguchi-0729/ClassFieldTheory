@@ -10,8 +10,6 @@ import ValuedFieldTheory.Valuation.Completion.FiniteProductNormTrace
 import Mathlib.Algebra.Algebra.Pi
 import Mathlib.Data.Fintype.EquivFin
 
-set_option autoImplicit false
-
 /-!
 # Exact number of copies of one Kummer field factor
 

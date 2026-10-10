@@ -9,8 +9,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity
 import Mathlib.FieldTheory.AbsoluteGaloisGroup
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Profinite local reciprocity
 

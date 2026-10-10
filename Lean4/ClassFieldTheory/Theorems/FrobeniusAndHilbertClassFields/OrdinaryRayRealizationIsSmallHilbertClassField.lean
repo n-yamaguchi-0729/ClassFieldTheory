@@ -11,8 +11,6 @@ import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.ExistsRayArtinModul
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldExists
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldOrdinaryRayRealization
 
-set_option autoImplicit false
-
 /-!
 # An ordinary ray realization is a small Hilbert class field
 

@@ -19,8 +19,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.I
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealComparison
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealSquare
 
-set_option autoImplicit false
-
 /-!
 # Global-place Hilbert symbols
 

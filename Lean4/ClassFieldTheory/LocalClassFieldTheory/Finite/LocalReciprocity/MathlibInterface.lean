@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import ClassFieldTheory.Definitions.LocalClassFieldTheory.All
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConjugationNaturality
@@ -12,8 +14,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTow
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
 import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity
-
-set_option autoImplicit false
 
 /-!
 # Mathlib-facing finite local class field theory
@@ -23,6 +23,8 @@ It collects the existing finite, absolute, naturality, normalization, and
 existence results without renaming them or wrapping them in an existence
 structure.
 -/
+
+
 
 noncomputable section
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
 
-set_option autoImplicit false
-
 /-!
 # The norm criterion at a real place that becomes complex
 

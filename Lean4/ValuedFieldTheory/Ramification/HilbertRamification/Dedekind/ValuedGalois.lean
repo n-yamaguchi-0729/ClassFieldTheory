@@ -8,8 +8,6 @@ import ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Core
 import Mathlib.NumberTheory.RamificationInertia.Galois
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
 
-set_option autoImplicit false
-
 /-!
 # Inertia cardinality for finite valued extensions
 

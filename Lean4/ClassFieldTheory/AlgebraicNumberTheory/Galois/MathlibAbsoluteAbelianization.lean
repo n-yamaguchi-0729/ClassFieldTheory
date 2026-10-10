@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Infinite.TopologicalAbelianization
 import Mathlib.FieldTheory.AbsoluteGaloisGroup
 import ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
 
-set_option autoImplicit false
-
 /-!
 # Comparison with Mathlib's absolute Galois abelianization
 

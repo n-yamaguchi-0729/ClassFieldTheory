@@ -13,8 +13,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassV
 import Mathlib.NumberTheory.NumberField.Basic
 import ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
 
-set_option autoImplicit false
-
 /-!
 # The maximal finite-unramified abelian subextension
 
@@ -26,6 +24,8 @@ subextension whose actual fixed-field extension is unramified at all
 finite places has a larger norm subgroup, hence lies below the selected
 big Hilbert class field by the order-reversing finite classification.
 -/
+
+
 
 open scoped NumberField
 

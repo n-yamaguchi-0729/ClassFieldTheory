@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
 
-set_option autoImplicit false
-
 /-!
 # Unramified normalization of the chosen finite-place Artin map
 
@@ -18,7 +16,9 @@ geometric finite-place construction. Its local Artin image is therefore
 inverse arithmetic Frobenius in the actual chosen completion.
 -/
 
-open scoped Classical NumberField ValuativeRel
+
+
+open scoped NumberField ValuativeRel
 open NumberField IsDedekindDomain
 open AlgebraicNumberTheory.Valuations LocalFieldTheory
 

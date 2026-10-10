@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.KroneckerWeber.Setup
 
-set_option autoImplicit false
-
 /-!
 # The common local cyclotomic target
 

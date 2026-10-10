@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
 import ClassFieldTheory.AlgebraicNumberTheory.NumberField.PlaceEquiv
 
-set_option autoImplicit false
-
 /-!
 # Infinite completions under a number-field equivalence
 

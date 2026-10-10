@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceComparison
 
-set_option autoImplicit false
-
 /-!
 # Finite-place local--global Kummer transport
 
@@ -19,7 +17,9 @@ as separate declarations so the eventual root-character comparison does not
 rebuild their instance towers.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

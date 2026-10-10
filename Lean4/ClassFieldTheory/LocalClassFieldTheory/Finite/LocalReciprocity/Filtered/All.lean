@@ -14,8 +14,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.I
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.StandardCompositum
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Unramified
 
-set_option autoImplicit false
-
 /-!
 # Filtered finite local reciprocity
 

@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbel
 import Mathlib.FieldTheory.KrullTopology
 import Mathlib.Topology.Algebra.Group.Quotient
 
-set_option autoImplicit false
-
 /-!
 # Topological global reciprocity for finite Galois extensions
 
@@ -26,6 +24,8 @@ The evaluation lemmas below ensure that these are the already
 constructed actual global symbols, rather than unrelated abstract
 isomorphisms between finite groups.
 -/
+
+
 
 open scoped IsMulCommutative NumberField
 open NumberField
@@ -140,7 +140,7 @@ noncomputable def globalReciprocityAbelianizationContinuousMulEquiv :
 actual finite-Galois norm-residue map. -/
 @[simp]
 theorem globalReciprocityAbelianizationContinuousMulEquiv_apply
-    (σ : Abelianization (Gal(L / K))) :
+    (σ : Abelianization (Gal(L/K))) :
     globalReciprocityAbelianizationContinuousMulEquiv K L σ =
       Additive.toMul
         ((globalNormResidueAbelianizationEquiv K L).symm

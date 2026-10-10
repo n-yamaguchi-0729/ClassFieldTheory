@@ -77,8 +77,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveActio
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
 
-set_option autoImplicit false
-
 /-!
 # Equal-characteristic Lubin--Tate unit quotients and Galois groups
 
@@ -88,6 +86,8 @@ to `[a⁻¹]`.  Its kernel is the `(n + 1)`-st higher-unit subgroup, so the
 action descends to a multiplicative equivalence from the finite unit
 quotient to the Galois group.
 -/
+
+
 
 noncomputable section
 

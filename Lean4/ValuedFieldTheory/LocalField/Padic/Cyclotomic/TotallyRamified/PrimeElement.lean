@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.IntegralClosure
 
-set_option autoImplicit false
-
 /-!
 # A prime element for the totally ramified cyclotomic extension
 

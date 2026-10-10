@@ -14,8 +14,6 @@ import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 
-set_option autoImplicit false
-
 /-!
 # Finite-place norm kernels of a global Artin map
 
@@ -78,7 +76,8 @@ theorem exists_finiteAbelianGlobalArtin_finitePlaceNormKernel
         (GlobalClassFieldTheory.Reciprocity.globalNormResidueMonoidHom_comp_finitePlaceIdeleClass
           (K := K) (L := L) v) x
     rw [hcompat]
-    rw [GlobalClassFieldTheory.Reciprocity.chosenFinitePlaceArtinMonoidHom_eq_one_iff_chosenLocalNorm,
+    rw [(open GlobalClassFieldTheory.Reciprocity in
+      chosenFinitePlaceArtinMonoidHom_eq_one_iff_chosenLocalNorm),
       ← finitePlaceLocalTensorNorm_range_eq_chosenLocalNormSubgroup (K := K) (L := L) v]
     change x ∈ (localTensorNorm (K := K) (L := L) v).range ↔
       x ∈ finitePlaceTensorNormSubgroup K L v

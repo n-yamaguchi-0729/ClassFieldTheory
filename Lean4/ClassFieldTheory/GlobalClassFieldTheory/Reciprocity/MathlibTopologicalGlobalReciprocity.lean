@@ -10,8 +10,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibTopologyCo
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.IdeleClassConnectedQuotient
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
 
-set_option autoImplicit false
-
 /-!
 # Topological global reciprocity in Mathlib's groups
 

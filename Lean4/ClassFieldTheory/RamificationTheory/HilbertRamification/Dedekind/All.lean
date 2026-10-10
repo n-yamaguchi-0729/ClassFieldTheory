@@ -8,8 +8,6 @@ import ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.ChosenIn
 import ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.InertiaGeneration
 import ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.PadicValuationInertia
 
-set_option autoImplicit false
-
 /-!
 # Dedekind-domain decomposition and inertia
 

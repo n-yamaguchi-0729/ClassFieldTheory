@@ -19,8 +19,6 @@ import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.Ramification
 import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueExtensionCoefficients
 import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueValuationSubring
 
-set_option autoImplicit false
-
 /-!
 # The valuation on the p-adic localization in the global cyclotomic inertia argument
 

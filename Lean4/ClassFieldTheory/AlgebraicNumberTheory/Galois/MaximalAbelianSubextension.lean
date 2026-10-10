@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
 import GaloisCohomology.GroupTheory.Quotient
 import Mathlib.FieldTheory.Galois.Abelian
 
-set_option autoImplicit false
-
 /-!
 # Maximal abelian subextensions inside finite normal closures
 

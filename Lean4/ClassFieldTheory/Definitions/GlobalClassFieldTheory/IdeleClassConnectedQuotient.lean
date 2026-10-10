@@ -9,8 +9,6 @@ import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Group.Subgroup
 import Mathlib.Topology.Algebra.Group.Units
 
-set_option autoImplicit false
-
 /-!
 # The connected-component quotient of the idèle class group
 

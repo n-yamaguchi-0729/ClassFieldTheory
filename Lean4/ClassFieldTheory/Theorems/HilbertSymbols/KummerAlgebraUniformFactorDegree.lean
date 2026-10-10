@@ -10,8 +10,6 @@ import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFinrank
 import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteEtale
 import Mathlib.LinearAlgebra.Dimension.Constructions
 
-set_option autoImplicit false
-
 /-!
 # Degree and number of uniform Kummer factors
 

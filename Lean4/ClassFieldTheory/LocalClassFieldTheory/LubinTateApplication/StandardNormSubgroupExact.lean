@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormI
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
 import ClassFieldTheory.LubinTate.FiniteLevel.HigherUnitLevelEquiv
 
-set_option autoImplicit false
-
 /-!
 # The norm subgroup of a standard Lubin--Tate level
 
@@ -19,6 +17,8 @@ known norm of the chosen uniformizer, this contains the canonical standard
 open subgroup in the norm subgroup.  Their independently computed,
 nonzero indices are equal, so the containment is an equality.
 -/
+
+
 
 noncomputable section
 

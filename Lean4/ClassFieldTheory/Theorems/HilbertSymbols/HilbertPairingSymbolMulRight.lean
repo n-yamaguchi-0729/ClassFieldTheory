@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingSymbol
 
-set_option autoImplicit false
-
 /-!
 # Hilbert-pairing symbol multiplication in the second argument
 

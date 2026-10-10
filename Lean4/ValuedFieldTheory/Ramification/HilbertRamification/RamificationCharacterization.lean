@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
 
-set_option autoImplicit false
-
 /-!
 # Ramification inside the decomposition group
 

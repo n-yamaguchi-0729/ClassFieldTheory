@@ -10,8 +10,6 @@ import ValuedFieldTheory.Valuation.Completion.TensorProductDecomposition
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 
-set_option autoImplicit false
-
 /-!
 # Canonical evaluation in the completion tensor decomposition
 

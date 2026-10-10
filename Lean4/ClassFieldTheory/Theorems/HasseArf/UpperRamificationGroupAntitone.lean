@@ -9,8 +9,6 @@ import ClassFieldTheory.Theorems.HasseArf.HerbrandFunctionCanonical
 import ClassFieldTheory.Theorems.HasseArf.HerbrandFunctionInverseHerbrandFunction
 import ClassFieldTheory.Theorems.HasseArf.RealLowerRamificationGroupCanonical
 
-set_option autoImplicit false
-
 /-! # Antitonicity of the canonical upper filtration -/
 
 namespace ClassFieldTheory

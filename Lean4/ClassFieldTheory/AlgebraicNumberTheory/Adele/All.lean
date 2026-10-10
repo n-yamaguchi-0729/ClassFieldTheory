@@ -14,6 +14,4 @@ import ClassFieldTheory.AlgebraicNumberTheory.Adele.LocalComponents
 import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedAction
 import ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedProduct
 
-set_option autoImplicit false
-
 /-! # Adelic coordinates and restricted products -/

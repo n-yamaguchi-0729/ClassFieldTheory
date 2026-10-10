@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.IsMaximalAbelianGlobalArtin
 import ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity
 
-set_option autoImplicit false
-
 /-!
 # The maximal abelian global Artin map
 

@@ -16,8 +16,6 @@ import ClassFieldTheory.LubinTate.FormalModule.Series
 import ClassFieldTheory.LubinTate.FormalModule.StandardFormalGroup
 import ClassFieldTheory.LubinTate.FormalModule.StandardSeries
 
-set_option autoImplicit false
-
 /-!
 # Lubin--Tate formal modules
 

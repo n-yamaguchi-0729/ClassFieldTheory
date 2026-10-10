@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.NumberTheory.NumberField.Basic
 import Mathlib.RingTheory.ClassGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # Fractional-ideal group of a number field
 -/
+
+
 
 open scoped NumberField
 open NumberField

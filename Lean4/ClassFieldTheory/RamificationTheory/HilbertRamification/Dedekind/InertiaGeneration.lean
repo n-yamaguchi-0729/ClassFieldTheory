@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Ramification.UnramifiedRationals
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.FixedFieldUnramified
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.FixedFields
 
-set_option autoImplicit false
-
 /-!
 # Global cyclotomic inertia argument: completion of the inertia-generation step
 

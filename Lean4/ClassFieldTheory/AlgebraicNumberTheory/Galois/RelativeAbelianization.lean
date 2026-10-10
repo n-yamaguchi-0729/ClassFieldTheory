@@ -6,7 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteAbelianization
 
-set_option autoImplicit false
 /-!
 # Relative topological abelianization
 
@@ -64,7 +63,7 @@ noncomputable def relativeAbelianizationMulEquiv :
 
 /-- The quotient equivalence sends a class to restriction. -/
 @[simp]
-theorem relativeAbelianizationMulEquiv_mk (sigma : Gal(M / F)) :
+theorem relativeAbelianizationMulEquiv_mk (sigma : Gal(M/F)) :
     relativeAbelianizationMulEquiv F M (QuotientGroup.mk sigma) =
       AlgEquiv.restrictNormalHom (relativeMaximalAbelianSubextension F M) sigma :=
   rfl

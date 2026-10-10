@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
 
-set_option autoImplicit false
-
 /-!
 # Conjugation naturality of finite local reciprocity
 
@@ -17,6 +15,8 @@ closure are related by conjugation. This module transports that conjugation
 to the actual Galois group, records the algebraic norm-residue square, and
 bundles the resulting map on the topological abelianization continuously.
 -/
+
+
 
 noncomputable section
 
@@ -48,7 +48,8 @@ theorem abelianizedGaloisConjugationOfEmbeddings_eq_refl
   change
     (finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L j).abelianizationCongr
         ((finiteGaloisConjugationOfEmbeddings K L i j).abelianizationCongr
-          ((finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L i).abelianizationCongr.symm z)) =
+          ((finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L
+            i).abelianizationCongr.symm z)) =
       z
   exact
     (finiteGaloisAbstractQuotientEquivGaloisGroup_conjugation
@@ -62,7 +63,7 @@ theorem abelianizedGaloisConjugationOfEmbeddings_eq_refl
 from two explicit realizations of the same finite Galois extension. -/
 theorem concreteNormResidueSymbolOfEmbedding_conjugation
     (i j : L →ₐ[K] SeparableClosure K)
-    (D : ClassFormation.DegreeData (Gal(SeparableClosure K / K)))
+    (D : ClassFormation.DegreeData (Gal(SeparableClosure K/K)))
     (v : ClassFormation.ValuationData D
       (galoisAmbientUnitsRep K (SeparableClosure K)))
     (hcf : ClassFormation.SatisfiesClassFieldAxiom

@@ -10,8 +10,6 @@ import ValuedFieldTheory.Ramification.LocalField.Core
 import ValuedFieldTheory.Ramification.LocalField.BaseChange
 import ValuedFieldTheory.Ramification.LocalField.Unramified
 
-set_option autoImplicit false
-
 /-!
 # Equal-characteristic Lubin--Tate upper filtration
 
@@ -19,6 +17,8 @@ This file identifies the image of the `k`-th higher-unit subgroup under the
 explicit finite-level Artin map `a ↦ [a⁻¹]` with the actual upper
 ramification group `G^k`.
 -/
+
+
 
 noncomputable section
 

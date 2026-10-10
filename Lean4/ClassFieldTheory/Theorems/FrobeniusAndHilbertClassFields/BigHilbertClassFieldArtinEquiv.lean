@@ -12,8 +12,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertC
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassFieldMathlibArtin
 
-set_option autoImplicit false
-
 /-!
 # Artin isomorphism for the big Hilbert class field
 
@@ -43,7 +41,8 @@ theorem bigHilbertClassField_artinEquiv
           artin (narrowRayClassOfFinitePrime v) =
             arithmeticFrobeniusAt (K := K) w := by
   let g :=
-    GlobalClassFieldComparison.arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_of_isBig E hE
+    (open GlobalClassFieldComparison in
+      arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_of_isBig E hE)
   let artin : RayClassGroup (narrowRayClassModulus K) ≃* (E ≃ₐ[K] E) :=
     (GlobalClassFieldComparison.narrowRayClassGroupEquivNarrowClassGroup K).trans g.symm
   refine ⟨artin, ?_⟩
@@ -63,7 +62,7 @@ theorem bigHilbertClassField_artinEquiv
     _ = g (arithmeticFrobeniusAt (K := K) w) := by
       rw [← GlobalClassFieldComparison.arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
         (K := K) (L := E) v w hw hunram]
-      exact (GlobalClassFieldComparison.arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_prime
-        E hE v).symm
+      exact ((open GlobalClassFieldComparison in
+        arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_prime E hE v)).symm
 
 end ClassFieldTheory

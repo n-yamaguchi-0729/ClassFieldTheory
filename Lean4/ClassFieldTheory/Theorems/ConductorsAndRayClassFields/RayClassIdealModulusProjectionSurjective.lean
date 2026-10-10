@@ -9,8 +9,6 @@ import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassIdealModulu
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 
-set_option autoImplicit false
-
 /-!
 # Surjectivity of the ideal-theoretic modulus projection
 
@@ -20,7 +18,7 @@ The latter projection is directly surjective since both ray class groups are
 quotients of the same idèle class group.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

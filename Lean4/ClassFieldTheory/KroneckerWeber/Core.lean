@@ -19,8 +19,6 @@ import ClassFieldTheory.KroneckerWeber.RayClassComparison
 import ClassFieldTheory.KroneckerWeber.Setup
 import ClassFieldTheory.KroneckerWeber.UnramifiedCompositumSupport
 
-set_option autoImplicit false
-
 /-!
 # Kronecker--Weber
 

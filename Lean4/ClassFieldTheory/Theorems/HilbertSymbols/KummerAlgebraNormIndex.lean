@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebraNormSubgroup
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.KummerNormPowerClassDegree
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Norm index of a Kummer algebra
 

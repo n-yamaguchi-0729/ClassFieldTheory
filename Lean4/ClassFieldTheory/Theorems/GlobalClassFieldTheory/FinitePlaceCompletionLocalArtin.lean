@@ -13,8 +13,6 @@ import Mathlib.Algebra.Algebra.Equiv
 import Mathlib.FieldTheory.KrullTopology
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
-set_option autoImplicit false
-
 /-!
 # A local Artin map on the actual extension completion
 
@@ -140,8 +138,8 @@ theorem exists_finitePlaceCompletionLocalArtin
             (K := K) (L := L) v x = 1 := hGlobal
       _ ↔ x ∈ _root_.chosenFinitePlaceLocalNormSubgroup
             (K := K) (L := L) v :=
-        GlobalClassFieldTheory.Reciprocity.chosenFinitePlaceArtinMonoidHom_eq_one_iff_chosenLocalNorm
-          v x
+        (open GlobalClassFieldTheory.Reciprocity in
+          chosenFinitePlaceArtinMonoidHom_eq_one_iff_chosenLocalNorm v x)
       _ ↔ x ∈ finitePlaceTensorNormSubgroup K L v := by
         rw [← finitePlaceLocalTensorNorm_range_eq_chosenLocalNormSubgroup
           (K := K) (L := L) v]

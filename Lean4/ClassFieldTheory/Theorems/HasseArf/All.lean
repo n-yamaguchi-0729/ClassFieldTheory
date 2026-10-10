@@ -26,6 +26,4 @@ import ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupCanonical
 import ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupAfter
 import ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupEventuallyBot
 
-set_option autoImplicit false
-
 /-! Public Hasse--Arf theorem and basic lower-filtration identities. -/

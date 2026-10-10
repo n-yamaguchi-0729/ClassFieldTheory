@@ -9,8 +9,6 @@ import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.EmbedsInRayClassFie
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.IsAbelianConductorUnique
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
 
-set_option autoImplicit false
-
 /-!
 # Real places in the public abelian conductor
 -/
@@ -39,7 +37,8 @@ theorem IsAbelianConductor.mem_infinitePart_iff_realRamified
     hc.unique (normFullConductor_isAbelianConductor K L)
   rw [heq]
   change v ∈ H.fullConductor.infinitePart ↔ _
-  rw [GlobalClassFieldTheory.GlobalClassFields.ideleClassNormFullConductor_infinitePart_eq_realRamificationLocus]
+  rw [(open GlobalClassFieldTheory.GlobalClassFields in
+      ideleClassNormFullConductor_infinitePart_eq_realRamificationLocus)]
   simp only [Finset.mem_filter, Finset.mem_univ, true_and]
 
 end ClassFieldTheory

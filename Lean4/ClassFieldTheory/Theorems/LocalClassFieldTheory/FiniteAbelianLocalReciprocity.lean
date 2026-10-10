@@ -10,8 +10,6 @@ import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian local reciprocity
 

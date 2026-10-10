@@ -10,8 +10,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertC
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusEqOneIffSplitsCompletely
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.BigHilbertClassFieldArtinEquiv
 
-set_option autoImplicit false
-
 /-!
 # Prime splitting in the big Hilbert class field
 
@@ -20,7 +18,7 @@ when its narrow ideal class is trivial.  Real-place ramification does not
 affect this finite-prime criterion.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

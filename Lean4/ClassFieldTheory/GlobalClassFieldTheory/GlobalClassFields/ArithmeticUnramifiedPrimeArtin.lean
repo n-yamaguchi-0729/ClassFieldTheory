@@ -10,8 +10,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalizati
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.UnramifiedNormalization
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Frobenius at an unramified finite place
 
@@ -21,7 +19,9 @@ element used in the ideal-theoretic formulation: the ordinary normalized
 prime idèle maps to arithmetic Frobenius.
 -/
 
-open scoped NumberField Classical
+
+
+open scoped NumberField
 
 noncomputable section
 

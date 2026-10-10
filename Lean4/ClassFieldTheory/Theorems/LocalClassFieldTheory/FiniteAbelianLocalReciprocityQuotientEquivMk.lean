@@ -11,8 +11,6 @@ import Mathlib.FieldTheory.KrullTopology
 import Mathlib.Topology.Algebra.Constructions
 import Mathlib.Topology.Algebra.Group.Quotient
 
-set_option autoImplicit false
-
 /-!
 # The local norm quotient is induced by the Artin map
 

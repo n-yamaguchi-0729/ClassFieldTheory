@@ -9,8 +9,6 @@ import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.NumberTheory.LocalField.Basic
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.MathlibInterface
 
-set_option autoImplicit false
-
 /-!
 # Index formula in finite abelian local reciprocity
 

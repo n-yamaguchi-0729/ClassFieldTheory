@@ -6,13 +6,13 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceNegativeRoot
 
-set_option autoImplicit false
-
 /-!
 # Negative units and the real infinite-place Artin map
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField
 
 noncomputable section

@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.I
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealSquare
 import ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
 
-set_option autoImplicit false
-
 /-!
 # The positive-radicand real infinite-place branch
 
@@ -19,7 +17,9 @@ norm subgroup all of the completion units, so the actual infinite-place
 Artin automorphism and its Kummer root character are trivial.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField
 
 noncomputable section

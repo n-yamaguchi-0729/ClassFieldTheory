@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassFieldRealization
 
-set_option autoImplicit false
-
 /-!
 # The ray Artin map
 -/

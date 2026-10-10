@@ -11,8 +11,6 @@ import Mathlib.Algebra.Polynomial.Lifts
 import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
 
-set_option autoImplicit false
-
 /-!
 # Integral closures of Henselian valuation rings
 

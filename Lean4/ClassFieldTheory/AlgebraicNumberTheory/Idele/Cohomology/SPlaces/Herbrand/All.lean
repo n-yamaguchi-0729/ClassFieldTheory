@@ -9,8 +9,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.FamilyFinite
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.Herbrand.Local
 
-set_option autoImplicit false
-
 /-!
 # Cohomology of the unrestricted factors of a relative `S`-idele
 

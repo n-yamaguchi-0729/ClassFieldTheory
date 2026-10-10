@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # The field-norm quotient
 -/
+
+
 
 noncomputable section
 

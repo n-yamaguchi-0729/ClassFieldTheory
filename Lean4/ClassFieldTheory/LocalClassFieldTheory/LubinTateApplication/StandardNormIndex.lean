@@ -9,8 +9,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
 import ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
 import ClassFieldTheory.LubinTate.FiniteLevel.NormSubgroup
 
-set_option autoImplicit false
-
 /-!
 # Norm indices for standard finite Lubin--Tate levels
 
@@ -19,6 +17,8 @@ finite abelian Galois extension with its field degree.  Applied to a standard
 Lubin--Tate level over the canonical local-field package, this gives index
 `(q - 1) * q ^ n`.
 -/
+
+
 
 noncomputable section
 

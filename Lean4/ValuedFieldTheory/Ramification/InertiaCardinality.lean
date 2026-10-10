@@ -8,8 +8,6 @@ import Mathlib.Algebra.Group.Subgroup.Finite
 import Mathlib.Algebra.Group.Subgroup.Lattice
 import Mathlib.SetTheory.Cardinal.NatCard
 
-set_option autoImplicit false
-
 /-!
 # The finite-group count in the global cyclotomic inertia argument
 

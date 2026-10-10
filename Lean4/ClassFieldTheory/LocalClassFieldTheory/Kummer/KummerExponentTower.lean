@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import GaloisCohomology.Kummer.Concrete.SimpleExtension
 import GaloisCohomology.Kummer.Concrete.FiniteGeneration
 
-set_option autoImplicit false
-
 /-!
 # Divisibility of simple Kummer extensions
 

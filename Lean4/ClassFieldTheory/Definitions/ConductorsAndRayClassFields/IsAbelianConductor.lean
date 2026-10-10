@@ -6,11 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.EmbedsInRayClassField
 
-set_option autoImplicit false
-
 /-!
 # Conductors of finite abelian extensions
 -/
+
+
 
 namespace ClassFieldTheory
 

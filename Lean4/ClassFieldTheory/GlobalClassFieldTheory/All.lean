@@ -10,8 +10,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.All
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.All
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.All
 
-set_option autoImplicit false
-
 /-!
 # Global class field theory
 

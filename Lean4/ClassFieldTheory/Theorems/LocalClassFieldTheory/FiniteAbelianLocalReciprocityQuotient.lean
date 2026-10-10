@@ -11,8 +11,6 @@ import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Algebra.Group.Quotient
 
-set_option autoImplicit false
-
 /-!
 # Quotient form of finite abelian local reciprocity
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
 import Mathlib.RingTheory.Norm.Basic
 
-set_option autoImplicit false
-
 /-!
 # Transport of finite-extension norm subgroups
 

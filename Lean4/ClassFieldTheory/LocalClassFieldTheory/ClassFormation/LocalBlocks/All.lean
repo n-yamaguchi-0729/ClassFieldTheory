@@ -10,8 +10,6 @@ import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Induced
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.Tensor
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalBlocks.TensorNorm
 
-set_option autoImplicit false
-
 /-!
 # Local class-formation blocks
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
 
-set_option autoImplicit false
-
 /-!
 # A coherent family of finite local Artin maps
 

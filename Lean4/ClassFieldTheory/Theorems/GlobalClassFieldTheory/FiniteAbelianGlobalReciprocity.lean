@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciproc
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibGlobalReciprocity
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian global reciprocity
 

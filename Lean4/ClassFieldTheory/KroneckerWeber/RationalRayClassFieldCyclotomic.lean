@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRe
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicRayNorm
 
-set_option autoImplicit false
-
 /-!
 # The rational ray class field as an actual cyclotomic field
 
@@ -26,7 +24,7 @@ Thus the result is an equality of actual class fields and not merely an
 equality of degrees or an abstract comparison of finite groups.
 -/
 
-open scoped Classical IsMulCommutative NumberField Cyclotomic
+open scoped IsMulCommutative NumberField Cyclotomic
 
 noncomputable section
 
@@ -141,7 +139,7 @@ theorem galEquivZMod_autCongr
     [IsCyclotomicExtension {m} ℚ A]
     [IsCyclotomicExtension {m} ℚ B]
     (e : A ≃ₐ[ℚ] B)
-    (σ : Gal(A / ℚ)) :
+    (σ : Gal(A/ℚ)) :
     IsCyclotomicExtension.Rat.galEquivZMod
         m B (AlgEquiv.autCongr e σ) =
       IsCyclotomicExtension.Rat.galEquivZMod
@@ -426,10 +424,7 @@ transport. -/
 @[simp]
 theorem
     rationalCyclotomicLevelGaloisContinuousMulEquivRayClassGroup_apply
-    (σ :
-      Gal(
-        KummerTheory.rationalCyclotomicLevel
-          ⟨m, NeZero.pos m⟩ / ℚ)) :
+    (σ : Gal(KummerTheory.rationalCyclotomicLevel ⟨m, NeZero.pos m⟩/ℚ)) :
     rationalCyclotomicLevelGaloisContinuousMulEquivRayClassGroup
         m σ =
       QuotientGroup.quotientMulEquivOfEq
@@ -692,7 +687,7 @@ standard `galEquivZMod` map literally. -/
 @[simp]
 theorem
     rationalCyclotomicGaloisContinuousMulEquivZModUnits_apply
-    (σ : Gal(CyclotomicField m ℚ / ℚ)) :
+    (σ : Gal(CyclotomicField m ℚ/ℚ)) :
     rationalCyclotomicGaloisContinuousMulEquivZModUnits
         m σ =
       IsCyclotomicExtension.Rat.galEquivZMod
@@ -705,7 +700,7 @@ cyclotomic norm-range equality. -/
 @[simp]
 theorem
     rationalCyclotomicGaloisContinuousMulEquivRayClassGroup_apply
-    (σ : Gal(CyclotomicField m ℚ / ℚ)) :
+    (σ : Gal(CyclotomicField m ℚ/ℚ)) :
     rationalCyclotomicGaloisContinuousMulEquivRayClassGroup
         m σ =
       QuotientGroup.quotientMulEquivOfEq

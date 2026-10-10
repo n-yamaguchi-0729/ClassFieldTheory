@@ -11,8 +11,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RamifiedOverextension
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ComplexificationArtin.RationalComplexification
 
-set_option autoImplicit false
-
 /-!
 # Artin reciprocity for the cyclotomic complexification
 

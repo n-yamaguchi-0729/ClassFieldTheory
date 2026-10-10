@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicLocalField
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MathlibHilbertProductFormula
 
-set_option autoImplicit false
-
 /-!
 # Comparison of finite-place Hilbert factors
 

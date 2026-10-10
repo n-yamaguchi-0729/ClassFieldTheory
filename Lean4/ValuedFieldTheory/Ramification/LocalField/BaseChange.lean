@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.Ramification.LocalField.Core
 
-set_option autoImplicit false
-
 /-!
 # Transport of upper ramification groups under an equivalent base field
 
@@ -16,6 +14,8 @@ identified by a valuation-preserving field equivalence.  This file proves
 that the resulting Galois groups have the same upper filtration, after
 identifying their automorphisms by their common action on the target.
 -/
+
+
 
 noncomputable section
 
@@ -67,10 +67,12 @@ theorem galoisGroupEquivOfBaseRingEquiv_apply
     [Algebra B E] [Algebra K E]
     (e : B ≃+* K)
     (he : ∀ b, algebraMap K E (e b) = algebraMap B E b)
-    (σ : Gal(E / B)) (x : E) :
+    (σ : Gal(E/B)) (x : E) :
     galoisGroupEquivOfBaseRingEquiv B K E e he σ x = σ x :=
   rfl
 
+open _root_.RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration
+  (herbrandFunction_eq_of_card_lower_eq) in
 private theorem upperRamificationGroup_map_baseChange
     (B K E : Type)
     [Field B] [Field K] [Field E]
@@ -87,7 +89,7 @@ private theorem upperRamificationGroup_map_baseChange
     (huniqK :
       RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension
         (base := baseK) (target := target))
-    (q : Gal(E / B) ≃* Gal(E / K))
+    (q : Gal(E/B) ≃* Gal(E/K))
     (hq : ∀ σ x, q σ x = σ x)
     (t : ℝ) :
     Subgroup.map q.toMonoidHom
@@ -151,7 +153,7 @@ private theorem upperRamificationGroup_map_baseChange
         herbrandFunctionOfUniqueExtension
           (base := baseK) (target := target) huniqK s := by
     exact
-      RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandFunction_eq_of_card_lower_eq
+      herbrandFunction_eq_of_card_lower_eq
         _ _ hcard s
   have hinverse (u : ℝ) :
       inverseHerbrandFunctionOfUniqueExtension

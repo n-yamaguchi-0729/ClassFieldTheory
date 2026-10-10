@@ -13,8 +13,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTranspor
 import Mathlib.NumberTheory.LocalField.Basic
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
 
-set_option autoImplicit false
-
 /-!
 # Local-field structure on a finite adic completion
 

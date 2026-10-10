@@ -8,11 +8,11 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 import Mathlib.RingTheory.Unramified.Locus
 
-set_option autoImplicit false
-
 /-!
 # Unramifiedness outside the support of a ray modulus
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

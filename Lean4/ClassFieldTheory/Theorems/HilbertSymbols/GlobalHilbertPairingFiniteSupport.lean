@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
 import ClassFieldTheory.Theorems.HilbertSymbols.HilbertProductFormula
 
-set_option autoImplicit false
-
 /-!
 # Finite support of every local Hilbert-pairing family
 

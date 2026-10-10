@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.I
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
 import GaloisCohomology.Kummer.Concrete.SimpleExtension
 
-set_option autoImplicit false
-
 /-!
 # Infinite-place Kummer root characters
 
@@ -19,7 +17,9 @@ is completed here.  The real quadratic action is kept as the next arithmetic
 leaf rather than being introduced as an assumption.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField
 
 noncomputable section

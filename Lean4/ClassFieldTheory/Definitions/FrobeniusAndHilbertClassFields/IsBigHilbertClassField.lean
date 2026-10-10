@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsUnramifiedAtFinitePlaces
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 
-set_option autoImplicit false
-
 /-!
 # Big Hilbert class fields
 -/
+
+
 
 namespace ClassFieldTheory
 

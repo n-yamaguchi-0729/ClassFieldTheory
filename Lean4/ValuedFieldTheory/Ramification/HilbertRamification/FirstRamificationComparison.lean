@@ -9,8 +9,6 @@ import ValuedFieldTheory.Ramification.HilbertRamification.CharacterMap
 import ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
 import ValuedFieldTheory.Ramification.HilbertRamification.RamificationCharacterization
 
-set_option autoImplicit false
-
 /-!
 # Comparing first principal units in the two ramification conventions
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Unramified
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
 
-set_option autoImplicit false
-
 /-!
 # Uniqueness of arithmetic Frobenius from its residue action
 
@@ -76,8 +74,9 @@ theorem finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow_iff
     finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow K L u hval x
   constructor
   · intro hσ
-    apply LocalFieldTheory.galoisGroupResidueAlgEquivHomOfIsIntegralClosure_injective_of_unramifiedValuation
-      K L
+    apply (open _root_.LocalFieldTheory in
+      galoisGroupResidueAlgEquivHomOfIsIntegralClosure_injective_of_unramifiedValuation
+        K L)
     apply AlgEquiv.ext
     intro y
     obtain ⟨x, rfl⟩ := IsLocalRing.residue_surjective y

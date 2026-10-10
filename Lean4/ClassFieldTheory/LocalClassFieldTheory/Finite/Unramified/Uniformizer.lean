@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
 
-set_option autoImplicit false
-
 /-!
 # Actual unramified norm quotient uniformizer
 

@@ -8,8 +8,6 @@ import ValuedFieldTheory.Valuation.DiscreteValuationField.Compositum
 import ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
 import ValuedFieldTheory.Ramification.HilbertRamification.CyclotomicDegreeBound
 
-set_option autoImplicit false
-
 /-!
 # A p-primary ramification bound for p-adic cyclotomic fields
 

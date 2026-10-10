@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.CanonicalKummerNorm
 
-set_option autoImplicit false
-
 /-!
 # Norms from a Kummer algebra and a simple radical field
 

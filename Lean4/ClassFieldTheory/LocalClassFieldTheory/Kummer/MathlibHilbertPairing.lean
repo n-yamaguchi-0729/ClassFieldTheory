@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import ClassFieldTheory.Definitions.HilbertSymbols.All
+import ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
+import ClassFieldTheory.Definitions.HilbertSymbols.IsKummerNorm
+import ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
+import ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
+import ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.CanonicalKummerNorm
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairingNondegeneracy
@@ -12,14 +16,14 @@ import GaloisCohomology.Kummer.Concrete.FiniteGeneration
 import GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
-set_option autoImplicit false
-
 /-!
 # Mathlib-facing local Hilbert pairing
 
 The existing local Artin construction is transported to the public
 power-class group and root-of-unity subgroup.
 -/
+
+
 
 noncomputable section
 

@@ -8,11 +8,11 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassPrimeToI
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # Ideal-theoretic ray class groups
 -/
+
+
 
 namespace ClassFieldTheory
 

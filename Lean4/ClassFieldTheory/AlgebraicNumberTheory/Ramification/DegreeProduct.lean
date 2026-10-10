@@ -8,8 +8,6 @@ import Mathlib.FieldTheory.Galois.GaloisClosure
 import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
 import ValuedFieldTheory.Ramification.InertiaCardinality
 
-set_option autoImplicit false
-
 /-!
 # A finite-group degree product
 

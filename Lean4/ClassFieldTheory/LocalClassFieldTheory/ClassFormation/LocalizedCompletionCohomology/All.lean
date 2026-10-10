@@ -11,8 +11,6 @@ import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletion
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Generator
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.HerbrandEquiv
 
-set_option autoImplicit false
-
 /-!
 # The local class-field axiom for decomposition-group blocks
 

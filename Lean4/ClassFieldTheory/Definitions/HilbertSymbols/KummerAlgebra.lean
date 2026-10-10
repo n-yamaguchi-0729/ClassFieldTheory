@@ -6,11 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.FieldTheory.KummerExtension
 
-set_option autoImplicit false
-
 /-!
 # Canonical Kummer algebras
 -/
+
+
 
 namespace ClassFieldTheory
 

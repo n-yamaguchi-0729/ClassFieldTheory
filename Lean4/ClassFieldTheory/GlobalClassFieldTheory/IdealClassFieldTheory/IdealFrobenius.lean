@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
 
-set_option autoImplicit false
-
 /-!
 # Ideal Frobenius classes and the decomposition law
 
@@ -18,7 +16,9 @@ The general unramified Galois identity `r * f = n` belongs to
 `RamificationTheory.HilbertRamification.Dedekind.Basic`.
 -/
 
-open scoped NumberField Classical
+
+
+open scoped NumberField
 
 noncomputable section
 

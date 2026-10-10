@@ -9,4 +9,9 @@ import ClassFieldTheory.Definitions.NormTheorems.IsEverywhereLocalNorm
 import ClassFieldTheory.Definitions.NormTheorems.IsNormAtFinitePlace
 import ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 
-set_option autoImplicit false
+/-!
+# Local and global norm conditions
+
+This aggregate collects extending absolute values and norm conditions
+at finite places, infinite places, and every place.
+-/

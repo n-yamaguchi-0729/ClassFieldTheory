@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorInfinitePart
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
 
-set_option autoImplicit false
-
 /-!
 # Full conductors and ray class field containment
 
@@ -18,7 +16,9 @@ embeds.  The proof combines the ray-field embedding criterion with the
 minimality theorem for the full conductor.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 
 noncomputable section
 

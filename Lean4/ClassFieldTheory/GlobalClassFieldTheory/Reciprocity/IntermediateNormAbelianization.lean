@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbelianizationNaturality
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormTowerConductor
 
-set_option autoImplicit false
-
 /-!
 # Abelianized restriction over intermediate fields
 

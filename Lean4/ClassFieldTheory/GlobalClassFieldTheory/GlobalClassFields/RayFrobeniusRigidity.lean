@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayPrimeGenerat
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 
-set_option autoImplicit false
-
 /-!
 # Rigidity of Frobenius-normalized ray reciprocity
 
@@ -21,7 +19,9 @@ compares the given map and genuine global reciprocity at a common multiple
 of the given modulus and the extension's full conductor.
 -/
 
-open scoped Classical NumberField IsMulCommutative
+
+
+open scoped NumberField IsMulCommutative
 open NumberField IsDedekindDomain
 
 noncomputable section

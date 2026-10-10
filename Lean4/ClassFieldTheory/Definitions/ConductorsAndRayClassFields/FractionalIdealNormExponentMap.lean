@@ -10,8 +10,6 @@ import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.Ideal.GoingUp
 import Mathlib.RingTheory.Ideal.Norm.RelNorm
 
-set_option autoImplicit false
-
 /-!
 # Norm of a fractional-ideal exponent vector
 
@@ -20,7 +18,9 @@ The norm sends its exponent to the prime below, multiplied by the inertia
 degree. The resulting map on finitely supported exponent vectors is additive.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

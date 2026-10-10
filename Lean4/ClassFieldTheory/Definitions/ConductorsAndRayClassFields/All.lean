@@ -26,4 +26,9 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroup
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
 
-set_option autoImplicit false
+/-!
+# Conductors and ray class-field definitions
+
+This aggregate collects conductor and modulus conditions, ray class
+groups and realizations, ideal norms, and ray Artin maps.
+-/

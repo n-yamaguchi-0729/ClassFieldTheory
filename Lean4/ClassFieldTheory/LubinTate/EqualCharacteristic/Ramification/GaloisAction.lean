@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAbelian
 import ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Galois action at an equal-characteristic Lubin--Tate level
 
@@ -16,6 +14,8 @@ This module identifies the action of every finite-level Galois automorphism on
 the chosen primitive division point with the corresponding truncated
 Lubin--Tate bracket.
 -/
+
+
 
 noncomputable section
 
@@ -37,8 +37,7 @@ theorem equalCharacteristicLubinTate_galoisAction_eq_bracket_unique
     (F : LocalField.{u, v} K)
     [CharP K F.residueCharacteristic]
     (n : ℕ)
-    (σ : Gal((equalCharacteristicLubinTateLevelField F n) /
-      F.residueField⸨X⸩)) :
+    (σ : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩)) :
     ∃! a : equalCharacteristicLubinTateUnitParameter F n,
       σ (equalCharacteristicLubinTateLevelPowerBasis F n).gen =
         equalCharacteristicLubinTateLevelBracket F n (n + 1)

@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
 import Mathlib.NumberTheory.NumberField.Ideal.Basic
 import Mathlib.RingTheory.DedekindDomain.Factorization
 
-set_option autoImplicit false
-
 /-!
 # Power-residue symbols at prime ideals and integral ideals
 
@@ -22,7 +20,7 @@ For a nonzero integral ideal `I`, `(a/I)` is the finite product of
 `(a/P)` raised to the multiplicity of `P` in `I`.
 -/
 
-open scoped NumberField Classical BigOperators
+open scoped NumberField BigOperators
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -105,6 +103,7 @@ noncomputable def rootsOfUnityReductionEquiv
     (hcoprime : (Ideal.absNorm P.asIdeal).Coprime (n : ℕ)) :
     rootsOfUnity (n : ℕ) (𝓞 K) ≃*
       rootsOfUnity (n : ℕ) (𝓞 K ⧸ P.asIdeal) := by
+  classical
   let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   letI : Fintype (rootsOfUnity (n : ℕ) (𝓞 K)) :=
     Fintype.ofFinite _
@@ -350,6 +349,7 @@ noncomputable def idealPowerResidueSymbol
           (ha P.1 ((mem_idealPrimeDivisors K I P.1).mp P.2)) ^
         idealPrimeMultiplicity K P.1 I
 
+open scoped Classical in
 /-- The prime-by-prime factor of the ideal power-residue symbol, extended
 by `1` away from the prime divisors of the denominator. -/
 noncomputable def idealPowerResidueFactor
@@ -425,6 +425,7 @@ theorem idealPowerResidueFactor_mul
           hcoprimeI haI P *
         idealPowerResidueFactor K J n hmu a
           hcoprimeJ haJ P := by
+  classical
   dsimp only
   by_cases hPI : P.asIdeal ∣ I
   · have hPIJ : P.asIdeal ∣ I * J :=

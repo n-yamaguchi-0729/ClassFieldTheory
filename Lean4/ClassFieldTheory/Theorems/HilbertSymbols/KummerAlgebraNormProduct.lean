@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
 import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraProductDecomposition
 import ValuedFieldTheory.Valuation.Completion.FiniteProductNormTrace
 
-set_option autoImplicit false
-
 /-!
 # Norm across the finite product of Kummer field factors
 

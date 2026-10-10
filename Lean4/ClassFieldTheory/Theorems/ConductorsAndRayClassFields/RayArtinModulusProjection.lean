@@ -12,8 +12,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassC
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 
-set_option autoImplicit false
-
 /-!
 # Naturality of ray Artin maps under reduction of the modulus
 
@@ -23,7 +21,7 @@ statement uses only Mathlib and public Definitions vocabulary; the idelic
 implementation appears only in the proof.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

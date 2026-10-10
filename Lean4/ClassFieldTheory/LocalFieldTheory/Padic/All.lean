@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.All
 
-set_option autoImplicit false
-
 /-!
 # P-adic local field theory
 

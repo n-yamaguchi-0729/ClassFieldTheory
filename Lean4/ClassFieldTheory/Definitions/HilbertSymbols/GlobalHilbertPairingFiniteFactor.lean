@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFamily
 import ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
 import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
-set_option autoImplicit false
-
 /-!
 # Finite-place factors of a global Hilbert pairing family
 -/

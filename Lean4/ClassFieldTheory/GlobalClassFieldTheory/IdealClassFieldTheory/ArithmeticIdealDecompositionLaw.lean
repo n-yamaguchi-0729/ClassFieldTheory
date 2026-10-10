@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealArtin
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealDecompositionLaw
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic ideal Artin symbols and unramified decomposition
 
@@ -19,7 +17,7 @@ reciprocity map, while the image of an ordinary prime ideal is the
 genuine arithmetic Frobenius automorphism.
 -/
 
-open scoped NumberField Classical
+open scoped NumberField
 
 noncomputable section
 
@@ -55,8 +53,9 @@ theorem
       Ideal.inertiaDegIn v.asIdeal (𝓞 L) := by
   rw [
     arithmeticIdealArtinGaloisMap_primeIdeal_eq_arithmeticFinitePlacePrimeArtin,
-    GlobalClassFields.orderOf_arithmeticFinitePlacePrimeArtin_eq_finitePlaceLocalDegree_of_chosenUnramified
-        (K := K) (L := L) v hunram]
+    (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+      orderOf_arithmeticFinitePlacePrimeArtin_eq_finitePlaceLocalDegree_of_chosenUnramified
+        (K := K) (L := L) v hunram)]
   exact
     finitePlaceLocalDegree_eq_inertiaDegree_of_chosenUnramified
       (K := K) (L := L) v hunram

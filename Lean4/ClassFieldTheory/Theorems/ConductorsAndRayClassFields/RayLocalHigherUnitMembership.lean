@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUn
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 import Mathlib.RingTheory.Ideal.Quotient.Defs
 
-set_option autoImplicit false
-
 /-!
 # Congruence description of local higher units
 

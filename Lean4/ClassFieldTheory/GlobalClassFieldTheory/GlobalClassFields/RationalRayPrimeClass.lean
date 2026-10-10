@@ -10,8 +10,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
 
-set_option autoImplicit false
-
 /-!
 # Rational prime classes in rational ray class groups
 
@@ -21,7 +19,7 @@ one-place prime idèle represents the direct residue unit `q` in
 compare rational ray reciprocity with the cyclotomic character.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 
 noncomputable section
 

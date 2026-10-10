@@ -10,8 +10,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilber
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
 
-set_option autoImplicit false
-
 /-!
 # Prime splitting in the small Hilbert class field
 
@@ -37,7 +35,8 @@ theorem finitePrime_splitsCompletelyInSmallHilbertClassField_iff_principal
     FinitePrimeSplitsCompletely K E v ↔
       finitePrimeFractionalIdeal v ∈
         (toPrincipalIdeal (𝓞 K) K).range := by
-  exact GlobalClassFieldComparison.finitePrime_splitsCompletelyInSmallHilbertClassField_iff_principal_of_isSmall
-    K E hE v
+  exact (open GlobalClassFieldComparison in
+    finitePrime_splitsCompletelyInSmallHilbertClassField_iff_principal_of_isSmall
+      K E hE v)
 
 end ClassFieldTheory

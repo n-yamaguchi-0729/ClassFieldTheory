@@ -10,8 +10,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassC
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
 
-set_option autoImplicit false
-
 /-!
 # The local kernel of a ray-class Artin map
 
@@ -117,7 +115,8 @@ theorem exists_finitePlaceRayArtin_normKernel
         (IdeleGroup.finitePlaceIdeleClass v x) =
           GlobalClassFieldTheory.Reciprocity.chosenFinitePlaceArtinMonoidHom
             (K := K) (L := L) v x from hcompat]
-    rw [GlobalClassFieldTheory.Reciprocity.chosenFinitePlaceArtinMonoidHom_eq_one_iff_chosenLocalNorm,
+    rw [(open GlobalClassFieldTheory.Reciprocity in
+      chosenFinitePlaceArtinMonoidHom_eq_one_iff_chosenLocalNorm),
       ← finitePlaceLocalTensorNorm_range_eq_chosenLocalNormSubgroup
         (K := K) (L := L) v]
     change x ∈ (localTensorNorm (K := K) (L := L) v).range ↔

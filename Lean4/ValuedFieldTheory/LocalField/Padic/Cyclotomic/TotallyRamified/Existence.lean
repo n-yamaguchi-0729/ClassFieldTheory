@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.RamificationIndex
 
-set_option autoImplicit false
-
 /-!
 # The totally ramified cyclotomic endpoint
 
@@ -31,7 +29,8 @@ section CyclotomicExtension
 variable {p k : ℕ} [Fact p.Prime]
 variable {L : Type u} [Field L] [Algebra ℚ_[p] L]
 
-local instance padicCyclotomicTotallyRamifiedRamificationEndpointAlgebraPadicInt : Algebra ℤ_[p] L :=
+local instance padicCyclotomicTotallyRamifiedRamificationEndpointAlgebraPadicInt :
+    Algebra ℤ_[p] L :=
   ((algebraMap ℚ_[p] L).comp (algebraMap ℤ_[p] ℚ_[p])).toAlgebra
 
 local instance padicCyclotomicTotallyRamifiedRamificationEndpointScalarTowerPadicInt :
@@ -79,7 +78,8 @@ theorem padicCyclotomicTotallyRamified_exists_totallyRamified_extension
     padicCyclotomicTotallyRamified_uniformizer_and_ramificationIndex_eq_degree
       ζ hζ hgen target
   exact ⟨hfd, target, hExt, hsource.1,
-    (LocalFieldTheory.DiscreteValuationField.ValuedExtension.isTotallyRamified_iff_ramificationIndex_eq_degree_of_finite_separable
+    (open _root_.LocalFieldTheory.DiscreteValuationField.ValuedExtension in
+      isTotallyRamified_iff_ramificationIndex_eq_degree_of_finite_separable
         base target).2 hsource.2⟩
 
 end CyclotomicExtension

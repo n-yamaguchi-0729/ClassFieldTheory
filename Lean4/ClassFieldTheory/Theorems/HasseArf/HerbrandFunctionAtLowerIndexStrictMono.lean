@@ -9,8 +9,6 @@ import ClassFieldTheory.HasseArf
 import Mathlib.Order.Monotone.Basic
 import Mathlib.SetTheory.Cardinal.Finite
 
-set_option autoImplicit false
-
 /-!
 # Strict growth of the integral-index Herbrand function
 

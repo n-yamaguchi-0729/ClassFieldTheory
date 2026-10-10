@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
 
-set_option autoImplicit false
-
 /-!
 # The rational cyclotomic product formula in arithmetic normalization
 
@@ -20,7 +18,7 @@ Artin maps and proves the finite principal-idèle product formula in
 that normalization.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

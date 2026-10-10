@@ -12,8 +12,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFin
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.ZeroTransport
 
-set_option autoImplicit false
-
 /-!
 # Rational finite-norm transport
 

@@ -9,8 +9,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.NumberField.EverywhereUnramifiedTo
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsEverywhereUnramified
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsUnramifiedAtFinitePlaces
 
-set_option autoImplicit false
-
 /-!
 # Finite-place unramifiedness comparison
 
@@ -18,6 +16,8 @@ The implementation quantifies over primes of the extension, while the public
 definition quantifies over primes of the base.  These are equivalent because
 every prime above a nonzero base prime is itself nonzero.
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

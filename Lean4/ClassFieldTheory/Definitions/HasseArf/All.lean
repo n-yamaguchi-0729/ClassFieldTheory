@@ -13,4 +13,9 @@ import ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
 import ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
 import ClassFieldTheory.Definitions.HasseArf.UpperRamificationGroup
 
-set_option autoImplicit false
+/-!
+# Ramification and Herbrand-function definitions
+
+This aggregate collects lower and upper ramification groups and jumps,
+Herbrand functions, and inverse Herbrand functions.
+-/

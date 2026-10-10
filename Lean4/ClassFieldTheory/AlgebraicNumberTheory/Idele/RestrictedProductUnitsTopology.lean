@@ -8,8 +8,6 @@ import Mathlib.Topology.Algebra.Group.Units
 import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 import Mathlib.Topology.Algebra.RestrictedProduct.Units
 
-set_option autoImplicit false
-
 /-!
 # Topology on units of a restricted product
 

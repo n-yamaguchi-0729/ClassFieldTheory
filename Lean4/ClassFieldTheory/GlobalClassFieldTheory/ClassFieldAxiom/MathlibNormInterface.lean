@@ -5,10 +5,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
-import ClassFieldTheory.Definitions.NormTheorems.All
+import ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormHom
+import ClassFieldTheory.Definitions.NormTheorems.IsEverywhereLocalNorm
+import ClassFieldTheory.Definitions.NormTheorems.IsNormAtFinitePlace
+import ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.HasseNormPrinciple
-
-set_option autoImplicit false
 
 /-!
 # Mathlib-facing Hasse norm theorem
@@ -17,6 +18,8 @@ This module translates the idele-theoretic implementation of the cyclic
 Hasse norm theorem into the implementation-independent predicates in
 `ClassFieldTheory.Definitions.NormTheorems`.
 -/
+
+
 
 open scoped NumberField TensorProduct
 open NumberField IsDedekindDomain

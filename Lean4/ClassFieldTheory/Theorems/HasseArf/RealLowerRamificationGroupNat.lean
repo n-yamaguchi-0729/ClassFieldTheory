@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
 import ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
 
-set_option autoImplicit false
-
 /-! # Real lower groups at natural indices -/
 
 namespace ClassFieldTheory

@@ -11,8 +11,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFie
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallOriginal
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic reciprocity for the actual Hilbert class fields
 
@@ -25,7 +23,9 @@ public bundle here is `MulEquiv`; the preceding Galois/norm-quotient
 factor remains a `ContinuousMulEquiv`.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 
 noncomputable section
 

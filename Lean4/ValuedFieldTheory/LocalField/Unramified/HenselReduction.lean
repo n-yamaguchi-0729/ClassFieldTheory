@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.LocalField.Unramified.HenselianAlgebraicExtension
 import ValuedFieldTheory.Valuation.Henselian.ValuationExtensionCriterion
 
-set_option autoImplicit false
-
 /-!
 # the unramified base-change theorem: irreducible reduction source
 

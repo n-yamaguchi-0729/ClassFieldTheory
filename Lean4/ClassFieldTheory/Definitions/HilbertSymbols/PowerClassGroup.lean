@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.Algebra.Field.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # Multiplicative power-class groups
 -/
+
+
 
 namespace ClassFieldTheory
 

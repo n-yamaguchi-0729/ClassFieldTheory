@@ -9,8 +9,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.DivisionModul
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateAction
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateEndomorphism
 
-set_option autoImplicit false
-
 /-!
 # Equal-characteristic Lubin--Tate formal modules
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # The quotient induced by a ray-class Artin map
 

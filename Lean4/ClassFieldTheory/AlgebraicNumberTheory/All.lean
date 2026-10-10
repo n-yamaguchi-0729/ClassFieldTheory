@@ -23,8 +23,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.SUnit.All
 import ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
 import ClassFieldTheory.AlgebraicNumberTheory.TensorProduct
 
-set_option autoImplicit false
-
 /-!
 # Algebraic number theory
 

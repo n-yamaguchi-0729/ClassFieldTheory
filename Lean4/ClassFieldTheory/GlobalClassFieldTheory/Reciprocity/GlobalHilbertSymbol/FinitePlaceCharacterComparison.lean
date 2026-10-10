@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.F
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
 import ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
 
-set_option autoImplicit false
-
 /-!
 # Finite-place Kummer root-character comparison
 
@@ -19,7 +17,9 @@ localized completion and its instance tower occur only in the provider body
 which proves compatibility with the two Artin actions.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

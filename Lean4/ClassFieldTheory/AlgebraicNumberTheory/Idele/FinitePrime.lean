@@ -14,8 +14,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNatu
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 
-set_option autoImplicit false
-
 /-!
 # Normalized finite-prime ideles
 
@@ -23,6 +21,8 @@ This file defines the idele supported at one finite place with normalized
 local order one, and computes its associated fractional ideal and ideal
 class. These constructions are independent of class field theory.
 -/
+
+
 
 open scoped NumberField
 

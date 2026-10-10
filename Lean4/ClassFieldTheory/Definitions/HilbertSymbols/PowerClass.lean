@@ -6,11 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
 
-set_option autoImplicit false
-
 /-!
 # Canonical power classes
 -/
+
+
 
 namespace ClassFieldTheory
 

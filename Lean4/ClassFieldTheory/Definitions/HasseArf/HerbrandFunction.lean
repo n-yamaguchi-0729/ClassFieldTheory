@@ -9,8 +9,6 @@ import Mathlib.Algebra.Order.Floor.Ring
 import Mathlib.Algebra.Order.Archimedean.Real.Basic
 import Mathlib.Basic.Real.Basic
 
-set_option autoImplicit false
-
 /-!
 # The real Herbrand function from integral lower groups
 

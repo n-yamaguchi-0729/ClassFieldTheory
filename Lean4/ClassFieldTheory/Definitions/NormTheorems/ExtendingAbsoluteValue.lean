@@ -8,8 +8,6 @@ import Mathlib.Algebra.Algebra.Basic
 import Mathlib.Basic.Real.Basic
 import Mathlib.Topology.UniformSpace.AbsoluteValue
 
-set_option autoImplicit false
-
 /-!
 # Absolute values above a fixed absolute value
 

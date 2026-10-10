@@ -13,8 +13,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
 import Mathlib.Algebra.BigOperators.Finsupp.Basic
 
-set_option autoImplicit false
-
 /-!
 # Norms of ideals prime to a modulus
 
@@ -30,7 +28,9 @@ principal ray ideals, is the norm-defined ideal group
 `N_{L/K} J_L^m P_K^m`.
 -/
 
-open scoped BigOperators Classical NumberField Topology
+
+
+open scoped BigOperators NumberField Topology
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -113,6 +113,7 @@ theorem exists_localHigherUnitGroup_le_norm_preimage
   intro x hx
   exact hn hx
 
+open scoped Classical in
 omit [FiniteDimensional K L] in
 /-- The positive local depth used at `W` in the lifted modulus.  It is
 zero precisely away from the inverse image of the support of `m`. -/
@@ -275,6 +276,7 @@ noncomputable def idealNormExponentMap :
         (AddMonoidHom.mulLeft
           (W.asIdeal.inertiaDeg (𝓞 K) : ℤ))
 
+open scoped Classical in
 omit [FiniteDimensional K L] in
 @[simp]
 theorem idealNormExponentMap_apply

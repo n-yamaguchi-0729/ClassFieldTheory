@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingSymbol
 import ClassFieldTheory.Definitions.HilbertSymbols.IsKummerNorm
 
-set_option autoImplicit false
-
 /-!
 # The norm-residue criterion
 -/
+
+
 
 namespace ClassFieldTheory.HilbertPairing
 

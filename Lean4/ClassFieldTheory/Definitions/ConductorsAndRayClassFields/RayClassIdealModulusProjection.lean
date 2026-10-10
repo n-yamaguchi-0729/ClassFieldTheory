@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
 import Mathlib.Data.Finsupp.Order
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # Projection between ideal-theoretic ray class groups
 
@@ -19,7 +17,7 @@ conditions. The induced inclusions of prime-to-modulus ideals and ray-principal
 ideals give the canonical quotient map from the larger modulus to the smaller.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

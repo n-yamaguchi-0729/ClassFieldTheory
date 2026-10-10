@@ -31,8 +31,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.SufficientlyLarge
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
 
-set_option autoImplicit false
-
 /-!
 # Ideles and idele classes
 

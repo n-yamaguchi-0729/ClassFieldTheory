@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
 
-set_option autoImplicit false
-
 /-!
 # Fixed-field instance spine for rational finite-norm transport
 
@@ -16,6 +14,8 @@ This leaf names the finite-dimensional, scalar-tower, number-field, Galois,
 and quotient instances reused by the rational finite-norm transport modules.
 The public dependent type aliases are compiled once here.
 -/
+
+
 
 noncomputable section
 

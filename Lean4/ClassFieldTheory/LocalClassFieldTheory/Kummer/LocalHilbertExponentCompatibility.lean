@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Kummer.KummerExponentTower
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
 
-set_option autoImplicit false
-
 /-!
 # Compatibility of local Hilbert symbols at divisible exponents
 

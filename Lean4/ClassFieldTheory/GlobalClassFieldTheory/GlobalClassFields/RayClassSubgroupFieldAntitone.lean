@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
 
-set_option autoImplicit false
-
 /-!
 # Subgroup order and chosen ray class fields
 
@@ -16,7 +14,7 @@ The selected field of a larger ray-class subgroup is contained in that of
 a smaller subgroup, as actual subfields of the fixed separable closure.
 -/
 
-open scoped NumberField Classical
+open scoped NumberField
 
 noncomputable section
 

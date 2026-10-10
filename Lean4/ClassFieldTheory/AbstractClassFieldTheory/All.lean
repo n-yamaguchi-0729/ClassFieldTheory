@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AbstractClassFieldTheory.Degree.All
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.All
 
-set_option autoImplicit false
-
 /-!
 # Abstract class field theory
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNor
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicIdealNormArtinKernel
 
-set_option autoImplicit false
-
 /-!
 # Ideal norms are killed by the ray-class Artin map
 

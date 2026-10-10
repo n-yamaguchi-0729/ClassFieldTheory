@@ -8,8 +8,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoin
 import ValuedFieldTheory.LocalField.DiscreteValuationField.PolynomialRootProximity
 import ValuedFieldTheory.Ramification.HilbertRamification.ValuationKrasner
 
-set_option autoImplicit false
-
 /-!
 # Valuation of primitive-point displacement
 
@@ -17,6 +15,8 @@ This module computes the normalized additive valuation of the displacement of
 the chosen primitive Lubin--Tate point from the first visible coefficient of
 the corresponding unit parameter.
 -/
+
+
 
 noncomputable section
 
@@ -486,8 +486,7 @@ private theorem
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
-    (sigma : Gal((equalCharacteristicLubinTateLevelField F n) /
-      F.residueField⸨X⸩))
+    (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
     (a : equalCharacteristicLubinTateUnitParameter F n)
     (ha :
       sigma (equalCharacteristicLubinTateLevelPowerBasis F n).gen =
@@ -512,8 +511,7 @@ private theorem
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
-    (sigma : Gal((equalCharacteristicLubinTateLevelField F n) /
-      F.residueField⸨X⸩))
+    (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
     (a : equalCharacteristicLubinTateUnitParameter F n)
     (ha :
       sigma (equalCharacteristicLubinTateLevelPowerBasis F n).gen =
@@ -547,8 +545,7 @@ theorem
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
-    (sigma : Gal((equalCharacteristicLubinTateLevelField F n) /
-      F.residueField⸨X⸩))
+    (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
     (a : equalCharacteristicLubinTateUnitParameter F n)
     (ha :
       sigma (equalCharacteristicLubinTateLevelPowerBasis F n).gen =
@@ -602,8 +599,7 @@ theorem
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
-    (sigma : Gal((equalCharacteristicLubinTateLevelField F n) /
-      F.residueField⸨X⸩))
+    (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
     (a : equalCharacteristicLubinTateUnitParameter F n)
     (ha :
       sigma (equalCharacteristicLubinTateLevelPowerBasis F n).gen =

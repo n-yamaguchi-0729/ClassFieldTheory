@@ -9,8 +9,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
 
-set_option autoImplicit false
-
 /-!
 # Prime classes at the narrow finite norm conductor
 
@@ -24,6 +22,8 @@ extension degree.  Complete splitting forces this class to be trivial;
 when the narrow-finite-conductor ray-class presentation is maximal, it also
 forces the narrow finite conductor ray prime class itself to be trivial.
 -/
+
+
 
 open scoped NumberField
 
@@ -254,7 +254,8 @@ theorem
     narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
       (K := K) (L := L)
   have hfInjective : Function.Injective f :=
-    (narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
+    (
+  narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
       (K := K) (L := L)).2 hcard
   constructor
   · intro hprime
@@ -298,7 +299,8 @@ theorem
     narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
       (K := K) (L := L)
   have hfInjective : Function.Injective f :=
-    (narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
+    (
+  narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
       (K := K) (L := L)).2 hcard
   have horder :=
     orderOf_injective f hfInjective
@@ -313,7 +315,7 @@ theorem
 the actual norm quotient, triviality of its ray prime class is
 equivalent to membership of the prime ideal in the ideal Artin kernel. -/
 theorem
-    narrowFiniteConductorRayPrimeClass_eq_one_iff_narrowFiniteConductorPrimeIdeal_mem_idealArtinKernel
+  narrowFiniteConductorRayPrimeClass_eq_one_iff_narrowFiniteConductorPrimeIdeal_mem_idealArtinKernel
     (hcard :
       Nat.card
           (RayClass.RayClassGroup
@@ -493,7 +495,7 @@ theorem
 finite conductor ray prime class is equivalent to membership of the prime
 ideal in the ideal Artin kernel. -/
 theorem
-    narrowFiniteConductorRayPrimeClass_eq_one_iff_narrowFiniteConductorPrimeIdeal_mem_idealArtinKernel_of_card_eq_extensionDegree
+    narrowRayPrimeClass_eq_one_iff_primeIdeal_mem_artinKernel_of_card_eq_degree
     (hcard :
       Nat.card
           (RayClass.RayClassGroup
@@ -526,15 +528,16 @@ theorem
     exact
       ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L
   exact
-    narrowFiniteConductorRayPrimeClass_eq_one_iff_narrowFiniteConductorPrimeIdeal_mem_idealArtinKernel
+    (
+  narrowFiniteConductorRayPrimeClass_eq_one_iff_narrowFiniteConductorPrimeIdeal_mem_idealArtinKernel
       (K := K) (L := L)
-      (hcard.trans hNormCard.symm) v hv
+      (hcard.trans hNormCard.symm) v hv)
 
 /-- If a cyclic extension reaches the full ray class number at its exact
 narrow finite conductor, complete splitting forces the corresponding ray
 prime class to be trivial. -/
 theorem
-    finitePlaceSplitsCompletely_imp_narrowFiniteConductorRayPrimeClass_eq_one_of_card_eq_extensionDegree
+finitePlaceSplitsCompletely_imp_narrowFiniteConductorRayPrimeClass_eq_one_of_card_eq_extensionDegree
     (hcard :
       Nat.card
           (RayClass.RayClassGroup
@@ -551,7 +554,8 @@ theorem
       Function.Injective
         (narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
           (K := K) (L := L)) :=
-    (narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_extensionDegree
+    (
+    narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_extensionDegree
       (K := K) (L := L)).2 hcard
   apply hfInjective
   rw [

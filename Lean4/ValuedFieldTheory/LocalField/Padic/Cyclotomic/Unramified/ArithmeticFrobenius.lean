@@ -10,8 +10,6 @@ import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
 import Mathlib.RingTheory.Polynomial.Cyclotomic.Factorization
 import ValuedFieldTheory.Valuation.LocalRingEquiv
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Frobenius on the unramified cyclotomic extension
 
@@ -182,7 +180,8 @@ variable [FiniteDimensional K L]
 target ring is the integral closure of the Henselian base valuation ring, so
 this restriction is canonical. -/
 noncomputable def padicCyclotomicUnramified_galIntegerRingEquiv
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -229,7 +228,8 @@ noncomputable def padicCyclotomicUnramified_galIntegerRingEquiv
 
 @[simp]
 theorem padicCyclotomicUnramified_galIntegerRingEquiv_apply
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -246,7 +246,8 @@ abbrev padicCyclotomicUnramifiedResidueField {F : Type*} [Field F]
 
 /-- The canonical residue-field algebra structure of a valuation extension. -/
 @[reducible] noncomputable def padicCyclotomicUnramifiedResidueAlgebra
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x) :
     Algebra (padicCyclotomicUnramifiedResidueField vK)
       (padicCyclotomicUnramifiedResidueField vL) := by
@@ -361,7 +362,8 @@ private theorem padicCyclotomicUnramified_residueMapEquiv_commutes
 
 /-- The canonical action of `Gal(L/K)` on the residue extension. -/
 noncomputable def padicCyclotomicUnramified_galResidueAlgEquiv
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -390,7 +392,8 @@ noncomputable def padicCyclotomicUnramified_galResidueAlgEquiv
 
 @[simp]
 theorem padicCyclotomicUnramified_galResidueAlgEquiv_residue
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -410,7 +413,8 @@ theorem padicCyclotomicUnramified_galResidueAlgEquiv_residue
 
 /-- The canonical residue action as a group homomorphism. -/
 noncomputable def padicCyclotomicUnramified_galToResidueGal
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation) :
@@ -596,7 +600,8 @@ finite unramified extension in the literal sense of the finite unramified-extens
 primitive integral model used here is the cyclotomic polynomial itself; its
 reduction is separable because `n` is nonzero in the residue field. -/
 theorem padicCyclotomicUnramified_finiteUnramifiedExtension
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -776,7 +781,8 @@ automorphisms have the same residue action, their images of `ζ` are simple
 roots of the cyclotomic polynomial with the same residue, hence are equal by
 Hensel uniqueness; `ζ` generates the field. -/
 theorem padicCyclotomicUnramified_galToResidueGal_injective
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -930,7 +936,8 @@ homomorphism is bijective.  Injectivity is the Hensel-uniqueness argument
 above; surjectivity follows by comparing the two genuine Galois group
 cardinalities with the equal field and residue degrees from part (i). -/
 theorem padicCyclotomicUnramified_galToResidueGal_bijective
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -980,7 +987,8 @@ theorem padicCyclotomicUnramified_galToResidueGal_bijective
 /-- the unramified cyclotomic theorem(ii): the canonical multiplicative equivalence obtained
 from reduction of valuation-ring automorphisms. -/
 noncomputable def padicCyclotomicUnramified_galEquivResidueGal
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -1005,7 +1013,8 @@ noncomputable def padicCyclotomicUnramified_galEquivResidueGal
 /-- The arithmetic Frobenius in `Gal(K(ζ)/K)`, defined canonically as the
 inverse image of finite-field Frobenius under the reduction equivalence. -/
 noncomputable def padicCyclotomicUnramifiedArithmeticFrobenius
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -1028,7 +1037,8 @@ noncomputable def padicCyclotomicUnramifiedArithmeticFrobenius
 
 @[simp]
 theorem padicCyclotomicUnramified_galEquivResidueGal_arithmeticFrobenius
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -1060,7 +1070,8 @@ root to its `q = p^r` power.  Both sides are simple cyclotomic roots and their
 residues agree by construction of Frobenius, so Hensel uniqueness identifies
 them upstairs. -/
 theorem padicCyclotomicUnramifiedArithmeticFrobenius_apply_primitiveRoot
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -1205,7 +1216,8 @@ theorem padicCyclotomicUnramifiedArithmeticFrobenius_apply_primitiveRoot
 /-- the unramified cyclotomic theorem(ii): arithmetic Frobenius generates the whole Galois
 group, with exponents bounded by the degree `f = ord_n(p^r)`. -/
 theorem padicCyclotomicUnramifiedArithmeticFrobenius_generates
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK).valuation)
@@ -1271,7 +1283,8 @@ extension.  Since the extension is unramified, the source maximal ideal maps
 onto the target maximal ideal, and Nakayama applied to the finite integral
 closure proves `O_L = O_K[ζ]`. -/
 theorem padicCyclotomicUnramified_valuationSubring_adjoin_eq_top
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hvdisc : LubinTate.Valuations.DiscreteExponentialValuation vK)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
@@ -1606,7 +1619,8 @@ theorem padicCyclotomicUnramified_valuationSubring_adjoin_eq_top
 /-- Finite-dimensional core of the complete the unramified cyclotomic theorem endpoint.
 The public endpoint below derives finite-dimensionality from `L = K(ζ)`. -/
 private theorem padicCyclotomicUnramified_of_finiteDimensional
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hvdisc : LubinTate.Valuations.DiscreteExponentialValuation vK)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
@@ -1707,7 +1721,8 @@ canonical Galois/residue-Galois comparison and its arithmetic Frobenius
 generator; and `O_L = O_K[ζ]` for the specified `ζ`.  No separate
 finite-dimensionality hypothesis is needed: it follows from `L = K(ζ)`. -/
 theorem padicCyclotomicUnramified
-    (vK : LubinTate.Valuations.ExponentialValuation K) (vL : LubinTate.Valuations.ExponentialValuation L)
+    (vK : LubinTate.Valuations.ExponentialValuation K)
+    (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x)
     (hvdisc : LubinTate.Valuations.DiscreteExponentialValuation vK)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization

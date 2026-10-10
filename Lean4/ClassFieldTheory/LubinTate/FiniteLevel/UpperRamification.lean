@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LubinTate.FiniteLevel.LowerRamification
 import ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
 
-set_option autoImplicit false
-
 /-!
 # Herbrand functions and upper groups of standard Lubin--Tate levels
 
@@ -16,6 +14,8 @@ This file names the lower filtration, Herbrand function, inverse Herbrand
 function, and genuine real upper ramification groups attached to the chosen
 integral-closure valuation on a standard finite Lubin--Tate level.
 -/
+
+
 
 noncomputable section
 

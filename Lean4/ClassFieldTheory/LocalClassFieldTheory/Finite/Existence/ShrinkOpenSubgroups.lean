@@ -8,8 +8,6 @@ import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
 import Mathlib.Topology.Algebra.Group.Units
 
-set_option autoImplicit false
-
 /-!
 # Open finite-index subgroups under a small field equivalence
 

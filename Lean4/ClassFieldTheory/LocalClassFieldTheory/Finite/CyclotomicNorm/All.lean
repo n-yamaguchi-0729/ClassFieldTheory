@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUni
 import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.StandardSubgroup
 import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.Unramified
 
-set_option autoImplicit false
-
 /-!
 # Norm groups of p-adic cyclotomic extensions
 

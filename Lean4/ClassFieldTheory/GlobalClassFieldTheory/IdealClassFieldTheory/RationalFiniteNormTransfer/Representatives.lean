@@ -6,14 +6,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
 
-set_option autoImplicit false
-
 /-!
 # Representatives and comparison endpoints for rational finite-norm transport
 
 This compiled leaf preserves the original public declarations while reusing
 the shared fixed-field instance providers.
 -/
+
+
 
 noncomputable section
 

@@ -9,8 +9,6 @@ import GaloisCohomology.GroupTheory.RestrictionKernel
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.TransportedNormSubgroupExact
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
 
-set_option autoImplicit false
-
 /-!
 # Local Artin comparison on transported Lubin--Tate levels
 
@@ -160,7 +158,7 @@ theorem
 /-- Integral filtered local reciprocity for a transported
 equal-characteristic Lubin--Tate level. -/
 theorem
-    equalCharacteristicTransportedLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
+    equalCharTransportedLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
     (p : ℕ) [Fact p.Prime] [hKp : CharP K p]
     (ϖ : Kˣ)
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)

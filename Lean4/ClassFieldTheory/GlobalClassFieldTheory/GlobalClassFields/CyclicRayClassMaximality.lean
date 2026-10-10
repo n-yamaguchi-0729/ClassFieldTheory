@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicNormConductor
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormRayClassMaximality
 
-set_option autoImplicit false
-
 /-!
 # Maximal cyclic quotients at the narrow finite conductor
 
@@ -21,6 +19,8 @@ when the ray class number already equals the extension degree.
 Equivalently, the actual norm subgroup is then exactly the ray congruence
 subgroup at its narrow finite conductor.
 -/
+
+
 
 open scoped NumberField
 
@@ -50,7 +50,7 @@ variable
 the congruence subgroup at its exact narrow finite conductor precisely when
 the corresponding ray class number equals the extension degree. -/
 theorem
-    ideleClassNorm_range_eq_narrowFiniteConductorCongruenceSubgroup_iff_rayClassGroup_card_eq_extensionDegree :
+    ideleClassNorm_range_eq_narrowConductorSubgroup_iff_rayClass_card_eq_degree :
     (_root_.ideleClassNorm K L).range =
         RayClass.Modulus.congruenceSubgroup
           (RayClass.Modulus.narrowOfFinite
@@ -63,14 +63,14 @@ theorem
   simpa only [
     ← Subgroup.index_eq_card,
     ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L] using
-      (ideleClassNorm_range_eq_narrowFiniteConductorCongruenceSubgroup_iff_rayClassGroup_card_eq_normQuotient_card
+      (ideleClassNorm_range_eq_narrowConductorSubgroup_iff_rayClass_card_eq_normQuotient_card
         (K := K) (L := L))
 
 /-- The canonical map from the ray class group at the exact narrow finite
 norm conductor to the actual norm quotient is injective precisely when the
 ray class number equals the extension degree. -/
 theorem
-    narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_extensionDegree :
+  narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_extensionDegree :
     Function.Injective
         (narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
           (K := K) (L := L)) ↔
@@ -82,7 +82,8 @@ theorem
   simpa only [
     ← Subgroup.index_eq_card,
     ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L] using
-      (narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
+      (
+  narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
         (K := K) (L := L))
 
 /-- When the ray class number at the exact narrow finite norm conductor

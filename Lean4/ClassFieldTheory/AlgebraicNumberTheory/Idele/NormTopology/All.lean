@@ -11,6 +11,4 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.FiniteNormArith
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.IdeleClassNorm
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.NormOne
 
-set_option autoImplicit false
-
 /-! # Topological properties of idele norms -/

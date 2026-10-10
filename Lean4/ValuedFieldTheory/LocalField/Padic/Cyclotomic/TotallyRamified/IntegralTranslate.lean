@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.EisensteinRelation
 
-set_option autoImplicit false
-
 /-!
 # Translation of the integral ring in the totally ramified cyclotomic extension
 

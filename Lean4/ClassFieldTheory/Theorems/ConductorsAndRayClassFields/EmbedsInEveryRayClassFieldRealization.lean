@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.EmbedsInRayClass
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassFieldModulusMonotone
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassFieldReciprocity
 
-set_option autoImplicit false
-
 /-!
 # Independence of the ray class field realization
 

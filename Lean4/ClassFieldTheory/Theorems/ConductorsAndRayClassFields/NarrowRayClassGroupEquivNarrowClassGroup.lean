@@ -10,8 +10,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
 
-set_option autoImplicit false
-
 /-!
 # The narrow ray class group and the narrow ideal class group
 

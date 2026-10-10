@@ -12,4 +12,10 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Norm
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.TowerRestriction
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.UnramifiedNormalization
 
-set_option autoImplicit false
+/-!
+# Finite-place Artin maps
+
+This aggregate collects finite-place Artin maps, their construction and
+unramified normalization, and compatibility with conjugation, norms,
+towers, and cross-local restriction.
+-/

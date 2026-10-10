@@ -8,11 +8,11 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFr
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.RingTheory.DedekindDomain.Factorization
 
-set_option autoImplicit false
-
 /-!
 # Fractional ideal represented by a finite prime
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

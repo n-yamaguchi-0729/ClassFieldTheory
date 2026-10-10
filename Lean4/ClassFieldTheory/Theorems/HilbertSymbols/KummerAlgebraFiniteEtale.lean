@@ -9,8 +9,6 @@ import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteFree
 import Mathlib.RingTheory.Etale.StandardEtale
 import Mathlib.RingTheory.Localization.Away.Basic
 
-set_option autoImplicit false
-
 /-!
 # Finite étaleness of a Kummer algebra
 

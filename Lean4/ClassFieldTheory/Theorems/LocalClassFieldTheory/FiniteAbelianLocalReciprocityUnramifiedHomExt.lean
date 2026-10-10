@@ -13,8 +13,6 @@ import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
-set_option autoImplicit false
-
 /-!
 # Uniqueness from an unramified norm kernel and a uniformizer value
 

@@ -4,11 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import ClassFieldTheory.Definitions.HilbertSymbols.All
+import ClassFieldTheory.Definitions.HilbertSymbols.GlobalInfinitePlaceHilbertSymbol
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormula
 import Mathlib.Algebra.BigOperators.Finprod
-
-set_option autoImplicit false
 
 /-!
 # Mathlib-facing Hilbert product formula
@@ -17,11 +15,13 @@ The established product formula is transported from the internal subgroup of
 roots of unity to Mathlib's `rootsOfUnity`.
 -/
 
+
+
 noncomputable section
 
 namespace ClassFieldTheory
 
-open scoped BigOperators Classical NumberField
+open scoped BigOperators NumberField
 open NumberField IsDedekindDomain
 
 /-- The finite-place Hilbert factor, transported from the internal

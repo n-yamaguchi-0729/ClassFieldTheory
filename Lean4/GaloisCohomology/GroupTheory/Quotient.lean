@@ -4,10 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Mathlib.Algebra.Group.Equiv.Defs
 import Mathlib.GroupTheory.Abelianization.Defs
+import Mathlib.Logic.Equiv.Defs
 import Mathlib.GroupTheory.QuotientGroup.Basic
-
-set_option autoImplicit false
 
 /-!
 # Quotients represented by a supporting subgroup
@@ -53,19 +53,6 @@ theorem subgroupQuotientEquivQuotientOfSupEqTop_mk
     subgroupQuotientEquivQuotientOfSupEqTop S P hSP
         (QuotientGroup.mk' (P.subgroupOf S) s) =
       QuotientGroup.mk' P (s : G) := by
-  simp [subgroupQuotientEquivQuotientOfSupEqTop,
-    QuotientGroup.quotientInfEquivProdNormalQuotient,
-    QuotientGroup.quotientInfEquivProdNormalizerQuotient,
-    QuotientGroup.quotientKerEquivOfSurjective,
-    QuotientGroup.quotientKerEquivOfRightInverse,
-    QuotientGroup.kerLift_mk]
-  have ofBijective_apply'
-      (f : (S ⊔ P : Subgroup G) →* G)
-      (hf : Function.Injective f ∧ Function.Surjective f)
-      (x : (S ⊔ P : Subgroup G)) :
-      (MulEquiv.ofBijective f hf) x = f x :=
-    MulEquiv.ofBijective_apply f hf x
-  rw [ofBijective_apply']
   rfl
 
 namespace Subgroup

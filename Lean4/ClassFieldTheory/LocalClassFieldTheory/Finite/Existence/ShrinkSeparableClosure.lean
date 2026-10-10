@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
 import Mathlib.FieldTheory.IsSepClosed
 
-set_option autoImplicit false
-
 /-!
 # Separable closures over the small local-field representative
 

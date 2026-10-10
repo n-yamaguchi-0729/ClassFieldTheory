@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.EisensteinPolynomial
 
-set_option autoImplicit false
-
 /-!
 # The integral closure in the totally ramified cyclotomic extension
 
@@ -166,8 +164,8 @@ theorem padicCyclotomicTotallyRamified_adjoin_isDiscreteValuationRing
       map_mul' := fun _ _ => rfl
       map_add' := fun _ _ => rfl }
   let : IsDiscreteValuationRing (integralClosure V L) :=
-    ValuationTheory.DiscreteValuationField.ValuedExtension.integralClosure_isDiscreteValuationRing_of_finite_separable
-      base
+    (open _root_.ValuationTheory.DiscreteValuationField.ValuedExtension in
+      integralClosure_isDiscreteValuationRing_of_finite_separable base)
   let : IsDiscreteValuationRing (integralClosure ℤ_[p] L) :=
     IsDiscreteValuationRing.RingEquivClass.isDiscreteValuationRing eIC.symm
   let eA : integralClosure ℤ_[p] L ≃+*

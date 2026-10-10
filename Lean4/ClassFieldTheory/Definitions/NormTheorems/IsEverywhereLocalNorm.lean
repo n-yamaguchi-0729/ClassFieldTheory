@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.NormTheorems.IsNormAtFinitePlace
 import ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 
-set_option autoImplicit false
-
 /-!
 # Everywhere local norms
 -/

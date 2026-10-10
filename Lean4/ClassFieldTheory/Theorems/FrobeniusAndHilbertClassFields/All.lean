@@ -31,8 +31,6 @@ import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClas
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldUniqueUpToEquiv
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldUnique
 
-set_option autoImplicit false
-
 /-!
 # Frobenius and Hilbert class fields
 

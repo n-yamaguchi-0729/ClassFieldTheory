@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Valuation.Henselian.StandardEtaleLifting
 import Mathlib.RingTheory.Unramified.LocalStructure
 
-set_option autoImplicit false
-
 /-!
 # Lifting residue points of etale algebras
 

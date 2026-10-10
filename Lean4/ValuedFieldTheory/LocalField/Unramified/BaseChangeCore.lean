@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.LocalField.Unramified.HenselReduction
 import ValuedFieldTheory.LocalField.Unramified.Separable
 
-set_option autoImplicit false
-
 /-!
 # the unramified base-change theorem: primitive Hensel base-change core
 
@@ -32,7 +30,8 @@ by the supplied generator's residue. -/
 private theorem primitive_separable_integral_model_core
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
-    (v : LubinTate.Valuations.ExponentialValuation K) (w : LubinTate.Valuations.ExponentialValuation L)
+    (v : LubinTate.Valuations.ExponentialValuation K)
+    (w : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ a : K, w (algebraMap K L a) = v a)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring v).valuation)
@@ -291,7 +290,8 @@ No unramified conclusion or degree comparison is assumed. -/
 theorem finiteUnramifiedExtension_of_primitive_separable_integral_model
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
-    (v : LubinTate.Valuations.ExponentialValuation K) (w : LubinTate.Valuations.ExponentialValuation L)
+    (v : LubinTate.Valuations.ExponentialValuation K)
+    (w : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ a : K, w (algebraMap K L a) = v a)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring v).valuation)
@@ -318,7 +318,8 @@ residue field over the base residue field. -/
 theorem unramifiedBaseChange_residue_adjoin_eq_top_of_primitive_separable_integral_model
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L]
-    (v : LubinTate.Valuations.ExponentialValuation K) (w : LubinTate.Valuations.ExponentialValuation L)
+    (v : LubinTate.Valuations.ExponentialValuation K)
+    (w : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ a : K, w (algebraMap K L a) = v a)
     (hhens : ValuationTheory.DiscreteValuationField.HenselianValuationByFactorization
       (LubinTate.Valuations.exponentialValuationSubringAsValuationSubring v).valuation)

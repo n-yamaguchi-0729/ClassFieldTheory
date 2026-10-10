@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.RamificationInertia.Galois
 
-set_option autoImplicit false
-
 /-!
 # Complete splitting of a finite prime
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

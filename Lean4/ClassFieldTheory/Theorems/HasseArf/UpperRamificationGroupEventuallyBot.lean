@@ -11,8 +11,6 @@ import ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupAntitone
 import ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupCanonical
 import ClassFieldTheory.HasseArf
 
-set_option autoImplicit false
-
 /-!
 # Eventual triviality of upper ramification groups
 
@@ -40,7 +38,8 @@ theorem upperRamificationGroup_eventually_bot
   let : IsNoetherianRing A := by
     change IsNoetherianRing ((ValuativeRel.valuation L).valuationSubring)
     rw [← HasseArf.chosenLocalExtension_valuationSubring_eq_canonical K L]
-    exact ((LocalFieldTheory.chosenLocalExtensionCompleteDVF K L).toDVF).valuationSubring_isNoetherianRing
+    exact ((LocalFieldTheory.chosenLocalExtensionCompleteDVF
+      K L).toDVF).valuationSubring_isNoetherianRing
   obtain ⟨N, hN⟩ := lowerRamificationGroup_eventually_bot K A
   refine ⟨herbrandFunction K A (N : ℝ), ?_⟩
   intro t ht

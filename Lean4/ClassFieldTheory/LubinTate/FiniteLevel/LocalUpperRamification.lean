@@ -11,8 +11,6 @@ import ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
 import ClassFieldTheory.LubinTate.FiniteLevel.HerbrandFormula
 import ClassFieldTheory.LubinTate.FiniteLevel.LevelFieldTower
 
-set_option autoImplicit false
-
 /-!
 # Upper ramification groups of standard Lubin--Tate levels
 
@@ -24,6 +22,8 @@ upper-ramification API.  This identifies their upper filtrations.
 The explicit Herbrand formula and the finite-level tower then identify the
 integral upper group at `k` with the kernel of restriction to level `k - 1`.
 -/
+
+
 
 noncomputable section
 

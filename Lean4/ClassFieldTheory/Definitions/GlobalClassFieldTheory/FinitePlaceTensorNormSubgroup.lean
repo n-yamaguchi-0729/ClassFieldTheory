@@ -8,8 +8,6 @@ import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 
-set_option autoImplicit false
-
 /-!
 # Finite-place tensor-norm subgroup
 

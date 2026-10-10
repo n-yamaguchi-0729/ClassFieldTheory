@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.Id
 import ValuedFieldTheory.Valuation.Henselian.AlgebraicExtensionUniqueness
 import ValuedFieldTheory.Valuation.LocalRingEquiv
 
-set_option autoImplicit false
-
 /-!
 # Ramification index and finite-place completion
 
@@ -20,7 +18,7 @@ its valuation in the completed target is the global ramification index, and
 its image generates the completed base maximal ideal.
 -/
 
-open scoped NumberField Classical NNReal ValuativeRel
+open scoped NumberField NNReal ValuativeRel
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -135,8 +133,8 @@ theorem chosenFinitePlace_completed_ramificationIdx'_eq_centre
     exact h
   have hπConcreteMem (n : ℕ) :
       πConcrete ∈ targetDVF.maximalIdeal ^ n ↔ n ≤ eGlobal := by
-    rw [ValuationTheory.DiscreteValuationField.Valuation.mem_maximalIdeal_pow_iff_valuation_le_uniformizer_pow
-      targetDVF.valuation hϖ n]
+    rw [(open _root_.ValuationTheory.DiscreteValuationField.Valuation in
+      mem_maximalIdeal_pow_iff_valuation_le_uniformizer_pow targetDVF.valuation hϖ n)]
     change Valued.v (πConcrete : W.adicCompletion L) ≤
       Valued.v ((ϖ : W.adicCompletion L) ^ n) ↔ n ≤ eGlobal
     have hCoe :

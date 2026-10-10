@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbel
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueNaturality
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormProof
 
-set_option autoImplicit false
-
 /-!
 # Naturality of finite-Galois global reciprocity in abelianizations
 

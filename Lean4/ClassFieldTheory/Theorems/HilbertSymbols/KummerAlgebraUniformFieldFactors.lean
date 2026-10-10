@@ -9,8 +9,6 @@ import ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraProductDecompositio
 import Mathlib.FieldTheory.KummerExtension
 import Mathlib.FieldTheory.SplittingField.Construction
 
-set_option autoImplicit false
-
 /-!
 # Uniform field factors of a Kummer algebra
 

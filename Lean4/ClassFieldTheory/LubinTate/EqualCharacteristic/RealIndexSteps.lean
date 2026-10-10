@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
 import ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Real-index steps for equal-characteristic Lubin--Tate levels
 
@@ -17,6 +15,8 @@ and the integral values of its inverse Herbrand function.  Together they show
 that, on the positive range covered by an explicit finite Lubin--Tate level,
 the real upper filtration is constant on the natural-ceiling steps.
 -/
+
+
 
 noncomputable section
 

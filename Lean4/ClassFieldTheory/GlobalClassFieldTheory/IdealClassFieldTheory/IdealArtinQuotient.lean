@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
 
-set_option autoImplicit false
-
 /-!
 # The ideal Artin quotient
 
@@ -15,6 +13,8 @@ For a defining modulus `m`, the ideal-theoretic Artin map is surjective and
 has kernel `H_m`.  The first isomorphism theorem therefore identifies
 `J_K^m / H_m` with the corresponding idelic norm quotient `C_K / N`.
 -/
+
+
 
 open scoped NumberField
 

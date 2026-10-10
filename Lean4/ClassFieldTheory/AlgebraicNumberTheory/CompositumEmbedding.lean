@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
 import ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
 
-set_option autoImplicit false
-
 /-!
 # Embedding a finite Galois compositum into a common field
 
@@ -106,7 +104,6 @@ noncomputable def finiteGaloisCompositumEmbeddingOfEmbeddings
     IntermediateField.finiteDimensional_sup A B
   letI : IsGalois K R := inferInstance
   let r : R →ₐ[K] SeparableClosure K := IsSepClosed.lift
-
   let A₀ : IntermediateField K (SeparableClosure K) :=
     finiteGaloisFieldRange K L
   let B₀ : IntermediateField K (SeparableClosure K) :=
@@ -120,7 +117,6 @@ noncomputable def finiteGaloisCompositumEmbeddingOfEmbeddings
     r.comp (aR.comp (eA.toAlgHom.comp eA₀.symm.toAlgHom))
   let fB : B₀ →ₐ[K] SeparableClosure K :=
     r.comp (bR.comp (eB.toAlgHom.comp eB₀.symm.toAlgHom))
-
   have hA : A₀ ≤ r.fieldRange := by
     rw [← AlgHom.fieldRange_of_normal fA]
     rintro x ⟨y, rfl⟩
@@ -130,7 +126,6 @@ noncomputable def finiteGaloisCompositumEmbeddingOfEmbeddings
     rintro x ⟨y, rfl⟩
     exact ⟨bR (eB (eB₀.symm y)), rfl⟩
   have hM : M₀ ≤ r.fieldRange := sup_le hA hB
-
   let intoRange : M₀ →ₐ[K] r.fieldRange :=
     IntermediateField.inclusion hM
   let rangeEquiv : R ≃ₐ[K] r.fieldRange := AlgEquiv.ofInjectiveField r
@@ -172,7 +167,6 @@ theorem exists_finiteGaloisCompositumEmbeddingOfEmbeddings_left_eq
     have h := congrArg Subtype.val
       (eF.apply_symm_apply (eAB.symm (eI x)))
     exact h
-
   let A₀ : IntermediateField K M := i₀.fieldRange
   let e₀ : L ≃ₐ[K] A₀ := AlgEquiv.ofInjectiveField i₀
   let : FiniteDimensional K A₀ := e₀.toLinearEquiv.finiteDimensional

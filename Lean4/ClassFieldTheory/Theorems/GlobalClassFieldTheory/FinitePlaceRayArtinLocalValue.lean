@@ -17,8 +17,6 @@ import Mathlib.Algebra.Algebra.Equiv
 import Mathlib.FieldTheory.KrullTopology
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
-set_option autoImplicit false
-
 /-!
 # The finite-place ray Artin value diagram
 
@@ -151,13 +149,15 @@ theorem exists_finitePlaceRayArtin_localValueDiagram
       D.artin (ι x) =
           GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom
             K L (IdeleGroup.finitePlaceIdeleClass v x) :=
-        GlobalClassFieldTheory.GlobalClassFields.rayArtin_comp_ideleClass_eq_arithmeticGlobalNormResidue
-          m a hprime (IdeleGroup.finitePlaceIdeleClass v x)
+        (open GlobalClassFieldTheory.GlobalClassFields in
+          rayArtin_comp_ideleClass_eq_arithmeticGlobalNormResidue
+            m a hprime (IdeleGroup.finitePlaceIdeleClass v x))
       _ = GlobalClassFieldTheory.Reciprocity.arithmeticChosenFinitePlaceArtinMonoidHom
             K L v x := by
         exact DFunLike.congr_fun
-          (GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass
-            (K := K) (L := L) v) x
+          ((open GlobalClassFieldTheory.Reciprocity in
+            arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass
+              (K := K) (L := L) v)) x
   have hfactor (x : (v.adicCompletion K)ˣ) :
       GlobalClassFieldTheory.Reciprocity.chosenFinitePlaceArtinMonoidHom
           (K := K) (L := L) v x = S.subtype (eD.symm (localE x)) := by

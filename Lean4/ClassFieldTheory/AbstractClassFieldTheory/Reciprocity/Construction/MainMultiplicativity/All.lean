@@ -13,8 +13,6 @@ import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMu
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.PrimeUnitDifferences
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainMultiplicativity.ReciprocityMapMul
 
-set_option autoImplicit false
-
 /-!
 # Multiplicativity of the abstract reciprocity map
 

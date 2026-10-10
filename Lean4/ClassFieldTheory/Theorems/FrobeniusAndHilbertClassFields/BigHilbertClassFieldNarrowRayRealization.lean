@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassFieldRea
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.BigHilbertClassFieldArtinEquiv
 
-set_option autoImplicit false
-
 /-!
 # The big Hilbert class field as a narrow ray class field
 

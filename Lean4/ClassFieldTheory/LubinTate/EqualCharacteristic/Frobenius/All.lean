@@ -9,8 +9,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CompletedUnramif
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.ContractingEquation
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.LaurentSeriesFrobenius
 
-set_option autoImplicit false
-
 /-!
 # Frobenius in equal-characteristic Lubin--Tate theory
 

@@ -11,12 +11,6 @@ import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
 import GaloisCohomology.ProfiniteIntegers.ProfiniteIntegerCore
 
-set_option autoImplicit false
-
-namespace ClassFormation
-
-open CategoryTheory CategoryTheory.Limits
-
 /-!
 # Finite quotient reductions of profinite integers
 
@@ -25,6 +19,10 @@ additive quotient of `ℤ`.  The construction first identifies such a subgroup
 with the multiples of its index, then uses the existing reduction to `ZMod`
 and Mathlib's `ZMod.lift`.
 -/
+
+namespace ClassFormation
+
+open CategoryTheory CategoryTheory.Limits
 
 noncomputable section
 

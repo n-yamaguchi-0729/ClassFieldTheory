@@ -14,8 +14,6 @@ import GaloisCohomology.Kummer.Concrete.FiniteGeneration
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Chosen Kummer radical: norm index and power-class degree
 

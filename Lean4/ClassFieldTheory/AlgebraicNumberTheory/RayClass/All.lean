@@ -17,8 +17,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.RayClass.PublicHigherUnitCompariso
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 
-set_option autoImplicit false
-
 /-!
 # Ray class groups
 

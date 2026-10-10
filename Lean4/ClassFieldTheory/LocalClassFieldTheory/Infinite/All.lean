@@ -18,8 +18,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletionCriter
 import ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity
 import ClassFieldTheory.LocalClassFieldTheory.Infinite.TopologicalAbelianizationCongr
 
-set_option autoImplicit false
-
 /-!
 # Infinite local class field theory
 

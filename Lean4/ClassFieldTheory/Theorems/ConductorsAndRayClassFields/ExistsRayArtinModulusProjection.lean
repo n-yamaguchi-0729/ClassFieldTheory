@@ -13,8 +13,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnram
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
 
-set_option autoImplicit false
-
 /-!
 # Existence of a modulus-compatible ray class field embedding
 
@@ -22,7 +20,7 @@ Reducing the modulus yields an embedding of ray class field realizations
 that intertwines their Artin maps.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -62,8 +60,8 @@ private theorem rayClassFieldRealization_norm_range
       (R.extension ≃ₐ[K] R.extension) :=
     (GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K m).symm.trans
       R.artinEquiv
-  apply GlobalClassFieldTheory.GlobalClassFields.rayModulus_normSubgroup_eq_of_arithmeticPrimeArtinEquiv
-    m' e
+  apply (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+    rayModulus_normSubgroup_eq_of_arithmeticPrimeArtinEquiv m' e)
   intro v hv
   have hvm : v ∉ m.finitePart.support := hv
   calc

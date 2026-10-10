@@ -16,8 +16,6 @@ import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
 import Mathlib.LinearAlgebra.FreeModule.PID
 import Mathlib.LinearAlgebra.Matrix.Adjugate
 
-set_option autoImplicit false
-
 /-!
 # Witt's transfer theorem
 
@@ -28,6 +26,8 @@ The proof follows Witt's group-ring argument. This file first
 constructs the required right Fox coefficients directly from free words; no
 presentation relations are assumed as extra input.
 -/
+
+
 
 open scoped BigOperators Pointwise
 
@@ -167,7 +167,7 @@ theorem wordExponent_of {X : Type*} (x : X) :
 @[simp]
 theorem wordExponent_inv {X : Type*} (w : FreeGroup X) :
     wordExponent w⁻¹ = -wordExponent w := by
-  show
+  change
     FreeAbelianGroup.toFinsupp
         (-Additive.ofMul (Abelianization.of w)) =
       -FreeAbelianGroup.toFinsupp
@@ -178,7 +178,7 @@ theorem wordExponent_inv {X : Type*} (w : FreeGroup X) :
 theorem wordExponent_mul {X : Type*} (u v : FreeGroup X) :
     wordExponent (u * v) =
       wordExponent u + wordExponent v := by
-  show
+  change
     FreeAbelianGroup.toFinsupp
         (Additive.ofMul (Abelianization.of u) +
           Additive.ofMul (Abelianization.of v)) =
@@ -193,7 +193,7 @@ augmentation of each coefficient is the corresponding exponent sum.
 
 This is the source-producing form needed for Witt's relation matrix. -/
 theorem exists_rightFoxExpansion
-    {X : Type*} [Fintype X] [DecidableEq X]
+    {X : Type*} [Fintype X]
     (φ : FreeGroup X →* G) (w : FreeGroup X) :
     ∃ μ : X → IntegralGroupRing G,
       groupRingDelta (φ w) =
@@ -202,6 +202,7 @@ theorem exists_rightFoxExpansion
       ∀ i : X,
         augmentation G (μ i) =
           wordExponent w i := by
+  classical
   induction w using FreeGroup.induction_on with
   | one =>
       refine ⟨0, ?_, ?_⟩
@@ -312,7 +313,7 @@ theorem presentationLinearMap_apply
 /-- Finite abelianization makes the relation lattice of a finite free
 presentation have full rank. -/
 theorem presentationKernel_finrank_eq
-    {X : Type*} [Fintype X]
+    {X : Type*} [Finite X]
     (φ : FreeGroup X →* G)
     [FiniteIndex (commutator G)] :
     Module.finrank ℤ (presentationLinearMap φ).ker =
@@ -652,6 +653,7 @@ noncomputable def foxCoefficient (i j : X) :
   ((exists_rightFoxExpansion φ
     (relationWord φ hφ j)).choose i)
 
+omit [DecidableEq X] in
 theorem foxExpansion_relation (j : X) :
     ∑ i : X,
         groupRingDelta (φ (FreeGroup.of i)) *
@@ -667,12 +669,14 @@ theorem foxExpansion_relation (j : X) :
   exact h.symm.trans (by
     rw [relationWord_map, groupRingDelta_one])
 
+omit [DecidableEq X] in
 theorem augmentation_foxCoefficient (i j : X) :
     augmentation G (foxCoefficient φ hφ i j) =
       wordExponent (relationWord φ hφ j) i :=
   (exists_rightFoxExpansion φ
     (relationWord φ hφ j)).choose_spec.2 i
 
+omit [DecidableEq X] in
 theorem augmentation_foxCoefficient_eq_repr
     (i j : X) :
     augmentation G (foxCoefficient φ hφ i j) =
@@ -834,6 +838,7 @@ theorem generator_mul_foxDeterminantLift_mem_mixed
       (commutator G)).neg_mem hneg
   simpa using this
 
+omit [DecidableEq X] in
 theorem delta_vecMul_foxMatrix :
     Matrix.vecMul
         (fun i : X =>
@@ -1028,7 +1033,7 @@ theorem abelianizationRingMap_transversalNormElement
 /-- A left-translation invariant element of a finite group ring is a
 scalar multiple of the norm element. -/
 theorem eq_coeff_one_smul_groupNormElement
-    {Q : Type*} [Group Q] [Fintype Q]
+    {Q : Type*} [Group Q] [Finite Q]
     (z : IntegralGroupRing Q)
     (hz : ∀ q : Q,
       MonoidAlgebra.single q 1 * z = z) :
@@ -1040,7 +1045,7 @@ theorem eq_coeff_one_smul_groupNormElement
       x.coeff q) (hz q)
   have hcoeff : z.coeff q = z.coeff 1 := by
     simpa using hq.symm
-  show
+  change
     z.coeff q =
       z.coeff 1 * (groupNormElement Q).coeff q
   rw [hcoeff]
@@ -1123,13 +1128,16 @@ theorem exists_unit_foxDeterminantLift_eq_smul_section_norm :
   unfold foxDeterminantLift
   rw [hu, map_zsmul]
 
+omit [Fintype X] [DecidableEq X] in
 include hφ in
-theorem generator_mul_section_norm_mem_mixed
+theorem generator_mul_section_norm_mem_mixed [Finite X]
     (k : X) :
     groupRingDelta (φ (FreeGroup.of k)) *
         abelianizationRingSection
           (groupNormElement (Abelianization G)) ∈
       mixedAugmentationProduct (commutator G) := by
+  classical
+  let : Fintype X := Fintype.ofFinite X
   obtain ⟨u, hu⟩ :=
     exists_unit_foxDeterminantLift_eq_smul_section_norm
       φ hφ
@@ -1173,8 +1181,9 @@ theorem generator_mul_section_norm_mem_mixed
   rw [← htwice]
   exact hmTwice
 
+omit [Fintype X] [DecidableEq X] in
 include hφ in
-theorem word_mul_section_norm_mem_mixed
+theorem word_mul_section_norm_mem_mixed [Finite X]
     (w : FreeGroup X) :
     groupRingDelta (φ w) *
         abelianizationRingSection
@@ -1210,8 +1219,9 @@ theorem word_mul_section_norm_mem_mixed
               (groupRingDelta (φ v) * S) hv)
             hu
 
+omit [Fintype X] [DecidableEq X] in
 include hφ in
-theorem delta_mul_section_norm_mem_mixed
+theorem delta_mul_section_norm_mem_mixed [Finite X]
     (g : G) :
     groupRingDelta g *
         abelianizationRingSection
@@ -1220,8 +1230,9 @@ theorem delta_mul_section_norm_mem_mixed
   obtain ⟨w, rfl⟩ := hφ g
   exact word_mul_section_norm_mem_mixed φ hφ w
 
+omit [Fintype X] [DecidableEq X] in
 include hφ in
-theorem delta_mul_transversalNormElement_mem_mixed
+theorem delta_mul_transversalNormElement_mem_mixed [Finite X]
     (T : (commutator G).LeftTransversal) (g : G) :
     groupRingDelta g *
         transversalNormElement (commutator G) T ∈

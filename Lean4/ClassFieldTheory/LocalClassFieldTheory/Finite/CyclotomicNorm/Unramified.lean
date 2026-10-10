@@ -18,8 +18,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Cohomology
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
 import ValuedFieldTheory.Valuation.LocalRingEquiv
 
-set_option autoImplicit false
-
 /-!
 # The unramified cyclotomic norm subgroup over `ℚ_p`
 
@@ -81,7 +79,6 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
     { toIsValuativeTopology := inferInstance
       toLocallyCompactSpace := inferInstance
       toIsNontrivial := inferInstance }
-
   let : (ValuativeRel.valuation ℚ_[p]).HasExtension
       (ValuativeRel.valuation L) := by
     apply Valuation.HasExtension.ofComapInteger
@@ -94,7 +91,6 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
     rw [spectralNorm_extends]
     rw [← integer_mem_iff_norm_le_one p x,
       Valuation.mem_integer_iff]
-
   let base := LocalFieldTheory.DiscreteValuationField.Examples.Qp.padicCompleteDVF p
   let : base.valuation.HasExtension vL := by
     apply Valuation.HasExtension.ofComapInteger
@@ -125,7 +121,6 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
       have hunorm :=
         (integer_mem_iff_norm_le_one p (u : ℚ_[p])).1 humem
       simpa [hu] using hunorm
-
   let : Algebra.IsIntegral 𝒪[ℚ_[p]] 𝒪[L] := ⟨by
     intro y
     apply IsIntegral.tower_bot
@@ -168,19 +163,18 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
           Polynomial.map_toSubring]
         exact minpoly.aeval ℚ_[p] (y : L)
       rwa [Polynomial.aeval_map_algebraMap ℚ_[p] (y : L) q] at hmaproot⟩
-
   let : Algebra.IsIntegral
       (ValuativeRel.valuation ℚ_[p]).valuationSubring
       (ValuativeRel.valuation L).valuationSubring := by
     change Algebra.IsIntegral 𝒪[ℚ_[p]] 𝒪[L]
     infer_instance
   let hIntegralClosure : IsIntegralClosure 𝒪[L] 𝒪[ℚ_[p]] L :=
-    ValuationTheory.DiscreteValuationField.Valuation.valuationSubring_isIntegralClosure_of_isIntegral
-      (ValuativeRel.valuation ℚ_[p]) (ValuativeRel.valuation L)
+    (open _root_.ValuationTheory.DiscreteValuationField in
+      Valuation.valuationSubring_isIntegralClosure_of_isIntegral
+        (ValuativeRel.valuation ℚ_[p]) (ValuativeRel.valuation L))
   let : IsIntegralClosure 𝒪[L] 𝒪[ℚ_[p]] L := hIntegralClosure
   let : Module.Finite 𝒪[ℚ_[p]] 𝒪[L] :=
     LocalFieldTheory.integerRing_moduleFinite_of_isIntegralClosure ℚ_[p] L
-
   obtain ⟨target, hExt, hTarget, _hUnram, _hdegree⟩ :=
     AlgebraicNumberTheory.Valuations.exists_padicCyclotomic_completeDVF_isFiniteUnramified_degree_eq
       p f hf hζ hζgen
@@ -188,13 +182,15 @@ theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
   let : IsIntegralClosure target.valuationSubring base.valuationSubring L := hTarget
   let : base.valuation.HasExtension vL.valuationSubring.valuation := by
     apply
-      ValuationTheory.DiscreteValuationField.Valuation.hasExtension_valuation_of_valuationSubring_pullback
+      (open _root_.ValuationTheory.DiscreteValuationField in
+        Valuation.hasExtension_valuation_of_valuationSubring_pullback)
     intro x
     change vL (algebraMap ℚ_[p] L x) ≤ 1 ↔ base.valuation x ≤ 1
     exact _root_.Valuation.HasExtension.val_map_le_one_iff base.valuation vL x
   have hTargetEq : target.valuation.valuationSubring = vL.valuationSubring :=
-    ValuationTheory.DiscreteValuationField.ValuedExtension.target_valuationSubring_eq_of_finite_separable
-        (base := base) (target := target) vL.valuationSubring
+    (open _root_.ValuationTheory.DiscreteValuationField in
+      ValuedExtension.target_valuationSubring_eq_of_finite_separable
+        (base := base) (target := target) vL.valuationSubring)
   let eBase : 𝒪[ℚ_[p]] ≃+* base.valuationSubring :=
     integerRingEquivPadicDVRValuationSubring p
   let eTarget : target.valuationSubring ≃+* 𝒪[L] :=

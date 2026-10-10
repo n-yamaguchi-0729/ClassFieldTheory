@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.RingTheory.Henselian
 import Mathlib.RingTheory.Etale.StandardEtale
 
-set_option autoImplicit false
-
 /-!
 # Lifting points of standard étale algebras
 

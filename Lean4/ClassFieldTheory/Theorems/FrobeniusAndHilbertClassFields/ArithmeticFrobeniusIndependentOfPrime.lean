@@ -9,8 +9,6 @@ import Mathlib.NumberTheory.RamificationInertia.Unramified
 import Mathlib.RingTheory.DedekindDomain.Factorization
 import Mathlib.RingTheory.Frobenius
 
-set_option autoImplicit false
-
 /-!
 # Independence of arithmetic Frobenius from the prime above
 

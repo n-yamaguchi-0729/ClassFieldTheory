@@ -13,6 +13,4 @@ import ClassFieldTheory.Theorems.KroneckerWeber
 import ClassFieldTheory.Theorems.LocalClassFieldTheory.All
 import ClassFieldTheory.Theorems.NormTheorems.All
 
-set_option autoImplicit false
-
 /-! Stable reader-facing statements of the main class field theory results. -/

@@ -10,8 +10,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.GaloisAction
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.DisplacementValuation
 
-set_option autoImplicit false
-
 /-!
 # Herbrand function and upper ramification groups of Lubin--Tate levels
 
@@ -19,6 +17,8 @@ The lower-group calculation is integrated here to compute the actual Herbrand
 function and the resulting upper ramification groups of the chosen
 equal-characteristic Lubin--Tate level.
 -/
+
+
 
 noncomputable section
 
@@ -154,6 +154,8 @@ private theorem equalCharacteristicLubinTateHerbrandSlope_eq_of_pow_interval
         equalCharacteristicLubinTateRealLowerRamificationGroup_zero_natCard
           F n]
 
+open _root_.RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration
+  (herbrandSlope) in
 private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
@@ -189,7 +191,7 @@ private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
         omega
       have hslope :
           ∀ x ∈ Finset.range b,
-            RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandSlope
+            herbrandSlope
                 filtration (a + x) =
               (q ^ (n + 1 - (k + 1)) : ℕ) /
                 ((q - 1) * q ^ n : ℕ) := by
@@ -225,7 +227,7 @@ private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
         Nat.mul_pos (Nat.sub_pos_of_lt hqone) (Nat.pow_pos hqpos)
       have htail :
           (∑ x ∈ Finset.range b,
-              RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandSlope
+              herbrandSlope
                 filtration (a + x)) = 1 := by
         calc
           _ = ∑ _x ∈ Finset.range b,
@@ -243,14 +245,14 @@ private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
               exact_mod_cast (Nat.ne_of_gt hdenpos)
       change
         (∑ i ∈ Finset.range (q ^ (k + 1) - 1),
-          RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandSlope
+          herbrandSlope
             filtration i) = ((k + 1 : ℕ) : ℝ)
       rw [hdecomp, Finset.sum_range_add]
       change
         RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandValueNat
             filtration a +
           (∑ x ∈ Finset.range b,
-            RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandSlope
+            herbrandSlope
               filtration (a + x)) =
           ((k + 1 : ℕ) : ℝ)
       rw [show a = q ^ k - 1 by rfl, ihval, htail]

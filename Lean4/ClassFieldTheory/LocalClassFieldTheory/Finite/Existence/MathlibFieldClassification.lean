@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgrou
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
 
-set_option autoImplicit false
-
 /-!
 # Mathlib intermediate fields and finite local class-field theory
 

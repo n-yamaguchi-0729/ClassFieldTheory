@@ -9,8 +9,6 @@ import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletion
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Quotient
 import ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Cardinality.Trivial
 
-set_option autoImplicit false
-
 /-!
 # Localized-completion Herbrand cardinalities
 

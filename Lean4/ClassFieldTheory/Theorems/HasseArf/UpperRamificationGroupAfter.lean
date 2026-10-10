@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HasseArf.IsUpperRamificationJump
 import ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupAntitone
 
-set_option autoImplicit false
-
 /-!
 # The right-limit upper ramification group
 -/

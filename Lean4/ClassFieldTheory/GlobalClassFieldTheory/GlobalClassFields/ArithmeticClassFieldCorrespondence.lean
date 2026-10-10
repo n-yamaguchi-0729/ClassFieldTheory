@@ -15,8 +15,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteInd
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic topological class-field correspondence
 
@@ -27,7 +25,9 @@ canonical arithmetic reciprocity homeomorphism
 are fixed rather than merely asserted to exist.
 -/
 
-open scoped Classical IsMulCommutative NumberField
+
+
+open scoped IsMulCommutative NumberField
 
 noncomputable section
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Valuation.Henselian.EtaleLifting
 import Mathlib.RingTheory.Polynomial.UniversalFactorizationRing
 
-set_option autoImplicit false
-
 /-!
 # Coprime factor lifting from the simple-root Hensel property
 

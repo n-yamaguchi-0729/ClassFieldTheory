@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
 import ValuedFieldTheory.LocalField.Unramified.BasicInvariants
 
-set_option autoImplicit false
-
 /-!
 # Ramification index in valued-field towers
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.KroneckerWeber.GlobalCompositumLocalizationEmbedding
 import ClassFieldTheory.KroneckerWeber.GlobalPadicPrimePowInertiaBound
 
-set_option autoImplicit false
-
 /-!
 # The fixed-conductor local inertia bound for the auxiliary compositum
 

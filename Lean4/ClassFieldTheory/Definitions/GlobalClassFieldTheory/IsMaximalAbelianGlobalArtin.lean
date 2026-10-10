@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.IdeleClassConnectedQuotient
 import Mathlib.FieldTheory.AbsoluteGaloisGroup
 
-set_option autoImplicit false
-
 /-!
 # A maximal-abelian reciprocity-map property
 

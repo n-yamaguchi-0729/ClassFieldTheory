@@ -11,8 +11,6 @@ import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.RestrictionCosets
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.TotallyRamifiedCase.RestrictionEquiv
 
-set_option autoImplicit false
-
 /-!
 # The cyclic totally ramified reciprocity case
 

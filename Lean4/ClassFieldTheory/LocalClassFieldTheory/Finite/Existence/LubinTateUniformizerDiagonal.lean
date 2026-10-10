@@ -10,8 +10,6 @@ import ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
 import ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationInvariants
 import Mathlib.FieldTheory.LinearDisjoint
 
-set_option autoImplicit false
-
 /-!
 # The unramified--Lubin--Tate diagonal field for an explicit uniformizer
 
@@ -463,7 +461,7 @@ abbrev lubinTateUniformizerDiagonalCompositumField
   let T := standardLubinTateLevelField hπ n
   letI : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  let σ : Gal(T / K) :=
+  let σ : Gal(T/K) :=
     (standardLubinTateUnitParameterEquivGal
       (standardLocalField K) hπ n
       (standardLubinTateUnitParameterClass
@@ -485,7 +483,7 @@ theorem lubinTateUniformizerDiagonalCompositumField_finiteDimensional
   let T := standardLubinTateLevelField hπ n
   let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  let σ : Gal(T / K) :=
+  let σ : Gal(T/K) :=
     (standardLubinTateUnitParameterEquivGal
       (standardLocalField K) hπ n
       (standardLubinTateUnitParameterClass
@@ -511,7 +509,7 @@ theorem lubinTateUniformizerDiagonalCompositumField_isGalois
   let T := standardLubinTateLevelField hπ n
   let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  let σ : Gal(T / K) :=
+  let σ : Gal(T/K) :=
     (standardLubinTateUnitParameterEquivGal
       (standardLocalField K) hπ n
       (standardLubinTateUnitParameterClass
@@ -533,9 +531,9 @@ theorem lubinTateUniformizerDiagonalCompositumField_isGalois
 private theorem explicitRestrictNormalHom_toAlgAut_eq_one
     (K C : Type) [Field K] [Field C] [Algebra K C]
     (B : IntermediateField K C) [Normal K B]
-    (δ : Gal(C / B)) :
+    (δ : Gal(C/B)) :
     AlgEquiv.restrictNormalHom B
-        (MulSemiringAction.toAlgAut Gal(C / B) K C δ) =
+        (MulSemiringAction.toAlgAut Gal(C/B) K C δ) =
       1 := by
   apply AlgEquiv.ext
   intro x
@@ -546,7 +544,7 @@ private theorem explicitRestrictNormalHom_toAlgAut_eq_one
 private theorem explicitRestrictNormalHom_mul_inv_eq_one
     (K C : Type) [Field K] [Field C] [Algebra K C]
     (A : IntermediateField K C) [Normal K A]
-    (σ τ : Gal(C / K)) (ρ : Gal(A / K))
+    (σ τ : Gal(C/K)) (ρ : Gal(A/K))
     (hσ : AlgEquiv.restrictNormalHom A σ = ρ)
     (hτ : AlgEquiv.restrictNormalHom A τ = ρ) :
     AlgEquiv.restrictNormalHom A (σ * τ⁻¹) = 1 := by
@@ -555,20 +553,20 @@ private theorem explicitRestrictNormalHom_mul_inv_eq_one
 private theorem explicit_mem_fixingSubgroup_of_restrictNormalHom_eq_one
     (K C : Type) [Field K] [Field C] [Algebra K C]
     (A : IntermediateField K C) [Normal K A]
-    (σ : Gal(C / K))
+    (σ : Gal(C/K))
     (hσ : AlgEquiv.restrictNormalHom A σ = 1) :
     σ ∈ A.fixingSubgroup := by
   rw [IntermediateField.mem_fixingSubgroup_iff]
   intro x hx
   let y : A := ⟨x, hx⟩
-  have hy := congrArg (fun τ : Gal(A / K) => τ y) hσ
+  have hy := congrArg (fun τ : Gal(A/K) => τ y) hσ
   have hyval := congrArg Subtype.val hy
   rw [AlgEquiv.restrictNormalHom_apply] at hyval
   simpa [y] using hyval
 
 private theorem explicit_eq_one_of_mem_fixingSubgroup_of_sup_eq_top
     (K C : Type) [Field K] [Field C] [Algebra K C]
-    (A B : IntermediateField K C) (σ : Gal(C / K))
+    (A B : IntermediateField K C) (σ : Gal(C/K))
     (hA : σ ∈ A.fixingSubgroup) (hB : σ ∈ B.fixingSubgroup)
     (hSup : A ⊔ B = ⊤) :
     σ = 1 := by
@@ -581,7 +579,7 @@ private theorem explicit_eq_one_of_mem_fixingSubgroup_of_sup_eq_top
 private theorem explicitAlgEquiv_eq_of_restrict_eq_of_sup_eq_top
     (K C : Type) [Field K] [Field C] [Algebra K C]
     (A B : IntermediateField K C) [Normal K A] [Normal K B]
-    (σ τ : Gal(C / K))
+    (σ τ : Gal(C/K))
     (hA : AlgEquiv.restrictNormalHom A σ =
       AlgEquiv.restrictNormalHom A τ)
     (hB : AlgEquiv.restrictNormalHom B σ =
@@ -609,8 +607,8 @@ private theorem explicitAlgEquiv_eq_of_restrict_eq_of_sup_eq_top
 private theorem explicit_orderOf_eq_of_restrict_orders_of_sup_eq_top
     (K C : Type) [Field K] [Field C] [Algebra K C]
     (A B : IntermediateField K C) [Normal K A] [Normal K B]
-    [Finite (Gal(A / K))] [Finite (Gal(B / K))]
-    (σ : Gal(C / K)) (σA : Gal(A / K)) (σB : Gal(B / K)) (d : ℕ)
+    [Finite (Gal(A/K))] [Finite (Gal(B/K))]
+    (σ : Gal(C/K)) (σA : Gal(A/K)) (σB : Gal(B/K)) (d : ℕ)
     (hA : AlgEquiv.restrictNormalHom A σ = σA)
     (hB : AlgEquiv.restrictNormalHom B σ = σB)
     (hAOrder : orderOf σA = d) (hBOrder : orderOf σB = d)
@@ -641,20 +639,20 @@ private theorem exists_explicitAlgEquiv_with_disjoint_restrictions
     (A B : IntermediateField K C)
     [Normal K A] [Normal K B] [Normal K C]
     [FiniteDimensional K A] [FiniteDimensional B C] [IsGalois B C]
-    (hInf : A ⊓ B = ⊥) (σA : Gal(A / K)) (σB : Gal(B / K)) :
-    ∃ σ : Gal(C / K),
+    (hInf : A ⊓ B = ⊥) (σA : Gal(A/K)) (σB : Gal(B/K)) :
+    ∃ σ : Gal(C/K),
       AlgEquiv.restrictNormalHom A σ = σA ∧
         AlgEquiv.restrictNormalHom B σ = σB := by
   obtain ⟨σ₀, hσ₀⟩ :=
     (AlgEquiv.restrictNormalHom_surjective
       (F := K) (K₁ := B) (E := C)) σB
-  let error : Gal(A / K) :=
+  let error : Gal(A/K) :=
     σA * (AlgEquiv.restrictNormalHom A σ₀)⁻¹
   obtain ⟨δ, hδ⟩ :=
     (IntermediateField.restrictRestrictAlgEquivMapHom_surjective
       (F := K) (E := C) A B hInf) error
-  let δK : Gal(C / K) :=
-    MulSemiringAction.toAlgAut Gal(C / B) K C δ
+  let δK : Gal(C/K) :=
+    MulSemiringAction.toAlgAut Gal(C/B) K C δ
   have hδA : AlgEquiv.restrictNormalHom A δK = error := by
     change AlgEquiv.restrictNormalHom A δK = error at hδ
     exact hδ
@@ -675,7 +673,7 @@ private theorem exists_lubinTateUniformizerDiagonalAutomorphism
     let T := standardLubinTateLevelField hπ n
     letI : FiniteDimensional K T :=
       standardLubinTateLevelField_finiteDimensional hπ n
-    let σT : Gal(T / K) :=
+    let σT : Gal(T/K) :=
       (standardLubinTateUnitParameterEquivGal
         (standardLocalField K) hπ n
         (standardLubinTateUnitParameterClass
@@ -694,15 +692,15 @@ private theorem exists_lubinTateUniformizerDiagonalAutomorphism
     letI : IsGalois K B := IsGalois.of_algEquiv eT
     let φ :=
       arithmeticFrobeniusOfUnramifiedValuation K U
-    let σA : Gal(A / K) := (eU.symm.trans φ).trans eU
-    let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
-    ∃ σ : Gal(C / K),
+    let σA : Gal(A/K) := (eU.symm.trans φ).trans eU
+    let σB : Gal(B/K) := (eT.symm.trans σT).trans eT
+    ∃ σ : Gal(C/K),
       AlgEquiv.restrictNormalHom A σ = σA ∧
         AlgEquiv.restrictNormalHom B σ = σB := by
   let T := standardLubinTateLevelField hπ n
   let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  let σT : Gal(T / K) :=
+  let σT : Gal(T/K) :=
     (standardLubinTateUnitParameterEquivGal
       (standardLocalField K) hπ n
       (standardLubinTateUnitParameterClass
@@ -735,8 +733,8 @@ private theorem exists_lubinTateUniformizerDiagonalAutomorphism
     IsGalois.tower_top_of_isGalois K B C
   let φ :=
     arithmeticFrobeniusOfUnramifiedValuation K U
-  let σA : Gal(A / K) := (eU.symm.trans φ).trans eU
-  let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
+  let σA : Gal(A/K) := (eU.symm.trans φ).trans eU
+  let σB : Gal(B/K) := (eT.symm.trans σT).trans eT
   have hInf : U ⊓ T = ⊥ :=
     localFiniteUnramifiedField_inf_lubinTateLevelField
       K hπ d hd n
@@ -760,7 +758,7 @@ noncomputable def lubinTateUniformizerDiagonalAutomorphism
     (hπ : (standardLocalField K).toCompleteDVF.valuation.IsUniformizer
       (π : K))
     (n : ℕ) (u : (standardLocalField K).valuationSubringˣ) :
-    Gal((lubinTateUniformizerDiagonalCompositumField K hπ n u) / K) :=
+    Gal((lubinTateUniformizerDiagonalCompositumField K hπ n u)/K) :=
   Classical.choose
     (exists_lubinTateUniformizerDiagonalAutomorphism K hπ n u)
 
@@ -776,7 +774,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_restrict_unramified
     let T := standardLubinTateLevelField hπ n
     letI : FiniteDimensional K T :=
       standardLubinTateLevelField_finiteDimensional hπ n
-    let σT : Gal(T / K) :=
+    let σT : Gal(T/K) :=
       (standardLubinTateUnitParameterEquivGal
         (standardLocalField K) hπ n
         (standardLubinTateUnitParameterClass
@@ -789,7 +787,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_restrict_unramified
     let A := U.restrict hUC
     let eU : U ≃ₐ[K] A := IntermediateField.restrictAlgEquiv hUC
     letI : IsGalois K A := IsGalois.of_algEquiv eU
-    let φA : Gal(A / K) :=
+    let φA : Gal(A/K) :=
       (eU.symm.trans
         (arithmeticFrobeniusOfUnramifiedValuation K U)).trans eU
     AlgEquiv.restrictNormalHom A
@@ -810,7 +808,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_restrict_level
     let T := standardLubinTateLevelField hπ n
     letI : FiniteDimensional K T :=
       standardLubinTateLevelField_finiteDimensional hπ n
-    let σT : Gal(T / K) :=
+    let σT : Gal(T/K) :=
       (standardLubinTateUnitParameterEquivGal
         (standardLocalField K) hπ n
         (standardLubinTateUnitParameterClass
@@ -823,7 +821,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_restrict_level
     let B := T.restrict hTC
     let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
     letI : IsGalois K B := IsGalois.of_algEquiv eT
-    let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
+    let σB : Gal(B/K) := (eT.symm.trans σT).trans eT
     AlgEquiv.restrictNormalHom B
         (lubinTateUniformizerDiagonalAutomorphism K hπ n u) =
       σB :=
@@ -838,12 +836,12 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
     (hπ : (standardLocalField K).toCompleteDVF.valuation.IsUniformizer
       (π : K))
     (n : ℕ) (u : (standardLocalField K).valuationSubringˣ)
-    (σ : Gal((lubinTateUniformizerDiagonalCompositumField K hπ n u) / K))
+    (σ : Gal((lubinTateUniformizerDiagonalCompositumField K hπ n u)/K))
     (hσUnramified :
       let T := standardLubinTateLevelField hπ n
       letI : FiniteDimensional K T :=
         standardLubinTateLevelField_finiteDimensional hπ n
-      let σT : Gal(T / K) :=
+      let σT : Gal(T/K) :=
         (standardLubinTateUnitParameterEquivGal
           (standardLocalField K) hπ n
           (standardLubinTateUnitParameterClass
@@ -856,7 +854,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
       let A := U.restrict hUC
       let eU : U ≃ₐ[K] A := IntermediateField.restrictAlgEquiv hUC
       letI : IsGalois K A := IsGalois.of_algEquiv eU
-      let φA : Gal(A / K) :=
+      let φA : Gal(A/K) :=
         (eU.symm.trans
           (arithmeticFrobeniusOfUnramifiedValuation K U)).trans eU
       AlgEquiv.restrictNormalHom A σ = φA)
@@ -864,7 +862,7 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
       let T := standardLubinTateLevelField hπ n
       letI : FiniteDimensional K T :=
         standardLubinTateLevelField_finiteDimensional hπ n
-      let σT : Gal(T / K) :=
+      let σT : Gal(T/K) :=
         (standardLubinTateUnitParameterEquivGal
           (standardLocalField K) hπ n
           (standardLubinTateUnitParameterClass
@@ -877,13 +875,13 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
       let B := T.restrict hTC
       let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
       letI : IsGalois K B := IsGalois.of_algEquiv eT
-      let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
+      let σB : Gal(B/K) := (eT.symm.trans σT).trans eT
       AlgEquiv.restrictNormalHom B σ = σB) :
     σ = lubinTateUniformizerDiagonalAutomorphism K hπ n u := by
   let T := standardLubinTateLevelField hπ n
   let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  let σT : Gal(T / K) :=
+  let σT : Gal(T/K) :=
     (standardLubinTateUnitParameterEquivGal
       (standardLocalField K) hπ n
       (standardLubinTateUnitParameterClass
@@ -900,10 +898,10 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
   let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
   let : IsGalois K A := IsGalois.of_algEquiv eU
   let : IsGalois K B := IsGalois.of_algEquiv eT
-  let φA : Gal(A / K) :=
+  let φA : Gal(A/K) :=
     (eU.symm.trans
       (arithmeticFrobeniusOfUnramifiedValuation K U)).trans eU
-  let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
+  let σB : Gal(B/K) := (eT.symm.trans σT).trans eT
   let chosen := lubinTateUniformizerDiagonalAutomorphism K hπ n u
   have hσA : AlgEquiv.restrictNormalHom A σ = φA := by
     change AlgEquiv.restrictNormalHom A σ = φA at hσUnramified
@@ -940,7 +938,7 @@ private theorem lubinTateUniformizerDiagonalAutomorphism_order
     let T := standardLubinTateLevelField hπ n
     letI : FiniteDimensional K T :=
       standardLubinTateLevelField_finiteDimensional hπ n
-    let σT : Gal(T / K) :=
+    let σT : Gal(T/K) :=
       (standardLubinTateUnitParameterEquivGal
         (standardLocalField K) hπ n
         (standardLubinTateUnitParameterClass
@@ -950,7 +948,7 @@ private theorem lubinTateUniformizerDiagonalAutomorphism_order
   let T := standardLubinTateLevelField hπ n
   let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  let σT : Gal(T / K) :=
+  let σT : Gal(T/K) :=
     (standardLubinTateUnitParameterEquivGal
       (standardLocalField K) hπ n
       (standardLubinTateUnitParameterClass
@@ -973,16 +971,16 @@ private theorem lubinTateUniformizerDiagonalAutomorphism_order
   let : IsGalois K B := IsGalois.of_algEquiv eT
   let φ :=
     arithmeticFrobeniusOfUnramifiedValuation K U
-  let σA : Gal(A / K) := (eU.symm.trans φ).trans eU
-  let σB : Gal(B / K) := (eT.symm.trans σT).trans eT
+  let σA : Gal(A/K) := (eU.symm.trans φ).trans eU
+  let σB : Gal(B/K) := (eT.symm.trans σT).trans eT
   let σ := lubinTateUniformizerDiagonalAutomorphism K hπ n u
-  let transportU : Gal(U / K) ≃* Gal(A / K) :=
+  let transportU : Gal(U/K) ≃* Gal(A/K) :=
     { AlgEquiv.equivCongr eU eU with
       map_mul' := by
         intro g h
         ext x
         simp }
-  let transportT : Gal(T / K) ≃* Gal(B / K) :=
+  let transportT : Gal(T/K) ≃* Gal(B/K) :=
     { AlgEquiv.equivCongr eT eT with
       map_mul' := by
         intro g h
@@ -1043,7 +1041,7 @@ theorem lubinTateUniformizerDiagonalFixedField_finrank
   let T := standardLubinTateLevelField hπ n
   let : FiniteDimensional K T :=
     standardLubinTateLevelField_finiteDimensional hπ n
-  let σT : Gal(T / K) :=
+  let σT : Gal(T/K) :=
     (standardLubinTateUnitParameterEquivGal
       (standardLocalField K) hπ n
       (standardLubinTateUnitParameterClass

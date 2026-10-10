@@ -11,8 +11,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidu
 import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
-set_option autoImplicit false
-
 /-!
 # A local Hilbert pairing compatible with arithmetic Artin reciprocity
 

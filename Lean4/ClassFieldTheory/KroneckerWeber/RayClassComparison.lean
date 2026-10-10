@@ -8,8 +8,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
 import Mathlib.NumberTheory.Cyclotomic.Gal
 
-set_option autoImplicit false
-
 /-!
 # The rational ray-class/cyclotomic comparison
 

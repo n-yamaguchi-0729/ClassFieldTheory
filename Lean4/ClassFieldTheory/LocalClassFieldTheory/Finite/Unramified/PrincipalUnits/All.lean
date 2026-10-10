@@ -9,6 +9,5 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.L
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Trace
 
-set_option autoImplicit false
-
-/-! Provides the public declarations in the `LocalClassFieldTheory.Finite.Unramified.PrincipalUnits` Lean module. -/
+/-! Provides the public declarations in the `LocalClassFieldTheory.Finite.Unramified.PrincipalUnits`
+Lean module. -/

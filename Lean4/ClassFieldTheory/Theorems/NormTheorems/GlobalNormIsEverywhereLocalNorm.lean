@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
 import ClassFieldTheory.Definitions.NormTheorems.IsEverywhereLocalNorm
 import ClassFieldTheory.Theorems.NormTheorems.TensorNormBaseChange
 
-set_option autoImplicit false
-
 /-!
 # Global norms are local norms everywhere
 

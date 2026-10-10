@@ -5,13 +5,12 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-
-set_option autoImplicit false
 
 /-!
 # Higher-unit subgroups at finite places
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

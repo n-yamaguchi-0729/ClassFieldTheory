@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 
-set_option autoImplicit false
-
 /-!
 # Existence of the class field of a ray-class subgroup
 
@@ -19,7 +17,7 @@ uses ideal classes; the proof transports the existing idelic reciprocity
 construction to that interface.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 
 noncomputable section
 

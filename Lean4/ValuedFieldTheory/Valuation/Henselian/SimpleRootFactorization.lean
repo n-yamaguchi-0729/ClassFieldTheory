@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Valuation.Henselian.CoprimeFactorLifting
 import ValuedFieldTheory.Valuation.Henselian.ValuationExtensionCriterion
 
-set_option autoImplicit false
-
 /-!
 # From simple-root Hensel lifting to valuation factorization
 

@@ -17,8 +17,6 @@ import ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
 import Mathlib.RingTheory.Discriminant
 import Mathlib.RingTheory.Polynomial.Eisenstein.IsIntegral
 
-set_option autoImplicit false
-
 /-!
 # The chosen complete valuation and primitive Lubin--Tate point
 
@@ -26,6 +24,8 @@ This module constructs the actual complete discrete valuation on an explicit
 finite equal-characteristic Lubin--Tate level.  It proves that the chosen
 primitive point generates the integral closure and is a uniformizer.
 -/
+
+
 
 noncomputable section
 
@@ -309,6 +309,8 @@ theorem
     ← equalCharacteristicLubinTateIntegralPrimitivePolynomial_map]
   congr 1
 
+open _root_.ValuationTheory.DiscreteValuationField.ValuedExtension
+  (exists_integralClosure_standard_fundamental_identity) in
 private theorem equalCharacteristicLubinTateLevelCompleteDVFData_exists
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
@@ -341,7 +343,7 @@ private theorem equalCharacteristicLubinTateLevelCompleteDVFData_exists
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_isGalois F n
   exact
-    ValuationTheory.DiscreteValuationField.ValuedExtension.exists_integralClosure_standard_fundamental_identity
+    exists_integralClosure_standard_fundamental_identity
       (K := F.residueField⸨X⸩)
       (L := equalCharacteristicLubinTateLevelField F n)
       (equalCharacteristicLubinTateBaseCompleteDVF F)
@@ -608,6 +610,10 @@ theorem equalCharacteristicLubinTatePrimitivePointInteger_adjoin_eq_top
     equalCharacteristicLubinTatePrimitivePolynomialInBaseValuationSubring_isEisensteinAt
       F n
 
+open _root_.ValuationTheory.DiscreteValuationField.ValuedExtension (
+  HasUniqueValuationExtension
+  hasUniqueValuationExtension_of_finite_separable
+) in
 /-- Finite separability gives uniqueness of the chosen complete valuation
 extension on the explicit level field. -/
 theorem
@@ -615,7 +621,7 @@ theorem
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
-    ValuationTheory.DiscreteValuationField.ValuedExtension.HasUniqueValuationExtension.{0, 0, 0, 0, y}
+    HasUniqueValuationExtension.{0, 0, 0, 0, y}
       (base := equalCharacteristicLubinTateBaseCompleteDVF F)
       (target := equalCharacteristicLubinTateLevelCompleteDVF F n) := by
   let : FiniteDimensional F.residueField⸨X⸩
@@ -625,10 +631,10 @@ theorem
       (equalCharacteristicLubinTateLevelField F n) :=
     equalCharacteristicLubinTateLevelField_isGalois F n
   exact
-    (ValuationTheory.DiscreteValuationField.ValuedExtension.hasUniqueValuationExtension_of_finite_separable
+    (hasUniqueValuationExtension_of_finite_separable
         (equalCharacteristicLubinTateBaseCompleteDVF F)
         (equalCharacteristicLubinTateLevelCompleteDVF F n) :
-      ValuationTheory.DiscreteValuationField.ValuedExtension.HasUniqueValuationExtension.{0, 0, 0, 0, y}
+      HasUniqueValuationExtension.{0, 0, 0, 0, y}
         (base := equalCharacteristicLubinTateBaseCompleteDVF F)
         (target := equalCharacteristicLubinTateLevelCompleteDVF F n))
 
@@ -935,8 +941,7 @@ theorem
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
-    (σ : Gal((equalCharacteristicLubinTateLevelField F n) /
-      F.residueField⸨X⸩))
+    (σ : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
     (a : equalCharacteristicLubinTateUnitParameter F n)
     (ha :
       σ (equalCharacteristicLubinTateLevelPowerBasis F n).gen =

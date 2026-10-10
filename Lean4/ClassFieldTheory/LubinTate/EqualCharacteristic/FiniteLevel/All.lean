@@ -18,8 +18,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrred
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
 import ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.UnitQuotientGalois
 
-set_option autoImplicit false
-
 /-!
 # Finite Lubin--Tate levels in equal characteristic
 

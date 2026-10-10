@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.NumberTheory.NumberField.Discriminant.Different
 
-set_option autoImplicit false
-
 /-!
 # No nontrivial everywhere-unramified extension of ℚ
 

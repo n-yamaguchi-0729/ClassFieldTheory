@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertC
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
 
-set_option autoImplicit false
-
 /-!
 # Existence of the big Hilbert class field
 

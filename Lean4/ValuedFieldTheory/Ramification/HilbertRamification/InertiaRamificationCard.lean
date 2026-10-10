@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.ValuedGalois
 import ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
 
-set_option autoImplicit false
-
 /-!
 # Inertia cardinality and the ramification index
 

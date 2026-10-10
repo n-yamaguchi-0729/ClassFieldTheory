@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupQuotientEquiv
 
-set_option autoImplicit false
-
 /-!
 # Evaluation of a ray-class subgroup quotient isomorphism
 

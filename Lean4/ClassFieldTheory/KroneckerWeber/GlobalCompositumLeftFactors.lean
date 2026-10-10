@@ -9,8 +9,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.CompositumEmbedding
 import ClassFieldTheory.KroneckerWeber.GlobalCompositumCyclotomicTarget
 import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
 
-set_option autoImplicit false
-
 /-!
 # The left-factor ring embedding for the global compositum
 

@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtensio
 import Mathlib.NumberTheory.NumberField.ClassNumber
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
 
-set_option autoImplicit false
-
 /-!
 # Degree of the small Hilbert class field
 

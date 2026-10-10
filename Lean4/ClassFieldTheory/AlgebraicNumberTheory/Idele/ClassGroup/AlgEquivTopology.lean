@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
 import ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionMap
 
-set_option autoImplicit false
-
 /-!
 # Local continuity for transport under a number-field equivalence
 

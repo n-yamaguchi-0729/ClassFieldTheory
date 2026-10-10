@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.KroneckerWeber.GlobalCompositumGlobalEmbedding
 import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
 
-set_option autoImplicit false
-
 /-!
 # A valued global embedding of the auxiliary compositum
 

@@ -5,9 +5,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import ClassFieldTheory.RamificationTheory.HilbertRamification.All
-import ClassFieldTheory.RamificationTheory.RamificationIndexComparison
-
-set_option autoImplicit false
 
 /-!
 # Ramification theory

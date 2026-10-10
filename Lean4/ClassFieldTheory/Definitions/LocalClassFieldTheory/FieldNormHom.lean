@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.RingTheory.Norm.Basic
 
-set_option autoImplicit false
-
 /-!
 # The field norm on multiplicative groups
 -/

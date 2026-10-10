@@ -18,8 +18,6 @@ import Mathlib.RingTheory.Valuation.Extension
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
-set_option autoImplicit false
-
 /-!
 # Uniqueness of the normalized coherent local Artin family
 
@@ -140,7 +138,8 @@ theorem finiteAbelianLocalReciprocity_family_ext
     norm_num
   have hUnram :
       (𝓂[U] : Ideal 𝒪[U]).ramificationIdx 𝒪[K] = 1 :=
-    LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension.maximalIdeal_ramificationIdx_eq_one
+    (open LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension in
+      maximalIdeal_ramificationIdx_eq_one)
   have hUeq : f Upack = g Upack :=
     finiteAbelianLocalReciprocity_unramified_family_ext K f g
       hfker hgker hfrob hgrob Upack hUnram π hπ

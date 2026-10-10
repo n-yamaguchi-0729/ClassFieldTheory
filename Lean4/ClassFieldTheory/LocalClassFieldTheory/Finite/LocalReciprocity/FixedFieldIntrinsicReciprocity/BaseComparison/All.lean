@@ -10,8 +10,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedField
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.FixedFieldSpecialization
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.IntrinsicBaseEquivalence
 
-set_option autoImplicit false
-
 /-!
 # Fixed-field base comparison
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealN
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
 import Mathlib.Algebra.BigOperators.Finsupp.Basic
 
-set_option autoImplicit false
-
 /-!
 # Ideal norms in an ideal-theoretic ray class group
 
@@ -20,7 +18,7 @@ ray quotient gives its genuine ideal-norm image.  This construction does not
 identify ideal norms with idèle-class norms.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section
@@ -49,6 +47,7 @@ def rayClassPrimeToIdealNormDomain
     rw [Units.val_inv_eq_inv_val, FractionalIdeal.count_inv L W,
       hI W hW, neg_zero]
 
+open scoped Classical in
 /-- The exponent of a relative fractional-ideal norm at a finite prime is
 the inertia-degree-weighted sum of the exponents at the primes above it. -/
 theorem fractionalIdealNorm_count
@@ -100,6 +99,7 @@ def rayClassPrimeToIdealNorm
     rayClassPrimeToIdealNormDomain K L m →*
       rayClassPrimeToIdeals m where
   toFun I := ⟨fractionalIdealNorm K L I, by
+    classical
     intro w hw
     rw [fractionalIdealNorm_count K L I w]
     apply Finset.sum_eq_zero

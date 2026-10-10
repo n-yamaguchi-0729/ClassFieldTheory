@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRe
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic prime Artin symbols on ray-class fixed fields
 
@@ -17,7 +15,9 @@ Arithmetic reciprocity on a ray-class fixed field agrees, at each ordinary
 prime idèle, with the arithmetic global Artin symbol of that field.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 
 noncomputable section
 

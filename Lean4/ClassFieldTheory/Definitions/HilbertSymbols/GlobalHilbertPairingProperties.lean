@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
 import ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
 
-set_option autoImplicit false
-
 /-!
 # Locality and support conditions for global Hilbert pairing families
 -/

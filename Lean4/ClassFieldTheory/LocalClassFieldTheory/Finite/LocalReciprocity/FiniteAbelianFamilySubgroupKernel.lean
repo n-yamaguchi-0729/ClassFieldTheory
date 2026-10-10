@@ -9,8 +9,6 @@ import Mathlib.FieldTheory.Galois.Basic
 import Mathlib.FieldTheory.IntermediateField.Algebraic
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
-set_option autoImplicit false
-
 /-!
 # Subgroup data of coherent finite local reciprocity families
 

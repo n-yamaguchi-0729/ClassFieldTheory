@@ -82,8 +82,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNor
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeNormClass
 
-set_option autoImplicit false
-
 /-!
 # Global class fields
 

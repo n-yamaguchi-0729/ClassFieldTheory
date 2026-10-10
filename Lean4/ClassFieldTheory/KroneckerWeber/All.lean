@@ -20,4 +20,9 @@ import ClassFieldTheory.KroneckerWeber.RayClassComparison
 import ClassFieldTheory.KroneckerWeber.Setup
 import ClassFieldTheory.KroneckerWeber.UnramifiedCompositumSupport
 
-set_option autoImplicit false
+/-!
+# Kronecker–Weber and cyclotomic class fields
+
+Collects the local cyclotomic embeddings, inertia bounds, and rational ray class comparisons
+used in the Kronecker–Weber theorem.
+-/

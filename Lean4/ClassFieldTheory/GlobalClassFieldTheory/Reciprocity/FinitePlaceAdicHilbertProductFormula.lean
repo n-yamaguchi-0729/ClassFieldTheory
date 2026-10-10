@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicHilbertComparison
 
-set_option autoImplicit false
-
 /-!
 # A coherent Hilbert pairing family in a small number field
 

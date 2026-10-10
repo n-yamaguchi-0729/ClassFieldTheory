@@ -13,8 +13,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassC
 import Mathlib.RingTheory.Norm.Basic
 import Mathlib.RingTheory.TensorProduct.Basic
 
-set_option autoImplicit false
-
 /-!
 # Finite conductor exponents and local norms
 
@@ -64,8 +62,9 @@ theorem IsAbelianConductor.finiteExponent_le_iff_higherUnit_le_tensorNorm
     rw [abelianFullConductor_finiteExponent_eq_localConductorExponent
       (K := K) (L := L) v]
     exact
-      (GlobalClassFieldTheory.GlobalClassFields.ideleClassNormLocalHigherUnitExponent_eq_localConductorExponent
-        (K := K) (L := L) v).symm
+      ((open GlobalClassFieldTheory.GlobalClassFields in
+        ideleClassNormLocalHigherUnitExponent_eq_localConductorExponent
+          (K := K) (L := L) v)).symm
   have hcoeff :
       c.finitePart v =
         GlobalClassFieldTheory.GlobalClassFields.ideleClassNormLocalHigherUnitExponent

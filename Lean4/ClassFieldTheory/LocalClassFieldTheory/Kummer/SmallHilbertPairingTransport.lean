@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.MathlibHilbertPairing
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
 
-set_option autoImplicit false
-
 /-!
 # Transport of Hilbert pairings across field equivalences
 

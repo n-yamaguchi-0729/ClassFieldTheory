@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
 import ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # Existence of the local Hilbert pairing
 

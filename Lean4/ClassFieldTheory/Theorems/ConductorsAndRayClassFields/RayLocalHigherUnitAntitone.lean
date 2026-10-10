@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 
-set_option autoImplicit false
-
 /-!
 # Monotonicity of local higher-unit groups
 -/

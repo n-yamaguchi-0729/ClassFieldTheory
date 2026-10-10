@@ -9,8 +9,6 @@ import ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingSymbol
 import ClassFieldTheory.Definitions.HilbertSymbols.IsKummerNorm
 import ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
 
-set_option autoImplicit false
-
 /-!
 # Norm-residue criterion for a local Hilbert pairing
 

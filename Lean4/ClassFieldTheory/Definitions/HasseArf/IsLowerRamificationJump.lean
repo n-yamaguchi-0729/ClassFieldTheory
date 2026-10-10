@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
 
-set_option autoImplicit false
-
 /-!
 # Lower ramification jumps
 -/

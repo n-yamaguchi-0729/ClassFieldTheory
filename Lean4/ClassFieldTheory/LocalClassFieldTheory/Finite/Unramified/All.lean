@@ -10,6 +10,5 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.A
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.ResidueNorm
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Uniformizer
 
-set_option autoImplicit false
-
-/-! Provides the public declarations in the `LocalClassFieldTheory.Finite.Unramified` Lean module. -/
+/-! Provides the public declarations in the `LocalClassFieldTheory.Finite.Unramified` Lean module.
+-/

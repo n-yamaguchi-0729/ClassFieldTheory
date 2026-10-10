@@ -11,8 +11,6 @@ import Mathlib.Data.Nat.Factorization.Basic
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.GroupTheory.PGroup
 
-set_option autoImplicit false
-
 /-!
 # Finite ramification groups in positive and zero residue characteristic
 
@@ -26,6 +24,7 @@ constructions. Only finiteness of the ramification group is used;
 no normality, Henselianity, discreteness, perfectness, or finite residue field
 is required.
 -/
+
 
 namespace RamificationTheory.HilbertRamification.ValuationSubring
 

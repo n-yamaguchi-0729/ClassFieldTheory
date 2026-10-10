@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
 import ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
 
-set_option autoImplicit false
-
 /-!
 # Real-index upper ramification groups
 

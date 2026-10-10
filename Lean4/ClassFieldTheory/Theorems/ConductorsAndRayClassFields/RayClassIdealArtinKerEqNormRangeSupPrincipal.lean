@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNor
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassIdealNormImageEqArtinKer
 
-set_option autoImplicit false
-
 /-!
 # Ideal Artin kernel before passage to ray classes
 
@@ -17,7 +15,7 @@ The kernel in prime-to-modulus ideals is the product of the genuine ideal
 norm image and the principal ray-ideal subgroup.
 -/
 
-open scoped Classical NumberField IsMulCommutative
+open scoped NumberField IsMulCommutative
 open NumberField IsDedekindDomain
 
 noncomputable section

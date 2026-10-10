@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import GaloisCohomology.Kummer.Concrete.RootCharacters
 import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 
-set_option autoImplicit false
-
 /-!
 # Hilbert symbols at infinite places
 
@@ -18,7 +16,9 @@ the quadratic one: its value is `-1` exactly when both arguments are negative.
 The definition below records that evaluation directly in `μₙ(K)`.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField
 
 noncomputable section
@@ -30,6 +30,7 @@ open KummerTheory
 
 variable (K : Type) [Field K] [NumberField K]
 
+open scoped Classical in
 /-- The Hilbert symbol of two global units at an infinite place.  Complex
 places and nonquadratic exponents contribute `1`; a real quadratic place
 contributes `-1` precisely when both real embeddings are negative. -/

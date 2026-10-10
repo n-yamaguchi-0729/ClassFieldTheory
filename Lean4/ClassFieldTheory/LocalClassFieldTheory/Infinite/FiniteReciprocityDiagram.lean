@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteArtin
 import ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormSubgroupFunctoriality
 
-set_option autoImplicit false
-
 /-!
 # Finite reciprocity as an isomorphism of diagrams
 

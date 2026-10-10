@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertFamilyAlgEquiv
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteHilbertFactorNaturality
 import Mathlib.Algebra.BigOperators.Finprod
 
-set_option autoImplicit false
-
 /-!
 # Transport of the Hilbert product formula
 

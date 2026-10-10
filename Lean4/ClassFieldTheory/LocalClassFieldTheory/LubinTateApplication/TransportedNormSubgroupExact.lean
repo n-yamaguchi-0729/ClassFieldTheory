@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LaurentPrincipalUnitTransport
 
-set_option autoImplicit false
-
 /-!
 # Exact transported Lubin--Tate norm subgroup
 
@@ -15,6 +13,8 @@ The exact principal-unit transport upgrades the transported
 equal-characteristic Lubin--Tate norm containment to the sharp standard
 subgroup formula.
 -/
+
+
 
 noncomputable section
 

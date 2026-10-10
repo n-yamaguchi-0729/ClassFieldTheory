@@ -42,8 +42,6 @@ import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.Univer
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.UniversalNormDescent
 import ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.UnramifiedNormQuotient
 
-set_option autoImplicit false
-
 /-!
 # Abstract reciprocity construction
 

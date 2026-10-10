@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
 import Mathlib.Algebra.Group.Subgroup.Lattice
 
-set_option autoImplicit false
-
 /-!
 # Membership in the ray-principal ideal subgroup
 

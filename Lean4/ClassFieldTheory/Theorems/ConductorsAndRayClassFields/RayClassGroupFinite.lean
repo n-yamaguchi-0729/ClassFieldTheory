@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
 import ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 
-set_option autoImplicit false
-
 /-!
 # Finiteness of the ideal-theoretic ray class group
 

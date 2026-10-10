@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
 
-set_option autoImplicit false
-
 /-!
 # Uniqueness of the big Hilbert class field inside a separable closure
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.Algebra.Group.Subgroup.Finite
 import ValuedFieldTheory.Ramification.HilbertRamification.DecompositionGroup
 
-set_option autoImplicit false
-
 /-!
 # Cardinality under inertia scalar restriction
 

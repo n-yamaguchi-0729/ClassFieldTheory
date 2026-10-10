@@ -19,8 +19,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.Unramified
 import GaloisCohomology.Kummer.Concrete.CyclotomicField
 import ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
 
-set_option autoImplicit false
-
 /-!
 # Local cyclotomic embeddings for the global construction
 
@@ -124,7 +122,6 @@ theorem exists_structuredLocalCyclotomicEmbedding
   let : NeZero (p ^ f - 1) := ⟨huPos.ne'⟩
   let : NeZero (p ^ n) := ⟨hrPos.ne'⟩
   let : NeZero ((p ^ f - 1) * p ^ n) := ⟨hmPos.ne'⟩
-
   let U := CyclotomicField (p ^ f - 1) ℚ_[p]
   let C := CyclotomicField (p ^ n) ℚ_[p]
   let D := CyclotomicField ((p ^ f - 1) * p ^ n) ℚ_[p]
@@ -148,7 +145,6 @@ theorem exists_structuredLocalCyclotomicEmbedding
   let : IsAbelianGalois ℚ_[p] D :=
     IsCyclotomicExtension.isAbelianGalois
       {(p ^ f - 1) * p ^ n} ℚ_[p] D
-
   obtain ⟨ζU, hζU, hgenU⟩ :=
     exists_primitiveRoot_adjoin_eq_top_cyclotomicField
       ℚ_[p] (p ^ f - 1) huPos
@@ -158,7 +154,6 @@ theorem exists_structuredLocalCyclotomicEmbedding
   obtain ⟨ζD, hζD, hgenD⟩ :=
     exists_primitiveRoot_adjoin_eq_top_cyclotomicField
       ℚ_[p] ((p ^ f - 1) * p ^ n) hmPos
-
   have hnormU : localNormSubgroup ℚ_[p] U =
       unramifiedNormSubgroup ℚ_[p] f :=
     normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
@@ -172,7 +167,6 @@ theorem exists_structuredLocalCyclotomicEmbedding
     simpa [C, hnsub] using
       (localNormSubgroup_eq_uniformizerPrincipalSubgroup_cyclotomicPrimePower
         p (k := n - 1) ζC hζC' hgenC)
-
   obtain ⟨iU⟩ := nonempty_algHom_cyclotomicField_of_dvd
     ℚ_[p] (p ^ f - 1) ((p ^ f - 1) * p ^ n)
       huPos hmPos (dvd_mul_right _ _)

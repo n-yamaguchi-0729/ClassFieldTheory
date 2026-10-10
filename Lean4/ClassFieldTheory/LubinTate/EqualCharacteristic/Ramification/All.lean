@@ -10,4 +10,9 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.GaloisAction
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.LowerGroups
 import ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
 
-set_option autoImplicit false
+/-!
+# Ramification of equal-characteristic Lubin–Tate extensions
+
+Collects primitive points, their Galois displacements, and the resulting lower
+ramification groups.
+-/

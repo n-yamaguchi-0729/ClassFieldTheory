@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Valuation.Henselian.AlgebraicIntegralClosure
 import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueValuationSubring
 
-set_option autoImplicit false
-
 /-!
 # Uniqueness over an algebraic extension of a Henselian valued field
 
@@ -33,8 +31,8 @@ theorem valuationSubring_eq_integralClosure_of_henselianRing
     rw [ValuationSubring.valuationSubring_valuation]
     exact integralClosure_mem_or_inv_of_henselianRing (L := L) V
   have h := congrArg ValuationSubring.toSubring
-    (_root_.DiscreteValuationField.Valuation.normFormula_extension_valuationSubring_eq_integralClosure_of_mem_or_inv
-      V hval w)
+    (open _root_.DiscreteValuationField.Valuation in
+      normFormula_extension_valuationSubring_eq_integralClosure_of_mem_or_inv V hval w)
   change w.valuationSubring.toSubring =
     (integralClosure V.valuation.valuationSubring L).toSubring at h
   rw [ValuationSubring.valuationSubring_valuation] at h

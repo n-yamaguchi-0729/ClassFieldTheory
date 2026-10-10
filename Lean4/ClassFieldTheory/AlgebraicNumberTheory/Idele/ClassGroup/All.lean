@@ -21,8 +21,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
 
-set_option autoImplicit false
-
 /-!
 # Idelic class groups
 

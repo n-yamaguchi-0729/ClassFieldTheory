@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
 
-set_option autoImplicit false
-
 /-!
 # Membership in the field-norm subgroup
 

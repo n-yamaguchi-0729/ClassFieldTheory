@@ -11,4 +11,9 @@ import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.Core
 import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.FiniteLevelEvaluation
 import ClassFieldTheory.LubinTate.Padic.MultiplicativeEvaluation.FiniteLevelPrimitiveRoot
 
-set_option autoImplicit false
+/-!
+# Multiplicative evaluation of p-adic Lubin–Tate series
+
+Collects finite-level evaluations and primitive roots together with completed
+coefficient evaluations, scalar endomorphisms, and primitive points.
+-/

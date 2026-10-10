@@ -10,8 +10,6 @@ import ClassFieldTheory.Theorems.HilbertSymbols.LocalHilbertPairingExists
 import ClassFieldTheory.Theorems.HilbertSymbols.PowerClassGroupFinite
 import Mathlib.NumberTheory.LocalField.Basic
 
-set_option autoImplicit false
-
 /-!
 # A perfect local Hilbert pairing
 

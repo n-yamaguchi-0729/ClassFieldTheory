@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
 import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 
-set_option autoImplicit false
-
 /-!
 # Positive global units are local squares at real places
 
@@ -16,7 +14,9 @@ This is the arithmetic input for the positive-radicand branch of the real
 infinite-place Hilbert-symbol comparison.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField
 
 noncomputable section

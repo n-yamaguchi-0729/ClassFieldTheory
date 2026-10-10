@@ -26,8 +26,6 @@ import ClassFieldTheory.Theorems.LocalClassFieldTheory.FieldNormSubgroupTower
 import ClassFieldTheory.Theorems.LocalClassFieldTheory.MemFieldNormSubgroupIff
 import ClassFieldTheory.Theorems.LocalClassFieldTheory.ProfiniteLocalReciprocity
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian local class field theory
 

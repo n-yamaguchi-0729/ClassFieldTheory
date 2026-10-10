@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.FieldTheory.Galois.Basic
 import ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
 
-set_option autoImplicit false
-
 /-!
 # Restriction from a compositum
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.CofinitelySplitFiniteE
 import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.CyclicPrimePowerFullDecomposition
 import ClassFieldTheory.GlobalClassFieldTheory.Cohomology.IdeleClassHerbrandSupportedFinal
 
-set_option autoImplicit false
-
 /-!
 # Cohomological tools for global class field theory
 -/

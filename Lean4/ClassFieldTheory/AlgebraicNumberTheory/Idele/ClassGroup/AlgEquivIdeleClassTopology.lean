@@ -9,8 +9,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Idele.FiniteMathlibTopologyCompari
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.Group.Units
 
-set_option autoImplicit false
-
 /-!
 # Idèle and idèle-class transport under a number-field equivalence
 

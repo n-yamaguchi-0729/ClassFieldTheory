@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.AbelianConductorFiniteUnramified
 
-set_option autoImplicit false
-
 /-!
 # Finite support of the conductor
 

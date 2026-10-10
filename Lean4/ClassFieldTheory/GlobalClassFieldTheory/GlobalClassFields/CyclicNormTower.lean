@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
 
-set_option autoImplicit false
-
 /-!
 # Exact norm quotients in a cyclic tower
 

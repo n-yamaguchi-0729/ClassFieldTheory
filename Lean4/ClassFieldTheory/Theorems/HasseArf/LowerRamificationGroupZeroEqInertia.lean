@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
 
-set_option autoImplicit false
-
 /-!
 # The zeroth lower group is the inertia group
 

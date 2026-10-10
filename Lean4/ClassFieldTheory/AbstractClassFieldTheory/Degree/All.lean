@@ -18,8 +18,6 @@ import ClassFieldTheory.AbstractClassFieldTheory.Degree.ProfiniteIntegerFiniteQu
 import ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
 import ClassFieldTheory.AbstractClassFieldTheory.Degree.ValuationLaws
 
-set_option autoImplicit false
-
 /-!
 # Degree and valuation data
 

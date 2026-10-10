@@ -29,8 +29,6 @@ import ValuedFieldTheory.Ramification.LocalField.Unramified
 import Mathlib.FieldTheory.Fixed
 import Mathlib.SetTheory.Cardinal.Finite
 
-set_option autoImplicit false
-
 /-!
 # Hasse--Arf
 
@@ -219,8 +217,9 @@ theorem chosenLocalExtension_decompositionSubgroup_eq_top
   change σ • target.valuation.valuationSubring = target.valuation.valuationSubring
   ext z
   rw [ValuationSubring.mem_pointwise_smul_iff_inv_smul_mem]
-  exact (RamificationTheory.DiscreteValuationField.DVF.mem_valuationSubring_algEquiv_iff_of_hasUniqueValuationExtension
-    (base := base) (target := target) huniq σ⁻¹ z).symm
+  exact (open _root_.RamificationTheory.DiscreteValuationField.DVF in
+    mem_valuationSubring_algEquiv_iff_of_hasUniqueValuationExtension
+      (base := base) (target := target) huniq σ⁻¹ z).symm
 
 /-- At integer indices the lower group defined using Mathlib's valuation
 subring action agrees elementwise with the existing local lower group. -/
@@ -388,14 +387,18 @@ theorem chosenHerbrandFunctionAtLowerIndex_real_eq
       simp only [ClassFieldTheory.herbrandFunctionAtLowerIndex,
         show Finset.Icc (1 : ℕ) 0 = ∅ from by decide,
         Finset.sum_empty, zero_div, Rat.cast_zero,
-        RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandFunction_nat,
-        RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandValueNat_zero]
+        (open _root_.RamificationTheory.DiscreteValuationField in
+          AntitoneNormalSubgroupFiltration.herbrandFunction_nat),
+        (open _root_.RamificationTheory.DiscreteValuationField in
+          AntitoneNormalSubgroupFiltration.herbrandValueNat_zero)]
   | succ n ih =>
       rw [herbrandFunctionAtLowerIndex_succ, Rat.cast_add, Rat.cast_div]
-      rw [RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandFunction_nat,
-        RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandValueNat_succ]
-      rw [← RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandFunction_nat
-        F n, ih]
+      rw [(open _root_.RamificationTheory.DiscreteValuationField in
+        AntitoneNormalSubgroupFiltration.herbrandFunction_nat),
+        (open _root_.RamificationTheory.DiscreteValuationField in
+          AntitoneNormalSubgroupFiltration.herbrandValueNat_succ)]
+      rw [← (open _root_.RamificationTheory.DiscreteValuationField in
+        AntitoneNormalSubgroupFiltration.herbrandFunction_nat F n), ih]
       congr 1
       rw [RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandSlope]
       rw [show F.lower (n + 1) =
@@ -424,9 +427,10 @@ theorem chosenLocalExtension_valuationSubring_eq_canonical
   let : (localCompleteDVF K).valuation.HasExtension (ValuativeRel.valuation L) := by
     rw [localCompleteDVF_valuation_eq]
     exact ‹Valuation.HasExtension (ValuativeRel.valuation K) (ValuativeRel.valuation L)›
-  exact ValuationTheory.DiscreteValuationField.ValuedExtension.valuationSubring_eq_of_finite_separable
-    (localCompleteDVF K) (chosenLocalExtensionCompleteDVF K L)
-      (ValuativeRel.valuation L)
+  exact (open _root_.ValuationTheory.DiscreteValuationField.ValuedExtension in
+    valuationSubring_eq_of_finite_separable
+      (localCompleteDVF K) (chosenLocalExtensionCompleteDVF K L)
+        (ValuativeRel.valuation L))
 
 /-- The public canonical Herbrand value agrees with the old local Herbrand
 function at each natural index, after casting from rationals to reals. -/
@@ -491,14 +495,14 @@ theorem chosenHerbrandFunction_eq_localHerbrandFunction
             (base := base) (target := target) huniq (m : ℝ) :=
         chosenHerbrandFunctionAtLowerIndex_real_eq K L m
       _ =
-          RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandValueNat
-            F m := by
+          (open _root_.RamificationTheory.DiscreteValuationField in
+            AntitoneNormalSubgroupFiltration.herbrandValueNat F m) := by
         change
-          RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandFunction
-            F (m : ℝ) = _
+          (open _root_.RamificationTheory.DiscreteValuationField in
+            AntitoneNormalSubgroupFiltration.herbrandFunction F (m : ℝ)) = _
         exact
-          RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandFunction_nat
-            F m
+          (open _root_.RamificationTheory.DiscreteValuationField in
+            AntitoneNormalSubgroupFiltration.herbrandFunction_nat F m)
   have hslope (m : ℕ) :
       ((Nat.card (ClassFieldTheory.lowerRamificationGroup K
         target.valuation.valuationSubring (m + 1)) : ℝ) /
@@ -515,13 +519,14 @@ theorem chosenHerbrandFunction_eq_localHerbrandFunction
   by_cases hs : 0 ≤ s
   · rw [ite_eq_left hs]
     dsimp only
-    rw [RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandFunction_of_floor
-      F hs ⌊s⌋₊ rfl]
+    rw [(open _root_.RamificationTheory.DiscreteValuationField in
+      AntitoneNormalSubgroupFiltration.herbrandFunction_of_floor F hs ⌊s⌋₊ rfl)]
     rw [hnat ⌊s⌋₊, hslope ⌊s⌋₊]
   · rw [ite_eq_right hs]
     exact
-      (RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandFunction_of_nonpos
-        F (le_of_lt (lt_of_not_ge hs))).symm
+      (open _root_.RamificationTheory.DiscreteValuationField in
+        AntitoneNormalSubgroupFiltration.herbrandFunction_of_nonpos
+          F (le_of_lt (lt_of_not_ge hs))).symm
 
 /-- The public piecewise-linear Herbrand function of the canonical valuation
 ring agrees at every real index with the existing local Herbrand function. -/
@@ -591,7 +596,8 @@ theorem mem_canonicalUpperRamificationGroup_iff_mem_localUpperRamificationGroup
         ClassFieldTheory.upperRamificationGroup K L t ↔
       σ ∈ localUpperRamificationGroup K L t := by
   have hσChosen : σ ∈
-      ((chosenLocalExtensionCompleteDVF K L).valuation.valuationSubring).decompositionSubgroup K := by
+      ((chosenLocalExtensionCompleteDVF K L).valuation.valuationSubring).decompositionSubgroup
+        K := by
     rw [chosenLocalExtension_valuationSubring_eq_canonical K L]
     exact hσ
   have hchosen :=
@@ -707,7 +713,8 @@ theorem chosenLowerRamificationGroup_eq_iff_localLowerRamificationGroup_eq
     apply Subgroup.ext
     intro σ
     have hσ : σ ∈
-        ((chosenLocalExtensionCompleteDVF K L).valuation.valuationSubring).decompositionSubgroup K := by
+        ((chosenLocalExtensionCompleteDVF K L).valuation.valuationSubring).decompositionSubgroup
+          K := by
       rw [chosenLocalExtension_decompositionSubgroup_eq_top K L]
       trivial
     rw [← mem_chosenLowerRamificationGroup_iff_mem_localLowerRamificationGroup K L m σ hσ,

@@ -15,8 +15,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFin
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FiniteNormClass
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
 
-set_option autoImplicit false
-
 /-!
 # Transfer input for the principal ideal theorem
 
@@ -32,7 +30,9 @@ small Hilbert tower and transport it to genuine idèle-class extension and
 norm maps.
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 
 noncomputable section
 

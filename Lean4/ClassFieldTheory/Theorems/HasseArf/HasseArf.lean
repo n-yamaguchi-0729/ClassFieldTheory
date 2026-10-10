@@ -11,8 +11,6 @@ import Mathlib.FieldTheory.Galois.Abelian
 import Mathlib.NumberTheory.LocalField.Basic
 import Mathlib.RingTheory.Valuation.Extension
 
-set_option autoImplicit false
-
 /-!
 # Hasse--Arf theorem
 

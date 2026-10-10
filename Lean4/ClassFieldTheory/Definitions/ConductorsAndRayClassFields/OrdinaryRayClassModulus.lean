@@ -6,11 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
 
-set_option autoImplicit false
-
 /-!
 # The ordinary class-group modulus
 -/
+
+
 
 namespace ClassFieldTheory
 

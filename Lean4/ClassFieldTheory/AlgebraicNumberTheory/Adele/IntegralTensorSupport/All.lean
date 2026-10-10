@@ -11,8 +11,6 @@ import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattic
 import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
 import ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Localization
 
-set_option autoImplicit false
-
 /-!
 # Integral support for relative adelic tensor products
 

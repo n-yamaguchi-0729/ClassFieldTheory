@@ -9,8 +9,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompa
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.FinitePadicCyclicData
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.SeparableClosurePadicLift
 
-set_option autoImplicit false
-
 /-!
 # Local-global compatibility of Artin homomorphisms
 

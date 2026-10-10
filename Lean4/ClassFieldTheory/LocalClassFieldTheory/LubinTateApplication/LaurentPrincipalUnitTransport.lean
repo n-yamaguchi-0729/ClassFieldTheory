@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
 
-set_option autoImplicit false
-
 /-!
 # Exact principal-unit transport from the Laurent model
 
@@ -17,6 +15,8 @@ power-series coefficient ring and the target integer ring.  Consequently it
 carries every principal-unit level onto, rather than merely into, the
 corresponding target principal-unit level.
 -/
+
+
 
 noncomputable section
 

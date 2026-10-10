@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalId
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTransfer
 import ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
 
-set_option autoImplicit false
-
 /-!
 # Principalization in the selected small Hilbert class field
 
@@ -30,7 +28,9 @@ then gives the class-group, integral-ideal, and fractional-ideal forms
 of principalization over the original number field.
 -/
 
-open scoped Classical IsMulCommutative NumberField
+
+
+open scoped IsMulCommutative NumberField
 
 noncomputable section
 

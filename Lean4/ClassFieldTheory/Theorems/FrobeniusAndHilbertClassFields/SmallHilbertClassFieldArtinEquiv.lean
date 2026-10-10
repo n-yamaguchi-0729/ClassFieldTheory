@@ -12,8 +12,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilber
 import ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldMathlibArtin
 
-set_option autoImplicit false
-
 /-!
 # Artin isomorphism for the small Hilbert class field
 
@@ -43,7 +41,8 @@ theorem smallHilbertClassField_artinEquiv
           artin (ordinaryRayClassOfFinitePrime v) =
             arithmeticFrobeniusAt (K := K) w := by
   let g :=
-    SmallHilbertClassFieldComparison.arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_of_isSmall E hE
+    (open SmallHilbertClassFieldComparison in
+      arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_of_isSmall E hE)
   let artin : RayClassGroup (ordinaryRayClassModulus K) ≃* (E ≃ₐ[K] E) :=
     (ordinaryRayClassGroupEquivClassGroup (K := K)).trans g.symm
   refine ⟨artin, ?_⟩
@@ -62,7 +61,7 @@ theorem smallHilbertClassField_artinEquiv
     _ = g (arithmeticFrobeniusAt (K := K) w) := by
       rw [← GlobalClassFieldComparison.arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
         (K := K) (L := E) v w hw hunram]
-      exact (SmallHilbertClassFieldComparison.arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_prime
-        E hE v).symm
+      exact ((open SmallHilbertClassFieldComparison in
+        arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_prime E hE v)).symm
 
 end ClassFieldTheory

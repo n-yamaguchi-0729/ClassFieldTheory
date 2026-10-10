@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Ramification.LocalField.Core
 import ValuedFieldTheory.Ramification.HilbertRamification.FirstRamificationComparison
 
-set_option autoImplicit false
-
 /-!
 # The first lower ramification group of a local field extension
 
@@ -57,8 +55,9 @@ theorem localLowerRamificationGroup_one_eq_hilbertRamificationGroup
     Algebra.IsAlgebraic.of_finite _ _
   let : Algebra.IsSeparable base.residueField target.residueField :=
     inferInstance
-  exact RamificationTheory.HilbertRamification.lowerRamificationGroup_one_eq_hilbertRamificationGroup
-    base target (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension K L)
+  exact (open _root_.RamificationTheory.HilbertRamification in
+    lowerRamificationGroup_one_eq_hilbertRamificationGroup
+      base target (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension K L))
 
 /-- Triviality of the first lower group is exactly triviality of Hilbert's
 ramification group; the two transports above are both injective. -/

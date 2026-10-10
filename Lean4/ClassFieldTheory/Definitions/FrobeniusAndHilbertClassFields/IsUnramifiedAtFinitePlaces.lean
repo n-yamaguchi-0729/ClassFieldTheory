@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.RingTheory.Unramified.Locus
 
-set_option autoImplicit false
-
 /-!
 # Unramifiedness at all finite places
 -/
+
+
 
 open scoped NumberField
 open NumberField IsDedekindDomain

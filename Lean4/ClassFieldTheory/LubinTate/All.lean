@@ -9,8 +9,6 @@ import ClassFieldTheory.LubinTate.FiniteLevel.All
 import ClassFieldTheory.LubinTate.FormalModule.All
 import ClassFieldTheory.LubinTate.Padic.All
 
-set_option autoImplicit false
-
 /-!
 # Lubin--Tate theory
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 
-set_option autoImplicit false
-
 /-!
 # Uniqueness of the conductor
 

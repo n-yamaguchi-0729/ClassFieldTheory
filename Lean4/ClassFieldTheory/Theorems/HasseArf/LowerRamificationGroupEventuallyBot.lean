@@ -10,8 +10,6 @@ import Mathlib.FieldTheory.Fixed
 import Mathlib.RingTheory.Filtration
 import Mathlib.RingTheory.Localization.FractionRing
 
-set_option autoImplicit false
-
 /-!
 # Eventual triviality of lower ramification groups
 

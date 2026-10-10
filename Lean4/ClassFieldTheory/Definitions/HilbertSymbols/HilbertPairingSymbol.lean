@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
 import ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
 
-set_option autoImplicit false
-
 /-!
 # Evaluation of a Hilbert pairing on representatives
 -/
+
+
 
 namespace ClassFieldTheory.HilbertPairing
 

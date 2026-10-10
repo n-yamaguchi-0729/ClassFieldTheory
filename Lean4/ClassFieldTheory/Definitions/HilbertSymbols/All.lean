@@ -20,4 +20,9 @@ import ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebraNormSubgroup
 import ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
 import ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
 
-set_option autoImplicit false
+/-!
+# Hilbert symbols and Kummer norm definitions
+
+This aggregate collects local and global Hilbert pairings and their
+laws, Kummer algebras and norm subgroups, and power classes.
+-/

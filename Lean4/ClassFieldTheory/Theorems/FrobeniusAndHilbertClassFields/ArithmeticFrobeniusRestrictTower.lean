@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFro
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
 import ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Frobenius in a finite abelian tower
 

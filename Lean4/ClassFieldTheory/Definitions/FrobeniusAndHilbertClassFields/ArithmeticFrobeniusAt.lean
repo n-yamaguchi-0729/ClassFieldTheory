@@ -9,13 +9,13 @@ import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 import Mathlib.NumberTheory.RamificationInertia.Galois
 import Mathlib.RingTheory.Frobenius
 
-set_option autoImplicit false
-
 /-!
 # Arithmetic Frobenius at a finite prime
 -/
 
-open scoped Classical NumberField
+
+
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

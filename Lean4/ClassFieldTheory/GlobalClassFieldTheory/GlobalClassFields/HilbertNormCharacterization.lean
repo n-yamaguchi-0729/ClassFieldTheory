@@ -8,8 +8,6 @@ import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClass
 import ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 import ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
 
-set_option autoImplicit false
-
 /-!
 # Hilbert norm subgroups and unramified extensions
 
@@ -22,6 +20,8 @@ The inclusion yields a canonical surjection from the narrow class group
 onto the actual norm quotient, together with the exact kernel
 factorization and the resulting divisibility of orders.
 -/
+
+
 
 open scoped IsMulCommutative NumberField
 

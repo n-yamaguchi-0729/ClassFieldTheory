@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
 import Mathlib.Algebra.Group.Hom.Basic
 
-set_option autoImplicit false
-
 /-!
 # Inverting the values of a local Hilbert pairing
 

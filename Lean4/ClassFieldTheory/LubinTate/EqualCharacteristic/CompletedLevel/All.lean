@@ -35,8 +35,6 @@ import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectTheta
 import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ThetaAtCompletedLevel
 import ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ThetaLocalInverse
 
-set_option autoImplicit false
-
 /-!
 # Completed Lubin--Tate levels in equal characteristic
 

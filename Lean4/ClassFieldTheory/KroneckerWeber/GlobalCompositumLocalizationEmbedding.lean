@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
 import ClassFieldTheory.KroneckerWeber.GlobalCompositumValuedEmbedding
 
-set_option autoImplicit false
-
 /-!
 # Embedding the localized global compositum in the common cyclotomic target
 
@@ -70,7 +68,6 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
   let F : wM.1.Completion →+* WithAbs aT :=
     AbsoluteValue.completionMapToCompleteTarget
       wM.1 aT W.embedding.toRingHom hW
-
   let _ : Field vK.Completion := inferInstance
   let _ : Field wM.1.Completion := inferInstance
   let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) wM.1
@@ -86,7 +83,6 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
   let _ : Algebra ℚ_[p.1] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p.1] E _ _
       (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
-
   let g : vK.Completion →+* WithAbs aT :=
     (WithAbs.equiv aT).symm.toRingHom.comp
       ((algebraMap ℚ_[p.1] T).comp e.toRingHom)
@@ -99,7 +95,6 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
         (map_zero (padicAbsoluteValueCompletionRingHom p.1)) x
   have hg : Isometry g :=
     AddMonoidHomClass.isometry_of_norm g hgNorm
-
   have hbase (x : vK.Completion) :
       F (AbsoluteValue.completionMap vK wM.1 wM.2 x) = g x := by
     have hcomp :
@@ -131,7 +126,6 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
         simp
       exact hq.trans (congrArg (algebraMap ℚ_[p.1] T) he.symm)
     exact DFunLike.congr_fun hcomp x
-
   let iRing : E →+* T :=
     (WithAbs.equiv aT).toRingHom.comp
       (F.comp E.val.toRingHom)

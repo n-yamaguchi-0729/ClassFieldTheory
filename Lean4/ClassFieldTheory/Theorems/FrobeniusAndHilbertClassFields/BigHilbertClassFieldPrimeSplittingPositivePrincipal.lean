@@ -10,8 +10,6 @@ import ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertC
 import ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayPrincipalIdealMembership
 import ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.BigHilbertClassFieldPrimeSplitting
 
-set_option autoImplicit false
-
 /-!
 # Totally positive principal primes and splitting
 
@@ -19,7 +17,7 @@ A finite prime splits completely in the big Hilbert class field exactly
 when its fractional ideal has a totally positive generator.
 -/
 
-open scoped Classical NumberField
+open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section

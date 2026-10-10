@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MathlibFieldClass
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkChosenFiniteAbelianNorms
 import ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkOpenSubgroups
 
-set_option autoImplicit false
-
 /-!
 # Finite abelian local classification in arbitrary universes
 

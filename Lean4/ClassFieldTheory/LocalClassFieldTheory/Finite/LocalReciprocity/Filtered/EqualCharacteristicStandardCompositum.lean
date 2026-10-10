@@ -8,8 +8,6 @@ import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.A
 import ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedFixedFieldComparison
 
-set_option autoImplicit false
-
 /-!
 # Filtered reciprocity for the equal-characteristic standard compositum
 

@@ -8,8 +8,6 @@ import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealMod
 import ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
 import Mathlib.Data.Finsupp.Order
 
-set_option autoImplicit false
-
 /-!
 # Prime classes and reduction of a ray modulus
 

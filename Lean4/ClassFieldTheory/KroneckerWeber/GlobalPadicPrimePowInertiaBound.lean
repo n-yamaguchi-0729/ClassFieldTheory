@@ -10,13 +10,12 @@ import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicIn
 import ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
 import ClassFieldTheory.KroneckerWeber.LocalCyclotomicEmbedding
 
-set_option autoImplicit false
-
 /-!
 # The one-prime p-primary inertia bound
 
 This endpoint combines the localization–inertia comparison, the structured
-local cyclotomic embedding, and the ramification comparison to replace the full cyclotomic totient by
+local cyclotomic embedding, and the ramification comparison to replace the full cyclotomic
+totient by
 the exact `p`-primary factor `φ(p ^ n)`.
 -/
 

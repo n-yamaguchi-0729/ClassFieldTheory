@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardArtinComparison
 import ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedLevelTower
 
-set_option autoImplicit false
-
 /-!
 # Restriction kernels for transported upper ramification groups
 
