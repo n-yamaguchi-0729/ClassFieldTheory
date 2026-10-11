@@ -55,69 +55,24 @@ Frobenius and Hilbert class fields. Each topic also has an `All.lean` aggregate.
 Each linked source file is also a focused import module, with `/` replaced by
 `.` and `.lean` removed.
 
-**[Finite local reciprocity](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalReciprocity.lean)**
-
-A surjective continuous local Artin map `Kˣ → Gal(L/K)` whose kernel is the field-norm subgroup.
-
-**[Profinite local reciprocity](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/ProfiniteLocalReciprocity.lean)**
-
-The topological profinite completion of `Kˣ` is continuously multiplicatively equivalent to the abelianized absolute Galois group of a nonarchimedean local field.
-
-**[Local existence theorem](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalExistenceOrderIso.lean)**
-
-The contravariant correspondence between finite abelian local extensions and open finite-index norm subgroups.
-
-**[Finite global reciprocity](Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/FiniteAbelianGlobalReciprocity.lean)**
-
-A Frobenius-normalized surjective Artin map from a ray class group for every finite abelian extension.
-
-**[Topological global reciprocity](Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/TopologicalGlobalReciprocity.lean)**
-
-The idèle-class quotient by its identity component is topologically isomorphic to the abelianized absolute Galois group.
-
-**[Global Artin map](Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/MaximalAbelianGlobalArtin.lean)**
-
-A continuous surjective global Artin map with the identity component as kernel.
-
-**[Hasse--Arf theorem](Lean4/ClassFieldTheory/Theorems/HasseArf/HasseArf.lean)**
-
-For a finite abelian local extension, the Herbrand value of every lower ramification jump is integral.
-
-**[Perfect local Hilbert pairing](Lean4/ClassFieldTheory/Theorems/HilbertSymbols/LocalHilbertPairingPerfectExists.lean)**
-
-Existence of a perfect local Hilbert pairing with the Kummer norm-residue criterion.
-
-**[Hilbert product formula](Lean4/ClassFieldTheory/Theorems/HilbertSymbols/HilbertProductFormula.lean)**
-
-A coherent family of local Hilbert pairings satisfying finite support and the global product formula.
-
-**[Cyclic Hasse norm theorem](Lean4/ClassFieldTheory/Theorems/NormTheorems/CyclicHasseNormTheorem.lean)**
-
-For a finite cyclic number-field extension, global norms are exactly the everywhere-local norms.
-
-**[Abelian conductor](Lean4/ClassFieldTheory/Theorems/ConductorsAndRayClassFields/ExistsUniqueAbelianConductor.lean)**
-
-Unique existence of the conductor of a finite abelian extension.
-
-**[Ray class fields](Lean4/ClassFieldTheory/Theorems/ConductorsAndRayClassFields/RayClassFieldReciprocity.lean)**
-
-Existence of a ray class field realization with its Artin reciprocity isomorphism.
-
-**[Big Hilbert class field](Lean4/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/BigHilbertClassFieldArtinEquiv.lean)**
-
-The narrow ideal class group as the Frobenius-normalized Galois group of a big Hilbert class field.
-
-**[Small Hilbert class field](Lean4/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/SmallHilbertClassFieldArtinEquiv.lean)**
-
-The ordinary ideal class group as the Galois group of a small Hilbert class field.
-
-**[Principal ideal theorem](Lean4/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/SmallHilbertClassFieldPrincipalization.lean)**
-
-The principal ideal theorem for the small Hilbert class field.
-
-**[Kronecker--Weber theorem](Lean4/ClassFieldTheory/Theorems/KroneckerWeber.lean)**
-
-Every finite abelian extension of `ℚ` embeds into a cyclotomic field of positive order.
+| Result | Mathematical content |
+| --- | --- |
+| [Finite local reciprocity](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalReciprocity.lean) | A surjective continuous local Artin map `Kˣ → Gal(L/K)` whose kernel is the field-norm subgroup. |
+| [Profinite local reciprocity](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/ProfiniteLocalReciprocity.lean) | The topological profinite completion of `Kˣ` is continuously multiplicatively equivalent to the abelianized absolute Galois group of a nonarchimedean local field. |
+| [Local existence theorem](Lean4/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalExistenceOrderIso.lean) | The contravariant correspondence between finite abelian local extensions and open finite-index norm subgroups. |
+| [Finite global reciprocity](Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/FiniteAbelianGlobalReciprocity.lean) | A Frobenius-normalized surjective Artin map from a ray class group for every finite abelian extension. |
+| [Topological global reciprocity](Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/TopologicalGlobalReciprocity.lean) | The idèle-class quotient by its identity component is topologically isomorphic to the abelianized absolute Galois group. |
+| [Global Artin map](Lean4/ClassFieldTheory/Theorems/GlobalClassFieldTheory/MaximalAbelianGlobalArtin.lean) | A continuous surjective global Artin map with the identity component as kernel. |
+| [Hasse--Arf theorem](Lean4/ClassFieldTheory/Theorems/HasseArf/HasseArf.lean) | For a finite abelian local extension, the Herbrand value of every lower ramification jump is integral. |
+| [Perfect local Hilbert pairing](Lean4/ClassFieldTheory/Theorems/HilbertSymbols/LocalHilbertPairingPerfectExists.lean) | Existence of a perfect local Hilbert pairing with the Kummer norm-residue criterion. |
+| [Hilbert product formula](Lean4/ClassFieldTheory/Theorems/HilbertSymbols/HilbertProductFormula.lean) | A coherent family of local Hilbert pairings satisfying finite support and the global product formula. |
+| [Cyclic Hasse norm theorem](Lean4/ClassFieldTheory/Theorems/NormTheorems/CyclicHasseNormTheorem.lean) | For a finite cyclic number-field extension, global norms are exactly the everywhere-local norms. |
+| [Abelian conductor](Lean4/ClassFieldTheory/Theorems/ConductorsAndRayClassFields/ExistsUniqueAbelianConductor.lean) | Unique existence of the conductor of a finite abelian extension. |
+| [Ray class fields](Lean4/ClassFieldTheory/Theorems/ConductorsAndRayClassFields/RayClassFieldReciprocity.lean) | Existence of a ray class field realization with its Artin reciprocity isomorphism. |
+| [Big Hilbert class field](Lean4/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/BigHilbertClassFieldArtinEquiv.lean) | The narrow ideal class group as the Frobenius-normalized Galois group of a big Hilbert class field. |
+| [Small Hilbert class field](Lean4/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/SmallHilbertClassFieldArtinEquiv.lean) | The ordinary ideal class group as the Galois group of a small Hilbert class field. |
+| [Principal ideal theorem](Lean4/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/SmallHilbertClassFieldPrincipalization.lean) | The principal ideal theorem for the small Hilbert class field. |
+| [Kronecker--Weber theorem](Lean4/ClassFieldTheory/Theorems/KroneckerWeber.lean) | Every finite abelian extension of `ℚ` embeds into a cyclotomic field of positive order. |
 
 The implementation directories include `Algebra`, `AlgebraicNumberTheory`,
 `AbstractClassFieldTheory`, `LocalFieldTheory`, `LocalClassFieldTheory`,
