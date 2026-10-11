@@ -6,7 +6,7 @@
     {
       "name": "GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueContinuousMulEquiv",
       "kind": "definition",
-      "module": "ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization"
+      "module": "Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization"
     },
     {
       "name": "GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom_ker",
@@ -19,7 +19,7 @@
     {
       "name": "GlobalClassFieldTheory.GlobalClassFields.arithmeticClosedFiniteIndexClassFieldGaloisContinuousMulEquivNormQuotient",
       "kind": "definition",
-      "module": "ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticClassFieldCorrespondence"
+      "module": "Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticClassFieldCorrespondence"
     },
     {
       "name": "GlobalClassFieldTheory.GlobalClassFields.closedFiniteIndexClassField_ideleClassNorm_range",
@@ -32,7 +32,7 @@
     {
       "name": "GlobalClassFieldTheory.GlobalClassFields.infiniteAbelianClassFieldCorrespondence",
       "kind": "definition",
-      "module": "ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.InfiniteAbelianClassFieldCorrespondence"
+      "module": "Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.InfiniteAbelianClassFieldCorrespondence"
     },
     {
       "name": "GlobalClassFieldTheory.GlobalClassFields.infiniteAbelianClassFieldCorrespondence_finite_iff_open",
@@ -41,7 +41,7 @@
     {
       "name": "LocalClassFieldTheory.localReciprocityEquiv",
       "kind": "definition",
-      "module": "ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity"
+      "module": "Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity"
     },
     {
       "name": "LocalClassFieldTheory.localArtinMap_surjective",
@@ -54,7 +54,7 @@
     {
       "name": "LocalClassFieldTheory.profiniteLocalReciprocity",
       "kind": "definition",
-      "module": "ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity"
+      "module": "Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity"
     },
     {
       "name": "LocalClassFieldTheory.profiniteLocalReciprocityHom_injective",
@@ -71,97 +71,97 @@
     {
       "name": "KroneckerWeber.exists_cyclotomicEmbedding",
       "kind": "theorem",
-      "module": "ClassFieldTheory.KroneckerWeber.Core"
+      "module": "Nyll.ClassFieldTheory.KroneckerWeber.Core"
     },
     {
       "name": "AlgebraicNumberTheory.PrimeSelection.exists_completelySplitPrime_modFour_one_not_mem",
       "kind": "theorem",
-      "module": "ClassFieldTheory.AlgebraicNumberTheory.NumberField.CompletelySplitPrimesModFour"
+      "module": "Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.CompletelySplitPrimesModFour"
     },
     {
       "name": "AlgebraicNumberTheory.exists_finiteGaloisIntermediateField_le_finrank_ge_of_infinite_aut",
       "kind": "theorem",
-      "module": "ClassFieldTheory.AlgebraicNumberTheory.Galois.UnboundedDegree"
+      "module": "Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.UnboundedDegree"
     },
     {
       "name": "AlgebraicNumberTheory.DiscriminantBounds.rootDiscr_le_of_natAbs_discr_le_pow",
       "kind": "theorem",
-      "module": "ClassFieldTheory.AlgebraicNumberTheory.NumberField.RootDiscriminantBound"
+      "module": "Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.RootDiscriminantBound"
     },
     {
       "name": "ClassFieldTheory.finiteAbelianLocalReciprocity",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocity"
+      "module": "Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocity"
     },
     {
       "name": "ClassFieldTheory.finiteAbelianLocalExistence_orderIso",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalExistenceOrderIso"
+      "module": "Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalExistenceOrderIso"
     },
     {
       "name": "ClassFieldTheory.finiteAbelianGlobalReciprocity",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.GlobalClassFieldTheory.FiniteAbelianGlobalReciprocity"
+      "module": "Nyll.ClassFieldTheory.Theorems.GlobalClassFieldTheory.FiniteAbelianGlobalReciprocity"
     },
     {
       "name": "ClassFieldTheory.topologicalGlobalReciprocity",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity"
+      "module": "Nyll.ClassFieldTheory.Theorems.GlobalClassFieldTheory.TopologicalGlobalReciprocity"
     },
     {
       "name": "ClassFieldTheory.maximalAbelianGlobalArtin",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.GlobalClassFieldTheory.MaximalAbelianGlobalArtin"
+      "module": "Nyll.ClassFieldTheory.Theorems.GlobalClassFieldTheory.MaximalAbelianGlobalArtin"
     },
     {
       "name": "ClassFieldTheory.hasseArf",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.HasseArf.HasseArf"
+      "module": "Nyll.ClassFieldTheory.Theorems.HasseArf.HasseArf"
     },
     {
       "name": "ClassFieldTheory.exists_perfectLocalHilbertPairing",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.HilbertSymbols.LocalHilbertPairingPerfectExists"
+      "module": "Nyll.ClassFieldTheory.Theorems.HilbertSymbols.LocalHilbertPairingPerfectExists"
     },
     {
       "name": "ClassFieldTheory.exists_globalHilbertPairingFamily_productFormula",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.HilbertSymbols.HilbertProductFormula"
+      "module": "Nyll.ClassFieldTheory.Theorems.HilbertSymbols.HilbertProductFormula"
     },
     {
       "name": "ClassFieldTheory.cyclicHasseNormTheorem",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.NormTheorems.CyclicHasseNormTheorem"
+      "module": "Nyll.ClassFieldTheory.Theorems.NormTheorems.CyclicHasseNormTheorem"
     },
     {
       "name": "ClassFieldTheory.existsUnique_abelianConductor",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.ConductorsAndRayClassFields.ExistsUniqueAbelianConductor"
+      "module": "Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.ExistsUniqueAbelianConductor"
     },
     {
       "name": "ClassFieldTheory.rayClassField_reciprocity",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassFieldReciprocity"
+      "module": "Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassFieldReciprocity"
     },
     {
       "name": "ClassFieldTheory.bigHilbertClassField_artinEquiv",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.BigHilbertClassFieldArtinEquiv"
+      "module": "Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.BigHilbertClassFieldArtinEquiv"
     },
     {
       "name": "ClassFieldTheory.smallHilbertClassField_artinEquiv",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldArtinEquiv"
+      "module": "Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldArtinEquiv"
     },
     {
       "name": "ClassFieldTheory.ideals_becomePrincipalInSmallHilbertClassField",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldPrincipalization"
+      "module": "Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.SmallHilbertClassFieldPrincipalization"
     },
     {
       "name": "ClassFieldTheory.kroneckerWeber",
       "kind": "theorem",
-      "module": "ClassFieldTheory.Theorems.KroneckerWeber"
+      "module": "Nyll.ClassFieldTheory.Theorems.KroneckerWeber"
     }
   ]
 }
