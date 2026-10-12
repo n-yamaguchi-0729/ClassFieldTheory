@@ -122,3 +122,4 @@ goals and scope, directs development, and maintains the library.
 
 Apache License 2.0. See [LICENSE](LICENSE). Bundled scheme-theory foundations
 retain the [Anthropic FLT notices](Nyll/SchemeTheory/ANTHROPIC_FLT_NOTICE).
+For pi1 adaptations and their preserved notices, see [NOTICE](NOTICE).
