@@ -27,6 +27,5 @@ globs = [
   "Nyll.ProCGroups.+",
   "Nyll.ValuedFieldTheory.+",
   "Nyll.GaloisCohomology.+",
-  "Nyll.SchemeTheory.+",
   "Nyll.ClassFieldTheory.+",
 ]

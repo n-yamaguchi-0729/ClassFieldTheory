@@ -9,9 +9,6 @@
     "GaloisCohomology": [
       "Nyll.GaloisCohomology"
     ],
-    "SchemeTheory": [
-      "Nyll.SchemeTheory"
-    ],
     "ClassFieldTheory": [
       "Nyll.ClassFieldTheory"
     ],
@@ -47,14 +44,15 @@
     "ProCGroups",
     "ValuedFieldTheory",
     "GaloisCohomology",
-    "SchemeTheory",
     "ClassFieldTheory"
   ],
   "depths": {
     "ProCGroups": 1,
     "ValuedFieldTheory": 1,
     "GaloisCohomology": 1,
-    "SchemeTheory": 1,
     "ClassFieldTheory": 2
-  }
+  },
+  "primaryRoots": [
+    "Nyll.ClassFieldTheory.All"
+  ]
 }
