@@ -6,7 +6,10 @@
 A Lean 4.35.0-rc2 library for local and global class field theory.
 
 This library is extracted from [NYLL](https://github.com/n-yamaguchi-0729/NYLL).
-Bundled dependencies use the same `Nyll` imports as the complete library.
+The class-field-theory modules use Mathlib and the bundled
+[ValuedFieldTheory](Nyll/ValuedFieldTheory/All.lean),
+[GaloisCohomology](Nyll/GaloisCohomology/All.lean), and
+[ProCGroups](Nyll/ProCGroups/All.lean) foundations.
 
 ## Scope
 
@@ -120,6 +123,4 @@ goals and scope, directs development, and maintains the library.
 
 ## License
 
-Apache License 2.0. See [LICENSE](LICENSE). Bundled scheme-theory foundations
-retain the [Anthropic FLT notices](Nyll/SchemeTheory/ANTHROPIC_FLT_NOTICE).
-For pi1 adaptations and their preserved notices, see [NOTICE](NOTICE).
+Apache License 2.0. See [LICENSE](LICENSE).

@@ -3,6 +3,16 @@ COPYRIGHT AND THIRD-PARTY NOTICES
 This project is released under the Apache License, Version 2.0 (see LICENSE).
 Source-specific copyright, author and provenance notices remain in the files.
 
+Scope of the bundled-source notices
+-----------------------------------
+
+The class-field-theory import closure (Nyll.ClassFieldTheory.All) uses
+ValuedFieldTheory, GaloisCohomology and ProCGroups, in addition to Mathlib.
+It does not import SchemeTheory or its pi1- or Anthropic-FLT-derived code.
+The current distribution also bundles SchemeTheory through Nyll.All. The
+pi1 and Anthropic FLT notices below apply to those distributed source files;
+they do not identify dependencies of the class-field-theory modules.
+
 pi1
 ---
 
@@ -70,10 +80,11 @@ Nyll/SchemeTheory/Pi1/Descent/EqualizerScalars.lean
   Authors: Christian Merten
 
 Nyll/SchemeTheory/Descent/EqualizerScalars.lean
-  Local extension; retained upstream statements and local proofs are distinguished in the source.
-  Upstream: https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean
-  Copyright (c) 2024 Christian Merten. All rights reserved.
-  Authors: Christian Merten
+  Original NYLL computation lemma importing the pi1 comparison from
+  Nyll/SchemeTheory/Pi1/Descent/EqualizerScalars.lean (credited above).
+  Copyright (c) 2026 Naganori Yamaguchi. All rights reserved.
+  Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
+  https://github.com/n-yamaguchi-0729
 
 Nyll/SchemeTheory/Pi1/Etale/RingHom.lean
   Adapted upstream port.
