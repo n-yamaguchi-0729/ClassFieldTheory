@@ -90,8 +90,8 @@ theorem exponentialValueGroupQuotient_finite_of_finiteDimensional
     (IsLocalRing.ResidueField.map i).toAlgebra
   have honeLI : LinearIndependent (IsLocalRing.ResidueField V)
       (fun _ : Unit ↦ IsLocalRing.residue W (1 : W)) := by
-    rw [linearIndependent_unique_iff]
-    simp
+    rw [linearIndependent_unique_iff, map_one]
+    exact one_ne_zero
   have hprodQ : LinearIndependent K
       (fun p : Q × Unit ↦
         (((1 : LubinTate.Valuations.exponentialValuationSubring w) : L) * pi p.1)) :=

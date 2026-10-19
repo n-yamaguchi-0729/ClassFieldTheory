@@ -170,7 +170,7 @@ theorem
     MonoidHom.mem_ker.mp hpowKer
   refine ⟨integerUnitsToFieldUnits B u, ?_, ?_⟩
   · unfold LocalFieldTheory.fieldPrincipalUnits
-    exact ⟨u, by simp, rfl⟩
+    exact ⟨u, by rw [LocalFieldTheory.principalUnits_zero]; exact Subgroup.mem_top u, rfl⟩
   · rw [← hx, ← hdecomp, map_mul, hpow, mul_one]
 
 /-- The zeroth Artin principal-unit group is full on an explicit

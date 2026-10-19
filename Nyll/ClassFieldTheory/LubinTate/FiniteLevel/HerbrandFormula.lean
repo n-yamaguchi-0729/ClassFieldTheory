@@ -56,7 +56,8 @@ private theorem standardLubinTateUnitParameterSubgroup_zero_eq_top
     (standardLubinTateUnitParameterClass_mem_subgroup_iff
       F n 0 (Nat.zero_le (n + 1))
       (standardLubinTateUnitParameterChosenRepresentative F n a)).2 (by
-        simp)
+        rw [CompleteDVF.higherPrincipalUnitGroup.zero_eq_top]
+        exact Subgroup.mem_top _)
 
 private theorem standardLubinTateRealLowerRamificationGroup_zero_eq_top
     (F : LocalField.{u, v} K) {π : F.valuationSubring}
@@ -143,7 +144,8 @@ private theorem standardLubinTateHerbrandValueNat_pow_sub_one
   induction k with
   | zero =>
       intro _
-      simp
+      rw [pow_zero, Nat.sub_self,
+        AntitoneNormalSubgroupFiltration.herbrandValueNat_zero, Nat.cast_zero]
   | succ k ih =>
       intro hsucc
       have hkn : k ≤ n := by omega
@@ -181,8 +183,7 @@ private theorem standardLubinTateHerbrandValueNat_pow_sub_one
           q ^ (k + 1) - q ^ k = q * q ^ k - q ^ k := by
             rw [pow_succ, Nat.mul_comm]
           _ = (q - 1) * q ^ k := by
-            rw [Nat.mul_sub_right_distrib]
-            simp
+            rw [Nat.mul_sub_right_distrib, one_mul]
       have hexponent : n + 1 - (k + 1) = n - k := by omega
       have hpowSplit : q ^ n = q ^ k * q ^ (n - k) := by
         rw [← pow_add]
@@ -208,7 +209,7 @@ private theorem standardLubinTateHerbrandValueNat_pow_sub_one
           _ = (b : ℝ) *
                 ((q ^ (n + 1 - (k + 1)) : ℕ) /
                   ((q - 1) * q ^ n : ℕ) : ℝ) := by
-              simp
+              rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
           _ = 1 := by
               rw [← mul_div_assoc, ← Nat.cast_mul, hproduct, div_self]
               exact_mod_cast (Nat.ne_of_gt hdenpos)

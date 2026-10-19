@@ -975,17 +975,9 @@ private theorem lubinTateUniformizerDiagonalAutomorphism_order
   let σB : Gal(B/K) := (eT.symm.trans σT).trans eT
   let σ := lubinTateUniformizerDiagonalAutomorphism K hπ n u
   let transportU : Gal(U/K) ≃* Gal(A/K) :=
-    { AlgEquiv.equivCongr eU eU with
-      map_mul' := by
-        intro g h
-        ext x
-        simp }
+    AlgEquiv.autCongr eU
   let transportT : Gal(T/K) ≃* Gal(B/K) :=
-    { AlgEquiv.equivCongr eT eT with
-      map_mul' := by
-        intro g h
-        ext x
-        simp }
+    AlgEquiv.autCongr eT
   have hσAOrder : orderOf σA = d := by
     rw [show σA = transportU φ by rfl, transportU.orderOf_eq,
       localFiniteUnramifiedField_arithmeticFrobenius_order K d hd]

@@ -33,8 +33,8 @@ theorem rationalPrimeIdeal_eq_span (p : Nat.Primes) :
       ((Rat.HeightOneSpectrum.primesEquiv (R := ℤ)).apply_symm_apply p)
     exact h
   have he : Rat.IsIntegralClosure.intEquiv ℤ = RingEquiv.refl ℤ := by
-    ext z
-    simp
+    apply RingEquiv.toRingHom_injective
+    exact Subsingleton.elim _ _
   change v.asIdeal = Ideal.span {(p.1 : ℤ)}
   symm
   calc

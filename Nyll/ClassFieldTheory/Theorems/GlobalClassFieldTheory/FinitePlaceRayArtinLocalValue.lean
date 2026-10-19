@@ -285,7 +285,7 @@ theorem exists_finitePlaceRayArtin_localValueDiagram
   have hLocalContinuous : Continuous localArtin := by
     apply continuous_of_continuousAt_one localArtin
     apply tendsto_nhds_of_eventually_eq
-    filter_upwards [hLocalKerOpen.mem_nhds (by simp)] with x hx
+    filter_upwards [hLocalKerOpen.mem_nhds localArtin.ker.one_mem] with x hx
     change localArtin x = 1 at hx
     simpa only [map_one] using hx
   exact ⟨w, halg, ι, localArtin, transport,

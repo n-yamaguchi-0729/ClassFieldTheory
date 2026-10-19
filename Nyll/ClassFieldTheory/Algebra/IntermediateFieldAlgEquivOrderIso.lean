@@ -5,6 +5,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Mathlib.FieldTheory.IntermediateField.Basic
+import Mathlib.Logic.Equiv.Set
 
 /-!
 # Intermediate fields under an algebra equivalence
@@ -32,15 +33,11 @@ def intermediateFieldAlgEquivOrderIso (e : L ≃ₐ[F] L') :
     left_inv := by
       intro E
       apply SetLike.coe_injective
-      change e.symm '' (e '' (E : Set L)) = E
-      ext x
-      simp
+      exact e.toEquiv.symm_image_image (E : Set L)
     right_inv := by
       intro E
       apply SetLike.coe_injective
-      change e '' (e.symm '' (E : Set L')) = E
-      ext x
-      simp
+      exact e.toEquiv.image_symm_image (E : Set L')
   }
   map_rel_iff' := by
     intro E G

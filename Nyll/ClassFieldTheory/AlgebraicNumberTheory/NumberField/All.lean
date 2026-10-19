@@ -21,4 +21,8 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.SupportedDiscriminantBound
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.TameDifferentTrace
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.GoodReductionPlaces
+
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteTypeIntegralPlaces
+
 /-! # Finite and everywhere-unramified towers of number fields -/

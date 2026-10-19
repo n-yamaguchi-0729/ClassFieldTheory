@@ -313,7 +313,7 @@ noncomputable def abstractFixedFieldNormResidueMap
     rw [abstractFixedFieldNormResidueMonoidHom_ker
       k Ω D v hcf K L hLK]
     exact localNormSubgroup_isOpen F E
-  exact hopen.mem_nhds (by simp)
+  exact hopen.mem_nhds f.ker.one_mem
 
 /-- The ordinary norm on fixed-field units, continuously bundled for the
 two spectral topologies extended from the original local field. -/

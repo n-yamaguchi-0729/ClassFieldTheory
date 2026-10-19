@@ -180,9 +180,12 @@ noncomputable def finitePlaceIntegralCompletionElement
   letI : IsNonarchimedeanLocalField C :=
     finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
   exact ⟨algebraMap K C (x : K), by
-    rw [finitePlaceCompletion_mem_integers_iff_norm_le_one
-      (HeightOneSpectrum.adicAbv K v)
-      (HeightOneSpectrum.isNonarchimedean_adicAbv K v)]
+    have hmem : algebraMap K C (x : K) ∈ 𝒪[C] ↔
+        ‖algebraMap K C (x : K)‖ ≤ 1 :=
+      finitePlaceCompletion_mem_integers_iff_norm_le_one
+        (HeightOneSpectrum.adicAbv K v)
+        (HeightOneSpectrum.isNonarchimedean_adicAbv K v) _
+    apply hmem.2
     calc
       ‖algebraMap K C (x : K)‖ =
           HeightOneSpectrum.adicAbv K v (x : K) :=
@@ -309,14 +312,13 @@ noncomputable def finitePlaceIntegralCompletionUnit
     intro hy
     rw [hy, norm_zero] at hyNorm
     exact zero_ne_one hyNorm
-  let yIntegral : 𝒪[C] := ⟨y, by
-    rw [finitePlaceCompletion_mem_integers_iff_norm_le_one
-      a (HeightOneSpectrum.isNonarchimedean_adicAbv K v)]
-    exact hyNorm.le⟩
+  have hmem (z : C) : z ∈ 𝒪[C] ↔ ‖z‖ ≤ 1 :=
+    finitePlaceCompletion_mem_integers_iff_norm_le_one
+      a (HeightOneSpectrum.isNonarchimedean_adicAbv K v) z
+  let yIntegral : 𝒪[C] := ⟨y, (hmem y).2 hyNorm.le⟩
   let yInvIntegral : 𝒪[C] := ⟨y⁻¹, by
-    rw [finitePlaceCompletion_mem_integers_iff_norm_le_one
-      a (HeightOneSpectrum.isNonarchimedean_adicAbv K v),
-      norm_inv, hyNorm, inv_one]⟩
+    apply (hmem (y⁻¹)).2
+    rw [norm_inv, hyNorm, inv_one]⟩
   exact {
     val := yIntegral
     inv := yInvIntegral
@@ -925,7 +927,8 @@ theorem finitePlaceNormalizedValuation_nonzeroIntegralFieldUnit
       WithZero.exp (-1 : ℤ) ^ m =
           WithZero.exp (m • (-1 : ℤ)) :=
         (WithZero.exp_nsmul m (-1 : ℤ)).symm
-      _ = WithZero.exp (-(m : ℤ)) := by simp
+      _ = WithZero.exp (-(m : ℤ)) := by
+        rw [nsmul_eq_mul, mul_neg, mul_one]
   have hnormX :
       ‖(xC : C)‖ =
         (WithZeroMulInt.toNNReal
@@ -1000,7 +1003,7 @@ theorem finitePlaceNormalizedValuation_nonzeroIntegralFieldUnit
     _ = valuationMap C (Additive.ofMul (πC ^ m)) := hValuationMap
     _ = (m : ℤ) * valuationMap C (Additive.ofMul πC) := by
       rw [valuationMap_ofMul_pow]
-    _ = -(m : ℤ) := by rw [hπCValuation]; simp
+    _ = -(m : ℤ) := by rw [hπCValuation, mul_neg, mul_one]
     _ = -(AlgebraicNumberTheory.PowerResidueSymbols.idealPrimeMultiplicity
         K v (Ideal.span {x}) : ℤ) := rfl
 

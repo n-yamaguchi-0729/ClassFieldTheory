@@ -11,18 +11,17 @@ This library is extracted from [NYLL](https://github.com/n-yamaguchi-0729/NYLL).
 
 <!-- nyll-publication:distribution:begin -->
 Only the module-level import closure of `Nyll.ClassFieldTheory.All` is bundled. Dependencies retain their canonical `Nyll` imports.
+
+Supporting modules are included from [AlgebraicCurves](Nyll/AlgebraicCurves/), [GaloisCohomology](Nyll/GaloisCohomology/), [ProCGroups](Nyll/ProCGroups/), [SchemeTheory](Nyll/SchemeTheory/), [ValuedFieldTheory](Nyll/ValuedFieldTheory/). These dependency libraries are included only to the extent required by the imports.
 <!-- nyll-publication:distribution:end -->
-The class-field-theory modules use Mathlib and the bundled
-[ValuedFieldTheory](Nyll/ValuedFieldTheory/),
-[GaloisCohomology](Nyll/GaloisCohomology/), and
-[ProCGroups](Nyll/ProCGroups/) foundations.
 
 ## Scope
 
-The local theory concerns nonarchimedean local fields, and the global theory
-concerns number fields. The library covers reciprocity and existence theorems,
-Hasse--Arf, Hilbert symbols, norm theorems, conductors and ray class fields,
-and Frobenius and Hilbert class fields.
+<!-- nyll-publication:cft-scope:begin -->
+Local class field theory covers nonarchimedean local fields. Global class field
+theory covers number fields and function fields over finite fields, including
+reciprocity, existence, norm subgroups, conductors and ray class fields.
+<!-- nyll-publication:cft-scope:end -->
 
 ## Main results
 
@@ -48,9 +47,21 @@ and Frobenius and Hilbert class fields.
 Further results include local Kronecker--Weber, general power-residue
 reciprocity, and Gauss quadratic reciprocity.
 
-## Incomplete results
+## Function-field class field theory
 
-Global function-field class field theory is not included.
+<!-- nyll-publication:cft-function-fields:begin -->
+For function fields over a finite constant field, the following endpoints
+use a chosen rational parameter. Their principal-divisor structure (finite support of valuation orders and degree zero) is constructed from the function-field hypotheses by [`isCurveOver`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Fields/Curve.lean#L34). No class-field existence input or norm-cofinality hypothesis is supplied.
+
+| Result | Lean endpoint |
+| --- | --- |
+| Existence and classification: Finite abelian extensions correspond, with reversed inclusion, to open finite-index subgroups in the ordinary idèle-class topology, through the actual norm image. | [`exists_classField_of_open`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/GlobalClassFields/Classification.lean#L35) and [`finiteAbelianFieldNormSubgroupOrderIso`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/GlobalClassFields/Classification.lean#L82) |
+| Local–global compatibility: The actual local and global Artin maps agree on a one-place idèle. At an unramified place, the local value is arithmetic Frobenius to the power of the valuation. | [`localArtin_eq_abelianFiniteArtin_placeIdele`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Artin/LocalGlobalCompatibility.lean#L369) and [`localDecompositionArtin_eq_unramifiedFrobenius_zpow`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Artin/UnramifiedFrobenius.lean#L99) |
+| Profinite reciprocity: The profinite completion for the ordinary idèle-class topology is isomorphic to the abelianized absolute Galois group. | [`profiniteReciprocity`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Artin/ProfiniteReciprocity.lean#L74) |
+
+The development also includes arithmetic Frobenius normalization, conductors,
+ray class fields, prescribed splitting, and the cyclic Hasse norm theorem.
+<!-- nyll-publication:cft-function-fields:end -->
 
 ## Public API
 
@@ -131,4 +142,7 @@ goals and scope, directs development, and maintains the library.
 
 <!-- nyll-publication:credits:begin -->
 Apache License 2.0. See [LICENSE](LICENSE).
+
+Included adaptations from [pi1](https://github.com/chrisflav/pi1) and [Anthropic’s Fermat’s Last Theorem project](https://github.com/anthropics/fermats-last-theorem) retain their source-specific copyrights and authors.
+The included-file inventories and preserved upstream notices are in [NOTICE](NOTICE).
 <!-- nyll-publication:credits:end -->

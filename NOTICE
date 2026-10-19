@@ -1,0 +1,1138 @@
+COPYRIGHT AND THIRD-PARTY NOTICES
+
+Apache License, Version 2.0. See LICENSE.
+The following notices apply only to the Lean files included in this extract.
+Source-specific copyright and author notices remain in those files.
+
+pi1
+---
+
+https://github.com/chrisflav/pi1
+License: Apache License, Version 2.0.
+Comparison revision: 5c5c0171efc863ce9990171bdf46d7cb5fd582fb. Original import commit unverified.
+Included-file attribution and exact license:
+Nyll/EtaleFundamentalGroups/Pi1/ATTRIBUTION.md
+Nyll/EtaleFundamentalGroups/Pi1/LICENSE
+
+Nyll/SchemeTheory/Descent/EqualizerScalars.lean
+Role: nyll_extension
+Copyright (c) 2026 Naganori Yamaguchi. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
+https://github.com/n-yamaguchi-0729
+
+Nyll/SchemeTheory/FiniteEtale/Algebra/EtaleSplitting.lean
+Role: nyll_extension
+Copyright (c) 2026 Naganori Yamaguchi. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
+https://github.com/n-yamaguchi-0729
+
+Nyll/SchemeTheory/Pi1/Affine/Over.lean
+Role: adapted_upstream_port
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Nyll/SchemeTheory/Pi1/Affine/Property.lean
+Role: adapted_upstream_port
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Nyll/SchemeTheory/Pi1/Descent/EqualizerScalars.lean
+Role: adapted_upstream_port
+Copyright (c) 2024 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean
+Original mathlib source:
+https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean
+
+Nyll/SchemeTheory/Pi1/Descent/FlatEqualizer.lean
+Role: adapted_upstream_port
+Copyright (c) 2024 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean
+Original mathlib source:
+https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean
+
+Nyll/SchemeTheory/Pi1/Etale/RingHom.lean
+Role: adapted_upstream_port
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/RingHom/Etale.lean
+Original mathlib source:
+https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/RingHom/Etale.lean
+
+Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Basic.lean
+Role: adapted_upstream_port
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+The cited pi1 file has no copyright notice; its holder requires review.
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Basic.lean
+
+Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Descent.lean
+Role: adapted_upstream_port
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+The cited pi1 file has no copyright notice; its holder requires review.
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Descent.lean
+
+Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Equalizer.lean
+Role: adapted_upstream_port
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+The cited pi1 file has no copyright notice; its holder requires review.
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Equalizer.lean
+
+Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Splitting.lean
+Role: adapted_upstream_port
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+The cited pi1 file has no copyright notice; its holder requires review.
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/KerTensor.lean
+
+Nyll/SchemeTheory/Pi1/FiniteEtale/Basic.lean
+Role: adapted_upstream_port
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Nyll/SchemeTheory/Pi1/FiniteEtale/Geometry.lean
+Role: adapted_upstream_port
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Nyll/SchemeTheory/Pi1/Morphisms/Finite.lean
+Role: adapted_upstream_port
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Nyll/SchemeTheory/Pi1/Morphisms/Flat.lean
+Role: adapted_upstream_port
+Copyright (c) 2024 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten, Andrew Yang
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean
+Original mathlib source:
+https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean
+
+Nyll/SchemeTheory/Pi1/Morphisms/Smooth.lean
+Role: adapted_upstream_port
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+
+Nyll/SchemeTheory/Pi1/RingTheory/QuotientProducts.lean
+Role: adapted_upstream_port
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+The cited pi1 file has no copyright notice; its holder requires review.
+
+Adapted from the pinned pi1 source:
+https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Ideal/Quotient/Operations.lean
+
+Anthropic FLT: AlgebraicCurves
+------------------------------
+
+Copyright 2026 Anthropic, PBC.
+License: Apache License, Version 2.0.
+Included-file source mapping: Nyll/AlgebraicCurves/ANTHROPIC_FLT_SOURCE.md
+Preserved upstream NOTICE: Nyll/AlgebraicCurves/ANTHROPIC_FLT_NOTICE
+Preserved earlier-source attribution: Nyll/AlgebraicCurves/ANTHROPIC_FLT_ATTRIBUTION.md
+Earlier copyright holders and authors are not replaced by Anthropic.
+
+Nyll/AlgebraicCurves/Cohomology/Adelic/Index.lean
+Nyll/AlgebraicCurves/Cohomology/Adelic/Repartitions.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/CoherentBaseChangeFibreH0FamilyIsClosedSetOfLeH0.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/CoherentBaseChangeTwoTermComplexProjectiveKer.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechFibreH0Family.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechFinrankKerBaseChangeEq.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechIsClosedSetOfLeFinrankKerBaseChange.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechKerBaseChangeTowerEquiv.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechKerMapInjective.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordBijectiveCokerMapBaseChange.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordBijectiveKerMapBaseChange.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordFiniteK0.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordFlatK0.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordProjectiveK0.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordProjectiveKer.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechProjectiveKer.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechTwoTermComplexKerMapBaseChangeBijective.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoTermEulerCharacteristic.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/Comparison/EquivModulesIso.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/Comparison/FiniteModules.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/Comparison/FiniteToOrderedAffineCoverIff.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/Comparison/FiniteUnit.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/DivisorSections.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/Maps.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/GradedModuleHMapBijective.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/GradedModuleHomCochainMapBijective.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/GradedModuleHomHMapBijective.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/GradedModuleHomSecMapBijective.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/GradedModuleHomSecMapInjective.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/GradedModulePresentationSubsingletonH.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/GradedModuleSubsingletonCohomologyShift.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/TwistSubsingletonCohomologyLt.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/TwistSubsingletonCohomologyNegLe.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/ProjectiveSpace/TwistSubsingletonCohomologySucc.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/TwoChart/LocallyConstantFibreEulerChar.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/TwoChart/SectionsFiniteH0.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/TwoChart/SectionsFiniteH1.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/TwoChart/SectionsOf.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/TwoChart/TwoAffineCoverCechSectionsOfBaseChangeEquiv.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/TwoChart/TwoAffineCoverFinrankCechDiffBaseChange.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/TwoChart/TwoAffineCoverFinrankKerCechDiffBaseChangeEqOne.lean
+Nyll/AlgebraicCurves/Cohomology/Cech/TwoChart/TwoAffineEulerCharacteristicConstancy.lean
+Nyll/AlgebraicCurves/Cohomology/CechH1ToH1Bijective.lean
+Nyll/AlgebraicCurves/Cohomology/CechRiemannRochGenusReached.lean
+Nyll/AlgebraicCurves/Cohomology/FiniteH0H1StructureSheafAlgClosed.lean
+Nyll/AlgebraicCurves/Cohomology/FiniteH0H1StructureSheafSmoothProperCurve.lean
+Nyll/AlgebraicCurves/Cohomology/FiniteH1GenusReached.lean
+Nyll/AlgebraicCurves/Cohomology/FinrankH0H1SectionsOfRangeEqLSpaceOn.lean
+Nyll/AlgebraicCurves/Cohomology/IndexOfSpecialtyEqFinrankH1.lean
+Nyll/AlgebraicCurves/Cohomology/LinearEquivCechH0CechH1.lean
+Nyll/AlgebraicCurves/Cohomology/LinearEquivCechH0CechH1SectionsOf.lean
+Nyll/AlgebraicCurves/Cohomology/LinearEquivCechH0CechH1SectionsOfRangeEqLSpaceOn.lean
+Nyll/AlgebraicCurves/Cohomology/MemAdeleSpaceIffMemRepartitions.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/BaseChange/LSpacePullbackConstantsEqSpan.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Duality/CanonicalDivisorGenusRiemannRoch.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Duality/FinrankOmegaSpaceEqEllCanonicalSub.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Duality/WeilDifferentialRankOne.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Duality/WeilOfKaehlerMemOmegaSpace.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/EqGenusFFEllSubEllEq.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Genus/AdelicGenus.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Genus/GenusEqGenusFF.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Genus/GenusFFEqAlgEquiv.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/GenusRiemannIndexCurve.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/AdicValuationSubLeRiemannGenus.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/FunctionFieldRiemannRochAlgClosed.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/FunctionFieldRiemannRochAlgClosedCurve.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/FunctionFieldRiemannRochResidueTheoremK.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/IndexOfSpecialtyEqEllSub.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/IndexOfSpecialtyNsmulSingleEqZero.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/RiemannGenusBoundedIndexFinite.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/RiemannGenusReachedAtEq.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/RiemannGenusReachedStichtenothGenusExists.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Index/StichtenothGenusExists.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/LocalSections/MemLSpaceOnAdicValuationEq.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/LocalSections/RROpensDegreeEqSubOneEllEqZero.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/LocalSections/RROpensEffectiveSubAddSmulSingleMemPrincipal.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/LocalSections/RROpensFinsetSubsetEllSubSumSingleEqZero.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/LocalSections/RROpensInjectiveEllSubSumSingleEqOne.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Spaces/EllAddEqOrd.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Spaces/EllEqDegreeAddOneSubGenusFF.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Spaces/FiniteDimensionalLSpaceZero.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Spaces/MulMemLSpaceAdd.lean
+Nyll/AlgebraicCurves/Cohomology/RiemannRoch/Spaces/SectionBounds.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/BaseChange/CochainBaseChangeEquiv.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Coherent/CoherentModules.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Coherent/IsIsoBaseChangeHomPushforward.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Coherent/QuasicoherentModules.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Complexes/DZeroModulesEqZeroIffUnique.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Complexes/FlatCochainModules.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Complexes/KerDSuccLeRangeD.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Complexes/OModulePresheafOfModules.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/EulerCharacteristic/InvertibleIdealEulerCharSectionsOfTensorInvModuleEq.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/EulerCharacteristic/RelativeDivisorEulerCharTensorLineBundleEq.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/EulerCharacteristic/RelativeDivisorIEqZeroSchemeIdealEulerCharEq.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Vanishing/ModulesInvertibleNontrivialH0SectionsOf.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Vanishing/ModulesInvertibleSubsingletonH1SectionsOf.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Vanishing/SubsingletonHSucc.lean
+Nyll/AlgebraicCurves/Cohomology/Sheaves/Vanishing/SubsingletonHSuccZeroModules.lean
+Nyll/AlgebraicCurves/Cohomology/WeilDualityAdelicFunctionFieldRiemannRoch.lean
+Nyll/AlgebraicCurves/Differentials/Kaehler/KaehlerDifferentialDNeZero.lean
+Nyll/AlgebraicCurves/Differentials/Kaehler/KaehlerDifferentialSpanDEqTop.lean
+Nyll/AlgebraicCurves/Differentials/Kaehler/KaehlerRankOneTranscendental.lean
+Nyll/AlgebraicCurves/Differentials/Kaehler/TranscendentalSeparable.lean
+Nyll/AlgebraicCurves/Differentials/Kaehler/Weil.lean
+Nyll/AlgebraicCurves/Differentials/Local/LocalGeometry.lean
+Nyll/AlgebraicCurves/Differentials/Local/Order.lean
+Nyll/AlgebraicCurves/Differentials/Local/Uniformizer.lean
+Nyll/AlgebraicCurves/Differentials/Maps/Maps.lean
+Nyll/AlgebraicCurves/Differentials/Residues/Basic.lean
+Nyll/AlgebraicCurves/Differentials/Residues/Canonical.lean
+Nyll/AlgebraicCurves/Differentials/Residues/Construction.lean
+Nyll/AlgebraicCurves/Differentials/Residues/FibreIdentity.lean
+Nyll/AlgebraicCurves/Differentials/Residues/FibreResidueIdentityAlong.lean
+Nyll/AlgebraicCurves/Differentials/Residues/RationalSimplePoles.lean
+Nyll/AlgebraicCurves/Differentials/Residues/ResidueTheoremKAlgClosed.lean
+Nyll/AlgebraicCurves/Differentials/Residues/ResidueTheoremKRatFunc.lean
+Nyll/AlgebraicCurves/Differentials/Residues/ResidueTheoremRatFuncPerfectField.lean
+Nyll/AlgebraicCurves/Differentials/Residues/ResidueTheoremResidueTheoremK.lean
+Nyll/AlgebraicCurves/Differentials/Residues/ResidueTraceCompletionCommute.lean
+Nyll/AlgebraicCurves/Differentials/Residues/TateAgreement.lean
+Nyll/AlgebraicCurves/Differentials/Residues/TateChainRule.lean
+Nyll/AlgebraicCurves/Differentials/Residues/TateCommFinite.lean
+Nyll/AlgebraicCurves/Differentials/Residues/TateTrace.lean
+Nyll/AlgebraicCurves/Differentials/Residues/TateTraceCompatSeparable.lean
+Nyll/AlgebraicCurves/Differentials/Residues/WeilKaehlerAgreeResidueTheorem.lean
+Nyll/AlgebraicCurves/Divisors/ClassGroup/ClassGroup.lean
+Nyll/AlgebraicCurves/Divisors/ClassGroup/Pic0Congr.lean
+Nyll/AlgebraicCurves/Divisors/ClassGroup/PicardDegree.lean
+Nyll/AlgebraicCurves/Divisors/ClassGroup/PicardZero.lean
+Nyll/AlgebraicCurves/Divisors/ConstantExtension/ConstantExtension.lean
+Nyll/AlgebraicCurves/Divisors/ConstantExtension/ConstantSemilinear.lean
+Nyll/AlgebraicCurves/Divisors/ConstantExtension/PrincipalPrincipalPullbackConstants.lean
+Nyll/AlgebraicCurves/Divisors/ConstantExtension/UniquePullbackConstantsEq.lean
+Nyll/AlgebraicCurves/Divisors/Correspondences/Correspondences.lean
+Nyll/AlgebraicCurves/Divisors/Degree/CardEffectiveDivisorsMulEqSum.lean
+Nyll/AlgebraicCurves/Divisors/Degree/DegreeArithmetic.lean
+Nyll/AlgebraicCurves/Divisors/Degree/PoleData.lean
+Nyll/AlgebraicCurves/Divisors/Maps/Maps.lean
+Nyll/AlgebraicCurves/Divisors/Maps/Semilinear.lean
+Nyll/AlgebraicCurves/Divisors/Norm/PushforwardNormFormulaSeparable.lean
+Nyll/AlgebraicCurves/Divisors/Norm/SumGaloisSmulEqPullbackPushforward.lean
+Nyll/AlgebraicCurves/Divisors/Principal/Canonical.lean
+Nyll/AlgebraicCurves/Divisors/Principal/HasPrincipalDivisorsFiniteDimensional.lean
+Nyll/AlgebraicCurves/Divisors/Principal/HasPrincipalDivisorsTranscendentalSeparable.lean
+Nyll/AlgebraicCurves/Divisors/Principal/InstHasCanonicalDivisorRatFuncPerfectField.lean
+Nyll/AlgebraicCurves/Divisors/Principal/ListPrincipalSubSumSingleSubSmulSingle.lean
+Nyll/AlgebraicCurves/Divisors/Principal/MemPrincipalEllPosAdd.lean
+Nyll/AlgebraicCurves/Divisors/Principal/PrincipalHom.lean
+Nyll/AlgebraicCurves/Divisors/Semilinear/InertiaDegSmul.lean
+Nyll/AlgebraicCurves/Divisors/Semilinear/RamificationIndexSmul.lean
+Nyll/AlgebraicCurves/Foundations/Algebra/ModuleKerBaseChangeField.lean
+Nyll/AlgebraicCurves/Foundations/CommutativeAlgebra/LocalRingHenselLiftUnique.lean
+Nyll/AlgebraicCurves/Foundations/HomologicalAlgebra/ModuleMumfordTruncation.lean
+Nyll/AlgebraicCurves/FunctionFields/Constants/ConstantFieldDegreeFormula.lean
+Nyll/AlgebraicCurves/FunctionFields/Constants/ConstantSeparatingParameter.lean
+Nyll/AlgebraicCurves/FunctionFields/Constants/ConstantsAreBaseAlgClosed.lean
+Nyll/AlgebraicCurves/FunctionFields/Constants/ConstantsAreBaseIsRational.lean
+Nyll/AlgebraicCurves/FunctionFields/Extensions/CurveIffTranscendentalFiniteDimensional.lean
+Nyll/AlgebraicCurves/FunctionFields/Extensions/FiniteSimpleExtensions.lean
+Nyll/AlgebraicCurves/FunctionFields/InfiniteSetOfIsClosedSingleton.lean
+Nyll/AlgebraicCurves/FunctionFields/LinearAlgebra/LinearIndependentAlgebraMap.lean
+Nyll/AlgebraicCurves/FunctionFields/LinearAlgebra/LinearIndependentPowMul.lean
+Nyll/AlgebraicCurves/FunctionFields/LinearAlgebra/LinearIndependentPowTranscendental.lean
+Nyll/AlgebraicCurves/FunctionFields/NormTrace/CompletionTraceSumSeparable.lean
+Nyll/AlgebraicCurves/FunctionFields/NormTrace/RelNormEqPowIsMaximal.lean
+Nyll/AlgebraicCurves/FunctionFields/Rational/CurveRatFunc.lean
+Nyll/AlgebraicCurves/FunctionFields/Rational/FunctionFieldRatFuncAlgHomApplyXEq.lean
+Nyll/AlgebraicCurves/FunctionFields/Rational/InstIsCurveOverRatFunc.lean
+Nyll/AlgebraicCurves/FunctionFields/Rational/SeparatingRationalPresentation.lean
+Nyll/AlgebraicCurves/FunctionFields/Rational/TranscendenceTowerDegreePoleDivisorEqFinrank.lean
+Nyll/AlgebraicCurves/FunctionFields/Rational/TranscendenceTowerPoleDivisorApply.lean
+Nyll/AlgebraicCurves/FunctionFields/Transcendence/CurveOver.lean
+Nyll/AlgebraicCurves/FunctionFields/Transcendence/CurveSeparatingTranscendental.lean
+Nyll/AlgebraicCurves/FunctionFields/Transcendence/CurveTranscendental.lean
+Nyll/AlgebraicCurves/FunctionFields/Transcendence/CurveTranscendentalPerfectField.lean
+Nyll/AlgebraicCurves/FunctionFields/Transcendence/EssFiniteTypeFunctionField.lean
+Nyll/AlgebraicCurves/FunctionFields/Transcendence/IsAlgebraicAdjoinTranscendental.lean
+Nyll/AlgebraicCurves/FunctionFields/Transcendence/SeparatingTranscendental.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/AbelianSchemePropertyBundle.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/GroupLaw/AlgebraicPoints.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/GroupLaw/BaseChange.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/GroupLaw/EndDegree.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/GroupLaw/Fibre.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/GroupLaw/Kernel.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/Theorems/AbelianSchemeBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/Theorems/AbelianSchemeGeometricallyIntegral.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/Theorems/AbelianSchemePropertyBundleFibreStr.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/Theorems/RelativeGroupLawEtaleEndKerStrEndAeval.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/Theorems/RelativeGroupLawEtaleSchemeNsmul.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/Theorems/RelativeGroupLawFormallyUnramifiedSchemeNsmulIsUnit.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/Theorems/RelativeGroupLawFormallyUnramifiedSchemeNsmulSqZero.lean
+Nyll/AlgebraicCurves/Geometry/AbelianSchemes/Theorems/RelativeGroupLawSmoothOfRelativeDimension.lean
+Nyll/AlgebraicCurves/Geometry/AlgEquivFunctionFieldIso.lean
+Nyll/AlgebraicCurves/Geometry/Curves/ConnectedFibreRiemannRochGenus.lean
+Nyll/AlgebraicCurves/Geometry/Curves/FiniteMapFibreRiemannRochGenus.lean
+Nyll/AlgebraicCurves/Geometry/Curves/GeometricallyConnectedComp.lean
+Nyll/AlgebraicCurves/Geometry/Curves/GeometricallyConnectedDescendsAlongSurjective.lean
+Nyll/AlgebraicCurves/Geometry/Curves/GeometricallyConnectedProperBijectiveAppTop.lean
+Nyll/AlgebraicCurves/Geometry/Curves/GeometricallyIntegralAlgClosed.lean
+Nyll/AlgebraicCurves/Geometry/Curves/GeometricallyIntegralIsIntegral.lean
+Nyll/AlgebraicCurves/Geometry/Curves/GeometricallyIntegralSmooth.lean
+Nyll/AlgebraicCurves/Geometry/Curves/IdealTwistFibreCohomology.lean
+Nyll/AlgebraicCurves/Geometry/Curves/IsDomainTensorSections.lean
+Nyll/AlgebraicCurves/Geometry/Curves/IsIntegralSmooth.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveBase.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveBijectiveAlgebraMapSectionsBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveClosedImmersionLevelSet.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveCurveModelIsoPullback.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveCurveModelRiemannRoch.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteEtaleClosedImmersionLeFinrank.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteMapData.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteMapDataBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteMapDataFiniteH0H1LineBundle.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteMapDataHomProjPreimageBasicOpenEq.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteMapDataIsAffineOpenLePreimage.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteMapDataLeIsUnit.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFiniteMapDataLeIsUnitTwoAffineCover.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveFreeFinrankQuotientSpan.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveGeometricFibreRiemannRochImpEq.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveLeSectionInvModuleDisjoint.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurvePolynomialIsUnitAevalImpEtaleLevelSet.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveSectionInvModulePowKerDisjoint.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveSectionInvModulePowKerNotMemSupport.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveSectionPullbackInvModulePowKerNotMemSupport.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveSectionsInjective.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveSurjectiveUnitAppTopInvModulePowKer.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveTwoAffineCover.lean
+Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperGeometricallyConnected.lean
+Nyll/AlgebraicCurves/Geometry/Curves/TwoAffineFibreRiemannRochGenus.lean
+Nyll/AlgebraicCurves/Geometry/Descent/DescentAction.lean
+Nyll/AlgebraicCurves/Geometry/Descent/DescentActionEffectiveFiniteEtale.lean
+Nyll/AlgebraicCurves/Geometry/Descent/DescentActionEffectivePullback.lean
+Nyll/AlgebraicCurves/Geometry/IsClosedSingletonNeGenericPoint.lean
+Nyll/AlgebraicCurves/Geometry/OneLeDeg.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AbelJacobi/AbelJacobiFamily.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AbelJacobi/AjFamilyFibreIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AbelJacobi/Pic0EquivPointsAbelJacobi.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AbelJacobi/Pic0EquivPointsNontrivialH0IffEllPos.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AbelJacobi/Pic0EquivPointsNontrivialH0PullbackIffEllPos.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgEquivZeroCut.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgEquivZeroGroupCut.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgebraicEquivalenceEulerCharSectionsOfTensorEq.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgebraicEquivalenceIffEulerCharSectionsOfEq.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgebraicEquivalenceIsoPointDifference.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgebraicEquivalenceIsoPointDifferenceModule.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgebraicEquivalenceIsoPointsSubBasepoint.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgebraicEquivalenceIsoTensorUnit.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgebraicEquivalencePointDifference.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/AlgebraicallyTrivialTwistCohomology.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/IsOpenSetOfAlgebraicEquivalenceFibre.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/IsoTensorUnitFibrewiseAlgebraicEquivalence.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/RelativeDivisorAlgebraicEquivalenceTwistModuleFibre.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/RigidifiedAlgebraicEquivalenceDescent.lean
+Nyll/AlgebraicCurves/Geometry/Picard/AlgebraicEquivalence/RigidifiedBundleFibrewiseAlgebraicEquivalencePullbackOpenCover.lean
+Nyll/AlgebraicCurves/Geometry/Picard/BaseChange/IsPullbackBaseChangeSnd.lean
+Nyll/AlgebraicCurves/Geometry/Picard/BaseChange/PicardRepresentabilityBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Picard/BaseChange/Pullback.lean
+Nyll/AlgebraicCurves/Geometry/Picard/BaseChange/RelativePic0DesignationBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Picard/BaseChange/StageHom.lean
+Nyll/AlgebraicCurves/Geometry/Picard/BaseChange/TransportSectionTwistBaseChangeIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/AlgebraicallyClosedTwistCohomology.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/ChartSections.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/ChartSubsingletonH1Fibre.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/DeterminantSectionTwistPullback.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/EulerCharFibreSectionTwistTensorIdealModuleEqOne.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/FinrankH0FibreEqOneSubsingletonH1.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/FinrankH0UnitFibreEqOne.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/FinrankH1UnitFibreEqEulerCharChart.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/IsOpenSetOfFibreSubsingletonH1.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/IsoFibrePullbackFibreModuleTensorSectionTwistIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/LocallyFreePushforwardFibre.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/LocallyFreePushforwardFibreFiniteType.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/LocallyFreePushforwardThickeningSectionTwistDetIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/OpensRangeSubsetIffSubsingletonH1Fibre.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/PullbackMapCounitAppNeZero.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/PullbackSectionTwistIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/ShortExactMapPushforwardThickening.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/ShortExactPushforwardTensorIdealOfSection.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/SubsingletonH1FibreSubsingletonH1ResidueFieldChart.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/SubsingletonH1FinrankH0FibreModule.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/TwoAffineCoverFibreFinrankH0EqFinrankH1Eq.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/TwoAffineCoverFibreFinrankH0EqSubsingletonH1Iff.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/TwoAffineCoverFibreLinearEquivSectionsOf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Cohomology/TwoAffineFibreCechRank.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Deformation/RigidifiedBundleSquareZero.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Divisors/InvModuleProdKerGraphTensorModulePowIsoPointDifferenceModule.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Divisors/RelativeDivisorEqPullback.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Divisors/RelativeDivisorIEqLineBundleIsoTensorPullback.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Divisors/RelativeDivisorLineBundleIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Divisors/RelativeDivisorTwistModuleIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Functor/Functor.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Functor/IsSheafForPicardZeroPresheafFiniteEtale.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Functor/IsSheafForPicardZeroPresheafFiniteFaithfullyFlat.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Functor/IsSheafPicardZeroPresheafZariskiBijectiveSections.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Functor/IsSheafPicardZeroPresheafZariskiFiniteMapData.lean
+Nyll/AlgebraicCurves/Geometry/Picard/GroupLaw/RelativeGroupLaw.lean
+Nyll/AlgebraicCurves/Geometry/Picard/GroupLaw/RelativeGroupLawGrpObj.lean
+Nyll/AlgebraicCurves/Geometry/Picard/IsClosedSetOfFibreModuleIsoUnit.lean
+Nyll/AlgebraicCurves/Geometry/Picard/IsFiniteToBaseGeometricFibreGenusEqZero.lean
+Nyll/AlgebraicCurves/Geometry/Picard/IsProperGeometricallyConnected.lean
+Nyll/AlgebraicCurves/Geometry/Picard/LFPFgIsoPullback.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Poincare/BaseChangePointsMulPoincareCompat.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Poincare/PicardRepresentabilityPoincarePullbackMulIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Poincare/PicardRepresentabilityPoincarePullbackOneIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Poincare/SubsingletonH1FinrankH0FibrePoincareTensorSectionTwist.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Poincare/SubsingletonH1FinrankH0FibrePoincareTensorSectionTwistAlgClosed.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Poincare/SurjectivePoincarePullbackIsoTwistModule.lean
+Nyll/AlgebraicCurves/Geometry/Picard/PullbackSectionIdealPowModuleIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/PushforwardPullbackIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/RelSubPic/BaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Picard/RelSubPic/Group.lean
+Nyll/AlgebraicCurves/Geometry/Picard/RelSubPic/Presheaf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/AbelJacobiPicardRepresentability.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/AlgEquivZeroCut.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/Basic.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/Designation.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/Existence.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/FiniteEtaleHasChartSections.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/FiniteProjPicardRepresentabilityAlgEquivZeroCut.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/HasChartSectionsGeometricFibreRiemannRochImpEq.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/IsAffineOpenPicardRepresentabilityAlgEquivZeroCut.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/IsLFPInjPicardZeroPresheaf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/IsLFPInjRelPicardPresheaf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/IsLFPSurjPicardZeroPresheaf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/IsLFPSurjRelPicardPresheaf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/IsSeparatedPicardRepresentabilityAlgEquivZeroCut.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/LocallyOfFiniteTypePicardRepresentabilityAlgEquivZeroCut.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/OpenChartPicardZeroPresheaf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/OpenChartsPicardZeroPresheaf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/Pic0EquivPointsPicardRepresentability.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/RelSubPicGlue.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/Representation.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/RepresentsRelSubPicBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/RepresentsRelSubPicGroup.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/RepresentsRelSubPicPresheaf.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/RepresentsRelSubPicPullback.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/SmoothPicardRepresentabilityAlgEquivZeroCut.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Representability/SubPicCondition.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleDescentFiniteFaithfullyFlat.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleGluingOpenCover.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleIsoEqMapPullbackRigSectionCompEq.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleIsoEqMapPullbackRigSectionCompEqSurjective.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleIsoMapPullbackRigSectionCompEq.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleIsoPullback.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleIsoPullbackFiniteFaithfullyFlat.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleIsoPullbackOpenCover.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleIsoUnitPullbackRigSection.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundlePullbackRigSectionPullbackIsoTensorUnit.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedBundleSubsingletonIsoMapPullbackRigSectionCompEq.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Rigidification/RigidifiedPointDifferenceEquivalence.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/FiniteBySectionsTensorPowThetaBundle.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/InvertibleThetaBundle.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/PullbackFstThetaBundleIsoBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/PullbackSectionThetaBundleEqZeroIff.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/PullbackSectionThetaBundlePoincareEqZeroIff.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/PullbackThetaBundleIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/ThetaBundle.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/ThetaBundleBaseChangeIsoThetaBundleToR.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/ThetaBundleIsoIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/ThetaBundleTensorPointDifferenceTensorPullbackIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/ThetaBundleTensorPointsSubBasepointTensorFoldrPullbackIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/ThetaBundleTensorPullbackTensorIso.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/ThetaSectionNeZeroStabilizerTrivial.lean
+Nyll/AlgebraicCurves/Geometry/Picard/Theta/TranslateThetaBundleTensorIso.lean
+Nyll/AlgebraicCurves/Geometry/Projective/ModulesProjectiveSections.lean
+Nyll/AlgebraicCurves/Geometry/Projective/ProjSpaceAlgHomAwayApplyRatioEq.lean
+Nyll/AlgebraicCurves/Geometry/Projective/ProjSpaceIsFGHomInjectiveSaturatedTwistGradedModule.lean
+Nyll/AlgebraicCurves/Geometry/Projective/ProjSpaceSecShiftTwistGradedModuleEquiv.lean
+Nyll/AlgebraicCurves/Geometry/Projective/ProjSpaceSubsingletonHSuccTwist.lean
+Nyll/AlgebraicCurves/Geometry/Projective/ProjTwistDatum.lean
+Nyll/AlgebraicCurves/Geometry/Projective/TwoAffineCoverInvertibleSectionsOfEquiv.lean
+Nyll/AlgebraicCurves/Geometry/Projective/TwoAffineCoverSectionsOfInvertibleProjectiveFiniteFinrank.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Affine/IsAffineOpenMemIsAffineHomProj.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Affine/IsAffineOpenMemIsImmersionProj.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Affine/NotIsAffineProper.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Affine/SubsetBasicOpenOrDisjoint.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/BaseChange/GenericPointMemPreimageCompPullbackFst.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/BaseChange/HomPullbackKerPowInvModuleIso.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/BaseChange/HomQuasiFiniteAtPullback.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/BaseChange/IsPushoutAppTopPullbackFstAppTopPullbackSnd.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/BaseChange/ProdKerGraphComapMapOnProdOver.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/BaseChange/SchemeHomOverBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverBaseChangeIsosStructureSheaf.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverBijectiveAlgebraMapSectionsBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverBijectiveKerBaseChangeHomSurjectiveUnitApp.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverFiniteH0H1StructureSheaf.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverFiniteH0SubsingletonH1SectionsOfPushforward.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverFiniteTypeAlgebraOfHom.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverFinrankH0SectionsOfBaseChangeEqSubsingletonH1Iff.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverFinrankH1SectionsOfUnitEqFinrankH0EqOne.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverFlatSections.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverIdealPullbackCoverRingEquivQuotientAppLE.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverIsOpenSetOfSubsingletonH1Fibre.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverIsoPullbackBaseChangeSnd.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverIsoSectionsOfLinearEquiv.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverLinearEquivOverlapQuotientBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverLinearEquivSectionsOf.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverLinearEquivSectionsOfH0.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverPullbackSndSpecMapAlgebraOfHom.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverSectionsOfBaseChangeEquiv.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverSectionsOfOverlapLinearEquivBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverSectionsOfUnitEquivStructureSheafSections.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverStageBaseChangeIsosStructureSheaf.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverStageSectionsOfBaseChangeEquiv.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverSubsingletonH1SectionsOfField.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverSubsingletonH1SectionsOfSubsingletonH1.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverToH0Bijective.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Covers/MemIffSubsetUnionPreimageOrDisjoint.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Covers/MumfordTruncation.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Covers/OrderedAffineCoverComap.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Covers/OrderedAffineCoverCompactSpace.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/FunctionFields/IsAffineOpenRangeAlgebraMapFunctionFieldEqIInf.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/FunctionFields/OpensRangeAlgebraMapFunctionFieldEqIInf.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Limits/AffineLimit.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Limits/AffineLimitHomIsLFPFinitePresentation.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Limits/AffineLimitLocallyOfFiniteType.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Limits/AffineLimitPresheafULiftOpenImmersionIsLocallySurjective.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Limits/FGSubalgebraIsColimitCocone.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Limits/FGSubalgebraTensorStage.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/LocalGeometry/HomOrdEqKerPowIdealEqSpan.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/LocalGeometry/IsIntegralIsLocallyNoetherian.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/LocalGeometry/RingEquivStalkPullbackLocalizationTensorStalk.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/FiniteToProjCompleteOrthogonalIdempotents.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/HomFiniteFinrankSubschemeIotaKerPow.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/HomFinrankCompFinrankEqConst.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/HomInvertibleKerCompEqId.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/IsSeparatedComp.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/LocallyOfFiniteTypeComp.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/LocallyQuasiFiniteDescendsAlongSurjectiveInfFlatInfQuasiCompact.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/OpensFinitePreimageSingletonToSpecPolynomial.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/OpensProperToSpecPolynomial.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/RepresentableByRepresentableByRestrictFiniteEtale.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Morphisms/SchemeFibreEndo.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Points/HomIsClosedIrreducibleSubsetFiber.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Points/IsPreconnectedPreimageClosedPoint.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Points/MemIsClosedSingletonNe.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Points/OverHomBaseClosedPointEq.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Points/UniversallyInjectiveAlgClosedPointsEq.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Quotients/AffineQuotientFiniteLocallyFreeEquivalenceRelation.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Quotients/InvariantIsAffineOpenFiniteLocallyFreeEquivalenceRelation.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Quotients/QuotientBaseChangeFiniteLocallyFree.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Quotients/QuotientFiniteLocallyFreeEquivalenceRelation.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Quotients/QuotientQuotientRestrict.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/RigidifiedLineBundleOfInvertible.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/SchemeHomOver.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Sections/BijectiveAppTopPullbackSndBijectiveAlgebraMapSections.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Sections/FiniteAppTopProper.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Sections/FinrankSectionsPushforwardThickeningInjectiveUnitAppIff.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Sections/SubsingletonH1FinrankH0SectionsOfTensorInvModulePowKer.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Smooth/ReducedSmoothOverField.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Smooth/SmoothDescendsAlongSurjectiveInfFlatInfQuasiCompact.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Smooth/SmoothOfRelativeDimensionDVRStalkIsClosed.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Smooth/SmoothOfRelativeDimensionDVRStalkSection.lean
+Nyll/AlgebraicCurves/Geometry/Schemes/Smooth/ValuationRingStalkSmoothOfRelativeDimensionOne.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Descent/EqSubCocycle.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Descent/InvertibleIsoToDescentDataIsAffine.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Descent/InvertibleIsoToDescentDataIsAffineHom.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Descent/InvertibleToDescentDataMapBijective.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Descent/ToDescentDataMapBijectiveUnit.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Determinants/DetSuccIsoDetTensor.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Determinants/EpiWhiskerRightWedgeVec.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Determinants/InvertibleDetLocallyFree.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Determinants/PullbackDetIsoDetPullback.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Determinants/PullbackSectionDualDetEqZeroIffNotIso.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/EqMulEqAddOrdPresentations.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/HomTensorPowThreeSupportZeroSchemeIdealEq.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/IdealSheafDataMonoWhiskerLeftModuleIota.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/IdealSheafDataPullbackModuleComparisonLocallySurjective.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/IdealSheafDataRangeModuleIotaAppInjective.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/IdealSheafModule.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/IdealSheafModuleMaps.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleCoeffIdealLeIdealZeroSchemeIdealEq.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleComapZeroSchemeIdeal.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleDivisorRangeEqLSpaceOn.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleDualIsoModuleZeroSchemeIdeal.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleGenericPointNotMemSupportZeroSchemeIdeal.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealDivisorRangeInvModuleEqLSpaceOn.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealDivisorRangeModuleEqLSpaceOn.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealEpiUnitAppTensorInvModulePowShortExact.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealInvertibleComap.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealInvertibleModule.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealIsoPullbackModuleComparison.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealMulInvModuleIsoTensor.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealMulLeftCancel.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealMulModuleIsoTensor.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealPullbackInvModuleIso.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealShortExactThickeningUnit.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealTensorIsoMulModule.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealZeroSchemeIdealEqSpan.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIdealZeroSchemeIdealInvModuleSection.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleInvertibleZeroSchemeIdealFlat.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleIsoInvModuleZeroSchemeIdeal.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertiblePullbackSectionEqZeroIffMemSupport.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleZeroSchemeIdealEq.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/InvertibleZeroSchemeIdealTensorHom.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/ProjPresentationSubsetSupportZeroSchemeIdealOrDisjoint.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/SectionZeroScheme.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/UnitRangeEqLSpaceOnZero.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/ZeroSchemeIdealCompEq.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/ZeroSchemeIdealCompLe.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/BasicOpenFrameFramePullback.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/InvertibleBasisOne.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/InvertibleIsFrameOnApp.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/InvertibleModuleFrames.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/IsFrameOnTensorPowThree.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/InvertibleIsoEvAppIsoCurryBraidingEv.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/InvertibleIsoLocallySurjective.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/InvertibleIsoUnitInvertibleFree.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/InvertibleRigidify.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/InvertibleUniqueAppEqSmul.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/LocallyFreeOneIffInvertible.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/LocallyFreePushforward.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/AwayFiniteBySectionsTensorPow.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/FiniteBySectionsFinite.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/FiniteBySectionsFiniteBySectionsUnit.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/FiniteBySectionsMemFinsetAway.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/FiniteBySectionsTensorPow.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/ProjPresentationFiniteToProjPullbackSectionEqZeroIff.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/ProjPresentationLinearMapSectionsTensorPowTwistObj.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/ProjPresentationLocallyQuasiFinite.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Projective/SubsingletonHSuccTensorPow.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/EqSumSmulPullbackSectionSubsingletonHSucc.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/FinrankBaseChangeSectionsEqOne.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/InvertibleIsoUnitPullbackSquareZero.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/InvertiblePullbackDual.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/InvertiblePullbackRigidifyIso.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/InvertiblePullbackSectionTransposeSectionEqZeroIff.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/InvertibleRigidifyPullbackTensorIso.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/IsoBaseChangeHomIsAffineHom.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/IsoBaseChangeHomTwoAffineCover.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/LinearEquivSectionsBaseChange.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Pullback/PullbackUnitIsoHomAppPullbackLocalSectionToUnitSection.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Sections/InvertibleRatioSection.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Sections/PrincipalSubSingle.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Sections/PrincipalSubSub.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Sections/RelativeSectionTwist.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Sections/SurjectiveAppShortExact.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Sections/SurjectiveAppSup.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleDual.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleDualTensor.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleIsoEvAppTensorUnit.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleIsoTensorUnitField.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleTensor.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleTensorInverse.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/OfUnitSectionSectionDualApp.lean
+Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/ShortExactKerModuleTensor.lean
+Nyll/AlgebraicCurves/Hilbert/SymmetricPowerData.lean
+Nyll/AlgebraicCurves/Models/Charts/ChartAlgebra.lean
+Nyll/AlgebraicCurves/Models/Charts/FiniteComplIsOpen.lean
+Nyll/AlgebraicCurves/Models/Charts/IsAffineOpenMaximalDomain.lean
+Nyll/AlgebraicCurves/Models/Charts/IsAffineOpenMemFinset.lean
+Nyll/AlgebraicCurves/Models/Charts/IsAffineOpenMemFinsetField.lean
+Nyll/AlgebraicCurves/Models/Charts/IsAffineOpenSupEqTop.lean
+Nyll/AlgebraicCurves/Models/Charts/ProperSmoothPlacesAffineCoverGlued.lean
+Nyll/AlgebraicCurves/Models/ConstantExtension/SemilinearAutBaseAutEqPointPlaceEqSmul.lean
+Nyll/AlgebraicCurves/Models/Construction/Basic.lean
+Nyll/AlgebraicCurves/Models/Construction/BasicPerfectField.lean
+Nyll/AlgebraicCurves/Models/Construction/Construction.lean
+Nyll/AlgebraicCurves/Models/Construction/CurveIsIntegral.lean
+Nyll/AlgebraicCurves/Models/Construction/FiniteHomProjProper.lean
+Nyll/AlgebraicCurves/Models/Construction/OfSmoothProperCurve.lean
+Nyll/AlgebraicCurves/Models/Construction/Smoothness.lean
+Nyll/AlgebraicCurves/Models/Divisors/DivisorClassMap.lean
+Nyll/AlgebraicCurves/Models/EqGenusFFEllSubEllEq.lean
+Nyll/AlgebraicCurves/Models/FinrankH0SectionsOfInvModuleProdKerTensorModuleProdKerEqEll.lean
+Nyll/AlgebraicCurves/Models/FunctionFields/CurveRingEquivFunctionField.lean
+Nyll/AlgebraicCurves/Models/FunctionFields/RangeAlgebraMapFunctionFieldEqIInf.lean
+Nyll/AlgebraicCurves/Models/Gluing/OpensIsAffineOpenFiniteAevalTwoChart.lean
+Nyll/AlgebraicCurves/Models/Gluing/OpensIsAffineOpenFiniteAevalTwoChartRight.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveFinrankLevelSetField.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveFlatAeval.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveInjectiveAevalTensor.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveLevelSetFree.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveNontrivialTensorSections.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveTranscendentalApp.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveTwoChart.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveTwoChartPoleDatum.lean
+Nyll/AlgebraicCurves/Models/Gluing/SmoothProperCurveTwoChartPoleDatumTranscendentalLeIsUnit.lean
+Nyll/AlgebraicCurves/Models/LocalGeometry/ClosedPointRangeStalkEq.lean
+Nyll/AlgebraicCurves/Models/LocalGeometry/EqRangeStalkEq.lean
+Nyll/AlgebraicCurves/Models/LocalGeometry/TranscendentalMemRangeStalkIffNe.lean
+Nyll/AlgebraicCurves/Models/Points/AlgEquivPointPlaceCompHomEqAlgAutSmulPointPlace.lean
+Nyll/AlgebraicCurves/Models/Points/Places.lean
+Nyll/AlgebraicCurves/Places/Basic.lean
+Nyll/AlgebraicCurves/Places/Completion.lean
+Nyll/AlgebraicCurves/Places/ConstantExtension/ForgetConstantsRestrictEq.lean
+Nyll/AlgebraicCurves/Places/ConstantExtension/RamificationIndexForgetConstantsEqOneAdjoinRangeEqTop.lean
+Nyll/AlgebraicCurves/Places/ConstantExtension/RamificationIndexForgetConstantsEqOneConstantExtension.lean
+Nyll/AlgebraicCurves/Places/ConstantExtension/SumDegFiberConstantsEqDeg.lean
+Nyll/AlgebraicCurves/Places/Degree/FiniteSetOfDegEq.lean
+Nyll/AlgebraicCurves/Places/Degree/IsRationalAlgClosed.lean
+Nyll/AlgebraicCurves/Places/Differentials/CanonicalLocalResidueDataKResDifferentialCoeffDMulPowInvEqZero.lean
+Nyll/AlgebraicCurves/Places/Evaluation/Evaluation.lean
+Nyll/AlgebraicCurves/Places/Evaluation/Value.lean
+Nyll/AlgebraicCurves/Places/NotMemNeMem.lean
+Nyll/AlgebraicCurves/Places/Orders/AdicValuationSubEq.lean
+Nyll/AlgebraicCurves/Places/Orders/AdicValuationSubLe.lean
+Nyll/AlgebraicCurves/Places/Orders/BasicTranscendental.lean
+Nyll/AlgebraicCurves/Places/Orders/FiniteSetOfOrdNeZeroFiniteDimensional.lean
+Nyll/AlgebraicCurves/Places/Orders/OrdEqFinset.lean
+Nyll/AlgebraicCurves/Places/Orders/OrdEqZeroIsAlgebraic.lean
+Nyll/AlgebraicCurves/Places/Orders/PositiveOrderElement.lean
+Nyll/AlgebraicCurves/Places/Orders/TranscendentalOrdNeZero.lean
+Nyll/AlgebraicCurves/Places/Ramification/CardFiberOverMulRamificationIndexMulInertiaDeg.lean
+Nyll/AlgebraicCurves/Places/Ramification/InertiaDegEqInertiaDegFiberCenter.lean
+Nyll/AlgebraicCurves/Places/Ramification/InertiaDegEqRestrictEq.lean
+Nyll/AlgebraicCurves/Places/Ramification/InertiaDegPos.lean
+Nyll/AlgebraicCurves/Places/Ramification/NcardAlgHomCompEqPreimageEqRamificationIndex.lean
+Nyll/AlgebraicCurves/Places/Ramification/RamificationIndexComp.lean
+Nyll/AlgebraicCurves/Places/Ramification/RamificationIndexEqRamificationIdxFiberCenter.lean
+Nyll/AlgebraicCurves/Places/Ramification/RamificationIndexEqRestrictEq.lean
+Nyll/AlgebraicCurves/Places/Ramification/RamificationStabilizerOrder.lean
+Nyll/AlgebraicCurves/Places/Ramification/SumRamificationIndexMulInertiaDeg.lean
+Nyll/AlgebraicCurves/Places/Ramification/SumRamificationIndexMulInertiaDegBifiber.lean
+Nyll/AlgebraicCurves/Places/Ramification/SumRamificationIndexMulInertiaDegExchange.lean
+Nyll/AlgebraicCurves/Places/Ramification/SumRamificationIndexMulInertiaDegFiberOver.lean
+Nyll/AlgebraicCurves/Places/Rational/Basic.lean
+Nyll/AlgebraicCurves/Places/Rational/Classification.lean
+Nyll/AlgebraicCurves/Places/Rational/FiniteOrder.lean
+Nyll/AlgebraicCurves/Places/Rational/Infinity.lean
+Nyll/AlgebraicCurves/Places/Rational/InfinityArithmetic.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncDegEqOneAlgClosed.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncDegreeEqZeroEqOrd.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncDegreeEqZeroEqOrdAlgebraMap.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncFiniteDimensionalLSpaceZero.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncFiniteSetOfOrdNeZero.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncGlobalResidueFormula.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncIndexOfSpecialtyFinite.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncNeOfHeightOneSpectrum.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncStichtenothGenusExists.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncStichtenothGenusExistsRatFuncTower.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncSubsingletonSetOfNeOfHeightOneSpectrum.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncToValuationSubringEq.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncTraceLocalResidueFinitePlaceDivPowEqZero.lean
+Nyll/AlgebraicCurves/Places/Rational/RatFuncTraceLocalResiduePlaceInftyXPowEqZero.lean
+Nyll/AlgebraicCurves/Places/Residue/FiniteResidueFieldFiniteDimensional.lean
+Nyll/AlgebraicCurves/Places/Residue/ResidueFieldEqCompositum.lean
+Nyll/AlgebraicCurves/Places/Restriction/AlgEquivSmulEqRestrictEq.lean
+Nyll/AlgebraicCurves/Places/Restriction/NatCardSetOfComapEqEqDeg.lean
+Nyll/AlgebraicCurves/Places/Restriction/PlaceEquivOrdEqEllMapDomainEq.lean
+Nyll/AlgebraicCurves/Places/Restriction/PlacesOfUnionEqUnivSupEqTop.lean
+Nyll/AlgebraicCurves/Places/Restriction/RestrictEq.lean
+Nyll/AlgebraicCurves/Places/Restriction/RestrictionComposition.lean
+Nyll/AlgebraicCurves/Places/Taylor/UniquePDigitsTranscendental.lean
+Nyll/AlgebraicCurves/Places/ValuationRings/OrdEqNegLogValuationSubringEq.lean
+Nyll/AlgebraicCurves/Places/ValuationRings/OverDVR.lean
+Nyll/AlgebraicCurves/Places/ValuationRings/RangeStalkEq.lean
+Nyll/AlgebraicCurves/Places/ValuationRings/SubAlgebraMapMemMaximalIdeal.lean
+Nyll/AlgebraicCurves/Places/ValuationRings/ToValuationSubringEqComapRingHom.lean
+Nyll/AlgebraicCurves/Places/ValuationRings/ToValuationSubringEqComapRingHomSeparable.lean
+Nyll/AlgebraicCurves/RelativeDivisors/BaseChange/InvertibleTwistModulePullbackIso.lean
+Nyll/AlgebraicCurves/RelativeDivisors/BaseChange/PullbackInjective.lean
+Nyll/AlgebraicCurves/RelativeDivisors/BaseChange/PullbackOfPoint.lean
+Nyll/AlgebraicCurves/RelativeDivisors/BaseChange/TwistModulePullbackIsoPullback.lean
+Nyll/AlgebraicCurves/RelativeDivisors/BaseChange/UniquePullbackEq.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Cartier/Cartier.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Cartier/IEqZeroSchemeIdeal.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Cartier/IEqZeroSchemeIdealNeZero.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Cartier/IdealProductDivisor.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Cartier/RelEffCartierDiv.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Cartier/RelEffCartierDivRestrict.lean
+Nyll/AlgebraicCurves/RelativeDivisors/LineBundles/InvertibleI.lean
+Nyll/AlgebraicCurves/RelativeDivisors/LineBundles/RelEffCartierDivTwist2.lean
+Nyll/AlgebraicCurves/RelativeDivisors/PointSums/IEqKerGraphOverMul.lean
+Nyll/AlgebraicCurves/RelativeDivisors/PointSums/IEqProdKerGraph.lean
+Nyll/AlgebraicCurves/RelativeDivisors/PointSums/IEqProdKerGraphAlgClosed.lean
+Nyll/AlgebraicCurves/RelativeDivisors/PointSums/RelEffCartierDivOfPoint.lean
+Nyll/AlgebraicCurves/RelativeDivisors/PointSums/RelEffCartierDivSum.lean
+Nyll/AlgebraicCurves/RelativeDivisors/PointSums/SplittingCover.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/IsRepresentableSupportedIn.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/IsSheafFunctor.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/IsUniversal.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/IsUniversalEmpty.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/IsUniversalGeometricallyConnected.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/IsUniversalIsAffine.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/IsUniversalProper.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/IsUniversalSumMap.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/RelEffCartierDivFunctor.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Representability/UniversalData.lean
+Nyll/AlgebraicCurves/RelativeDivisors/SameDivisorScheme.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Support/OpenImmersionPresheafSupportedInIncl.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Support/RelEffCartierDivSupportedIn.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Support/SndApplyEqNotMemSupport.lean
+Nyll/AlgebraicCurves/RelativeDivisors/Support/SupportedInFinset.lean
+
+Anthropic FLT: ClassFieldTheory
+-------------------------------
+
+Copyright 2026 Anthropic, PBC.
+License: Apache License, Version 2.0.
+Included-file source mapping: Nyll/ClassFieldTheory/ANTHROPIC_FLT_SOURCE.md
+Preserved upstream NOTICE: Nyll/ClassFieldTheory/ANTHROPIC_FLT_NOTICE
+Preserved earlier-source attribution: Nyll/ClassFieldTheory/ANTHROPIC_FLT_ATTRIBUTION.md
+Earlier copyright holders and authors are not replaced by Anthropic.
+
+Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Adele/StrongApproximation.lean
+Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Fields/RiemannRoch.lean
+
+Anthropic FLT: ProCGroups
+-------------------------
+
+Copyright 2026 Anthropic, PBC.
+License: Apache License, Version 2.0.
+Included-file source mapping: Nyll/ProCGroups/ANTHROPIC_FLT_SOURCE.md
+Preserved upstream NOTICE: Nyll/ProCGroups/ANTHROPIC_FLT_NOTICE
+Preserved earlier-source attribution: Nyll/ProCGroups/ANTHROPIC_FLT_ATTRIBUTION.md
+Earlier copyright holders and authors are not replaced by Anthropic.
+
+Nyll/ProCGroups/GroupTheory/MulActionNcardOrbitInterOrbitMulCard.lean
+Nyll/ProCGroups/GroupTheory/SubgroupEqMulIndexInfEq.lean
+
+Anthropic FLT: SchemeTheory
+---------------------------
+
+Copyright 2026 Anthropic, PBC.
+License: Apache License, Version 2.0.
+Included-file source mapping: Nyll/SchemeTheory/ANTHROPIC_FLT_SOURCE.md
+Preserved upstream NOTICE: Nyll/SchemeTheory/ANTHROPIC_FLT_NOTICE
+Preserved earlier-source attribution: Nyll/SchemeTheory/ANTHROPIC_FLT_ATTRIBUTION.md
+Earlier copyright holders and authors are not replaced by Anthropic.
+
+Nyll/SchemeTheory/CategoryTheory/MonoidalClosedIsoEvAppIsoCurryBraidingEv.lean
+Nyll/SchemeTheory/CategoryTheory/MorphismPropertyWidePullbackBase.lean
+Nyll/SchemeTheory/CategoryTheory/OverTotalPresheaf.lean
+Nyll/SchemeTheory/CategoryTheory/PresheafModulePushforward.lean
+Nyll/SchemeTheory/CategoryTheory/PseudofunctorDescentDataIsoToDescentDataObj.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteAffSESLeft.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteAffSESMid.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteAffSESRight.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteCechFiniteIdealPowQuot.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteIff.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteIntegral.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFinitePreimage.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteProper.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFinitePushforward.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFinitePushforwardIff.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteUnitClosedImmersionProj.lean
+Nyll/SchemeTheory/Cohomology/Cech/ModulePresheafCechFiniteUnitIsIntegral.lean
+Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverCech.lean
+Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverOf.lean
+Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverOfAugInjective.lean
+Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverOfKerDSuccLeRangeD.lean
+Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverOfKerDZeroEqRangeAug.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModule.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModuleDSq.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModuleFiniteCohomology.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModuleHEquivFD.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModuleHEquivPi.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModulePresentationFiniteH.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModulePresentationKerIsFG.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechTwist.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechTwistDSq.lean
+Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechTwistFiniteCohomology.lean
+Nyll/SchemeTheory/Cohomology/Cech/TwoAffineOpenCover.lean
+Nyll/SchemeTheory/Cohomology/Cech/TwoChartCech.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/CoherentBaseChange.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/DoubleComplex.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafAffSESConnectingHom.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafBasicOpenSectionsFree.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafCoherentCoker.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafCoherentIdealPowQuot.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafDCompD.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafDEqDDMemPow.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafHasDevissageStep.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafIdealPowSubEqBot.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayChowSES.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayCoherentRelHPresheafChow.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayDVCompBiAug.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayE2IEquiv.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayHTotEquiv.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayHomRelHPresheafZero.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayQuasicoherentRelHPresheafChow.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayRelHPresheafObjEquiv.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayRowsExact.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLeraySupportedInRelHPresheafChow.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafQuasicoherentCoker.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafQuasicoherentIdealPowQuot.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafSupportedInIdealPowQuot.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafConstructions.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafHom.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafIdealFiltration.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafLerayBicomplex.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafLerayDoubleComplex.lean
+Nyll/SchemeTheory/Descent/AlgebraDescentCofaces.lean
+Nyll/SchemeTheory/Descent/FGSubalgebra.lean
+Nyll/SchemeTheory/Descent/ModuleFaithfullyFlatSubmoduleIsBaseChange.lean
+Nyll/SchemeTheory/Descent/ModuleIsDirectLimitInvertibleLinearEquivBaseChange.lean
+Nyll/SchemeTheory/Descent/ModuleIsDirectLimitLinearEquiv.lean
+Nyll/SchemeTheory/Descent/ModuleIsDirectLimitStageLinearEquiv.lean
+Nyll/SchemeTheory/Divisors/IsIntegralSubschemeVanishingIdeal.lean
+Nyll/SchemeTheory/FunctionFields/AlgebraIsSeparableFinrankFieldRangeFrobeniusEq.lean
+Nyll/SchemeTheory/FunctionFields/AlgebraTensorIsFieldSeparable.lean
+Nyll/SchemeTheory/FunctionFields/FrobeniusSubfield.lean
+Nyll/SchemeTheory/FunctionFields/ModuleFlatMemNonZeroDivisorsFlatQuotientSpan.lean
+Nyll/SchemeTheory/FunctionFields/StructureMorphism.lean
+Nyll/SchemeTheory/HomologicalAlgebra/DoubleComplexBoundedSpectralSequence.lean
+Nyll/SchemeTheory/HomologicalAlgebra/DoubleComplexConvergenceFiniteE2Q0.lean
+Nyll/SchemeTheory/HomologicalAlgebra/FiniteDimensionalExactSequences.lean
+Nyll/SchemeTheory/HomologicalAlgebra/TorExactSequence.lean
+Nyll/SchemeTheory/LocalGeometry/LocalRepresentabilityULift.lean
+Nyll/SchemeTheory/LocalGeometry/SmoothStalks.lean
+Nyll/SchemeTheory/Modules/Descent/IsStackForOpenCover.lean
+Nyll/SchemeTheory/Modules/Descent/OpenCoverGluedSheaf.lean
+Nyll/SchemeTheory/Modules/Descent/OpenCoverGluedSheafSections.lean
+Nyll/SchemeTheory/Modules/Descent/ToDescentDataEssSurjOpenCover.lean
+Nyll/SchemeTheory/Modules/Descent/ToDescentDataMapBijective.lean
+Nyll/SchemeTheory/Modules/EqMulPresentations.lean
+Nyll/SchemeTheory/Modules/Exactness.lean
+Nyll/SchemeTheory/Modules/ExteriorPower/Det.lean
+Nyll/SchemeTheory/Modules/ExteriorPower/ExteriorPowerLocal.lean
+Nyll/SchemeTheory/Modules/ExteriorPower/ExteriorPowerMapAppUnitIotaMultiEqDetSmul.lean
+Nyll/SchemeTheory/Modules/ExteriorPower/PresheafExteriorPower.lean
+Nyll/SchemeTheory/Modules/ExteriorPower/Wedge.lean
+Nyll/SchemeTheory/Modules/FiniteType/FiniteBySections.lean
+Nyll/SchemeTheory/Modules/FiniteType/FiniteBySectionsFinite.lean
+Nyll/SchemeTheory/Modules/Frames/BasicOpenFrame.lean
+Nyll/SchemeTheory/Modules/Frames/BasisPullbackFieldPoint.lean
+Nyll/SchemeTheory/Modules/Frames/FrameDescent.lean
+Nyll/SchemeTheory/Modules/Frames/FrameFromTrivialization.lean
+Nyll/SchemeTheory/Modules/Frames/FrameLinearCombination.lean
+Nyll/SchemeTheory/Modules/Frames/FrameLocality.lean
+Nyll/SchemeTheory/Modules/Frames/Frames.lean
+Nyll/SchemeTheory/Modules/Frames/IsFrameOnPullbackIsoUnit.lean
+Nyll/SchemeTheory/Modules/Frames/IsFrameOnSheafificationAdjunctionUnitIotaMulti.lean
+Nyll/SchemeTheory/Modules/Frames/LocallyFreeBasis.lean
+Nyll/SchemeTheory/Modules/Frames/ProjectivePresentationFromFrames.lean
+Nyll/SchemeTheory/Modules/Frames/PullbackFrame.lean
+Nyll/SchemeTheory/Modules/Functoriality/AffineSectionsBaseChange.lean
+Nyll/SchemeTheory/Modules/Functoriality/BaseChangeComposition.lean
+Nyll/SchemeTheory/Modules/Functoriality/BaseChangeHom.lean
+Nyll/SchemeTheory/Modules/Functoriality/BaseChangeIsomorphism.lean
+Nyll/SchemeTheory/Modules/Functoriality/IsoPullbackMapProjectionMorphismIff.lean
+Nyll/SchemeTheory/Modules/Functoriality/IsoPullbackPullback.lean
+Nyll/SchemeTheory/Modules/Functoriality/LocallyFreePushforwardFinite.lean
+Nyll/SchemeTheory/Modules/Functoriality/LocallyFreePushforwardPullback.lean
+Nyll/SchemeTheory/Modules/Functoriality/ProjectionMorphism.lean
+Nyll/SchemeTheory/Modules/Functoriality/PullbackCompPullbackCongrPasteSquaresApp.lean
+Nyll/SchemeTheory/Modules/Functoriality/PullbackIsoBijectiveApp.lean
+Nyll/SchemeTheory/Modules/Functoriality/PullbackLocalSection.lean
+Nyll/SchemeTheory/Modules/Functoriality/PullbackLocallyMemSpanUnit.lean
+Nyll/SchemeTheory/Modules/Functoriality/PullbackUnitComposition.lean
+Nyll/SchemeTheory/Modules/Functoriality/PushforwardHomCompIso.lean
+Nyll/SchemeTheory/Modules/Functoriality/PushforwardRestrict.lean
+Nyll/SchemeTheory/Modules/HomRestrictEqOpenImmersion.lean
+Nyll/SchemeTheory/Modules/InternalHomSheaf.lean
+Nyll/SchemeTheory/Modules/Invertible/Invertible.lean
+Nyll/SchemeTheory/Modules/Invertible/Rigidify.lean
+Nyll/SchemeTheory/Modules/LocalMorphisms.lean
+Nyll/SchemeTheory/Modules/Localization/IsLocalizationBasicOpen.lean
+Nyll/SchemeTheory/Modules/Localization/LocallyTrivialSectionsLocalization.lean
+Nyll/SchemeTheory/Modules/Localization/SectionsLocalizationFiniteCover.lean
+Nyll/SchemeTheory/Modules/OpenImmersionUnit.lean
+Nyll/SchemeTheory/Modules/PresheafInternalHom.lean
+Nyll/SchemeTheory/Modules/ProjectivePresentation/ProjPresentationFiniteBySectionsPullback.lean
+Nyll/SchemeTheory/Modules/ProjectivePresentation/ProjectivePresentation.lean
+Nyll/SchemeTheory/Modules/ProjectivePresentation/ProjectivePresentationBaseChange.lean
+Nyll/SchemeTheory/Modules/ProjectivePresentation/ProjectivePresentationIso.lean
+Nyll/SchemeTheory/Modules/Quasicoherent/IsoBaseChangeSectionsIsoFromTildeGamma.lean
+Nyll/SchemeTheory/Modules/Quasicoherent/IsoFromTildeGammaPushforward.lean
+Nyll/SchemeTheory/Modules/Quasicoherent/LocallyFreeTilde.lean
+Nyll/SchemeTheory/Modules/Quasicoherent/TildeLocalization.lean
+Nyll/SchemeTheory/Modules/Quasicoherent/TildePullback.lean
+Nyll/SchemeTheory/Modules/Sections/FibreProductSectionsBijective.lean
+Nyll/SchemeTheory/Modules/Sections/FiniteSectionsLocallyTrivial.lean
+Nyll/SchemeTheory/Modules/Sections/IhomSections.lean
+Nyll/SchemeTheory/Modules/Sections/RankAtStalkSectionsEqOne.lean
+Nyll/SchemeTheory/Modules/Tensor/Monoidal.lean
+Nyll/SchemeTheory/Modules/Tensor/PresheafPullbackMonoidal.lean
+Nyll/SchemeTheory/Modules/Tensor/PullbackMonoidal.lean
+Nyll/SchemeTheory/Modules/Tensor/PullbackTensorObjIsoHomAppPullbackLocalSection.lean
+Nyll/SchemeTheory/Modules/Tensor/PullbackTensorPullbackIso.lean
+Nyll/SchemeTheory/Modules/Tensor/PullbackTensorUnitObjIsoHomAppPullbackLocalSectionUnitSection.lean
+Nyll/SchemeTheory/Modules/Tensor/PushforwardUnitTensorIsoPushforwardPullback.lean
+Nyll/SchemeTheory/Modules/Tensor/SheafificationMonoidal.lean
+Nyll/SchemeTheory/Modules/Tensor/TensorFrames.lean
+Nyll/SchemeTheory/Modules/Tensor/TensorPowerIsomorphisms.lean
+Nyll/SchemeTheory/Modules/Tensor/TensorPowers.lean
+Nyll/SchemeTheory/Modules/Tensor/TensorSectionMaps.lean
+Nyll/SchemeTheory/Modules/Tensor/TensorSectionNaturality.lean
+Nyll/SchemeTheory/Modules/Tensor/TensorSectionRightUnitor.lean
+Nyll/SchemeTheory/Modules/Tensor/TensorSectionSheafification.lean
+Nyll/SchemeTheory/Modules/Tensor/TensorSections.lean
+Nyll/SchemeTheory/Morphisms/AppTopPullbackMapEqAppTopPullbackFst.lean
+Nyll/SchemeTheory/Morphisms/ChowDatum.lean
+Nyll/SchemeTheory/Morphisms/ChowDatumProj.lean
+Nyll/SchemeTheory/ProjectiveSpace/BaseChange.lean
+Nyll/SchemeTheory/ProjectiveSpace/Basic.lean
+Nyll/SchemeTheory/ProjectiveSpace/Cover.lean
+Nyll/SchemeTheory/RingTheory/Descent/EtaleAtPrimeNormality.lean
+Nyll/SchemeTheory/RingTheory/Descent/InvertibleModule.lean
+Nyll/SchemeTheory/RingTheory/Descent/SmoothAtPrimeNormality.lean
+Nyll/SchemeTheory/RingTheory/Dimension/AlgebraFinrankQuotientSpanSubEq.lean
+Nyll/SchemeTheory/RingTheory/Dimension/IdealHeightAddKrullDimensionQuotientEqKrullDimension.lean
+Nyll/SchemeTheory/RingTheory/Dimension/SubalgebraNoetherianDimensionLEOne.lean
+Nyll/SchemeTheory/RingTheory/Etale/AlgebraEtaleReducedReduced.lean
+Nyll/SchemeTheory/RingTheory/Etale/EtaleLocalResidueSeparation.lean
+Nyll/SchemeTheory/RingTheory/Etale/EtaleSplitting.lean
+Nyll/SchemeTheory/RingTheory/FieldExtensions/SeparableConstantsTensor.lean
+Nyll/SchemeTheory/RingTheory/FinitePresentation/ModuleFinitePresentation.lean
+Nyll/SchemeTheory/RingTheory/Flat/FibralCriterion.lean
+Nyll/SchemeTheory/RingTheory/Flat/FiniteSubalgebraLocalization.lean
+Nyll/SchemeTheory/RingTheory/Flat/Kernel.lean
+Nyll/SchemeTheory/RingTheory/Flat/LocalCriterion.lean
+Nyll/SchemeTheory/RingTheory/Flat/ModuleFlatFinitePresentation.lean
+Nyll/SchemeTheory/RingTheory/Flat/Product.lean
+Nyll/SchemeTheory/RingTheory/Flat/RingHomQuasiFiniteCodescendsAlongFaithfullyFlat.lean
+Nyll/SchemeTheory/RingTheory/Flat/TensorInjectivity.lean
+Nyll/SchemeTheory/RingTheory/Flat/TorLocalCriterion.lean
+Nyll/SchemeTheory/RingTheory/IdealMapComapEqSelfMapIncludeLeftEqMapIncludeRight.lean
+Nyll/SchemeTheory/RingTheory/Idempotents/NoetherianConnectedIdempotents.lean
+Nyll/SchemeTheory/RingTheory/LinearAlgebra/AlgebraLevelSetFiniteFreeFinrank.lean
+Nyll/SchemeTheory/RingTheory/LinearAlgebra/InvertibleModules.lean
+Nyll/SchemeTheory/RingTheory/LinearAlgebra/LinearMapIsOpenSetOfSurjectiveBaseChangeResidueField.lean
+Nyll/SchemeTheory/RingTheory/LinearAlgebra/ModuleFiniteKerLeRange.lean
+Nyll/SchemeTheory/RingTheory/LinearAlgebra/ModuleFreeCokerKerBaseChange.lean
+Nyll/SchemeTheory/RingTheory/LinearAlgebra/ModuleKerBaseChangeField.lean
+Nyll/SchemeTheory/RingTheory/LinearAlgebra/RankLocalization.lean
+Nyll/SchemeTheory/RingTheory/LinearAlgebra/SquareZeroProjectiveModules.lean
+Nyll/SchemeTheory/RingTheory/Polynomial/AlgebraPolynomialIsUnitAevalImpEtaleLevelSet.lean
+Nyll/SchemeTheory/RingTheory/Polynomial/HomogeneousIdealHomogeneousPosMemNotMem.lean
+Nyll/SchemeTheory/RingTheory/Polynomial/PolynomialIsUnitAevalSubMemMaximalIdealImpEq.lean
+Nyll/SchemeTheory/RingTheory/RegularLocal/RegularLocalDomain.lean
+Nyll/SchemeTheory/RingTheory/RegularLocal/RegularLocalLocalizationAtPrimeEtale.lean
+Nyll/SchemeTheory/RingTheory/RegularLocal/RegularLocalLocalizationAtPrimeIsStandardSmooth.lean
+Nyll/SchemeTheory/RingTheory/RegularLocal/RegularLocalRingQuotientNonZeroDivisorAscent.lean
+Nyll/SchemeTheory/RingTheory/Smooth/AlgebraIsStandardSmoothStandardSmooth.lean
+Nyll/SchemeTheory/RingTheory/Smooth/MathlibRingTheorySmoothAlgebraOverFieldRegularStalks.lean
+Nyll/SchemeTheory/RingTheory/Smooth/StandardSmoothFibreRegularity.lean
+Nyll/SchemeTheory/RingTheory/Spectrum/PrimeSpectrumApplyEqApply.lean
+Nyll/SchemeTheory/RingTheory/Spectrum/RingHomIsPushoutEqLocus.lean
+Nyll/SchemeTheory/RingTheory/TwoChartCechGrothendieckComplex.lean
+Nyll/SchemeTheory/Sheaves/IdealHom.lean
+Nyll/SchemeTheory/Sheaves/IdealSheafComap.lean
+Nyll/SchemeTheory/Sheaves/IdealSheafDataComapEqOpenCover.lean
+Nyll/SchemeTheory/Sheaves/RestrictOpen.lean
+
+Anthropic FLT: ValuedFieldTheory
+--------------------------------
+
+Copyright 2026 Anthropic, PBC.
+License: Apache License, Version 2.0.
+Included-file source mapping: Nyll/ValuedFieldTheory/ANTHROPIC_FLT_SOURCE.md
+Preserved upstream NOTICE: Nyll/ValuedFieldTheory/ANTHROPIC_FLT_NOTICE
+Preserved earlier-source attribution: Nyll/ValuedFieldTheory/ANTHROPIC_FLT_ATTRIBUTION.md
+Earlier copyright holders and authors are not replaced by Anthropic.
+
+Nyll/ValuedFieldTheory/Valuation/Completion/AdicCompletion.lean
+Nyll/ValuedFieldTheory/Valuation/DiscreteValuationField/AlgebraStandardSmoothDVRLocalizationAtPrime.lean
+Nyll/ValuedFieldTheory/Valuation/Subring/Discrete/DVRAlgebraMapMemFinite.lean
+Nyll/ValuedFieldTheory/Valuation/Subring/Ramification/SmulEqCardStabilizerEqRamificationIdxMulInertiaDeg.lean
+
+Additional source-specific credits
+----------------------------------
+
+Nyll/SchemeTheory/CategoryTheory/DescentComparison.lean
+Copyright (c) 2026 Naganori Yamaguchi. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
+https://github.com/n-yamaguchi-0729
+
+The descent comparison constructions used here are from Mathlib:
+
+DescentData.lean: Copyright (c) 2025 Joël Riou. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Joël Riou, Christian Merten
+https://github.com/leanprover-community/mathlib4/blob/065356127b1dc0016f66b7283ce0ce2c4055aa55/Mathlib/CategoryTheory/Sites/Descent/DescentData.lean
+
+DescentDataPrime.lean: Copyright (c) 2026 Joël Riou. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Joël Riou, Christian Merten
+https://github.com/leanprover-community/mathlib4/blob/065356127b1dc0016f66b7283ce0ce2c4055aa55/Mathlib/CategoryTheory/Sites/Descent/DescentDataPrime.lean

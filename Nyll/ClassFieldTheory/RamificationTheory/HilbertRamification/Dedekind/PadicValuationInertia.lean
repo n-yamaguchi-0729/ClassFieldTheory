@@ -206,7 +206,7 @@ theorem int_mem_globalPadicPrimeIdeal_under_iff
   have hz :
       ((algebraMap ℤ (𝓞 M) z : 𝓞 M) : M) =
         algebraMap ℚ M (z : ℚ) := by
-    simp
+    simp only [eq_intCast, map_intCast]
   rw [hz, w.2]
   change (((padicNorm p (z : ℚ) : ℚ) : ℝ) < 1) ↔ (p : ℤ) ∣ z
   exact_mod_cast padicNorm.int_lt_one_iff (p := p) z

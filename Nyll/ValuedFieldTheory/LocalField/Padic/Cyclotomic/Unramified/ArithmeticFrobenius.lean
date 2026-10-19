@@ -221,10 +221,10 @@ noncomputable def padicCyclotomicUnramified_galIntegerRingEquiv
   exact
     { toFun := fun x ↦ ⟨σ (x : L), hmem σ x⟩
       invFun := fun x ↦ ⟨σ.symm (x : L), hmem σ.symm x⟩
-      left_inv := by intro x; ext; simp
-      right_inv := by intro x; ext; simp
-      map_mul' := by intro x y; ext; simp
-      map_add' := by intro x y; ext; simp }
+      left_inv x := Subtype.ext (σ.symm_apply_apply (x : L))
+      right_inv x := Subtype.ext (σ.apply_symm_apply (x : L))
+      map_mul' x y := Subtype.ext (map_mul σ (x : L) (y : L))
+      map_add' x y := Subtype.ext (map_add σ (x : L) (y : L)) }
 
 @[simp]
 theorem padicCyclotomicUnramified_galIntegerRingEquiv_apply
@@ -756,8 +756,7 @@ theorem padicCyclotomicUnramified_finrank_eq_residueDegree
     calc
       Module.finrank K L = Module.finrank K
           (IntermediateField.adjoin K ({ζ} : Set L)) := by
-        rw [hAdjoin]
-        simp
+        rw [hAdjoin, IntermediateField.finrank_top']
       _ = (minpoly K ζ).natDegree :=
         IntermediateField.adjoin.finrank hζIntegralK
   have hqDegree : qbar.natDegree = Module.finrank K L := by
@@ -1515,8 +1514,8 @@ theorem padicCyclotomicUnramified_valuationSubring_adjoin_eq_top
         halphaSubDegree
       _ = @Module.finrank k ell _ _ algebraModule :=
         hfullResidueDegreeAlgebra.symm
-      _ = Module.finrank k (⊤ : IntermediateField k ell) := by
-        simp
+      _ = Module.finrank k (⊤ : IntermediateField k ell) :=
+        IntermediateField.finrank_top'.symm
   have halphaAlgTop :
       Algebra.adjoin k ({alpha} : Set ell) =
         (⊤ : Subalgebra k ell) :=

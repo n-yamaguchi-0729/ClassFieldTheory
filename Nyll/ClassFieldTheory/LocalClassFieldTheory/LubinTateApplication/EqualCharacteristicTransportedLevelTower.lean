@@ -6,6 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRamification
 import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
+import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.LevelAlgebra
 
 /-!
 # Towers of transported equal-characteristic Lubin--Tate levels
@@ -42,53 +47,32 @@ noncomputable def
     (ϖ : Kˣ)
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
     {m n : ℕ} (hmn : m ≤ n) :
-    let F := equalCharacteristicTargetLocalField K
-    let B := F.residueField⸨X⸩
-    letI : CharP K F.residueCharacteristic :=
+    let F : LocalField K := equalCharacteristicTargetLocalField K
+    let B : Type := F.residueField⸨X⸩
+    let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
-    let E := equalCharacteristicLubinTateLevelField F m
-    let L := equalCharacteristicLubinTateLevelField F n
-    letI : Algebra B E :=
-      equalCharacteristicLubinTateLevelAlgebra F m
-    letI : Algebra B L :=
-      equalCharacteristicLubinTateLevelAlgebra F n
-    letI : CharP K p := hKp
-    letI : Algebra K E :=
-      equalCharacteristicTransportedLubinTateLevelAlgebra
-        K p ϖ hϖ m
-    letI : Algebra K L :=
-      equalCharacteristicTransportedLubinTateLevelAlgebra
-        K p ϖ hϖ n
+    let E : IntermediateField B (SeparableClosure B) :=
+      equalCharacteristicLubinTateLevelField F m
+    let L : IntermediateField B (SeparableClosure B) :=
+      equalCharacteristicLubinTateLevelField F n
+    let _ : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
+    let _ : Algebra B L := equalCharacteristicLubinTateLevelAlgebra F n
+    let _ : Algebra K E :=
+      equalCharacteristicTransportedLubinTateLevelAlgebra K p (hKp := hKp) ϖ hϖ m
+    let _ : Algebra K L :=
+      equalCharacteristicTransportedLubinTateLevelAlgebra K p (hKp := hKp) ϖ hϖ n
     Gal(L / K) →* Gal(E / K) := by
-  let F := equalCharacteristicTargetLocalField K
-  let B := F.residueField⸨X⸩
-  letI hKq : CharP K F.residueCharacteristic :=
-    equalCharacteristicTargetResidueCharacteristicCharP K p
-  let E := equalCharacteristicLubinTateLevelField F m
-  let L := equalCharacteristicLubinTateLevelField F n
-  letI : Algebra B E :=
-    equalCharacteristicLubinTateLevelAlgebra F m
-  letI : Algebra B L :=
-    equalCharacteristicLubinTateLevelAlgebra F n
-  let hEL : E ≤ L :=
-    equalCharacteristicLubinTateLevelField_mono F hmn
-  letI : IsGalois B E :=
-    equalCharacteristicLubinTateLevelField_isGalois F m
-  let restrictB :=
+  intro F B hKq E L hBE hBL hKE hKL
+  have hEL : E ≤ L := equalCharacteristicLubinTateLevelField_mono F hmn
+  have hGalois : IsGalois B E := equalCharacteristicLubinTateLevelField_isGalois F m
+  let restrictB : Gal(L / B) →* Gal(E / B) :=
     intermediateFieldRestrictNormalHom E L hEL
-  letI : CharP K p := hKp
-  letI : Algebra K E :=
-    equalCharacteristicTransportedLubinTateLevelAlgebra
-      K p ϖ hϖ m
-  letI : Algebra K L :=
-    equalCharacteristicTransportedLubinTateLevelAlgebra
-      K p ϖ hϖ n
   exact
     (equalCharacteristicTransportedLubinTateGaloisEquiv
-        K p ϖ hϖ m).toMonoidHom.comp
+        K p (hKp := hKp) ϖ hϖ m).toMonoidHom.comp
       (restrictB.comp
         (equalCharacteristicTransportedLubinTateGaloisEquiv
-          K p ϖ hϖ n).symm.toMonoidHom)
+          K p (hKp := hKp) ϖ hϖ n).symm.toMonoidHom)
 
 /-- Evaluation of transported restriction agrees in the common Laurent
 separable closure with restricting the underlying automorphism. -/
@@ -97,77 +81,35 @@ theorem
     (p : ℕ) [Fact p.Prime] [hKp : CharP K p]
     (ϖ : Kˣ)
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
-    {m n : ℕ} (hmn : m ≤ n)
-    (σ :
-      let F := equalCharacteristicTargetLocalField K
-      letI : CharP K F.residueCharacteristic :=
-        equalCharacteristicTargetResidueCharacteristicCharP K p
-      let L := equalCharacteristicLubinTateLevelField F n
-      letI : CharP K p := hKp
-      letI : Algebra K L :=
-        equalCharacteristicTransportedLubinTateLevelAlgebra
-          K p ϖ hϖ n
-      Gal(L / K))
-    (x :
-      let F := equalCharacteristicTargetLocalField K
-      letI : CharP K F.residueCharacteristic :=
-        equalCharacteristicTargetResidueCharacteristicCharP K p
-      equalCharacteristicLubinTateLevelField F m) :
-    let F := equalCharacteristicTargetLocalField K
-    let B := F.residueField⸨X⸩
-    letI : CharP K F.residueCharacteristic :=
+    {m n : ℕ} (hmn : m ≤ n) :
+    let F : LocalField K := equalCharacteristicTargetLocalField K
+    let B : Type := F.residueField⸨X⸩
+    let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
-    let E := equalCharacteristicLubinTateLevelField F m
-    let L := equalCharacteristicLubinTateLevelField F n
-    letI : Algebra B E :=
-      equalCharacteristicLubinTateLevelAlgebra F m
-    letI : Algebra B L :=
-      equalCharacteristicLubinTateLevelAlgebra F n
-    letI : CharP K p := hKp
-    letI : Algebra K E :=
-      equalCharacteristicTransportedLubinTateLevelAlgebra
-        K p ϖ hϖ m
-    letI : Algebra K L :=
-      equalCharacteristicTransportedLubinTateLevelAlgebra
-        K p ϖ hϖ n
-    letI : CharP K F.residueCharacteristic :=
-      equalCharacteristicTargetResidueCharacteristicCharP K p
-    let hEL : E ≤ L :=
-      equalCharacteristicLubinTateLevelField_mono F hmn
-    letI : CharP K p := hKp
-    E.val
-        (equalCharacteristicTransportedLubinTateRestrictNormalHom
-          K p ϖ hϖ hmn σ x) =
-      L.val (σ (IntermediateField.inclusion hEL x)) := by
-  let F := equalCharacteristicTargetLocalField K
-  let B := F.residueField⸨X⸩
-  let hKq : CharP K F.residueCharacteristic :=
-    equalCharacteristicTargetResidueCharacteristicCharP K p
-  let E := equalCharacteristicLubinTateLevelField F m
-  let L := equalCharacteristicLubinTateLevelField F n
-  let : Algebra B E :=
-    equalCharacteristicLubinTateLevelAlgebra F m
-  let : Algebra B L :=
-    equalCharacteristicLubinTateLevelAlgebra F n
-  let hEL : E ≤ L :=
-    equalCharacteristicLubinTateLevelField_mono F hmn
-  let : IsGalois B E :=
-    equalCharacteristicLubinTateLevelField_isGalois F m
-  let restrictB :=
+    let E : IntermediateField B (SeparableClosure B) :=
+      equalCharacteristicLubinTateLevelField F m
+    let L : IntermediateField B (SeparableClosure B) :=
+      equalCharacteristicLubinTateLevelField F n
+    let _ : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
+    let _ : Algebra B L := equalCharacteristicLubinTateLevelAlgebra F n
+    let _ : Algebra K E :=
+      equalCharacteristicTransportedLubinTateLevelAlgebra K p (hKp := hKp) ϖ hϖ m
+    let _ : Algebra K L :=
+      equalCharacteristicTransportedLubinTateLevelAlgebra K p (hKp := hKp) ϖ hϖ n
+    let hEL : E ≤ L := equalCharacteristicLubinTateLevelField_mono F hmn
+    ∀ (σ : Gal(L / K)) (x : E),
+      E.val
+          (equalCharacteristicTransportedLubinTateRestrictNormalHom
+            K p (hKp := hKp) ϖ hϖ hmn σ x) =
+        L.val (σ (IntermediateField.inclusion hEL x)) := by
+  intro F B hKq E L hBE hBL hKE hKL hEL σ x
+  have hGalois : IsGalois B E := equalCharacteristicLubinTateLevelField_isGalois F m
+  let restrictB : Gal(L / B) →* Gal(E / B) :=
     intermediateFieldRestrictNormalHom E L hEL
-  let : CharP K p := hKp
-  let : Algebra K E :=
-    equalCharacteristicTransportedLubinTateLevelAlgebra
-      K p ϖ hϖ m
-  let : Algebra K L :=
-    equalCharacteristicTransportedLubinTateLevelAlgebra
-      K p ϖ hϖ n
-  let qE :=
-    equalCharacteristicTransportedLubinTateGaloisEquiv
-      K p ϖ hϖ m
-  let qL :=
-    equalCharacteristicTransportedLubinTateGaloisEquiv
-      K p ϖ hϖ n
+  let qE : Gal(E / B) ≃* Gal(E / K) :=
+    equalCharacteristicTransportedLubinTateGaloisEquiv K p (hKp := hKp) ϖ hϖ m
+  let qL : Gal(L / B) ≃* Gal(L / K) :=
+    equalCharacteristicTransportedLubinTateGaloisEquiv K p (hKp := hKp) ϖ hϖ n
   have hrestrict :
       E.val (restrictB (qL.symm σ) x) =
         L.val (qL.symm σ (IntermediateField.inclusion hEL x)) :=
@@ -181,12 +123,17 @@ theorem
         (fun τ : Gal(L / K) =>
           L.val (τ (IntermediateField.inclusion hEL x)))
         (qL.apply_symm_apply σ)
-    rw [equalCharacteristicTransportedLubinTateGaloisEquiv_apply] at h
-    exact h
+    have heval : qL (qL.symm σ) (IntermediateField.inclusion hEL x) =
+        qL.symm σ (IntermediateField.inclusion hEL x) :=
+      equalCharacteristicTransportedLubinTateGaloisEquiv_apply
+        K p (hKp := hKp) ϖ hϖ n (qL.symm σ) (IntermediateField.inclusion hEL x)
+    exact (congrArg L.val heval).symm.trans h
   change E.val (qE (restrictB (qL.symm σ)) x) =
     L.val (σ (IntermediateField.inclusion hEL x))
-  rw [equalCharacteristicTransportedLubinTateGaloisEquiv_apply]
-  exact hrestrict.trans hqL
+  have heval : qE (restrictB (qL.symm σ)) x = restrictB (qL.symm σ) x :=
+    equalCharacteristicTransportedLubinTateGaloisEquiv_apply
+      K p (hKp := hKp) ϖ hϖ m (restrictB (qL.symm σ)) x
+  exact (congrArg E.val heval).trans (hrestrict.trans hqL)
 
 /-- The Galois-group identifications at two levels commute with restriction
 between those levels. -/
@@ -195,93 +142,37 @@ theorem
     (p : ℕ) [Fact p.Prime] [hKp : CharP K p]
     (ϖ : Kˣ)
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
-    {m n : ℕ} (hmn : m ≤ n)
-    (σ :
-      let F := equalCharacteristicTargetLocalField K
-      let B := F.residueField⸨X⸩
-      letI : CharP K F.residueCharacteristic :=
-        equalCharacteristicTargetResidueCharacteristicCharP K p
-      let L := equalCharacteristicLubinTateLevelField F n
-      letI : Algebra B L :=
-        equalCharacteristicLubinTateLevelAlgebra F n
-      Gal(L / B)) :
-    let F := equalCharacteristicTargetLocalField K
-    let B := F.residueField⸨X⸩
-    letI : CharP K F.residueCharacteristic :=
+    {m n : ℕ} (hmn : m ≤ n) :
+    let F : LocalField K := equalCharacteristicTargetLocalField K
+    let B : Type := F.residueField⸨X⸩
+    let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
-    let E := equalCharacteristicLubinTateLevelField F m
-    let L := equalCharacteristicLubinTateLevelField F n
-    letI : Algebra B E :=
-      equalCharacteristicLubinTateLevelAlgebra F m
-    letI : Algebra B L :=
-      equalCharacteristicLubinTateLevelAlgebra F n
-    letI : CharP K p := hKp
-    letI : Algebra K E :=
-      equalCharacteristicTransportedLubinTateLevelAlgebra
-        K p ϖ hϖ m
-    letI : Algebra K L :=
-      equalCharacteristicTransportedLubinTateLevelAlgebra
-        K p ϖ hϖ n
-    letI : CharP K F.residueCharacteristic :=
-      equalCharacteristicTargetResidueCharacteristicCharP K p
-    let hEL : E ≤ L :=
-      equalCharacteristicLubinTateLevelField_mono F hmn
-    letI : CharP K p := hKp
-    equalCharacteristicTransportedLubinTateRestrictNormalHom
-        K p ϖ hϖ hmn
-        (equalCharacteristicTransportedLubinTateGaloisEquiv
-          K p ϖ hϖ n σ) =
-      equalCharacteristicTransportedLubinTateGaloisEquiv
-        K p ϖ hϖ m
-        (intermediateFieldRestrictNormalHom E L hEL σ) := by
-  let F := equalCharacteristicTargetLocalField K
-  let B := F.residueField⸨X⸩
-  let hKq : CharP K F.residueCharacteristic :=
-    equalCharacteristicTargetResidueCharacteristicCharP K p
-  let E := equalCharacteristicLubinTateLevelField F m
-  let L := equalCharacteristicLubinTateLevelField F n
-  let : Algebra B E :=
-    equalCharacteristicLubinTateLevelAlgebra F m
-  let : Algebra B L :=
-    equalCharacteristicLubinTateLevelAlgebra F n
-  let hEL : E ≤ L :=
-    equalCharacteristicLubinTateLevelField_mono F hmn
-  let : IsGalois B E :=
-    equalCharacteristicLubinTateLevelField_isGalois F m
-  let : CharP K p := hKp
-  let : Algebra K E :=
-    equalCharacteristicTransportedLubinTateLevelAlgebra
-      K p ϖ hϖ m
-  let : Algebra K L :=
-    equalCharacteristicTransportedLubinTateLevelAlgebra
-      K p ϖ hϖ n
-  apply AlgEquiv.ext
-  intro x
-  apply E.val.injective
-  calc
-    E.val
-        (equalCharacteristicTransportedLubinTateRestrictNormalHom
-          K p ϖ hϖ hmn
-          (equalCharacteristicTransportedLubinTateGaloisEquiv
-            K p ϖ hϖ n σ) x) =
-        L.val
-          (equalCharacteristicTransportedLubinTateGaloisEquiv
-            K p ϖ hϖ n σ
-            (IntermediateField.inclusion hEL x)) :=
-      equalCharacteristicTransportedLubinTateRestrictNormalHom_apply_val
-        K p ϖ hϖ hmn _ x
-    _ = L.val (σ (IntermediateField.inclusion hEL x)) := by
-      rw [equalCharacteristicTransportedLubinTateGaloisEquiv_apply]
-    _ =
-        E.val
-          (intermediateFieldRestrictNormalHom E L hEL σ x) :=
-      (intermediateFieldRestrictNormalHom_apply_val
-        E L hEL σ x).symm
-    _ =
-        E.val
-          (equalCharacteristicTransportedLubinTateGaloisEquiv
-            K p ϖ hϖ m
-            (intermediateFieldRestrictNormalHom E L hEL σ) x) := by
-      rw [equalCharacteristicTransportedLubinTateGaloisEquiv_apply]
+    let E : IntermediateField B (SeparableClosure B) :=
+      equalCharacteristicLubinTateLevelField F m
+    let L : IntermediateField B (SeparableClosure B) :=
+      equalCharacteristicLubinTateLevelField F n
+    let _ : Algebra B E := equalCharacteristicLubinTateLevelAlgebra F m
+    let _ : Algebra B L := equalCharacteristicLubinTateLevelAlgebra F n
+    let _ : Algebra K E :=
+      equalCharacteristicTransportedLubinTateLevelAlgebra K p (hKp := hKp) ϖ hϖ m
+    let _ : Algebra K L :=
+      equalCharacteristicTransportedLubinTateLevelAlgebra K p (hKp := hKp) ϖ hϖ n
+    let hEL : E ≤ L := equalCharacteristicLubinTateLevelField_mono F hmn
+    ∀ (σ : Gal(L / B)),
+      equalCharacteristicTransportedLubinTateRestrictNormalHom
+          K p (hKp := hKp) ϖ hϖ hmn
+          (equalCharacteristicTransportedLubinTateGaloisEquiv K p (hKp := hKp) ϖ hϖ n σ) =
+        equalCharacteristicTransportedLubinTateGaloisEquiv K p (hKp := hKp) ϖ hϖ m
+          (intermediateFieldRestrictNormalHom E L hEL σ) := by
+  intro F B hKq E L hBE hBL hKE hKL hEL σ
+  have hGalois : IsGalois B E := equalCharacteristicLubinTateLevelField_isGalois F m
+  let restrictB : Gal(L / B) →* Gal(E / B) :=
+    intermediateFieldRestrictNormalHom E L hEL
+  let qE : Gal(E / B) ≃* Gal(E / K) :=
+    equalCharacteristicTransportedLubinTateGaloisEquiv K p (hKp := hKp) ϖ hϖ m
+  let qL : Gal(L / B) ≃* Gal(L / K) :=
+    equalCharacteristicTransportedLubinTateGaloisEquiv K p (hKp := hKp) ϖ hϖ n
+  change qE (restrictB (qL.symm (qL σ))) = qE (restrictB σ)
+  rw [qL.symm_apply_apply]
 
 end LubinTate

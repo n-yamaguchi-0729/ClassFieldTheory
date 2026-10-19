@@ -33,12 +33,12 @@ noncomputable def powerClassGroupEquivOfRingEquiv
     intro x hx
     obtain ⟨y, rfl⟩ := hx
     change eu (y ^ (n : ℕ)) ∈ NG
-    exact ⟨eu y, by simp⟩
+    exact ⟨eu y, (map_pow eu y (n : ℕ)).symm⟩
   have hgf : NG ≤ NF.comap eu.symm.toMonoidHom := by
     intro x hx
     obtain ⟨y, rfl⟩ := hx
     change eu.symm (y ^ (n : ℕ)) ∈ NF
-    exact ⟨eu.symm y, by simp⟩
+    exact ⟨eu.symm y, (map_pow eu.symm y (n : ℕ)).symm⟩
   let fwd : Fˣ ⧸ NF →* Gˣ ⧸ NG :=
     QuotientGroup.map NF NG eu.toMonoidHom hfg
   let bwd : Gˣ ⧸ NG →* Fˣ ⧸ NF :=

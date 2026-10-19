@@ -155,7 +155,7 @@ private theorem equalCharacteristicLubinTateHerbrandSlope_eq_of_pow_interval
           F n]
 
 open _root_.RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration
-  (herbrandSlope) in
+  (herbrandSlope herbrandValueNat_zero) in
 private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
     (F : LocalField.{0, v} K₀)
     [CharP K₀ F.residueCharacteristic]
@@ -174,7 +174,7 @@ private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
   induction k with
   | zero =>
       intro _
-      simp
+      rw [pow_zero, Nat.sub_self, herbrandValueNat_zero, Nat.cast_zero]
   | succ k ih =>
       intro hsucc
       have hkn : k ≤ n := by omega
@@ -212,8 +212,7 @@ private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
           q ^ (k + 1) - q ^ k = q * q ^ k - q ^ k := by
             rw [pow_succ, Nat.mul_comm]
           _ = (q - 1) * q ^ k := by
-            rw [Nat.mul_sub_right_distrib]
-            simp
+            rw [Nat.mul_sub_right_distrib, one_mul]
       have hexponent : n + 1 - (k + 1) = n - k := by omega
       have hpowSplit : q ^ n = q ^ k * q ^ (n - k) := by
         rw [← pow_add]
@@ -239,7 +238,7 @@ private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
           _ = (b : ℝ) *
                 ((q ^ (n + 1 - (k + 1)) : ℕ) /
                   ((q - 1) * q ^ n : ℕ) : ℝ) := by
-              simp
+              rw [Finset.sum_const, Finset.card_range, nsmul_eq_mul]
           _ = 1 := by
               rw [← mul_div_assoc, ← Nat.cast_mul, hproduct, div_self]
               exact_mod_cast (Nat.ne_of_gt hdenpos)

@@ -97,7 +97,7 @@ theorem padicCyclotomicTotallyRamified_exists_unit_mul_p_eq_sub_one_pow
         congrArg Polynomial.natDegree hmin
       _ = Nat.totient (p ^ (k + 1)) := by
         rw [padicCyclotomicTotallyRamifiedShiftedCyclotomicPadicInt, natDegree_comp,
-          show (X + 1 : ℤ_[p][X]) = X + C 1 by simp,
+          show (X + 1 : ℤ_[p][X]) = X + C 1 by rw [Polynomial.C_1],
           natDegree_X_add_C, mul_one, natDegree_cyclotomic]
   refine ⟨y, hyu, ?_⟩
   rw [hdim] at hy'

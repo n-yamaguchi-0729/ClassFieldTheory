@@ -40,8 +40,7 @@ theorem unramifiedNormQuotientEquivZMod_inverseIntegerRingUniformizerFieldUnit
       Multiplicative.ofAdd (1 : ZMod n) := by
   rw [unramifiedNormQuotientEquivZMod_mk, valuationModDegreeMulHom_apply,
     LocalFieldTheory.IsNonarchimedeanLocalField.valuationMap_apply,
-    v_inverseIntegerRingUniformizerFieldUnit]
-  simp
+    v_inverseIntegerRingUniformizerFieldUnit, Int.cast_one]
 
 /-- Powers of the chosen inverse prime element in the valuation quotient. -/
 theorem unramifiedNormQuotientEquivZMod_inverseIntegerRingUniformizerFieldUnit_zpow

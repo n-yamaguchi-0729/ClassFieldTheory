@@ -892,7 +892,7 @@ theorem shrinkAlgebra_commutes
     change (Shrink.ringEquiv L).symm
       (algebraMap K L (Shrink.ringEquiv K ((Shrink.ringEquiv K).symm x))) =
         (Shrink.ringEquiv L).symm (algebraMap K L x)
-    simp
+    rw [RingEquiv.apply_symm_apply]
 
 /-- Finite-dimensionality survives simultaneous shrinking of the base and
 extension fields. -/

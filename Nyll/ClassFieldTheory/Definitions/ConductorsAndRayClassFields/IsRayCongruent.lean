@@ -49,7 +49,7 @@ theorem one {K : Type u} [Field K] [NumberField K]
   · intro v _
     simpa only [map_one] using (rayLocalHigherUnitGroup v (m.finitePart v)).one_mem
   · intro v _
-    simp
+    simpa only [Units.val_one, map_one] using (zero_lt_one : (0 : ℝ) < 1)
 
 /-- Ray-congruent nonzero elements are closed under multiplication. -/
 theorem mul {K : Type u} [Field K] [NumberField K]

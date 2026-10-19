@@ -32,7 +32,7 @@ def totallyPositiveFieldUnits
     0 < v.1.embedding_of_isReal v.2 (x : K)}
   one_mem' := by
     intro v
-    simp
+    simpa only [Units.val_one, map_one] using (zero_lt_one : (0 : ℝ) < 1)
   mul_mem' := by
     intro x y hx hy v
     simpa only [Units.val_mul, map_mul] using mul_pos (hx v) (hy v)

@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.Algebra.All
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.All
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.All
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.All
 import Nyll.ClassFieldTheory.Definitions.All
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.All
 import Nyll.ClassFieldTheory.HasseArf
@@ -24,4 +25,10 @@ import Nyll.ClassFieldTheory.Theorems.All
 Local and global class field theory, including reciprocity laws, the class field axiom,
 Hasse–Arf and Kronecker–Weber. Supporting constructions cover idèles, Kummer theory and
 Lubin–Tate theory.
+
+The function-field part supplies all-place adeles and ideles, degree-zero compactness,
+ray congruence subgroups, the class field axiom, finite reciprocity with the actual
+norm kernel, and continuous dense absolute reciprocity. The local-global comparison
+and the existence theorem for arbitrary finite-index open subgroups remain under
+development; see `FUNCTION_FIELD_PLAN.md`.
 -/

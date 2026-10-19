@@ -60,8 +60,7 @@ theorem shrinkIntermediateFieldRingEquiv_commutes
       algebraMap (Shrink.{0} K) (SeparableClosure K)
           ((Shrink.ringEquiv K).symm x) =
         algebraMap K (SeparableClosure K) x := by
-    rw [hAlg]
-    simp
+    rw [hAlg, RingEquiv.apply_symm_apply]
   have hfield :
       algebraMap K (SeparableClosure K) x =
         ((algebraMap K E x : E) : SeparableClosure K) :=

@@ -187,7 +187,9 @@ theorem relativeDeltaClass_one (H : Subgroup G) :
   rw [mem_mixedProductInNumerator_iff]
   change embeddedDelta H 1 ∈ mixedAugmentationProduct H
   rw [embeddedDelta_eq]
-  simp
+  change MonoidAlgebra.single (1 : G) 1 - MonoidAlgebra.single (1 : G) 1 ∈ _
+  rw [sub_self]
+  exact (mixedAugmentationProduct H).zero_mem
 
 /-- The relative identity `δ(hk)=δh+δk` modulo `I_G I_H`. -/
 theorem relativeDeltaClass_mul
@@ -215,7 +217,7 @@ theorem relativeDeltaClass_mul
       MonoidAlgebra.single ((h * k : H) : G) (1 : ℤ) =
         MonoidAlgebra.single (h : G) 1 *
           MonoidAlgebra.single (k : G) 1 := by
-    simp
+    rw [MonoidAlgebra.single_mul_single, one_mul, Subgroup.coe_mul]
   rw [hsingle, ← MonoidAlgebra.one_def]
   noncomm_ring
 
@@ -319,7 +321,7 @@ theorem transversalLinearization_embeddedDelta
     transversalLinearization_single, one_zsmul]
   rw [show transversalComponent H T (h : G) =
       transversalComponent H T 1 * h by simpa using hc]
-  simp
+  simp only [map_mul, ofMul_mul, add_sub_cancel_left]
 
 /-- A basic generator of `I_G I_H` is killed by transversal
 linearization. -/
@@ -344,7 +346,7 @@ theorem transversalLinearization_delta_mul_embeddedDelta
   rw [show transversalComponent H T (h : G) =
       transversalComponent H T 1 * h by
         simpa using hc1]
-  simp
+  simp only [mul_one, map_mul, ofMul_mul, add_sub_add_right_eq_sub, sub_self]
 
 /-- Transversal linearization kills a product of an augmentation-zero
 element of `ℤ[G]` with an embedded augmentation-zero element of

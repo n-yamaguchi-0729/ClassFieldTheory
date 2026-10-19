@@ -360,7 +360,7 @@ theorem adjoinRoot_factor_norm_is_chosenSimpleKummerNorm
       subst g
       have hsub : Subsingleton (AdjoinRoot (1 : Polynomial K)) := by
         change Subsingleton ((Polynomial K) ⧸ Ideal.span {1})
-        exact Ideal.Quotient.subsingleton_iff.mpr (by simp)
+        exact Ideal.Quotient.subsingleton_iff.mpr Ideal.span_singleton_one
       have hu1 : (u : AdjoinRoot (1 : Polynomial K)) = 1 :=
         Subsingleton.elim _ _
       refine ⟨1, ?_⟩

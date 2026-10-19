@@ -42,7 +42,7 @@ theorem ramificationCondition_mem_inertiaGroup
       by_cases ha : (a : L) = 0
       · have ha' : a = 0 := Subtype.ext ha
         subst a
-        simp
+        rw [smul_zero, map_zero]
       · let x : Lˣ := Units.mk0 (a : L) ha
         have hx : A.valuation
             ((automorphismUnitQuotient K A sigma x : L) - 1) < 1 :=

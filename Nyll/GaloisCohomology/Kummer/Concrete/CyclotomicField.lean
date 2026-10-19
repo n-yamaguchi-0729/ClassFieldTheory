@@ -55,7 +55,7 @@ theorem nonempty_algHom_cyclotomicField_of_dvd
   have hc : c ≠ 0 := by
     intro hc0
     subst c
-    simp at hbc
+    rw [mul_zero] at hbc
     omega
   have hζa : IsPrimitiveRoot (ζ ^ c) a := by
     have hpow := hζ.pow_of_dvd hc (by

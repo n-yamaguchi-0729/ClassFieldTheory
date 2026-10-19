@@ -72,14 +72,14 @@ theorem globalInfinitePlaceHilbertSymbol_congr
             InfinitePlace.embedding_of_isReal hW
               ((Units.mapEquiv e.toMulEquiv a : Gˣ) : G) < 0 := by
         rw [show ((Units.mapEquiv e.toMulEquiv a : Gˣ) : G) = e (a : F) by
-          simp]
+          exact Units.coe_mapEquiv e.toMulEquiv _]
         rw [infinitePlace_embedding_of_isReal_congr e W hv hW]
       have hbiff :
           InfinitePlace.embedding_of_isReal hv (b : F) < 0 ↔
             InfinitePlace.embedding_of_isReal hW
               ((Units.mapEquiv e.toMulEquiv b : Gˣ) : G) < 0 := by
         rw [show ((Units.mapEquiv e.toMulEquiv b : Gˣ) : G) = e (b : F) by
-          simp]
+          exact Units.coe_mapEquiv e.toMulEquiv _]
         rw [infinitePlace_embedding_of_isReal_congr e W hv hW]
       by_cases ha : InfinitePlace.embedding_of_isReal hv (a : F) < 0
       · have haG := haiff.mp ha
@@ -91,7 +91,7 @@ theorem globalInfinitePlaceHilbertSymbol_congr
           apply Subtype.ext
           apply Units.ext
           change e (-1 : F) = (-1 : G)
-          simp
+          rw [map_neg, map_one]
         · have hbG := fun h => hb (hbiff.mpr h)
           simp only [globalInfinitePlaceHilbertSymbol, dite_eq_left hn,
             dite_eq_left hv, dite_eq_left hW, dite_eq_left ha, dite_eq_right hb,

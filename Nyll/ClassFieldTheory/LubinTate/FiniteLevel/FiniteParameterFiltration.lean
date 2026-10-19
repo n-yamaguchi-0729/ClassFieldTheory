@@ -107,7 +107,7 @@ theorem standardLubinTateUnitParameterSubgroup_natCard
           higherPrincipalUnitGroup.card_principalUnitSuccQuot_eq_residue_of_uniformizer
             D hπ (k + i) hki
     _ = Nat.card F.residueField ^ (n + 1 - k) := by
-      simp
+      rw [Finset.prod_const, Finset.card_range]
 
 end LubinTate
 

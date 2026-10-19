@@ -30,8 +30,9 @@ theorem intermediateFieldMap_commutes :
     (algebraMap F (E.map e.toAlgHom)).comp (RingEquiv.refl F).toRingHom =
       (IntermediateField.intermediateFieldMap e E).toRingHom.comp
         (algebraMap F E) := by
-  ext x
-  simp
+  apply RingHom.ext
+  intro x
+  exact ((IntermediateField.intermediateFieldMap e E).commutes x).symm
 
 /-- Mapping an intermediate field through an ambient algebra equivalence
 preserves its finite-dimensionality. -/

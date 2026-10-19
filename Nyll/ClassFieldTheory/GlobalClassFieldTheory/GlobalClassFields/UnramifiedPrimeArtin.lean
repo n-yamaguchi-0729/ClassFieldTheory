@@ -85,7 +85,7 @@ theorem
       (FiniteIdeleGroup.localOrder_eq_zero_iff
         v (x * y⁻¹)).1
     rw [map_mul, map_inv, hxy]
-    simp
+    simp only [mul_inv_cancel, toAdd_one]
   have hker :
       x * y⁻¹ ∈
         (Reciprocity.chosenFinitePlaceArtinMonoidHom

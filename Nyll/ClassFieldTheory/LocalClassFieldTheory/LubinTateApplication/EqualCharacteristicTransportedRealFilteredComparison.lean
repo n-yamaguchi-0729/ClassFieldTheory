@@ -144,7 +144,7 @@ private theorem principalUnitsImage_zero_eq_top_of_uniformizer_zpowers_le_ker
     MonoidHom.mem_ker.mp hpowKer
   refine ⟨integerUnitsToFieldUnits K u, ?_, ?_⟩
   · unfold LocalFieldTheory.fieldPrincipalUnits
-    exact ⟨u, by simp, rfl⟩
+    exact ⟨u, by rw [LocalFieldTheory.principalUnits_zero]; exact Subgroup.mem_top u, rfl⟩
   · rw [← hx, ← hdecomp, map_mul, hpow, mul_one]
 
 /-- The target-field Artin image of the valuation-ring unit group `U^0` is

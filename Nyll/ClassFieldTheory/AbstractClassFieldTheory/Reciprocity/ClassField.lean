@@ -55,7 +55,9 @@ theorem classField_normSubgroup
             exact (normSubgroupOrderIso_apply
               v hcf K (classField v hcf K N)).symm
     _ = N.1 := by
-      simp [classField]
+      exact congrArg
+        (fun N : OrderDual (NormOpenAddSubgroup A K.field) => (OrderDual.ofDual N).1)
+        ((normSubgroupOrderIso v hcf K).apply_symm_apply (OrderDual.toDual N))
 
 /-- Taking the class field is inverse to taking the norm subgroup. -/
 @[simp]
@@ -96,8 +98,7 @@ theorem classField_le_classField_iff
     (K : FiniteAbstractField G)
     (N₁ N₂ : NormOpenAddSubgroup A K.field) :
     classField v hcf K N₁ ≤ classField v hcf K N₂ ↔ N₂.1 ≤ N₁.1 := by
-  rw [le_iff_normSubgroup_le v hcf K]
-  simp
+  simp only [le_iff_normSubgroup_le v hcf K, classField_normSubgroup]
 
 /-- A finite abelian extension lies in the class field of `N` exactly when
 its norm subgroup contains `N`. -/
@@ -109,8 +110,7 @@ theorem le_classField_iff
     (L : FiniteAbelianSubextension K.field)
     (N : NormOpenAddSubgroup A K.field) :
     L ≤ classField v hcf K N ↔ N.1 ≤ L.normSubgroup A := by
-  rw [le_iff_normSubgroup_le v hcf K]
-  simp
+  simp only [le_iff_normSubgroup_le v hcf K, classField_normSubgroup]
 
 /-- The class field of `N` lies in `L` exactly when the norm subgroup of
 `L` lies in `N`. -/
@@ -122,8 +122,7 @@ theorem classField_le_iff
     (N : NormOpenAddSubgroup A K.field)
     (L : FiniteAbelianSubextension K.field) :
     classField v hcf K N ≤ L ↔ L.normSubgroup A ≤ N.1 := by
-  rw [le_iff_normSubgroup_le v hcf K]
-  simp
+  simp only [le_iff_normSubgroup_le v hcf K, classField_normSubgroup]
 
 /-- Intersection of two norm-open subgroups, with its openness produced
 from finite Galois norm neighbourhoods. -/

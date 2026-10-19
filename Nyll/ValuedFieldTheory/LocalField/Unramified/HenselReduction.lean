@@ -49,8 +49,7 @@ theorem irreducible_residue_of_irreducible_of_separable_of_henselian
     intro hq
     have hfzero : f.natDegree = 0 := by
       rw [← hf.natDegree_map (IsLocalRing.residue V), show
-        f.map (IsLocalRing.residue V) = qbar from rfl, hq]
-      simp
+        f.map (IsLocalRing.residue V) = qbar from rfl, hq, Polynomial.natDegree_one]
     exact (Nat.ne_of_gt hfpos) hfzero
   rw [Polynomial.irreducible_of_monic hqmonic hqne]
   intro gbar hbar hgmonic hhmonic hfactor

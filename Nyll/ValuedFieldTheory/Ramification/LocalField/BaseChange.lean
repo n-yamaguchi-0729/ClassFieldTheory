@@ -131,8 +131,8 @@ private theorem upperRamificationGroup_map_baseChange
     · rintro ⟨σ, hσ, rfl⟩
       exact (hmem s σ).1 hσ
     · intro hτ
-      refine ⟨q.symm τ, (hmem s (q.symm τ)).2 ?_, by simp⟩
-      simpa using hτ
+      refine ⟨q.symm τ, (hmem s (q.symm τ)).2 ?_, q.apply_symm_apply τ⟩
+      simpa only [q.apply_symm_apply] using hτ
   have hcard (n : ℕ) :
       Nat.card
           ((lowerRamificationFiltrationOfUniqueExtension

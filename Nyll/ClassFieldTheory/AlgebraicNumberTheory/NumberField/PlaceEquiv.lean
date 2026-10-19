@@ -43,16 +43,14 @@ def infinitePlaceEquivOfRingEquiv
   left_inv w := by
     change (w.comap e.symm.toRingHom).comap e.toRingHom = w
     rw [← NumberField.InfinitePlace.comap_comp]
-    have hcomp : e.symm.toRingHom.comp e.toRingHom = RingHom.id F := by
-      ext x
-      simp
+    have hcomp : e.symm.toRingHom.comp e.toRingHom = RingHom.id F :=
+      e.symm_toRingHom_comp_toRingHom
     rw [hcomp, NumberField.InfinitePlace.comap_id]
   right_inv w := by
     change (w.comap e.toRingHom).comap e.symm.toRingHom = w
     rw [← NumberField.InfinitePlace.comap_comp]
-    have hcomp : e.toRingHom.comp e.symm.toRingHom = RingHom.id G := by
-      ext x
-      simp
+    have hcomp : e.toRingHom.comp e.symm.toRingHom = RingHom.id G :=
+      e.toRingHom_comp_symm_toRingHom
     rw [hcomp, NumberField.InfinitePlace.comap_id]
 
 end ClassFieldTheory

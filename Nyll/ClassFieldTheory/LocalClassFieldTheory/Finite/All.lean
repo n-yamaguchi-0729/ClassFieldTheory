@@ -10,6 +10,7 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.ArtinSchreierConductor
 
 /-!
 # Finite local reciprocity

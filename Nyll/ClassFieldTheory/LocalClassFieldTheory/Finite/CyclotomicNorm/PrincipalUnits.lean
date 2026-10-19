@@ -257,7 +257,7 @@ theorem norm_adjoin_two_add_primitiveFourthRoot
   rw [minpoly_two_add_primitiveFourthRoot i hi]
   rw [cyclotomic_four_padic]
   rw [Polynomial.natDegree_comp]
-  rw [show (1 : Polynomial ℚ_[2]) = Polynomial.C 1 by simp,
+  rw [show (1 : Polynomial ℚ_[2]) = Polynomial.C 1 from (map_one Polynomial.C).symm,
     Polynomial.natDegree_X_pow_add_C, Polynomial.natDegree_X_sub_C]
   rw [
     Polynomial.coeff_zero_eq_eval_zero, Polynomial.eval_comp]
@@ -299,7 +299,7 @@ theorem norm_two_add_fourthRoot_cyclotomic_two
     rw [IntermediateField.adjoin.finrank hjint]
     rw [minpoly_two_add_primitiveFourthRoot i hi]
     rw [cyclotomic_four_padic, Polynomial.natDegree_comp]
-    rw [show (1 : Polynomial ℚ_[2]) = Polynomial.C 1 by simp,
+    rw [show (1 : Polynomial ℚ_[2]) = Polynomial.C 1 from (map_one Polynomial.C).symm,
       Polynomial.natDegree_X_pow_add_C, Polynomial.natDegree_X_sub_C]
   have hfinL : Module.finrank ℚ_[2] L = 2 ^ (m + 1) := by
     simpa [Nat.add_assoc] using

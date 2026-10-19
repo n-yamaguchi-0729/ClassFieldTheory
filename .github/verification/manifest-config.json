@@ -9,8 +9,14 @@
     "GaloisCohomology": [
       "Nyll.GaloisCohomology"
     ],
+    "SchemeTheory": [
+      "Nyll.SchemeTheory"
+    ],
     "ClassFieldTheory": [
       "Nyll.ClassFieldTheory"
+    ],
+    "AlgebraicCurves": [
+      "Nyll.AlgebraicCurves"
     ],
     "EntryPoint": [
       "Nyll"
@@ -44,13 +50,17 @@
     "ProCGroups",
     "ValuedFieldTheory",
     "GaloisCohomology",
-    "ClassFieldTheory"
+    "SchemeTheory",
+    "ClassFieldTheory",
+    "AlgebraicCurves"
   ],
   "depths": {
     "ProCGroups": 1,
     "ValuedFieldTheory": 1,
     "GaloisCohomology": 1,
-    "ClassFieldTheory": 2
+    "SchemeTheory": 1,
+    "ClassFieldTheory": 2,
+    "AlgebraicCurves": 2
   },
   "primaryRoots": [
     "Nyll.ClassFieldTheory.All"

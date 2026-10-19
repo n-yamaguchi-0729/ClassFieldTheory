@@ -1,0 +1,1089 @@
+{
+  "schema": "nyll.pi1.provenance.public-extract.v1",
+  "description": "Included source evidence only; not a build-success certificate.",
+  "upstream": {
+    "repository": "https://github.com/chrisflav/pi1",
+    "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+    "original_import_commit": null,
+    "original_import_commit_status": "The exact commit originally copied into Nyll is unverified. The refreshed pinned comparison commit does not resolve that historical uncertainty."
+  },
+  "license": {
+    "spdx": "Apache-2.0",
+    "local_path": "Nyll/EtaleFundamentalGroups/Pi1/LICENSE",
+    "upstream_path": "LICENSE",
+    "git_blob_sha1": "8dada3edaf50dbc082c9a125058f25def75e625a",
+    "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+    "byte_count": 11357,
+    "byte_identical_to_upstream": true,
+    "upstream_NOTICE_files": [],
+    "upstream_ATTRIBUTION_files": []
+  },
+  "attribution_policy": {
+    "upstream_file_notices": "Exact explicit notices are retained per file; absence is not a copyright determination.",
+    "git_author_evidence": "Git author records evidence history only and do not establish copyright holders.",
+    "legacy_local_notices": "Retained original Nyll notices and their cited mathlib sources are separate evidence; they are not represented as headers present in the current pi1 file.",
+    "nyll_additions": "Copyright and authorship notices for Nyll-local additions apply only to those additions; they do not replace upstream attribution.",
+    "distinct_project": {
+      "repository": "https://github.com/anthropics/fermats-last-theorem",
+      "part_of_this_pi1_inventory": false
+    }
+  },
+  "local_source_snapshot": {
+    "hash_algorithm": "SHA-256 over raw bytes",
+    "files": [
+      {
+        "path": "Nyll/SchemeTheory/Descent/EqualizerScalars.lean",
+        "role": "nyll_extension",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/Mathlib/RingTheory/Flat/Equalizer.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2026 Naganori Yamaguchi. All rights reserved."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Naganori Yamaguchi (assisted by OpenAI Codex)"
+            }
+          ],
+          "source_urls": []
+        },
+        "local_change_description": "Nyll forward-map computation AlgHom.equalizerRestrictScalars_apply, split from the scalar-restriction comparison.",
+        "sha256": "66e7fd485afa7cb6916c29b992373af9de60b3ac00ae5ff4b051828c723c3826",
+        "byte_count": 929,
+        "canonical_record_sha256": "66e7fd485afa7cb6916c29b992373af9de60b3ac00ae5ff4b051828c723c3826",
+        "header": "Copyright (c) 2026 Naganori Yamaguchi. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Naganori Yamaguchi (assisted by OpenAI Codex)\nhttps://github.com/n-yamaguchi-0729",
+        "source_urls": [
+          "https://github.com/n-yamaguchi-0729"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/FiniteEtale/Algebra/EtaleSplitting.lean",
+        "role": "nyll_extension",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/RingTheory/KerTensor.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2026 Naganori Yamaguchi. All rights reserved."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Naganori Yamaguchi (assisted by OpenAI Codex)"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/KerTensor.lean"
+          ]
+        },
+        "local_change_description": "Nyll etale-neighbourhood refinement Algebra.exists_etale_isFiniteSplit, stronger than the referenced upstream splitting construction.",
+        "sha256": "246a6610261b0a3c819c0b9f8fcbd523945396edf0a6cf20ba49d809aaa296c9",
+        "byte_count": 3009,
+        "canonical_record_sha256": "246a6610261b0a3c819c0b9f8fcbd523945396edf0a6cf20ba49d809aaa296c9",
+        "header": "Copyright (c) 2026 Naganori Yamaguchi. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Naganori Yamaguchi (assisted by OpenAI Codex)\nhttps://github.com/n-yamaguchi-0729",
+        "source_urls": [
+          "https://github.com/n-yamaguchi-0729"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/Affine/Over.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/FundamentalGroup/AffineColimits.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+            },
+            {
+              "line": 20,
+              "text": "Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729)."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            },
+            {
+              "line": 21,
+              "text": "Authors of local modifications: Naganori Yamaguchi (assisted by OpenAI Codex)."
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/FundamentalGroup/AffineColimits.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "2cc9110ba3acffe001e60c50f7505511e98960a28c30a21bb007aec4f8509ef2",
+        "byte_count": 30830,
+        "canonical_record_sha256": "2cc9110ba3acffe001e60c50f7505511e98960a28c30a21bb007aec4f8509ef2",
+        "header": "Copyright (c) 2025 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten",
+        "source_urls": []
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/Affine/Property.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/FundamentalGroup/AffineAnd.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+            },
+            {
+              "line": 20,
+              "text": "Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729)."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            },
+            {
+              "line": 21,
+              "text": "Authors of local modifications: Naganori Yamaguchi (assisted by OpenAI Codex)."
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/FundamentalGroup/AffineAnd.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "0abc986523d8625f2b8a48599252dad7ded2c5be301ed62f84fc109a4dc2e459",
+        "byte_count": 48440,
+        "canonical_record_sha256": "8c667218bcb1a8f43736fcce160e0af3e545ec4dff80754ec793510ef9bec93a",
+        "header": "Copyright (c) 2025 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten",
+        "source_urls": []
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/Descent/EqualizerScalars.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/Mathlib/RingTheory/Flat/Equalizer.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2024 Christian Merten. All rights reserved."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean",
+            "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "79acf0092b54407bdecc3b67c5160b707b1f29ba00fb8d6d4b95bd410c032f7a",
+        "byte_count": 2033,
+        "canonical_record_sha256": "79acf0092b54407bdecc3b67c5160b707b1f29ba00fb8d6d4b95bd410c032f7a",
+        "header": "Copyright (c) 2024 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean\nOriginal mathlib source:\nhttps://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean",
+          "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/Descent/FlatEqualizer.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/Mathlib/RingTheory/Flat/Equalizer.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2024 Christian Merten. All rights reserved."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean",
+            "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "d446a1898630ed6789f351f3ac0f6b9b584705f99c3cdb6d96e6be45c3fcda7a",
+        "byte_count": 15548,
+        "canonical_record_sha256": "59c499154a8d67aa29dd1f6acc495b5090f0b7f53b449f5e6f76e2e465c4aa8f",
+        "header": "Copyright (c) 2024 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean\nOriginal mathlib source:\nhttps://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Flat/Equalizer.lean",
+          "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/Etale/RingHom.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/Mathlib/RingTheory/RingHom/Etale.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/RingHom/Etale.lean",
+            "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/RingHom/Etale.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "607f48cff001a7d46849befba378de13c88a2e0aece214e0adc979052218ab99",
+        "byte_count": 4097,
+        "canonical_record_sha256": "607f48cff001a7d46849befba378de13c88a2e0aece214e0adc979052218ab99",
+        "header": "Copyright (c) 2025 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/RingHom/Etale.lean\nOriginal mathlib source:\nhttps://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/RingHom/Etale.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/RingHom/Etale.lean",
+          "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/RingHom/Etale.lean"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Basic.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/RingTheory/FiniteEtale/Basic.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [],
+          "author_notices": [
+            {
+              "line": 3,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Basic.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "44ad693e0285ba3c5481fd64cd4d415f955221602f66f5dbf761e1392de19056",
+        "byte_count": 6322,
+        "canonical_record_sha256": "44ad693e0285ba3c5481fd64cd4d415f955221602f66f5dbf761e1392de19056",
+        "header": "Released under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten\nThe cited pi1 file has no copyright notice; its holder requires review.\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Basic.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Basic.lean"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Descent.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/RingTheory/FiniteEtale/Descent.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [],
+          "author_notices": [
+            {
+              "line": 3,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Descent.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "be411c9ce5b2d05f9beb7515ef6ac0f0479798bef5b8608f1d6c18d1a6a0082e",
+        "byte_count": 1580,
+        "canonical_record_sha256": "be411c9ce5b2d05f9beb7515ef6ac0f0479798bef5b8608f1d6c18d1a6a0082e",
+        "header": "Released under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten\nThe cited pi1 file has no copyright notice; its holder requires review.\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Descent.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Descent.lean"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Equalizer.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/RingTheory/FiniteEtale/Equalizer.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [],
+          "author_notices": [
+            {
+              "line": 3,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Equalizer.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated. Removed IsIdempotentElem.eq_one_of_isUnit proof; two uses now call canonical iff .mp directly. Zero branch uses canonical sub_eq_self.mp.",
+        "sha256": "6694dc6075b931a334ca485fb9228fed5434fa6972df03156e5bc1ab34a6b381",
+        "byte_count": 24420,
+        "canonical_record_sha256": "61239f40c83416f753d2005c533dcd06026d44ce5f5df9efe907477e4ab9e0db",
+        "header": "Released under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten\nThe cited pi1 file has no copyright notice; its holder requires review.\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Equalizer.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/FiniteEtale/Equalizer.lean"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Splitting.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/RingTheory/KerTensor.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [],
+          "author_notices": [
+            {
+              "line": 3,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/KerTensor.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "14a335a0455a2d4b2bff50c091c458c26a9482fa5ab48394b5e935e75e21479f",
+        "byte_count": 27143,
+        "canonical_record_sha256": "8fb8537ce4fc1c1a29e35d025f3720b2648223b85f84941225de95b070986952",
+        "header": "Released under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten\nThe cited pi1 file has no copyright notice; its holder requires review.\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/KerTensor.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/RingTheory/KerTensor.lean"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Basic.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/FundamentalGroup/FiniteEtale.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+            },
+            {
+              "line": 20,
+              "text": "Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729)."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            },
+            {
+              "line": 21,
+              "text": "Authors of local modifications: Naganori Yamaguchi (assisted by OpenAI Codex)."
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/FundamentalGroup/FiniteEtale.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "148ea80d21c6139a710fe496d215be2f73330b0fdb1e00c40126aa9d81501e3d",
+        "byte_count": 15883,
+        "canonical_record_sha256": "148ea80d21c6139a710fe496d215be2f73330b0fdb1e00c40126aa9d81501e3d",
+        "header": "Copyright (c) 2025 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten",
+        "source_urls": []
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Geometry.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/FundamentalGroup/Galois.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+            },
+            {
+              "line": 20,
+              "text": "Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729)."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            },
+            {
+              "line": 21,
+              "text": "Authors of local modifications: Naganori Yamaguchi (assisted by OpenAI Codex)."
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/FundamentalGroup/Galois.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "01a63484662d455b4e33aa871af4a9f9e094d2c38f6d2ed74d2a682a195e0247",
+        "byte_count": 34847,
+        "canonical_record_sha256": "01a63484662d455b4e33aa871af4a9f9e094d2c38f6d2ed74d2a682a195e0247",
+        "header": "Copyright (c) 2025 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten",
+        "source_urls": []
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/Morphisms/Finite.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/Mathlib/AlgebraicGeometry/Morphisms/Finite.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/AlgebraicGeometry/Morphisms/Finite.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "79879e088d7f5f9796ea09f18f32b83a12ec4cd1ab8d947aeb7bae8d5fdb674b",
+        "byte_count": 1192,
+        "canonical_record_sha256": "79879e088d7f5f9796ea09f18f32b83a12ec4cd1ab8d947aeb7bae8d5fdb674b",
+        "header": "Copyright (c) 2025 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten",
+        "source_urls": []
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/Morphisms/Flat.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2024 Christian Merten. All rights reserved."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten, Andrew Yang"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean",
+            "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "10a0bffdcf26d823544afb6c3e5dbc3006614c7b0f0a96039c2698b11077439b",
+        "byte_count": 2054,
+        "canonical_record_sha256": "10a0bffdcf26d823544afb6c3e5dbc3006614c7b0f0a96039c2698b11077439b",
+        "header": "Copyright (c) 2024 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten, Andrew Yang\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean\nOriginal mathlib source:\nhttps://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean",
+          "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean"
+        ]
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/Morphisms/Smooth.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/Mathlib/RingTheory/RingHom/Smooth.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [
+            {
+              "line": 2,
+              "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+            }
+          ],
+          "author_notices": [
+            {
+              "line": 4,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/RingHom/Smooth.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated. Removed Smooth.ofLocalizationSpan wrapper; canonical PropertyIsLocal owner imported directly.",
+        "sha256": "f1c8bb7bf172f7abc47d9b610bf70a0b58d960c0e43ca12826d186a61331a64e",
+        "byte_count": 1917,
+        "canonical_record_sha256": "10d78f06164c1aa9fa2c6dab578f50645ec27bdffb64ac935ab0203d24b9e612",
+        "header": "Copyright (c) 2025 Christian Merten. All rights reserved.\nReleased under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten",
+        "source_urls": []
+      },
+      {
+        "path": "Nyll/SchemeTheory/Pi1/RingTheory/QuotientProducts.lean",
+        "role": "adapted_upstream_port",
+        "owning_library": "SchemeTheory",
+        "depth": 1,
+        "upstream_paths": [
+          "Pi1/Mathlib/RingTheory/Ideal/Quotient/Operations.lean"
+        ],
+        "attribution_evidence": {
+          "copyright_notices": [],
+          "author_notices": [
+            {
+              "line": 3,
+              "text": "Authors: Christian Merten"
+            }
+          ],
+          "source_urls": [
+            "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Ideal/Quotient/Operations.lean"
+          ]
+        },
+        "local_change_description": "Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.",
+        "sha256": "5e3df9b5c42b7abe1dba2be4fbc90c0b80c6c0eb720ec9495bff138fcffa82dd",
+        "byte_count": 1319,
+        "canonical_record_sha256": "5e3df9b5c42b7abe1dba2be4fbc90c0b80c6c0eb720ec9495bff138fcffa82dd",
+        "header": "Released under Apache 2.0 license as described in the file LICENSE.\nAuthors: Christian Merten\nThe cited pi1 file has no copyright notice; its holder requires review.\n\nAdapted from the pinned pi1 source:\nhttps://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Ideal/Quotient/Operations.lean",
+        "source_urls": [
+          "https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/RingTheory/Ideal/Quotient/Operations.lean"
+        ]
+      }
+    ]
+  },
+  "original_to_current_mappings": [
+    {
+      "original_path": "Nyll/SchemeTheory/Morphisms/Smooth.lean",
+      "original_sha256": "60de3eba609720518f110b376b89d818a45ed36d4c3e90e0bf92a450787cc9f6",
+      "original_git_blob_sha1": "0638c1935bea9f139667b7af6ecdb49b408ae0e1",
+      "upstream_path": "Pi1/Mathlib/RingTheory/RingHom/Smooth.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/Morphisms/Smooth.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/Morphisms/Flat.lean",
+      "original_sha256": "df168e1b4393cc018e6c2bbe136f0d3277697fdbbcc1fd4359ece6365c8096cf",
+      "original_git_blob_sha1": "b9c6381421b09b24203e634a17092e55df7e74aa",
+      "upstream_path": "Pi1/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2024 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten, Andrew Yang"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [
+        "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/AlgebraicGeometry/Morphisms/Flat.lean"
+      ],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/Morphisms/Flat.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/Morphisms/Finite.lean",
+      "original_sha256": "8b95daf4ebb10b2a44442c554ad3f99150c6ae0456353036392e28b3f40bbeab",
+      "original_git_blob_sha1": "8b4dfa851f4d5e996d4bf2d5c452097da36cb2c4",
+      "upstream_path": "Pi1/Mathlib/AlgebraicGeometry/Morphisms/Finite.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/Morphisms/Finite.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/Descent/FlatEqualizer.lean",
+      "original_sha256": "d9905a04ae7ca733d7d1f55774c6fee285b26e6bfbf01a5fd433f14b497449ea",
+      "original_git_blob_sha1": "49b436c673af56fec227c93744a567b09f744be8",
+      "upstream_path": "Pi1/Mathlib/RingTheory/Flat/Equalizer.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2024 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [
+        "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/Flat/Equalizer.lean"
+      ],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/Descent/FlatEqualizer.lean",
+          "role": "adapted_upstream_port"
+        },
+        {
+          "path": "Nyll/SchemeTheory/Pi1/Descent/EqualizerScalars.lean",
+          "role": "adapted_upstream_port"
+        },
+        {
+          "path": "Nyll/SchemeTheory/Descent/EqualizerScalars.lean",
+          "role": "nyll_extension"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy.",
+        "Nyll helper separated: AlgHom.equalizerRestrictScalars_apply."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/Etale/RingHom.lean",
+      "original_sha256": "d3a293bbf0e65d7fd8413276ac60273612f0be1ed1bfc43238fde960363af4e0",
+      "original_git_blob_sha1": "4d5456b56cf5c7511924c9b790ae43d99c9c44de",
+      "upstream_path": "Pi1/Mathlib/RingTheory/RingHom/Etale.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [
+        "https://github.com/leanprover-community/mathlib4/blob/53f8a93a7739dd4eb33926f645811ebb6cee21bf/Mathlib/RingTheory/RingHom/Etale.lean"
+      ],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/Etale/RingHom.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/RingTheory/QuotientProducts.lean",
+      "original_sha256": "5424b4af585f73849f879ad405ea539b5a45882f1abe93059f297de847d06e1a",
+      "original_git_blob_sha1": "1dec8c618ff60e09f99381a22b2c27c859b800d4",
+      "upstream_path": "Pi1/Mathlib/RingTheory/Ideal/Quotient/Operations.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [],
+        "author_notices": [
+          {
+            "line": 3,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/RingTheory/QuotientProducts.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/Affine/Property.lean",
+      "original_sha256": "63f8b66cef0942b5f261df27e27227c370a74ef8ad13aa03ee0eb790b8c01ca5",
+      "original_git_blob_sha1": "70558437178b90ac92c09693b8fb3a914d2188af",
+      "upstream_path": "Pi1/FundamentalGroup/AffineAnd.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/Affine/Property.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/Affine/Over.lean",
+      "original_sha256": "a247e9374dd0af95ab197f5e47c3c2d2a45cf1689f36a2ad1f96fcafb5686ec3",
+      "original_git_blob_sha1": "f9d81e62f7d5d962c7cfc0b2861c7831d046c023",
+      "upstream_path": "Pi1/FundamentalGroup/AffineColimits.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/Affine/Over.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/FiniteEtale/Geometry.lean",
+      "original_sha256": "7dc561f66f60b4846043beabe7e4ef5dc5ff2da4c8c036de56d72d86b5767dba",
+      "original_git_blob_sha1": "156c04c0d7a4c7a6fd75600e4af168acf46183a7",
+      "upstream_path": "Pi1/FundamentalGroup/Galois.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Geometry.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy.",
+        "Retained Nyll local comparisons: private lemma finite_primeSpectrum_of_etale_field, def etaleFunctionsAlgEquiv, private lemma isoSpec_hom_comp_specMap_algebraMap, private lemma isoSpec_hom_comp_specMap_algEquiv."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/FiniteEtale/Basic.lean",
+      "original_sha256": "7a15b990e97f1cea4fa88b2ed6dca7a22d702f1a8ff0691c6750c993c4008100",
+      "original_git_blob_sha1": "088f8990187646163962dc1dde687dbecd044437",
+      "upstream_path": "Pi1/FundamentalGroup/FiniteEtale.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [
+          {
+            "line": 2,
+            "text": "Copyright (c) 2025 Christian Merten. All rights reserved."
+          }
+        ],
+        "author_notices": [
+          {
+            "line": 4,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Basic.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/FiniteEtale/Algebra/Equalizer.lean",
+      "original_sha256": "45a3e519a84fc4b746cdbc873c4797113740623fe3a4af811fb3c7f5430a7ca4",
+      "original_git_blob_sha1": "501da87889a726fb9dfea785abbcaa591765c755",
+      "upstream_path": "Pi1/RingTheory/FiniteEtale/Equalizer.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [],
+        "author_notices": [
+          {
+            "line": 3,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Equalizer.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/FiniteEtale/Algebra/Basic.lean",
+      "original_sha256": "286a9b29cd2381a3380ebfaa4794add4e7456d48c9147515584e605d5e2e979a",
+      "original_git_blob_sha1": "d79a0368016284df8ca4be52ec69eb7dd211840b",
+      "upstream_path": "Pi1/RingTheory/FiniteEtale/Basic.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [],
+        "author_notices": [
+          {
+            "line": 3,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Basic.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/FiniteEtale/Algebra/Splitting.lean",
+      "original_sha256": "1566fa76ae807c9ffd3fd1d1f4e57d5f20e9debe3e7ece94cf9117a857fdd514",
+      "original_git_blob_sha1": "691d5736be5b589deb19379114b2edfa12ec698f",
+      "upstream_path": "Pi1/RingTheory/KerTensor.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [],
+        "author_notices": [
+          {
+            "line": 3,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Splitting.lean",
+          "role": "adapted_upstream_port"
+        },
+        {
+          "path": "Nyll/SchemeTheory/FiniteEtale/Algebra/EtaleSplitting.lean",
+          "role": "nyll_extension"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy.",
+        "Nyll helper separated: Algebra.exists_etale_isFiniteSplit."
+      ]
+    },
+    {
+      "original_path": "Nyll/SchemeTheory/FiniteEtale/Algebra/Descent.lean",
+      "original_sha256": "fd2907028f8a32828d191e95699749e94f2c982bdc0a19ebb15436a6965c35ce",
+      "original_git_blob_sha1": "88a28e0f7b30df9369c36f7a26e192989d17bb94",
+      "upstream_path": "Pi1/RingTheory/FiniteEtale/Descent.lean",
+      "comparison_commit": "5c5c0171efc863ce9990171bdf46d7cb5fd582fb",
+      "original_attribution_evidence": {
+        "copyright_notices": [],
+        "author_notices": [
+          {
+            "line": 3,
+            "text": "Authors: Christian Merten"
+          }
+        ],
+        "copyright_holder_inference": null,
+        "absent_notice_policy": "No copyright holder or file author inferred from repository ownership or git authors."
+      },
+      "additional_original_source_urls": [],
+      "destinations": [
+        {
+          "path": "Nyll/SchemeTheory/Pi1/FiniteEtale/Algebra/Descent.lean",
+          "role": "adapted_upstream_port"
+        }
+      ],
+      "local_changes": [
+        "Module relocation/splitting with direct imports updated to current owners.",
+        "Lean/mathlib API and proof adaptations; not a pristine upstream copy."
+      ]
+    }
+  ]
+}

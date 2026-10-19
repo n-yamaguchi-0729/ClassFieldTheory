@@ -366,7 +366,9 @@ theorem standardLubinTateRealLowerRamificationGroup_zero_eq_top
       (standardLubinTateUnitParameterClass_mem_subgroup_iff
         F n 0 (Nat.zero_le (n + 1))
         (standardLubinTateUnitParameterChosenRepresentative F n a)).2
-        (by simp)
+        (by
+          rw [CompleteDVF.higherPrincipalUnitGroup.zero_eq_top]
+          exact Subgroup.mem_top _)
   ext σ
   obtain ⟨a, rfl⟩ :=
     standardLubinTateUnitParameterToGal_surjective F hπ n σ
@@ -480,7 +482,7 @@ theorem
     MonoidHom.mem_ker.mp hpowKer
   refine ⟨integerUnitsToFieldUnits K u, ?_, ?_⟩
   · unfold LocalFieldTheory.fieldPrincipalUnits
-    exact ⟨u, by simp, rfl⟩
+    exact ⟨u, by rw [LocalFieldTheory.principalUnits_zero]; exact Subgroup.mem_top u, rfl⟩
   · rw [← hx, ← hdecomp, map_mul, hpow, mul_one]
 
 /-- Filtered local reciprocity holds at real index zero for the canonical

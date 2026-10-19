@@ -44,7 +44,7 @@ noncomputable def infinitePlaceHilbertSymbol
         · refine ⟨(-1 : Kˣ), ?_⟩
           change (-1 : Kˣ) ^ (n : ℕ) = 1
           rw [hn]
-          simp
+          simp only [neg_sq, one_pow]
         · exact 1
       · exact 1
     · exact 1

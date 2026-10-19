@@ -120,7 +120,7 @@ theorem mem_standardLubinTateRealLowerRamificationGroup_nat_iff_primitivePoint
           (show z ∈
               (⊤ : Subalgebra F.valuationSubring
                 (standardLubinTateLevelCompleteDVF hπ n).valuationSubring) from
-            by simp)
+            Algebra.mem_top)
 
 /-- At a nonnegative real lower index, the standard lower group is already
 the group at the natural-number ceiling of that index. -/

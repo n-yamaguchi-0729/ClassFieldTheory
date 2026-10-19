@@ -59,7 +59,7 @@ theorem ideleClassNorm_narrowFiniteConductor_eq_zero_of_no_ramifiedFinitePlaces
     ideleClassNorm_narrowFiniteConductor_support_subset_ramifiedBaseFinitePlaces
       (K := K) (L := L) hv
   rw [hunramified] at hramified
-  simp at hramified
+  exact Finset.notMem_empty v hramified
 
 /-- The norm subgroup of every finite Galois extension unramified at all
 finite primes contains the big-Hilbert norm subgroup. -/

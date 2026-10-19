@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.UnramifiedIntegerSymbol
+import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.RestrictionSymbol
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassField
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassFieldAxiom
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassFieldCandidate

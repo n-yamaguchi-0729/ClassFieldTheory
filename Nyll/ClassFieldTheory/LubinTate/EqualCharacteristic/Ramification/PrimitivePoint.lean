@@ -677,7 +677,8 @@ private theorem addVal_prod_valuationSubringAut
               (base := base) (target := target) huniq sigma a) := by
     intro s
     induction s using Finset.induction_on with
-    | empty => simp
+    | empty =>
+        rw [Finset.prod_empty, Finset.sum_empty, IsDiscreteValuationRing.addVal_one]
     | @insert sigma s hs ih =>
         rw [Finset.prod_insert hs, Finset.sum_insert hs,
           IsDiscreteValuationRing.addVal_mul, ih]

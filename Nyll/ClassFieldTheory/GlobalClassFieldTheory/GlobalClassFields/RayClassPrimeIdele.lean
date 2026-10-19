@@ -233,7 +233,9 @@ theorem bigHilbertIdealFrobeniusClass_eq_bigHilbertFrobeniusClass
         (bigHilbertClassFieldNormSubgroup (K := K))
         (bigHilbertClassFieldNormSubgroup_isDefiningModulus
           (K := K))
-        v (by simp) =
+        v (by
+          rw [RayClass.Modulus.finitePart_narrowOfFinite, Finsupp.support_zero]
+          exact Finset.notMem_empty v) =
       bigHilbertFrobeniusClass v := by
   have hm :
       (RayClass.Modulus.narrowOfFinite
@@ -260,7 +262,9 @@ theorem orderOf_bigHilbertIdealFrobeniusClass
           (bigHilbertClassFieldNormSubgroup (K := K))
           (bigHilbertClassFieldNormSubgroup_isDefiningModulus
             (K := K))
-          v (by simp)) =
+          v (by
+          rw [RayClass.Modulus.finitePart_narrowOfFinite, Finsupp.support_zero]
+          exact Finset.notMem_empty v)) =
       orderOf
         (QuotientGroup.mk'
           (RayClass.narrowDenominator (K := K))
@@ -284,7 +288,9 @@ theorem
         (bigHilbertClassFieldNormSubgroup (K := K))
         (bigHilbertClassFieldNormSubgroup_isDefiningModulus
           (K := K))
-        v (by simp) =
+        v (by
+          rw [RayClass.Modulus.finitePart_narrowOfFinite, Finsupp.support_zero]
+          exact Finset.notMem_empty v) =
         1 ↔
       ∃ x : Kˣ,
         IdeleGroup.principalIdele K x ∈
@@ -306,7 +312,9 @@ theorem smallHilbertIdealFrobeniusClass_eq_smallHilbertFrobeniusClass
         (smallHilbertClassFieldNormSubgroup (K := K))
         (smallHilbertClassFieldNormSubgroup_isDefiningModulus
           (K := K))
-        v (by simp) =
+        v (by
+          rw [RayClass.Modulus.finitePart_zero, Finsupp.support_zero]
+          exact Finset.notMem_empty v) =
       IdealClassFieldTheory.smallHilbertFrobeniusClass v := by
   have hm :
       (0 : RayClass.Modulus K).congruenceSubgroup ≤
@@ -332,7 +340,9 @@ theorem orderOf_smallHilbertIdealFrobeniusClass
           (smallHilbertClassFieldNormSubgroup (K := K))
           (smallHilbertClassFieldNormSubgroup_isDefiningModulus
             (K := K))
-          v (by simp)) =
+          v (by
+          rw [RayClass.Modulus.finitePart_zero, Finsupp.support_zero]
+          exact Finset.notMem_empty v)) =
       orderOf
         (ClassGroup.mk K
           (FractionalIdealGroup.prime v)) := by
@@ -352,7 +362,9 @@ theorem smallHilbertIdealFrobeniusClass_eq_one_iff_principal
         (smallHilbertClassFieldNormSubgroup (K := K))
         (smallHilbertClassFieldNormSubgroup_isDefiningModulus
           (K := K))
-        v (by simp) =
+        v (by
+          rw [RayClass.Modulus.finitePart_zero, Finsupp.support_zero]
+          exact Finset.notMem_empty v) =
         1 ↔
       FractionalIdealGroup.prime v ∈
         (toPrincipalIdeal (𝓞 K) K).range := by

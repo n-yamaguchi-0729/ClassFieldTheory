@@ -12,11 +12,14 @@ import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Indices
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Norm
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.NormConjugation
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.NormLaws
+import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.InvariantNorm
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.PadicCyclicClosure
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.PrimeElements
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.ProfiniteIntegerFiniteQuotient
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.ValuationLaws
+import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.IntegerValueGroup
+import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.NormComparison
 
 /-!
 # Degree and valuation data

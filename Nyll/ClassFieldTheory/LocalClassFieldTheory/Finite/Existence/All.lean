@@ -34,6 +34,7 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedLu
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnshrinkFiniteAbelianFields
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ArtinSchreierCharacters
 
 /-!
 # Finite local existence theorem

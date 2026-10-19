@@ -165,8 +165,7 @@ private theorem primitive_separable_integral_model_core
     calc
       Module.finrank K L = Module.finrank K
           (IntermediateField.adjoin K ({(a : L)} : Set L)) := by
-        rw [hAdjoin]
-        simp
+        rw [hAdjoin, IntermediateField.finrank_top']
       _ = (minpoly K (a : L)).natDegree :=
         IntermediateField.adjoin.finrank haIntegralK
   have hqDegree : qbar.natDegree = Module.finrank K L := by
@@ -257,8 +256,8 @@ private theorem primitive_separable_integral_model_core
           (IntermediateField.adjoin k ({alpha} : Set ell)) =
           Module.finrank K L := hresidueSubDegree
       _ = @Module.finrank k ell _ _ algebraModule := hdegreeEqAlgebra
-      _ = Module.finrank k (⊤ : IntermediateField k ell) := by
-        simp
+      _ = Module.finrank k (⊤ : IntermediateField k ell) :=
+        IntermediateField.finrank_top'.symm
   have hsepAdjoin : Algebra.IsSeparable k
       (IntermediateField.adjoin k ({alpha} : Set ell)) :=
     (IntermediateField.isSeparable_adjoin_iff_isSeparable k ell).2 (by

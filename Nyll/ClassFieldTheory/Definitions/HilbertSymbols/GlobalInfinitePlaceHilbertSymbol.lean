@@ -39,7 +39,7 @@ def globalInfinitePlaceHilbertSymbol
         · refine ⟨(-1 : Fˣ), ?_⟩
           change (-1 : Fˣ) ^ (n : ℕ) = 1
           rw [hn]
-          simp
+          simp only [neg_sq, one_pow]
         · exact 1
       · exact 1
     · exact 1

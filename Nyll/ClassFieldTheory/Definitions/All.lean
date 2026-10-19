@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.All
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.All
+import Nyll.ClassFieldTheory.Definitions.FunctionField.All
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.All
 import Nyll.ClassFieldTheory.Definitions.HasseArf.All
 import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.All
@@ -18,5 +19,7 @@ import Nyll.ClassFieldTheory.Definitions.NormTheorems.All
 Reader-facing vocabulary used by the headline theorem modules.  Primitive
 leaves import Mathlib only; derived leaves import only the prerequisite
 definition leaves.  Topic-level `All` modules and this root module are
-aggregation-only, and no public definition imports an implementation module.
+aggregation-only. The function-field facade reuses the existing canonical
+all-place idele class group and constructs its continuous finite Artin map
+from the proved implementation; it does not duplicate those objects.
 -/

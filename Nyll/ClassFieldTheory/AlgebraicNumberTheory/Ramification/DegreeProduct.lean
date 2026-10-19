@@ -32,7 +32,7 @@ theorem totient_prod_primePowers
       ∏ p ∈ S, Nat.totient (p.1 ^ e p) := by
   classical
   induction S using Finset.induction_on with
-  | empty => simp
+  | empty => simp only [Finset.prod_empty, Nat.totient_one]
   | @insert p S hp ih =>
       have hcoprime : Nat.Coprime (p.1 ^ e p) (∏ q ∈ S, q.1 ^ e q) := by
         rw [Nat.coprime_prod_right_iff]
@@ -54,13 +54,11 @@ theorem finrank_le_totient_prod_primePowers_of_inertia_bounds
     (hcard : ∀ p ∈ S, Nat.card (I p) ≤ Nat.totient (p.1 ^ e p)) :
     Module.finrank ℚ M ≤
       Nat.totient (∏ p ∈ S, p.1 ^ e p) := by
-  let : Finite (M ≃ₐ[ℚ] M) := inferInstance
   calc
     Module.finrank ℚ M = Nat.card (M ≃ₐ[ℚ] M) :=
       (IsGalois.card_aut_eq_finrank ℚ M).symm
     _ = Nat.card (S.sup I : Subgroup (M ≃ₐ[ℚ] M)) := by
-      rw [hgenerate]
-      simp
+      rw [hgenerate, Subgroup.card_top]
     _ ≤ ∏ p ∈ S, Nat.card (I p) :=
       natCard_finsetSup_le_prod_natCard
         (G := M ≃ₐ[ℚ] M) (ι := Nat.Primes) S I

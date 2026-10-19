@@ -39,7 +39,7 @@ private theorem monoidHom_eq_of_div_apply_eq_one
     (f : G →* H) (x y : G) (h : f (x / y) = 1) :
     f x = f y := by
   calc
-    f x = f ((x / y) * y) := by simp
+    f x = f ((x / y) * y) := by rw [div_mul_cancel]
     _ = f (x / y) * f y := map_mul f _ _
     _ = f y := by rw [h, one_mul]
 

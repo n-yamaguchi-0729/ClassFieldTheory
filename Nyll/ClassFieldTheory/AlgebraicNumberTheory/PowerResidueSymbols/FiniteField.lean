@@ -34,12 +34,8 @@ def finiteFieldPowerResidueSymbol
       apply Units.ext
       exact FiniteField.pow_card_sub_one_eq_one
         (u : k) (Units.ne_zero u)⟩
-  map_one' := by
-    apply Subtype.ext
-    simp
-  map_mul' u v := by
-    apply Subtype.ext
-    simp [mul_pow]
+  map_one' := Subtype.ext (one_pow _)
+  map_mul' u v := Subtype.ext (mul_pow u v _)
 
 @[simp]
 theorem finiteFieldPowerResidueSymbol_apply

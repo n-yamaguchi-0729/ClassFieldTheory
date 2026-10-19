@@ -55,7 +55,7 @@ theorem augmentation_apply (x : IntegralGroupRing G) :
   classical
   conv_lhs => rw [← MonoidAlgebra.sum_coeff_single x]
   rw [map_finsuppSum]
-  simp
+  simp only [augmentation_single]
 
 /-- The augmentation ideal `I_G`. -/
 def ideal : TwoSidedIdeal (IntegralGroupRing G) :=
@@ -109,8 +109,7 @@ abbrev Quotient :=
 def deltaElement (g : G) : ideal G :=
   ⟨MonoidAlgebra.single g 1 -
       MonoidAlgebra.single (1 : G) 1, by
-    rw [mem_ideal_iff, map_sub]
-    simp⟩
+    rw [mem_ideal_iff, map_sub, augmentation_single, augmentation_single, sub_self]⟩
 
 @[simp]
 theorem deltaElement_val (g : G) :
@@ -224,7 +223,7 @@ theorem deltaClass_mul (g h : G) :
       MonoidAlgebra.single (g * h) (1 : ℤ) =
         MonoidAlgebra.single g 1 *
           MonoidAlgebra.single h 1 := by
-    simp
+    rw [MonoidAlgebra.single_mul_single, one_mul]
   rw [hsingle]
   rw [← MonoidAlgebra.one_def]
   noncomm_ring
@@ -391,7 +390,7 @@ theorem linearization_eq_zero_of_mem_square
           ((ideal G).mul_mem_left a x hx)
           ((ideal G).mul_mem_right y b hy)
     · intro a b
-      simp
+      rw [mul_zero, zero_mul, map_zero]
     · intro x y hx hy hlinx hliny a b
       simp [mul_add, add_mul, hlinx a b, hliny a b]
     · intro x hx hlin a b

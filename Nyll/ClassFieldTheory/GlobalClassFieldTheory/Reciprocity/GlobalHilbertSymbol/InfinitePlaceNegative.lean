@@ -73,8 +73,7 @@ theorem infinitePlaceKummerRootCharacter_eq_neg_one_of_real_of_neg_neg
     simp only [rootQuotient, Units.val_div_eq_div_val, Units.coe_map]
     change sigma (beta : L) / (beta : L) =
       algebraMap K L (-1 : K)
-    rw [hArtin, haction]
-    simp
+    rw [hArtin, haction, neg_div, div_self beta.ne_zero, map_neg, map_one]
   apply nthRootsSubgroupMap_injective K L (n : ℕ)
   change
     nthRootsSubgroupMap K L (n : ℕ)

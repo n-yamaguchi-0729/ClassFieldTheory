@@ -123,7 +123,11 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
       have hq : algebraMap ℚ T q =
           algebraMap ℚ_[p.1] T
             (padicAbsoluteValueBaseMap p.1 ((WithAbs.equiv vK).symm q)) := by
-        simp
+        change algebraMap ℚ T q =
+          algebraMap ℚ_[p.1] T
+            (((WithAbs.equiv vK) ((WithAbs.equiv vK).symm q) : ℚ) : ℚ_[p.1])
+        rw [RingEquiv.apply_symm_apply]
+        exact (IsScalarTower.algebraMap_apply ℚ ℚ_[p.1] T q).symm
       exact hq.trans (congrArg (algebraMap ℚ_[p.1] T) he.symm)
     exact DFunLike.congr_fun hcomp x
   let iRing : E →+* T :=

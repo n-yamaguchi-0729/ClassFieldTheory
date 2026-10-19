@@ -54,7 +54,7 @@ theorem natCard_finsetSup_le_prod_natCard
     Nat.card ↥(s.sup I : Subgroup G) ≤ ∏ i ∈ s, Nat.card (I i) := by
   classical
   induction s using Finset.induction_on with
-  | empty => simp
+  | empty => rw [Finset.sup_empty, Finset.prod_empty, Nat.card_unique]
   | @insert a s ha ih =>
       rw [Finset.sup_insert, Finset.prod_insert ha]
       exact (natCard_sup_le_mul_natCard (I a) (s.sup I)).trans

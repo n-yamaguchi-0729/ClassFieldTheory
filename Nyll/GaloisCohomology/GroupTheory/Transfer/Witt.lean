@@ -89,7 +89,7 @@ theorem groupRingDelta_mul (g h : G) :
       MonoidAlgebra.single (g * h) (1 : ℤ) =
         MonoidAlgebra.single g 1 *
           MonoidAlgebra.single h 1 := by
-    simp
+    rw [MonoidAlgebra.single_mul_single, one_mul]
   rw [groupRingDelta, groupRingDelta, groupRingDelta, hs,
     ← MonoidAlgebra.one_def]
   noncomm_ring
@@ -102,7 +102,7 @@ theorem groupRingDelta_mul_left (g h : G) :
       MonoidAlgebra.single (g * h) (1 : ℤ) =
         MonoidAlgebra.single g 1 *
           MonoidAlgebra.single h 1 := by
-    simp
+    rw [MonoidAlgebra.single_mul_single, one_mul]
   rw [groupRingDelta, groupRingDelta, groupRingDelta, hs,
     ← MonoidAlgebra.one_def]
   noncomm_ring
@@ -206,7 +206,7 @@ theorem exists_rightFoxExpansion
   induction w using FreeGroup.induction_on with
   | one =>
       refine ⟨0, ?_, ?_⟩
-      · simp
+      · simp only [map_one, groupRingDelta_one, Pi.zero_apply, mul_zero, Finset.sum_const_zero]
       · intro i
         rw [wordExponent_one]
         rfl
@@ -214,14 +214,15 @@ theorem exists_rightFoxExpansion
       refine
         ⟨Pi.single x 1, ?_, ?_⟩
       · rw [Finset.sum_eq_single x]
-        · simp
+        · rw [Pi.single_eq_same, mul_one]
         · intro y _ hy
           simp [Pi.single_eq_of_ne hy]
-        · simp
+        · intro hx
+          exact (hx (Finset.mem_univ x)).elim
       · intro i
         by_cases hxi : x = i
         · subst i
-          simp
+          rw [Pi.single_eq_same, map_one, wordExponent_of, Finsupp.single_eq_same]
         · rw [Pi.single_eq_of_ne (Ne.symm hxi), map_zero,
             wordExponent_of,
             Finsupp.single_eq_of_ne (Ne.symm hxi)]
@@ -237,11 +238,13 @@ theorem exists_rightFoxExpansion
               (φ (FreeGroup.of x))
         · intro y _ hy
           simp [Pi.single_eq_of_ne hy]
-        · simp
+        · intro hx
+          exact (hx (Finset.mem_univ x)).elim
       · intro i
         by_cases hxi : x = i
         · subst i
-          simp
+          rw [Pi.single_eq_same, map_neg, augmentation_single,
+            wordExponent_inv, wordExponent_of, Finsupp.neg_apply, Finsupp.single_eq_same]
         · rw [Pi.single_eq_of_ne (Ne.symm hxi), map_zero,
             wordExponent_inv]
           change 0 = -(wordExponent (FreeGroup.of x) i)
@@ -590,7 +593,8 @@ theorem mul_mem_mixed
     exact
       ⟨z * x, (ideal G).mul_mem_left z x hx,
         y, hy, (mul_assoc z x y).symm⟩
-  · simp
+  · rw [mul_zero]
+    exact (mixedAugmentationProduct H).zero_mem
   · intro a b _ _ ha hb
     rw [mul_add]
     exact (mixedAugmentationProduct H).add_mem ha hb
@@ -610,7 +614,7 @@ theorem mul_det_eq_zero_of_vecMul_eq_zero
       Matrix.vecMul (Matrix.vecMul v A)
         A.adjugate = 0 := by
     rw [h]
-    simp
+    exact Matrix.zero_vecMul _
   rw [Matrix.vecMul_vecMul, Matrix.mul_adjugate] at h'
   have hi := congrFun h' i
   simpa [Matrix.vecMul, dotProduct,
@@ -813,10 +817,11 @@ theorem generator_mul_foxDeterminantLift_mem_mixed
         groupRingDelta (φ (FreeGroup.of k)) *
           foxDeterminantLift φ hφ := by
     rw [Finset.sum_eq_single k]
-    · simp
+    · rw [ite_eq_left rfl]
     · intro i _ hik
       simp [hik]
-    · simp
+    · intro hk
+      exact (hk (Finset.mem_univ k)).elim
   have heq :
       ∑ i : X,
           groupRingDelta (φ (FreeGroup.of i)) *
@@ -876,7 +881,7 @@ theorem delta_word_mul_foxMatrix_det
       0 := by
   induction w using FreeGroup.induction_on with
   | one =>
-      simp
+      rw [map_one, map_one, groupRingDelta_one, zero_mul]
   | of i =>
       exact delta_generator_mul_foxMatrix_det φ hφ i
   | inv_of i hi =>
@@ -1197,7 +1202,8 @@ theorem word_mul_section_norm_mem_mixed [Finite X]
       mixedAugmentationProduct (commutator G)
   induction w using FreeGroup.induction_on with
   | one =>
-      simp
+      rw [map_one, groupRingDelta_one, zero_mul]
+      exact (mixedAugmentationProduct (commutator G)).zero_mem
   | of k =>
       exact generator_mul_section_norm_mem_mixed
         φ hφ k

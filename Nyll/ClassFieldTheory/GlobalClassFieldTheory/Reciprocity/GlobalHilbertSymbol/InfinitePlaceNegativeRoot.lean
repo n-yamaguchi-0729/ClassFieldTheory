@@ -83,8 +83,8 @@ theorem chosenInfinitePlaceArtin_neg_one_apply_kummerRoot_of_real_of_radical_neg
     Complex.sq_nonpos_iff.mp hnonpos
   have hstar : star (w.embedding beta) = -w.embedding beta := by
     apply Complex.ext
-    · simp [hre]
-    · simp
+    · simp only [Complex.star_def, Complex.conj_re, Complex.neg_re, hre, neg_zero]
+    · rfl
   have hRamified : w.IsRamified K := by
     simpa only [L, w] using
       chosenSimpleKummerExtension_chosenInfinitePlace_isRamified_of_real_of_radical_neg

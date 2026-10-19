@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.All
 import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.All
+import Nyll.ClassFieldTheory.Theorems.FunctionField.All
 import Nyll.ClassFieldTheory.Theorems.GlobalClassFieldTheory.All
 import Nyll.ClassFieldTheory.Theorems.HasseArf.All
 import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.All

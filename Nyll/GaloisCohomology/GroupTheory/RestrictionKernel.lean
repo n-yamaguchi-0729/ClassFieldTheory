@@ -29,7 +29,7 @@ theorem map_eq_ker_of_comp_ker_eq_sup_of_left_le_ker
     rw [← MonoidHom.comap_ker]
     exact Subgroup.map_comap_eq_self_of_surjective hφ ψ.ker
   calc
-    U.map φ = ⊥ ⊔ U.map φ := by simp
+    U.map φ = ⊥ ⊔ U.map φ := (bot_sup_eq _).symm
     _ = Z.map φ ⊔ U.map φ := by
       rw [(Subgroup.map_eq_bot_iff Z).2 hZ]
     _ = (Z ⊔ U).map φ := (Subgroup.map_sup Z U φ).symm

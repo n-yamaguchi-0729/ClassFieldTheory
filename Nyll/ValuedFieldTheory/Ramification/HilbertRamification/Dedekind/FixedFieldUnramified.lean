@@ -129,7 +129,7 @@ theorem fixedFieldOfSubgroup_forall_isUnramifiedAt_of_inertiaGroup_le
     apply Nat.mul_right_cancel (Nat.pos_of_ne_zero hrelative0)
     calc
       1 * Q.ramificationIdx (𝓞 F) =
-          Q.ramificationIdx (𝓞 F) := by simp
+          Q.ramificationIdx (𝓞 F) := one_mul _
       _ = Q.ramificationIdx ℤ := heq.symm
       _ = P.ramificationIdx ℤ * Q.ramificationIdx (𝓞 F) := htower
   exact

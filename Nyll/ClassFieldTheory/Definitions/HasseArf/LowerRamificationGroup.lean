@@ -33,7 +33,10 @@ def lowerRamificationGroup (A : ValuationSubring L) (n : ℕ) :
     Subgroup (A.decompositionSubgroup K) where
   carrier := {σ | ∀ x : A,
     σ • x - x ∈ (IsLocalRing.maximalIdeal A) ^ (n + 1)}
-  one_mem' := by simp
+  one_mem' := by
+    intro x
+    rw [one_smul, sub_self]
+    exact ((IsLocalRing.maximalIdeal A) ^ (n + 1)).zero_mem
   mul_mem' := by
     intro σ τ hσ hτ x
     have hτ' := smul_mem_maximalIdeal_pow K A (n + 1) σ (hτ x)

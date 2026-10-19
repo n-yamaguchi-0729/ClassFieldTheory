@@ -343,7 +343,7 @@ theorem idealNormExponentMap_apply_eq_sum_above
       rw [Finsupp.sum_fintype]
       · rfl
       · intro W
-        simp
+        exact mul_zero _
 
 private theorem factorizationEquiv_symm_toAdd
     (I : FractionalIdealGroup L) :
@@ -539,7 +539,7 @@ theorem fractionalIdealNorm_mem_primeToModulusIdeals
       rw [mem_idealNormLiftedModulus_support_iff, hbelow]
       exact hv
     rw [FractionalIdealGroup.countVector_apply, I.property W hLifted]
-    simp
+    simp only [mul_zero]
   · rw [ite_eq_right hbelow]
 
 /-- The ideal norm restricted to fractional ideals prime to the

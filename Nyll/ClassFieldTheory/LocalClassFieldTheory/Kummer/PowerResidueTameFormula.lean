@@ -261,7 +261,7 @@ theorem residue_arithmeticFrobenius_integerUnitQuotient
           Nat.card 𝓀[K] = (Nat.card 𝓀[K] - 1) + 1 :=
         (Nat.sub_add_cancel hcardPos).symm
       rw [hcard, pow_succ]
-      simp
+      simp only [mul_div_cancel_right, Nat.add_sub_cancel]
 
 /-- If `n` is a valuation-ring unit, reduction is injective on the local
 `n`-th roots of unity. -/
@@ -939,7 +939,9 @@ theorem localHilbertSymbol_integerUnit_integerUnit_eq_one
       rw [hArtin]
     _ = 1 := rootQuotient_one beta
     _ = (nthRootsSubgroupMap K E (n : ℕ)
-        (1 : nthRootsSubgroup K (n : ℕ))).1 := by simp
+        (1 : nthRootsSubgroup K (n : ℕ))).1 :=
+      (congrArg Subtype.val
+        (map_one (nthRootsSubgroupMap K E (n : ℕ)))).symm
 
 /-- General tame local Hilbert-symbol formula with a valuation-ring unit in
 the first slot.  Decomposing the second argument into its unit factor and the

@@ -142,7 +142,7 @@ theorem
               (⊤ : Subalgebra
                 (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring
                 (equalCharacteristicLubinTateLevelCompleteDVF F n).valuationSubring) from
-            by simp)
+            Algebra.mem_top)
 
 /-- Elementwise lower-ramification form: if a nonidentity
 automorphism first differs from the identity unit parameter in degree `k`,
@@ -437,8 +437,7 @@ private theorem equalCharacteristicLubinTateUnitParameter_coeff_zero_iff_vanishe
     | zero =>
         rw [map_sub,
           equalCharacteristicLubinTateUnitParameterSeries_coeff_zero,
-          PowerSeries.coeff_one, ite_eq_left rfl, hconstant]
-        simp
+          PowerSeries.coeff_one, ite_eq_left rfl, hconstant, Units.val_one, sub_self]
     | succ j =>
         have hjn : j < n := by omega
         let i : Fin n := ⟨j, hjn⟩
