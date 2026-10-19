@@ -3,17 +3,10 @@
 [![Lean](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-A Lean 4.35.0-rc2 library for local and global class field theory.
-
-[Library overview and selected results](https://n-yamaguchi-0729.github.io/NYLL/libraries/class-field-theory/).
-
-This library is extracted from [NYLL](https://github.com/n-yamaguchi-0729/NYLL).
-
-<!-- nyll-publication:distribution:begin -->
-Only the module-level import closure of `Nyll.ClassFieldTheory.All` is bundled. Dependencies retain their canonical `Nyll` imports.
-
-Supporting modules are included from [AlgebraicCurves](Nyll/AlgebraicCurves/), [GaloisCohomology](Nyll/GaloisCohomology/), [ProCGroups](Nyll/ProCGroups/), [SchemeTheory](Nyll/SchemeTheory/), [ValuedFieldTheory](Nyll/ValuedFieldTheory/). These dependency libraries are included only to the extent required by the imports.
-<!-- nyll-publication:distribution:end -->
+Developed as part of [NYLL](https://github.com/n-yamaguchi-0729/NYLL), this Lean library treats class field theory for
+nonarchimedean local fields, number fields and function fields over finite fields.
+The [mathematical guide](https://n-yamaguchi-0729.github.io/NYLL/libraries/class-field-theory/) presents reciprocity, existence and the other selected results
+with their mathematical hypotheses and links to the formal proofs.
 
 ## Scope
 
@@ -23,81 +16,31 @@ theory covers number fields and function fields over finite fields, including
 reciprocity, existence, norm subgroups, conductors and ray class fields.
 <!-- nyll-publication:cft-scope:end -->
 
-## Main results
+## Included sources
 
-| Result | Mathematical content |
-| --- | --- |
-| [Finite local reciprocity](Nyll/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalReciprocity.lean) | A surjective continuous local Artin map `Kˣ → Gal(L/K)` whose kernel is the field-norm subgroup. |
-| [Profinite local reciprocity](Nyll/ClassFieldTheory/Theorems/LocalClassFieldTheory/ProfiniteLocalReciprocity.lean) | The topological profinite completion of `Kˣ` is continuously multiplicatively equivalent to the abelianized absolute Galois group of a nonarchimedean local field. |
-| [Local existence theorem](Nyll/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalExistenceOrderIso.lean) | The contravariant correspondence between finite abelian local extensions and open finite-index norm subgroups. |
-| [Finite global reciprocity](Nyll/ClassFieldTheory/Theorems/GlobalClassFieldTheory/FiniteAbelianGlobalReciprocity.lean) | A Frobenius-normalized surjective Artin map from a ray class group for every finite abelian extension. |
-| [Topological global reciprocity](Nyll/ClassFieldTheory/Theorems/GlobalClassFieldTheory/TopologicalGlobalReciprocity.lean) | The idèle-class quotient by its identity component is topologically isomorphic to the abelianized absolute Galois group. |
-| [Global Artin map](Nyll/ClassFieldTheory/Theorems/GlobalClassFieldTheory/MaximalAbelianGlobalArtin.lean) | A continuous surjective global Artin map with the identity component as kernel. |
-| [Hasse--Arf theorem](Nyll/ClassFieldTheory/Theorems/HasseArf/HasseArf.lean) | For a finite abelian local extension, the Herbrand value of every lower ramification jump is integral. |
-| [Perfect local Hilbert pairing](Nyll/ClassFieldTheory/Theorems/HilbertSymbols/LocalHilbertPairingPerfectExists.lean) | Existence of a perfect local Hilbert pairing with the Kummer norm-residue criterion. |
-| [Hilbert product formula](Nyll/ClassFieldTheory/Theorems/HilbertSymbols/HilbertProductFormula.lean) | A coherent family of local Hilbert pairings satisfying finite support and the global product formula. |
-| [Cyclic Hasse norm theorem](Nyll/ClassFieldTheory/Theorems/NormTheorems/CyclicHasseNormTheorem.lean) | For a finite cyclic number-field extension, global norms are exactly the everywhere-local norms. |
-| [Abelian conductor](Nyll/ClassFieldTheory/Theorems/ConductorsAndRayClassFields/ExistsUniqueAbelianConductor.lean) | Unique existence of the conductor of a finite abelian extension. |
-| [Ray class fields](Nyll/ClassFieldTheory/Theorems/ConductorsAndRayClassFields/RayClassFieldReciprocity.lean) | Existence of a ray class field realization with its Artin reciprocity isomorphism. |
-| [Big Hilbert class field](Nyll/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/BigHilbertClassFieldArtinEquiv.lean) | The narrow ideal class group as the Frobenius-normalized Galois group of a big Hilbert class field. |
-| [Small Hilbert class field](Nyll/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/SmallHilbertClassFieldArtinEquiv.lean) | The ordinary ideal class group as the Galois group of a small Hilbert class field. |
-| [Principal ideal theorem](Nyll/ClassFieldTheory/Theorems/FrobeniusAndHilbertClassFields/SmallHilbertClassFieldPrincipalization.lean) | The principal ideal theorem for the small Hilbert class field. |
-| [Kronecker--Weber theorem](Nyll/ClassFieldTheory/Theorems/KroneckerWeber.lean) | Every finite abelian extension of `ℚ` embeds into a cyclotomic field of positive order. |
+<!-- nyll-publication:distribution:begin -->
+Only the module-level import closure of `Nyll.ClassFieldTheory.All` is bundled. Dependencies retain their canonical `Nyll` imports.
 
-Further results include local Kronecker--Weber, general power-residue
-reciprocity, and Gauss quadratic reciprocity.
-
-## Function-field class field theory
-
-<!-- nyll-publication:cft-function-fields:begin -->
-For function fields over a finite constant field, the following endpoints
-use a chosen rational parameter. Their principal-divisor structure (finite support of valuation orders and degree zero) is constructed from the function-field hypotheses by [`isCurveOver`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Fields/Curve.lean#L34). No class-field existence input or norm-cofinality hypothesis is supplied.
-
-| Result | Lean endpoint |
-| --- | --- |
-| Existence and classification: Finite abelian extensions correspond, with reversed inclusion, to open finite-index subgroups in the ordinary idèle-class topology, through the actual norm image. | [`exists_classField_of_open`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/GlobalClassFields/Classification.lean#L35) and [`finiteAbelianFieldNormSubgroupOrderIso`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/GlobalClassFields/Classification.lean#L82) |
-| Local–global compatibility: The actual local and global Artin maps agree on a one-place idèle. At an unramified place, the local value is arithmetic Frobenius to the power of the valuation. | [`localArtin_eq_abelianFiniteArtin_placeIdele`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Artin/LocalGlobalCompatibility.lean#L369) and [`localDecompositionArtin_eq_unramifiedFrobenius_zpow`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Artin/UnramifiedFrobenius.lean#L99) |
-| Profinite reciprocity: The profinite completion for the ordinary idèle-class topology is isomorphic to the abelianized absolute Galois group. | [`profiniteReciprocity`](Nyll/ClassFieldTheory/AlgebraicFunctionFieldTheory/Artin/ProfiniteReciprocity.lean#L74) |
-
-The development also includes arithmetic Frobenius normalization, conductors,
-ray class fields, prescribed splitting, and the cyclic Hasse norm theorem.
-<!-- nyll-publication:cft-function-fields:end -->
+Supporting modules are included from [AlgebraicCurves](Nyll/AlgebraicCurves/), [GaloisCohomology](Nyll/GaloisCohomology/), [ProCGroups](Nyll/ProCGroups/), [SchemeTheory](Nyll/SchemeTheory/), [ValuedFieldTheory](Nyll/ValuedFieldTheory/). These dependency libraries are included only to the extent required by the imports.
+<!-- nyll-publication:distribution:end -->
 
 ## Public API
 
-The reader-facing API is split into two layers.
-
-- [`Nyll.ClassFieldTheory.Definitions`](Nyll/ClassFieldTheory/Definitions/All.lean)
-  contains the mathematical vocabulary used in the main statements. Definition
-  files are independent of implementation modules.
-- [`Nyll.ClassFieldTheory.Theorems`](Nyll/ClassFieldTheory/Theorems/All.lean)
-  contains stable statements of the main results. The statements use the public
-  definitions; their proofs may import the implementation library.
-
-Use only the definitions:
-
-```lean
-import Nyll.ClassFieldTheory.Definitions.All
-```
-
-Use all public statements:
-
-```lean
-import Nyll.ClassFieldTheory.Theorems.All
-```
-
-Use the complete library, including implementation modules:
+<!-- nyll-publication:cft-public-api:begin -->
+Import the complete library for local fields, number fields and function fields:
 
 ```lean
 import Nyll.ClassFieldTheory.All
 ```
 
-Each public theorem normally has its own file and can be imported independently,
-for example:
+For a smaller dependency set, import an individual result directly, for example:
 
 ```lean
 import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocity
 ```
+
+The [Definitions](Nyll/ClassFieldTheory/Definitions/All.lean) and [Theorems](Nyll/ClassFieldTheory/Theorems/All.lean) facades provide the vocabulary and statements collected in those sublibraries; the full entry point above includes every maintained part of the development.
+<!-- nyll-publication:cft-public-api:end -->
 
 ## Build
 
