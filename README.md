@@ -39,6 +39,58 @@ Let K be a function field in one variable over a finite field k.
 | [Class-field existence and uniqueness](Nyll/ClassFieldTheory/Theorems/FunctionField/ClassField.lean#L60) | Every open finite-index subgroup of C_K in its usual topology is the norm subgroup of a unique finite abelian extension in a fixed separable closure. |
 <!-- nyll-publication:cft-main-results:end -->
 
+
+## Choose an entry point
+
+You do not need to import the entire library for every project. Start with the
+smallest entry point that matches the mathematics you are using.
+
+| Topic | Entry point |
+| --- | --- |
+| Local class field theory (full local development) | `Nyll.ClassFieldTheory.LocalClassFieldTheory.All` |
+| Number-field global class field theory (reciprocity and maximal abelian statements) | `Nyll.ClassFieldTheory.Theorems.GlobalClassFieldTheory.All` |
+| Number-field conductors and ray class fields | `Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.All` |
+| Function-field class field theory (public theorem collection) | `Nyll.ClassFieldTheory.Theorems.FunctionField.All` |
+| Entire CFT library | `Nyll.ClassFieldTheory.All` |
+
+For example, a project focused on function fields can start with:
+
+```lean
+import Nyll.ClassFieldTheory.Theorems.FunctionField.All
+```
+
+The theorem collections are broader than individual leaf modules. If build time
+or import closure matters, import the specific theorem module you need instead.
+For instance:
+
+```lean
+import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocity
+```
+
+The paths above are existing modules; short aliases such as
+`Nyll.ClassFieldTheory.Local`, `NumberField`, and `FunctionField` are
+possible future conveniences, not modules provided by this revision.
+
+### Package boundaries
+
+The public standalone distribution currently uses the Lake package name
+`Nyll`. Do not add multiple standalone NYLL-derived distributions as separate
+dependencies and assume they can coexist: they share that package name and may
+overlap in module ownership. For a project using several NYLL libraries, use
+the main [NYLL repository](https://github.com/n-yamaguchi-0729/NYLL) and its
+dependency configuration.
+
+### Version pinning
+
+For reproducible downstream builds, prefer a reviewed Git tag or commit over
+tracking `main`, and commit the resulting `lake-manifest.json`. A tag should
+only be advertised as a supported release after the matching source revision
+has passed the repository's verification workflow. Check the repository's
+[Releases](https://github.com/n-yamaguchi-0729/ClassFieldTheory/releases) page
+for published versions; this README does not imply that a release tag already
+exists.
+
+
 ## Public API
 
 Use [leanprover/lean4:v4.35.0-rc2](lean-toolchain) and the Mathlib revision pinned in
