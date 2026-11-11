@@ -10,14 +10,18 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleHEquivFD
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwistFiniteCohomology
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleHEquivFD
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwistFiniteCohomology
 
 /-!
 Finite Cech cohomology of a shifted free graded module on projective space.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Frames.Frames
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+module
+
+public import Nyll.SchemeTheory.Modules.Frames.Frames
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
 
 /-!
 # Tensor products and frames of module sections
@@ -21,6 +23,8 @@ import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
 Local tensor sections and their iterated powers are compatible with restrictions and
 module operations; frames characterize sections freely generating smaller opens.
 -/
+
+@[expose] public section
 
 universe u
 

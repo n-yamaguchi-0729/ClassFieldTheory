@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Divisors.Principal.HasPrincipalDivisorsFiniteDimensional
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Divisors.Principal.HasPrincipalDivisorsFiniteDimensional
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 
 /-!
 Principal divisors for separable function fields with a transcendental coordinate.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

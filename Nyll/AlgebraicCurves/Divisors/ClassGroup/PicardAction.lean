@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
 
 /-!
 # Semilinear action on the full Picard degree sequence
@@ -13,6 +15,8 @@ import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
 Actual semilinear automorphisms preserve principal divisors and degree.
 Their action on the full divisor class group restricts to the existing Picard-zero action.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,14 +10,18 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.LocallyFreeOneIffInvertible
-import Nyll.SchemeTheory.Modules.Quasicoherent.LocallyFreeTilde
+module
+
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Invertible.RankOne
+public import Nyll.SchemeTheory.Modules.Quasicoherent.LocallyFreeTilde
 
 /-!
 # Scheme Modules is Invertible tilde of projective rank One
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

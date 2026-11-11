@@ -11,11 +11,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremKRatFunc
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremResidueTheoremK
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremResidueTheoremRatFunc
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTraceCompletionCommute
-import Nyll.AlgebraicCurves.Divisors.Principal.InstHasCanonicalDivisorRatFuncPerfectField
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremKRatFunc
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremResidueTheoremK
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremResidueTheoremRatFunc
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTraceCompletionCommute
+public import Nyll.AlgebraicCurves.Divisors.Principal.InstHasCanonicalDivisorRatFuncPerfectField
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -23,6 +26,8 @@ import Nyll.AlgebraicCurves.Divisors.Principal.InstHasCanonicalDivisorRatFuncPer
 The rational-function-field residue theorem and fibre trace identities give the residue theorem
 over algebraically closed base fields.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

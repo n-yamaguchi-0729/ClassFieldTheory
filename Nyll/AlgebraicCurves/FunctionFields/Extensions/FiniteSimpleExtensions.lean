@@ -13,20 +13,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.IsAlgebraicAdjoinTranscendental
-import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
-import Mathlib.RingTheory.AlgebraicIndependent.AlgebraicClosure
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
-import Mathlib.RingTheory.Algebraic.Defs
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+module
+
+public import Mathlib.RingTheory.AlgebraicIndependent.TranscendenceBasis
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.IsAlgebraicAdjoinTranscendental
+public import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
+public import Mathlib.RingTheory.AlgebraicIndependent.AlgebraicClosure
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
+public import Mathlib.RingTheory.Algebraic.Defs
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 
 /-!
 # Finite extensions of simple intermediate fields
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

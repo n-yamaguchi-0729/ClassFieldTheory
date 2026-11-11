@@ -10,10 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 
 /-! Pulling back an affine open is the Cartesian square defined by its section algebra. -/
+
+@[expose] public section
 
 universe u
 

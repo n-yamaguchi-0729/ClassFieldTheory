@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Descent.OpenCoverGluedSheaf
-import Nyll.SchemeTheory.Modules.Descent.OpenCoverGluedSheafSections
-import Mathlib.CategoryTheory.Sites.Descent.DescentData
+module
+
+public import Nyll.SchemeTheory.Modules.Descent.OpenCoverGluedSheaf
+public import Nyll.SchemeTheory.Modules.Descent.OpenCoverGluedSheafSections
+public import Mathlib.CategoryTheory.Sites.Descent.DescentData
 /-!
 # Effectivity of module descent on open covers
 Restriction compatibility identifies the constructed glued sheaf with the prescribed descent datum.
 -/
+
+@[expose] public section
 
 open _root_.AlgebraicCurves.Geometry.Sheaves.Proofs
 open Scheme_Modules_toDescentData_map_bijective_of_openCover.AlgebraicGeometry.Scheme.Modules.HomZar
@@ -69,7 +73,8 @@ private theorem comm_of_pullHom {ι : Type*} {S : C} {X : ι → C}
     ← pullHom_comp', ← pullHom_comp', comm]
 
 -- Construct the comparison while the canonical object's fibers stay abstract.
-private noncomputable def canonical_iso {ι : Type*} {S : C} {X : ι → C}
+/-- Compatible fiber isomorphisms identify the canonical and prescribed descent data. -/
+noncomputable def canonical_iso {ι : Type*} {S : C} {X : ι → C}
     (f : ∀ i, X i ⟶ S) (M : F.obj (.mk (op S))) (D : F.DescentData f)
     (e : ∀ i, (F.map (f i).op.toLoc).toFunctor.obj M ≅ D.obj i)
     (comm : ∀ ⦃Z : C⦄ (q : Z ⟶ S) ⦃i j : ι⦄ (f₁ : Z ⟶ X i) (f₂ : Z ⟶ X j)

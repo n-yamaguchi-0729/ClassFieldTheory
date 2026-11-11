@@ -11,9 +11,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Connected
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Mathlib.AlgebraicGeometry.PullbackCarrier
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Connected
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
 
 /-!
 # Geometric connectedness descends through a surjective morphism
@@ -21,6 +23,8 @@ import Mathlib.AlgebraicGeometry.PullbackCarrier
 If a composite is geometrically connected and its first map is surjective, the second
 map is geometrically connected.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

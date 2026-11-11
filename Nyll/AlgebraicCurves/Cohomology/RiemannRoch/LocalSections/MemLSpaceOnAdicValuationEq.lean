@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.AdicValuationSubLeRiemannGenus
-import Nyll.AlgebraicCurves.Places.Orders.AdicValuationSubEq
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.AdicValuationSubLeRiemannGenus
+public import Nyll.AlgebraicCurves.Places.Orders.AdicValuationSubEq
 
 /-!
 Find a divisor-bounded chart section realizing the prescribed valuation at a genus-reaching place.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

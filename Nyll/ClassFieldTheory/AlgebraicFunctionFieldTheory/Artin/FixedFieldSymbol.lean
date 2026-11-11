@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Main
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Valuation
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Main
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Valuation
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
 
 /-!
 # The finite Artin symbol on actual fixed-field idele classes
@@ -16,13 +18,18 @@ on actual idele classes. The actual Galois quotient comparison puts its values
 in the abelianization of the relative fixed-field Galois group.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w)
+    [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]

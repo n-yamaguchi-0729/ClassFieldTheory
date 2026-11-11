@@ -4,15 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibComparison
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 
 /-!
 # Finite-place norm kernels of a global Artin map
@@ -27,6 +32,8 @@ The proof transports the established restricted-product reciprocity map
 through the algebraic comparison with Mathlib's idèle class group.
 -/
 
+@[expose] public section
+
 open scoped NumberField TensorProduct
 open NumberField IsDedekindDomain
 
@@ -34,10 +41,12 @@ noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- A finite abelian extension has one global Artin homomorphism whose
 restriction to each finite completion has precisely the tensor-norm kernel. -/
 theorem exists_finiteAbelianGlobalArtin_finitePlaceNormKernel
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L] :

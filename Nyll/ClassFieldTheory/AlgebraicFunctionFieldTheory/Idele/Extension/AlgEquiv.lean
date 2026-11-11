@@ -4,16 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.AlgEquiv
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
-import Mathlib.Algebra.Group.Action.End
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
-import Mathlib.Order.Filter.Cofinite
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.AlgEquiv
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Mathlib.Algebra.Group.Action.End
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Mathlib.Order.Filter.Cofinite
 
 /-!
 # Semilinear action on function-field ideles and idele classes
@@ -23,6 +25,8 @@ completed field isomorphisms. The existing restricted-product map constructs
 the continuous action. Principal ideles are preserved, so the action descends
 to idele classes. The normalized divisor and degree maps are compatible.
 -/
+
+@[expose] public section
 
 open scoped RestrictedProduct WithZero
 
@@ -36,7 +40,8 @@ variable {k K : Type*} [Field k] [Field K] [Algebra k K]
 
 namespace IdeleGroup
 
-private theorem localAction_mem_localUnits (g : SemilinearAut k K) (v : Place k K)
+/-- The semilinear completion equivalence preserves the integral local units. -/
+theorem localAction_mem_localUnits (g : SemilinearAut k K) (v : Place k K)
     (x : (g⁻¹ • v).adicCompletionˣ) :
     (placeCompletionUnitsEquiv g⁻¹ v).symm x ∈ v.adicCompletionIntegers.units ↔
       x ∈ (g⁻¹ • v).adicCompletionIntegers.units := by

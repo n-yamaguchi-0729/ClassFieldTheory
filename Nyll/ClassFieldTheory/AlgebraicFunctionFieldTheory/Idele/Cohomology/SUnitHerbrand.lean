@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitKernel
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitLatticeAction
-import Nyll.GaloisCohomology.Cyclic.Herbrand.FiniteErrors
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitKernel
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitLatticeAction
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.FiniteErrors
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
 
 /-!
 # Herbrand comparison for actual S-units
@@ -17,7 +20,11 @@ map has the finite kernel and cokernel already proved geometrically. The
 generic finite-error theorem therefore identifies their Herbrand quotients.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField.SUnits
 
@@ -90,7 +97,7 @@ namespace FunctionField.SUnits
 open AlgebraicCurve CyclicCohomology
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 
-variable {k K G : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} {G : Type w} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K] [Group G] [Fintype G]
 
@@ -102,8 +109,7 @@ theorem herbrandQuotientDefined_iff_lattice (S : Finset (Place k K))
     let _ : MulDistribMulAction G (Multiplicative (divisorLattice k K S)) := latticeAction S ρ
     HerbrandQuotientDefined G (units k K S) σ ↔
       HerbrandQuotientDefined G (Multiplicative (divisorLattice k K S)) σ := by
-  let : MulDistribMulAction G (units k K S) := unitsAction S ρ
-  let : MulDistribMulAction G (Multiplicative (divisorLattice k K S)) := latticeAction S ρ
+  intro sharedOwner1 sharedOwner2
   have : Finite (multiplicativeDivisor S).ker := finite_ker_multiplicativeDivisor S
   have : Finite (Multiplicative (divisorLattice k K S) ⧸ (multiplicativeDivisor S).range) :=
     finite_cokernel_multiplicativeDivisor S

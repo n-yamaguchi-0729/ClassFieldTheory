@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionMap
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionMap
 
 /-!
 # Local continuity for transport under a number-field equivalence
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionMap
 The finite-completion map used by `adeleCongr` is continuous. This is the
 local continuity input for transporting the restricted-product topology.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

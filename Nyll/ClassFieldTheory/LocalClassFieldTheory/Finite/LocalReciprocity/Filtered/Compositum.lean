@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.CompositumRestriction
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
-import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
+module
+
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.CompositumRestriction
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
 
 /-!
 # Filtered reciprocity for a compositum
@@ -18,6 +20,8 @@ trivially to both the principal-unit Artin image and the upper ramification
 group.  Equality on the other factor can then be recovered upstairs from the
 joint injectivity of the two restriction maps.
 -/
+
+@[expose] public section
 
 noncomputable section
 

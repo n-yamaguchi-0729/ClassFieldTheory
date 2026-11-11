@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # The quotient induced by a finite Artin map
@@ -13,6 +15,8 @@ import Mathlib.GroupTheory.QuotientGroup.Basic
 This is the specific isomorphism induced by the Artin map in
 `FiniteAbelianReciprocityData`, not an arbitrarily chosen isomorphism.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

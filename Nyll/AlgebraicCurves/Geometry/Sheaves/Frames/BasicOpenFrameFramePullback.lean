@@ -10,9 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Frames.FrameDescent
-import Nyll.SchemeTheory.Modules.Frames.BasicOpenFrame
+module
+
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Frames.FrameDescent
+public import Nyll.SchemeTheory.Modules.Frames.BasicOpenFrame
 
 /-!
 # Frames on a basic open from a field-valued fibre
@@ -20,6 +23,8 @@ import Nyll.SchemeTheory.Modules.Frames.BasicOpenFrame
 Sections that locally frame the pullback over a residue-field point also locally frame
 the original module above a basic open neighbourhood of that point.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

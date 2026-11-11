@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.GaloisClosure
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGalois
+module
+
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGalois
 
 /-!
 # Finite Galois towers obtained by adjoining constants upstairs
@@ -16,6 +18,8 @@ extension which is finite Galois over the original base as well. The supply
 comes from the actual identity between the relative constant compositum and
 the supremum of the original field and the constant extension of the base.
 -/
+
+@[expose] public section
 
 noncomputable section
 

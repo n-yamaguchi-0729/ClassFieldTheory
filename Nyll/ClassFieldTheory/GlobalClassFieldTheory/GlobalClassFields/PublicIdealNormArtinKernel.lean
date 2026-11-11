@@ -9,6 +9,7 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNorm
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # Ideal norms lie in the normalized Artin kernel
@@ -23,10 +24,12 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
 private theorem publicIdealNormDomain_eq_source
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]
@@ -62,7 +65,7 @@ private theorem publicIdealNormDomain_eq_source
     exact hW
 
 private theorem fractionalIdealNorm_prime
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]
@@ -110,7 +113,7 @@ private theorem fractionalIdealNorm_prime
 Artin map. This is the forward half of the ideal-theoretic norm-kernel
 formula, with no idèle norm substituted for an ideal norm. -/
 theorem idealNormImage_le_finiteAbelianReciprocityArtinKer
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]

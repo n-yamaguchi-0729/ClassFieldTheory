@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
+module
+
+public import Mathlib.NumberTheory.LegendreSymbol.JacobiSymbol
 
 /-!
 # Gauss reciprocity and its supplementary laws
@@ -14,6 +16,8 @@ natural-number
 denominator, so an integer denominator `b` is written canonically as
 `jacobiSym a b.natAbs`, as is forced by the principal ideal `(b)`.
 -/
+
+@[expose] public section
 
 open scoped NumberTheorySymbols
 

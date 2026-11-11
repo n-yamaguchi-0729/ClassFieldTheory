@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.DivisorPeriod
-import Nyll.AlgebraicCurves.Models.Points.RationalPointExistence
-import Nyll.AlgebraicCurves.Divisors.Principal.PrincipalHom
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusUnits
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.DivisorPeriod
+public import Nyll.AlgebraicCurves.Models.Points.RationalPointExistence
+public import Nyll.AlgebraicCurves.Divisors.Principal.PrincipalHom
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusUnits
 
 /-!
 # Positive constant-field Frobenius periods of rational functions
@@ -18,6 +20,10 @@ A period of the principal divisor makes the quotient of a function and its
 Frobenius translate a constant. Multiplicative Lang on the algebraic constants
 removes this quotient. A common period then fixes the original function.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -30,9 +36,9 @@ attribute [local instance] Units.mulDistribMulActionRight
   SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
   SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupDivisor
 
-variable {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F : Type v} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    (M : CurveModel Ω F) {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    (M : CurveModel Ω F) {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [LocallyOfFiniteType c] [IsSeparated c]
     (e : M.C ≅ pullback c (specMap k Ω))
     (he : e.hom ≫ pullback.snd c (specMap k Ω) = M.toBase)

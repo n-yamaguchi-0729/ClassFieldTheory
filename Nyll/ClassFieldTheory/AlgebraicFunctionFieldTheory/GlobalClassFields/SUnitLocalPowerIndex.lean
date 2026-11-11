@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitLocalPower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PositiveCharacteristicPowerIndex
-import Mathlib.GroupTheory.Index
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitLocalPower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PositiveCharacteristicPowerIndex
+public import Mathlib.GroupTheory.Index
 
 /-!
 # The actual image of S-units in local power classes
@@ -19,6 +21,10 @@ completion power indices then compute its quotient index, equal to the
 degree of the S-unit Kummer extension.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 open AlgebraicCurve
@@ -26,7 +32,7 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField.SUnits
 
-variable {k K : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
 
 /-- The product of the actual completed multiplicative power quotients at S. -/
 abbrev localPowerClassProduct (n : ℕ+) (S : Finset (Place k K)) :=

@@ -11,16 +11,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoEqMapPullbackRigSectionCompEq
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoEqMapPullbackRigSectionCompEq
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Show that the type of line bundle isomorphisms respecting fixed rigidifications is a
 subsingleton.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

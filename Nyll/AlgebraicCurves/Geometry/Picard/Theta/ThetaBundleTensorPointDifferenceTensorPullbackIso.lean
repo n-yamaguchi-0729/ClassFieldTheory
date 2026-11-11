@@ -10,50 +10,54 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroGroupCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
-import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AbelJacobiFamily
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.SchemeTheory.Modules.Invertible.Rigidify
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.DeterminantSectionTwistPullback
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicallyTrivialTwistCohomology
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundlePullbackRigSectionPullbackIsoTensorUnit
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleIsoTensorUnitField
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealMulInvModuleIsoTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.InvertibleDetLocallyFree
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardFibre
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.SubsingletonH1FinrankH0FibreModule
-import Nyll.AlgebraicCurves.Geometry.Picard.PullbackSectionIdealPowModuleIso
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicGroup
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroGroupCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
+public import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AbelJacobiFamily
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.SchemeTheory.Modules.Invertible.Rigidify
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.DeterminantSectionTwistPullback
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicallyTrivialTwistCohomology
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundlePullbackRigSectionPullbackIsoTensorUnit
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleIsoTensorUnitField
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealMulInvModuleIsoTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
+public import Nyll.SchemeTheory.Modules.Invertible.Determinant
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardFibre
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.SubsingletonH1FinrankH0FibreModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.PullbackSectionIdealPowModuleIso
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicGroup
 
 /-!
 Compare theta bundles after twisting by the difference of one point and the basepoint.
 -/
+@[expose] public section
+
 section ProofImplementation
 
 namespace JacobianVarieties.Picard.Proofs.ThetaPointTwist
@@ -142,8 +146,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

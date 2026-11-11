@@ -4,19 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilyRigidity
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilySubgroupKernel
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilyUnramifiedCompositum
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedResidueUniqueness
-import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocityUnramifiedFamilyExt
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.Valuation.Extension
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilyRigidity
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilySubgroupKernel
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilyUnramifiedCompositum
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedResidueUniqueness
+public import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocityUnramifiedFamilyExt
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.Valuation.Extension
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
 
 /-!
 # Uniqueness of the normalized coherent local Artin family
@@ -25,6 +30,10 @@ Norm kernels and tower compatibility alone leave an orientation ambiguity at
 finite levels. Arithmetic Frobenius on unramified extensions removes it for
 the entire coherent family, including ramified extensions.
 -/
+
+@[expose] public section
+
+universe u
 
 open scoped ValuativeRel
 
@@ -37,7 +46,7 @@ its norm kernels and its arithmetic-Frobenius normalization. The chosen
 uniformizer is only used to express that normalization; the conclusion does
 not depend on it. -/
 theorem finiteAbelianLocalReciprocity_family_ext
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (f g : (E : FiniteAbelianLocalExtension K) →
       Kˣ →ₜ* (E.1 ≃ₐ[K] E.1))
@@ -144,22 +153,22 @@ theorem finiteAbelianLocalReciprocity_family_ext
     finiteAbelianLocalReciprocity_unramified_family_ext K f g
       hfker hgker hfrob hgrob Upack hUnram π hπ
   have hfUcanonical : f Upack u =
-      LocalClassFieldTheory.abelianLocalArtinMap K U u :=
+      LocalClassFieldTheory.Universe.abelianLocalArtinMap K U u :=
     (finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow_iff
       K U π hπ _).mp (hfrob Upack hUnram π hπ)
   have hcanon :=
     LocalClassFieldTheory.finiteAbelianArtin_unramifiedRestriction_zpowers_eq_top
       K d hd Ffield le_sup_right u huval
   have hfc : rU (f Fpack u) =
-      rU (LocalClassFieldTheory.abelianLocalArtinMap K Ffield u) := by
+      rU (LocalClassFieldTheory.Universe.abelianLocalArtinMap K Ffield u) := by
     calc
       rU (f Fpack u) = f Upack u :=
         hrestrict f hfcoh Upack Fpack le_sup_right u
-      _ = LocalClassFieldTheory.abelianLocalArtinMap K U u := hfUcanonical
-      _ = rU (LocalClassFieldTheory.abelianLocalArtinMap K Ffield u) := by
+      _ = LocalClassFieldTheory.Universe.abelianLocalArtinMap K U u := hfUcanonical
+      _ = rU (LocalClassFieldTheory.Universe.abelianLocalArtinMap K Ffield u) := by
         symm
         exact DFunLike.congr_fun
-          (LocalClassFieldTheory.abelianLocalArtinMap_restrict
+          (LocalClassFieldTheory.Universe.abelianLocalArtinMap_restrict
             K U Ffield le_sup_right) u
   have hgen : Subgroup.zpowers (rU (f Fpack u)) = ⊤ := by
     rw [hfc]

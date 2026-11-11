@@ -10,27 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SubPicCondition
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicEquivalenceEulerCharSectionsOfTensorEq
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.EulerCharacteristic.InvertibleIdealEulerCharSectionsOfTensorInvModuleEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.ModulesInvertibleSubsingletonH1SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFinrankH1SectionsOfUnitEqFinrankH0EqOne
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SubPicCondition
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicEquivalenceEulerCharSectionsOfTensorEq
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.EulerCharacteristic.InvertibleIdealEulerCharSectionsOfTensorInvModuleEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.ModulesInvertibleSubsingletonH1SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFinrankH1SectionsOfUnitEqFinrankH0EqOne
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
 
 /-!
 # Cohomology after twisting an algebraically trivial module
@@ -38,6 +40,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
 Tensoring an algebraically trivial invertible module with a sufficiently large inverse
 power of a point ideal gives vanishing first cohomology and the Riemann--Roch rank.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -167,8 +171,6 @@ open
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField

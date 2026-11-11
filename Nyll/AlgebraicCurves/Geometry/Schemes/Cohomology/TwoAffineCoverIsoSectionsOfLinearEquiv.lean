@@ -10,20 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
-import Nyll.SchemeTheory.Modules.HomRestrictEqOpenImmersion
-import Nyll.SchemeTheory.Modules.LocalMorphisms
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfOverlapLinearEquivBaseChange
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
+public import Nyll.SchemeTheory.Modules.HomRestrictEqOpenImmersion
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfOverlapLinearEquivBaseChange
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 An isomorphism of invertible scheme modules obtained from compatible linear equivalences of
 chart sections.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -435,10 +439,12 @@ section Charts
 
 variable {X : Scheme.{u}} (U0 U1 : X.Opens)
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueIso.ρ0 : X.presheaf.obj
+/-- The restriction homomorphism from the first chart to the intersection. -/
+abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueIso.ρ0 : X.presheaf.obj
     (op U0) ⟶ X.presheaf.obj (op (U0 ⊓ U1)) := X.presheaf.map (homOfLE inf_le_left).op
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueIso
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueIso.ρ1 : X.presheaf.obj
+/-- The restriction homomorphism from the second chart to the intersection. -/
+abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueIso.ρ1 : X.presheaf.obj
     (op U1) ⟶ X.presheaf.obj (op (U0 ⊓ U1)) := X.presheaf.map (homOfLE inf_le_right).op
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueIso
 /-- The Spec morphism from the chart intersection to the first chart. -/

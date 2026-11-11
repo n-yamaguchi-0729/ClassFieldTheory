@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+module
+
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
 
 /-!
 Pullback and trace on divisor-section Cech cohomology along an integral field embedding.
 -/
+
+@[expose] public section
 
 noncomputable section
 

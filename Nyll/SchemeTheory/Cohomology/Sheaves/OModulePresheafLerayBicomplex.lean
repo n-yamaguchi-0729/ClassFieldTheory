@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
 
 /-!
 The Leray bicomplex of a module presheaf for two ordered affine covers.
 -/
+
+@[expose] public section
 
 noncomputable section
 

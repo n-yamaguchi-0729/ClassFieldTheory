@@ -4,17 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Mathlib.Topology.Algebra.Group.Neighborhood
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
-import Mathlib.Topology.Algebra.Valued.NormedValued
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
+module
+
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Mathlib.Topology.Algebra.Group.Neighborhood
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Mathlib.Topology.Algebra.Valued.NormedValued
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Continuity of the all-place idele norm
@@ -24,6 +27,8 @@ On the open product of local integral-unit groups, their finite products give a
 continuous map into the target integral-unit product. Translation then supplies
 continuity on the whole restricted product.
 -/
+
+@[expose] public section
 
 open scoped AlgebraicCurve.Place Valued WithZero
 

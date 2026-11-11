@@ -34,13 +34,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.SchemeTheory.Sheaves.RestrictOpen
-import Nyll.SchemeTheory.Modules.Frames.LocallyFreeBasis
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.LocalMorphisms
+module
+
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.SchemeTheory.Sheaves.RestrictOpen
+public import Nyll.SchemeTheory.Modules.Frames.LocallyFreeBasis
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
+public import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
 
 /-!
 # Pullback to an open commutes with exterior powers
@@ -48,6 +51,8 @@ import Nyll.SchemeTheory.Modules.LocalMorphisms
 Restriction commutes with presheaf exterior powers, and sheafification transports
 this comparison to pullback of module sheaves.
 -/
+
+@[expose] public section
 
 section nonempty_pullback_exteriorPower_iso_exteriorPower_pullback
 

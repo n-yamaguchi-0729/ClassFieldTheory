@@ -11,15 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.Differentials.Maps.Maps
-import Nyll.AlgebraicCurves.Cohomology.Cech.Maps
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Differentials.Maps.Maps
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Maps
 
 /-!
 # Differentials, residues, and divisor correspondences
 
 The compatibility of residue sums over a place fibre with differential pullback and field trace.
 -/
+
+@[expose] public section
 
 noncomputable section
 

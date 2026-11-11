@@ -11,14 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Rational.Differentials
-import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Nyll.AlgebraicCurves.Places.Differentials.CanonicalLocalResidueDataKResDifferentialCoeffDMulPowInvEqZero
+module
+
+public import Nyll.AlgebraicCurves.Places.Rational.Differentials
+public import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Nyll.AlgebraicCurves.Places.Differentials.CanonicalLocalResidueDataKResDifferentialCoeffDMulPowInvEqZero
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
 
 /-!
 # Rational Function Field trace local Residue place Infty X pow eq zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

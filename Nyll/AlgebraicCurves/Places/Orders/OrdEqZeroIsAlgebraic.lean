@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Mathlib.RingTheory.Algebraic.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Mathlib.RingTheory.Algebraic.Defs
+module
+
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Mathlib.RingTheory.Algebraic.Defs
 
 /-!
 # Place ord eq zero of is Algebraic
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

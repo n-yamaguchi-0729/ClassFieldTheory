@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicLocalField
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MathlibHilbertProductFormula
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicLocalField
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MathlibHilbertProductFormula
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
 
 /-!
 # Comparison of finite-place Hilbert factors
@@ -13,6 +18,8 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MathlibHilbertPr
 The finite-place factor of the transported adic pairing agrees with the
 established finite-place Hilbert symbol.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -29,7 +36,7 @@ private theorem globalFinitePlaceHilbertSymbol_map_eq_local
     (hmu : (primitiveRoots (n : ℕ) F).Nonempty)
     (v : HeightOneSpectrum (𝓞 F)) (a b : Fˣ) :
     let C := (HeightOneSpectrum.adicAbv F v).Completion
-    letI : ValuativeRel C :=
+    let : ValuativeRel C :=
       GlobalClassFieldTheory.Reciprocity.finitePlaceLocalArtinCompletionValuativeRel v
     let eFC : rootsOfUnity (n : ℕ) F ≃* rootsOfUnity (n : ℕ) C :=
       letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
@@ -42,9 +49,7 @@ private theorem globalFinitePlaceHilbertSymbol_map_eq_local
           F n hmu v)
         (GlobalClassFieldTheory.Reciprocity.finitePlaceHilbert_completionUnit F v a)
         (GlobalClassFieldTheory.Reciprocity.finitePlaceHilbert_completionUnit F v b) := by
-  let C := (HeightOneSpectrum.adicAbv F v).Completion
-  let : ValuativeRel C :=
-    GlobalClassFieldTheory.Reciprocity.finitePlaceLocalArtinCompletionValuativeRel v
+  intro C sharedOwner2
   let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
   let eFC : rootsOfUnity (n : ℕ) F ≃* rootsOfUnity (n : ℕ) C :=
     rootsOfUnityEquivOfPrimitiveRoots (algebraMap F C).injective hmu
@@ -77,7 +82,7 @@ private theorem rootsOfUnity_finiteCompletion_comp
     (z : rootsOfUnity (n : ℕ) F) :
     let C := (HeightOneSpectrum.adicAbv F v).Completion
     let D := v.adicCompletion F
-    letI : NeZero (n : ℕ) := ⟨n.ne_zero⟩
+    let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
     let eFC : rootsOfUnity (n : ℕ) F ≃* rootsOfUnity (n : ℕ) C :=
       rootsOfUnityEquivOfPrimitiveRoots (algebraMap F C).injective hmu
     let eFD : rootsOfUnity (n : ℕ) F ≃* rootsOfUnity (n : ℕ) D :=
@@ -86,16 +91,7 @@ private theorem rootsOfUnity_finiteCompletion_comp
       rootsOfUnityEquivOfRingEquiv
         (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
     eFD z = eCD (eFC z) := by
-  let C := (HeightOneSpectrum.adicAbv F v).Completion
-  let D := v.adicCompletion F
-  let : NeZero (n : ℕ) := ⟨n.ne_zero⟩
-  let eFC : rootsOfUnity (n : ℕ) F ≃* rootsOfUnity (n : ℕ) C :=
-    rootsOfUnityEquivOfPrimitiveRoots (algebraMap F C).injective hmu
-  let eFD : rootsOfUnity (n : ℕ) F ≃* rootsOfUnity (n : ℕ) D :=
-    rootsOfUnityEquivOfPrimitiveRoots (algebraMap F D).injective hmu
-  let eCD : rootsOfUnity (n : ℕ) C ≃* rootsOfUnity (n : ℕ) D :=
-    rootsOfUnityEquivOfRingEquiv
-      (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
+  intro C D sharedOwner3 eFC eFD eCD
   apply Subtype.ext
   apply Units.ext
   change algebraMap F D ((z : Fˣ) : F) =
@@ -136,8 +132,6 @@ theorem finitePlaceAdicHilbertPairingFamily_finiteFactor
     GlobalClassFieldTheory.Reciprocity.finitePlaceHilbert_completionUnit F v a
   let bC : Cˣ :=
     GlobalClassFieldTheory.Reciprocity.finitePlaceHilbert_completionUnit F v b
-  let aD : Dˣ := Units.map (algebraMap F D).toMonoidHom a
-  let bD : Dˣ := Units.map (algebraMap F D).toMonoidHom b
   have hunit (x : Fˣ) :
       (Units.mapEquiv e.toMulEquiv).symm
         (Units.map (algebraMap F D).toMonoidHom x) =
@@ -152,11 +146,9 @@ theorem finitePlaceAdicHilbertPairingFamily_finiteFactor
       eFD (GlobalHilbertPairingFamily.finiteFactor F
         (finitePlaceAdicHilbertPairingFamily F n hmu) hmu v a b) =
         eCD (localHilbertSymbol C n hnC hmuC aC bC) := by
-    change eFD (eFD.symm
-      ((hilbertPairingOfRingEquiv e n hmuC
-        (localHilbertPairing C n hnC hmuC))
-        (powerClass D n aD) (powerClass D n bD))) = _
-    rw [eFD.apply_symm_apply, hilbertPairingOfRingEquiv_apply,
+    simp only [GlobalHilbertPairingFamily.finiteFactor, eFD, MulEquiv.apply_symm_apply]
+    unfold finitePlaceAdicHilbertPairingFamily
+    rw [hilbertPairingOfRingEquiv_apply,
       powerClassGroupEquivOfRingEquiv_symm_powerClass,
       powerClassGroupEquivOfRingEquiv_symm_powerClass,
       hunit a, hunit b, localHilbertPairing_powerClass]

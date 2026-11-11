@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
 
 /-!
 # Fixed-field instance spine for rational finite-norm transport
@@ -16,6 +18,8 @@ The public dependent type aliases are compiled once here.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Power classes modulo a subgroup
@@ -12,6 +14,8 @@ import Mathlib.GroupTheory.QuotientGroup.Basic
 The third isomorphism theorem identifies the quotient by a subgroup and
 n-th powers with n-th power classes in the original subgroup quotient.
 -/
+
+@[expose] public section
 
 noncomputable section
 namespace LocalFieldTheory

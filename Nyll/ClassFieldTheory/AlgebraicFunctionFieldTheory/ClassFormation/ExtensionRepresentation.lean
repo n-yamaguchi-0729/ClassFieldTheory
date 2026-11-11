@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Representation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediateAction
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Representation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediateAction
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
 
 /-!
 # The actual relative action on fixed idele-class coefficients
@@ -15,14 +18,18 @@ The carrier comparison with fixed-field idele classes intertwines the
 abstract quotient action and the actual relative Galois action.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 open IdeleClassGroup.FiniteExtensionLimit
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [FunctionField k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]

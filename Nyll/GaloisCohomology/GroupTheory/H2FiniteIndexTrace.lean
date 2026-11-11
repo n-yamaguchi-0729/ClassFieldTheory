@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RepresentationTheory.FiniteIndex
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
-import Mathlib.GroupTheory.Coset.Card
-import Mathlib.GroupTheory.Sylow
-import Mathlib.GroupTheory.OrderOfElement
+module
+
+public import Mathlib.RepresentationTheory.FiniteIndex
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Shapiro
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
+public import Mathlib.GroupTheory.Coset.Card
+public import Mathlib.GroupTheory.Sylow
+public import Mathlib.GroupTheory.OrderOfElement
 
 /-!
 # Subgroup index annihilates H² when restricted H² vanishes
@@ -20,6 +22,8 @@ followed by the induction counit. Its composite with the coinduction unit is the
 Shapiro then supplies the vanishing intermediate cohomology object.
 -/
 
+@[expose] public section
+
 open CategoryTheory
 open scoped BigOperators
 
@@ -27,33 +31,38 @@ namespace ClassFieldTower.Cohomology
 
 noncomputable section
 
-variable {R G : Type} [CommRing R] [Group G] (A : Rep R G) (H : Subgroup G) [H.FiniteIndex]
+universe r u v
+
+section Trace
+
+variable {R : Type r} {G : Type u} [CommRing R] [Group G]
+  (A : Rep.{max r u v} R G) (H : Subgroup G) [H.FiniteIndex]
 
 /-- The actual coefficient trace from the coinduced restricted representation. -/
 def finiteIndexCoefficientTrace :
     Rep.coind H.subtype (Rep.res H.subtype A) ⟶ A := by
   classical
-  exact (Rep.indCoindIso (Rep.res H.subtype A)).inv ≫
-    (Rep.indResHomEquiv H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)
+  exact (Rep.indCoindIso.{max r u v} (Rep.res H.subtype A)).inv ≫
+    (Rep.indResHomEquiv.{max r u v} H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)
 
 /-- The existing coefficient trace commutes with morphisms of representations. -/
-theorem finiteIndexCoefficientTrace_natural {B : Rep R G} (f : A ⟶ B) :
+theorem finiteIndexCoefficientTrace_natural {B : Rep.{max r u v} R G} (f : A ⟶ B) :
     (Rep.coindFunctor R H.subtype).map ((Rep.resFunctor H.subtype).map f) ≫
-        finiteIndexCoefficientTrace B H =
-      finiteIndexCoefficientTrace A H ≫ f := by
+        finiteIndexCoefficientTrace.{r, u, v} B H =
+      finiteIndexCoefficientTrace.{r, u, v} A H ≫ f := by
   classical
-  exact (Rep.coindResAdjunction R H).counit.naturality f
+  exact (Rep.coindResAdjunction.{max r u v} R H).counit.naturality f
 
 omit [H.FiniteIndex] in
 private theorem inductionCounit_mk (g : G) (a : A) :
-    ((Rep.indResHomEquiv H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)).hom
+    ((Rep.indResHomEquiv.{max r u v} H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)).hom
       (Representation.IndV.mk H.subtype (Rep.res H.subtype A).ρ g a) =
         A.ρ g⁻¹ a := by
   let : Module R (Rep.res H.subtype A).V := (Rep.res H.subtype A).hV2
-  let f := (Rep.indResHomEquiv H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)
+  let f := (Rep.indResHomEquiv.{max r u v} H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)
   have h1 : f.hom (Representation.IndV.mk H.subtype (Rep.res H.subtype A).ρ 1 a) = a :=
     congrArg (fun u => u.hom a)
-      ((Rep.indResHomEquiv H.subtype (Rep.res H.subtype A) A).apply_symm_apply (𝟙 _))
+      ((Rep.indResHomEquiv.{max r u v} H.subtype (Rep.res H.subtype A) A).apply_symm_apply (𝟙 _))
   have h := Rep.hom_comm_apply f g⁻¹
     (Representation.IndV.mk H.subtype (Rep.res H.subtype A).ρ 1 a)
   rw [Representation.ind_mk, inv_inv, one_mul, h1] at h
@@ -61,8 +70,8 @@ private theorem inductionCounit_mk (g : G) (a : A) :
 
 /-- Coinduction followed by the coefficient trace is multiplication by the subgroup index. -/
 theorem coinductionUnit_comp_finiteIndexCoefficientTrace :
-    Rep.resCoindToHom H.subtype A (Rep.res H.subtype A) (𝟙 _) ≫
-      finiteIndexCoefficientTrace A H = H.index • 𝟙 A := by
+    Rep.resCoindHomEquiv.{max r u v} H.subtype A (Rep.res H.subtype A) (𝟙 _) ≫
+      finiteIndexCoefficientTrace.{r, u, v} A H = H.index • 𝟙 A := by
   classical
   let : Fintype (G ⧸ H) := Subgroup.fintypeQuotientOfFiniteIndex
   let : Module R (Rep.res H.subtype A).V := (Rep.res H.subtype A).hV2
@@ -70,9 +79,9 @@ theorem coinductionUnit_comp_finiteIndexCoefficientTrace :
   apply Representation.IntertwiningMap.ext
   apply LinearMap.ext
   intro a
-  change ((Rep.indResHomEquiv H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)).hom
+  change ((Rep.indResHomEquiv.{max r u v} H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)).hom
     (Rep.coindToInd (Rep.res H.subtype A)
-      ((Rep.resCoindToHom H.subtype A (Rep.res H.subtype A) (𝟙 _)).hom a)) =
+      ((Rep.resCoindHomEquiv.{max r u v} H.subtype A (Rep.res H.subtype A) (𝟙 _)).hom a)) =
         H.index • a
   rw [Rep.coindToInd_apply, map_sum]
   trans ∑ _ : Quotient (QuotientGroup.rightRel H), a
@@ -80,38 +89,38 @@ theorem coinductionUnit_comp_finiteIndexCoefficientTrace :
     intro q _
     induction q using Quotient.inductionOn with
     | h g =>
-      change ((Rep.indResHomEquiv H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)).hom
+      change ((Rep.indResHomEquiv.{max r u v} H.subtype (Rep.res H.subtype A) A).symm (𝟙 _)).hom
         (Representation.IndV.mk H.subtype (Rep.res H.subtype A).ρ g (A.ρ g a)) = a
-      rw [inductionCounit_mk]
+      rw [inductionCounit_mk.{r, u, v}]
       rw [← Module.End.mul_apply, ← map_mul, inv_mul_cancel, map_one]
       rfl
   · rw [Finset.sum_const, Finset.card_univ, QuotientGroup.card_quotient_rightRel,
       ← Nat.card_eq_fintype_card, ← H.index_eq_card]
 
 /-- Trace of a morphism defined after restriction to a finite-index subgroup. -/
-def finiteIndexHomTrace (T : Rep R G)
+def finiteIndexHomTrace (T : Rep.{max r u v} R G)
     (f : Rep.res H.subtype T ⟶ Rep.res H.subtype A) : T ⟶ A :=
-  Rep.resCoindToHom H.subtype T (Rep.res H.subtype A) f ≫
-    finiteIndexCoefficientTrace A H
+  Rep.resCoindHomEquiv.{max r u v} H.subtype T (Rep.res H.subtype A) f ≫
+    finiteIndexCoefficientTrace.{r, u, v} A H
 
 /-- Tracing a restricted morphism commutes with its target morphisms. -/
-theorem finiteIndexHomTrace_comp {B : Rep R G} (T : Rep R G)
+theorem finiteIndexHomTrace_comp {B : Rep.{max r u v} R G} (T : Rep.{max r u v} R G)
     (f : Rep.res H.subtype T ⟶ Rep.res H.subtype A) (g : A ⟶ B) :
-    finiteIndexHomTrace A H T f ≫ g =
-      finiteIndexHomTrace B H T (f ≫ (Rep.resFunctor H.subtype).map g) := by
+    finiteIndexHomTrace.{r, u, v} A H T f ≫ g =
+      finiteIndexHomTrace.{r, u, v} B H T (f ≫ (Rep.resFunctor H.subtype).map g) := by
   unfold finiteIndexHomTrace
-  rw [Category.assoc, ← finiteIndexCoefficientTrace_natural, ← Category.assoc]
+  rw [Category.assoc, ← finiteIndexCoefficientTrace_natural.{r, u, v}, ← Category.assoc]
   congr 1
 
 /-- The trace of an ambient morphism restricted to the subgroup is its
 index multiple. -/
-theorem finiteIndexHomTrace_restriction (T : Rep R G) (f : T ⟶ A) :
-    finiteIndexHomTrace A H T ((Rep.resFunctor H.subtype).map f) =
+theorem finiteIndexHomTrace_restriction (T : Rep.{max r u v} R G) (f : T ⟶ A) :
+    finiteIndexHomTrace.{r, u, v} A H T ((Rep.resFunctor H.subtype).map f) =
       H.index • f := by
   have hu :
-      Rep.resCoindToHom H.subtype T (Rep.res H.subtype A)
+      Rep.resCoindHomEquiv.{max r u v} H.subtype T (Rep.res H.subtype A)
           ((Rep.resFunctor H.subtype).map f) =
-        f ≫ Rep.resCoindToHom H.subtype A (Rep.res H.subtype A) (𝟙 _) := by
+        f ≫ Rep.resCoindHomEquiv.{max r u v} H.subtype A (Rep.res H.subtype A) (𝟙 _) := by
     apply Rep.hom_ext
     apply Representation.IntertwiningMap.ext
     apply LinearMap.ext
@@ -120,7 +129,7 @@ theorem finiteIndexHomTrace_restriction (T : Rep R G) (f : T ⟶ A) :
     funext h
     exact Rep.hom_comm_apply f h x
   unfold finiteIndexHomTrace
-  rw [hu, Category.assoc, coinductionUnit_comp_finiteIndexCoefficientTrace]
+  rw [hu, Category.assoc, coinductionUnit_comp_finiteIndexCoefficientTrace.{r, u, v}]
   apply Rep.hom_ext
   apply Representation.IntertwiningMap.ext
   apply LinearMap.ext
@@ -128,45 +137,51 @@ theorem finiteIndexHomTrace_restriction (T : Rep R G) (f : T ⟶ A) :
   rfl
 
 /-- An invariant image with a subgroup-invariant preimage has an ambient
-invariant preimage after multiplication by the subgroup index. -/
-theorem exists_invariant_index_preimage (A : Rep.{0} R G)
-    {B : Rep.{0} R G} (d : A ⟶ B)
+invariant preimage after multiplication by the subgroup index. The sum over
+actual cosets permits independent scalar, group, and coefficient universes. -/
+theorem exists_invariant_index_preimage (A : Rep.{v} R G)
+    {B : Rep.{v} R G} (d : A ⟶ B)
     (v : A) (hv : ∀ h : H, A.ρ (h : G) v = v)
     (hdv : ∀ g : G, B.ρ g (d.hom v) = d.hom v) :
     ∃ w : A, (∀ g : G, A.ρ g w = w) ∧
       d.hom w = H.index • d.hom v := by
-  let T := Rep.trivial R G R
-  let f : Rep.res H.subtype T ⟶ Rep.res H.subtype A :=
-    Rep.ofHom ⟨LinearMap.toSpanSingleton R A v, by
-      intro h
-      apply LinearMap.ext
-      intro r
-      change r • v = A.ρ (h : G) (r • v)
-      rw [map_smul, hv]⟩
-  let g : T ⟶ B :=
-    Rep.ofHom ⟨LinearMap.toSpanSingleton R B (d.hom v), by
-      intro t
-      apply LinearMap.ext
-      intro r
-      change r • d.hom v = B.ρ t (r • d.hom v)
-      rw [map_smul, hdv]⟩
-  have hfg : f ≫ (Rep.resFunctor H.subtype).map d =
-      (Rep.resFunctor H.subtype).map g := by
-    apply Rep.hom_ext
-    apply Representation.IntertwiningMap.ext
-    apply LinearMap.ext
-    intro r
-    exact map_smul d.hom r v
-  let t := finiteIndexHomTrace A H T f
-  refine ⟨t.hom 1, ?_, ?_⟩
-  · intro a
-    exact (Rep.hom_comm_apply t a (1 : R)).symm
-  · have ht : t ≫ d = H.index • g := by
-      change finiteIndexHomTrace A H T f ≫ d = _
-      rw [finiteIndexHomTrace_comp, hfg, finiteIndexHomTrace_restriction]
-    have ht₁ := CategoryTheory.ConcreteCategory.congr_hom ht (1 : R)
-    change d.hom (t.hom 1) = H.index • ((1 : R) • d.hom v) at ht₁
-    simpa only [one_smul] using ht₁
+  classical
+  let : Fintype (G ⧸ H) := Subgroup.fintypeQuotientOfFiniteIndex
+  let f : G ⧸ H → A := Quotient.lift (fun g => A.ρ g v) (by
+    intro g k h
+    have hh := hv ⟨g⁻¹ * k, QuotientGroup.leftRel_apply.mp h⟩
+    have he : A.ρ k v = A.ρ g v := by
+      calc
+        A.ρ k v = A.ρ (g * (g⁻¹ * k)) v := by rw [mul_inv_cancel_left]
+        _ = A.ρ g (A.ρ (g⁻¹ * k) v) :=
+          congrArg (fun t : Module.End R A => t v) (map_mul A.ρ g (g⁻¹ * k))
+        _ = A.ρ g v := congrArg (A.ρ g) hh
+    exact he.symm)
+  have hf (g : G) (q : G ⧸ H) : A.ρ g (f q) = f (g • q) := by
+    induction q using Quotient.inductionOn with
+    | h k =>
+      change A.ρ g (A.ρ k v) = A.ρ (g * k) v
+      exact (congrArg (fun t : Module.End R A => t v) (map_mul A.ρ g k)).symm
+  refine ⟨∑ q, f q, ?_, ?_⟩
+  · intro g
+    rw [map_sum]
+    exact (Finset.sum_congr rfl (fun q _ => hf g q)).trans
+      (Equiv.sum_comp (MulAction.toPerm g : Equiv.Perm (G ⧸ H)) f)
+  · rw [map_sum]
+    trans ∑ _ : G ⧸ H, d.hom v
+    · apply Finset.sum_congr rfl
+      intro q _
+      induction q using Quotient.inductionOn with
+      | h g => exact (Rep.hom_comm_apply d g v).trans (hdv g)
+    · rw [Finset.sum_const, Finset.card_univ, ← Nat.card_eq_fintype_card,
+        ← H.index_eq_card]
+
+end Trace
+
+section NativeCohomology
+
+variable {R G : Type u} [CommRing R] [Group G]
+  (A : Rep.{u} R G) (H : Subgroup G) [H.FiniteIndex]
 
 private theorem H2_map_nsmul_id (m : ℕ)
     (c : groupCohomology A 2) :
@@ -191,14 +206,14 @@ theorem index_nsmul_H2_eq_zero_of_restricted_isZero
   let : Subsingleton
       (groupCohomology (Rep.coind H.subtype (Rep.res H.subtype A)) 2) :=
     ModuleCat.isZero_iff_subsingleton.mp hCoind
-  rw [← H2_map_nsmul_id, ← coinductionUnit_comp_finiteIndexCoefficientTrace,
+  rw [← H2_map_nsmul_id, ← coinductionUnit_comp_finiteIndexCoefficientTrace.{u, u, u},
     groupCohomology.map_id_comp]
-  change groupCohomology.map (MonoidHom.id G) (finiteIndexCoefficientTrace A H) 2
+  change groupCohomology.map (MonoidHom.id G) (finiteIndexCoefficientTrace.{u, u, u} A H) 2
     (groupCohomology.map (MonoidHom.id G)
-      (Rep.resCoindToHom H.subtype A (Rep.res H.subtype A) (𝟙 _)) 2 c) = 0
+      (Rep.resCoindHomEquiv.{u} H.subtype A (Rep.res H.subtype A) (𝟙 _)) 2 c) = 0
   rw [Subsingleton.elim
     (groupCohomology.map (MonoidHom.id G)
-      (Rep.resCoindToHom H.subtype A (Rep.res H.subtype A) (𝟙 _)) 2 c) 0, map_zero]
+      (Rep.resCoindHomEquiv.{u} H.subtype A (Rep.res H.subtype A) (𝟙 _)) 2 c) 0, map_zero]
 
 /-- Vanishing on every Sylow subgroup detects vanishing of actual H². -/
 theorem H2_eq_zero_of_sylow_restrictions_isZero [Finite G]
@@ -215,6 +230,7 @@ theorem H2_eq_zero_of_sylow_restrictions_isZero [Finite G]
     index_nsmul_H2_eq_zero_of_restricted_isZero A P (h p P) c
   exact P.not_dvd_index (hpc.trans (addOrderOf_dvd_of_nsmul_eq_zero hkill))
 
+end NativeCohomology
 
 end
 end ClassFieldTower.Cohomology

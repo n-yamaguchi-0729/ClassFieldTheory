@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
 
 /-!
 # Exact norm quotients in a cyclic tower
@@ -20,6 +22,8 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v w
+
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
@@ -27,21 +31,21 @@ open NumberField
 open RelativeIdeleGroup.Cohomology
 
 private theorem cyclicNormTower_relativeClassGroupIsMulCommutative
-    (A B : Type) [Field A] [NumberField A] [Field B] [Algebra A B] :
+    (A : Type u) (B : Type v) [Field A] [NumberField A] [Field B] [Algebra A B] :
     IsMulCommutative (RelativeIdeleGroup.ClassGroup A B) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 attribute [local instance] cyclicNormTower_relativeClassGroupIsMulCommutative
 
 private theorem cyclicNormTower_ideleClassGroupIsMulCommutative
-    (A : Type) [Field A] [NumberField A] :
+    (A : Type*) [Field A] [NumberField A] :
     IsMulCommutative (IdeleClassGroup A) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 attribute [local instance] cyclicNormTower_ideleClassGroupIsMulCommutative
 
 variable
-    (K M L : Type)
+    (K : Type u) (M : Type v) (L : Type w)
     [Field K] [NumberField K]
     [Field M] [NumberField M]
     [Field L] [NumberField L]

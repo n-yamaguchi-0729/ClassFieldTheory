@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.LocallyFreePushforward
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.LocallyFreePushforward
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf
 
 /-!
 # Relative Picard varieties and fibre cohomology
 
 Use finite-type base change and fibre cohomology to obtain a pushforward module of constant rank.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
-import Mathlib.FieldTheory.Finite.Extension
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+module
+
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
+public import Mathlib.FieldTheory.Finite.Extension
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
 
 /-!
 # The exact order on a Frobenius-periodic function field
@@ -16,6 +18,8 @@ The period-n subfield contains an actual copy of the degree-n extension of
 the finite constant field. Restriction of its Frobenius therefore has order
 exactly n, not just order dividing n.
 -/
+
+@[expose] public section
 
 noncomputable section
 

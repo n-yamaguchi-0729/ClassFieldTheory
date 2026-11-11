@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRamification
-import Mathlib.Analysis.Complex.Order
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRamification
+public import Mathlib.Analysis.Complex.Order
 
 /-!
 # Complex conjugation on a negative quadratic Kummer root
 -/
 
 
+
+@[expose] public section
 
 open scoped ComplexConjugate ComplexOrder NumberField
 open NumberField
@@ -35,21 +39,15 @@ theorem chosenInfinitePlaceArtin_neg_one_apply_kummerRoot_of_real_of_radical_neg
     (hn : (n : ℕ) = 2) (hv : v.IsReal)
     (hb : InfinitePlace.embedding_of_isReal hv (b : K) < 0) :
     let L := chosenSimpleKummerExtension K n hnK b
-    letI : FiniteDimensional K L :=
+    let : FiniteDimensional K L :=
       chosenSimpleKummerExtension_finiteDimensional K n hnK b
-    letI : IsAbelianGalois K L :=
+    let : IsAbelianGalois K L :=
       chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-    letI : NumberField L := NumberField.of_module_finite K L
+    let : NumberField L := NumberField.of_module_finite K L
     let beta : L := (chosenSimpleKummerRootUnit K n hnK b : Lˣ)
     chosenInfinitePlaceArtinMonoidHom (K := K) (L := L) v
         (-1 : v.Completionˣ) beta = -beta := by
-  let L := chosenSimpleKummerExtension K n hnK b
-  let : FiniteDimensional K L :=
-    chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  let : IsAbelianGalois K L :=
-    chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
-  let : NumberField L := NumberField.of_module_finite K L
-  let beta : L := (chosenSimpleKummerRootUnit K n hnK b : Lˣ)
+  intro L sharedOwner2 sharedOwner3 sharedOwner4 beta
   have hbeta : beta ^ 2 = algebraMap K L (b : K) := by
     have hunit := congrArg Units.val
       (chosenSimpleKummerRootUnit_pow K n hnK b)

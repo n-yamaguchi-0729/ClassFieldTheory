@@ -10,12 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH1
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH0
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.Adjoin.Polynomial.Basic
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH1
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH0
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.Adjoin.Polynomial.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Finite cohomology of line bundles on two charts
@@ -24,6 +27,8 @@ Localization expresses sections on a basic open using a denominator power.
 Finite maps on the two affine charts then give finite zeroth and first Cech
 cohomology for the associated line bundles.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

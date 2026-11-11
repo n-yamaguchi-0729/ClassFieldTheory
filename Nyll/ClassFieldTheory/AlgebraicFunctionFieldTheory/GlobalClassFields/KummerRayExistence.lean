@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPowerRay
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPowerRay
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.GaloisCohomology.Kummer.Concrete.RadicalExtension
 
 /-!
 # Actual Kummer norm groups inside ray-power subgroups
@@ -16,12 +19,16 @@ Its actual S-unit root extension has norm image equal to the local-power
 subgroup, which lies inside the prescribed ray-power subgroup.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 open AlgebraicCurve
 
 namespace FunctionField
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K] [IsSepClosure K Ω]

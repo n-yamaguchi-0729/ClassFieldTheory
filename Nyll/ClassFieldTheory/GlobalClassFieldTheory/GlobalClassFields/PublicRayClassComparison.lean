@@ -4,26 +4,37 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticRayClassFieldReciprocity
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FullConductorRayClassField
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassSubgroupPrimeArtin
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsRayCongruent
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.NarrowRayClassModulus
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsUnramifiedOutsideModulus
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
-import Mathlib.Data.Finsupp.Order
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticRayClassFieldReciprocity
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FullConductorRayClassField
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassSubgroupPrimeArtin
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsRayCongruent
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.NarrowRayClassModulus
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsUnramifiedOutsideModulus
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
+public import Mathlib.Data.Finsupp.Order
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.Conductor
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 
 /-!
 # Conductors and ray class fields implementation
@@ -34,6 +45,8 @@ ray-class-field statements in the parent `Theorems` directory.
 
 
 
+@[expose] public section
+
 open scoped NumberField
 open NumberField IsDedekindDomain
 
@@ -41,7 +54,7 @@ noncomputable section
 
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
-universe u
+universe u v w
 
 /-- Interpret a public ray modulus in the existing idèle-theoretic ray-class
 library, preserving both its finite exponents and selected real places. -/
@@ -321,7 +334,7 @@ theorem rayClassGroupEquivOriginalIdele_prime
 /-- The public ideal-theoretic narrow ray class group agrees with the
 existing narrow class group used by global class field theory. -/
 noncomputable def narrowRayClassGroupEquivNarrowClassGroup
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     RayClassGroup (narrowRayClassModulus K) ≃*
       RayClass.NarrowClassGroup K := by
   let m : RayClass.Modulus K := RayClass.Modulus.narrowOfFinite 0
@@ -335,7 +348,7 @@ noncomputable def narrowRayClassGroupEquivNarrowClassGroup
 /-- The norm subgroup of the selected ray class field is the ray
 congruence subgroup. -/
 theorem rayClassField_normSubgroup
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) :
     (_root_.ideleClassNorm K
       (GlobalClassFieldTheory.GlobalClassFields.rayClassField K m)).range =
@@ -349,7 +362,7 @@ open _root_.GlobalClassFieldTheory.GlobalClassFields (
 /-- Any finite abelian extension whose norm group contains the ray
 congruence subgroup is unramified outside that modulus. -/
 theorem unramifiedOutsideModulus_of_definingModulus
-    (K E : Type) [Field K] [NumberField K]
+    (K : Type u) (E : Type v) [Field K] [NumberField K]
     [Field E] [NumberField E] [Algebra K E]
     [FiniteDimensional K E] [IsAbelianGalois K E]
     (m : RayClassModulus K)
@@ -405,7 +418,7 @@ theorem unramifiedOutsideModulus_of_definingModulus
 /-- The selected ray class field is unramified away from the finite and real
 places selected by the public modulus. -/
 theorem rayClassField_unramifiedOutsideModulus
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K) :
     IsUnramifiedOutsideModulus K
       (GlobalClassFieldTheory.GlobalClassFields.rayClassField K
@@ -419,7 +432,7 @@ theorem rayClassField_unramifiedOutsideModulus
 /-- Ray class reciprocity identifies the Galois group of the selected ray
 class field with the corresponding ray class group. -/
 theorem rayClassField_reciprocity
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) :
     Nonempty
       ((GlobalClassFieldTheory.GlobalClassFields.rayClassField K m ≃ₐ[K]
@@ -430,7 +443,7 @@ theorem rayClassField_reciprocity
 /-- The selected ray class field has degree equal to the order of its ray
 class group. -/
 theorem rayClassField_degree
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) :
     Module.finrank K
         (GlobalClassFieldTheory.GlobalClassFields.rayClassField K m) =
@@ -440,8 +453,8 @@ theorem rayClassField_degree
 /-- The full conductor is the least modulus whose ray class field contains
 the given finite abelian extension. -/
 theorem embedsInRayClassField_iff_conductor_le
-    {K : Type} [Field K] [NumberField K]
-    (L : Type) [Field L] [NumberField L]
+    {K : Type u} [Field K] [NumberField K]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L]
     (m : RayClass.Modulus K) :
@@ -454,7 +467,7 @@ theorem embedsInRayClassField_iff_conductor_le
 
 /-- Build the public Frobenius-normalized realization attached to a ray-class subgroup. -/
 theorem rayClassSubgroup_existence
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K) (H : Subgroup (RayClassGroup m)) :
     Nonempty (RayClassSubgroupRealization K m H) := by
   let m' := rayClassModulusToOriginal K m
@@ -515,6 +528,8 @@ end ClassFieldTheory.GlobalClassFieldComparison
 
 namespace ClassFieldTheory
 
+universe u v
+
 open _root_.GlobalClassFieldTheory.GlobalClassFields (
   finiteAbelianExtension_nonempty_algHom_of_normRange_le
   rayModulus_normSubgroup_eq_of_arithmeticPrimeArtinEquiv
@@ -523,8 +538,8 @@ open _root_.GlobalClassFieldTheory.GlobalClassFields (
 class field contains the finite abelian extension. This implementation theorem
 uses the original idelic full conductor in its statement. -/
 theorem normFullConductor_isAbelianConductor
-    (K : Type) [Field K] [NumberField K]
-    (L : Type) [Field L] [NumberField L]
+    (K : Type u) [Field K] [NumberField K]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [IsAbelianGalois K L] :
     IsAbelianConductor K L
       { finitePart :=

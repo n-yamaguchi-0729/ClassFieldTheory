@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Etale.Basic
-import Nyll.AlgebraicCurves.Geometry.Descent.DescentAction
-import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.QuotientFiniteLocallyFreeEquivalenceRelation
-import Nyll.AlgebraicCurves.Geometry.Descent.DescentActionEffectivePullback
+module
+
+public import Mathlib.RingTheory.Etale.Basic
+public import Nyll.AlgebraicCurves.Geometry.Descent.DescentAction
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.QuotientFiniteLocallyFreeEquivalenceRelation
+public import Nyll.AlgebraicCurves.Geometry.Descent.DescentActionEffectivePullback
 
 /-!
 # Descent Action effective of finite Etale
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

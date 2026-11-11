@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
 
 /-!
 # Unit multiples give the same zero-scheme ideal
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdea
 Global sections of an invertible module related by multiplication by a unit have the
 same zero-scheme ideal.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

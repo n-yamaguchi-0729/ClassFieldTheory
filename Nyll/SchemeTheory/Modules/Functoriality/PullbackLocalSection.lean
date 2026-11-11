@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Tactic.Ext
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Tactic.Ext
 
 /-!
 # Pullback of local module sections
@@ -19,6 +21,8 @@ import Mathlib.Tactic.Ext
 The adjunction unit pulls sections back to inverse-image opens, compatibly with
 module operations, restriction maps, morphisms, and the counit.
 -/
+
+@[expose] public section
 
 universe u
 

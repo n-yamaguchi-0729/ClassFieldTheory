@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.Normal.Basic
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictionComposition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+module
+
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.Normal.Basic
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictionComposition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
 
 /-!
 # Lifting decomposition automorphisms in finite Galois towers
@@ -21,6 +23,8 @@ is corrected by an automorphism over the intermediate field, using actual
 transitivity on the fiber of places. Thus restriction onto the lower
 decomposition group is surjective.
 -/
+
+@[expose] public section
 
 noncomputable section
 

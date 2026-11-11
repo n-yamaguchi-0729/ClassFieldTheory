@@ -11,11 +11,15 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
 
-import Nyll.AlgebraicCurves.Places.Orders.OrdEqZeroIsAlgebraic
+module
+
+public import Nyll.AlgebraicCurves.Places.Orders.OrdEqZeroIsAlgebraic
 
 /-!
 # A function of nonzero order is transcendental over the constant field
 -/
+
+@[expose] public section
 
 theorem _root_.AlgebraicCurve.Place.transcendental_of_ord_ne_zero {K F : Type*} [Field K] [Field
   F] [Algebra K F] (v : AlgebraicCurve.Place K F) {t : F} (ht : v.ord t ≠ 0) :

@@ -11,9 +11,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AbelJacobiFamily
-import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AjFamilyFibreIso
-import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AbelJacobiFamily
+public import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AjFamilyFibreIso
+public import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
 
 /-!
 # Relative Picard varieties and fibre cohomology
@@ -21,6 +23,8 @@ import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
 Show that the line bundle defined by a point minus the basepoint is algebraically equivalent to
 zero.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

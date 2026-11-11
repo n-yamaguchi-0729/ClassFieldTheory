@@ -11,9 +11,12 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
 
-import Nyll.AlgebraicCurves.Differentials.Local.LocalGeometry
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.RingTheory.EssentialFiniteness
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Local.LocalGeometry
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Mathlib.RingTheory.EssentialFiniteness
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
 
 /-!
 # Canonical divisors of the rational function field
@@ -21,6 +24,8 @@ import Mathlib.RingTheory.EssentialFiniteness
 The polynomial localization supplies essential finite type, so the general construction of
 canonical divisors applies over every perfect base field.
 -/
+
+@[expose] public section
 
 theorem AlgebraicCurve.instHasCanonicalDivisorRatFuncPerfectField (K : Type*) [Field K]
     [PerfectField K] [AlgebraicCurve.IsCurveOver K (RatFunc K)] :

@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldInvariantClass
-import Nyll.AlgebraicCurves.Models.ConstantExtension.DivisorDescent
-import Nyll.AlgebraicCurves.Models.Construction.GeometricallyIntegralOfConstants
-import Nyll.AlgebraicCurves.Models.Construction.BasicPerfectField
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveCurveModelIsoPullback
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldInvariantClass
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.DivisorDescent
+public import Nyll.AlgebraicCurves.Models.Construction.GeometricallyIntegralOfConstants
+public import Nyll.AlgebraicCurves.Models.Construction.BasicPerfectField
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveCurveModelIsoPullback
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 
 /-!
 # Degree-one divisors over the full finite constant field
@@ -18,6 +20,10 @@ Construct actual proper smooth models over the finite base and its algebraic
 closure. Lang and periodic Hilbert 90 give a fixed geometric degree-one divisor,
 which descends along the actual projection without changing its degree.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -30,7 +36,7 @@ attribute [local instance] CurveModel.isIntegral CurveModel.isProper CurveModel.
 
 /-- A one-variable function field over its full finite constants has a divisor of degree one. -/
 theorem exists_divisor_degree_one_of_finite_constants
-    {k F₀ : Type} [Field k] [Finite k] [Field F₀] [Algebra k F₀]
+    {k : Type u} {F₀ : Type v} [Field k] [Finite k] [Field F₀] [Algebra k F₀]
     [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     (hfg : ∃ x : F₀, Transcendental k x ∧
       FiniteDimensional (IntermediateField.adjoin k ({x} : Set F₀)) F₀)
@@ -38,7 +44,8 @@ theorem exists_divisor_degree_one_of_finite_constants
     ∃ D : Divisor k F₀, Divisor.degree D = 1 := by
   let fintype : Fintype k := Fintype.ofFinite k
   obtain ⟨M₀⟩ := CurveModel.nonempty_of_perfectField k F₀ hfg
-  have hgeom : GeometricallyIntegral M₀.toBase := M₀.geometricallyIntegral_of_constantsAreBase hC
+  have hgeom : GeometricallyIntegral M₀.toBase :=
+    CurveModel.geometricallyIntegral_of_constantsAreBase (k := k) (F := F₀) M₀ hC
   let Ω := AlgebraicClosure k
   obtain ⟨F, fieldF, algF, curveF, eftF, M, e, he⟩ :=
     SmoothProperCurve.exists_curveModel_iso_pullback_of_isAlgClosed k M₀.toBase Ω (specMap k Ω)
@@ -55,7 +62,7 @@ theorem exists_divisor_degree_one_of_finite_constants
 
 /-- Over full finite constants the actual divisor degree map is surjective onto the integers. -/
 theorem degree_surjective_of_finite_constants
-    {k F : Type} [Field k] [Finite k] [Field F] [Algebra k F]
+    {k : Type u} {F : Type v} [Field k] [Finite k] [Field F] [Algebra k F]
     [IsCurveOver k F] [Algebra.EssFiniteType k F]
     (hfg : ∃ x : F, Transcendental k x ∧
       FiniteDimensional (IntermediateField.adjoin k ({x} : Set F)) F)

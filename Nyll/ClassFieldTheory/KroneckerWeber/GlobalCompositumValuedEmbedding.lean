@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumGlobalEmbedding
-import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+module
+
+public import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumGlobalEmbedding
+public import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
 
 /-!
 # A valued global embedding of the auxiliary compositum
@@ -15,6 +17,8 @@ Consequently the pullback of the canonical absolute value on the common
 local cyclotomic target is exactly the chosen `p`-adic place.  The corrected
 normal-compositum embedding preserves this exact left restriction.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -109,9 +113,9 @@ cyclotomic compositum into the common local target. -/
 noncomputable def kroneckerWeberGlobalValuedCompositumEmbeddingData
     (p : Nat.Primes)
     (hp : p ∈ kroneckerWeberRamifiedPrimes (L := L)) :
-    letI : Fact p.1.Prime := ⟨p.2⟩
+    let : Fact p.1.Prime := ⟨p.2⟩
     KroneckerWeberGlobalValuedCompositumEmbeddingData (L := L) p := by
-  letI : Fact p.1.Prime := ⟨p.2⟩
+  intro sharedOwner1
   let hi := kroneckerWeberGlobalValuedLeftEmbedding (L := L) p
   let i := Classical.choose hi
   let hiAbs := Classical.choose_spec hi

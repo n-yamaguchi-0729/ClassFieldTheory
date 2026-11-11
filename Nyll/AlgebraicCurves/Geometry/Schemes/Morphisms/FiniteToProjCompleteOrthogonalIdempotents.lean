@@ -10,31 +10,35 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.BigOperators.Pi
-import Mathlib.Algebra.DirectSum.Basic
-import Mathlib.Algebra.DirectSum.Decomposition
-import Mathlib.Algebra.DirectSum.Ring
-import Mathlib.AlgebraicGeometry.Gluing
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.AlgebraicGeometry.Morphisms.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
-import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Maps
-import Mathlib.RingTheory.GradedAlgebra.HomogeneousLocalization
-import Mathlib.RingTheory.Idempotents
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Localization.Away.Basic
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.Tactic.Choose
+module
+
+public import Mathlib.Algebra.BigOperators.Pi
+public import Mathlib.Algebra.DirectSum.Basic
+public import Mathlib.Algebra.DirectSum.Decomposition
+public import Mathlib.Algebra.DirectSum.Ring
+public import Mathlib.AlgebraicGeometry.Gluing
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.AlgebraicGeometry.Morphisms.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
+public import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Maps
+public import Mathlib.RingTheory.GradedAlgebra.HomogeneousLocalization
+public import Mathlib.RingTheory.Idempotents
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.Tactic.Choose
 
 /-!
 # exists is Finite to proj of complete Orthogonal Idempotents
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -67,7 +71,7 @@ lemma single_mem_grading {n : ℕ} (i : ι') {x : A i} (hx : x ∈ 𝒜 i n) :
   intro k
   by_cases h : k = i
   · subst h; simpa using hx
-  · simp [Pi.single_eq_of_ne h, zero_mem]
+  · rw [Pi.single_eq_of_ne h]; exact zero_mem _
 
 scoped instance : SetLike.GradedMonoid (grading A σ 𝒜) where
   one_mem _i := SetLike.one_mem_graded _
@@ -77,7 +81,7 @@ scoped instance : SetLike.GradedMonoid (grading A σ 𝒜) where
 def singlePiece (i : ι') (n : ℕ) : 𝒜 i n →+ grading A σ 𝒜 n where
   toFun x := ⟨Pi.single i (x : A i), single_mem_grading A σ 𝒜 i x.2⟩
   map_zero' := by ext : 1; exact Pi.single_zero _
-  map_add' x y := by ext : 1; simp [Pi.single_add]
+  map_add' x y := by ext : 1; exact Pi.single_add i (x : A i) (y : A i)
 omit [Fintype ι'] [(i : ι') → GradedRing (𝒜 i)] in
 @[scoped simp] lemma coe_singlePiece (i : ι') (n : ℕ) (x : 𝒜 i n) :
     (singlePiece A σ 𝒜 i n x : Π i, A i) = Pi.single i (x : A i) := rfl
@@ -168,7 +172,7 @@ lemma awayMap_π_single_bijective (k : ι') {d : ℕ} (t : A k) (ht : t ∈ 𝒜
     · subst hj
       simp only [Pi.single_eq_same] at hc ⊢
       rw [pow_succ', mul_assoc, hc, mul_zero]
-    · simp [Pi.single_eq_of_ne hj]
+    · simp only [Pi.single_eq_of_ne hj, zero_pow (Nat.succ_ne_zero N), zero_mul]
   · intro y
     obtain ⟨n, b, hb, rfl⟩ :=
       HomogeneousLocalization.Away.mk_surjective _ ((π A σ 𝒜 k).map_mem hs) y
@@ -291,10 +295,10 @@ lemma eq_of_incl_eq {k l : ι'} (q : Proj (𝒜 k)) (q' : Proj (𝒜 l))
     · subst hj
       have := (mem_basicOpen_incl_iff A σ 𝒜 q' (Pi.single j 1)).not
       rw [← h, Proj.mem_basicOpen, Proj.mem_basicOpen, not_not, not_not] at this
-      exact this.mpr (by simp [Pi.single_eq_of_ne (Ne.symm hkl)])
+      exact this.mpr (by simp only [Pi.single_eq_of_ne (Ne.symm hkl), zero_mem])
     · have := (mem_basicOpen_incl_iff A σ 𝒜 q (Pi.single j 1)).not
       rw [Proj.mem_basicOpen, Proj.mem_basicOpen, not_not, not_not] at this
-      exact this.mpr (by simp [Pi.single_eq_of_ne (Ne.symm hj)])
+      exact this.mpr (by simp only [Pi.single_eq_of_ne (Ne.symm hj), zero_mem])
   have h1 : (incl A σ 𝒜 k q) ∈ Proj.basicOpen (grading A σ 𝒜) 1 := by
     rw [Proj.basicOpen_one]; trivial
   rw [Proj.mem_basicOpen] at h1

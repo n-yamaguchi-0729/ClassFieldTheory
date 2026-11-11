@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExists
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+module
+
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExists
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
 
 /-!
 Existence of a genus and the Riemann index formula for a curve function field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

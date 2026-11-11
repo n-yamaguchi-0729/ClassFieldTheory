@@ -4,20 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Units.Hom
-import Mathlib.Algebra.Group.Subgroup.Ker
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.Order.Filter.Cofinite
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+module
+
+public import Mathlib.Algebra.Group.Units.Hom
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.Order.Filter.Cofinite
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Inclusion of ideles under an arbitrary finite extension
@@ -32,6 +35,8 @@ the existing divisor pullback. For a separable extension, its degree is multipli
 by the field degree. The latter uses the proved ramification-inertia identity,
 not an additional hypothesis about degrees or places.
 -/
+
+@[expose] public section
 
 open scoped AlgebraicCurve.Place
 

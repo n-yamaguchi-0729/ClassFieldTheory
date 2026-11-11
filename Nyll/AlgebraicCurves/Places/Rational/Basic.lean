@@ -13,12 +13,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Data.Int.ConditionallyCompleteOrder
-import Mathlib.FieldTheory.RatFunc.Basic
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+module
+
+public import Mathlib.Order.Int.ConditionallyCompleteOrder
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Basic
@@ -26,6 +28,8 @@ import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 Polynomial primes and points define finite places of a rational function field, with residue-field
 comparisons and transport along field equivalences.
 -/
+
+@[expose] public section
 
 noncomputable section
 

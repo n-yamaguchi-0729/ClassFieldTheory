@@ -9,6 +9,8 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.CyclotomicKu
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.NormTopology
 import Nyll.ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
+import Nyll.GaloisCohomology.Kummer.Concrete.LocalMaximalKummerExtension
+import Nyll.GaloisCohomology.Kummer.Concrete.MaximalKummerSubgroup
 
 /-!
 # Kummer criteria for openness in the norm topology
@@ -44,10 +46,7 @@ theorem finiteIndexSubgroup_isNormOpen_of_natCast_ne_zero
       ((H.toAddSubgroup.map e.toAddMonoidHom :
         AddSubgroup (ambientFixedAddSubgroup A B)) :
         Set (ambientFixedAddSubgroup A B)) := by
-  let A := galoisAmbientUnitsRep K (SeparableClosure K)
-  let B := closedFixingSubgroup K (SeparableClosure K)
-    (⊥ : IntermediateField K (SeparableClosure K))
-  let e := baseUnitsEquivGaloisAmbientFixed K (SeparableClosure K)
+  intro A B e
   have hindex : H.index ≠ 0 := Subgroup.FiniteIndex.index_ne_zero
   let n : ℕ+ := ⟨H.index, Nat.pos_of_ne_zero hindex⟩
   have hnK' : ((n : ℕ) : K) ≠ 0 := by simpa [n] using hnK
@@ -117,10 +116,7 @@ theorem finiteIndexSubgroup_isNormOpen_of_primitiveRoots
       ((H.toAddSubgroup.map e.toAddMonoidHom :
         AddSubgroup (ambientFixedAddSubgroup A B)) :
         Set (ambientFixedAddSubgroup A B)) := by
-  let A := galoisAmbientUnitsRep K (SeparableClosure K)
-  let B := closedFixingSubgroup K (SeparableClosure K)
-    (⊥ : IntermediateField K (SeparableClosure K))
-  let e := baseUnitsEquivGaloisAmbientFixed K (SeparableClosure K)
+  intro A B e
   have hindex : H.index ≠ 0 := Subgroup.FiniteIndex.index_ne_zero
   let n : ℕ+ := ⟨H.index, Nat.pos_of_ne_zero hindex⟩
   let Delta := KummerTheory.maximalKummerSubgroup K n

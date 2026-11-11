@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.Finiteness.Basic
-import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
+module
+
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
 
 /-!
 Finiteness in the zero row of the second page of a convergent double complex.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

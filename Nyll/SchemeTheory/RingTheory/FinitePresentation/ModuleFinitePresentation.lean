@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+module
+
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
 
 /-!
 # Finite presentation from constant rank at stalks
 
 Relates localization and constant stalk rank to finite presentation.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

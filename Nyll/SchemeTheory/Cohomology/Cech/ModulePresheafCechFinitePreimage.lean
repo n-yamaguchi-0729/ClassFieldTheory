@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFinitePushforwardIff
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
-import Mathlib.RingTheory.Finiteness.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFinitePushforwardIff
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.RingTheory.Finiteness.Basic
 
 /-!
 # Čech finiteness under closed-subscheme preimage by induction
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

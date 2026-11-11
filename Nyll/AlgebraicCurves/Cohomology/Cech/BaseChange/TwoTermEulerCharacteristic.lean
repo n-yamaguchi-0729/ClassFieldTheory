@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dimension.RankNullity
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dimension.RankNullity
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 The Euler characteristic of a two-term complex from its field-base-change kernel and cokernel.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

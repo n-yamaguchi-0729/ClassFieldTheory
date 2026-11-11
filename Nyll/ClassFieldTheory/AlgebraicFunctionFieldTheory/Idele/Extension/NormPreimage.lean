@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.OrbitBlocks
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.OrbitBlocks
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
 
 /-!
 # Assembling actual local norm preimages
@@ -14,6 +16,8 @@ The norm of an idele supported at one place contributes precisely its completed
 field norm. Local fiber preimages that are integral almost everywhere assemble
 to an actual all-place idele preimage through the concrete fiber regrouping.
 -/
+
+@[expose] public section
 
 noncomputable section
 

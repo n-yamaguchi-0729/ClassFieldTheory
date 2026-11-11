@@ -10,19 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataLeIsUnit
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurvePolynomialIsUnitAevalImpEtaleLevelSet
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.FiniteEtaleHasChartSections
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsAffineOpenPicardRepresentabilityAlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Basic
-import Nyll.SchemeTheory.RingTheory.Etale.AlgebraEtaleReducedReduced
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataLeIsUnit
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurvePolynomialIsUnitAevalImpEtaleLevelSet
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.FiniteEtaleHasChartSections
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsAffineOpenPicardRepresentabilityAlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Basic
+public import Nyll.SchemeTheory.RingTheory.Etale.AlgebraEtaleReducedReduced
 
 /-!
 # Pointed Picard existence over reduced local rings and fields
@@ -34,6 +36,8 @@ field the required finite-map data are constructed from the curve and its ration
 No DVR thickening or comparison with a special fibre is used. These are pointed existence
 statements; unpointed existence, dimension and Albanese universality remain separate tasks.
 -/
+
+@[expose] public section
 
 noncomputable section
 

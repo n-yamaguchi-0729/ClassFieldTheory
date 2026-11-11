@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SubPicCondition
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SubPicCondition
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
 
 /-!
 # The group structure on algebraically trivial invertible modules
@@ -25,6 +27,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
 Algebraically trivial invertible modules are closed under tensor products, inverses
 and pullback, giving the associated sub-Picard group condition.
 -/
+
+@[expose] public section
 
 universe u
 

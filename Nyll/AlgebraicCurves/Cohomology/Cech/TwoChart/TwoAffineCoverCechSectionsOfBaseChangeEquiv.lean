@@ -10,17 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.TensorProduct.Prod
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfBaseChangeEquiv
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfBaseChangeEquiv
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 Base-change equivalences for two-chart Cech cohomology of locally trivial module sheaves.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

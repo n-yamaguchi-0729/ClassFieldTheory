@@ -8,3 +8,4 @@ import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
 import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.ValuationTopology
 import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Compact
 import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Cohomology
+import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.FiniteSupportDensity

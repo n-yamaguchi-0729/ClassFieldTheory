@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 
 /-!
 # Comparison of public and idelic higher-unit groups
@@ -14,6 +16,8 @@ The reader-facing higher-unit group agrees with the group used in the
 existing ray-class and idelic implementation. Keep this definitional
 comparison at the boundary between the two APIs.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -25,7 +29,7 @@ namespace ClassFieldTheory
 /-- The public local higher-unit group is the same subgroup as the one used
 by the existing ray-class implementation. -/
 theorem rayLocalHigherUnitGroup_eq_rayClass
-    {K : Type} [Field K] [NumberField K]
+    {K : Type*} [Field K] [NumberField K]
     (v : HeightOneSpectrum (𝓞 K)) (n : ℕ) :
     rayLocalHigherUnitGroup v n = RayClass.localHigherUnitGroup v n := by
   rfl

@@ -10,21 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.BaseChange.CoherentBaseChangeFamily
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechTwoTermComplexKerMapBaseChangeBijective
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBaseChangeEq
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechKerBaseChangeTowerEquiv
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.BaseChange.CoherentBaseChangeFamily
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechTwoTermComplexKerMapBaseChangeBijective
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBaseChangeEq
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechKerBaseChangeTowerEquiv
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
 
 /-!
 Fibre dimension data for a finite two-term kernel after pullback to a scheme over the base ring.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -59,9 +64,9 @@ def baseChangeTTC {R : Type u} [CommRing R] (G : CoherentBaseChange.TwoTermCompl
 theorem specMap_algebraMap_eq {R : Type u} [CommRing R] {T : Scheme.{u}} (f : T ⟶ Spec (.of R)) (U
     : T.Opens)
     (hU : IsAffineOpen U) :
-    letI := algebraOfHom' f U
+    let := algebraOfHom' f U
     Spec.map (CommRingCat.ofHom (algebraMap R Γ(T, U))) = hU.fromSpec ≫ f := by
-  let := algebraOfHom' f U
+  intro sharedOwner1
   have halg : (algebraMap R Γ(T, U)) = ((Scheme.ΓSpecIso (.of R)).inv ≫ f.appLE ⊤ U le_top).hom :=
     rfl
   rw [halg, CommRingCat.ofHom_hom, Spec.map_comp, ← Scheme.isoSpec_Spec_inv, ←
@@ -72,9 +77,9 @@ theorem specMap_algebraMap_eq {R : Type u} [CommRing R] {T : Scheme.{u}} (f : T 
 theorem base_eq_comap {R : Type u} [CommRing R] {T : Scheme.{u}} (f : T ⟶ Spec (.of R)) (U :
     T.Opens)
     (hU : IsAffineOpen U) (x : U) :
-    letI := algebraOfHom' f U
+    let := algebraOfHom' f U
     f.base x.1 = PrimeSpectrum.comap (algebraMap R Γ(T, U)) (hU.primeIdealOf x) := by
-  let := algebraOfHom' f U
+  intro sharedOwner1
   have h1 : f.base x.1 = (hU.fromSpec ≫ f).base (hU.primeIdealOf x) := by
     rw [Scheme.Hom.comp_base]
     erw [TopCat.comp_app, hU.fromSpec_primeIdealOf x]
@@ -85,7 +90,8 @@ end Family
 
 open Family
 
-private theorem nativeSpecPrime {R : Type u} [CommRing R] (p : Spec (.of R)) :
+/-- A point of the affine spectrum determines a prime ideal in its native ring. -/
+theorem nativeSpecPrime {R : Type u} [CommRing R] (p : Spec (.of R)) :
     p.asIdeal.IsPrime := (show PrimeSpectrum R from p).isPrime
 
 attribute [local instance] nativeSpecPrime

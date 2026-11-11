@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-!
 Pullback preserves the property that multiplication by a section gives a bijection on sections
 over every open subset of a prescribed open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -125,7 +129,8 @@ section pullback
 
 variable {X X' : Scheme.{u}} (p : X' ⟶ X) (M : X.Modules)
 
-private theorem nativePushforwardRightAdjoint :
+/-- The scheme pushforward is right adjoint in its underlying sheaf-of-modules form. -/
+theorem nativePushforwardRightAdjoint :
     (SheafOfModules.pushforward.{u} p.toRingCatSheafHom).IsRightAdjoint :=
   (Modules.pullbackPushforwardAdjunction p).isRightAdjoint
 

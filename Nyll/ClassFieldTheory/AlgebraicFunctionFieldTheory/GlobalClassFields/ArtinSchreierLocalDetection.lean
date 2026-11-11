@@ -25,7 +25,7 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable {k K : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k K : Type*} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
 

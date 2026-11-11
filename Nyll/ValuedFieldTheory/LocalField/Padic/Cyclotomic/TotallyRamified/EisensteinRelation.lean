@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.PrimeElement
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.PrimeElement
 
 /-!
 # The Eisenstein relation for the cyclotomic uniformizer
 
 This file extracts the unit relation `p · u = (ζ - 1)^φ` from the translated Eisenstein polynomial.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -46,7 +50,7 @@ theorem padicCyclotomicTotallyRamified_exists_unit_mul_p_eq_sub_one_pow
       algebraMap ℤ_[p] A (p : ℤ_[p]) * y =
         (⟨α, Algebra.self_mem_adjoin_singleton ℤ_[p] α⟩ : A) ^
           Nat.totient (p ^ (k + 1)) := by
-  let α : L := ζ - 1
+  intro α
   have hintα : IsIntegral ℤ_[p] α :=
     (padicCyclotomicTotallyRamified_primitiveRoot_isIntegral_padicInt ζ hζ).sub isIntegral_one
   let A := Algebra.adjoin ℤ_[p] ({α} : Set L)

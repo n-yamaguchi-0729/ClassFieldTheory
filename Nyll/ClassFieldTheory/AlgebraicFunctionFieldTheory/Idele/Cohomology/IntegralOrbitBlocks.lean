@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.OrbitActions
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.DecompositionHilbert90
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.OrbitActions
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.DecompositionHilbert90
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
 
 /-!
 # Integral orbit blocks
@@ -15,6 +17,8 @@ The everywhere-integral idele group is an unrestricted product of its integral
 fiber blocks. Each block is the module induced from the actual integral units
 at any place above that base place. These comparisons respect the actual action.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -27,7 +31,8 @@ variable {k K L : Type*} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
 
-private theorem smul_mem_fiberIntegralUnits (v : Place k K) (σ : L ≃ₐ[K] L)
+/-- The decomposition action preserves integral units in a fiber block. -/
+theorem smul_mem_fiberIntegralUnits (v : Place k K) (σ : L ≃ₐ[K] L)
     (a : fiberIntegralUnits (L := L) v) : σ • a.val ∈ fiberIntegralUnits (L := L) v := by
   obtain ⟨w, rfl⟩ := Place.exists_restrict_eq (M := L) v
   apply (fiberInducedEquiv_integral_iff (K := K) w _).mp
@@ -120,7 +125,8 @@ def integralGroupByPlace : integralSubgroup (k := k) (K := L) ≃*
   map_mul' _ _ := rfl
 
 omit [FiniteDimensional K L] [IsGalois K L] in
-private theorem smul_mem_integralSubgroup (σ : L ≃ₐ[K] L)
+/-- Field automorphisms preserve everywhere-integral ideles. -/
+theorem smul_mem_integralSubgroup (σ : L ≃ₐ[K] L)
     (a : integralSubgroup (k := k) (K := L)) :
     σ • a.val ∈ integralSubgroup (k := k) (K := L) := by
   apply (divisor_eq_one_iff _).mp

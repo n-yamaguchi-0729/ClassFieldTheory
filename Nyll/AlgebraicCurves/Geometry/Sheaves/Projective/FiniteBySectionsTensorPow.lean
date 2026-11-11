@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowerIsomorphisms
-import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.InvertibleTensorPow
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.AwayFiniteBySectionsTensorPow
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.FiniteBySectionsMemFinsetAway
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowerIsomorphisms
+public import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.InvertibleTensorPow
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.AwayFiniteBySectionsTensorPow
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.FiniteBySectionsMemFinsetAway
 
 /-!
 # Finite presentation by sections of tensor powers from geometric fibres
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

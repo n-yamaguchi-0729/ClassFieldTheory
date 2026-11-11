@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Tactic.Ring
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
+module
+
+public import Mathlib.Tactic.Ring
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
 
 /-!
 # Divisor and Picard reindexing after changing the constant field
@@ -15,6 +17,8 @@ The actual equivalence of places preserves principal divisors and scales
 arithmetic degree by the degree of the constant extension. The existing
 FunctionField declaration names are retained for downstream compatibility.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelValuation
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RamificationNumber
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelValuation
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RamificationNumber
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
 
 /-!
 # Lower ramification groups of standard Lubin--Tate levels
@@ -19,6 +21,8 @@ displacement of that one element.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

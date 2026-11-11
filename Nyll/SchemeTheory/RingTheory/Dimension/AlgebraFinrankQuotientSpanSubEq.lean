@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.AlgebraLevelSetFiniteFreeFinrank
-import Mathlib.Algebra.Polynomial.FieldDivision
-import Mathlib.Algebra.Polynomial.Laurent
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Localization.BaseChange
+module
+
+public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.AlgebraLevelSetFiniteFreeFinrank
+public import Mathlib.Algebra.Polynomial.FieldDivision
+public import Mathlib.Algebra.Polynomial.Laurent
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Localization.BaseChange
 
 /-!
 # Algebra, divisors, and base change
@@ -25,6 +27,8 @@ import Mathlib.RingTheory.Localization.BaseChange
 A tensor-product coordinate-relation quotient is identified with a polynomial-ring tensor product
 for finrank calculations.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -113,12 +117,12 @@ omit [IsScalarTower K K[X] D] in
 theorem finrank_laurent_eq [Module.Free K[X] D] (φ : D →ₐ[K] O)
     (hloc : letI := φ.toRingHom.toAlgebra; IsLocalization.Away (algebraMap K[X] D X) O)
     (hunit : IsUnit ((φ.toRingHom.comp (algebraMap K[X] D)) X)) :
-    letI : Algebra K[T;T⁻¹] O := (IsLocalization.Away.lift (X : K[X]) hunit).toAlgebra
+    let : Algebra K[T;T⁻¹] O := (IsLocalization.Away.lift (X : K[X]) hunit).toAlgebra
     Module.finrank K[T;T⁻¹] O = Module.finrank K[X] D := by
   let algDO : Algebra D O := φ.toRingHom.toAlgebra
   let algXO : Algebra K[X] O := (φ.toRingHom.comp (algebraMap K[X] D)).toAlgebra
   have : IsScalarTower K[X] D O := IsScalarTower.of_algebraMap_eq fun _ => rfl
-  let algTO : Algebra K[T;T⁻¹] O := (IsLocalization.Away.lift (X : K[X]) hunit).toAlgebra
+  intro algTO
   have : IsScalarTower K[X] K[T;T⁻¹] O := IsScalarTower.of_algebraMap_eq fun p =>
     (IsLocalization.Away.lift_eq (X : K[X]) hunit p).symm
   have hM : Algebra.algebraMapSubmonoid D (Submonoid.powers (X : K[X])) =
@@ -197,7 +201,7 @@ theorem main {K : Type u} [Field K] {D E O : Type u} [CommRing D] [CommRing E] [
     · have e1 : algebraMap K[X] (LaurentPolynomial K) (Polynomial.C k) = LaurentPolynomial.C k := by
         rw [LaurentPolynomial.algebraMap_eq_toLaurent, Polynomial.toLaurent_C]
       simp only [RingHom.comp_apply, RingEquiv.toRingHom_eq_coe, RingEquiv.coe_toRingHom,
-        AlgEquiv.coe_ringEquiv, e1, LaurentPolynomial.invert_C,
+        AlgEquiv.coe_toRingEquiv, e1, LaurentPolynomial.invert_C,
         RingEquiv.refl_apply]
       rw [← e1, IsLocalization.Away.lift_eq, IsLocalization.Away.lift_eq]
       change ψ ((Polynomial.aeval b : K[X] →ₐ[K] E) (Polynomial.C k)) =
@@ -219,7 +223,7 @@ theorem main {K : Type u} [Field K] {D E O : Type u} [CommRing D] [CommRing E] [
               rw [mul_comm (ψ b), hab, mul_one]
           _ = φ a := by rw [← mul_assoc, hprod, one_mul]
       simp only [RingHom.comp_apply, RingEquiv.toRingHom_eq_coe, RingEquiv.coe_toRingHom,
-        AlgEquiv.coe_ringEquiv, eX, LaurentPolynomial.invert_T,
+        AlgEquiv.coe_toRingEquiv, eX, LaurentPolynomial.invert_T,
         RingEquiv.refl_apply]
       rw [hα₂inv, hα₁X]
   exact @Algebra.finrank_eq_of_equiv_equiv (LaurentPolynomial K) O _ _ α₁.toAlgebra

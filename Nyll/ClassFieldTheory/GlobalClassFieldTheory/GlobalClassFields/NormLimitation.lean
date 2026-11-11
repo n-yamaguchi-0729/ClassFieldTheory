@@ -30,11 +30,13 @@ open NumberField
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 variable
-    (K : Type) (L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]

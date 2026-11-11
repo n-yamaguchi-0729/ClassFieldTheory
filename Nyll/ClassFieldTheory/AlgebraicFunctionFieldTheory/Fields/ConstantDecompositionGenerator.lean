@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Finite
-import Mathlib.Data.ZMod.QuotientGroup
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.OrderOfElement
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFrobeniusPlace
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Finite
+public import Mathlib.Data.ZMod.QuotientGroup
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.OrderOfElement
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFrobeniusPlace
 
 /-!
 # A generator of decomposition groups in the constant tower
@@ -22,6 +24,8 @@ arithmetic constant Frobenius. Membership follows from the action on places,
 and equality follows from the exact order of Frobenius and the splitting
 degree of the place.
 -/
+
+@[expose] public section
 
 noncomputable section
 

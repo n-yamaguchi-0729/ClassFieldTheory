@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitLattice
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitLattice
 
 /-!
 # The equivariant degree sequence of the S-unit lattice
@@ -14,6 +16,8 @@ by inverse permutation. The divisor reconstruction intertwines this with the
 existing semilinear divisor action. Actual residue degrees are invariant, so
 the image of weighted degree has trivial action.
 -/
+
+@[expose] public section
 
 noncomputable section
 

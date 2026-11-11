@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.Equalizer
-import Nyll.SchemeTheory.RingTheory.Flat.Product
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.Equalizer
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
 
 /-!
 Flatness of the enlarged kernel in the finite-presentation construction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -7,12 +7,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayPrimeGeneration
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 
 /-!
 # Prime classes determine maps out of a ray class group
 
 Finite primes away from the modulus generate enough of the ideal-theoretic
-ray class group to determine any homomorphism into a commutative group.
+ray class group to determine any homomorphism into a monoid.
 -/
 
 open scoped NumberField
@@ -29,7 +31,7 @@ value on every prime class away from the modulus. -/
 theorem rayClassGroup_hom_ext_finitePrime
     (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K)
-    {G : Type v} [CommGroup G]
+    {G : Type v} [Monoid G]
     (f g : RayClassGroup m →* G)
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (hv : v ∉ m.finitePart.support),

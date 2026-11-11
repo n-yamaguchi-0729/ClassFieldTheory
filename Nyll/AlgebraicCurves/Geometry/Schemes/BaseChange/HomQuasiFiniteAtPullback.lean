@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.LocallyQuasiFiniteDescendsAlongSurjectiveInfFlatInfQuasiCompact
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.LocallyQuasiFiniteDescendsAlongSurjectiveInfFlatInfQuasiCompact
 
 /-!
 # Scheme Hom quasi Finite At of is Pullback of locally Quasi Finite
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

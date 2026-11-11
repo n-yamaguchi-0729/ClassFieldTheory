@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ConstantNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.LocalUnitsH2
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ConstantNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.LocalUnitsH2
 
 /-!
 # The local-global kernel of constant-extension unit H²
@@ -14,6 +16,8 @@ Local vanishing gives a principal idele norm. The proved Hasse norm theorem
 for the actual finite constant extension makes its representing unit a global
 field norm, so its actual H² class is zero.
 -/
+
+@[expose] public section
 
 noncomputable section
 

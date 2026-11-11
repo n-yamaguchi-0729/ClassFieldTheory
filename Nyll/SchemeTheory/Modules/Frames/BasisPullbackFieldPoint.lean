@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocallyMemSpanUnit
+module
+
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocallyMemSpanUnit
 /-!
 # Bases after pullback to a field-valued point
 
 Local bases of a module give bases after pullback along a point valued in a field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

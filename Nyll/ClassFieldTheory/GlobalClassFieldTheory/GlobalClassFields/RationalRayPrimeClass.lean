@@ -9,6 +9,10 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # Rational prime classes in rational ray class groups

@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.SchemeTheory.Modules.Sections.IhomSections
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.SchemeTheory.Modules.Sections.IhomSections
 
 /-!
 # The action of a dual section
@@ -19,6 +21,8 @@ import Nyll.SchemeTheory.Modules.Sections.IhomSections
 Evaluating the dual of a module section agrees with the coefficient obtained from the
 restricted internal-Hom section and the canonical restriction of the tensor unit.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

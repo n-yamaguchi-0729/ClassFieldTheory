@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGeneration
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
-import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteConstantNorm
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindexNorm
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGeneration
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteConstantNorm
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindexNorm
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # The actual Picard norm image of the constructed constant extension
@@ -19,13 +22,17 @@ by the original full constants gives the normalized degree formula even when
 the initially specified finite base field is smaller than the full constants.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open AlgebraicCurve
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
@@ -59,8 +66,10 @@ theorem mem_picardNorm_fullConstantDegreeStage_iff (n : ℕ) [NeZero n] (x : Pic
     (finrank_fullConstantDegreeStage k K Ω n).trans
       (finrank_finiteConstantsInClosure C Ω n).symm
   change x ∈ (Pic.norm (k := k) (K := K) (L := L)).range ↔ _
-  rw [mem_picardNorm_range_iff_constantEquiv (C := C),
-    Pic.mem_norm_range_iff_of_finite_constants (constantsAreBase_fullConstants k K) hgen hdeg]
+  rw [mem_picardNorm_range_iff_constantEquiv (C := C)]
+  rw [Pic.mem_norm_range_iff_of_finite_constants
+    (k := C) (E := E) (K := K) (L := L)
+    (constantsAreBase_fullConstants k K) hgen hdeg (picConstantEquiv k C K x)]
   change (Module.finrank C (finiteConstantsInClosure C Ω n) : ℤ) ∣
     H1Gm.degree C K (picConstantEquiv k C K x) ↔ _
   rw [finrank_finiteConstantsInClosure, degree_picConstantEquiv k C K,

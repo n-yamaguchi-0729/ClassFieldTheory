@@ -10,30 +10,32 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
-import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.RelEffCartierDivTwist2
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsSeparatedPicardRepresentabilityAlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Poincare.SurjectivePoincarePullbackIsoTwistModule
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversal
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataIsAffineOpenLePreimage
-import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.InvertibleTwistModulePullbackIso
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.RelativeDivisorAlgebraicEquivalenceTwistModuleFibre
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalProper
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalGeometricallyConnected
-import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyConnectedComp
-import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyIrreducibleGeometricallyConnected
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+public import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.RelEffCartierDivTwist2
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsSeparatedPicardRepresentabilityAlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Poincare.SurjectivePoincarePullbackIsoTwistModule
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversal
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataIsAffineOpenLePreimage
+public import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.InvertibleTwistModulePullbackIso
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.RelativeDivisorAlgebraicEquivalenceTwistModuleFibre
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalProper
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalGeometricallyConnected
+public import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyConnectedComp
+public import Nyll.SchemeTheory.Morphisms.GeometricallyIrreducibleConnected
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
 
 /-!
 # Properness and geometric connectedness of the Picard scheme
@@ -41,6 +43,8 @@ import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPic
 The universal effective-divisor construction supplies a proper surjective covering
 of the Picard scheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -158,8 +162,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom
@@ -545,9 +549,9 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
+  AlgebraicCurve.instHasCanonicalLocalResidueK
 attribute [-instance]
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

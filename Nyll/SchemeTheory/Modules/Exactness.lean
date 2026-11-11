@@ -46,16 +46,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Topology.Sheaves.AddCommGrpCat
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
-import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
-import Mathlib.Data.Int.Cast.Lemmas
-import Mathlib.Tactic.Ext
-import Mathlib.Tactic.TermCongr
-import Nyll.SchemeTheory.Modules.LocalMorphisms
-import Mathlib.Algebra.Category.ModuleCat.Presheaf.Sheafification
-import Mathlib.AlgebraicGeometry.Modules.Presheaf
+module
+
+public import Mathlib.Topology.Sheaves.AddCommGrpCat
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.CategoryTheory.Preadditive.AdditiveFunctor
+public import Mathlib.CategoryTheory.Limits.Preserves.Shapes.Zero
+public import Mathlib.Data.Int.Cast.Lemmas
+public import Mathlib.Tactic.Ext
+public import Mathlib.Tactic.TermCongr
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf.Sheafification
+public import Mathlib.AlgebraicGeometry.Modules.Presheaf
 
 /-!
 # Lifting kernel sections in an exact complex
@@ -63,6 +65,8 @@ import Mathlib.AlgebraicGeometry.Modules.Presheaf
 When the first map is a monomorphism, a section killed by the second map comes from
 a section under the first map.
 -/
+
+@[expose] public section
 
 section exists_app_eq_of_exact_of_app_eq_zero
 

@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexEqRamificationIdxFiberCenter
-import Mathlib.RingTheory.DedekindDomain.Different
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexEqRamificationIdxFiberCenter
+public import Mathlib.RingTheory.DedekindDomain.Different
 
 /-!
 # Place ramification Index forget Constants eq one of adjoin range eq top
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

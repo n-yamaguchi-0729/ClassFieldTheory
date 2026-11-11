@@ -4,14 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basis
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.ExtensionConductor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRamification
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalCompatibility
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Conductor
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
-import Mathlib.Data.Finsupp.Single
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basis
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.ExtensionConductor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRamification
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalCompatibility
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Conductor
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Mathlib.Data.Finsupp.Single
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
 
 /-!
 # Actual global and completed local conductors
@@ -19,6 +22,10 @@ import Mathlib.Data.Finsupp.Single
 The local-global Artin theorem identifies the ray norm condition with
 the conductors of the actual completed extensions.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -28,7 +35,7 @@ namespace FunctionField.RayClass
 
 open AlgebraicCurve
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]

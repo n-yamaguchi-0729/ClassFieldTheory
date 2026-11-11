@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Mathlib.Topology.Algebra.Group.Units
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Mathlib.Topology.Algebra.Group.Units
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # The restricted-product idele topology
@@ -15,6 +18,8 @@ The local integral-unit subgroups are open. Thus Mathlib's restricted-product
 instances give the idele group its topological-group structure. Evaluation and
 the inclusion of a single local factor are continuous for this topology.
 -/
+
+@[expose] public section
 
 open scoped RestrictedProduct
 

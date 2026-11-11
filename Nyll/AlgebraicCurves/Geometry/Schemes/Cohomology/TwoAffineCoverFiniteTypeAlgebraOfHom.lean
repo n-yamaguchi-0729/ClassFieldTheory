@@ -10,10 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 
 /-! A finite type scheme morphism gives a finite type algebra on each affine open. -/
+
+@[expose] public section
 
 universe u
 

@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.FinrankOmegaSpaceEqEllCanonicalSub
-import Mathlib.Tactic.Linarith
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.FinrankOmegaSpaceEqEllCanonicalSub
+public import Mathlib.Tactic.Linarith
 
 /-! The attained Riemann genus agrees with the genus of a canonical divisor. -/
+
+@[expose] public section
 
 namespace AlgebraicCurves.Cohomology.RiemannRoch.Proofs.RiemannGenusReachedStichtenoth
 

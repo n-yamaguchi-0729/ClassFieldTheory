@@ -11,14 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AbelJacobiFamily
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicEquivalencePointDifference
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AbelJacobiFamily
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicEquivalencePointDifference
 
 /-!
 # Algebraic equivalence of point differences
 
 Transport algebraic equivalence to zero along an isomorphism with a point-minus-basepoint bundle.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

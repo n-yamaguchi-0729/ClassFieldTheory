@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
 
 /-!
 # Functoriality of idele inclusion
@@ -15,6 +17,8 @@ field. Their componentwise inclusions therefore compose on ideles and on idele
 classes. The identity law follows from this composition law and injectivity of
 idele inclusion, without identifying completions by definitional equality.
 -/
+
+@[expose] public section
 
 open scoped AlgebraicCurve.Place
 

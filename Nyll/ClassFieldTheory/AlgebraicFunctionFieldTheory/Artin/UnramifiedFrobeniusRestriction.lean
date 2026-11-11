@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finiteness
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidueRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
+module
+
+public import Mathlib.FieldTheory.Finiteness
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidueRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 
 /-!
 # Arithmetic Frobenius under arbitrary finite base change
@@ -17,6 +19,10 @@ actual residue degree of the base extension. The base extension may be
 inseparable and the common upper field need not be normal over the bottom.
 -/
 
+@[expose] public section
+
+universe u v w x y
+
 noncomputable section
 open AlgebraicCurve
 open scoped AlgebraicCurve.Place
@@ -25,7 +31,8 @@ namespace FunctionField
 
 open AlgebraicCurves.Places.Proofs.Place_sum_ramificationIndex_mul_inertiaDeg_exchange.BifibreW2
 
-variable {k K F L M : Type} [Field k] [Finite k]
+variable {k : Type u} {K : Type v} {F : Type w} {L : Type x} {M : Type y}
+    [Field k] [Finite k]
     [Field K] [Field F] [Field L] [Field M]
     [Algebra k K] [Algebra k F] [Algebra k L] [Algebra k M]
     [Algebra K F] [Algebra K L] [Algebra K M] [Algebra F M] [Algebra L M]

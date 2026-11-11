@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.NumberField.AdeleRing
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.Group.Subgroup
-import Mathlib.Topology.Algebra.Group.Units
+module
+
+public import Mathlib.NumberTheory.NumberField.AdeleRing
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.Group.Subgroup
+public import Mathlib.Topology.Algebra.Group.Units
 
 /-!
 # The connected-component quotient of the idèle class group
@@ -16,6 +18,8 @@ For a number field `K`, Mathlib's idèle class group is the unit group of
 the adele ring modulo principal idèles. Its quotient by the connected
 component of `1` is the group appearing in topological global reciprocity.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

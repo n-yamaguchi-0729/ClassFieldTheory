@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangPointFormula
-import Nyll.SchemeTheory.Morphisms.StalkIdealPower
+module
+
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangPointFormula
+public import Nyll.SchemeTheory.Morphisms.StalkIdealPower
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 
 /-!
 # Lang maps of positive iterates
@@ -14,6 +17,8 @@ A positive iterate of a morphism with zero cotangent map still has zero
 cotangent map. The geometric Lang theorem consequently applies to every
 positive iterate, without imposing a restriction on the characteristic.
 -/
+
+@[expose] public section
 
 noncomputable section
 

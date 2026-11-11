@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Places.Ramification.FiniteRamification
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormCompact
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormPreimage
+module
+
+public import Nyll.AlgebraicCurves.Places.Ramification.FiniteRamification
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormCompact
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormPreimage
 
 /-!
 # Open actual norm images and finite norm quotients
@@ -18,9 +20,13 @@ local preimages assemble into an idele. Consequently the idele norm range
 contains an open identity neighborhood, and its image in the class group is
 open. The already proved compact norm quotient is therefore finite.
 
-The local norm-openness theorem currently has universe `Type`, so these
-endpoints retain that restriction explicitly.
+The local norm image is transported through the same compatible field and
+unit equivalences. The original function fields and their completions remain unchanged.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -29,7 +35,7 @@ open scoped AlgebraicCurve.Place RestrictedProduct
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]

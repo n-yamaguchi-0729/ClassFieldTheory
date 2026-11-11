@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.IsoTensorUnitFibrewiseAlgebraicEquivalence
-import Nyll.AlgebraicCurves.Geometry.Schemes.Points.UniversallyInjectiveAlgClosedPointsEq
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.IsoTensorUnitFibrewiseAlgebraicEquivalence
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Points.UniversallyInjectiveAlgClosedPointsEq
 
 /-!
 Prove finiteness of a relative Picard scheme when every geometric fibre has genus zero.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -156,8 +160,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom
@@ -542,8 +546,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

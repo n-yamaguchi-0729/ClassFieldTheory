@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.ModelExtension
-import Nyll.AlgebraicCurves.Models.Points.RationalPointExistence
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusUnits
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.ModelExtension
+public import Nyll.AlgebraicCurves.Models.Points.RationalPointExistence
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusUnits
 
 /-!
 # Full constants from an actual integral geometric model
@@ -18,6 +20,10 @@ A function without poles remains without poles after extending constants.
 On the geometric curve it is constant, and its Frobenius invariance forces
 that constant into the original finite field.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -28,7 +34,7 @@ namespace AlgebraicCurve.CurveModel
 
 attribute [local instance] SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
 
-variable {k Ω F₀ F : Type} [Field k] [Finite k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Finite k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
     (M₀ : CurveModel k F₀) (M : CurveModel Ω F)

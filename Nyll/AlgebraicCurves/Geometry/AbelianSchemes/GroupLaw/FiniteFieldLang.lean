@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangMap
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.AbelianSchemeBaseChange
-import Nyll.SchemeTheory.Morphisms.FrobeniusBaseChange
+module
+
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangMap
+public import Nyll.AbelianVarieties.Geometry.AbelianSchemeBaseChange
+public import Nyll.SchemeTheory.Morphisms.FrobeniusBaseChange
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 
 /-!
 # Lang surjectivity for actual finite-field abelian schemes
@@ -16,6 +19,8 @@ base change of the original finite-field scheme. Its proved cotangent vanishing
 discharges Lang's geometric hypothesis. No Frobenius or differential assumption
 is supplied by the caller.
 -/
+
+@[expose] public section
 
 noncomputable section
 

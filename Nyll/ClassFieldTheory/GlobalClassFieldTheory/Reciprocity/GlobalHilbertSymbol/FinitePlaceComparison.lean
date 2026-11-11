@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
 
 /-!
 # Finite-place local--global Kummer comparison
@@ -16,6 +20,8 @@ rebuild the localized-completion instance tower.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -186,19 +192,14 @@ theorem finitePlaceKummerLocalized_isSplittingField
       (chosenSimpleKummerExtension K n hnK b)) :
     let C := finitePlaceKummerBaseCompletion K v
     let E := finitePlaceKummerLocalizedCompletion K n hnK v b w
-    letI : Algebra C E :=
+    let : Algebra C E :=
       finitePlaceKummerLocalizedAlgebra K n hnK v b w
-    letI : FiniteDimensional C E :=
+    let : FiniteDimensional C E :=
       finitePlaceKummerLocalizedFiniteDimensional K n hnK v b w
     Polynomial.IsSplittingField C E
       (Polynomial.X ^ (n : ℕ) -
         Polynomial.C (algebraMap K C (b : K))) := by
-  let C := finitePlaceKummerBaseCompletion K v
-  let E := finitePlaceKummerLocalizedCompletion K n hnK v b w
-  let : Algebra C E :=
-    finitePlaceKummerLocalizedAlgebra K n hnK v b w
-  let : FiniteDimensional C E :=
-    finitePlaceKummerLocalizedFiniteDimensional K n hnK v b w
+  intro C E sharedOwner3 sharedOwner4
   exact
     isSplittingField_X_pow_sub_C_of_root_adjoin_eq_top_of_primitiveRoots
       C E n (finitePlaceHilbert_primitiveRoots_nonempty K n hmu v)

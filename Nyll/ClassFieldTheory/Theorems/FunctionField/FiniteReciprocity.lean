@@ -4,10 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Nyll.ClassFieldTheory.Definitions.FunctionField.FiniteArtin
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Nyll.ClassFieldTheory.Definitions.FunctionField.FiniteArtin
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
 
 /-!
 # Finite abelian reciprocity for function fields
@@ -22,11 +27,15 @@ These assertions do not include the separate local-global comparison or
 the arithmetic Frobenius formula at a general unramified place.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.FunctionTower
-import Nyll.GaloisCohomology.FieldTheory.PeriodicGaloisAction
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.FunctionTower
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicGaloisAction
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusPeriodicField
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
 
 /-!
 # Frobenius on the actual finite constant base change
@@ -14,6 +18,10 @@ Transport the restricted geometric automorphism through the proved comparison
 of actual function fields. It fixes the original function field, acts on the
 geometric embedding by the original Frobenius, and generates the finite Galois group.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -24,14 +32,14 @@ namespace AlgebraicCurve.CurveModel
 
 attribute [local instance] SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]
     (M₀ : CurveModel k F₀) [GeometricallyIntegral M₀.toBase] (M : CurveModel Ω F)
     (e : M.C ≅ pullback M₀.toBase (specMap k Ω))
     (he : e.hom ≫ pullback.snd M₀.toBase (specMap k Ω) = M.toBase)
-    (E : Type) [Field E] [Fintype E] [Algebra k E] [Algebra E Ω]
+    (E : Type u) [Field E] [Fintype E] [Algebra k E] [Algebra E Ω]
     [IsScalarTower k E Ω] [Algebra.IsAlgebraic E Ω]
 
 local notation "CE" => pullback M₀.toBase (specMap k E)
@@ -51,7 +59,10 @@ def constantFiniteFrobenius :
   have hC := M₀.constantsAreBase_of_constantModel M e he
   let algP : Algebra F₀ (RingAut.periodicSubfield σ d) :=
     M₀.constantPeriodicAlgebra M e he hC d
-  let eqP := M₀.constantFunctionPeriodicAlgEquiv M e he E
+  let eqP : (CE).functionField ≃ₐ[F₀] RingAut.periodicSubfield σ d :=
+    _root_.AlgebraicCurve.CurveModel.constantFunctionPeriodicAlgEquiv
+      (k := k) (Ω := Ω) (F₀ := F₀) (F := F)
+      (M₀ := M₀) (M := M) (e := e) (he := he) (E := E)
   exact AlgEquiv.autCongr eqP.symm (RingAut.periodicAlgAut σ d
     (M₀.constantFrobeniusFixedFieldEquiv M e he hC))
 
@@ -86,7 +97,10 @@ theorem orderOf_constantFiniteFrobenius :
   have hC := M₀.constantsAreBase_of_constantModel M e he
   let algP : Algebra F₀ (RingAut.periodicSubfield σ d) :=
     M₀.constantPeriodicAlgebra M e he hC d
-  let eqP := M₀.constantFunctionPeriodicAlgEquiv M e he E
+  let eqP : (CE).functionField ≃ₐ[F₀] RingAut.periodicSubfield σ d :=
+    _root_.AlgebraicCurve.CurveModel.constantFunctionPeriodicAlgEquiv
+      (k := k) (Ω := Ω) (F₀ := F₀) (F := F)
+      (M₀ := M₀) (M := M) (e := e) (he := he) (E := E)
   change orderOf (AlgEquiv.autCongr eqP.symm (RingAut.periodicAlgAut σ d
     (M₀.constantFrobeniusFixedFieldEquiv M e he hC))) = d
   rw [MulEquiv.orderOf_eq, RingAut.orderOf_periodicAlgAut]

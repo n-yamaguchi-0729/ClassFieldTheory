@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
 /-!
 # Localization of module sections on quasi-compact quasi-separated opens
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

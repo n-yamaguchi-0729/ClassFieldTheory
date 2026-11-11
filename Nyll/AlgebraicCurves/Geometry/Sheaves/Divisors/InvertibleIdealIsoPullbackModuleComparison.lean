@@ -11,12 +11,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModuleMaps
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataPullbackModuleComparisonLocallySurjective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModuleMaps
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataPullbackModuleComparisonLocallySurjective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
 
 /-!
 # Invertible ideal-module pullback comparisons
@@ -24,6 +26,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleM
 For invertible ideal sheaves on both schemes, the pullback module comparison
 is an isomorphism.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

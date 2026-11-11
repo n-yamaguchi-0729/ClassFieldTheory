@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Basic
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
+module
+
+public import Mathlib.FieldTheory.Galois.Basic
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
+public import Nyll.ValuedFieldTheory.LocalField.GroupTheory.ContinuousQuotientEquiv
 
 /-!
 # Intrinsic Frobenius quotient transport
@@ -13,6 +16,10 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Fixed
 This module constructs the intrinsic-to-ambient quotient transport and
 maps Frobenius elements before the closure comparisons.
 -/
+
+@[expose] public section
+
+universe u
 
 noncomputable section
 
@@ -27,7 +34,7 @@ multiplicative equivalence from the intrinsic absolute-base subgroup of the
 finite fixed field to its ambient fixed subgroup. -/
 noncomputable def
     intrinsicBaseContinuousEquivAmbientFixedField
-    (K : Type) [Field K]
+    (K : Type u) [Field K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
     (e : intrinsicFixedFieldSeparableClosureEquiv K H) :
@@ -63,7 +70,7 @@ noncomputable def
     [hJfinite : Finite
       (H.field.toSubgroup ⧸ extensionSubgroup H.field J hJH)] :
     let F := abstractFixedField K (SeparableClosure K) H.field
-    letI : Algebra F (SeparableClosure F) :=
+    let : Algebra F (SeparableClosure F) :=
       (separableClosure F (AlgebraicClosure F)).algebra
     ∀ (e : SeparableClosure F ≃ₐ[F] SeparableClosure K),
     let E := abstractRelativeFixedField K (SeparableClosure K) hJH
@@ -91,11 +98,7 @@ noncomputable def
       (H.field.toSubgroup ⧸
         (localResidueDatum K).extensionInertiaWithin
           H.field J hJH) := by
-  dsimp only
-  let F := abstractFixedField K (SeparableClosure K) H.field
-  letI : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  intro e
+  intro F reusedStructure2 e
   let E := abstractRelativeFixedField K (SeparableClosure K) hJH
   letI : FiniteDimensional K F :=
     abstractFixedField_finiteDimensional
@@ -223,23 +226,23 @@ theorem
     [hJfinite : Finite
       (H.field.toSubgroup ⧸ extensionSubgroup H.field J hJH)] :
     let F := abstractFixedField K (SeparableClosure K) H.field
-    letI : Algebra F (SeparableClosure F) :=
+    let : Algebra F (SeparableClosure F) :=
       (separableClosure F (AlgebraicClosure F)).algebra
     ∀ (e : SeparableClosure F ≃ₐ[F] SeparableClosure K),
     let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-    letI : FiniteDimensional K F :=
+    let : FiniteDimensional K F :=
       abstractFixedField_finiteDimensional
         K (SeparableClosure K) H.field H.finite
-    letI : NontriviallyNormedField F :=
+    let : NontriviallyNormedField F :=
       finiteExtensionSpectralNormedField K F
-    letI : ValuativeRel F :=
+    let : ValuativeRel F :=
       finiteExtensionSpectralValuativeRel K F
-    letI : IsNonarchimedeanLocalField F :=
+    let : IsNonarchimedeanLocalField F :=
       finiteExtensionSpectralIsNonarchimedeanLocalField K F
-    letI : FiniteDimensional F E :=
+    let : FiniteDimensional F E :=
       abstractRelativeFixedField_finiteDimensional
         K (SeparableClosure K) H.field J hJH H.finite hJfinite
-    letI : IsGalois F E :=
+    let : IsGalois F E :=
       abstractRelativeFixedField_isGalois
         K (SeparableClosure K) H.field J hJH hJnormal
     let i : E →ₐ[F] SeparableClosure F :=
@@ -260,59 +263,38 @@ theorem
           K H J hJH e q) =
       (localResidueDatum F).extensionNormalizedDegree
         RF EI.field EI.below q := by
-  dsimp only
-  let F := abstractFixedField K (SeparableClosure K) H.field
-  let : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  intro e
-  let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  let : FiniteDimensional K F :=
-    abstractFixedField_finiteDimensional
-      K (SeparableClosure K) H.field H.finite
-  let : NontriviallyNormedField F :=
-    finiteExtensionSpectralNormedField K F
-  let : ValuativeRel F :=
-    finiteExtensionSpectralValuativeRel K F
-  let : IsNonarchimedeanLocalField F :=
-    finiteExtensionSpectralIsNonarchimedeanLocalField K F
-  let : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  let : IsGalois F E :=
-    abstractRelativeFixedField_isGalois
-      K (SeparableClosure K) H.field J hJH hJnormal
-  let i : E →ₐ[F] SeparableClosure F :=
-    e.symm.toAlgHom.comp E.val
-  let EI := finiteGaloisAbstractExtensionOfEmbedding F E i
-  intro q
-  let RF :=
-    (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
-      (localResidueDatum F)
-  let RH :=
-    H.toFiniteResidueAbstractField (localResidueDatum K)
+  intro F closureAlgebra e E finiteKF normF valuationF localFieldF finiteFE galoisFE i EI q RF RH
   refine Quotient.inductionOn' q ?_
   intro τ
-  let τRF : RF.field.toSubgroup :=
-    ⟨τ.1, τ.2⟩
-  let ψτRH : RH.field.toSubgroup :=
-    ⟨(intrinsicBaseEquivAmbientFixedField K H e τ).1,
-      (intrinsicBaseEquivAmbientFixedField K H e τ).2⟩
-  change
-    (localResidueDatum K).normalizedDegree RH ψτRH =
-      (localResidueDatum F).normalizedDegree RF τRF
-  have hψτRH :
-      ψτRH =
+  have hψτ :
+      intrinsicBaseEquivAmbientFixedField K H e τ =
         (abstractSubgroupEquivGaloisGroup
           K (SeparableClosure K) H.field).symm
             (AlgEquiv.autCongr e τ.1) := by
     apply Subtype.ext
-    exact
-      intrinsicBaseEquivAmbientFixedField_apply_val
-        K H e τ
-  rw [hψτRH]
-  exact
-    (intrinsicBase_normalizedDegree_eq_ambientFixedField
-      K H e τ).symm
+    exact intrinsicBaseEquivAmbientFixedField_apply_val K H e τ
+  calc
+    (localResidueDatum K).extensionNormalizedDegree RH J hJH
+        (intrinsicFrobeniusQuotientEquivAmbientFixedField
+          K H J hJH e (QuotientGroup.mk τ)) =
+        (localResidueDatum K).extensionNormalizedDegree RH J hJH
+          (QuotientGroup.mk (intrinsicBaseEquivAmbientFixedField K H e τ)) :=
+      congrArg ((localResidueDatum K).extensionNormalizedDegree RH J hJH)
+        (intrinsicFrobeniusQuotientEquivAmbientFixedField_mk K H J hJH e τ)
+    _ = (localResidueDatum K).normalizedDegree RH
+        (intrinsicBaseEquivAmbientFixedField K H e τ) :=
+      (localResidueDatum K).extensionNormalizedDegree_mk RH J hJH
+        (intrinsicBaseEquivAmbientFixedField K H e τ)
+    _ = (localResidueDatum K).normalizedDegree RH
+        ((abstractSubgroupEquivGaloisGroup
+          K (SeparableClosure K) H.field).symm
+            (AlgEquiv.autCongr e τ.1)) :=
+      congrArg ((localResidueDatum K).normalizedDegree RH) hψτ
+    _ = (localResidueDatum F).normalizedDegree RF τ :=
+      (intrinsicBase_normalizedDegree_eq_ambientFixedField K H e τ).symm
+    _ = (localResidueDatum F).extensionNormalizedDegree RF EI.field EI.below
+        (QuotientGroup.mk τ) :=
+      ((localResidueDatum F).extensionNormalizedDegree_mk RF EI.field EI.below τ).symm
 
 /-- Intrinsic extension-inertia quotient classes whose normalized degree is a
 strictly positive power of the canonical Frobenius degree. -/

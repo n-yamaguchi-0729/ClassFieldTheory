@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.ProP.FiniteCyclicCarryCocycle
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
+module
+
+public import Nyll.GaloisCohomology.ProP.FiniteCyclicCarryCocycle
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Functoriality
 
 /-!
 # Carry coordinates under cyclic subgroup restriction
@@ -15,18 +17,20 @@ the normalized carry is unchanged. This is the explicit coefficient comparison
 used for restricting a cyclic norm class to a decomposition group.
 -/
 
+@[expose] public section
+
 open CategoryTheory
 
 namespace ClassFieldTower.Cohomology
 
 noncomputable section
 
-universe u
+universe u v
 
 /-- An injective map into a finite cyclic group admits a generator mapping
 to exactly the index-th power of a specified generator. -/
 theorem finiteCyclic_exists_generator_map_index
-    {G H : Type u} [CommGroup G] [Finite G] [Group H] [Finite H]
+    {G : Type u} {H : Type v} [CommGroup G] [Finite G] [Group H] [Finite H]
     (g : G) (hg : ∀ x : G, x ∈ Subgroup.zpowers g)
     (f : H →* G) (hf : Function.Injective f) :
     ∃ h : H, (∀ x : H, x ∈ Subgroup.zpowers h) ∧ f h = g ^ f.range.index ∧
@@ -51,7 +55,7 @@ theorem finiteCyclic_exists_generator_map_index
 
 /-- Generator coordinates scale by the subgroup index, without modular wraparound. -/
 theorem finiteCyclicGeneratorCoordinate_map_val
-    {G H : Type u} [Group G] [Fintype G] [Group H] [Fintype H]
+    {G : Type u} {H : Type v} [Group G] [Fintype G] [Group H] [Fintype H]
     (g : G) (hg : ∀ x : G, x ∈ Subgroup.zpowers g)
     (h : H) (hh : ∀ x : H, x ∈ Subgroup.zpowers h)
     (f : H →* G) (d : ℕ) (hd : 0 < d)
@@ -72,7 +76,7 @@ theorem finiteCyclicGeneratorCoordinate_map_val
 
 /-- The actual carry is preserved when a cyclic subgroup generator maps to the index power. -/
 theorem finiteCyclicCarry_map_of_generator_power
-    {G H : Type u} [Group G] [Fintype G] [Group H] [Fintype H]
+    {G : Type u} {H : Type v} [Group G] [Fintype G] [Group H] [Fintype H]
     (g : G) (hg : ∀ x : G, x ∈ Subgroup.zpowers g)
     (h : H) (hh : ∀ x : H, x ∈ Subgroup.zpowers h)
     (f : H →* G) (d : ℕ) (hd : 0 < d)

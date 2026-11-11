@@ -10,22 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDivisorRangeEqLSpaceOn
-import Nyll.SchemeTheory.Modules.EqMulPresentations
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataRangeModuleIotaAppInjective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDivisorRangeEqLSpaceOn
+public import Nyll.SchemeTheory.Modules.EqMulPresentations
+public import Nyll.SchemeTheory.Sheaves.IdealSheafDataRangeModuleIotaAppInjective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Divisors representing invertible ideal modules
@@ -34,6 +38,8 @@ The module of an invertible ideal has a function-field presentation by affine
 Riemann-Roch spaces. Its inclusion in the unit module fixes a rational multiplier
 whose orders relate the presenting divisor to local generators of the ideal.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -318,10 +324,10 @@ theorem adicValuation_alg_le_one (W : X.Opens) (y : X) (hyW : y ∈ W) (hy : IsC
     (hv : letI := (baseToFunctionField x).toAlgebra
       (algebraMap (X.presheaf.stalk y) X.functionField).range = v.toValuationSubring.toSubring)
     (a : Γ(X, W)) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     haveI : Nonempty W := ⟨⟨y, hyW⟩⟩
     v.adicValuation (alg W a) ≤ 1 := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have : Nonempty W := ⟨⟨y, hyW⟩⟩
   obtain ⟨W', hW'aff, hyW', hW'W⟩ :=
     (Opens.isBasis_iff_nbhd.mp X.isBasis_affineOpens) hyW
@@ -473,10 +479,10 @@ theorem adicValuation_alg_eq_of_span_eq (W : X.Opens) (y : X) (hyW : y ∈ W) (h
     (hv : letI := (baseToFunctionField x).toAlgebra
       (algebraMap (X.presheaf.stalk y) X.functionField).range = v.toValuationSubring.toSubring)
     (g g' : Γ(X, W)) (hgg' : Ideal.span {g} = Ideal.span {g'}) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     haveI : Nonempty W := ⟨⟨y, hyW⟩⟩
     v.adicValuation (alg W g) = v.adicValuation (alg W g') := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have : Nonempty W := ⟨⟨y, hyW⟩⟩
   have h1 : g ∈ Ideal.span {g'} := hgg' ▸ Ideal.mem_span_singleton_self g
   have h2 : g' ∈ Ideal.span {g} := hgg'.symm ▸ Ideal.mem_span_singleton_self g'
@@ -522,7 +528,7 @@ theorem
     {K : Type u} [Field K] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of K))
     [IsIntegral X] [IsSeparated x] [QuasiCompact x] [SmoothOfRelativeDimension 1 x]
     {I : X.IdealSheafData} (hI : I.IsInvertible) :
-    letI := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
     ∃ (D : AlgebraicCurve.Divisor K X.functionField)
       (φ : ∀ U : X.Opens, Γ(I.module, U) →+ (X.functionField : Type u)),
       ((∀ (U V : X.Opens) (h : V ≤ U), Nonempty V →
@@ -552,8 +558,8 @@ theorem
                   v.toValuationSubring.toSubring →
               haveI : Nonempty U := ⟨⟨y, hyU⟩⟩
               D v + v.ord c + v.ord (algebraMap Γ(X, U) X.functionField g) = 0) := by
+  intro sharedOwner1
   classical
-  let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
   have hM : Scheme.Modules.IsInvertible I.module := hI.isInvertible_module
   obtain ⟨D, φ, h1, h2, h3, h4, h5⟩ :=
     Scheme.Modules.IsInvertible.exists_divisor_range_eq_lSpaceOn x I.module hM

@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Mathlib.Algebra.Module.Submodule.RestrictScalars
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Mathlib.Algebra.Module.Submodule.RestrictScalars
 
 /-!
 Filtration of a module presheaf by powers of an ideal and the resulting quotient presheaves.
 -/
+
+@[expose] public section
 
 noncomputable section
 

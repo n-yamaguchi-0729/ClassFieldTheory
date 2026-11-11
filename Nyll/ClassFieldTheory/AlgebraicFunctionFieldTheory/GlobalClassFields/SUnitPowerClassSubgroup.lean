@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitLocalPowerIndex
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeles
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SupportedComponents
-import Mathlib.GroupTheory.Index
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitLocalPowerIndex
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeles
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SupportedComponents
+public import Mathlib.GroupTheory.Index
 
 /-!
 # Actual idele classes with power components on S
@@ -18,6 +20,10 @@ to local power classes, identify its index with the already computed
 index of diagonal S-units in the local product.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 open AlgebraicCurve
@@ -25,7 +31,7 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField.IdeleGroup
 
-variable {k K : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
 
 /-- The local power classes of an actual S-idele. -/
 def sIdelePowerClass (n : ℕ+) (S : Finset (Place k K)) :

@@ -10,11 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremRatFuncPerfectField
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremResidueTheoremK
-import Nyll.AlgebraicCurves.Differentials.Residues.Construction
-import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremRatFuncPerfectField
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremResidueTheoremK
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+public import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
 
 /-!
 # The residue theorem over an algebraically closed rational-function field
@@ -23,6 +26,8 @@ The perfect-field theorem supplies the residue sum for the canonical family. Uni
 normalized local residue data over an algebraically closed field gives the theorem for every
 residue family.
 -/
+
+@[expose] public section
 
 open _root_.AlgebraicCurve
 open AlgebraicCurves.Differentials.Residues.Proofs

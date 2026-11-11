@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.FinrankBaseChangeSectionsEqOne
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.FinrankBaseChangeSectionsEqOne
 
 /-!
 Projectivity, finiteness and fibre rank one for sections of an invertible module on affine
 charts.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

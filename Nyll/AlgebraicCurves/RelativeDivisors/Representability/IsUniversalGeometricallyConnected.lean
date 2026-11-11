@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Connected
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalSumMap
-import Nyll.SchemeTheory.CategoryTheory.MorphismPropertyWidePullbackBase
-import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyConnectedComp
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Connected
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalSumMap
+public import Nyll.SchemeTheory.CategoryTheory.MorphismPropertyWidePullbackBase
+public import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyConnectedComp
 
 /-!
 Geometric connectedness for universal relative effective Cartier divisors.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

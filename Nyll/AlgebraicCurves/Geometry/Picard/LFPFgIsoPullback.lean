@@ -10,38 +10,41 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
-import Nyll.SchemeTheory.Descent.FGSubalgebra
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraTensorStage
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.RigidifiedLineBundleOfInvertible
-import Nyll.SchemeTheory.Descent.ModuleIsDirectLimitInvertibleLinearEquivBaseChange
-import Nyll.SchemeTheory.Descent.ModuleIsDirectLimitStageLinearEquiv
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.InvertibleModules
-import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverSectionsOfInvertibleProjectiveFiniteFinrank
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfOverlapLinearEquivBaseChange
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseChangeIsosStructureSheaf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageSectionsOfBaseChangeEquiv
-import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverInvertibleSectionsOfEquiv
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsoSectionsOfLinearEquiv
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.SchemeTheory.CategoryTheory.ModuleCatTensorExtension
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsLFPInjRelPicardPresheaf
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
+public import Nyll.SchemeTheory.Descent.FGSubalgebra
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraTensorStage
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.RigidifiedLineBundleOfInvertible
+public import Nyll.SchemeTheory.Descent.ModuleIsDirectLimitInvertibleLinearEquivBaseChange
+public import Nyll.SchemeTheory.Descent.ModuleIsDirectLimitStageLinearEquiv
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.InvertibleModules
+public import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverSectionsOfInvertibleProjectiveFiniteFinrank
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfOverlapLinearEquivBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseChangeIsosStructureSheaf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageSectionsOfBaseChangeEquiv
+public import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverInvertibleSectionsOfEquiv
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsoSectionsOfLinearEquiv
 
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.Algebra.Hom
-import Mathlib.Algebra.Group.Action.Defs
-import Mathlib.Algebra.Module.Equiv.Defs
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.RingTheory.TensorProduct.Maps
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.PicardGroup
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.SchemeTheory.CategoryTheory.ModuleCatTensorExtension
+
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.Algebra.Hom
+public import Mathlib.Algebra.Group.Action.Defs
+public import Mathlib.Algebra.Module.Equiv.Defs
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.PicardGroup
 
 /-!
 # Descent of a rigidified line bundle to a finitely generated stage
@@ -51,6 +54,8 @@ finitely generated subalgebra of the coefficient algebra. The affine-chart modul
 overlap maps are constructed at that stage, and the pulled-back underlying sheaf is isomorphic
 to the original underlying sheaf.
 -/
+
+@[expose] public section
 
 /-
 Copyright (c) 2026 Naganori Yamaguchi. All rights reserved.
@@ -214,42 +219,7 @@ theorem extendScalars_one_chart_pasting
       extendScalarsComp s uD
   (extendScalars uD).mapIso stage ≪≫ cOverlap.symm.app Q ≪≫ oldRealization =
     newRealization := by
-  let hu : uC.comp q = v.comp p := by
-    calc
-      uC.comp q = (uD.comp s).comp q :=
-        congrArg (fun t : C →+* U => t.comp q) ho.symm
-      _ = uD.comp (s.comp q) := rfl
-      _ = uD.comp (r.comp a) := congrArg (fun t : B →+* D => uD.comp t) hd.symm
-      _ = (uD.comp r).comp a := rfl
-      _ = (v.comp p').comp a := congrArg (fun t : J →+* U => t.comp a) hn
-      _ = v.comp p := congrArg (fun t : B →+* V => v.comp t) hc
-  let L : ModuleCat.{u} J := (extendScalars a).obj X
-  let Q : ModuleCat.{u} C := (extendScalars q).obj X
-  let N : ModuleCat.{u} D := (extendScalars r).obj L
-  let cChart : extendScalars p ≅ extendScalars a ⋙ extendScalars p' :=
-    (eqToIso (congrArg (fun t : B →+* V => extendScalars.{u, u, u} t) hc)).symm ≪≫
-      extendScalarsComp a p'
-  let e' : (extendScalars p').obj L ≅ M := cChart.symm.app X ≪≫ e
-  let cStage : extendScalars (r.comp a) ≅ extendScalars q ⋙ extendScalars s :=
-    (eqToIso (congrArg (fun t : B →+* D => extendScalars.{u, u, u} t) hd.symm)).symm ≪≫
-      extendScalarsComp q s
-  let stage : N ≅ (extendScalars s).obj Q :=
-    (extendScalarsComp a r).symm.app X ≪≫ cStage.app X
-  let cOld : extendScalars (v.comp p) ≅ extendScalars q ⋙ extendScalars uC :=
-    (eqToIso (congrArg (fun t : B →+* U => extendScalars.{u, u, u} t) hu)).symm ≪≫
-      extendScalarsComp q uC
-  let oldRealization : (extendScalars uC).obj Q ≅ (extendScalars v).obj M :=
-    cOld.symm.app X ≪≫ (extendScalarsComp p v).app X ≪≫ (extendScalars v).mapIso e
-  let cNew : extendScalars (v.comp p') ≅ extendScalars r ⋙ extendScalars uD :=
-    (eqToIso (congrArg (fun t : J →+* U => extendScalars.{u, u, u} t) hn)).symm ≪≫
-      extendScalarsComp r uD
-  let newRealization : (extendScalars uD).obj N ≅ (extendScalars v).obj M :=
-    cNew.symm.app L ≪≫ (extendScalarsComp p' v).app L ≪≫ (extendScalars v).mapIso e'
-  let cOverlap : extendScalars uC ≅ extendScalars s ⋙ extendScalars uD :=
-    (eqToIso (congrArg (fun t : C →+* U => extendScalars.{u, u, u} t) ho)).symm ≪≫
-      extendScalarsComp s uD
-  change (extendScalars uD).mapIso stage ≪≫ cOverlap.symm.app Q ≪≫ oldRealization =
-    newRealization
+  intro hu L Q N cChart e' cStage stage cOld oldRealization cNew newRealization cOverlap
   let k : (extendScalars (uD.comp (r.comp a))).obj X ≅ (extendScalars uD).obj N :=
     (extendScalarsComp (r.comp a) uD).app X ≪≫
       (extendScalars uD).mapIso ((extendScalarsComp a r).app X)
@@ -631,14 +601,7 @@ theorem extendScalars_square_unit_smul
       r j • (show (extendScalars s).obj ((extendScalars q).obj X) from
         (extendRestrictScalarsAdj s).unit.app ((extendScalars q).obj X)
           ((extendRestrictScalarsAdj q).unit.app X x)) := by
-  let c : extendScalars (r.comp a) ≅ extendScalars q ⋙ extendScalars s :=
-    (eqToIso (congrArg (fun t : B →+* D => extendScalars.{u, u, u} t) hsquare.symm)).symm ≪≫
-      extendScalarsComp q s
-  let κ : (extendScalars r).obj ((extendScalars a).obj X) ≅
-      (extendScalars s).obj ((extendScalars q).obj X) :=
-    (extendScalarsComp a r).symm.app X ≪≫ c.app X
-  let xa : (extendScalars a).obj X := (extendRestrictScalarsAdj a).unit.app X x
-  change κ.hom ((extendRestrictScalarsAdj r).unit.app ((extendScalars a).obj X) (j • xa)) = _
+  intro c κ xa
   have hunit : κ.hom ((extendRestrictScalarsAdj r).unit.app ((extendScalars a).obj X) xa) =
       (extendRestrictScalarsAdj s).unit.app ((extendScalars q).obj X)
         ((extendRestrictScalarsAdj q).unit.app X x) := by
@@ -1158,12 +1121,6 @@ variable {k : Type*} [CommRing k] {Γ Γ' : Type*} [CommRing Γ] [Algebra k Γ] 
   {P : Type*} [AddCommGroup P] [Module Γ P] [Module k P] [IsScalarTower k Γ P]
   {Q : Type*} [AddCommGroup Q] [Module Γ' Q] [Module k Q] [IsScalarTower k Γ' Q]
   {N : Type*} [AddCommGroup N] [Module k N]
-
-private noncomputable def _root_.AlgebraicGeometry.RelPicard.LFP.push (h : A' →ₐ[k] A'') (f : A'
-    ⊗[k] P →ₗ[A'] A' ⊗[k] Q) :
-    A'' ⊗[k] P →ₗ[A''] A'' ⊗[k] Q :=
-  LinearMap.liftBaseChange A''
-    ((h.toLinearMap.rTensor Q) ∘ₗ (f.restrictScalars k) ∘ₗ (TensorProduct.mk k A' P 1))
 
 open _root_.AlgebraicGeometry.RelPicard.LFP
 @[scoped simp] theorem push_tmul (h : A' →ₐ[k] A'') (f : A' ⊗[k] P →ₗ[A'] A' ⊗[k] Q) (a : A'') (m

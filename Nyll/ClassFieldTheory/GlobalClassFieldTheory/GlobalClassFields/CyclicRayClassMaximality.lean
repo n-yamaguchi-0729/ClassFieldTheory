@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicNormConductor
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormRayClassMaximality
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicNormConductor
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormRayClassMaximality
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Maximal cyclic quotients at the narrow finite conductor
@@ -22,9 +25,13 @@ subgroup at its narrow finite conductor.
 
 
 
+@[expose] public section
+
 open scoped NumberField
 
 noncomputable section
+
+universe u v w
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
@@ -32,15 +39,15 @@ namespace GlobalClassFields
 open NumberField
 
 /-- The canonical idèle-class multiplication makes every subgroup normal. -/
-private theorem cyclicRayClassMaximalityClassGroupIsMulCommutative
-    (F : Type) [Field F] [NumberField F] :
+theorem cyclicRayClassMaximalityClassGroupIsMulCommutative
+    (F : Type*) [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   IsMulCommutative.of_comm (fun a b => mul_comm a b)
 
 attribute [local instance] cyclicRayClassMaximalityClassGroupIsMulCommutative
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]

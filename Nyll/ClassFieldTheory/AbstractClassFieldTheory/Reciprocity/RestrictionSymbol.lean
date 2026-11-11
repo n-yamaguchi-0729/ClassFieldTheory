@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.PrimeElements
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.PrimeElements
 
 /-!
 # Restriction of norm-residue symbols at a fixed base
@@ -15,18 +17,22 @@ restriction formula directly on fixed coefficients. Its right-hand norm
 is the identity, so no change of coefficient representative is required.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace ClassFormation
 
 open KummerTheory CyclicCohomology
 
-variable {G : IntegralRepGroupType} [Group G] [TopologicalSpace G]
+variable {G : Type u} [Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
 
 /-- Norm-residue symbols commute with restriction to a smaller top field. -/
 theorem normResidueSymbol_restriction_finiteNormClass
-    (D : DegreeData G) (A : Rep ℤ G) (v : ValuationData D A)
+    (D : DegreeData G) (A : Rep.{v} ℤ G) (v : ValuationData D A)
     (hcf : SatisfiesClassFieldAxiom A) (H : FiniteAbstractField G)
     (L M : FiniteGaloisSubextension H.field)
     (hML : M.field.toSubgroup ≤ L.field.toSubgroup) :

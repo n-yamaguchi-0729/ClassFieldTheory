@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.LinearAlgebra.TensorProduct.Pi
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.OrderedAffineCoverComap
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.OrderedAffineCoverComap
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
 
 /-! Base change for Čech cochains of locally trivial sheaves of modules. -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,14 +10,18 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Connected
-import Mathlib.AlgebraicGeometry.Geometrically.Irreducible
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Connected
+public import Mathlib.AlgebraicGeometry.Geometrically.Irreducible
 
 /-!
 # Geometric irreducibility implies geometric connectedness
 
 A geometrically irreducible morphism has connected fibres after every field base change.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

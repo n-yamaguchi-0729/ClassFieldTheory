@@ -8,6 +8,7 @@ import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianCo
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.EmbedsInRayClassFieldIffConductorLe
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.IsAbelianConductorUnique
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 
 /-!
 # Real places in the public abelian conductor
@@ -17,13 +18,15 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- A real place belongs to the public conductor precisely when it ramifies
 (complexifies) in the extension. -/
 theorem IsAbelianConductor.mem_infinitePart_iff_realRamified
-    {K : Type} [Field K] [NumberField K]
-    {L : Type} [Field L] [NumberField L]
+    {K : Type u} [Field K] [NumberField K]
+    {L : Type v} [Field L] [NumberField L]
     [Algebra K L] [IsAbelianGalois K L]
     {c : RayClassModulus K}
     (hc : IsAbelianConductor K L c)

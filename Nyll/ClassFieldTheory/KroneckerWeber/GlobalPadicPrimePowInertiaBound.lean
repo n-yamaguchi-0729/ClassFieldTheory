@@ -4,11 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.InertiaRestrictionCard
-import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicInertiaBound
-import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
-import Nyll.ClassFieldTheory.KroneckerWeber.LocalCyclotomicEmbedding
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.InertiaRestrictionCard
+public import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicInertiaBound
+public import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+public import Nyll.ClassFieldTheory.KroneckerWeber.LocalCyclotomicEmbedding
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionFieldLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.LocalizationRamificationGroups
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
 
 /-!
 # The one-prime p-primary inertia bound
@@ -18,6 +24,8 @@ local cyclotomic embedding, and the ramification comparison to replace the full 
 totient by
 the exact `p`-primary factor `φ(p ^ n)`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -47,7 +55,7 @@ theorem globalPadicInertia_natCard_le_coprimeCyclotomicPrimePowTotient
           (HilbertRamification.absoluteValueExtensionValuationSubring
             vK w hw)) ≤
       Nat.totient (p ^ n) := by
-  let vK := Rat.AbsoluteValue.padic p
+  intro vK
   let hvK := padicAbsoluteValue_isNontrivial p
   let hv := rationalPadicAbsoluteValue_nonarchimedean p
   let hw := HilbertRamification.absoluteValueExtension_nonarchimedean_of_base

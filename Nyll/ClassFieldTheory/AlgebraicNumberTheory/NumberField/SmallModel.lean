@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Field.Shrink
-import Mathlib.Algebra.Ring.Shrink
-import Mathlib.Basic.Countable.Small
-import Mathlib.Data.Rat.Encodable
-import Mathlib.LinearAlgebra.Countable
-import Mathlib.NumberTheory.NumberField.Basic
+module
+
+public import Mathlib.Algebra.Field.Shrink
+public import Mathlib.Algebra.Ring.Shrink
+public import Mathlib.Basic.Countable.Small
+public import Mathlib.Data.Rat.Encodable
+public import Mathlib.LinearAlgebra.Countable
+public import Mathlib.NumberTheory.NumberField.Basic
 
 /-!
 # Small models of number fields
@@ -18,6 +20,8 @@ A number field has finite dimension over the countable field `ℚ`, so its
 underlying type has a representative in the lowest universe.  The ring
 equivalence to that representative preserves the number-field structure.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 
@@ -31,9 +35,9 @@ theorem numberField_small (F : Type u) [Field F] [NumberField F] :
 
 /-- The shrunk model of a number field remains a number field. -/
 theorem numberField_shrink (F : Type u) [Field F] [NumberField F] :
-    letI : Small.{0} F := numberField_small F
+    let : Small.{0} F := numberField_small F
     NumberField (Shrink.{0} F) := by
-  let : Small.{0} F := numberField_small F
+  intro sharedOwner1
   exact NumberField.of_ringEquiv F (Shrink.{0} F) (Shrink.ringEquiv F).symm
 
 end ClassFieldTheory

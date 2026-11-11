@@ -10,19 +10,22 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Residues.FibreResidueIdentityAlong
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
-import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
-import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Residues.FibreResidueIdentityAlong
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -30,6 +33,8 @@ import Nyll.AlgebraicCurves.Differentials.Residues.Construction
 A residue theorem for the rational-function field and completed residue-trace compatibility yield
 the extension residue theorem.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
 
 /-!
 # Arithmetic Frobenius in a finite abelian tower
@@ -19,13 +20,15 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v w
+
 namespace ClassFieldTheory
 
 open NumberField IsDedekindDomain IdeleGroup
 open GlobalClassFieldTheory.GlobalClassFields
 
 private theorem arithmeticFinitePlacePrimeArtin_restrict_tower_of_globalArtin
-    (K E L : Type) [Field K] [Field E] [Field L]
+    (K : Type u) (E : Type v) (L : Type w) [Field K] [Field E] [Field L]
     [NumberField K] [NumberField E] [NumberField L]
     [Algebra K E] [Algebra E L] [Algebra K L] [IsScalarTower K E L]
     [IsAbelianGalois K E] [IsAbelianGalois K L]
@@ -46,7 +49,7 @@ private theorem arithmeticFinitePlacePrimeArtin_restrict_tower_of_globalArtin
 unramified prime of `L` restricts to arithmetic Frobenius at the specified
 prime of `E` below it. -/
 theorem arithmeticFrobeniusAt_restrict_tower
-    {K E L : Type}
+    {K : Type u} {E : Type v} {L : Type w}
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Field L] [NumberField L]

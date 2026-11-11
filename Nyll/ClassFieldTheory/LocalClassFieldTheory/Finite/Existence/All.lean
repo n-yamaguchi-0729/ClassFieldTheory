@@ -36,6 +36,8 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNo
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnshrinkFiniteAbelianFields
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ArtinSchreierCharacters
 
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ClassificationNaturality
+
 /-!
 # Finite local existence theorem
 

@@ -10,35 +10,39 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Picard.PushforwardPullbackIso
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardFibre
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.InvertibleDetLocallyFree
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.PullbackDetIsoDetPullback
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Picard.PushforwardPullbackIso
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardFibre
+public import Nyll.SchemeTheory.Modules.Invertible.Determinant
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.PullbackDetIsoDetPullback
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicBaseChange
 
 /-!
 Compatibility of theta bundles with base change under the stated fibrewise cohomology
 hypotheses.
 -/
+@[expose] public section
+
 section ProofImplementation
 
 namespace JacobianVarieties.Picard.Proofs.Nonempty_pullback_thetaBundle_iso

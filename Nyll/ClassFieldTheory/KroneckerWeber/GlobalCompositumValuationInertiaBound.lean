@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumLocalizationEmbedding
-import Nyll.ClassFieldTheory.KroneckerWeber.GlobalPadicPrimePowInertiaBound
+module
+
+public import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumLocalizationEmbedding
+public import Nyll.ClassFieldTheory.KroneckerWeber.GlobalPadicPrimePowInertiaBound
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionFieldLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.LocalizationRamificationGroups
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
 
 /-!
 # The fixed-conductor local inertia bound for the auxiliary compositum
@@ -15,6 +20,8 @@ compositum embeds in the common local cyclotomic field whose `p`-power part
 is exactly the exponent selected from `L`.  The arbitrary-coprime local
 bound therefore gives the sharp factor `φ(p^e)`.
 -/
+
+@[expose] public section
 
 noncomputable section
 

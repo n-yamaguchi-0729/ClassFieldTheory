@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Mathlib.RingTheory.Norm.Transitivity
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Mathlib.RingTheory.Norm.Transitivity
 
 /-!
 # Norm subgroups in a tower
@@ -14,6 +16,8 @@ The norm from a larger field factors through the norm from every intermediate
 field. Thus enlarging a finite extension can only shrink its subgroup of
 norms in the base field. No local-field or Galois assumption is needed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

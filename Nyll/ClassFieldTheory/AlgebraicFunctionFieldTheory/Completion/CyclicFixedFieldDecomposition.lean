@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
-import Mathlib.FieldTheory.Galois.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+module
+
+public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
+public import Mathlib.FieldTheory.Galois.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
 
 /-!
 # The cyclic fixed field of a decomposition automorphism
@@ -17,6 +19,8 @@ field is therefore the decomposition group. The fixed-field theorem supplies
 membership in the original cyclic subgroup; no local-global comparison is
 assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

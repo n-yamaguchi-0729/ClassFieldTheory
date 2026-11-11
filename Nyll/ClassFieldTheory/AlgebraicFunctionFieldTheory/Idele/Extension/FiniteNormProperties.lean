@@ -4,20 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
 
 /-!
 # Continuity, degree, and towers for arbitrary finite class norms
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace FunctionField.IdeleClassGroup
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L]
@@ -45,7 +49,7 @@ theorem degree_finiteNorm (c : IdeleClassGroup k L) :
     IdeleGroup.degree (k := k) (K := L) a
   exact IdeleGroup.degree_norm_of_finite a
 
-variable {M : Type} [Field M] [Algebra k M] [Algebra K M] [Algebra L M]
+variable {M : Type*} [Field M] [Algebra k M] [Algebra K M] [Algebra L M]
     [IsScalarTower k K M] [IsScalarTower k L M] [IsScalarTower K L M]
     [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]
     [FiniteDimensional L M] [AlgebraicCurve.HasPrincipalDivisors k M]

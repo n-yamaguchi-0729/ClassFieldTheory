@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.FieldTheory.FiniteActionHilbert90
-import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusPeriodicField
-import Mathlib.Data.ZMod.QuotientGroup
+module
+
+public import Nyll.GaloisCohomology.FieldTheory.FiniteActionHilbert90
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusPeriodicField
+public import Mathlib.Data.ZMod.QuotientGroup
 
 /-!
 # Hilbert 90 inside an actual periodic subfield
@@ -15,6 +17,8 @@ Restriction to the periodic subfield gives a finite faithful cyclic field
 action. Its group norm is compared with the original length-n product.
 For arithmetic Frobenius, the exact order is supplied by the finite constants.
 -/
+
+@[expose] public section
 
 noncomputable section
 

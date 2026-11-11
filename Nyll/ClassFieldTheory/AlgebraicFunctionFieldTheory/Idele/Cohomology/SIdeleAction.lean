@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeles
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeles
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
 
 /-!
 # The equivariant S-idele presentation
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEqu
 The actual stabilizer of the finite place set acts on its S-ideles. The diagonal
 S-unit map and the map to idele classes respect the established semilinear actions.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -22,7 +26,8 @@ open AlgebraicCurve
 
 variable {k K : Type*} [Field k] [Field K] [Algebra k K]
 
-private theorem smul_mem_sIdeles (S : Finset (Place k K))
+/-- The stabilizer of a set of places preserves its S-ideles. -/
+theorem smul_mem_sIdeles (S : Finset (Place k K))
     (g : SUnits.stabilizer k K S) (a : sIdeles S) : g.val • a.val ∈ sIdeles S := by
   apply (mem_sIdeles_iff S _).mpr
   intro v hv

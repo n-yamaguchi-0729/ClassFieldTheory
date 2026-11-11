@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionUnramified
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.UnramifiedNormPicard
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionUnramified
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.UnramifiedNormPicard
 
 /-!
 # Actual constant-extension norms are detected by Picard norms
@@ -16,13 +18,17 @@ idele-class norm quotient therefore identifies with its actual Picard norm
 quotient, without any unramifiedness or norm-lifting hypothesis from the caller.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField.IdeleClassGroup
 
 open AlgebraicCurve
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]

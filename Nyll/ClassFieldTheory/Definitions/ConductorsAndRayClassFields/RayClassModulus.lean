@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.FiniteSupport.Defs
-import Mathlib.Order.Preorder.Finsupp
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
+module
+
+public import Mathlib.Algebra.FiniteSupport.Defs
+public import Mathlib.Order.Preorder.Finsupp
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
 
 /-!
 # Ray class moduli
@@ -17,6 +19,8 @@ A modulus consists of finite-prime exponents and a finite set of real places.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

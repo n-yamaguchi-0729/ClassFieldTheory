@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
 
 /-!
 # Naturality of the finite Hilbert factor
@@ -14,6 +16,8 @@ The factor obtained by evaluating a local pairing on global units commutes
 with equivalences of both the number fields and their completions. The
 commuting square for the two field embeddings is the only geometric input.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

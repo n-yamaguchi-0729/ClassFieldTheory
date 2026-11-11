@@ -10,11 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Finite fibres of a polynomial map from an open of a curve
@@ -22,6 +25,8 @@ import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
 A transcendental section on a nonempty open of an integral smooth curve defines
 a map to the polynomial spectrum whose point fibres are finite.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -109,13 +114,13 @@ theorem mem_fibre_iff (U : C.Opens) (s : Γ(C, U)) (x : (U : Scheme.{u})) (q : k
 variable [IsIntegral C]
 
 theorem germToFunctionField_eval₂ (U : C.Opens) [Nonempty U] (s : Γ(C, U)) (q : k[X]) :
-    letI := (AlgebraicCurve.baseToFunctionField c).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField c).toAlgebra
     haveI : Nonempty (U.ι ''ᵁ (⊤ : (U : Scheme.{u}).Opens)) := by
       rw [Scheme.Hom.image_top_eq_opensRange, Scheme.Opens.opensRange_ι]; infer_instance
     (C.germToFunctionField (U.ι ''ᵁ ⊤)).hom
         (Polynomial.eval₂ (Scheme.Opens.baseRingHom c U) (U.topIso.inv s) q) =
       Polynomial.aeval (C.germToFunctionField U s) q := by
-  let := (AlgebraicCurve.baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   have : Nonempty (U.ι ''ᵁ (⊤ : (U : Scheme.{u}).Opens)) := by
     rw [Scheme.Hom.image_top_eq_opensRange, Scheme.Opens.opensRange_ι]; infer_instance
   dsimp only
@@ -193,7 +198,8 @@ theorem _root_.AlgebraicGeometry.Scheme.Opens.finite_preimage_singleton_toSpecPo
           exact Subtype.ext_iff
         rw [this]
         exact hzC.preimage continuous_subtype_val
-      have hcl := (Scheme.Opens.toSpecPolynomial c U s).closePoints_subset_preimage_closedPoints hzU
+      have hcl :=
+        (Scheme.Opens.toSpecPolynomial c U s).closedPoints_subset_preimage_closedPoints hzU
       have hcl' : IsClosed ({p} : Set (PrimeSpectrum k[X])) := by rw [← hz]; exact hcl
       have hmax : p.asIdeal.IsMaximal := (PrimeSpectrum.isClosed_singleton_iff_isMaximal p).mp hcl'
       rw [hp] at hmax

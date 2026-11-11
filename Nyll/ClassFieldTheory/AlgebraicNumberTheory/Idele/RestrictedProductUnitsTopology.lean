@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.Group.Units
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
-import Mathlib.Topology.Algebra.RestrictedProduct.Units
+module
+
+public import Mathlib.Topology.Algebra.Group.Units
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Mathlib.Topology.Algebra.RestrictedProduct.Units
 
 /-!
 # Topology on units of a restricted product
@@ -16,6 +18,8 @@ is a topological group equivalence when each distinguished local submonoid
 is open. The units on the left carry their graph topology; the right side
 has the restricted-product topology of the local unit groups.
 -/
+
+@[expose] public section
 
 open Filter
 open scoped RestrictedProduct
@@ -32,7 +36,8 @@ variable {S : ι → Type w}
   [∀ i, SetLike (S i) (R i)] [∀ i, SubmonoidClass (S i) (R i)]
 variable {B : ∀ i, S i}
 
-private def inclusionMonoidHom {𝓕 𝓖 : Filter ι} (h : 𝓕 ≤ 𝓖) :
+/-- The restricted-product inclusion for an ordered pair of filters. -/
+def inclusionMonoidHom {𝓕 𝓖 : Filter ι} (h : 𝓕 ≤ 𝓖) :
     (Πʳ i, [R i, B i]_[𝓖]) →* (Πʳ i, [R i, B i]_[𝓕]) where
   toFun := inclusion R (fun i => (B i : Set (R i))) h
   map_one' := rfl
@@ -40,7 +45,7 @@ private def inclusionMonoidHom {𝓕 𝓖 : Filter ι} (h : 𝓕 ≤ 𝓖) :
 
 /-- At a principal filter, the algebraic equivalence of units is already a
 topological group equivalence; no openness assumption is needed. -/
-private noncomputable def unitsEquivPrincipal (T : Set ι) :
+noncomputable def unitsEquivPrincipal (T : Set ι) :
     (Πʳ i, [R i, B i]_[𝓟 T])ˣ ≃ₜ*
       (Πʳ i, [(R i)ˣ, (Submonoid.ofClass (B i)).units]_[𝓟 T]) := by
   let e := unitsEquiv (B := B) (𝓕 := 𝓟 T) R
@@ -79,7 +84,7 @@ private noncomputable def unitsEquivPrincipal (T : Set ι) :
 
 /-- The principal-stage inclusion of ring restricted products induces an
 open embedding of their unit groups when the distinguished submonoids are open. -/
-private theorem isOpenEmbedding_units_inclusion
+theorem isOpenEmbedding_units_inclusion
     (hBopen : ∀ i, IsOpen (B i : Set (R i)))
     {T : Set ι} (hT : cofinite ≤ 𝓟 T) :
     Topology.IsOpenEmbedding (Units.map (inclusionMonoidHom (B := B) hT)) := by

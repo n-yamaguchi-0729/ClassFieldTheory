@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassFiniteness
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassFiniteness
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Small
 
 /-!
 # Finiteness of local power classes
@@ -16,6 +19,8 @@ The nonzero residue of the exponent in a nonarchimedean local field makes its
 multiplicative `n`-th-power quotient finite. This is the finiteness input for
 turning a nondegenerate Hilbert pairing into a perfect pairing.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

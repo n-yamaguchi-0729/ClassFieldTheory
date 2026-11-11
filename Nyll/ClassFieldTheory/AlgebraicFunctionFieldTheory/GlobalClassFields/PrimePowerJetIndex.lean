@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimePowerJetClassSubgroup
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PrimePowerCongruenceIndex
+module
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPrimePowerJets
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimePowerJetClassSubgroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PrimePowerCongruenceIndex
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPrimePowerJets
 
 /-!
 # The index of characteristic-power jet classes
@@ -17,13 +19,17 @@ The finite diagonal S-unit image cancels all but one of these factors.
 The remaining residue-field powers count the local principal-unit layers.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 open AlgebraicCurve
 open scoped BigOperators
 
 namespace FunctionField.SUnits
 
-variable {k K : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     (p : ℕ) [Fact p.Prime] [CharP K p]
 
@@ -48,7 +54,7 @@ end FunctionField.SUnits
 
 namespace FunctionField.IdeleGroup
 
-variable {k K : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K]
     (p : ℕ) [Fact p.Prime] [CharP K p]

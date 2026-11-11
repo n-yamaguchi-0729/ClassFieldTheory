@@ -10,26 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.SchemeTheory.Modules.Exactness
-import Nyll.SchemeTheory.Modules.LocalMorphisms
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealEpiUnitAppTensorInvModulePowShortExact
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.SchemeTheory.Modules.Exactness
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealEpiUnitAppTensorInvModulePowShortExact
 
 /-!
 # Sections on finite thickenings
 
 Local trivializations compare section ranks and characterize injectivity of the unit map.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

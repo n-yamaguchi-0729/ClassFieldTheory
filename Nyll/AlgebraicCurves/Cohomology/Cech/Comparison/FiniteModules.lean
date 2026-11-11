@@ -11,17 +11,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.RingTheory.Noetherian.Basic
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.CoherentModules
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteProper
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.CoherentModules
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteProper
 
 /-!
 Cech finiteness for the module presheaf of a locally trivial module sheaf over a proper scheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

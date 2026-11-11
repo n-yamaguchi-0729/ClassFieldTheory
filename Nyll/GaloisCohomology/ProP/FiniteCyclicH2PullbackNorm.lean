@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.ProP.FiniteCyclicH2CoefficientNorm
+module
+
+public import Nyll.GaloisCohomology.ProP.FiniteCyclicH2CoefficientNorm
 
 /-!
 # Norms kill cyclic H² after a group pullback
@@ -12,6 +14,8 @@ import Nyll.GaloisCohomology.ProP.FiniteCyclicH2CoefficientNorm
 A norm preimage of the image of the unit coefficient kills every class with
 trivial rank-one coefficients after pullback to a finite cyclic group.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 
@@ -26,12 +30,12 @@ theorem finiteCyclicH2_rankOneMap_eq_zero_of_norm
     {R G H : Type u} [CommRing R] [Group G] [CommGroup H] [Fintype H]
     (B : Rep R H) (h : H) (hh : ∀ x : H, x ∈ Subgroup.zpowers h)
     (f : H →* G) (φ : Rep.res f (Rep.trivial R G R) ⟶ B)
-    (b : B) (hb : B.norm.hom b = φ.hom 1) :
+    (b : B) (hb : B.norm.asHom.hom b = φ.hom 1) :
     groupCohomology.map f φ 2 = 0 := by
   let ψ : Rep.trivial R H R ⟶ B := φ
   have hnorm : ∀ a : LinearMap.ker
       (Rep.applyAsHom (Rep.trivial R H R) h - 𝟙 _).hom.toLinearMap,
-      ∃ y : B, B.norm.hom y = ψ.hom a.1 := by
+      ∃ y : B, B.norm.asHom.hom y = ψ.hom a.1 := by
     intro a
     refine ⟨a.1 • b, ?_⟩
     rw [map_smul, hb]
@@ -58,7 +62,7 @@ theorem finiteCyclicCarry_pullbackMap_eq_zero_of_norm
     (h : H) (hh : ∀ x : H, x ∈ Subgroup.zpowers h)
     (f : H →* G) (φ : Rep.res f A ⟶ B)
     (a : LinearMap.ker (Rep.applyAsHom A g - 𝟙 A).hom.toLinearMap)
-    (b : B) (hb : B.norm.hom b = φ.hom a.1) :
+    (b : B) (hb : B.norm.asHom.hom b = φ.hom a.1) :
     groupCohomology.map f φ 2
       (groupCohomology.H2π A (finiteCyclicCarryTwoCocycle A g hg a)) = 0 := by
   have hag : A.ρ g a.1 = a.1 := by
@@ -75,8 +79,8 @@ theorem finiteCyclicCarry_pullbackMap_eq_zero_of_norm
       change r • a.1 = A.ρ σ (r • a.1)
       rw [map_smul, ha]⟩
   let ψ : Rep.res f (Rep.trivial R G R) ⟶ B := (Rep.resFunctor f).map ι ≫ φ
-  have hb' : B.norm.hom b = ψ.hom 1 := by
-    change B.norm.hom b = φ.hom ((1 : R) • a.1)
+  have hb' : B.norm.asHom.hom b = ψ.hom 1 := by
+    change B.norm.asHom.hom b = φ.hom ((1 : R) • a.1)
     rw [one_smul]
     exact hb
   have hzero := finiteCyclicH2_rankOneMap_eq_zero_of_norm B h hh f ψ b hb'

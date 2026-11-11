@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.FinrankOmegaSpaceEqEllCanonicalSub
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusReachedStichtenothGenusExists
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremResidueTheoremK
-import Nyll.AlgebraicCurves.Differentials.Residues.WeilKaehlerAgreeResidueTheorem
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseAlgClosed
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExists
-import Mathlib.Tactic.Linarith
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.FinrankOmegaSpaceEqEllCanonicalSub
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusReachedStichtenothGenusExists
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTheoremResidueTheoremK
+public import Nyll.AlgebraicCurves.Differentials.Residues.WeilKaehlerAgreeResidueTheorem
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseAlgClosed
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExists
+public import Mathlib.Tactic.Linarith
 
 /-!
 Function-field Riemann–Roch from the residue theorem over algebraically closed constants.
 The canonical residue comparison, attained genus and adelic index formula share their existing
 implementations; no independent completion or pole-divisor construction is needed here.
 -/
+
+@[expose] public section
 
 open AlgebraicCurve KaehlerDifferential
 

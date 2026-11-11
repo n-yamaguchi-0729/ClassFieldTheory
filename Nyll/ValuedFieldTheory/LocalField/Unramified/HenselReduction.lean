@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Unramified.HenselianAlgebraicExtension
-import Nyll.ValuedFieldTheory.Valuation.Henselian.ValuationExtensionCriterion
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.HenselianAlgebraicExtension
+public import Nyll.ValuedFieldTheory.Valuation.Henselian.ValuationExtensionCriterion
+public import Nyll.ValuedFieldTheory.Valuation.Henselian.MonicFactorization
 
 /-!
 # the unramified base-change theorem: irreducible reduction source
@@ -16,6 +19,8 @@ fraction field and its reduction is separable, then that reduction is already
 irreducible.  Otherwise a nontrivial residual factorization is coprime and
 Hensel lifting contradicts irreducibility upstairs.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 
 /-!
 # Unramified normalization of the chosen finite-place Artin map
@@ -18,6 +22,8 @@ inverse arithmetic Frobenius in the actual chosen completion.
 
 
 
+@[expose] public section
+
 open scoped NumberField ValuativeRel
 open NumberField IsDedekindDomain
 open AlgebraicNumberTheory.Valuations LocalFieldTheory
@@ -27,7 +33,9 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
-variable {K L : Type}
+universe uK uL
+
+variable {K : Type uK} {L : Type uL}
     [Field K] [NumberField K]
     [Field L] [Algebra K L]
     [hKLfinite : FiniteDimensional K L] [IsAbelianGalois K L]
@@ -85,19 +93,26 @@ theorem chosenFinitePlaceLocalArtin_eq_arithmeticFrobenius_inv_of_unramified
       IsNonarchimedeanLocalField.valuationMap C
         (Additive.ofMul (finitePlaceLocalArtinInput v x)) = -1 :=
     finitePlaceLocalArtinInput_chosenLocalOrderSection_valuationMap v
-  have hfrob :=
-    LocalClassFieldTheory.abelianLocalArtinMonoidHom_eq_frobenius_zpow
-      C E (finitePlaceLocalArtinInput v x)
+  have hvalInv :
+      IsNonarchimedeanLocalField.valuationMap C
+        (Additive.ofMul (finitePlaceLocalArtinInput v x)⁻¹) = 1 := by
+    rw [IsNonarchimedeanLocalField.valuationMap_ofMul_inv, hval]
+    rfl
+  have hfrob := LocalClassFieldTheory.Universe.abelianLocalArtinMap_uniformizer
+    C E (finitePlaceLocalArtinInput v x)⁻¹ hvalInv
   have hnorm :
-      LocalClassFieldTheory.abelianLocalArtinMonoidHom C E
+      LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom C E
           (finitePlaceLocalArtinInput v x) =
         (arithmeticFrobeniusOfUnramifiedValuation C E)⁻¹ := by
-    simpa only [hval, zpow_neg_one] using hfrob
+    change LocalClassFieldTheory.Universe.abelianLocalArtinMap C E
+      (finitePlaceLocalArtinInput v x) = _
+    simpa only [map_inv, inv_inv] using congrArg (fun σ : Gal(E / C) => σ⁻¹) hfrob
   calc
     finitePlaceLocalArtinMonoidHom (K := K) (L := L) v w x =
-        LocalClassFieldTheory.abelianLocalArtinMonoidHom C E
+        LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom C E
           (finitePlaceLocalArtinInput v x) := by
-      rfl
+      have h := finitePlaceLocalArtinMonoidHom_apply_normalized_universe v w x
+      with_reducible exact h
     _ = (chosenFinitePlaceLocalArithmeticFrobenius
           (K := K) (L := L) v hunram)⁻¹ := by
       exact hnorm

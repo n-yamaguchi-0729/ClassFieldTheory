@@ -4,11 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalNorm
-import Nyll.ValuedFieldTheory.Valuation.Completion.TensorProductDecomposition
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalNorm
+public import Nyll.ValuedFieldTheory.Valuation.Completion.TensorProductDecomposition
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
+public import Nyll.ValuedFieldTheory.Valuation.Completion.DegreeNormTrace
 
 /-!
 # Canonical evaluation in the completion tensor decomposition
@@ -17,6 +21,8 @@ The finite product decomposition sends a pure tensor to the product of its
 two canonical images in each completion. This specifies the same algebra
 equivalence that appears in the determinant-norm product formula.
 -/
+
+@[expose] public section
 
 open scoped BigOperators TensorProduct
 

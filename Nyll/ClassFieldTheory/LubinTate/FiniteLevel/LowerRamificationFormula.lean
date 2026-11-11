@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveDisplacement
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.GaloisParameterFiltration
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LowerRamification
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.PrimitiveDisplacement
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.GaloisParameterFiltration
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LowerRamification
 
 /-!
 # Explicit lower ramification groups of finite Lubin--Tate levels
@@ -19,6 +21,8 @@ Its cardinality is therefore `q ^ (n + 1 - k)`.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

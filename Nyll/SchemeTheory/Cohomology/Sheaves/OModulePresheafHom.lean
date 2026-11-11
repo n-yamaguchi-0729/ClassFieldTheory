@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
 
 /-!
 Morphisms of module presheaves, their affine sections and short exact sequences.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Mathlib.RingTheory.Norm.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Mathlib.RingTheory.Norm.Basic
 
 /-!
 # Transport of finite-extension norm subgroups
@@ -14,6 +16,8 @@ Compatible field equivalences carry the actual group of field norms to the
 actual group of field norms.  This is the norm comparison needed when finite
 local class-field theory is transported to a small representative.
 -/
+
+@[expose] public section
 
 noncomputable section
 

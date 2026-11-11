@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.AdicCompletion.LocalRing
-import Mathlib.FieldTheory.RatFunc.Basic
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
+module
+
+public import Mathlib.RingTheory.AdicCompletion.LocalRing
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
 
 /-!
 Results on Construction.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -159,26 +163,11 @@ instance instIsLocalHom_restrictSubringHom : IsLocalHom (w.restrictSubringHom (F
 def residueFieldMapRestrict : (w.restrict F).ResidueField →+* w.ResidueField :=
   IsLocalRing.ResidueField.map (w.restrictSubringHom (F := F))
 
-instance instAlgebra_restrictResidueField : Algebra (w.restrict F).ResidueField w.ResidueField :=
-  (w.residueFieldMapRestrict (F := F)).toAlgebra
-
 theorem algebraMap_residueField_residue (x : (w.restrict F).toValuationSubring) :
     algebraMap (w.restrict F).ResidueField w.ResidueField
         (IsLocalRing.residue _ x)
       = IsLocalRing.residue _ (w.restrictSubringHom x) :=
-  IsLocalRing.ResidueField.map_residue _ _
-
-instance instIsScalarTower_restrictResidueField : IsScalarTower K (w.restrict F).ResidueField
-    w.ResidueField := by
-  refine IsScalarTower.of_algebraMap_eq fun a => ?_
-  change IsLocalRing.residue _ (algebraMap K w.toValuationSubring a)
-      = algebraMap (w.restrict F).ResidueField w.ResidueField
-          (IsLocalRing.residue _ (algebraMap K (w.restrict F).toValuationSubring a))
-  rw [algebraMap_residueField_residue]
-  congr 1
-  ext
-  change algebraMap K F' a = algebraMap F F' (algebraMap K F a)
-  rw [IsScalarTower.algebraMap_apply K F F']
+  w.restrictResidueMap_residue x
 
 end Restrict
 
@@ -338,10 +327,13 @@ theorem ord_uniformizer_pow (n : ℕ) : v.ord (v.uniformizer ^ n) = (n : ℤ) :=
 
 theorem coe_poleSubmodule_zero :
     (v.poleSubmodule 0 : Set F) = (v.toValuationSubring : Set F) := by
-  ext f; simp [mem_poleSubmodule]
+  ext f
+  change v.uniformizer ^ 0 * f ∈ v.toValuationSubring ↔ f ∈ v.toValuationSubring
+  rw [pow_zero, one_mul]
 @[simp]
 theorem poleSubmodule_one : v.poleSubmodule 1 = v.simplePoleSubmodule := by
-  ext f; simp [mem_poleSubmodule, mem_simplePoleSubmodule]
+  ext f
+  simp only [mem_poleSubmodule, mem_simplePoleSubmodule, pow_one]
 
 theorem mem_poleSubmodule_iff_ord {n : ℕ} {f : F} (hf : f ≠ 0) :
     f ∈ v.poleSubmodule n ↔ -(n : ℤ) ≤ v.ord f := by
@@ -1845,8 +1837,9 @@ theorem aCoeff_one_eq_zero (v : Place K F) (S : Lg37CompletionSection v)
       * algebraMap v.toValuationSubring (lg37_completion v)
           v.uniformizerSubring ^ i) = 1 := by
     rw [Finset.sum_eq_single 0]
-    · simp [he_def]
-    · intro i _ hi; simp [he_def, hi]
+    · simp only [he_def, ite_eq_left rfl, map_one, pow_zero, mul_one]
+    · intro i _ hi
+      simp only [he_def, ite_eq_right hi, map_zero, zero_mul]
     · intro h; exact absurd (Finset.mem_range.mpr (by omega)) h
   have hevalid : AdicCompletion.evalₐ (maximalIdeal v.toValuationSubring) (n + 1)
       ((1 : lg37_completion v) - ∑ i ∈ Finset.range (n + 1), S.lift (e i)
@@ -1872,7 +1865,7 @@ theorem aCoeff_one_eq_zero (v : Place K F) (S : Lg37CompletionSection v)
     rw [e1, map_sub, hc, hevalid, sub_zero]
   have hzero := mp72a103_t2_taylor_coeff_eq_zero_of_depth v S (n + 1)
     (fun i => e i - cc i) key n (Nat.lt_succ_self n)
-  have hen : e n = 0 := by simp [he_def, Nat.one_le_iff_ne_zero.mp hn]
+  have hen : e n = 0 := ite_eq_right (Nat.one_le_iff_ne_zero.mp hn)
   have : e n - cc n = 0 := hzero
   rw [hen, zero_sub, neg_eq_zero] at this
   simp only [aCoeff, ← hcc_def]

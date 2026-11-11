@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneConstantExtension
-import Nyll.AlgebraicCurves.Places.ConstantExtension.SumDegFiberConstantsEqDeg
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneConstantExtension
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.SumDegFiberConstantsEqDeg
 
 /-!
 # Constant Field Degree Formula of is Constant Field Extension of is Curve Over
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

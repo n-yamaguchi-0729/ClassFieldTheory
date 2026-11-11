@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
 /-!
 # Pairings on power classes
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

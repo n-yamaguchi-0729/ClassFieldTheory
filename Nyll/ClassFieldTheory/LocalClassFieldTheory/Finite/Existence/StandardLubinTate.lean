@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormSubgroupExact
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormContainment
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormSubgroupExact
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+public import Nyll.GaloisCohomology.Cyclic.TateH0.NormImage
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
 
 /-!
 # Standard Lubin--Tate factors for finite local existence
@@ -23,7 +27,11 @@ Unlike the earlier transported Laurent-series construction, this source is
 characteristic-independent.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u
 
 open scoped ValuativeRel
 
@@ -34,7 +42,7 @@ open LocalFieldTheory
 open LocalFieldTheory.IsNonarchimedeanLocalField
 open LubinTate
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- Canonical standard Lubin--Tate level `m`, retained as a finite abelian
@@ -61,8 +69,7 @@ noncomputable def standardLubinTateFiniteAbelianSubextensionFixedFieldEquiv
     E ≃ₐ[K]
       abstractFixedField K (SeparableClosure K)
         (standardLubinTateFiniteAbelianSubextension K m).field := by
-  let hπ := standardLocalFieldUniformizer_isUniformizer K
-  let E := standardLubinTateLevelField hπ m
+  intro hπ E
   letI : FiniteDimensional K E :=
     standardLubinTateLevelField_finiteDimensional hπ m
   letI : IsAbelianGalois K E :=
@@ -82,6 +89,11 @@ noncomputable def standardLubinTateFiniteAbelianSubextensionFixedFieldEquiv
         (finiteGaloisFieldRangeOfEmbedding K E i)
   rw [hfixed]
   exact finiteGaloisFieldRangeEquivOfEmbedding K E i
+
+section NativeNormComparison
+
+variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+  [IsNonarchimedeanLocalField K]
 
 /-- The named standard level has exactly the canonical normalized
 uniformizer/principal-unit norm subgroup. -/
@@ -185,6 +197,8 @@ theorem standardLubinTateFiniteAbelianCompositum_nativeNormSubgroup_le
   simpa [standardLubinTateFiniteAbelianCompositum, U, T] using
     (finiteAbelianNormSubgroup_le_of_abstractNormSubgroup_le_map
       K (U.compositum T) H hP)
+
+end NativeNormComparison
 
 end LocalClassFieldTheory
 

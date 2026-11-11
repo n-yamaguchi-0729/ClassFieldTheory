@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeles
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ClassHerbrand
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeles
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ClassHerbrand
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
 
 /-!
 # Triviality from supported actual local norms
@@ -16,19 +18,23 @@ local norms outside S into a surjective class norm. The first norm inequality
 then forces an actual finite cyclic extension to have degree one.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 open AlgebraicCurve
 open scoped AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable {k K : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
 
 /-- Actual supported local norm preimages force a cyclic extension to be trivial. -/
 theorem finrank_eq_one_of_supported_local_norms
-    {M : Type} [Field M] [Algebra k M] [Algebra K M] [IsScalarTower k K M]
+    {M : Type w} [Field M] [Algebra k M] [Algebra K M] [IsScalarTower k K M]
     [FiniteDimensional K M] [IsGalois K M] [IsCyclic Gal(M/K)]
     [HasPrincipalDivisors k M]
     [Algebra (RatFunc k) M] [IsScalarTower k (RatFunc k) M] [FunctionField k M]

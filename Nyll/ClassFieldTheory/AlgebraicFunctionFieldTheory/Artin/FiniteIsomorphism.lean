@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
 
 /-!
 # Naturality of finite reciprocity under field isomorphisms
@@ -13,13 +15,18 @@ An algebra isomorphism of finite extensions identifies their Artin symbols
 by conjugation of the actual relative Galois groups.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField
 
 open scoped IsMulCommutative
 
-variable (k K L M : Type) [Field k] [Finite k] [Field K] [Field L] [Field M]
+variable (k : Type u) (K : Type v) (L : Type w) (M : Type x)
+    [Field k] [Finite k] [Field K] [Field L] [Field M]
     [Algebra k K] [Algebra k L] [Algebra k M] [Algebra K L] [Algebra K M]
     [IsScalarTower k K L] [IsScalarTower k K M]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]

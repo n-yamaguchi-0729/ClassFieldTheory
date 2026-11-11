@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Mathlib.RingTheory.Finiteness.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Mathlib.RingTheory.Finiteness.Basic
 
 /-!
 Finiteness of Cech cohomology is invariant under a cochain equivalence commuting with differentials.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

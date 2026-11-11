@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.AlgebraicCurves.Cohomology.Cech.ProjectiveSpace.TwistSubsingletonCohomologyNegLe
-import Nyll.AlgebraicCurves.Cohomology.Cech.ProjectiveSpace.GradedModuleHMapBijective
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleHEquivFD
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleHEquivPi
-import Nyll.AlgebraicCurves.Cohomology.Cech.ProjectiveSpace.GradedModulePresentationSubsingletonH
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModulePresentationKerIsFG
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.AlgebraicCurves.Cohomology.Cech.ProjectiveSpace.TwistSubsingletonCohomologyNegLe
+public import Nyll.AlgebraicCurves.Cohomology.Cech.ProjectiveSpace.GradedModuleHMapBijective
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleHEquivFD
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleHEquivPi
+public import Nyll.AlgebraicCurves.Cohomology.Cech.ProjectiveSpace.GradedModulePresentationSubsingletonH
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModulePresentationKerIsFG
 
 /-!
 # Proj Space Cech Graded Module subsingleton cohomology shift of is FG
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -65,7 +69,8 @@ open _root_.ProjSpaceCech.GradedModule.Presentation
 end GradedModule.Presentation
 namespace GradedModule.Presentation
 open scoped _root_.ProjSpaceCech.GradedModule _root_.ProjSpaceCech.GradedModule.Presentation in
-private def _root_.ProjSpaceCech.GradedModule.Presentation.shiftP (σ : GradedModule.Presentation M)
+/-- Shift a graded presentation by shifting each generator degree. -/
+def _root_.ProjSpaceCech.GradedModule.Presentation.shiftP (σ : GradedModule.Presentation M)
   (d : ℤ) :
     GradedModule.Presentation (GradedModule.shift M d) where
   J := σ.J
@@ -93,7 +98,8 @@ end GradedModule.Presentation
 open _root_.ProjSpaceCech
 namespace GradedModule.Presentation
 open scoped _root_.ProjSpaceCech.GradedModule _root_.ProjSpaceCech.GradedModule.Presentation in
-private def _root_.ProjSpaceCech.GradedModule.Presentation.kerToShift (σ :
+/-- The canonical map from the shifted presentation kernel to the shifted kernel. -/
+def _root_.ProjSpaceCech.GradedModule.Presentation.kerToShift (σ :
   GradedModule.Presentation M) (d : ℤ) :
     GradedModule.Hom (GradedModule.Presentation.ker (σ.shiftP d)) (GradedModule.shift σ.ker d) where
   toLinearMap := LinearMap.id
@@ -109,7 +115,8 @@ end GradedModule.Presentation
 open _root_.ProjSpaceCech
 namespace GradedModule.Presentation
 open scoped _root_.ProjSpaceCech.GradedModule _root_.ProjSpaceCech.GradedModule.Presentation in
-private def _root_.ProjSpaceCech.GradedModule.Presentation.shiftToKer (σ :
+/-- The inverse canonical map from the shifted kernel to the presentation kernel. -/
+def _root_.ProjSpaceCech.GradedModule.Presentation.shiftToKer (σ :
   GradedModule.Presentation M) (d : ℤ) :
     GradedModule.Hom (GradedModule.shift σ.ker d) (GradedModule.Presentation.ker (σ.shiftP d)) where
   toLinearMap := LinearMap.id

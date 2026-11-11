@@ -10,28 +10,32 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.AlgebraicGeometry.Sites.BigZariski
-import Mathlib.AlgebraicGeometry.Sites.Small
-import Mathlib.CategoryTheory.Sites.Coverage
-import Mathlib.CategoryTheory.Sites.Hypercover.Zero
-import Mathlib.CategoryTheory.Sites.Over
-import Mathlib.CategoryTheory.Sites.PrecoverageToGrothendieck
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleGluingOpenCover
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoPullbackOpenCover
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.RigidifiedBundleFibrewiseAlgebraicEquivalencePullbackOpenCover
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.AlgebraicGeometry.Sites.BigZariski
+public import Mathlib.AlgebraicGeometry.Sites.Small
+public import Mathlib.CategoryTheory.Sites.Coverage
+public import Mathlib.CategoryTheory.Sites.Hypercover.Zero
+public import Mathlib.CategoryTheory.Sites.Over
+public import Mathlib.CategoryTheory.Sites.PrecoverageToGrothendieck
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleGluingOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoPullbackOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.RigidifiedBundleFibrewiseAlgebraicEquivalencePullbackOpenCover
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
 /-!
 The algebraically trivial relative Picard presheaf satisfies Zariski descent
 when scalar extension induces bijections on global sections.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

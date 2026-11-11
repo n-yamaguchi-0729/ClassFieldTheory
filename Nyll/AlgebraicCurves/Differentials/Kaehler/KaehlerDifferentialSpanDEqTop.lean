@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.RingTheory.Etale.Field
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.LinearAlgebra.TensorProduct.Basis
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.FieldTheory.Separable
-import Mathlib.RingTheory.Algebraic.Defs
+module
+
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.RingTheory.Etale.Field
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.Algebraic.Defs
 
 /-!
 The differential of a transcendental coordinate spans the differential module.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -71,7 +75,9 @@ private theorem exists_basis : ∃ b : Module.Basis Unit F Ω[F⁄K], b () = D K
     (IntermediateField.adjoin K ({x} : Set F)) F
   let b₀ : Module.Basis Unit K[X] Ω[K[X]⁄K] :=
     (Module.Basis.singleton Unit K[X]).map (polynomialEquiv K).symm
-  have hb₀ : b₀ () = D K K[X] X := by simp [b₀]
+  have hb₀ : b₀ () = D K K[X] X := by
+    simp only [b₀, Module.Basis.map_apply, Module.Basis.singleton_apply,
+      polynomialEquiv_symm, one_smul]
   let ψ := tensorKaehlerEquivOfFormallyEtale K K[X] F
   refine ⟨(b₀.baseChange F).map ψ, ?_⟩
   have hX : algebraMap K[X] F X = x := by
@@ -90,7 +96,7 @@ theorem _root_.KaehlerDifferential.span_D_eq_top_of_transcendental (K : Type*) [
     Submodule.span F ({KaehlerDifferential.D K F x} : Set (KaehlerDifferential K F)) = ⊤ := by
   obtain ⟨b, hb⟩ := KaehlerDifferential.FF2.exists_basis hx
   have h := b.span_eq
-  rwa [show Set.range b = {KaehlerDifferential.D K F x} by ext ω; simp [Set.range_unique, hb]] at h
+  rwa [show Set.range b = {KaehlerDifferential.D K F x} by rw [Set.range_unique, hb]] at h
 
 end
 end AlgebraicCurves.Differentials.Kaehler.Proofs.KaehlerDifferential_span_D_eq_top_of_transcendental

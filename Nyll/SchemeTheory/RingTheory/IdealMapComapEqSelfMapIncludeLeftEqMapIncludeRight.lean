@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.RingTheory.TensorProduct.Basic
 
 /-!
 # Algebra, divisors, and base change
@@ -19,6 +21,8 @@ import Mathlib.RingTheory.TensorProduct.Basic
 Equality of the two tensor-square images is the descent condition for an ideal along a faithfully
 flat algebra.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -51,12 +55,19 @@ theorem map_comap_eq_self_of_descentCondition_of_section (σ : B →ₐ[A] A) (I
       (Algebra.TensorProduct.includeLeftRingHom : B →+* B ⊗[A] B) =
       (algebraMap A B).comp (σ : B →+* A) := by
     ext b
-    simp [θ, Algebra.TensorProduct.includeLeftRingHom]
+    simp only [Algebra.TensorProduct.includeLeftRingHom, ZeroHom.toFun_eq_coe,
+      AddMonoidHom.toZeroHom_coe, LinearMap.toAddMonoidHom_coe, RingHom.coe_comp, RingHom.coe_coe,
+      RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, LinearMap.flip_apply,
+      AlgebraTensorModule.mk_apply, LinearMap.coe_mk, AddHom.coe_mk,
+      Algebra.TensorProduct.lift_tmul, AlgHom.coe_comp, Algebra.ofId_apply, AlgHom.coe_id, id_eq,
+      mul_one, θ]
   have hθR : (θ : B ⊗[A] B →+* B).comp
       ((Algebra.TensorProduct.includeRight : B →ₐ[A] B ⊗[A] B) : B →+* B ⊗[A] B) =
         RingHom.id B := by
     ext b
-    simp [θ]
+    simp only [RingHom.coe_comp, RingHom.coe_coe, Function.comp_apply,
+      Algebra.TensorProduct.includeRight_apply, Algebra.TensorProduct.lift_tmul,
+      map_one, AlgHom.coe_id, id_eq, one_mul, RingHom.id_apply, θ]
   have h2 : I.map (σ : B →+* A) ≤ I.comap (algebraMap A B) := by
     rw [Ideal.map_le_iff_le_comap]
     intro i hi
@@ -95,8 +106,12 @@ theorem descentCondition_map (I₀ : Ideal A) : DescentCondition (A := A) (I₀.
   rw [Ideal.map_map, Ideal.map_map]
   congr 1
   ext a
-  simp [Algebra.TensorProduct.includeLeftRingHom, Algebra.TensorProduct.algebraMap_apply,
-    Algebra.TensorProduct.tmul_one_eq_one_tmul]
+  simp only [Algebra.TensorProduct.includeLeftRingHom, ZeroHom.toFun_eq_coe,
+    AddMonoidHom.toZeroHom_coe, LinearMap.toAddMonoidHom_coe, RingHom.coe_comp, RingHom.coe_mk,
+    MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, LinearMap.flip_apply,
+    AlgebraTensorModule.mk_apply, LinearMap.coe_mk, AddHom.coe_mk,
+    Algebra.TensorProduct.tmul_one_eq_one_tmul, AlgHom.comp_algebraMap_of_tower,
+    Algebra.TensorProduct.algebraMap_apply]
 
 theorem comap_includeLeft_map_includeRight [Module.Flat A B] (I : Ideal B) :
     (I.map ((Algebra.TensorProduct.includeRight : B →ₐ[A] B ⊗[A] B) : B →+* B ⊗[A] B)).comap
@@ -139,7 +154,11 @@ theorem comap_includeLeft_map_includeRight [Module.Flat A B] (I : Ideal B) :
     rw [Ideal.mem_comap, Ideal.mem_comap]
     have : Algebra.TensorProduct.includeLeftRingHom (algebraMap A B a) =
         (Algebra.TensorProduct.includeRight : B →ₐ[A] B ⊗[A] B) (algebraMap A B a) := by
-      simp [Algebra.TensorProduct.includeLeftRingHom, Algebra.algebraMap_eq_smul_one]
+      simp only [Algebra.TensorProduct.includeLeftRingHom, ZeroHom.toFun_eq_coe,
+        AddMonoidHom.toZeroHom_coe, LinearMap.toAddMonoidHom_coe, Algebra.algebraMap_eq_smul_one,
+        RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, map_smul, LinearMap.flip_apply,
+        AlgebraTensorModule.mk_apply, LinearMap.coe_mk, AddHom.coe_mk,
+        Algebra.TensorProduct.includeRight_apply]
     rw [this]
     exact Ideal.mem_map_of_mem _ ha
 
@@ -166,11 +185,20 @@ theorem map_comap_eq_self_of_descentCondition [Module.FaithfullyFlat A B] (I : I
     Algebra.TensorProduct.lift χ₁ χ₂ fun x y => Commute.all (χ₁ x) (χ₂ y)
   have hχL : (χ : B ⊗[A] B →+* (B ⊗[A] B) ⊗[B] (B ⊗[A] B)).comp iL = jL.comp iR := by
     ext b
-    simp [χ, χ₁, χ₂, iL, iR, jL, Algebra.TensorProduct.includeLeftRingHom]
+    simp only [Algebra.TensorProduct.includeLeftRingHom, ZeroHom.toFun_eq_coe,
+      AddMonoidHom.toZeroHom_coe, LinearMap.toAddMonoidHom_coe, RingHom.coe_comp, RingHom.coe_coe,
+      RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, LinearMap.flip_apply,
+      AlgebraTensorModule.mk_apply, LinearMap.coe_mk, AddHom.coe_mk,
+      Algebra.TensorProduct.lift_tmul, AlgHom.coe_comp, AlgHom.coe_restrictScalars',
+      Algebra.TensorProduct.includeRight_apply, Algebra.TensorProduct.includeLeft_apply,
+      Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, χ, χ₁, χ₂, iL, jL, iR]
     rfl
   have hχR : (χ : B ⊗[A] B →+* (B ⊗[A] B) ⊗[B] (B ⊗[A] B)).comp iR = jR.comp iR := by
     ext b
-    simp [χ, χ₁, χ₂, iR, jR]
+    simp only [RingHom.coe_comp, RingHom.coe_coe, Function.comp_apply,
+      Algebra.TensorProduct.includeRight_apply, Algebra.TensorProduct.lift_tmul, AlgHom.coe_comp,
+      AlgHom.coe_restrictScalars', Algebra.TensorProduct.includeLeft_apply,
+      Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul, χ, χ₁, χ₂, iR, jR]
     rfl
   have hDC : DescentCondition (A := B) (I.map iR) := by
     change (I.map iR).map jL = (I.map iR).map jR

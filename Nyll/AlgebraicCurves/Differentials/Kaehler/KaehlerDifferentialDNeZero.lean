@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.RingTheory.Etale.Field
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.LinearAlgebra.TensorProduct.Basis
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.FieldTheory.Separable
-import Mathlib.RingTheory.Algebraic.Defs
+module
+
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.RingTheory.Etale.Field
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.Algebraic.Defs
 
 /-!
 The differential of a transcendental coordinate is nonzero.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

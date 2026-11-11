@@ -16,6 +16,12 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decompositi
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteClassGroupNorm
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
 
 /-!
 # Global reciprocity at the actual places
@@ -27,11 +33,13 @@ unramified place it is the local-order power of arithmetic Frobenius.
 
 noncomputable section
 
+universe u v w
+
 open scoped AlgebraicCurve.Place
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

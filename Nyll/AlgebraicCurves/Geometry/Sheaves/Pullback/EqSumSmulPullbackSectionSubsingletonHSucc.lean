@@ -10,22 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.OrderedAffineCoverComap
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.OrderedAffineCoverCompactSpace
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.DZeroModulesEqZeroIffUnique
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.FlatCochainModules
-import Nyll.AlgebraicCurves.Foundations.Algebra.ModuleKerBaseChangeField
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.BaseChange.CochainBaseChangeEquiv
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.OrderedAffineCoverComap
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.OrderedAffineCoverCompactSpace
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.DZeroModulesEqZeroIffUnique
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.FlatCochainModules
+public import Nyll.AlgebraicCurves.Foundations.Algebra.ModuleKerBaseChangeField
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.BaseChange.CochainBaseChangeEquiv
 
 /-!
 # Scheme Modules exists eq sum smul pullback Section of subsingleton HSucc
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

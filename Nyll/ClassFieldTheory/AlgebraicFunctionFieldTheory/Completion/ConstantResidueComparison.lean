@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFrobeniusResidue
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFrobeniusResidue
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
 
 /-!
 # Completing the residue action of constant Frobenius
@@ -18,6 +20,8 @@ intertwines the original and completed actions of the decomposition group.
 In particular, completing the actual constant Frobenius preserves its
 arithmetic power action on the residue field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

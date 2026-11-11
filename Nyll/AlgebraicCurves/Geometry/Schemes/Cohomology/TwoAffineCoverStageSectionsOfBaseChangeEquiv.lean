@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Compatible scalar-extension equivalences of locally trivial module sections at an affine algebra
 stage.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -213,16 +217,15 @@ theorem exists_linearEquiv_transport
       X' ⟶ X₀)
     (hκf : κ ≫ fZ = σ) (sZ : Z ⟶ Spec (.of A')) (snd' : X' ⟶ Spec (.of A')) (hκs : κ ≫ sZ = snd')
     (M : X₀.Modules) (U : X₀.Opens) (U' : X'.Opens) (hU' : U' = σ ⁻¹ᵁ U) :
-    letI := moduleSectionsOfHom sZ ((Scheme.Modules.pullback fZ).obj M) (fZ ⁻¹ᵁ U)
-    letI := moduleSectionsOfHom snd' ((Scheme.Modules.pullback σ).obj M) U'
+    let := moduleSectionsOfHom sZ ((Scheme.Modules.pullback fZ).obj M) (fZ ⁻¹ᵁ U)
+    let := moduleSectionsOfHom snd' ((Scheme.Modules.pullback σ).obj M) U'
     ∃ T : Γ((Scheme.Modules.pullback fZ).obj M, fZ ⁻¹ᵁ U) ≃ₗ[A'] Γ((Scheme.Modules.pullback
       σ).obj M, U'),
       ∀ m : Γ(M, U), T ((((Scheme.Modules.pullbackPushforwardAdjunction fZ).unit.app M).app
         U).hom m) =
         ((Scheme.Modules.pullback σ).obj M).presheaf.map (homOfLE hU'.le).op
           ((((Scheme.Modules.pullbackPushforwardAdjunction σ).unit.app M).app U).hom m) := by
-  let := moduleSectionsOfHom sZ ((Scheme.Modules.pullback fZ).obj M) (fZ ⁻¹ᵁ U)
-  let := moduleSectionsOfHom snd' ((Scheme.Modules.pullback σ).obj M) U'
+  intro sharedOwner1 sharedOwner2
   let τ : (Scheme.Modules.pullback fZ).obj M ⟶
       (Scheme.Modules.pushforward κ).obj ((Scheme.Modules.pullback σ).obj M) :=
     (Scheme.Modules.pullbackPushforwardAdjunction κ).unit.app ((Scheme.Modules.pullback fZ).obj M) ≫
@@ -339,16 +342,14 @@ theorem exists_linearEquiv_sections_stage
       Nonempty ((Scheme.Modules.pullback V.ι).obj M ≅ SheafOfModules.unit V.toScheme.ringCatSheaf))
     (U : (Limits.pullback c (specMap R A₀)).Opens) (hU : IsAffineOpen U)
     (U' : (Limits.pullback c (specMap R A')).Opens) (hU' : U' = σ ⁻¹ᵁ U) :
-    letI := moduleSectionsOfHom (Limits.pullback.snd c (specMap R A₀)) M U
-    letI := moduleSectionsOfHom (Limits.pullback.snd c (specMap R A')) ((Scheme.Modules.pullback
+    let := moduleSectionsOfHom (Limits.pullback.snd c (specMap R A₀)) M U
+    let := moduleSectionsOfHom (Limits.pullback.snd c (specMap R A')) ((Scheme.Modules.pullback
       σ).obj M) U'
     ∃ e : A' ⊗[A₀] Γ(M, U) ≃ₗ[A'] Γ((Scheme.Modules.pullback σ).obj M, U'),
       ∀ m : Γ(M, U), e ((1 : A') ⊗ₜ[A₀] m) =
         ((Scheme.Modules.pullback σ).obj M).presheaf.map (homOfLE hU'.le).op
           ((((Scheme.Modules.pullbackPushforwardAdjunction σ).unit.app M).app U).hom m) := by
-  let := moduleSectionsOfHom (Limits.pullback.snd c (specMap R A₀)) M U
-  let := moduleSectionsOfHom (Limits.pullback.snd c (specMap R A')) ((Scheme.Modules.pullback
-    σ).obj M) U'
+  intro sharedOwner1 sharedOwner2
   have := isIso_lift_stage c σ hfst hsnd
   obtain ⟨eZ, heZ⟩ := Scheme.Modules.exists_linearEquiv_sections_baseChange_of_locallyTrivial
     (Limits.pullback.snd c (specMap R A₀)) M htriv U hU A'

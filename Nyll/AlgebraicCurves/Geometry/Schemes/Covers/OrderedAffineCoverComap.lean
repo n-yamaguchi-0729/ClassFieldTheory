@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 
 /-!
 # Ordered Affine Cover Comap
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -20,12 +20,14 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- Embedding in some ray class field realization is equivalent to
 embedding in every realization for the same modulus. -/
 theorem embedsInRayClassField_iff_every_realization
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     (m : RayClassModulus K) :

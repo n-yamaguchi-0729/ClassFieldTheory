@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.ValuedFieldTheory.Valuation.Completion.WeakApproximation
-import Mathlib.Topology.Algebra.IsOpenUnits
+module
+
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.ValuedFieldTheory.Valuation.Completion.WeakApproximation
+public import Mathlib.Topology.Algebra.IsOpenUnits
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Basic
 
 /-!
 # Weak approximation at finitely many places
@@ -16,6 +20,8 @@ Distinct places give inequivalent discrete valuations because their valuation
 subrings differ. The existing weak approximation theorem therefore gives density
 in the product of the actual completed fields used in the adele ring.
 -/
+
+@[expose] public section
 
 open scoped WithZero
 

@@ -10,13 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.Orders.FiniteSetOfOrdNeZeroFiniteDimensional
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncHasPrincipalDivisors
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegFiberOver
-import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
-import Mathlib.RingTheory.Norm.Transitivity
-import Mathlib.FieldTheory.RatFunc.Basic
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.Orders.FiniteSetOfOrdNeZeroFiniteDimensional
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncHasPrincipalDivisors
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegFiberOver
+public import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
+public import Mathlib.RingTheory.Norm.Transitivity
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Algebra, divisors, and base change
@@ -24,6 +27,8 @@ import Mathlib.FieldTheory.RatFunc.Basic
 Nonzero functions in a finite separable rational-function-field extension have finitely supported
 order divisors.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -169,7 +174,7 @@ variable {K : Type*} [Field K] {F' : Type*} [Field F'] [Algebra K F']
 function. -/
 def principalDivisorOf {f : F'} (hf : f ≠ 0) : AlgebraicCurve.Divisor K F' :=
   ⟨(finite_setOf_ord_ne_zero_of_finiteDimensional hf).toFinset, fun w => w.ord f, fun w => by
-    simp [Set.Finite.mem_toFinset]⟩
+    simp only [Set.Finite.mem_toFinset, Set.mem_ofPred_eq]⟩
 
 end HPDfdPort
 

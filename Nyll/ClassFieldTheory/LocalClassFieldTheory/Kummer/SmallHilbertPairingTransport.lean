@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.MathlibHilbertPairing
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.MathlibHilbertPairing
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
 
 /-!
 # Transport of Hilbert pairings across field equivalences
@@ -14,6 +16,8 @@ The Type 0 local construction can be applied to a small representative of a
 local field.  This file transports its public power-class and Kummer-norm
 statements back across the field equivalence.
 -/
+
+@[expose] public section
 
 noncomputable section
 

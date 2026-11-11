@@ -10,27 +10,31 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsOpenSetOfSubsingletonH1Fibre
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.SubsingletonH1FibreSubsingletonH1ResidueFieldChart
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsOpenSetOfSubsingletonH1Fibre
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.SubsingletonH1FibreSubsingletonH1ResidueFieldChart
 
 /-!
 # Relative Picard varieties and fibre cohomology
 
 Prove that vanishing of first cohomology on every fibre is an open condition on the base.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -145,10 +149,6 @@ namespace OpenLocusSol
 open _root_.AlgebraicGeometry.RelPicard
 open _root_.AlgebraicGeometry
 
-local instance nativeSpecPointIsPrime {A : Type u} [CommRing A]
-    (𝔭 : ↥(Spec (CommRingCat.of A))) : 𝔭.asIdeal.IsPrime :=
-  (show PrimeSpectrum A from 𝔭).isPrime
-
 theorem specMap_residueField_base {A : Type u} [CommRing A] (𝔭 : PrimeSpectrum A) :
     (Scheme.TwoAffineOpenCover.specMap A 𝔭.asIdeal.ResidueField).base
       (IsLocalRing.closedPoint 𝔭.asIdeal.ResidueField) = 𝔭 := by
@@ -167,7 +167,7 @@ theorem toK4
     {A : Type u} [CommRing A] (j : Spec (CommRingCat.of A) ⟶ T)
     {CA : Scheme.{u}} (g' : CA ⟶ pullback c t) (πA : CA ⟶ Spec (CommRingCat.of A))
     (hcart : IsPullback g' πA (pullback.snd c t) j)
-    (𝒱 : CA.TwoAffineOpenCover) (𝔭 : ↥(Spec (CommRingCat.of A)))
+    (𝒱 : CA.TwoAffineOpenCover) (𝔭 : PrimeSpectrum A)
     (hU : ∀ (k : Type u) [Field k] (s : Spec (CommRingCat.of k) ⟶ T),
       s.base (IsLocalRing.closedPoint k) = j.base 𝔭 →
         ∀ 𝒲 : (pullback (pullback.snd c t) s).TwoAffineOpenCover,
@@ -222,7 +222,7 @@ theorem main
   have hO := Scheme.TwoAffineOpenCover.isOpen_setOf_subsingleton_H1_fibre
     (pullback.snd c (Scheme.TwoAffineOpenCover.specMap R Γ(T, W))) 𝒱
     ((Scheme.Modules.pullback g').obj M) (hM.pullback g')
-  refine ⟨hW.fromSpec.base '' {𝔭 | Subsingleton
+  refine ⟨hW.fromSpec.base '' {𝔭 : PrimeSpectrum Γ(T, W) | Subsingleton
       ((𝒱.pullback (pullback.snd c (Scheme.TwoAffineOpenCover.specMap R Γ(T,
         W))) 𝔭.asIdeal.ResidueField).sectionsOf
         (pullback.snd (pullback.snd c (Scheme.TwoAffineOpenCover.specMap R Γ(T, W)))

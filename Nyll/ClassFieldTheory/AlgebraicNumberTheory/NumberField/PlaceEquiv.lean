@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+module
+
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 
 /-!
 # Places under a number-field equivalence
@@ -14,6 +16,8 @@ import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 A field equivalence bijects both the finite and infinite places. These
 equivalences reindex placewise products without changing their mathematics.
 -/
+
+@[expose] public section
 
 noncomputable section
 

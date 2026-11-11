@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.Index
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
+module
+
+public import Mathlib.GroupTheory.Index
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
 
 /-!
 # The actual norm index of a finite abelian function-field extension
@@ -15,11 +17,15 @@ Finite reciprocity identifies the index of the actual idele-class norm
 subgroup with the ordinary extension degree.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

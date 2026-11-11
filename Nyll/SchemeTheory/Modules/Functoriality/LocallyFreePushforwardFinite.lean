@@ -10,24 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.SchemeTheory.Modules.Functoriality.LocallyFreePushforwardPullback
-import Nyll.SchemeTheory.Modules.Quasicoherent.IsoFromTildeGammaPushforward
-import Nyll.SchemeTheory.Modules.Quasicoherent.LocallyFreeTilde
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.SchemeTheory.Modules.Functoriality.LocallyFreePushforwardPullback
+public import Nyll.SchemeTheory.Modules.Quasicoherent.IsoFromTildeGammaPushforward
+public import Nyll.SchemeTheory.Modules.Quasicoherent.LocallyFreeTilde
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
 /-!
 # Local freeness of a finite flat pushforward
 
 Constructs local trivializations of the pushforward from local trivializations on a finite
 flat cover.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

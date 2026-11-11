@@ -11,21 +11,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.IsSheafPicardZeroPresheafZariskiBijectiveSections
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBijectiveAlgebraMapSectionsBaseChange
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.IsSheafPicardZeroPresheafZariskiBijectiveSections
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBijectiveAlgebraMapSectionsBaseChange
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
 /-!
 Finite-map data supplies the section comparison needed for Zariski descent.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

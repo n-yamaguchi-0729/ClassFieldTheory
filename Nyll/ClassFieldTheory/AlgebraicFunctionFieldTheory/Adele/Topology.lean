@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Compact
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.RestrictedProductUnitsTopology
+module
+
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Compact
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.RestrictedProductUnitsTopology
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # The all-place adele topology
@@ -15,6 +18,8 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.RestrictedProductUnitsT
 The integer adeles form a compact open subring. The units carry precisely the
 restricted-product idele topology, by the existing common unit equivalence.
 -/
+
+@[expose] public section
 
 noncomputable section
 

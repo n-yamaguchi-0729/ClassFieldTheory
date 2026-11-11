@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Sites.Representability
-import Mathlib.CategoryTheory.Limits.Types.Pullbacks
-import Nyll.AlgebraicCurves.RelativeDivisors.Support.RelEffCartierDivSupportedIn
+module
+
+public import Mathlib.AlgebraicGeometry.Sites.Representability
+public import Mathlib.CategoryTheory.Limits.Types.Pullbacks
+public import Nyll.AlgebraicCurves.RelativeDivisors.Support.RelEffCartierDivSupportedIn
 
 /-!
 The inclusion of divisors supported in an open is an open immersion of presheaves.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

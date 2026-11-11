@@ -10,15 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
-import Nyll.AlgebraicCurves.Places.ValuationRings.ToValuationSubringEqComapRingHomSeparable
-import Nyll.AlgebraicCurves.Places.Basic
+module
+
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.DisjointSpanCoefficients
+public import Mathlib.RingTheory.KrullDimension.PID
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
+public import Nyll.AlgebraicCurves.Places.ValuationRings.ToValuationSubringEqComapRingHomSeparable
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Place nat Card set Of comap eq eq deg of linear Disjoint
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -491,7 +498,7 @@ theorem mem_nonunits_iff_isRoot {v : Place k F₀} {W : Place K F} (hb : ResBij 
   have hdec : (⟨r, hrW⟩ : W.toValuationSubring)
       = ⟨aeval (ι (θ : F₀)) P, aeval_mem W hΘ P⟩ + ⟨ι (π : F₀), hPiW⟩ * ⟨r', hr'W⟩ := by
     apply Subtype.ext
-    simp [hr]
+    exact hr
   have hPi0 : resHom W hb ⟨ι (π : F₀), hPiW⟩ = 0 :=
     (mem_nonunits_iff_resHom_eq_zero W hb _).mp hPiu
   rw [hdec, map_add, map_mul, hPi0, zero_mul, add_zero, resHom_aeval]
@@ -707,54 +714,8 @@ variable {k K F₀ F : Type*} [Field k] [Field K] [Field F₀] [Field F]
 local notation "ι" => algebraMap F₀ F
 
 theorem eq_of_le_of_ne_top (v : Place k F₀) {O' : ValuationSubring F₀}
-    (hle : v.toValuationSubring ≤ O') (hne : O' ≠ ⊤) : O' = v.toValuationSubring := by
-  by_contra hne'
-  have hlt : v.toValuationSubring < O' := lt_of_le_of_ne hle (Ne.symm hne')
-  obtain ⟨x, hxO', hxv⟩ := IsConcreteLE.exists_of_lt hlt
-  obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible v.toValuationSubring
-  have hϖ0 : (ϖ : F₀) ≠ 0 := by exact_mod_cast hϖ.ne_zero
-  have hx0 : x ≠ 0 := fun h => hxv (h ▸ zero_mem _)
-  have hxinv : x⁻¹ ∈ v.toValuationSubring := (v.toValuationSubring.mem_or_inv_mem x).resolve_left
-    hxv
-  obtain ⟨u, hu⟩ := v.exists_unit_mul_zpow (inv_ne_zero hx0) hϖ
-  set n := v.ord x⁻¹ with hn
-  have hn0 : 0 ≤ n := (Place.mem_iff_ord_nonneg v (inv_ne_zero hx0)).mp hxinv
-  have hn1 : n ≠ 0 := by
-    intro hzero
-    rw [hzero, zpow_zero, mul_one] at hu
-    apply hxv
-    have hxu : x = (((u⁻¹ : (v.toValuationSubring)ˣ) : v.toValuationSubring) : F₀) := by
-      rw [← inv_inv x, hu]
-      symm
-      apply eq_inv_of_mul_eq_one_right
-      have h := congrArg Subtype.val (Units.mul_inv u)
-      rw [Subring.coe_mul] at h
-      exact h
-    rw [hxu]
-    exact Subtype.mem _
-  have hϖO' : (ϖ : F₀) ∈ O' := hle ϖ.2
-  have hϖinv : (ϖ : F₀)⁻¹ ∈ O' := by
-    have hxu : x * (u : F₀) * (ϖ : F₀) ^ n = 1 := by
-      rw [mul_assoc, ← hu, mul_inv_cancel₀ hx0]
-    have : (ϖ : F₀)⁻¹ = x * (u : F₀) * (ϖ : F₀) ^ (n - 1) := by
-      rw [zpow_sub_one₀ hϖ0, ← mul_assoc, hxu, one_mul]
-    rw [this]
-    refine mul_mem (mul_mem hxO' (hle u.1.2)) ?_
-    have hpow : (ϖ : F₀) ^ (n - 1) = (ϖ : F₀) ^ ((n - 1).toNat) := by
-      rw [← zpow_natCast, Int.toNat_of_nonneg (by omega)]
-    rw [hpow]
-    exact pow_mem hϖO' _
-  have hϖunit : (ϖ : F₀) ∉ O'.nonunits := fun h => inv_notMem_of_mem_nonunits O' hϖ0 h hϖinv
-  have hval : O'.valuation (ϖ : F₀) = 1 := valuation_eq_one_of_notMem_nonunits O' hϖO' hϖunit
-  apply hne
-  ext y
-  refine ⟨fun _ => trivial, fun _ => ?_⟩
-  rcases eq_or_ne y 0 with rfl | hy0
-  · exact zero_mem _
-  obtain ⟨u', hu'⟩ := v.exists_unit_mul_zpow hy0 hϖ
-  rw [hu']
-  refine mul_mem (hle u'.1.2) ?_
-  rw [← O'.valuation_le_one_iff, map_zpow₀, hval, one_zpow]
+    (hle : v.toValuationSubring ≤ O') (hne : O' ≠ ⊤) : O' = v.toValuationSubring :=
+  (ValuationSubring.eq_of_le_of_ne_top v.toValuationSubring hle hne).symm
 
 /-- The base-field submodule of elements with valuation strictly less than one. -/
 def Nsub (v : Place k F₀) : Submodule k F₀ where
@@ -797,7 +758,7 @@ theorem disjoint_span_pow_Nsub (v : Place k F₀) (θ : v.toValuationSubring) :
   intro x hx hN
   obtain ⟨a, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun k).mp hx
   have := coeff_eq_zero_of_sum_smul_pow_mem v θ a hN
-  simp [this]
+  simp only [this, zero_smul, Finset.sum_const_zero]
 
 theorem algebraMap_mem_span_image {t : Set F₀} {z : F₀} (hz : z ∈ Submodule.span k t) :
     ι z ∈ Submodule.span K (algebraMap F₀ F '' t) := by
@@ -819,55 +780,9 @@ theorem coeff_eq_zero_of_LD
     (a : Fin (minpoly k (IsLocalRing.residue _ θ)).natDegree → K) {y : F}
     (hy : y ∈ Submodule.span K (algebraMap F₀ F '' (Nsub v : Set F₀)))
     (h : ∑ i, a i • ι (θ : F₀) ^ (i : ℕ) = y) : ∀ i, a i = 0 := by
-  classical
-  rw [Submodule.mem_span_set'] at hy
-  obtain ⟨n, c, g, rfl⟩ := hy
-  have hg : ∀ j, ∃ f : F₀, f ∈ (Nsub v : Set F₀) ∧ ι f = (g j : F) := fun j => (g j).2
-  choose f hfN hfι using hg
-  obtain ⟨b, hbt, hspan, hbind⟩ := exists_linearIndependent k (Set.range f)
-  have hbfin : b.Finite := (Set.finite_range f).subset hbt
-  let : Fintype b := hbfin.fintype
-  have hrange : Set.range (fun z : b => ι (z : F₀)) = algebraMap F₀ F '' b := by
-    ext y
-    simp only [Set.mem_range, Set.mem_image, Subtype.exists, exists_prop]
-  have hy' : (∑ j, c j • (g j : F)) ∈ Submodule.span K (Set.range fun z : b => ι (z : F₀)) := by
-    rw [hrange]
-    refine Submodule.sum_mem _ fun j _ => Submodule.smul_mem _ _ ?_
-    rw [← hfι j]
-    apply algebraMap_mem_span_image (k := k)
-    rw [hspan]
-    exact Submodule.subset_span ⟨j, rfl⟩
-  obtain ⟨c', hc'⟩ := (Submodule.mem_span_range_iff_exists_fun K).mp hy'
-  let w : Fin (minpoly k (IsLocalRing.residue _ θ)).natDegree ⊕ b → F₀ :=
-    Sum.elim (fun i => (θ : F₀) ^ (i : ℕ)) (fun z => (z : F₀))
-  have hw : LinearIndependent k w := by
-    apply LinearIndependent.sum_type (linearIndependent_pow_theta v θ) hbind
-    refine (disjoint_span_pow_Nsub v θ).mono_right ?_
-    rw [Subtype.range_coe_subtype, Set.ofPred_mem_eq, hspan, Submodule.span_le]
-    rintro _ ⟨j, rfl⟩
-    exact hfN j
-  let coef : Fin (minpoly k (IsLocalRing.residue _ θ)).natDegree ⊕ b → K :=
-    Sum.elim a (fun z => - c' z)
-  have hrel : ∑ x, algebraMap K F (coef x) * ι (w x) = 0 := by
-    rw [Fintype.sum_sum_type]
-    simp only [w, coef, Sum.elim_inl, Sum.elim_inr, map_pow, map_neg, neg_mul,
-      Finset.sum_neg_distrib]
-    have e1 : ∑ i : Fin (minpoly k (IsLocalRing.residue _ θ)).natDegree,
-        algebraMap K F (a i) * ι (θ : F₀) ^ (i : ℕ) = ∑ i, a i • ι (θ : F₀) ^ (i : ℕ) := by
-      simp [Algebra.smul_def]
-    have e2 : ∑ z : b, algebraMap K F (c' z) * ι (z : F₀) = ∑ z : b, c' z • ι (z : F₀) := by
-      simp [Algebra.smul_def]
-    rw [e1, e2, h, hc', add_neg_cancel]
-  let e := (Fintype.equivFin (Fin (minpoly k (IsLocalRing.residue _ θ)).natDegree ⊕ b)).symm
-  have hsum : ∑ i, algebraMap K F ((coef ∘ e) i) * ι ((w ∘ e) i) = 0 := by
-    rw [show ∑ i, algebraMap K F ((coef ∘ e) i) * ι ((w ∘ e) i)
-        = ∑ x, algebraMap K F (coef x) * ι (w x) from
-      Equiv.sum_comp e (fun x => algebraMap K F (coef x) * ι (w x))]
-    exact hrel
-  have hLD' := hLD _ (w ∘ e) (coef ∘ e) (hw.comp e e.injective) hsum
-  intro i
-  have := hLD' (e.symm (Sum.inl i))
-  simpa [coef] using this
+  exact _root_.LinearIndependent.coeff_eq_zero_of_disjoint_span_image
+    (linearIndependent_pow_theta v θ) hLD (disjoint_span_pow_Nsub v θ) a hy
+    (by simpa only [map_pow] using h)
 
 theorem valuation_pi_lt_one (v : Place k F₀) {π : v.toValuationSubring} (hπ : Irreducible π) :
     v.toValuationSubring.valuation (π : F₀) < 1 := by

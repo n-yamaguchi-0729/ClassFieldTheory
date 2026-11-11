@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Sites.Representability
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
-import Nyll.AlgebraicCurves.RelativeDivisors.Support.RelEffCartierDivSupportedIn
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsSheafFunctor
-import Nyll.AlgebraicCurves.RelativeDivisors.Support.OpenImmersionPresheafSupportedInIncl
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsRepresentableSupportedIn
-import Nyll.AlgebraicCurves.RelativeDivisors.Support.SupportedInFinset
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Sites.Representability
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+public import Nyll.AlgebraicCurves.RelativeDivisors.Support.RelEffCartierDivSupportedIn
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsSheafFunctor
+public import Nyll.AlgebraicCurves.RelativeDivisors.Support.OpenImmersionPresheafSupportedInIncl
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsRepresentableSupportedIn
+public import Nyll.AlgebraicCurves.RelativeDivisors.Support.SupportedInFinset
 
 /-!
 Existence of a universal relative effective Cartier divisor.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

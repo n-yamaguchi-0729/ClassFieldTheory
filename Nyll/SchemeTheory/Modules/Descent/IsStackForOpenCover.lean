@@ -11,11 +11,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
-import Nyll.SchemeTheory.Modules.Descent.ToDescentDataEssSurjOpenCover
+module
+
+public import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
+public import Nyll.SchemeTheory.Modules.Descent.ToDescentDataEssSurjOpenCover
 /-!
 # Scheme Modules is Stack For open Cover
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

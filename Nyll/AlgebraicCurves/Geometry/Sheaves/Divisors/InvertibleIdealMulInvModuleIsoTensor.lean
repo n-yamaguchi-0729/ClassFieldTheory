@@ -10,17 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealMulModuleIsoTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealMulModuleIsoTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
 
 /-!
 # Inverse modules of products of invertible ideal sheaves
@@ -28,6 +30,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
 The inverse module of a product of invertible ideal sheaves is identified with
 the tensor product of their inverse modules.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

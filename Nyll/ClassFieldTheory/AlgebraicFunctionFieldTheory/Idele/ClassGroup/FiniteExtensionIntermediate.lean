@@ -4,7 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionFixed
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionFixed
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 
 /-!
 # Arbitrary finite intermediate idele classes in the direct limit
@@ -15,6 +20,8 @@ The image is exactly the classes fixed by the ambient subgroup fixing the
 intermediate field pointwise, including when that field is not normal over the
 original base.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -136,15 +143,16 @@ def restrictOverIntermediate (E : IntermediateField K Ω)
     (H : FiniteGaloisIntermediateField K Ω) (h : E ≤ H)
     (σ : Ω ≃ₐ[K] Ω) (hσ : σ ∈ E.fixingSubgroup) :
     let _ : Algebra E H := (IntermediateField.inclusion h).toRingHom.toAlgebra
-    H ≃ₐ[E] H :=
-  let _aEH : Algebra E H := (IntermediateField.inclusion h).toRingHom.toAlgebra
-  { __ := (AlgEquiv.restrictNormalHom H σ).toRingEquiv
-    commutes' x := by
-      apply Subtype.ext
-      change algebraMap H Ω ((AlgEquiv.restrictNormalHom H σ) (algebraMap E H x)) =
-        algebraMap H Ω (algebraMap E H x)
-      exact (AlgEquiv.restrictNormal_commutes σ H (algebraMap E H x)).trans
-        (((IntermediateField.mem_fixingSubgroup_iff E σ).mp hσ) x.1 x.2) }
+    H ≃ₐ[E] H := by
+  intro algebraEH
+  exact
+    { __ := (AlgEquiv.restrictNormalHom H σ).toRingEquiv
+      commutes' x := by
+        apply Subtype.ext
+        change algebraMap H Ω ((AlgEquiv.restrictNormalHom H σ) (algebraMap E H x)) =
+          algebraMap H Ω (algebraMap E H x)
+        exact (AlgEquiv.restrictNormal_commutes σ H (algebraMap E H x)).trans
+          (((IntermediateField.mem_fixingSubgroup_iff E σ).mp hσ) x.1 x.2) }
 
 /-- Actual finite-intermediate-field classes are fixed by their pointwise
 ambient fixing subgroup after inclusion into the limit. -/

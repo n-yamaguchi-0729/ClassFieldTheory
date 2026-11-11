@@ -10,22 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
-import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsLFPInjRelPicardPresheaf
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsLFPInjRelPicardPresheaf
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
 /-!
 # Relative Picard varieties and fibre cohomology
 
 Transfer finite-presentation injectivity from the relative Picard presheaf to its algebraically
 trivial cut.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

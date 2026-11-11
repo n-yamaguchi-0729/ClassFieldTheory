@@ -10,23 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Mathlib.AlgebraicGeometry.Geometrically.Irreducible
-import Mathlib.RingTheory.FinitePresentation
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleGenericPointNotMemSupportZeroSchemeIdeal
-import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.ReducedSmoothOverField
-import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
+module
+
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Mathlib.AlgebraicGeometry.Geometrically.Irreducible
+public import Mathlib.RingTheory.FinitePresentation
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleGenericPointNotMemSupportZeroSchemeIdeal
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.ReducedSmoothOverField
+public import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
 
 /-!
 Construct a relative effective Cartier divisor from a nonzero section in the proper case.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

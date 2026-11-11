@@ -4,12 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianLocalConductorComparison
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicFinitePlaceArtin
-import Nyll.ClassFieldTheory.KroneckerWeber.RayClassComparison
-import Nyll.GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicCharacterEquiv
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerAlgEquivNaturality
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianLocalConductorComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicFinitePlaceArtin
+public import Nyll.ClassFieldTheory.KroneckerWeber.RayClassComparison
+public import Nyll.GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicCharacterEquiv
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+public import Nyll.GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicField
+public import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
 
 /-!
 # Rational cyclotomic ray norm groups
@@ -27,6 +34,8 @@ the unramified Artin formula together with valuation zero.  The finite
 cyclotomic character then detects that the full local Artin symbol is
 trivial.
 -/
+
+@[expose] public section
 
 open scoped NNReal NumberField ValuativeRel
 open NumberField IsDedekindDomain
@@ -161,9 +170,7 @@ theorem
         (padicLocalField q.1).toCompleteDVF n).map
         (CompleteDVF.valuationSubringUnitsToFieldUnits
           (padicLocalField q.1).toCompleteDVF) := by
-  let vQ :=
-    HeightOneSpectrum.adicAbv ℚ
-      (RayClass.rationalPrime q)
+  intro vQ
   let eO :
       𝒪[vQ.Completion] ≃+*
         (padicLocalField q.1).valuationSubring :=
@@ -688,8 +695,7 @@ theorem
         (RayClass.rationalModulus m) ≤
       (_root_.ideleClassNorm ℚ
         (KummerTheory.rationalCyclotomicLevel mp)).range := by
-  dsimp only
-  let mp : ℕ+ := ⟨m, Nat.pos_of_ne_zero hm⟩
+  intro mp
   let L := KummerTheory.rationalCyclotomicLevel mp
   have hlocal :
       ∀ v : HeightOneSpectrum (𝓞 ℚ),

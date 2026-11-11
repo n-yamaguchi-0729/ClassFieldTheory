@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
 
 /-!
 # Function fields of isomorphic integral schemes
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Models.Construction.Basic
 An isomorphism of integral schemes over a field induces an algebra equivalence of their
 function fields.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -31,11 +35,10 @@ theorem _root_.AlgebraicCurve.nonempty_algEquiv_functionField_of_iso
     {K : Type u} [Field K] {X Y : Scheme.{u}} [IsIntegral X] [IsIntegral Y]
     (cX : X ⟶ Spec (CommRingCat.of K)) (cY : Y ⟶ Spec (CommRingCat.of K))
     (e : X ≅ Y) (he : e.hom ≫ cY = cX) :
-    letI := (baseToFunctionField cX).toAlgebra
-    letI := (baseToFunctionField cY).toAlgebra
+    let := (baseToFunctionField cX).toAlgebra
+    let := (baseToFunctionField cY).toAlgebra
     Nonempty (X.functionField ≃ₐ[K] Y.functionField) := by
-  let := (baseToFunctionField cX).toAlgebra
-  let := (baseToFunctionField cY).toAlgebra
+  intro sharedOwner1 sharedOwner2
   have hsurj : Function.Surjective e.hom.base := by
     rw [← Scheme.coe_homeoOfIso]; exact (Scheme.homeoOfIso e).surjective
   have hgen : IsGenericPoint (e.hom.base (genericPoint X)) (Set.univ : Set Y) := by

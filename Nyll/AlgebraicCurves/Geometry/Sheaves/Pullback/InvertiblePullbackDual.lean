@@ -10,13 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PresheafPullbackMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PresheafPullbackMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
 
 /-!
 # Pullback of the dual of an invertible module
@@ -24,6 +26,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
 Uniqueness of a tensor inverse identifies the pullback of the dual with the dual
 of the pullback of an invertible module.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

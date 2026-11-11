@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
 /-!
 # Representations of the relative sub-Picard presheaf
 
@@ -21,6 +23,8 @@ A representing relative Picard designation classifies the permitted rigidified l
 classes and determines a representation of their presheaf. Conversely, a presheaf
 representation compatible with the zero class supplies the designation's universal bundle.
 -/
+
+@[expose] public section
 
 noncomputable section
 

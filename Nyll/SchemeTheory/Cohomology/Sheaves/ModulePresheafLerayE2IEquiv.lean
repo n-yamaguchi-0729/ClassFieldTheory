@@ -10,13 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
-import Mathlib.LinearAlgebra.Quotient.Pi
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
+public import Mathlib.LinearAlgebra.Quotient.Pi
+public import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
 
 /-!
 Identification of the first Leray spectral-sequence page with Cech cohomology of relative
 cohomology.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

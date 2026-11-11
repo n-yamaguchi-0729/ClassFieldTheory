@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotientTransitions
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotientTransitions
 
 /-!
 # Finite coordinates of absolute function-field reciprocity
@@ -16,20 +18,25 @@ an actual finite abelian Galois group. Its Artin map is continuous and
 surjective, and the coordinates commute with the quotient transitions.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open LocalClassFieldTheory CategoryTheory
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v)
+    [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 
 /-- The continuous Artin coordinate at a finite quotient of the absolute abelianization. -/
 def absoluteFiniteArtinCoordinate
     (N : OpenNormalSubgroup (localAbsoluteAbelianProfinite K)) :
-    IdeleClassGroup k K →ₜ* ((localAbsoluteAbelianProfinite K).diagram.obj N : Type) := by
+    IdeleClassGroup k K →ₜ* ((localAbsoluteAbelianProfinite K).diagram.obj N : Type v) := by
   let akΩ : Algebra k (SeparableClosure K) :=
     ((algebraMap K (SeparableClosure K)).comp (algebraMap k K)).toAlgebra
   let aRΩ : Algebra (RatFunc k) (SeparableClosure K) :=
@@ -42,7 +49,7 @@ def absoluteFiniteArtinCoordinate
     IsScalarTower.of_algebraMap_eq (fun x => congrArg (algebraMap K (SeparableClosure K))
       (IsScalarTower.algebraMap_apply k (RatFunc k) K x))
   let E := absoluteFiniteQuotientField K N
-  let f : Gal(E/K) →ₜ* ((localAbsoluteAbelianProfinite K).diagram.obj N : Type) :=
+  let f : Gal(E/K) →ₜ* ((localAbsoluteAbelianProfinite K).diagram.obj N : Type v) :=
     { toMonoidHom := (absoluteFiniteQuotientEquiv K N).symm.toMulEquiv.toMonoidHom
       continuous_toFun := continuous_of_discreteTopology }
   exact f.comp

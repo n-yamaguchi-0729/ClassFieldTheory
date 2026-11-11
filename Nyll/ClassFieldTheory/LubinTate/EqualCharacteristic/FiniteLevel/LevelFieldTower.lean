@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.SplittingField.IsSplittingField
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+module
+
+public import Mathlib.FieldTheory.SplittingField.IsSplittingField
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
 
 /-!
 # Towers of equal-characteristic Lubin--Tate level fields
@@ -16,6 +18,8 @@ level fields nevertheless form an increasing tower.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -42,10 +46,7 @@ theorem equalCharacteristicLubinTatePrimitivePredecessor_isRoot
         (chosenEqualCharacteristicLubinTatePrimitiveRoot F n)
     ((equalCharacteristicLubinTatePrimitivePolynomial F m).map
       (equalCharacteristicSeparableBaseHom F)).IsRoot y := by
-  let y :=
-    equalCharacteristicLubinTateAmbientPiIterate F
-      (equalCharacteristicSeparableUniformizer F) (n - m)
-      (chosenEqualCharacteristicLubinTatePrimitiveRoot F n)
+  intro y
   have hyEquation :
       equalCharacteristicLubinTateAmbientPiIterate F
           (equalCharacteristicSeparableUniformizer F) m y ^

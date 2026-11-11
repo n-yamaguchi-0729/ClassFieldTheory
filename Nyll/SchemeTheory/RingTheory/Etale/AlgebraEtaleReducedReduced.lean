@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Reduced
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.RingTheory.Etale.Basic
-import Mathlib.RingTheory.Smooth.Flat
-import Mathlib.RingTheory.Unramified.Field
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Reduced
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.RingTheory.Etale.Basic
+public import Mathlib.RingTheory.Smooth.Flat
+public import Mathlib.RingTheory.Unramified.Field
 
 /-!
 # Algebra Etale is Reduced of is Reduced of is Noetherian Ring
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

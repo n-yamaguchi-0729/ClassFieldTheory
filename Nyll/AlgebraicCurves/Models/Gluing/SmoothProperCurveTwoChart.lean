@@ -10,21 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.InvertibleRatioSection
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealZeroSchemeIdealInvModuleSection
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.SchemeTheory.Modules.Frames.IsFrameOnPullbackIsoUnit
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleIsFrameOnApp
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.InvertibleRatioSection
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealZeroSchemeIdealInvModuleSection
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.SchemeTheory.Modules.Frames.IsFrameOnPullbackIsoUnit
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleIsFrameOnApp
 
 /-!
 # SmoothProperCurve exists twoChart of section invModule
@@ -32,6 +34,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleIsFrameOnApp
 A section of an invertible module with the prescribed zero locus produces a two-chart cover and
 inverse coordinate sections.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

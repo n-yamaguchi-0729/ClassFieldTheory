@@ -10,21 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.TrivSqZeroExt.Basic
-import Mathlib.Algebra.DualNumber
-import Mathlib.RingTheory.DualNumber
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.AbelianSchemePropertyBundle
-import Nyll.AlgebraicCurves.Geometry.Picard.GroupLaw.RelativeGroupLaw
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.EndDegree
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawFormallyUnramifiedSchemeNsmulIsUnit
+module
+
+public import Mathlib.Algebra.TrivSqZeroExt.Basic
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.Algebra.DualNumber
+public import Mathlib.RingTheory.DualNumber
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Nyll.AbelianVarieties.Basic
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Basic
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.EndDegree
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawFormallyUnramifiedSchemeNsmulIsUnit
 
 /-!
 # Etaleness of an endomorphism kernel
 
 The action on the maximal ideal controls infinitesimal points of a polynomial endomorphism.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -97,7 +102,7 @@ theorem g₀_eq_self_iff (z : DualNumber K) : g₀ K z = z ↔ z.snd = 0 := by
   rw [g₀_apply]
   constructor
   · intro h; rw [← h]; rfl
-  · intro h; ext <;> simp [h]
+  · intro h; exact TrivSqZeroExt.ext rfl h.symm
 
 theorem π₀_comp_ι₀ : (π₀ K).comp (ι₀ K) = RingHom.id K := by
   ext c; rfl

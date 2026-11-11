@@ -10,15 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Cover
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleFiniteCohomology
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Mathlib.RingTheory.Localization.Defs
+public import Mathlib.Algebra.DirectSum.Decomposition
+public import Mathlib.Data.DFinsupp.Defs
+public import Mathlib.Data.Finset.SDiff
+public import Nyll.SchemeTheory.ProjectiveSpace.Cover
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleFiniteCohomology
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.GradedAlgebra.HomogeneousLocalization
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
 
 /-!
 Finiteness of unit-presheaf Cech cohomology for a closed immersion into projective space.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -161,8 +173,8 @@ def J : Submodule A (ProjSpaceCech.GradedModule.free A n).M :=
           unfold testAt
           rw [← map_add, ← map_add]
           refine congrArg _ (congrArg _ (HomogeneousLocalization.val_injective _ ?_))
-          simp [HomogeneousLocalization.Away.val_mk, HomogeneousLocalization.val_add,
-            Localization.add_mk_self]
+          simp only [HomogeneousLocalization.Away.val_mk, HomogeneousLocalization.val_add]
+          exact (Localization.add_mk_self _ _ _).symm
         rw [hmk, ha j, hb j, add_zero]
       zero_mem' := by
         intro j
@@ -170,9 +182,7 @@ def J : Submodule A (ProjSpaceCech.GradedModule.free A n).M :=
         simp only [ZeroMemClass.coe_zero]
         rw [show HomogeneousLocalization.Away.mk 𝒜 (ProjSpace.X_mem_one A n j) d 0
               (Submodule.zero_mem _) = 0 from
-          HomogeneousLocalization.val_injective _ (by
-            simp [HomogeneousLocalization.Away.val_mk, HomogeneousLocalization.val_zero,
-              Localization.mk_zero])]
+          HomogeneousLocalization.mk_eq_zero_of_num _ rfl]
         rw [map_zero, map_zero]
       smul_mem' := by
         intro r m hm j
@@ -255,9 +265,8 @@ theorem mem_J_homogeneous {d : ℕ} {p : MvPolynomial (Fin (n + 1)) A}
   have htest0 : ∀ (e : ℕ) (k : Fin (n + 1)), testAt ι e k (0 : 𝒜 e) = 0 := by
     intro e k; unfold testAt; simp only [ZeroMemClass.coe_zero]
     rw [show HomogeneousLocalization.Away.mk 𝒜 (ProjSpace.X_mem_one A n k) e 0
-          (Submodule.zero_mem _) = 0 from HomogeneousLocalization.val_injective _ (by
-        simp [HomogeneousLocalization.Away.val_mk, HomogeneousLocalization.val_zero,
-          Localization.mk_zero]),
+          (Submodule.zero_mem _) = 0 from
+        HomogeneousLocalization.mk_eq_zero_of_num _ rfl,
       map_zero, map_zero]
   refine ⟨fun hJ j => ?_, fun htest => ?_⟩
   · have hproj := Submodule.iSup_induction
@@ -281,8 +290,9 @@ theorem mem_J_homogeneous {d : ℕ} {p : MvPolynomial (Fin (n + 1)) A}
               + testAt ι d k (DirectSum.decompose 𝒜 r d) := by
           unfold testAt; rw [← map_add, ← map_add]
           refine congrArg _ (congrArg _ (HomogeneousLocalization.val_injective _ ?_))
-          simp [HomogeneousLocalization.Away.val_mk, HomogeneousLocalization.val_add,
-            Localization.add_mk_self]
+          simp only [HomogeneousLocalization.Away.val_mk, HomogeneousLocalization.val_add,
+            DirectSum.decompose_add]
+          exact (Localization.add_mk_self _ _ _).symm
         rw [hadd, hq k, hr k, add_zero])
     exact (testAt_congr ι rfl j hp (DirectSum.decompose 𝒜 p d).2
       (DirectSum.decompose_of_mem_same 𝒜 hp).symm).trans (hproj j)
@@ -318,8 +328,8 @@ theorem testAtI_add (I : Finset (Fin (n + 1))) (k : ℕ)
   unfold testAtI
   rw [← map_add, ← map_add]
   refine congrArg _ (congrArg _ (HomogeneousLocalization.val_injective _ ?_))
-  simp [HomogeneousLocalization.Away.val_mk, HomogeneousLocalization.val_add,
-    Localization.add_mk_self]
+  simp only [HomogeneousLocalization.Away.val_mk, HomogeneousLocalization.val_add]
+  exact (Localization.add_mk_self _ _ _).symm
 
 omit [IsClosedImmersion ι] in
 theorem testAtI_congr (I : Finset (Fin (n + 1))) {k k' : ℕ} (hk : k = k')
@@ -352,7 +362,7 @@ theorem pad_add_supp (I : Finset (Fin (n + 1))) (a : Fin (n + 1) → ℕ)
   · have hle : a j ≤ ∑ k, a k :=
       Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ j)
     simp only [hj, ite_true]; omega
-  · simp [hj, ha j hj]
+  · rw [ite_eq_right hj, ite_eq_right hj, ha j hj]
 
 theorem sum_pad (I : Finset (Fin (n + 1))) (a : Fin (n + 1) → ℕ)
     (ha : ∀ j ∉ I, a j = 0) :
@@ -408,7 +418,7 @@ theorem secAux_enlarge (I : Finset (Fin (n + 1)))
       simp only [pad, Pi.add_apply, Finset.sum_add_distrib]
       by_cases hj : j ∈ I
       · simp only [hj, ite_true]; have h1 := hle e j; have h2 := hle z.denExp j; omega
-      · simp [hj, heI j hj]) z.num)
+      · rw [ite_eq_right hj, ite_eq_right hj, ite_eq_right hj, heI j hj]) z.num)
   have hmem := prodXpow_mul_mem (A := A) I (∑ k, e k)
     (secAuxNum_mem I z)
   exact ⟨hpoly ▸ hmem, (testAtI_prodXpow ι I _ (∑ k, e k)
@@ -610,14 +620,19 @@ theorem freeSec_surjective (I : Finset (Fin (n + 1))) (hI : I.Nonempty) :
       Int.toNat_natCast]
     exact hm'
   refine ⟨ProjSpaceCech.GradedModule.sec.mk _ I
-    ⟨fun j => if j ∈ I then k else 0, fun j hj => by simp [hj], m, hnum⟩, ?_⟩
+    ⟨fun j => if j ∈ I then k else 0, fun _j hj => ite_eq_right hj, m, hnum⟩, ?_⟩
   have hle : k ≤ k * I.card := Nat.le_mul_of_pos_right k (Finset.card_pos.mpr hI)
   have hpad : pad I (fun j => if j ∈ I then k else 0)
       = fun j => if j ∈ I then k * I.card - k else 0 :=
-    funext fun j => by unfold pad; by_cases hj : j ∈ I <;> simp [hj, hsum]
+    funext fun j => by
+      unfold pad
+      dsimp only
+      by_cases hj : j ∈ I
+      · rw [ite_eq_left hj, ite_eq_left hj, ite_eq_left hj, hsum]
+      · rw [ite_eq_right hj, ite_eq_right hj]
   have hnum' :=
-    secAuxNum_mem (A := A) I ⟨_, fun j hj => by simp [hj], m, hnum⟩
-  change secAux ι I ⟨_, fun j hj => by simp [hj], m, hnum⟩ = s
+    secAuxNum_mem (A := A) I ⟨_, fun _j hj => ite_eq_right hj, m, hnum⟩
+  change secAux ι I ⟨_, fun _j hj => ite_eq_right hj, m, hnum⟩ = s
   unfold secAux
   refine ((testAtI_congr ι I (hsum.trans (Nat.sub_add_cancel hle).symm) hnum'
       (prodXpow_mul_mem I (k * I.card - k) hm') ?_).trans
@@ -833,7 +848,9 @@ theorem freeSec_ker_le (I : Finset (Fin (n + 1))) (hI : I.Nonempty) :
       ∈ J ι := (mem_J_homogeneous ι hp_mem).mpr htestAll
   refine LinearMap.mem_ker.mpr ((ProjSpaceCech.GradedModule.sec_mk_eq _ I).mpr
     ⟨(fun j => if j ∈ I then Nmax else 0) + pad I x.denExp,
-      fun j hj => by simp [hj, pad], ?_⟩)
+      (fun _j hj => by
+        dsimp only [Pi.add_apply, pad]
+        rw [ite_eq_right hj, ite_eq_right hj]), ?_⟩)
   simp only [map_zero, add_zero]
   show ProjSpaceCech.GradedModule.monMul (Dι ι) _
     ((mkQHom ι).toLinearMap x.num) = 0
@@ -1055,8 +1072,8 @@ theorem secAux_face {I I' : Finset (Fin (n + 1))} (hII' : I ⊆ I')
       (if j ∈ I then pad I y.denExp j else ∑ k, y.denExp k)
         = pad I' y.denExp j := fun j hj => by
     unfold pad; by_cases hjI : j ∈ I
-    · simp [hj, hjI]
-    · simp [hj, hjI, y.hden j hjI]
+    · rw [ite_eq_left hjI, ite_eq_left hjI, ite_eq_left hj]
+    · rw [ite_eq_right hjI, ite_eq_left hj, y.hden j hjI, Nat.sub_zero]
   have hprod : (∏ j, (X j : MvPolynomial (Fin (n + 1)) A) ^ pad I y.denExp j)
         * (∏ j ∈ I' \ I, (X j : MvPolynomial (Fin (n + 1)) A)) ^ (∑ k, y.denExp k)
       = ∏ j, (X j : MvPolynomial (Fin (n + 1)) A) ^ pad I' y.denExp j := by
@@ -1071,10 +1088,17 @@ theorem secAux_face {I I' : Finset (Fin (n + 1))} (hII' : I ⊆ I')
       rw [← pow_add]; refine congrArg (X j ^ ·) ?_
       by_cases hjI' : j ∈ I'
       · rw [← hpad j hjI']
-        by_cases hjI : j ∈ I <;>
-          simp [hjI, hjI', Finset.mem_sdiff, pad]
+        by_cases hjI : j ∈ I
+        · have hjdiff : j ∉ I' \ I := fun h => (Finset.mem_sdiff.mp h).2 hjI
+          exact (congrArg (pad I y.denExp j + ·) (ite_eq_right hjdiff)).trans
+            ((add_zero _).trans (ite_eq_left hjI).symm)
+        · have hjdiff : j ∈ I' \ I := Finset.mem_sdiff.mpr ⟨hjI', hjI⟩
+          rw [show pad I y.denExp j = 0 from ite_eq_right hjI,
+            ite_eq_left hjdiff, ite_eq_right hjI, zero_add]
       · have hjI : j ∉ I := fun h => hjI' (hII' h)
-        simp [hjI', hjI, Finset.mem_sdiff, pad]
+        have hjdiff : j ∉ I' \ I := fun h => hjI' (Finset.mem_sdiff.mp h).1
+        rw [show pad I y.denExp j = 0 from ite_eq_right hjI, ite_eq_right hjdiff,
+          show pad I' y.denExp j = 0 from ite_eq_right hjI']
   refine ⟨1, ?_⟩
   simp only [OneMemClass.coe_one, one_mul]
   erw [ProjSpaceCech.GradedModule.free_monMul_apply,

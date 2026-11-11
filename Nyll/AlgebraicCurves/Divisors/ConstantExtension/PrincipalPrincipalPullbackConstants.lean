@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.BaseChange.LSpacePullbackConstantsEqSpan
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.BaseChange.LSpacePullbackConstantsEqSpan
 
 /-!
 # Divisor is Principal of is Principal pullback Constants of is Constant Field Extension
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -93,7 +97,8 @@ theorem exists_ne_zero_mem_lSpace
     have hx0 : x = 0 := by
       by_contra h
       exact hne x h hx
-    simp [hx0]
+    exact Set.mem_singleton_iff.mpr
+      ((congrArg (algebraMap F F') hx0).trans (map_zero _))
   have h0 : g⁻¹ ∈ Submodule.span K' ({0} : Set F') := Submodule.span_mono hzero hmem
   rw [Submodule.span_zero_singleton, Submodule.mem_bot] at h0
   exact inv_ne_zero hg0 h0

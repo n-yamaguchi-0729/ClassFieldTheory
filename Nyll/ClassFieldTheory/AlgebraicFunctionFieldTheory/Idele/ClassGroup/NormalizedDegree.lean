@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Degree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.IdeleConstantExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Topology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Degree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.IdeleConstantExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Topology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
 
 /-!
 # Idele-class degree normalized by the full constants
@@ -23,6 +26,8 @@ constant-field factors in finite-extension norm and inclusion formulas.
 
 No surjectivity onto the integers or Frobenius comparison is assumed here.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FieldRepresentation
-import Nyll.GaloisCohomology.Kummer.Abstract.MultiplicativeFixedPoints
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FieldRepresentation
+public import Nyll.GaloisCohomology.Kummer.Abstract.MultiplicativeFixedPoints
 
 /-!
 # The actual function-field idele-class representation
@@ -18,21 +20,25 @@ classes. Fixed coefficients over a finite abstract field are identified with
 the actual idele classes of its concrete fixed field by proved Galois descent.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 open IdeleClassGroup.FiniteExtensionLimit
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [FunctionField k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]
     [IsScalarTower k (RatFunc k) Ω]
 
 /-- The actual absolute idele-class module, written additively for cohomology. -/
-def ideleClassRepresentation : Rep ℤ Gal(Ω/K) :=
+def ideleClassRepresentation : Rep.{w} ℤ Gal(Ω/K) :=
   Rep.ofMulDistribMulAction Gal(Ω/K) (Limit k K Ω)
 
 variable [IsGalois K Ω]
@@ -54,9 +60,12 @@ def abstractFixedClassEquiv (H : ClosedSubgroup Gal(Ω/K))
       FixedPoints.subgroup H.toSubgroup (Limit k K Ω) :=
     MulEquiv.subgroupCongr (congrArg
       (fun S : Subgroup Gal(Ω/K) => FixedPoints.subgroup S (Limit k K Ω)) hfixed)
-  let e := (intermediateEquivFixed (k := k) E).trans eH
-  exact (MulEquiv.toAdditive e).trans
-    (multiplicativeFixedPointsEquiv Gal(Ω/K) (Limit k K Ω) H)
+  let e : IdeleClassGroup k E ≃* FixedPoints.subgroup H.toSubgroup (Limit k K Ω) :=
+    (intermediateEquivFixed (k := k) E).trans eH
+  let eAdd := MulEquiv.toAdditive (G := IdeleClassGroup k E)
+    (H := FixedPoints.subgroup H.toSubgroup (Limit k K Ω)) e
+  let eFixed := multiplicativeFixedPointsEquiv Gal(Ω/K) (Limit k K Ω) H
+  exact eAdd.trans eFixed
 
 /-- The fixed coefficient comparison is the original inclusion into the direct limit. -/
 theorem abstractFixedClassEquiv_coe (H : ClosedSubgroup Gal(Ω/K))

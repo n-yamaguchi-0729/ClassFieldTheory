@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Profinite
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+module
+
+public import Mathlib.FieldTheory.Galois.Profinite
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 
 /-!
 # Continuity of restriction of scalars on Galois groups
@@ -14,6 +16,8 @@ A finite subextension of the smaller base generates a finite subextension of
 the larger base. Its fixing subgroup therefore supplies the required Krull
 neighborhood, even when the larger base is transcendental over the smaller one.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Mathlib.NumberTheory.RatFunc.Ostrowski
+module
+
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Mathlib.NumberTheory.RatFunc.Ostrowski
 
 /-!
 # Classification
@@ -20,6 +22,8 @@ import Mathlib.NumberTheory.RatFunc.Ostrowski
 Places of a rational function field over an algebraically closed field are classified by finite
 points and the place at infinity.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -94,10 +98,12 @@ theorem eq_placeOfPoint_or_eq_placeInfty [IsAlgClosed K] [DecidableEq (RatFunc K
     exact Or.inl ⟨a, hw.trans ha⟩
   · exact Or.inr hw
 
-private def ofOption [DecidableEq (RatFunc K)] : Option K → Place K (RatFunc K) :=
+/-- The rational-function place associated with a finite point or the point at infinity. -/
+def ofOption [DecidableEq (RatFunc K)] : Option K → Place K (RatFunc K) :=
   fun o => o.elim (placeInfty K) (placeOfPoint K)
 
-private theorem ofOption_bijective [IsAlgClosed K] [DecidableEq (RatFunc K)] :
+/-- Over an algebraically closed field, finite points and infinity classify all rational places. -/
+theorem ofOption_bijective [IsAlgClosed K] [DecidableEq (RatFunc K)] :
     Function.Bijective (ofOption K) := by
   constructor
   · rintro (_ | a) (_ | b) h

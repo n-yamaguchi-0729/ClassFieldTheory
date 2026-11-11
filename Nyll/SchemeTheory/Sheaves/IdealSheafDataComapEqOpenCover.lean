@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.Ring.Basic
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.AlgebraicGeometry.Cover.Open
+module
+
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.AlgebraicGeometry.Cover.Open
 /-!
 # Gluing compatible ideal sheaves on an open cover
 
@@ -20,6 +22,8 @@ Ideal sheaves on the members of an open cover glue when their inverse images
 agree on common refinements. The ideal on each affine open is determined by
 its restrictions to transported affine opens in the cover.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

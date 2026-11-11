@@ -4,10 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldMaximality
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertSplitting
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldMaximality
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertSplitting
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
 
 /-!
 # Prime splitting for a maximal everywhere-unramified cyclic norm quotient
@@ -22,6 +32,10 @@ prime ideal.
 
 
 
+@[expose] public section
+
+universe u v
+
 open scoped NumberField
 
 noncomputable section
@@ -32,15 +46,15 @@ namespace GlobalClassFields
 open NumberField IsDedekindDomain IdeleGroup
 
 /-- The canonical idèle-class multiplication makes every subgroup normal. -/
-private theorem hilbertPrimeSplittingClassGroupIsMulCommutative
-    (F : Type) [Field F] [NumberField F] :
+theorem hilbertPrimeSplittingClassGroupIsMulCommutative
+    (F : Type*) [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   IsMulCommutative.of_comm (fun a b => mul_comm a b)
 
 attribute [local instance] hilbertPrimeSplittingClassGroupIsMulCommutative
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -59,7 +73,7 @@ def bigHilbertFrobeniusClass
       (finitePrimeIdele v))
 
 private theorem mulEquiv_symm_apply_eq_one_iff
-    {G H : Type} [Group G] [Group H]
+    {G : Type*} {H : Type*} [Group G] [Group H]
     (e : G ≃* H) (x : H) :
     e.symm x = 1 ↔ x = 1 := by
   constructor
@@ -72,13 +86,13 @@ private theorem mulEquiv_symm_apply_eq_one_iff
       _ = 1 := map_one e.symm
 
 private theorem mulEquiv_apply_trans_symm
-    {G H I : Type} [Group G] [Group H] [Group I]
+    {G : Type*} {H : Type*} {I : Type*} [Group G] [Group H] [Group I]
     (e : G ≃* H) (f : H ≃* I) (x : I) :
     e ((e.trans f).symm x) = f.symm x :=
   e.apply_symm_apply (f.symm x)
 
 private theorem quotientMulEquivOfEq_trans_apply_mk
-    {G I : Type} [Group G] [Group I]
+    {G : Type*} {I : Type*} [Group G] [Group I]
     (M N : Subgroup G) [M.Normal] [N.Normal]
     (h : M = N) (e : G ⧸ N ≃* I) (x : G) :
     ((QuotientGroup.quotientMulEquivOfEq h).trans e)

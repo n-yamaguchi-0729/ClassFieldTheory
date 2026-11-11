@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMaximalDomain
-import Nyll.AlgebraicCurves.Models.LocalGeometry.TranscendentalMemRangeStalkIffNe
-import Nyll.AlgebraicCurves.FunctionFields.InfiniteSetOfIsClosedSingleton
-import Nyll.AlgebraicCurves.Geometry.Schemes.FunctionFields.OpensRangeAlgebraMapFunctionFieldEqIInf
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMaximalDomain
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.TranscendentalMemRangeStalkIffNe
+public import Nyll.AlgebraicCurves.FunctionFields.InfiniteSetOfIsClosedSingleton
+public import Nyll.AlgebraicCurves.Geometry.Schemes.FunctionFields.OpensRangeAlgebraMapFunctionFieldEqIInf
 
 /-!
 # Exists isAffineOpen forall mem of finset
 
 A finite collection of points on a proper smooth integral curve is contained in an affine open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

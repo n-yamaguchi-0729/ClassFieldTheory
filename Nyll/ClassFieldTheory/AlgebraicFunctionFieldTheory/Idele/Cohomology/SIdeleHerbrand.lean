@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeleDivisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.IntegralHerbrand
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeleDivisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.IntegralHerbrand
 
 /-!
 # The Herbrand quotient of actual S-ideles
@@ -15,7 +17,11 @@ integral-ideles kernel of Herbrand quotient one and permutation-lattice quotient
 Thus the S-idele quotient is the product of the orbit stabilizer orders.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField.IdeleGroup
 
@@ -73,7 +79,7 @@ namespace FunctionField.IdeleGroup
 open AlgebraicCurve CyclicCohomology
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]

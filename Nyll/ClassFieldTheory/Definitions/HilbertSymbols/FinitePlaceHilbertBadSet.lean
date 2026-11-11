@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+module
+
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
 /-!
 # Possible nontrivial finite-place Hilbert factors
@@ -12,6 +14,8 @@ import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 This set depends on the two nonzero global arguments and the exponent.  A
 finite place is excluded exactly when all three have valuation one there.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

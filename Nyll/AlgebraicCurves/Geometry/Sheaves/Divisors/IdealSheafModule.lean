@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+module
+
+public import Nyll.SchemeTheory.Sheaves.IdealSheafModule
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
 
 /-!
-# Ideal sheaves and their associated modules
+# Ideal modules of relative effective Cartier divisors
 
-Constructs the module morphisms associated to an ideal sheaf and its closed subscheme.
+The general ideal module is shared with SchemeTheory. The relative divisor
+retains its original ideal module and dual line bundle.
 -/
+
+@[expose] public section
 
 universe u
 
@@ -27,30 +31,6 @@ open CategoryTheory CategoryTheory.Limits MonoidalCategory
 noncomputable section
 
 namespace AlgebraicGeometry
-
-variable {X Y : Scheme.{u}}
-
-/-- The canonical map from the structure module to the pushforward structure module. -/
-abbrev Scheme.Hom.unitToPushforwardUnit (f : X ⟶ Y) :
-    SheafOfModules.unit Y.ringCatSheaf ⟶
-      (SheafOfModules.pushforward f.toRingCatSheafHom).obj (SheafOfModules.unit X.ringCatSheaf) :=
-  SheafOfModules.unitToPushforwardObjUnit f.toRingCatSheafHom
-
-namespace Scheme.IdealSheafData
-
-/-- The ideal module, realized as the kernel of the quotient structure-sheaf map. -/
-def module (I : X.IdealSheafData) : X.Modules :=
-  (kernel I.subschemeι.unitToPushforwardUnit : SheafOfModules X.ringCatSheaf)
-
-/-- The inclusion of the ideal module into the structure module. -/
-def moduleι (I : X.IdealSheafData) : I.module ⟶ 𝟙_ X.Modules :=
-  kernel.ι I.subschemeι.unitToPushforwardUnit
-
-/-- The dual of the ideal module. -/
-def invModule (I : X.IdealSheafData) : X.Modules :=
-  Scheme.Modules.dual I.module
-
-end Scheme.IdealSheafData
 
 /-- The ideal module of the relative effective Cartier divisor. -/
 abbrev RelEffCartierDiv.idealModule {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} {r : ℕ} {T : Scheme.{u}}

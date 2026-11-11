@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Nyll.SchemeTheory.Modules.Localization.SectionsLocalizationFiniteCover
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Nyll.SchemeTheory.Modules.Localization.SectionsLocalizationFiniteCover
 
 /-!
 # Basic-open localization of locally trivial module sheaves
@@ -20,6 +22,8 @@ import Nyll.SchemeTheory.Modules.Localization.SectionsLocalizationFiniteCover
 Local trivializations transfer scalar localization to module sections. A finite
 basic-open refinement then glues numerators and annihilates restriction kernels.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

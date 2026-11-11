@@ -10,24 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDivisorRangeEqLSpaceOn
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.EqMulEqAddOrdPresentations
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleModuleFrames
-import Nyll.SchemeTheory.Modules.Tensor.TensorFrames
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDivisorRangeEqLSpaceOn
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.EqMulEqAddOrdPresentations
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleModuleFrames
+public import Nyll.SchemeTheory.Modules.Tensor.TensorFrames
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # The principal divisor comparing tensor presentations
@@ -36,6 +39,8 @@ For function-field presentations of two invertible modules and their tensor
 product, the tensor-product divisor differs from the sum of the original divisors
 by a principal divisor.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -394,10 +399,10 @@ theorem adicValuation_alg_le_one (W : X.Opens) (y : X) (hyW : y ∈ W) (hy : IsC
     (hv : letI := (baseToFunctionField x).toAlgebra
       (algebraMap (X.presheaf.stalk y) X.functionField).range = v.toValuationSubring.toSubring)
     (a : Γ(X, W)) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     haveI : Nonempty W := ⟨⟨y, hyW⟩⟩
     v.adicValuation (alg W a) ≤ 1 := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have : Nonempty W := ⟨⟨y, hyW⟩⟩
   obtain ⟨W', hW'aff, hyW', hW'W⟩ :=
     (Opens.isBasis_iff_nbhd.mp X.isBasis_affineOpens) hyW
@@ -521,7 +526,6 @@ theorem exists_forall_tensorSections_eq_mul
     rw [← hb, hsmul', hnat' V W inf_le_right inferInstance]
   rw [e1, e2, e3, map_mul]
   field_simp
-  try ring
 
 end TensorCalib
 
@@ -579,10 +583,10 @@ theorem AlgebraicGeometry.Scheme.Modules.isPrincipal_sub_sub_of_presentations_te
       ∀ U : X.Opens, IsAffineOpen U → Nonempty U →
         Set.range (φ'' U) = (AlgebraicCurve.lSpaceOn (AlgebraicCurve.placesOf x U) D'' : Set
             X.functionField)) :
-    letI := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
     AlgebraicCurve.Divisor.IsPrincipal (D'' - D - D') := by
+  intro sharedOwner1
   classical
-  let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
   obtain ⟨E, ψ, e1, e2, e3, e4, e5⟩ := Scheme.Modules.IsInvertible.exists_divisor_range_eq_lSpaceOn
       x L hL
   obtain ⟨E', ψ', e1', e2', e3', e4', e5'⟩ :=

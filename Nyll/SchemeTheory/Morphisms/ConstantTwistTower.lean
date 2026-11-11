@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.SchemeTheory.Morphisms.ConstantTwist
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Pasting
+module
+
+public import Nyll.SchemeTheory.Morphisms.ConstantTwist
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Pasting
 
 /-!
 # Coefficient twists in towers of constant fields
@@ -13,6 +15,8 @@ import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Pasting
 The actual iterated base change is identified with the single base change.
 This identification commutes with automorphisms fixing the intermediate field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

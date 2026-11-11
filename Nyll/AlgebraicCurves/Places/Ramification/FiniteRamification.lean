@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexEqRamificationIdxFiberCenter
-import Mathlib.RingTheory.DedekindDomain.Different
-import Mathlib.FieldTheory.PrimitiveElement
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexEqRamificationIdxFiberCenter
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Mathlib.FieldTheory.PrimitiveElement
 
 /-!
 # Finite ramification in a separable extension
@@ -19,6 +21,8 @@ that derivative and the poles of the coefficients, the derivative belongs to the
 but not to the centre of the place. The different therefore rules out ramification.
 This argument allows wild ramification and does not divide by the ramification index.
 -/
+
+@[expose] public section
 
 noncomputable section
 

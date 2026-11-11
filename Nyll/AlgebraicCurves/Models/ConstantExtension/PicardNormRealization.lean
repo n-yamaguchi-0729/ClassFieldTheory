@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardNormQuotient
-import Nyll.AlgebraicCurves.Divisors.Norm.PicardNormCongr
-import Nyll.GaloisCohomology.FieldTheory.ConstantTensorEquiv
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardNormQuotient
+public import Nyll.AlgebraicCurves.Divisors.Norm.PicardNormCongr
+public import Nyll.GaloisCohomology.FieldTheory.ConstantTensorEquiv
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
 
 /-!
 # Picard norms for any actual realization of the constant compositum
@@ -15,6 +18,10 @@ The tensor multiplication maps compare the concrete curve base change with
 a given constant-generated finite extension of the same degree. The proved
 invariance of actual norms transports the norm criterion to that extension.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -25,24 +32,23 @@ namespace AlgebraicCurve.CurveModel
 
 attribute [local instance] SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
 
-variable {k Ω F₀ F : Type} [Field k] [Finite k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω F : Type u} {F₀ : Type v} [Field k] [Finite k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]
     (M₀ : CurveModel k F₀) [GeometricallyIntegral M₀.toBase] (M : CurveModel Ω F)
     (e : M.C ≅ pullback M₀.toBase (specMap k Ω))
     (he : e.hom ≫ pullback.snd M₀.toBase (specMap k Ω) = M.toBase)
-    (E : Type) [Field E] [Finite E] [Algebra k E] [algEΩ : Algebra E Ω]
+    (E : Type u) [Field E] [Finite E] [Algebra k E] [algEΩ : Algebra E Ω]
     [towerEΩ : IsScalarTower k E Ω] [hAlgEΩ : Algebra.IsAlgebraic E Ω]
 
 local notation "CE" => pullback M₀.toBase (specMap k E)
 local notation "cE" => pullback.snd M₀.toBase (specMap k E)
 local notation "φ" => M.constantSemilinearAction M₀.toBase e he
   (FiniteField.frobeniusAlgEquivOfAlgebraic k Ω)
-local notation "σ" => SemilinearAut.toRingAut φ
 local notation "d" => Module.finrank k E
 
-variable {L : Type} [Field L] [Algebra k L] [Algebra E L] [Algebra F₀ L]
+variable {L : Type w} [Field L] [Algebra k L] [Algebra E L] [Algebra F₀ L]
     [IsScalarTower k E L] [IsScalarTower k F₀ L]
     [FiniteDimensional F₀ L] [IsGalois F₀ L] [HasPrincipalDivisors k L]
 

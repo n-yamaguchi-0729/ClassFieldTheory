@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteIff
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.Finiteness.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteIff
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.Finiteness.Basic
 
 /-!
 Cech finiteness for a pushforward is equivalent to finiteness on the preimage cover.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

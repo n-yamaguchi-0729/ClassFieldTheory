@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
-import Mathlib.RingTheory.Etale.Field
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+public import Mathlib.RingTheory.Etale.Field
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -19,6 +21,8 @@ import Mathlib.RingTheory.Etale.Field
 Pullback, trace, and correspondence maps for Kähler differentials along base-field algebra
 homomorphisms.
 -/
+
+@[expose] public section
 
 noncomputable section
 

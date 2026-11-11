@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedIdeles
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormCohomology
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedIdeles
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormCohomology
 
 /-!
 # Fixed groups and the actual function-field norm quotients
@@ -15,6 +17,8 @@ Galois fixed groups. Under these equivalences the actual norm images become the
 Tate norm images. The existing quotient-group construction then identifies the
 actual norm quotients with degree-zero Tate cohomology.
 -/
+
+@[expose] public section
 
 noncomputable section
 

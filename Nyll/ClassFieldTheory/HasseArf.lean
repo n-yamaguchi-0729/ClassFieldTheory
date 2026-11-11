@@ -4,30 +4,39 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
-import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
-import Nyll.ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
-import Nyll.ClassFieldTheory.Definitions.HasseArf.IsUpperRamificationJump
-import Nyll.ClassFieldTheory.Definitions.HasseArf.IsLowerRamificationJump
-import Nyll.ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
-import Nyll.ClassFieldTheory.Definitions.HasseArf.UpperRamificationGroup
-import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormalizedIntegerValuation
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
-import Mathlib.Algebra.Algebra.Shrink
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.AbstractUnramified
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.EqualCharacteristic
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.EqualCharacteristicStandardCompositum
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelian
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.StandardCompositum
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Unramified
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
-import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
-import Mathlib.FieldTheory.Fixed
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Map
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFiltered
+public import Nyll.ValuedFieldTheory.Ramification.Filtration
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.IsUpperRamificationJump
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.IsLowerRamificationJump
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.UpperRamificationGroup
+public import Nyll.ClassFieldTheory.Algebra.ShrinkFiniteExtension
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormalizedIntegerValuation
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
+public import Mathlib.Algebra.Algebra.Shrink
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.AbstractUnramified
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.EqualCharacteristic
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.EqualCharacteristicStandardCompositum
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelian
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.StandardCompositum
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Unramified
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
+public import Mathlib.FieldTheory.Fixed
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
+public import Nyll.ValuedFieldTheory.Ramification.Herbrand.Function
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
 
 /-!
 # Hasse--Arf
@@ -46,6 +55,8 @@ filtration with the upper ramification filtration.  Since the former changes
 only at natural-number indices, every upper jump of a finite Abelian local
 extension is integral (with the separate possible endpoint `-1`).
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -85,6 +96,8 @@ theorem herbrandFunctionAtLowerIndex_succ
 end ClassFieldTheory
 
 namespace HasseArf
+
+universe uK uL
 
 open LocalClassFieldTheory
 open RamificationTheory
@@ -183,24 +196,39 @@ theorem
 /-- Hasse--Arf integrality: every actual upper ramification jump of
 a finite Abelian local extension is an integer. -/
 theorem isLocalUpperRamificationJump_int
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     {t : ℝ} (ht : IsLocalUpperRamificationJump K L t) :
     ∃ z : ℤ, t = z := by
-  exact
-    isLocalUpperRamificationJump_int_of_filteredLocalReciprocity
-      K L
-      (fun s hs =>
-        finiteAbelian_filteredLocalReciprocity K L s hs)
-      ht
+  rcases isLocalUpperRamificationJump_eq_neg_one_or_nonneg K L ht with hneg | ht0
+  · exact ⟨-1, by simpa only [Int.cast_neg, Int.cast_one] using hneg⟩
+  · let F : ℕ → Subgroup Gal(L/K) :=
+      LocalClassFieldTheory.Universe.artinPrincipalUnitGroup K L
+    have hF : Antitone F := by
+      intro m n hmn
+      exact Subgroup.map_mono (fieldPrincipalUnits_antitone K hmn)
+    have hafter : localUpperRamificationGroupAfter K L t =
+        natCeilStepFiltrationAfter F t := by
+      unfold localUpperRamificationGroupAfter natCeilStepFiltrationAfter
+      apply iSup_congr
+      intro s
+      exact (LocalClassFieldTheory.Universe.finiteAbelian_filteredLocalReciprocity
+        K L s (ht0.trans s.property.le)).symm
+    have hjump : IsNatCeilStepFiltrationJump F t := by
+      intro heq
+      apply ht
+      exact ((LocalClassFieldTheory.Universe.finiteAbelian_filteredLocalReciprocity
+        K L t ht0).symm.trans heq).trans hafter.symm
+    obtain ⟨n, hn⟩ := isNatCeilStepFiltrationJump_integer hF hjump
+    exact ⟨n, by simpa only [Int.cast_natCast] using hn⟩
 
 /-- The chosen valuation ring of a finite local extension is invariant under
 every base-field automorphism. Thus its Mathlib decomposition group is the
 entire Galois group. -/
 theorem chosenLocalExtension_decompositionSubgroup_eq_top
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
@@ -209,7 +237,7 @@ theorem chosenLocalExtension_decompositionSubgroup_eq_top
   let base := (localCompleteDVF K).toDVF
   let target := (chosenLocalExtensionCompleteDVF K L).toDVF
   let huniq :
-      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{uK, uK, uL, 0, 0}
         base target :=
     chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension K L
   apply (Subgroup.eq_top_iff' _).2
@@ -224,7 +252,7 @@ theorem chosenLocalExtension_decompositionSubgroup_eq_top
 /-- At integer indices the lower group defined using Mathlib's valuation
 subring action agrees elementwise with the existing local lower group. -/
 theorem mem_chosenLowerRamificationGroup_iff_mem_localLowerRamificationGroup
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -239,7 +267,7 @@ theorem mem_chosenLowerRamificationGroup_iff_mem_localLowerRamificationGroup
   let base := (localCompleteDVF K).toDVF
   let target := (chosenLocalExtensionCompleteDVF K L).toDVF
   let huniq :
-      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{uK, uK, uL, 0, 0}
         base target :=
     chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension K L
   have hact (a : target.valuationSubring) :
@@ -260,7 +288,7 @@ theorem mem_chosenLowerRamificationGroup_iff_mem_localLowerRamificationGroup
 elementwise with the existing local lower filtration after forgetting the
 decomposition-subgroup wrapper. -/
 theorem mem_chosenRealLowerRamificationGroup_iff_mem_localLowerRamificationGroup
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -275,7 +303,7 @@ theorem mem_chosenRealLowerRamificationGroup_iff_mem_localLowerRamificationGroup
   let base := (localCompleteDVF K).toDVF
   let target := (chosenLocalExtensionCompleteDVF K L).toDVF
   let huniq :
-      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{uK, uK, uL, 0, 0}
         base target :=
     chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension K L
   have hact (a : target.valuationSubring) :
@@ -306,7 +334,7 @@ theorem mem_chosenRealLowerRamificationGroup_iff_mem_localLowerRamificationGroup
 existing local filtration have the same elements, after forgetting the
 decomposition-subgroup wrapper. -/
 noncomputable def chosenLowerRamificationGroupEquiv
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] (n : ℕ) :
@@ -336,7 +364,7 @@ noncomputable def chosenLowerRamificationGroupEquiv
 /-- The public-style lower group has the same cardinality as the original
 local lower group at every nonnegative integral index. -/
 theorem card_chosenLowerRamificationGroup_eq_card_localLowerRamificationGroup
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] (n : ℕ) :
@@ -348,7 +376,7 @@ theorem card_chosenLowerRamificationGroup_eq_card_localLowerRamificationGroup
 /-- Successive rational Herbrand values differ by the normalized cardinality
 of the next lower group. -/
 theorem herbrandFunctionAtLowerIndex_succ
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     (A : ValuationSubring L) (n : ℕ) :
     ClassFieldTheory.herbrandFunctionAtLowerIndex K A (n + 1) =
     ClassFieldTheory.herbrandFunctionAtLowerIndex K A n +
@@ -359,7 +387,7 @@ theorem herbrandFunctionAtLowerIndex_succ
 /-- After the canonical inclusion `ℚ → ℝ`, the rational finite-sum
 Herbrand value agrees with the Herbrand function used by local reciprocity. -/
 theorem chosenHerbrandFunctionAtLowerIndex_real_eq
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] (n : ℕ) :
@@ -368,12 +396,12 @@ theorem chosenHerbrandFunctionAtLowerIndex_real_eq
       herbrandFunctionOfUniqueExtension
         (base := (localCompleteDVF K).toDVF)
         (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L)
+        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L)
         (n : ℝ) := by
   let base := (localCompleteDVF K).toDVF
   let target := (chosenLocalExtensionCompleteDVF K L).toDVF
   let huniq :
-      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{uK, uK, uL, 0, 0}
         base target :=
     chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension K L
   let F := lowerRamificationFiltrationOfUniqueExtension
@@ -415,7 +443,7 @@ theorem chosenHerbrandFunctionAtLowerIndex_real_eq
 /-- For an extension carrying its own compatible local-field valuation, the
 chosen integral-closure valuation ring is exactly the canonical one. -/
 theorem chosenLocalExtension_valuationSubring_eq_canonical
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -435,7 +463,7 @@ theorem chosenLocalExtension_valuationSubring_eq_canonical
 /-- The public canonical Herbrand value agrees with the old local Herbrand
 function at each natural index, after casting from rationals to reals. -/
 theorem canonicalHerbrandFunctionAtLowerIndex_real_eq
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -448,7 +476,7 @@ theorem canonicalHerbrandFunctionAtLowerIndex_real_eq
       herbrandFunctionOfUniqueExtension
         (base := (localCompleteDVF K).toDVF)
         (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L)
+        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L)
         (n : ℝ) := by
   rw [← chosenLocalExtension_valuationSubring_eq_canonical K L]
   exact chosenHerbrandFunctionAtLowerIndex_real_eq K L n
@@ -456,7 +484,7 @@ theorem canonicalHerbrandFunctionAtLowerIndex_real_eq
 /-- The public piecewise-linear Herbrand function of the chosen valuation
 ring agrees at every real index with the existing local Herbrand function. -/
 theorem chosenHerbrandFunction_eq_localHerbrandFunction
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] (s : ℝ) :
@@ -465,11 +493,11 @@ theorem chosenHerbrandFunction_eq_localHerbrandFunction
       herbrandFunctionOfUniqueExtension
         (base := (localCompleteDVF K).toDVF)
         (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L) s := by
+        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L) s := by
   let base := (localCompleteDVF K).toDVF
   let target := (chosenLocalExtensionCompleteDVF K L).toDVF
   let huniq :
-      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{uK, uK, uL, 0, 0}
         base target :=
     chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension K L
   let F := lowerRamificationFiltrationOfUniqueExtension
@@ -531,7 +559,7 @@ theorem chosenHerbrandFunction_eq_localHerbrandFunction
 /-- The public piecewise-linear Herbrand function of the canonical valuation
 ring agrees at every real index with the existing local Herbrand function. -/
 theorem canonicalHerbrandFunction_eq_localHerbrandFunction
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -544,14 +572,14 @@ theorem canonicalHerbrandFunction_eq_localHerbrandFunction
       herbrandFunctionOfUniqueExtension
         (base := (localCompleteDVF K).toDVF)
         (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L) s := by
+        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L) s := by
   rw [← chosenLocalExtension_valuationSubring_eq_canonical K L]
   exact chosenHerbrandFunction_eq_localHerbrandFunction K L s
 
 /-- The inverse of the public canonical Herbrand function agrees with the
 inverse used by the existing local upper filtration. -/
 theorem canonicalInverseHerbrandFunction_eq_localInverseHerbrandFunction
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -563,14 +591,14 @@ theorem canonicalInverseHerbrandFunction_eq_localInverseHerbrandFunction
       inverseHerbrandFunctionOfUniqueExtension
         (base := (localCompleteDVF K).toDVF)
         (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L) t := by
+        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L) t := by
   have hfun :
       ClassFieldTheory.herbrandFunction K
           (ValuativeRel.valuation L).valuationSubring =
         herbrandFunctionOfUniqueExtension
           (base := (localCompleteDVF K).toDVF)
           (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-          (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L) := by
+          (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L) := by
     funext s
     exact canonicalHerbrandFunction_eq_localHerbrandFunction K L s
   unfold ClassFieldTheory.inverseHerbrandFunction
@@ -581,7 +609,7 @@ theorem canonicalInverseHerbrandFunction_eq_localInverseHerbrandFunction
 membership in the existing local upper group, after forgetting the
 decomposition-subgroup wrapper. -/
 theorem mem_canonicalUpperRamificationGroup_iff_mem_localUpperRamificationGroup
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -635,14 +663,14 @@ theorem mem_canonicalUpperRamificationGroup_iff_mem_localUpperRamificationGroup
       (inverseHerbrandFunctionOfUniqueExtension
         (base := (localCompleteDVF K).toDVF)
         (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L) t)
+        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L) t)
   rw [← canonicalInverseHerbrandFunction_eq_localInverseHerbrandFunction K L t]
   exact hcanonical
 
 /-- Mapping the public canonical upper group from the decomposition subgroup
 into `Gal(L/K)` gives the existing local upper group. -/
 theorem upperRamificationGroup_map_subtype_eq_localUpperRamificationGroup
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -678,7 +706,7 @@ theorem upperRamificationGroup_map_subtype_eq_localUpperRamificationGroup
 /-- Subgroup transport also identifies the public right-limit upper group
 with the existing local right-limit upper group. -/
 theorem upperRamificationGroupAfter_map_subtype_eq_localUpperRamificationGroupAfter
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -698,7 +726,7 @@ theorem upperRamificationGroupAfter_map_subtype_eq_localUpperRamificationGroupAf
 
 /-- Equality of natural lower groups is reflected by the local filtration. -/
 theorem chosenLowerRamificationGroup_eq_iff_localLowerRamificationGroup_eq
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] (m n : ℕ) :
@@ -729,7 +757,7 @@ theorem chosenLowerRamificationGroup_eq_iff_localLowerRamificationGroup_eq
 /-- The canonical lower-jump predicate is exactly a strict change in the
 original local lower filtration. -/
 theorem canonicalIsLowerRamificationJump_iff
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -749,7 +777,7 @@ theorem canonicalIsLowerRamificationJump_iff
 /-- Immediately to the right of the integer `n`, the real lower filtration
 has already reached (or passed) the group at `n + 1`. -/
 theorem localLowerRamificationGroup_le_succ_of_nat_lt
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -778,7 +806,7 @@ theorem localLowerRamificationGroup_le_succ_of_nat_lt
 /-- A strict change between consecutive integer lower groups yields an
 upper jump at the Herbrand image of the lower index. -/
 theorem isLocalUpperRamificationJump_herbrand_nat_of_lower_ne_succ
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -789,12 +817,12 @@ theorem isLocalUpperRamificationJump_herbrand_nat_of_lower_ne_succ
       (herbrandFunctionOfUniqueExtension
         (base := (localCompleteDVF K).toDVF)
         (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L)
+        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L)
         (n : ℝ)) := by
   let base := (localCompleteDVF K).toDVF
   let target := (chosenLocalExtensionCompleteDVF K L).toDVF
   let huniq :
-      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{uK, uK, uL, 0, 0}
         base target :=
     chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension K L
   let t := herbrandFunctionOfUniqueExtension
@@ -832,10 +860,10 @@ theorem isLocalUpperRamificationJump_herbrand_nat_of_lower_ne_succ
       (by exact_mod_cast Nat.le_succ n)
   exact hjump (le_antisymm hLe hRev)
 
-/-- The public rational lower-jump formulation of Hasse--Arf for fields in
-the universe supported by the existing local reciprocity construction. -/
+/-- The rational lower-jump formulation of Hasse--Arf for the original fields in
+independent universes, with their specified compatible canonical valuations. -/
 theorem hasseArf_canonical
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type uK) (L : Type uL) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -852,7 +880,7 @@ theorem hasseArf_canonical
       (herbrandFunctionOfUniqueExtension
         (base := (localCompleteDVF K).toDVF)
         (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L)
+        (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{uK, uL, 0} K L)
         (n : ℝ)) :=
     isLocalUpperRamificationJump_herbrand_nat_of_lower_ne_succ K L n
       ((canonicalIsLowerRamificationJump_iff K L n).mp hn)
@@ -865,95 +893,18 @@ theorem hasseArf_canonical
     exact hz
   exact_mod_cast hreal
 
-/-! ## Compatible small representatives of finite extensions -/
-
-/-- The algebra structure on the two small representatives, transported from
-the original field extension. -/
-@[instance_reducible]
-noncomputable def shrinkAlgebra
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [Small.{0} K] [Small.{0} L] :
-    Algebra (Shrink.{0} K) (Shrink.{0} L) :=
-  ((Shrink.ringEquiv L).symm.toRingHom.comp
-    ((algebraMap K L).comp (Shrink.ringEquiv K).toRingHom)).toAlgebra
-
-/-- The two `Shrink` equivalences commute with the algebra maps. -/
-theorem shrinkAlgebra_commutes
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [Small.{0} K] [Small.{0} L] :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    (algebraMap (Shrink.{0} K) (Shrink.{0} L)).comp
-      (Shrink.ringEquiv K).symm.toRingHom =
-        (Shrink.ringEquiv L).symm.toRingHom.comp (algebraMap K L) :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  by
-    apply RingHom.ext
-    intro x
-    change (Shrink.ringEquiv L).symm
-      (algebraMap K L (Shrink.ringEquiv K ((Shrink.ringEquiv K).symm x))) =
-        (Shrink.ringEquiv L).symm (algebraMap K L x)
-    rw [RingEquiv.apply_symm_apply]
-
-/-- Finite-dimensionality survives simultaneous shrinking of the base and
-extension fields. -/
-theorem shrink_finiteDimensional
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [Small.{0} K] [Small.{0} L] :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    FiniteDimensional (Shrink.{0} K) (Shrink.{0} L) :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  Module.Finite.of_equiv_equiv
-    (Shrink.ringEquiv K).symm (Shrink.ringEquiv L).symm
-    (shrinkAlgebra_commutes K L)
-
-/-- Abelian Galois structure survives simultaneous shrinking of both fields. -/
-theorem shrink_isAbelianGalois
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [IsAbelianGalois K L] [Small.{0} K] [Small.{0} L] :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    IsAbelianGalois (Shrink.{0} K) (Shrink.{0} L) :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  ClassFieldTheory.isAbelianGalois_of_equiv_equiv
-    (Shrink.ringEquiv K).symm (Shrink.ringEquiv L).symm
-    (shrinkAlgebra_commutes K L)
-
-/-- Galois automorphisms of a finite extension are identified with those of
-its simultaneous small representatives. -/
-noncomputable def shrinkGalEquiv
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [Small.{0} K] [Small.{0} L] :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    Gal(Shrink.{0} L / Shrink.{0} K) ≃ Gal(L/K) :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  ClassFieldTheory.galEquiv_of_equiv_equiv
-    (Shrink.ringEquiv K).symm (Shrink.ringEquiv L).symm
-    (shrinkAlgebra_commutes K L)
-
-/-- The Galois equivalence acts by conjugating with the field equivalence. -/
-theorem shrinkGalEquiv_apply
-    (K L : Type*) [Field K] [Field L] [Algebra K L]
-    [Small.{0} K] [Small.{0} L] :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    ∀ (σ : Gal(Shrink.{0} L / Shrink.{0} K)) (x : Shrink.{0} L),
-      shrinkGalEquiv K L σ (Shrink.ringEquiv L x) =
-        Shrink.ringEquiv L (σ x) :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  by
-    intro σ x
-    simp [shrinkGalEquiv, ClassFieldTheory.galEquiv_of_equiv_equiv]
-
 /-- The canonical valuation ring of a small local field is the pullback of
 the original canonical valuation ring. This does not depend on the choice of
 equivalent representatives for the two valuations. -/
 theorem shrink_valuationSubring_eq_comap
     (L : Type*) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Small.{0} L] :
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring =
       (ValuativeRel.valuation L).valuationSubring.comap
-        (Shrink.ringEquiv L).toRingHom :=
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  by
+        (Shrink.ringEquiv L).toRingHom := by
+  intro reusedStructure1
+  exact by
     let v := shrinkLocalFieldValuation L
     have hv : (ValuativeRel.valuation (Shrink.{0} L)).IsEquiv v :=
       letI : v.Compatible := Valuation.Compatible.ofValuation v
@@ -970,16 +921,15 @@ theorem shrink_mem_pointwise_smul_iff
     [Small.{0} K] [Small.{0} L]
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ∀ (σ : Gal(Shrink.{0} L / Shrink.{0} K)) (x : Shrink.{0} L),
       x ∈ σ • (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring ↔
         Shrink.ringEquiv L x ∈
           shrinkGalEquiv K L σ •
-            (ValuativeRel.valuation L).valuationSubring :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  by
+            (ValuativeRel.valuation L).valuationSubring := by
+  intro reusedStructure1 reusedStructure2
+  exact by
     let e := Shrink.ringEquiv L
     let B := (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring
     let A := (ValuativeRel.valuation L).valuationSubring
@@ -1020,16 +970,15 @@ theorem shrink_mem_decompositionSubgroup_iff
     [Small.{0} K] [Small.{0} L]
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ∀ σ : Gal(Shrink.{0} L / Shrink.{0} K),
       σ ∈ ((ValuativeRel.valuation (Shrink.{0} L)).valuationSubring).decompositionSubgroup
         (Shrink.{0} K) ↔
       shrinkGalEquiv K L σ ∈
-        ((ValuativeRel.valuation L).valuationSubring).decompositionSubgroup K :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  by
+        ((ValuativeRel.valuation L).valuationSubring).decompositionSubgroup K := by
+  intro reusedStructure1 reusedStructure2
+  exact by
     let e := Shrink.ringEquiv L
     let B := (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring
     let A := (ValuativeRel.valuation L).valuationSubring
@@ -1061,11 +1010,11 @@ theorem shrink_mem_decompositionSubgroup_iff
 noncomputable def shrink_valuationSubringRingEquiv
     (L : Type*) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Small.{0} L] :
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring ≃+*
-      (ValuativeRel.valuation L).valuationSubring :=
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  RingEquiv.restrict (Shrink.ringEquiv L) _ _ (by
+      (ValuativeRel.valuation L).valuationSubring := by
+  intro reusedStructure1
+  exact RingEquiv.restrict (Shrink.ringEquiv L) _ _ (by
     intro x
     rw [shrink_valuationSubring_eq_comap L]
     rfl)
@@ -1075,15 +1024,15 @@ equivalence of canonical integer rings. -/
 theorem shrink_mem_maximalIdeal_pow_iff
     (L : Type*) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Small.{0} L] (n : ℕ) :
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ∀ x : (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring,
       x ∈ (IsLocalRing.maximalIdeal
         (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring) ^ n ↔
       shrink_valuationSubringRingEquiv L x ∈
         (IsLocalRing.maximalIdeal
-          (ValuativeRel.valuation L).valuationSubring) ^ n :=
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  by
+          (ValuativeRel.valuation L).valuationSubring) ^ n := by
+  intro reusedStructure1
+  exact by
     intro x
     let e := shrink_valuationSubringRingEquiv L
     have hmap :
@@ -1103,8 +1052,8 @@ theorem shrink_mem_lowerRamificationGroup_iff
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L]
     (n : ℕ) :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ∀ (σ : Gal(Shrink.{0} L / Shrink.{0} K))
       (hσ : σ ∈
         ((ValuativeRel.valuation (Shrink.{0} L)).valuationSubring).decompositionSubgroup
@@ -1118,10 +1067,9 @@ theorem shrink_mem_lowerRamificationGroup_iff
           (shrink_mem_decompositionSubgroup_iff K L σ).mp hσ⟩ :
         ((ValuativeRel.valuation L).valuationSubring).decompositionSubgroup K) ∈
           ClassFieldTheory.lowerRamificationGroup K
-            (ValuativeRel.valuation L).valuationSubring n :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  by
+            (ValuativeRel.valuation L).valuationSubring n := by
+  intro reusedStructure1 reusedStructure2
+  exact by
     let B := (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring
     let A := (ValuativeRel.valuation L).valuationSubring
     let e := shrink_valuationSubringRingEquiv L
@@ -1167,14 +1115,13 @@ noncomputable def shrinkDecompositionGroupEquiv
     [Small.{0} K] [Small.{0} L]
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ((ValuativeRel.valuation (Shrink.{0} L)).valuationSubring).decompositionSubgroup
       (Shrink.{0} K) ≃
-      ((ValuativeRel.valuation L).valuationSubring).decompositionSubgroup K :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  (shrinkGalEquiv K L).subtypeEquiv
+      ((ValuativeRel.valuation L).valuationSubring).decompositionSubgroup K := by
+  intro reusedStructure1 reusedStructure2
+  exact (shrinkGalEquiv K L).subtypeEquiv
     (shrink_mem_decompositionSubgroup_iff K L)
 
 /-- Each natural-index lower ramification group has the same elements after
@@ -1184,15 +1131,14 @@ noncomputable def shrinkLowerRamificationGroupEquiv
     [Small.{0} K] [Small.{0} L]
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] (n : ℕ) :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ClassFieldTheory.lowerRamificationGroup (Shrink.{0} K)
       (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring n ≃
     ClassFieldTheory.lowerRamificationGroup K
-      (ValuativeRel.valuation L).valuationSubring n :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  (shrinkDecompositionGroupEquiv K L).subtypeEquiv (by
+      (ValuativeRel.valuation L).valuationSubring n := by
+  intro reusedStructure1 reusedStructure2
+  exact (shrinkDecompositionGroupEquiv K L).subtypeEquiv (by
     intro σ
     exact shrink_mem_lowerRamificationGroup_iff K L n σ.1 σ.2)
 
@@ -1203,15 +1149,14 @@ theorem shrink_card_lowerRamificationGroup_eq
     [Small.{0} K] [Small.{0} L]
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] (n : ℕ) :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     Nat.card (ClassFieldTheory.lowerRamificationGroup (Shrink.{0} K)
       (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring n) =
     Nat.card (ClassFieldTheory.lowerRamificationGroup K
-      (ValuativeRel.valuation L).valuationSubring n) :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  Nat.card_congr (shrinkLowerRamificationGroupEquiv K L n)
+      (ValuativeRel.valuation L).valuationSubring n) := by
+  intro reusedStructure1 reusedStructure2
+  exact Nat.card_congr (shrinkLowerRamificationGroupEquiv K L n)
 
 /-- Equality of two lower ramification groups is invariant under shrinking
 both local fields. -/
@@ -1220,8 +1165,8 @@ theorem shrink_lowerRamificationGroup_eq_iff
     [Small.{0} K] [Small.{0} L]
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] (m n : ℕ) :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ClassFieldTheory.lowerRamificationGroup (Shrink.{0} K)
         (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring m =
       ClassFieldTheory.lowerRamificationGroup (Shrink.{0} K)
@@ -1229,10 +1174,9 @@ theorem shrink_lowerRamificationGroup_eq_iff
     ClassFieldTheory.lowerRamificationGroup K
         (ValuativeRel.valuation L).valuationSubring m =
       ClassFieldTheory.lowerRamificationGroup K
-        (ValuativeRel.valuation L).valuationSubring n :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  by
+        (ValuativeRel.valuation L).valuationSubring n := by
+  intro reusedStructure1 reusedStructure2
+  exact by
     let B := (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring
     let A := (ValuativeRel.valuation L).valuationSubring
     let e := shrinkDecompositionGroupEquiv K L
@@ -1270,15 +1214,14 @@ theorem shrink_isLowerRamificationJump_iff
     [Small.{0} K] [Small.{0} L]
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] (n : ℕ) :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ClassFieldTheory.IsLowerRamificationJump (Shrink.{0} K)
       (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring n ↔
     ClassFieldTheory.IsLowerRamificationJump K
-      (ValuativeRel.valuation L).valuationSubring n :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  not_congr (shrink_lowerRamificationGroup_eq_iff K L n (n + 1))
+      (ValuativeRel.valuation L).valuationSubring n := by
+  intro reusedStructure1 reusedStructure2
+  exact not_congr (shrink_lowerRamificationGroup_eq_iff K L n (n + 1))
 
 /-- The rational finite-sum Herbrand value at a natural lower index is
 unchanged by shrinking the extension fields. -/
@@ -1287,15 +1230,14 @@ theorem shrink_herbrandFunctionAtLowerIndex_eq
     [Small.{0} K] [Small.{0} L]
     [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] (n : ℕ) :
-    letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-    letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
+    let : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
+    let : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
     ClassFieldTheory.herbrandFunctionAtLowerIndex (Shrink.{0} K)
       (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring n =
     ClassFieldTheory.herbrandFunctionAtLowerIndex K
-      (ValuativeRel.valuation L).valuationSubring n :=
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := shrinkAlgebra K L
-  letI : ValuativeRel (Shrink.{0} L) := shrinkLocalFieldValuativeRel L
-  by
+      (ValuativeRel.valuation L).valuationSubring n := by
+  intro reusedStructure1 reusedStructure2
+  exact by
     unfold ClassFieldTheory.herbrandFunctionAtLowerIndex
     congr 1
     · apply Finset.sum_congr rfl

@@ -35,15 +35,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.TensorProduct.Pi
-import Mathlib.Tactic.Push
-import Mathlib.RingTheory.TotallySplit
-import Mathlib.RingTheory.Spectrum.Prime.Basic
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+module
+
+public import Mathlib.RingTheory.TensorProduct.Pi
+public import Mathlib.Tactic.Push
+public import Mathlib.RingTheory.TotallySplit
+public import Mathlib.RingTheory.Spectrum.Prime.Basic
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
 
 /-!
 # Alg Hom nonempty equiv fin of tensor Product alg Equiv pi
 -/
+
+@[expose] public section
 
 section AlgHom_nonempty_equiv_fin_of_tensorProduct_algEquiv_pi
 
@@ -70,14 +74,20 @@ theorem exists_eq_evalAlgHom {Ω : Type*} [Field Ω] {d : ℕ} (F : (Fin d → �
   classical
   have hidem : ∀ j, F (Pi.single j 1) = 0 ∨ F (Pi.single j 1) = 1 := fun j => by
     have h : F (Pi.single j 1) * F (Pi.single j 1) = F (Pi.single j 1) := by
-      rw [← map_mul]; congr 1; ext k; by_cases hk : k = j <;> simp [hk]
+      rw [← map_mul]
+      congr 1
+      ext k
+      by_cases hk : k = j
+      · simp only [hk, Pi.mul_apply, Pi.single_eq_same, mul_one]
+      · simp only [Pi.mul_apply, ne_eq, hk, not_false_eq_true, Pi.single_eq_of_ne, mul_zero]
     rcases mul_eq_zero.mp
       (by rw [mul_sub, mul_one, h, sub_self] : F (Pi.single j 1) * (F (Pi.single j 1) - 1) = 0)
       with h0 | h1
     · exact Or.inl h0
     · exact Or.inr (sub_eq_zero.mp h1)
   have hone : (∑ j, (Pi.single j (1 : Ω) : Fin d → Ω)) = 1 := by
-    ext l; simp [Finset.sum_apply, Pi.single_apply]
+    ext l; simp only [Finset.sum_apply, Pi.single_apply, Finset.sum_ite_eq, Finset.mem_univ,
+      ↓reduceIte, Pi.one_apply]
   have hsum : ∑ j, F (Pi.single j 1) = 1 := by
     rw [← map_sum, hone, map_one]
   obtain ⟨j, hj⟩ : ∃ j, F (Pi.single j 1) = 1 := by
@@ -91,18 +101,20 @@ theorem exists_eq_evalAlgHom {Ω : Type*} [Field Ω] {d : ℕ} (F : (Fin d → �
   ext x
   have horth : ∀ k, k ≠ j → F (Pi.single k 1) = 0 := fun k hk => by
     have h0 : (Pi.single k (1 : Ω) : Fin d → Ω) * Pi.single j 1 = 0 := by
-      ext l; by_cases hl : l = k <;> by_cases hl' : l = j <;> simp_all
+      rw [← Pi.single_mul_left, Pi.single_eq_of_ne hk, mul_zero, Pi.single_zero]
     have := congrArg F h0
     rw [map_mul, hj, mul_one, map_zero] at this
     exact this
   have hx : x = ∑ k, x k • (Pi.single k (1 : Ω) : Fin d → Ω) := by
-    ext l; simp [Finset.sum_apply, Pi.single_apply, Finset.sum_ite_eq]
+    ext l; simp only [Finset.sum_apply, Pi.smul_apply, Pi.single_apply, smul_eq_mul, mul_ite,
+      mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, ↓reduceIte]
   rw [Pi.evalAlgHom_apply, hx, map_sum]
   simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
   rw [Finset.sum_eq_single j (fun k _ hk =>
     by rw [horth k hk, mul_zero]) (fun h => absurd (Finset.mem_univ j) h),
-    Finset.sum_eq_single j (fun k _ hk => by simp [hk]) (fun h => absurd (Finset.mem_univ j) h)]
-  simp [hj]
+    Finset.sum_eq_single j (fun k _ hk => by simp only [ne_eq, hk, not_false_eq_true,
+      Pi.single_eq_of_ne', mul_zero]) (fun h => absurd (Finset.mem_univ j) h)]
+  simp only [hj, mul_one, Pi.single_eq_same]
 
 /-- Identify an algebra homomorphism from a finite product of fields with its evaluation index. -/
 noncomputable def equivFinOfPi (Ω : Type*) [Field Ω] (d : ℕ) : ((Fin d → Ω) →ₐ[Ω] Ω) ≃ Fin d := by

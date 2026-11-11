@@ -10,25 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
-import Mathlib.FieldTheory.Galois.Basic
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
-import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictionComposition
-import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexEqRestrictEq
-import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegEqRestrictEq
-import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
-import Nyll.ProCGroups.GroupTheory.MulActionNcardOrbitInterOrbitMulCard
-import Nyll.ProCGroups.GroupTheory.SubgroupEqMulIndexInfEq
-import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexComp
-import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegAlongComp
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+module
+
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+public import Mathlib.FieldTheory.Galois.Basic
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictionComposition
+public import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexEqRestrictEq
+public import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegEqRestrictEq
+public import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
+public import Nyll.ProCGroups.GroupTheory.MulActionNcardOrbitInterOrbitMulCard
+public import Nyll.ProCGroups.GroupTheory.SubgroupEqMulIndexInfEq
+public import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexComp
+public import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegAlongComp
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
 
 /-!
 # Place sum ramification Index mul inertia Deg bifiber
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

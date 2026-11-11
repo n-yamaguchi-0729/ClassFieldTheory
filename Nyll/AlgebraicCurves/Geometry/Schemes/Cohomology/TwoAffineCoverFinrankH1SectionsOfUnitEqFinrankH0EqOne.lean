@@ -10,20 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverFinrankCechDiffBaseChange
-import Nyll.AlgebraicCurves.Models.EqGenusFFEllSubEllEq
-import Nyll.AlgebraicCurves.Geometry.AlgEquivFunctionFieldIso
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.GenusFFEqAlgEquiv
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveCurveModelRiemannRoch
-import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyIntegralAlgClosed
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverFinrankCechDiffBaseChange
+public import Nyll.AlgebraicCurves.Models.EqGenusFFEllSubEllEq
+public import Nyll.AlgebraicCurves.Geometry.AlgEquivFunctionFieldIso
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.GenusFFEqAlgEquiv
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveCurveModelRiemannRoch
+public import Nyll.SchemeTheory.Morphisms.GeometricallyIntegralAlgClosed
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Two-chart cohomology ranks of a geometric curve
@@ -31,6 +34,8 @@ import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyIntegralAlgClosed
 The unit module on an integral smooth proper curve over an algebraically closed field
 has zeroth cohomology of rank one and first cohomology of rank equal to the genus.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -77,8 +82,6 @@ attribute [-instance]
   AlgebraicCurve.Place.kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
@@ -418,8 +421,6 @@ attribute [-instance]
   AlgebraicCurve.Place.kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField

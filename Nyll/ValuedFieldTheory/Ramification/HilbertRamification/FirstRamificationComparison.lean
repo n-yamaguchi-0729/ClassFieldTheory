@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.UniformizerGradedHom
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CharacterMap
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RamificationCharacterization
+module
+
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.UniformizerGradedHom
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CharacterMap
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RamificationCharacterization
 
 /-!
 # Comparing first principal units in the two ramification conventions
@@ -16,6 +18,8 @@ The DVF filtration uses units of the valuation ring, whereas Hilbert's
 ramification group uses the principal-unit subgroup of the field units.
 This file identifies their first levels before comparing group actions.
 -/
+
+@[expose] public section
 
 noncomputable section
 

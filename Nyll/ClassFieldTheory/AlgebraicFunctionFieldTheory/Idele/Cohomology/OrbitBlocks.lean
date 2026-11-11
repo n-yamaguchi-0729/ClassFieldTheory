@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisAction
-import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
-import Nyll.ProCGroups.InducedFunctions
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisAction
+public import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
+public import Nyll.ProCGroups.InducedFunctions
 
 /-!
 # Actual local orbit blocks of function-field ideles
@@ -18,6 +20,8 @@ actual finite products of completion units. The integral subgroups are the
 products of the actual local integral-unit subgroups. Finite fibers make both
 directions of regrouping preserve the restricted-product condition.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -87,7 +91,8 @@ theorem fiberProjection_fiberInclusion (v : Place k K) (a : FiberUnits (L := L) 
 abbrev FiberRestrictedProduct :=
   Πʳ v : Place k K, [FiberUnits (L := L) v, fiberIntegralUnits (L := L) v]
 
-private theorem fiberProjection_eventually_integral (a : IdeleGroup k L) :
+/-- Grouping an idele by base places gives integral blocks outside finitely many places. -/
+theorem fiberProjection_eventually_integral (a : IdeleGroup k L) :
     ∀ᶠ v : Place k K in Filter.cofinite,
       fiberProjection (L := L) v a ∈ fiberIntegralUnits (L := L) v := by
   have hbad : {u : Place k L | a u ∉ u.adicCompletionIntegers.units}.Finite :=
@@ -105,7 +110,8 @@ section SeparableGrouping
 
 variable [Algebra.IsSeparable K L]
 
-private theorem ungroup_eventually_integral
+/-- Ungrouping integral fiber blocks gives an idele. -/
+theorem ungroup_eventually_integral
     (a : FiberRestrictedProduct (k := k) (K := K) (L := L)) :
     ∀ᶠ u : Place k L in Filter.cofinite,
       a (u.restrict K) ⟨u, Place.restrict_mem_fiberOver u⟩ ∈

@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.Finiteness.Basic
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.CompactModule
+module
+
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.CompactModule
 
 /-!
 # Finite integral completions for arbitrary finite extensions
@@ -16,6 +18,8 @@ import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.CompactModule
 Compactness of the actual upper integer ring supplies its finite generation over
 the open lower integer ring. Separability is unnecessary.
 -/
+
+@[expose] public section
 
 noncomputable section
 open AlgebraicCurve

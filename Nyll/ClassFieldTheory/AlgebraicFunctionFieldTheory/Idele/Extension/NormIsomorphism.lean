@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.DegreeOne
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.DegreeOne
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
 
 /-!
 # Actual norm comparison across isomorphic field presentations
@@ -15,6 +17,8 @@ In a commuting square of field inclusions whose two vertical degrees are one,
 idele-class base change commutes with the actual norm. The proof uses both
 norm tower formulas and the actual degree-one norm inverses.
 -/
+
+@[expose] public section
 
 noncomputable section
 

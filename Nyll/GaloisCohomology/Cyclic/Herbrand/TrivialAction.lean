@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+module
+
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
 
 /-!
 # Tate quotients for a trivial action
@@ -13,6 +15,8 @@ For an actual trivial action the norm is the power by the group order.
 The two low-degree Tate groups are therefore the power quotient and power
 kernel. These comparisons retain the supplied action and do not reconstruct it.
 -/
+
+@[expose] public section
 
 noncomputable section
 

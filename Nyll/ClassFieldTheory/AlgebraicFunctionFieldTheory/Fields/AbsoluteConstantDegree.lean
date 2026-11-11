@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionLinearDisjoint
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAlgebraicClosureDegree
-import Nyll.GaloisCohomology.Topology.GaloisRestrictionScalars
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionLinearDisjoint
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAlgebraicClosureDegree
+public import Nyll.GaloisCohomology.Topology.GaloisRestrictionScalars
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # The actual constant-field degree on an absolute Galois group
@@ -17,6 +21,8 @@ is closed by compactness. If the original field has no extra separable constants
 the fixed field of that image is the constant base, so Galois correspondence
 proves surjectivity. Arithmetic Frobenius coordinates then give the degree map.
 -/
+
+@[expose] public section
 
 noncomputable section
 

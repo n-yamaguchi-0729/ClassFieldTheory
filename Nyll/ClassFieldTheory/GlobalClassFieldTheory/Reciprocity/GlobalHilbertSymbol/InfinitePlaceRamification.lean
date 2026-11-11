@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlacePositive
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlacePositive
 
 /-!
 # Ramification of a negative quadratic Kummer radical at a real place
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField
@@ -34,17 +38,13 @@ theorem chosenSimpleKummerExtension_chosenInfinitePlace_isRamified_of_real_of_ra
     (hn : (n : ℕ) = 2) (hv : v.IsReal)
     (hb : InfinitePlace.embedding_of_isReal hv (b : K) < 0) :
     let L := chosenSimpleKummerExtension K n hnK b
-    letI : FiniteDimensional K L :=
+    let : FiniteDimensional K L :=
       chosenSimpleKummerExtension_finiteDimensional K n hnK b
-    letI : IsAbelianGalois K L :=
+    let : IsAbelianGalois K L :=
       chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
     letI : NumberField L := NumberField.of_module_finite K L
     (chosenInfinitePlaceAbove (L := L) v).IsRamified K := by
-  let L := chosenSimpleKummerExtension K n hnK b
-  let : FiniteDimensional K L :=
-    chosenSimpleKummerExtension_finiteDimensional K n hnK b
-  let : IsAbelianGalois K L :=
-    chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu b
+  intro L sharedOwner2 sharedOwner3
   let beta : L :=
     (chosenSimpleKummerRootUnit K n hnK b : Lˣ)
   have hbeta : beta ^ 2 = algebraMap K L (b : K) := by

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormClass
+module
+
+public import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormClass
 
 /-!
 # The actual norm criterion for a cyclic unit H² class
@@ -13,6 +15,8 @@ The class of a base-field unit is zero exactly when the unit is an actual
 field norm. The periodic resolution is compared with the carry representative
 and with the product of Galois conjugates defining the field norm.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 

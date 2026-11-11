@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Cover
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.AlgebraicCurves.Geometry.Projective.ProjTwistDatum
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Cover
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.AlgebraicCurves.Geometry.Projective.ProjTwistDatum
 
 /-!
 # Proj Space exists is FG hom injective saturated twist Graded Module
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -1084,7 +1088,7 @@ theorem PsiNum_surjective (h : Γ(X, Wop φ I i₀)) :
       ring
     have h2 : (∑ j, ((Pi.single i₀ (K + R) : Fin (N + 1) → ℕ) j : ℤ)) = K + R := by
       rw [Finset.sum_eq_single i₀ (fun j _ hj =>
-        by simp [hj]) (fun h => absurd (Finset.mem_univ _) h)]
+        by rw [Pi.single_eq_of_ne hj, Nat.cast_zero]) (fun h => absurd (Finset.mem_univ _) h)]
       simp only [Pi.single_eq_same, Nat.cast_add]
     simp only [ha_def, Pi.add_apply, Nat.cast_add, Finset.sum_add_distrib, h1, h2, he₁]
     push_cast; ring
@@ -1252,7 +1256,7 @@ def monMulFrac (c : Fin (N + 1) → ℕ) (x : ProjSpaceCech.GradedModule.Frac ((
     convert h using 2
     have hsingle : (∑ j, ((Pi.single i₀ (∑ l, c l) : Fin (N + 1) → ℕ) j : ℤ)) = ∑ l, (c l : ℤ) := by
       rw [Finset.sum_eq_single i₀ (fun j _ hj =>
-        by simp [hj]) (fun h => absurd (Finset.mem_univ _) h)]
+        by rw [Pi.single_eq_of_ne hj, Nat.cast_zero]) (fun h => absurd (Finset.mem_univ _) h)]
       simp only [Pi.single_eq_same, Nat.cast_sum]
     simp only [Pi.add_apply, Nat.cast_add, Finset.sum_add_distrib, hsingle]
 
@@ -1266,7 +1270,7 @@ theorem PsiNum_monMulFrac (c : Fin (N + 1) → ℕ) (x : ProjSpaceCech.GradedMod
   rw [twistMonMul_shift_apply, invProd_add, invProd_single_self φ, mul_one, map_mul]
   have hsingle : (∑ j, ((Pi.single i₀ (∑ l, c l) : Fin (N + 1) → ℕ) j : ℤ)) = ∑ l, (c l : ℤ) := by
     rw [Finset.sum_eq_single i₀ (fun j _ hj =>
-      by simp [hj]) (fun h => absurd (Finset.mem_univ _) h)]
+      by rw [Pi.single_eq_of_ne hj, Nat.cast_zero]) (fun h => absurd (Finset.mem_univ _) h)]
     simp only [Pi.single_eq_same, Nat.cast_sum]
   have hdeg : (∑ j, ((x.denExp + Pi.single i₀ (∑ l, c l) : Fin (N + 1) → ℕ) j : ℤ)) + m - ∑ l, (c l
     : ℤ) = (∑ j, (x.denExp j : ℤ)) + m := by
@@ -1696,8 +1700,6 @@ attribute [local instance] MvPolynomial.gradedAlgebra
 
 variable {A : Type u} [CommRing A] {N : ℕ} {X : Scheme.{u}}
   (φ : X ⟶ Proj (MvPolynomial.homogeneousSubmodule (Fin (N + 1)) A)) (π : X ⟶ Spec (.of A))
-
-local notation "𝒜" => MvPolynomial.homogeneousSubmodule (Fin (N + 1)) A
 
 theorem twistObj_sum_val {m : ℕ} {U : X.Opens} {ι : Type*} (s : Finset ι) (f : ι → twistObj π φ m
   U) (i : Fin (N + 1)) :

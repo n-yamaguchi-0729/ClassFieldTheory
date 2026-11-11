@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
-import Nyll.AlgebraicCurves.Places.Ramification.NcardAlgHomCompEqPreimageEqRamificationIndex
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
+public import Nyll.AlgebraicCurves.Places.Ramification.NcardAlgHomCompEqPreimageEqRamificationIndex
 
 /-!
 # Actual divisor and Picard pullbacks in constant towers
@@ -15,6 +17,8 @@ Restriction of places composes along the given field tower. The proved
 multiplicativity of ramification indices then identifies the two actual
 divisor pullbacks and their induced Picard maps.
 -/
+
+@[expose] public section
 
 noncomputable section
 

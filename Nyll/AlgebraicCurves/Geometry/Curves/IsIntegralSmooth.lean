@@ -11,14 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Connected
-import Nyll.AlgebraicCurves.Geometry.Schemes.LocalGeometry.IsIntegralIsLocallyNoetherian
-import Nyll.SchemeTheory.LocalGeometry.SmoothStalks
-import Nyll.SchemeTheory.RingTheory.RegularLocal.RegularLocalDomain
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Connected
+public import Nyll.SchemeTheory.LocalGeometry.IntegralNoetherian
+public import Nyll.SchemeTheory.LocalGeometry.SmoothStalks
+public import Nyll.SchemeTheory.RingTheory.RegularLocal.RegularLocalDomain
 
 /-!
 # is Integral of smooth of geometrically Connected
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,19 +4,22 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedRealFilteredComparison
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
-import Nyll.ValuedFieldTheory.Ramification.Filtration
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedRealFilteredComparison
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseSemilinearNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+public import Nyll.ValuedFieldTheory.Ramification.Filtration
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
 
 /-!
 # Filtered reciprocity on the named transported Lubin--Tate fixed field
@@ -28,7 +31,11 @@ transports both the local Artin filtration and the upper ramification
 filtration, so real filtered reciprocity holds on the named factor.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped LaurentSeries ValuativeRel
 
@@ -41,13 +48,13 @@ open LocalClassFieldTheory
 open LocalFieldTheory
 open LubinTate.EqualCharacteristic
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- Mapping the Artin principal-unit step group along a base-linear
 equivalence gives the corresponding group on the equivalent extension. -/
 theorem artinPrincipalUnitStepGroup_map_autCongr
-    (L M : Type) [Field L] [Field M]
+    (L : Type v) (M : Type w) [Field L] [Field M]
     [Algebra K L] [Algebra K M]
     [FiniteDimensional K L] [FiniteDimensional K M]
     [IsAbelianGalois K L] [IsAbelianGalois K M]
@@ -58,7 +65,7 @@ theorem artinPrincipalUnitStepGroup_map_autCongr
   unfold artinPrincipalUnitStepGroup RamificationTheory.natCeilStepFiltration
     artinPrincipalUnitGroup
   rw [Subgroup.map_map]
-  rw [abelianLocalArtinMonoidHom_autCongr K L M e]
+  rw [Universe.abelianLocalArtinMonoidHom_autCongr K L M e]
 
 /-- Real filtered local reciprocity for the named fixed field representing
 a transported equal-characteristic Lubin--Tate level. -/
@@ -70,11 +77,11 @@ theorem
       (Additive.ofMul ϖ) = 1)
     (m : ℕ) (t : ℝ) (ht : 0 ≤ t) :
     let F := equalCharacteristicTargetLocalField K
-    letI : CharP K F.residueCharacteristic :=
+    let : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E := equalCharacteristicLubinTateLevelField F m
-    letI : CharP K p := hKp
-    letI : Algebra K E :=
+    let : CharP K p := hKp
+    let : Algebra K E :=
       equalCharacteristicTransportedLubinTateLevelAlgebra
         K p ϖ hϖ m
     let T :=
@@ -90,14 +97,7 @@ theorem
       finiteAbelianSubextension_fixedField_isAbelianGalois K T
     artinPrincipalUnitStepGroup K M t =
       localUpperRamificationGroup K M t := by
-  let F := equalCharacteristicTargetLocalField K
-  let : CharP K F.residueCharacteristic :=
-    equalCharacteristicTargetResidueCharacteristicCharP K p
-  let E := equalCharacteristicLubinTateLevelField F m
-  let : CharP K p := hKp
-  let : Algebra K E :=
-    equalCharacteristicTransportedLubinTateLevelAlgebra
-      K p ϖ hϖ m
+  intro F sharedOwner2 E sharedOwner4 sharedOwner5
   let : FiniteDimensional K E :=
     equalCharacteristicTransportedLubinTateLevel_finiteDimensional
       K p ϖ hϖ m

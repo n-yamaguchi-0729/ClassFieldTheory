@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Descent.OpenCoverGluedSheaf
+module
+
+public import Nyll.SchemeTheory.Modules.Descent.OpenCoverGluedSheaf
 /-!
 # Local sections and restriction isomorphisms for the glued module sheaf
 The compatible-family construction is preserved, together with its original descent data.
 -/
+
+@[expose] public section
 
 open _root_.AlgebraicCurves.Geometry.Sheaves.Proofs
 open Scheme_Modules_toDescentData_map_bijective_of_openCover.AlgebraicGeometry.Scheme.Modules.HomZar

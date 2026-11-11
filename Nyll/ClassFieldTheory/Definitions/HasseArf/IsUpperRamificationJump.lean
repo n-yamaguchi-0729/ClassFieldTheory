@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.UpperRamificationGroup
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.UpperRamificationGroup
 
 /-!
 # Upper ramification jumps
@@ -13,6 +15,8 @@ The right-limit group is the supremum of upper groups at strictly larger
 indices. A jump occurs exactly when that right limit differs from the group
 at the index itself.
 -/
+
+@[expose] public section
 
 noncomputable section
 

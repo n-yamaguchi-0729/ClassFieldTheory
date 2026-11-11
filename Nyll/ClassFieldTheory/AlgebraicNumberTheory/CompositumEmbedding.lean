@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
+module
+
+public import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
 
 /-!
 # Embedding a finite Galois compositum into a common field
@@ -16,7 +18,11 @@ normality argument is the field-theoretic mechanism used to place the local
 inertia-field compositum in one cyclotomic target.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w x
 
 namespace AlgebraicNumberTheory
 
@@ -80,7 +86,7 @@ noncomputable def cyclotomicFieldEmbeddingOfBaseAndDvd
   exact IsSplittingField.lift (CyclotomicField m K)
     (Polynomial.cyclotomic m K) hs
 
-variable (K L E T : Type)
+variable (K : Type u) (L : Type v) (E : Type w) (T : Type x)
 variable [Field K] [Field L] [Field E] [Field T]
 variable [Algebra K L] [Algebra K E] [Algebra K T]
 variable [FiniteDimensional K L] [FiniteDimensional K E]
@@ -191,7 +197,7 @@ theorem exists_finiteGaloisCompositumEmbeddingOfEmbeddings_left_eq
       algebraMap A₀ M (e₀ (χ x))
     rw [AlgEquiv.liftNormal_commutes]
     congr 1
-    simp [χA]
+    simp only [AlgEquiv.trans_apply, AlgEquiv.symm_apply_apply, χA]
   refine ⟨g₀.comp σ.toAlgHom, ?_⟩
   intro x
   change g₀ (σ (i₀ x)) = i x

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.IdeleClassConnectedQuotient
-import Mathlib.FieldTheory.AbsoluteGaloisGroup
+module
+
+public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.IdeleClassConnectedQuotient
+public import Mathlib.FieldTheory.AbsoluteGaloisGroup
 
 /-!
 # A maximal-abelian reciprocity-map property
@@ -15,6 +17,8 @@ component of the idèle class group. These properties alone do not determine
 the normalized Artin map: finite-level Frobenius compatibility is a separate
 assertion. Existence is asserted in `Theorems`.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

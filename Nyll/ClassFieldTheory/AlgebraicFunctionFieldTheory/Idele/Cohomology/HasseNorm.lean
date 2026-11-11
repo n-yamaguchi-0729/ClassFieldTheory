@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.CyclicStageNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.LocalUnitsH2
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Mathlib.FieldTheory.IsSepClosed
-import Mathlib.RingTheory.Norm.Transitivity
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.CyclicStageNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalRange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalCriterion
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Mathlib.FieldTheory.IsSepClosed
+public import Mathlib.RingTheory.Norm.Transitivity
 
 /-!
 # The Hasse norm theorem for finite cyclic function-field extensions
@@ -20,6 +23,10 @@ this isomorphic stage has relative degree one, so norm transitivity transfers
 the theorem to the original fields and their actual norm maps.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open AlgebraicCurve
@@ -27,7 +34,7 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField.NormObstruction
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]
@@ -80,10 +87,10 @@ theorem principalNormSubgroup_eq_fieldNormSubgroup [IsCyclic Gal(L/K)] :
         ((congrArg (IdeleGroup.norm (k := k) (K := K) (L := L)) hbE).trans hb)
     obtain ⟨x, hx⟩ :=
       (FunctionField.principalNormSubgroup_eq_fieldNormSubgroup_cyclicStage k K Ω E).le hprincipal
-    refine ⟨Units.map (Algebra.norm L : E →* L) x, Units.ext ?_⟩
-    change Algebra.norm K (Algebra.norm L (x : E)) = (a : K)
-    rw [Algebra.norm_norm]
-    exact congrArg Units.val hx
+    refine ⟨Units.mapEquiv e.symm.toMulEquiv x, Units.ext ?_⟩
+    change Algebra.norm K (e.symm (x : E)) = (a : K)
+    exact (Algebra.norm_eq_of_algEquiv e.symm (x : E)).trans
+      (congrArg Units.val hx)
   · exact fieldNormSubgroup_le_principalNormSubgroup
 
 open ClassFieldTower.Cohomology
@@ -95,16 +102,32 @@ theorem exists_norm_iff_forall_completion_norm [IsCyclic Gal(L/K)]
       ∀ w : Place k L, ∃ x : w.adicCompletion,
         Algebra.norm (w.restrict K).adicCompletion x =
           algebraMap K (w.restrict K).adicCompletion (a : K) := by
-  obtain ⟨g, hg⟩ := IsCyclic.exists_generator (α := Gal(L/K))
   constructor
-  · intro ha w
-    have hzero := (finiteCyclicBaseUnitH2Class_eq_zero_iff_norm K L g hg a).mpr ha
-    apply (IdeleGroup.completionUnitsH2Map_baseUnitClass_eq_zero_iff_norm w g hg a).mp
-    rw [hzero, map_zero]
+  · rintro ⟨x, hx⟩ w
+    have hx0 : x ≠ 0 := by
+      intro hz
+      apply a.ne_zero
+      rw [← hx, hz, Algebra.norm_zero]
+    have hfield : a ∈ fieldNormSubgroup (K := K) (L := L) :=
+      ⟨Units.mk0 x hx0, Units.ext hx⟩
+    obtain ⟨b, hb⟩ := fieldNormSubgroup_le_principalNormSubgroup (k := k) hfield
+    obtain ⟨y, hy⟩ := IdeleGroup.exists_localNorm_preimage_of_principal_norm a b hb w
+    exact ⟨(y : w.adicCompletion), congrArg Units.val hy⟩
   · intro ha
-    have hprincipal := (IdeleGroup.baseUnitH2Class_locally_zero_iff_principal_norm
-      (k := k) g hg a).mp (fun w =>
-        (IdeleGroup.completionUnitsH2Map_baseUnitClass_eq_zero_iff_norm w g hg a).mpr (ha w))
+    have hprincipal : IdeleGroup.principalIdele k K a ∈
+        (IdeleGroup.norm (k := k) (K := K) (L := L)).range := by
+      apply (IdeleGroup.mem_norm_range_iff_forall_localNorm
+        (K := K) (L := L) (IdeleGroup.principalIdele k K a)).mpr
+      intro w
+      obtain ⟨x, hx⟩ := ha w
+      have hx0 : x ≠ 0 := by
+        intro hz
+        have hunit :=
+          (Units.map (algebraMap K (w.restrict K).adicCompletion).toMonoidHom a).ne_zero
+        apply hunit
+        change algebraMap K (w.restrict K).adicCompletion (a : K) = 0
+        rw [← hx, hz, Algebra.norm_zero]
+      exact ⟨Units.mk0 x hx0, Units.ext hx⟩
     obtain ⟨x, hx⟩ :=
       (principalNormSubgroup_eq_fieldNormSubgroup (k := k) (K := K) (L := L)).le hprincipal
     exact ⟨(x : L), congrArg Units.val hx⟩

@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
 
 /-!
 # Sections of a power of the ideal of a curve section
@@ -21,6 +23,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubscheme
 A generator of a power of the ideal of a section of a smooth proper curve gives
 a free quotient of affine sections with the rank prescribed by that power.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -106,9 +110,9 @@ theorem main
     (V : C.Opens) (hV : IsAffineOpen V) (hεV : ∀ x ∈ Set.range ε.1.base, x ∈ V) (g : Γ(C, V))
     (hg : ∀ W : C.affineOpens, ∀ hW : (W : C.Opens) ≤ V,
       (ε.1.ker ^ m).ideal W = Ideal.span {(C.presheaf.map (homOfLE hW).op).hom g}) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c V
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c V
     Module.Free R (Γ(C, V) ⧸ Ideal.span {g}) ∧ Module.finrank R (Γ(C, V) ⧸ Ideal.span {g}) = m := by
-  let algV := Scheme.TwoAffineOpenCover.algebraOfHom c V
+  intro algV
   let I : C.IdealSheafData := ε.1.ker ^ m
   let Z := I.subscheme
   let ι : Z ⟶ C := I.subschemeι

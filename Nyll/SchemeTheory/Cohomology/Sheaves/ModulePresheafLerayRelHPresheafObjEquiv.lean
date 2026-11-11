@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Identification of relative cohomology sections on an affine open with fibre-cover Cech cohomology.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

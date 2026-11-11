@@ -10,28 +10,33 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealDivisorRangeInvModuleEqLSpaceOn
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealDivisorRangeModuleEqLSpaceOn
-import Nyll.AlgebraicCurves.Geometry.Schemes.LocalGeometry.HomOrdEqKerPowIdealEqSpan
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.EqMulEqAddOrdPresentations
-import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
-import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataRangeModuleIotaAppInjective
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealDivisorRangeInvModuleEqLSpaceOn
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealDivisorRangeModuleEqLSpaceOn
+public import Nyll.AlgebraicCurves.Geometry.Schemes.LocalGeometry.HomOrdEqKerPowIdealEqSpan
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.EqMulEqAddOrdPresentations
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.SchemeTheory.Sheaves.IdealSheafDataRangeModuleIotaAppInjective
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Scheme Modules is Principal sub single of presentation ker pow
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -170,11 +175,11 @@ theorem AlgebraicGeometry.Scheme.Modules.isPrincipal_sub_single_of_presentation_
       ∀ U : X.Opens, IsAffineOpen U → Nonempty U →
         Set.range (φ' U) = (AlgebraicCurve.lSpaceOn (AlgebraicCurve.placesOf x U) D' : Set
           X.functionField)) :
-    letI := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
     AlgebraicCurve.Divisor.IsPrincipal (D - n • Finsupp.single v 1) ∧
       AlgebraicCurve.Divisor.IsPrincipal (D' + n • Finsupp.single v 1) := by
+  intro sharedOwner1
   classical
-  let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
   set pt : X := P.base (IsLocalRing.closedPoint K) with hpt
   have hI : (P.ker ^ n).IsInvertible := (Scheme.Hom.isInvertible_ker_of_comp_eq_id P hP).pow n
   have hplace : ∀ (y : X) (w : Place K X.functionField),

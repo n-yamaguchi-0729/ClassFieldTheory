@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
 
 /-!
 # Infinite abelian class-field correspondence
@@ -16,6 +18,7 @@ order-reversing infinite abelian class-field correspondence.
 -/
 
 
+@[expose] public section
 
 open scoped NumberField
 
@@ -100,7 +103,9 @@ namespace GlobalClassFields
 
 open Reciprocity
 
-variable (K : Type) [Field K] [NumberField K]
+universe u
+
+variable (K : Type u) [Field K] [NumberField K]
 
 /-- The infinite abelian class-field correspondence.  The order dual in the
 domain records that larger closed idele-class subgroups correspond to smaller
@@ -179,6 +184,108 @@ theorem infiniteAbelianClassFieldCorrespondence_finite_iff_open
         IsOpen (e '' (H : Set (ideleClassComponentQuotient K))) ↔
           IsOpen (H : Set (ideleClassComponentQuotient K))
       exact e.toHomeomorph.isOpen_image
+
+
+/-- Pulling the fixing subgroup of a finite layer back along the actual
+maximal-abelian Artin map gives the ordinary idèle-class norm range. -/
+theorem maximalAbelianGlobalArtin_comap_fixingSubgroup
+    (E : FiniteGaloisIntermediateField K (maximalAbelianExtension K)) :
+    let : NumberField E := NumberField.of_module_finite K E
+    E.toIntermediateField.fixingSubgroup.comap
+        (maximalAbelianGlobalArtin K).toMonoidHom =
+      (_root_.ideleClassNorm K E).range := by
+  intro numberFieldE
+  ext c
+  obtain ⟨a, rfl⟩ := QuotientGroup.mk'_surjective
+    (IdeleGroup.principalSubgroup K) c
+  let q := QuotientGroup.mk' (IdeleGroup.principalSubgroup K) a
+  let g := maximalAbelianGlobalArtin K q
+  change g ∈ E.toIntermediateField.fixingSubgroup ↔ q ∈ (_root_.ideleClassNorm K E).range
+  have hfix : g ∈ E.toIntermediateField.fixingSubgroup ↔ AlgEquiv.restrictNormalHom E g = 1 := by
+    rw [← E.toIntermediateField.restrictNormalHom_ker]
+    exact Iff.rfl
+  have hproj : AlgEquiv.restrictNormalHom E g =
+      globalIdeleClassArtinMonoidHom (K := K) (L := E) q :=
+    (maximalAbelianGlobalArtin_finiteProjection K a E).trans
+      (globalIdeleClassArtinMonoidHom_mk (K := K) (L := E) a).symm
+  exact hfix.trans ((congrArg (· = 1) hproj).to_iff.trans
+    (globalIdeleClassArtinMonoidHom_eq_one_iff (K := K) (L := E) q))
+
+/-- The infinite correspondence recovers the original subgroup on idèle
+classes, through the same component quotient and the same Artin map. -/
+theorem infiniteAbelianClassFieldCorrespondence_comap_fixingSubgroup
+    (H : ClosedSubgroup (ideleClassComponentQuotient K)) :
+    (infiniteAbelianClassFieldCorrespondence K
+        (OrderDual.toDual H)).fixingSubgroup.comap
+        (maximalAbelianGlobalArtin K).toMonoidHom =
+      H.toSubgroup.comap (QuotientGroup.mk' (ideleClassIdentityComponent K)) := by
+  rw [infiniteAbelianClassFieldCorrespondence_fixingSubgroup]
+  ext c
+  change maximalAbelianGlobalArtin K c ∈
+      H.toSubgroup.map
+        (ideleClassComponentQuotientEquivMaximalAbelianGalois K).toMonoidHom ↔ _
+  rw [Subgroup.mem_map_equiv]
+  rw [← ideleClassComponentQuotientEquivMaximalAbelianGalois_mk K c]
+  let e := (ideleClassComponentQuotientEquivMaximalAbelianGalois K).toMulEquiv
+  let q := QuotientGroup.mk' (ideleClassIdentityComponent K) c
+  change e.symm (e q) ∈ H.toSubgroup ↔ q ∈ H.toSubgroup
+  rw [e.symm_apply_apply]
+
+/-- On finite layers, the infinite correspondence is characterized by the
+actual ordinary norm range. This identifies fields inside the same maximal
+abelian extension, not just isomorphic abstract fields. -/
+theorem infiniteAbelianClassFieldCorrespondence_eq_finiteLayer_iff
+    (H : ClosedSubgroup (ideleClassComponentQuotient K))
+    (E : FiniteGaloisIntermediateField K (maximalAbelianExtension K)) :
+    let : NumberField E := NumberField.of_module_finite K E
+    infiniteAbelianClassFieldCorrespondence K (OrderDual.toDual H) =
+        E.toIntermediateField ↔
+      H.toSubgroup.comap (QuotientGroup.mk' (ideleClassIdentityComponent K)) =
+        (_root_.ideleClassNorm K E).range := by
+  intro numberFieldE
+  constructor
+  · intro h
+    calc
+      H.toSubgroup.comap (QuotientGroup.mk' (ideleClassIdentityComponent K)) =
+          (infiniteAbelianClassFieldCorrespondence K
+            (OrderDual.toDual H)).fixingSubgroup.comap
+            (maximalAbelianGlobalArtin K).toMonoidHom :=
+        (infiniteAbelianClassFieldCorrespondence_comap_fixingSubgroup K H).symm
+      _ = E.toIntermediateField.fixingSubgroup.comap
+          (maximalAbelianGlobalArtin K).toMonoidHom := by rw [h]
+      _ = (_root_.ideleClassNorm K E).range :=
+        maximalAbelianGlobalArtin_comap_fixingSubgroup K E
+  · intro h
+    have hfix :
+        (infiniteAbelianClassFieldCorrespondence K
+          (OrderDual.toDual H)).fixingSubgroup = E.toIntermediateField.fixingSubgroup := by
+      apply Subgroup.comap_injective (maximalAbelianGlobalArtin_surjective K)
+      exact (infiniteAbelianClassFieldCorrespondence_comap_fixingSubgroup K H).trans
+        (h.trans (maximalAbelianGlobalArtin_comap_fixingSubgroup K E).symm)
+    have hfield := congrArg IntermediateField.fixedField hfix
+    simpa only [InfiniteGalois.fixedField_fixingSubgroup] using hfield
+
+/-- The finite/open part of infinite reciprocity is the existing selected
+finite class field embedded by its specified embedding into the maximal
+abelian extension. No new class-field choice is introduced. -/
+theorem infiniteAbelianClassFieldCorrespondence_eq_closedFiniteIndexClassField
+    (H : ClosedSubgroup (ideleClassComponentQuotient K))
+    [(H.toSubgroup.comap
+      (QuotientGroup.mk' (ideleClassIdentityComponent K))).FiniteIndex] :
+    let P := H.toSubgroup.comap (QuotientGroup.mk' (ideleClassIdentityComponent K))
+    let hP : IsClosed (P : Set (IdeleClassGroup K)) :=
+      H.isClosed'.preimage QuotientGroup.continuous_mk
+    let L := closedFiniteIndexClassField (K := K) P hP
+    infiniteAbelianClassFieldCorrespondence K (OrderDual.toDual H) =
+      (finiteAbelianExtensionInMaximalAbelianExtension K L).toIntermediateField := by
+  intro P hP L
+  let : NumberField L := NumberField.of_module_finite K L
+  let E := finiteAbelianExtensionInMaximalAbelianExtension K L
+  let : NumberField E := NumberField.of_module_finite K E
+  apply (infiniteAbelianClassFieldCorrespondence_eq_finiteLayer_iff K H E).2
+  change P = (_root_.ideleClassNorm K E).range
+  exact ((finiteAbelianExtensionInMaximalAbelianExtension_ideleClassNorm_range K L).trans
+    (closedFiniteIndexClassField_ideleClassNorm_range (K := K) P hP)).symm
 
 end GlobalClassFields
 end GlobalClassFieldTheory

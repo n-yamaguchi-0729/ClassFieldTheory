@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
-import Mathlib.Algebra.Group.Subgroup.Map
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
+public import Mathlib.Algebra.Group.Subgroup.Map
 
 /-!
 # Norm membership under compatible field equivalences
@@ -14,6 +16,8 @@ import Mathlib.Algebra.Group.Subgroup.Map
 Transporting both fields of a finite extension through compatible ring
 equivalences preserves the actual field norms, not merely their index.
 -/
+
+@[expose] public section
 
 noncomputable section
 

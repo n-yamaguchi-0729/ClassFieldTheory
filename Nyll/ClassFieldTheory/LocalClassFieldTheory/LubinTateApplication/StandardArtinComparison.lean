@@ -4,15 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
-import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
-import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.NormSubgroup
-import Nyll.GaloisCohomology.GroupTheory.RestrictionKernel
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.NormSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicPointwiseArtinComparison
+public import Nyll.GaloisCohomology.GroupTheory.RestrictionKernel
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
 
 /-!
 # Standard local Artin map on equal-characteristic Lubin--Tate levels
@@ -21,16 +27,22 @@ This file compares the principal-unit filtration transported by the standard
 finite local Artin map with the actual upper ramification filtration of an
 explicit equal-characteristic Lubin--Tate level.
 
-The proof uses restriction to the lower Lubin--Tate level rather than a
-pointwise comparison between the standard Artin map and the explicit
-power-series action.
+The filtration proof uses restriction to the lower Lubin--Tate level.
+The imported `EqualCharacteristicPointwiseArtinComparison` additionally
+identifies the same native Artin map pointwise with the direct unit bracket,
+including its generator formula, finite-level restriction and semilinear
+naturality for every Laurent field unit after actual unit-factor extraction.
+Its geometric normalization evaluates the existing explicit
+inverse-bracket action at the inverse input unit.
 -/
+
+@[expose] public section
 
 noncomputable section
 
 open scoped LaurentSeries ValuativeRel
 
-universe v
+universe u v
 
 namespace LocalClassFieldTheory
 
@@ -74,13 +86,13 @@ private theorem natCard_ker_eq_pow_sub_of_surjective
     _ = ((q - 1) * q ^ m) * q ^ (n - m) := by
       rw [hpow, Nat.mul_assoc]
 
-variable {K₀ : Type} [Field K₀]
+variable {K₀ : Type u} [Field K₀]
 
 /-- On a tower of explicit levels `m + 1 ≤ n + 1`, the standard local Artin
 image of `U^(m + 1)` is the kernel of restriction to level `m + 1`. -/
 theorem
     equalCharacteristicLubinTateArtinPrincipalUnitsImage_eq_restrictKer
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     {m n : ℕ} (hmn : m ≤ n) :
     let B := F.residueField⸨X⸩
@@ -94,12 +106,10 @@ theorem
     letI : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
     (LocalFieldTheory.fieldPrincipalUnits B (m + 1)).map
-        (abelianLocalArtinMonoidHom B L) =
+        (Universe.abelianLocalArtinMonoidHom B L) =
       (intermediateFieldRestrictNormalHom E L
         (equalCharacteristicLubinTateLevelField_mono F hmn)).ker := by
-  let B := F.residueField⸨X⸩
-  let E := equalCharacteristicLubinTateLevelField F m
-  let L := equalCharacteristicLubinTateLevelField F n
+  intro B E L
   let pi : Bˣ := (equalCharacteristicLaurentUniformizerUnit F)⁻¹
   let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
   let : IsNonarchimedeanLocalField B :=
@@ -109,21 +119,21 @@ theorem
   let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let hEL : E ≤ L := equalCharacteristicLubinTateLevelField_mono F hmn
-  let φ := abelianLocalArtinMonoidHom B L
+  let φ := Universe.abelianLocalArtinMonoidHom B L
   let ψ := intermediateFieldRestrictNormalHom E L hEL
   have hker :
       (ψ.comp φ).ker =
         Subgroup.zpowers pi ⊔ LocalFieldTheory.fieldPrincipalUnits B (m + 1) := by
-    rw [show ψ.comp φ = abelianLocalArtinMonoidHom B E by
-      exact abelianLocalArtinMonoidHom_restrict B E L hEL]
-    rw [abelianLocalArtinMonoidHom_ker]
+    rw [show ψ.comp φ = Universe.abelianLocalArtinMonoidHom B E by
+      exact Universe.abelianLocalArtinMonoidHom_restrict B E L hEL]
+    rw [Universe.abelianLocalArtinMonoidHom_ker]
     change equalCharacteristicLubinTateNormSubgroup F m =
       Subgroup.zpowers pi ⊔ LocalFieldTheory.fieldPrincipalUnits B (m + 1)
     simpa [B, pi, LocalFieldTheory.uniformizerPrincipalSubgroup] using
       equalCharacteristicLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup
         F m
   have hZ : Subgroup.zpowers pi ≤ φ.ker := by
-    rw [abelianLocalArtinMonoidHom_ker]
+    rw [Universe.abelianLocalArtinMonoidHom_ker]
     change Subgroup.zpowers pi ≤
       equalCharacteristicLubinTateNormSubgroup F n
     rw [
@@ -131,31 +141,25 @@ theorem
     simp [B, pi, LocalFieldTheory.uniformizerPrincipalSubgroup]
   exact Subgroup.map_eq_ker_of_comp_ker_eq_sup_of_left_le_ker
     φ ψ (Subgroup.zpowers pi) (LocalFieldTheory.fieldPrincipalUnits B (m + 1))
-    (abelianLocalArtinMonoidHom_surjective B L) hker hZ
+    (Universe.abelianLocalArtinMonoidHom_surjective B L) hker hZ
 
 /-- The explicitly chosen complete-DVF upper group agrees with the canonical
 local upper ramification group on the same Lubin--Tate level field. -/
 theorem
     equalCharacteristicLubinTateRealUpperRamificationGroup_eq_localUpperRamificationGroup
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (t : ℝ) :
     let B := F.residueField⸨X⸩
     let L := equalCharacteristicLubinTateLevelField F n
-    letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-    letI : IsNonarchimedeanLocalField B :=
+    let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+    let : IsNonarchimedeanLocalField B :=
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
-    letI : FiniteDimensional B L :=
+    let : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
     equalCharacteristicLubinTateRealUpperRamificationGroup F n t =
       localUpperRamificationGroup B L t := by
-  let B := F.residueField⸨X⸩
-  let L := equalCharacteristicLubinTateLevelField F n
-  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  let : IsNonarchimedeanLocalField B :=
-    equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  let : FiniteDimensional B L :=
-    equalCharacteristicLubinTateLevelField_finiteDimensional F n
+  intro B L sharedOwner3 sharedOwner4 sharedOwner5
   let base := localCompleteDVF B
   let targetLocal := chosenLocalExtensionCompleteDVF B L
   let targetLT := equalCharacteristicLubinTateLevelCompleteDVF F n
@@ -201,35 +205,25 @@ theorem
 `n + 1` is the kernel of restriction to level `k`. -/
 theorem
     equalCharacteristicLubinTateRealUpperRamificationGroup_eq_restrictKer
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1) :
     let B := F.residueField⸨X⸩
     let m := k - 1
     let E := equalCharacteristicLubinTateLevelField F m
     let L := equalCharacteristicLubinTateLevelField F n
-    letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-    letI : IsNonarchimedeanLocalField B :=
+    let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+    let : IsNonarchimedeanLocalField B :=
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
-    letI : FiniteDimensional B E :=
+    let : FiniteDimensional B E :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F m
-    letI : FiniteDimensional B L :=
+    let : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
     equalCharacteristicLubinTateRealUpperRamificationGroup F n (k : ℝ) =
       (intermediateFieldRestrictNormalHom E L
         (equalCharacteristicLubinTateLevelField_mono F
           (Nat.sub_le_iff_le_add.2 hkn))).ker := by
-  let B := F.residueField⸨X⸩
-  let m := k - 1
-  let E := equalCharacteristicLubinTateLevelField F m
-  let L := equalCharacteristicLubinTateLevelField F n
-  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
-  let : IsNonarchimedeanLocalField B :=
-    equalCharacteristicLaurentIsNonarchimedeanLocalField F
-  let : FiniteDimensional B E :=
-    equalCharacteristicLubinTateLevelField_finiteDimensional F m
-  let : FiniteDimensional B L :=
-    equalCharacteristicLubinTateLevelField_finiteDimensional F n
+  intro B m E L sharedOwner5 sharedOwner6 sharedOwner7 sharedOwner8
   let : IsAbelianGalois B E :=
     equalCharacteristicLubinTateLevelField_isAbelianGalois F m
   let : IsAbelianGalois B L :=
@@ -276,11 +270,11 @@ theorem
   have hψ_surjective : Function.Surjective ψ := by
     intro σ
     obtain ⟨a, ha⟩ :=
-      abelianLocalArtinMonoidHom_surjective B E σ
-    refine ⟨abelianLocalArtinMonoidHom B L a, ?_⟩
+      Universe.abelianLocalArtinMonoidHom_surjective B E σ
+    refine ⟨Universe.abelianLocalArtinMonoidHom B L a, ?_⟩
     exact
       (DFunLike.congr_fun
-        (abelianLocalArtinMonoidHom_restrict B E L hEL) a).trans ha
+        (Universe.abelianLocalArtinMonoidHom_restrict B E L hEL) a).trans ha
   let q := Nat.card F.residueField
   have hcardGalE :
       Nat.card (Gal(E / B)) = (q - 1) * q ^ m := by
@@ -328,7 +322,7 @@ Lubin--Tate level: the standard local Artin image of `U^k` is the actual
 canonical upper ramification group `G^k`. -/
 theorem
     equalCharacteristicLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1) :
     let B := F.residueField⸨X⸩
@@ -338,7 +332,7 @@ theorem
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
     letI : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    (LocalFieldTheory.fieldPrincipalUnits B k).map (abelianLocalArtinMonoidHom B L) =
+    (LocalFieldTheory.fieldPrincipalUnits B k).map (Universe.abelianLocalArtinMonoidHom B L) =
       localUpperRamificationGroup B L (k : ℝ) := by
   let m := k - 1
   have hmn : m ≤ n := by

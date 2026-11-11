@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.MorphismProperty.Limits
-import Mathlib.CategoryTheory.Limits.Shapes.WidePullbacks
-import Mathlib.CategoryTheory.Limits.Shapes.FiniteLimits
+module
+
+public import Mathlib.CategoryTheory.MorphismProperty.Limits
+public import Mathlib.CategoryTheory.Limits.Shapes.WidePullbacks
+public import Mathlib.CategoryTheory.Limits.Shapes.FiniteLimits
 
 /-!
 # Algebra, divisors, and base change
@@ -20,6 +22,8 @@ import Mathlib.CategoryTheory.Limits.Shapes.FiniteLimits
 Finite wide pullbacks decompose into binary pullbacks, preserving the required morphism
 properties.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,46 +10,50 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.TensorProduct.Maps
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.AlgebraLevelSetFiniteFreeFinrank
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.TensorProduct.Quotient
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Ideal.Over
-import Mathlib.FieldTheory.PurelyInseparable.Basic
-import Mathlib.FieldTheory.SeparableClosure
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Mathlib.RingTheory.Kaehler.TensorProduct
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.RingTheory.Unramified.Basic
-import Mathlib.RingTheory.Smooth.Fiber
-import Mathlib.RingTheory.Etale.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.RingTheory.FinitePresentation
-import Mathlib.RingTheory.FiniteStability
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.IsTensorProduct
-import Mathlib.RingTheory.Localization.BaseChange
-import Mathlib.Algebra.Module.LocalizedModule.Basic
-import Mathlib.RingTheory.Localization.Defs
-import Mathlib.FieldTheory.RatFunc.Basic
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.Algebra.Polynomial.Degree.Lemmas
-import Mathlib.Tactic.Choose
+module
+
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.AlgebraLevelSetFiniteFreeFinrank
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.TensorProduct.Quotient
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Ideal.Over
+public import Mathlib.FieldTheory.PurelyInseparable.Basic
+public import Mathlib.FieldTheory.SeparableClosure
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.RingTheory.Kaehler.TensorProduct
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.Unramified.Basic
+public import Mathlib.RingTheory.Smooth.Fiber
+public import Mathlib.RingTheory.Etale.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.FinitePresentation
+public import Mathlib.RingTheory.FiniteStability
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.IsTensorProduct
+public import Mathlib.RingTheory.Localization.BaseChange
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.RingTheory.Localization.Defs
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.Algebra.Polynomial.Degree.Lemmas
+public import Mathlib.Tactic.Choose
 
 /-!
 # Algebra exists polynomial is Unit aeval imp etale level Set
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

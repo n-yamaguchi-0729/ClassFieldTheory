@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ProfiniteUnits
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
-import Mathlib.Topology.Algebra.Ring.Compact
-import Mathlib.Topology.Algebra.Group.Units
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ProfiniteUnits
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
+public import Mathlib.Topology.Algebra.Ring.Compact
+public import Mathlib.Topology.Algebra.Group.Units
 
 /-!
 # Openness of the existing local principal-unit filtration
@@ -16,6 +18,8 @@ import Mathlib.Topology.Algebra.Group.Units
 The filtration is the one already used by local class field theory. Its image in
 the field unit group is open because the integer-unit inclusion is an open embedding.
 -/
+
+@[expose] public section
 
 noncomputable section
 

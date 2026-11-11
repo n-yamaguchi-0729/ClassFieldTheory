@@ -10,19 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.FieldTheory.SeparablyGenerated
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.AlgebraicIndependent.Adjoin
-import Mathlib.RingTheory.Etale.Field
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.FieldTheory.SeparablyGenerated
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.AlgebraicIndependent.Adjoin
+public import Mathlib.RingTheory.Etale.Field
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
 
 /-!
 # IsCurveOver of isIntegral of smoothOfRelativeDimension one
@@ -30,6 +32,8 @@ import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
 The function field of an integral proper curve smooth of relative dimension one has the structure
 of a curve function field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -197,7 +201,7 @@ theorem rank_kaehler_eq_one_of_algEquiv {K : Type u} [Field K] {F : Type v} [Fie
     (h : Module.rank L Ω[L⁄K] = 1) : Module.rank F Ω[F⁄K] = 1 := by
   let : Algebra L F := (e.symm : L →ₐ[K] F).toRingHom.toAlgebra
   have : IsScalarTower K L F :=
-    IsScalarTower.of_algebraMap_eq fun k => by simp [RingHom.algebraMap_toAlgebra]
+    IsScalarTower.of_algebraMap_eq fun k => (e.symm.commutes k).symm
   have e' : L ≃ₐ[L] F := { e.symm.toRingEquiv with commutes' := fun l => rfl }
   have : Algebra.FormallyEtale L L := Algebra.FormallyEtale.of_formallyUnramified_and_formallySmooth
   have : Algebra.FormallyEtale L F := Algebra.FormallyEtale.of_equiv e'

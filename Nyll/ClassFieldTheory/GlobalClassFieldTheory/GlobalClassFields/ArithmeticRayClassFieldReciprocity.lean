@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 
 /-!
 # Arithmetic reciprocity for actual ray class fields
@@ -19,6 +23,10 @@ quotient topology.
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField
 
 noncomputable section
@@ -29,20 +37,17 @@ namespace GlobalClassFields
 open NumberField
 open Reciprocity
 
-private theorem arithmeticRayClassIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
+attribute [local instance]
+  globalNormResidueIdeleClassCommGroup
+  globalNormResidueIdeleClassIsMulCommutative
 
-attribute [local instance] arithmeticRayClassIdeleClassGroupIsMulCommutative
-
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 /-- Arithmetic reciprocity followed by transport between equal norm
 quotients sends a norm-residue symbol to its represented quotient class. -/
 private theorem
     arithmeticReciprocity_quotientMulEquivOfEq_globalNormResidue
-    {F E : Type} [Field F] [NumberField F]
+    {F : Type u} {E : Type v} [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E]
     [FiniteDimensional F E] [IsAbelianGalois F E]
     (H : Subgroup (IdeleClassGroup F))

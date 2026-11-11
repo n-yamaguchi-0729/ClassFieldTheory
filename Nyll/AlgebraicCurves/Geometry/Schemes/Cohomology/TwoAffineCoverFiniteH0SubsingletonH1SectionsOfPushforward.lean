@@ -10,14 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.RingTheory.Spectrum.Prime.Noetherian
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Cohomology of a finite pushforward on two affine charts
@@ -25,6 +28,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEqui
 Pushing an invertible module forward along a morphism finite over the field gives finite
 zeroth cohomology, vanishing first cohomology, and the rank formula for the zeroth group.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -157,15 +162,15 @@ def piEquiv (M : Z.Modules) (ψ₀ : k →+* Γ(Z, ⊤)) {ι : Type u} (U : ι �
 
 end PiDecomp
 
-local instance nativeUnitSectionsModule (Z : Scheme.{u}) (O : Z.Opens) :
-    Module Γ(Z, O) Γ((SheafOfModules.unit Z.ringCatSheaf : Z.Modules), O) :=
-  ((SheafOfModules.unit Z.ringCatSheaf : Z.Modules).val.obj (Opposite.op O)).isModule
-
 theorem exists_addEquiv_of_trivial {Z : Scheme.{u}} (M : Z.Modules) (V : Z.Opens)
     (e : (Scheme.Modules.pullback V.ι).obj M ≅ SheafOfModules.unit V.toScheme.ringCatSheaf)
     (W : V.toScheme.Opens) :
+    let : Module Γ(Z, V.ι ''ᵁ W)
+        Γ((SheafOfModules.unit Z.ringCatSheaf : Z.Modules), V.ι ''ᵁ W) :=
+      ((SheafOfModules.unit Z.ringCatSheaf : Z.Modules).val.obj (op (V.ι ''ᵁ W))).isModule
     ∃ τ : Γ(M, V.ι ''ᵁ W) ≃+ Γ((SheafOfModules.unit Z.ringCatSheaf : Z.Modules), V.ι ''ᵁ W),
       ∀ (c : Γ(Z, V.ι ''ᵁ W)) (m : Γ(M, V.ι ''ᵁ W)), τ (c • m) = c • τ m := by
+  intro unitSectionModule
   let θ : M.restrict V.ι ⟶ SheafOfModules.unit V.toScheme.ringCatSheaf :=
     ((Scheme.Modules.restrictFunctorIsoPullback V.ι).app M).hom ≫ e.hom
   have hθ : IsIso θ :=

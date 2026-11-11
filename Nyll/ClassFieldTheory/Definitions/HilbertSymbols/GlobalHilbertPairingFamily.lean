@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 
 /-!
 # Families of finite-place Hilbert pairings
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

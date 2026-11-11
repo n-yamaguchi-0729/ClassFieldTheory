@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusReachedAtEq
-import Nyll.AlgebraicCurves.Cohomology.FiniteH1GenusReached
-import Nyll.AlgebraicCurves.Cohomology.CechH1ToH1Bijective
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusReachedAtEq
+public import Nyll.AlgebraicCurves.Cohomology.FiniteH1GenusReached
+public import Nyll.AlgebraicCurves.Cohomology.CechH1ToH1Bijective
 
 /-!
 The Riemann--Roch dimension formula from a two-chart section system reaching the genus.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

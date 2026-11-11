@@ -10,44 +10,46 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ChartSections
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModuleMaps
-import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AbelJacobiFamily
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealIsoPullbackModuleComparison
-import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreFinrankH0EqSubsingletonH1Iff
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicEquivalenceEulerCharSectionsOfTensorEq
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.AlgebraicallyClosedTwistCohomology
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.EulerCharacteristic.RelativeDivisorIEqZeroSchemeIdealEulerCharEq
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraphAlgClosed
-import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.ProdKerGraphComapMapOnProdOver
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFinrankH1SectionsOfUnitEqFinrankH0EqOne
-import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenSupEqTop
-import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMemFinset
-import Nyll.AlgebraicCurves.Models.FunctionFields.CurveRingEquivFunctionField
-import Nyll.AlgebraicCurves.Models.FinrankH0SectionsOfInvModuleProdKerTensorModuleProdKerEqEll
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ChartSections
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModuleMaps
+public import Nyll.AlgebraicCurves.Geometry.Picard.AbelJacobi.AbelJacobiFamily
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealIsoPullbackModuleComparison
+public import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreFinrankH0EqSubsingletonH1Iff
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicEquivalenceEulerCharSectionsOfTensorEq
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.AlgebraicallyClosedTwistCohomology
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.EulerCharacteristic.RelativeDivisorIEqZeroSchemeIdealEulerCharEq
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraphAlgClosed
+public import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.ProdKerGraphComapMapOnProdOver
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFinrankH1SectionsOfUnitEqFinrankH0EqOne
+public import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenSupEqTop
+public import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMemFinset
+public import Nyll.AlgebraicCurves.Models.FunctionFields.CurveRingEquivFunctionField
+public import Nyll.AlgebraicCurves.Models.FinrankH0SectionsOfInvModuleProdKerTensorModuleProdKerEqEll
 
 /-!
 # A chart with vanishing fibre H¹
@@ -56,6 +58,8 @@ Compare cohomology under the canonical fibre isomorphisms. Chart sections and th
 Riemann–Roch dimension calculation then provide a chart whose prescribed twist has
 vanishing H¹, first over algebraically closed fields and then over arbitrary fields.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -136,8 +140,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

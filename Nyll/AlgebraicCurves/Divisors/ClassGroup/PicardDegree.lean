@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Mathlib.GroupTheory.QuotientGroup.Defs
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Mathlib.GroupTheory.QuotientGroup.Defs
 
 /-!
 # The degree exact sequence of the Picard group
@@ -19,6 +21,8 @@ import Mathlib.GroupTheory.QuotientGroup.Defs
 The degree-zero Picard group identifies with the kernel of degree on divisor classes.
 These definitions retain their existing cohomological names.
 -/
+
+@[expose] public section
 
 noncomputable section
 

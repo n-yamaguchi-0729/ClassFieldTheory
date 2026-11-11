@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Tactic.Ext
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Tactic.Ext
 
 /-!
 # Restriction of direct images to open subschemes
@@ -20,13 +22,16 @@ The comparison uses the actual preimage-open equality and native scheme
 restriction maps. The former AlgebraicCurves owner reexports this shared owner.
 -/
 
+@[expose] public section
+
 universe u
 
 open CategoryTheory AlgebraicGeometry Opposite TopologicalSpace
 
 namespace AlgebraicGeometry.Scheme.Modules
 
-private lemma topSheaf_comp_hom {Z : TopCat.{u}}
+/-- The underlying presheaf map of a composite sheaf morphism is the composite map. -/
+lemma topSheaf_comp_hom {Z : TopCat.{u}}
     {A B C : Z.Sheaf RingCat.{u}} (f : A ⟶ B) (g : B ⟶ C) :
     (f ≫ g).hom = f.hom ≫ g.hom := rfl
 

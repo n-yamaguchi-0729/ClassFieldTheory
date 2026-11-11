@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
-import Mathlib.Tactic.ByContra
-import Mathlib.Tactic.Choose
+module
+
+public import Mathlib.RingTheory.GradedAlgebra.Homogeneous.Ideal
+public import Mathlib.Tactic.ByContra
+public import Mathlib.Tactic.Choose
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -20,6 +22,8 @@ import Mathlib.Tactic.Choose
 Homogeneous prime avoidance constructs a positive-degree homogeneous element outside finitely many
 prime homogeneous ideals.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

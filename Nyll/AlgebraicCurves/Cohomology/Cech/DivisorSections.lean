@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 Divisor-bounded functions on two charts and their Cech cohomology.
 Chart extension maps the first Cech quotient to adelic cohomology.
 -/
+
+@[expose] public section
 
 noncomputable section
 

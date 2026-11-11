@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingSymbol
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingSymbol
 
 /-!
 # Algebraic laws for Hilbert pairings
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory.HilbertPairing
 

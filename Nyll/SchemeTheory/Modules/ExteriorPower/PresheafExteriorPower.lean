@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Presheaf
-import Mathlib.LinearAlgebra.ExteriorPower.Basic
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf
+public import Mathlib.LinearAlgebra.ExteriorPower.Basic
 /-!
 # Exterior powers of module presheaves
 
 Constructs exterior powers of module presheaves and the maps induced by module morphisms.
 -/
+
+@[expose] public section
 
 universe u
 

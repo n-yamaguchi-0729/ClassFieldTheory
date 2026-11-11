@@ -11,6 +11,8 @@ import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.Arithmet
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassFieldMathlibArtin
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
 
 /-!
 # Artin isomorphism for the big Hilbert class field
@@ -24,6 +26,8 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 open NumberField IsDedekindDomain
@@ -31,7 +35,7 @@ open NumberField IsDedekindDomain
 /-- The narrow class group acts through the Frobenius-normalized Artin
 isomorphism on a big Hilbert class field. -/
 theorem bigHilbertClassField_artinEquiv
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (E : FiniteAbelianExtension K) (hE : IsBigHilbertClassField E) :
     ∃ artin : RayClassGroup (narrowRayClassModulus K) ≃*
         (E ≃ₐ[K] E),

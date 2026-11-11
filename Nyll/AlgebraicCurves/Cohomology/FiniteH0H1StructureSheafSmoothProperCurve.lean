@@ -10,24 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1
-import Nyll.AlgebraicCurves.Places.Restriction.PlacesOfUnionEqUnivSupEqTop
-import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
-import Nyll.AlgebraicCurves.Cohomology.CechRiemannRochGenusReached
-import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1
+public import Nyll.AlgebraicCurves.Places.Restriction.PlacesOfUnionEqUnivSupEqTop
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
+public import Nyll.AlgebraicCurves.Cohomology.CechRiemannRochGenusReached
+public import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 Finiteness of structure-sheaf cohomology of a smooth proper integral curve.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -78,14 +83,14 @@ theorem finite_H0_H1_structureSheaf_of_smoothProperCurve' {K : Type u} [Field K]
     (hreach : letI := (AlgebraicCurve.baseToFunctionField c).toAlgebra
       ∃ (γ : ℤ) (D₀ : AlgebraicCurve.Divisor K C.functionField),
         AlgebraicCurve.RiemannGenusReachedAt γ D₀) :
-    letI := (AlgebraicCurve.baseToFunctionField c).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField c).toAlgebra
     Module.Finite K (𝒱.structureSheafSections c).H0 ∧ Module.Finite K (𝒱.structureSheafSections
       c).H1 ∧
       Module.finrank K (𝒱.structureSheafSections c).H0
         = AlgebraicCurve.ell (0 : AlgebraicCurve.Divisor K C.functionField) ∧
       Module.finrank K (𝒱.structureSheafSections c).H1 = AlgebraicCurve.genusFF K C.functionField
         := by
-  let := (AlgebraicCurve.baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   have := hcurve
   have := hL0
   obtain ⟨γ, D₀, hγ⟩ := hreach

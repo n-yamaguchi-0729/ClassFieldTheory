@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquivAdeleTopology
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FiniteMathlibTopologyComparison
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.Group.Units
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquivAdeleTopology
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FiniteMathlibTopologyComparison
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.Group.Units
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 
 /-!
 # Idèle and idèle-class transport under a number-field equivalence
@@ -16,6 +19,8 @@ The continuous adele-ring transport induces continuous transport of units
 and then of the quotient by principal idèles. These topological equivalences
 have the previously defined algebraic maps as their underlying maps.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

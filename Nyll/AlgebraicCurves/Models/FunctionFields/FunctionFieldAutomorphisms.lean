@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearActionUniqueness
-import Nyll.AlgebraicCurves.Models.Points.AlgEquivPointPlaceCompHomEqAlgAutSmulPointPlace
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearActionUniqueness
+public import Nyll.AlgebraicCurves.Models.Points.AlgEquivPointPlaceCompHomEqAlgAutSmulPointPlace
 
 /-!
 # Functorial function-field automorphisms
@@ -14,6 +16,10 @@ Expose the function-field pullback attached to actual curve automorphisms and
 its composition law. Germ formulas identify it with any compatible semilinear
 action, avoiding choices of an unrelated field automorphism.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -29,7 +35,7 @@ namespace AlgebraicCurve.CurveModel
 attribute [local instance]
   SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
 
-variable {K F : Type} [Field K] [Field F] [Algebra K F] (M : CurveModel K F)
+variable {K : Type u} {F : Type v} [Field K] [Field F] [Algebra K F] (M : CurveModel K F)
 
 /-- The actual pullback of rational functions along a curve automorphism. -/
 def functionFieldAut (θ : M.C ≅ M.C) : F ≃+* F := gRingEquiv M θ

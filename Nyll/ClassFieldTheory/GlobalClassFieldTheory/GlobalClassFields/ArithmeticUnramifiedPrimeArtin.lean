@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.UnramifiedNormalization
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.UnramifiedNormalization
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
 
 /-!
 # Arithmetic Frobenius at an unramified finite place
@@ -21,9 +24,13 @@ prime idèle maps to arithmetic Frobenius.
 
 
 
+@[expose] public section
+
 open scoped NumberField
 
 noncomputable section
+
+universe u v
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
@@ -31,7 +38,7 @@ namespace GlobalClassFields
 open NumberField IsDedekindDomain IdeleGroup
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -54,6 +61,19 @@ theorem arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin
         K L v (FiniteIdeleGroup.chosenLocalOrderSection v 1) := by
   rw [arithmeticFinitePlacePrimeArtin, finitePrimeIdele,
     Reciprocity.arithmeticGlobalArtinMonoidHom_finitePlaceIdele]
+
+/-- The arithmetic prime Artin value is the global norm-residue value of
+the same normalized prime idèle class, in independent field universes. -/
+theorem arithmeticFinitePlacePrimeArtin_eq_arithmeticGlobalNormResidue
+    (v : HeightOneSpectrum (𝓞 K)) :
+    arithmeticFinitePlacePrimeArtin (K := K) (L := L) v =
+      Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
+        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+          (finitePrimeIdele v)) := by
+  rw [arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin]
+  exact (DFunLike.congr_fun
+    (Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass
+      K L v) (FiniteIdeleGroup.chosenLocalOrderSection v 1)).symm
 
 /-- Arithmetic and geometric prime Artin elements are inverse
 automorphisms. -/

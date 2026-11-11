@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraUniformFactorDegree
-import Nyll.ValuedFieldTheory.Valuation.Completion.FiniteProductNormTrace
-import Mathlib.Algebra.Algebra.Pi
-import Mathlib.Data.Fintype.EquivFin
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraUniformFactorDegree
+public import Nyll.ValuedFieldTheory.Valuation.Completion.FiniteProductNormTrace
+public import Mathlib.Algebra.Algebra.Pi
+public import Mathlib.Data.Fintype.EquivFin
 
 /-!
 # Exact number of copies of one Kummer field factor
@@ -17,6 +19,8 @@ When the `n`-th roots of unity lie in the base field, the finite field
 factors of the Kummer algebra are all isomorphic. We choose one factor and
 reindex the product by `Fin (n / d)`, where `d` is that factor's degree.
 -/
+
+@[expose] public section
 
 noncomputable section
 

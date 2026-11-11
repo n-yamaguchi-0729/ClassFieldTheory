@@ -10,35 +10,40 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.SchemeTheory.Modules.Exactness
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.SurjectiveAppSup
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSubsingletonH1SectionsOfField
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.ShortExactKerModuleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.LocallyFreeOneIffInvertible
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
-import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf
-import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.SchemeTheory.Modules.Exactness
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.SurjectiveAppSup
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSubsingletonH1SectionsOfField
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.ShortExactKerModuleTensor
+public import Nyll.SchemeTheory.Modules.Invertible.RankOne
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
+public import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf
+public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 Construct the short exact pushforward sequence associated to an ideal of a section, using
 fibre cohomology vanishing.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

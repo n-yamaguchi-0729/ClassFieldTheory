@@ -6,7 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibGlobalReciprocity
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibGlobalArtinRayComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 
 /-!
 # Finite abelian global reciprocity
@@ -26,10 +28,12 @@ noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- A finite abelian extension admits a Frobenius-normalized finite Artin map
 through a ray class group. -/
 theorem finiteAbelianGlobalReciprocity
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L] :

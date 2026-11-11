@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
 
 /-!
 # Twists by a rigidifying section
 
 Defines the ideal and module twists of the rigidifying section after base change.
 -/
+
+@[expose] public section
 
 noncomputable section
 

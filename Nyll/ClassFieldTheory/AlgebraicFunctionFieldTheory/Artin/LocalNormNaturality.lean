@@ -4,20 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Separable
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Over
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
-import Nyll.ValuedFieldTheory.LocalField.NormUnits
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Separable
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Over
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 
 /-!
 # Local Artin symbols and norms in actual function-field towers
@@ -29,6 +32,10 @@ automorphisms. The arithmetic convention inverts both local inputs, and
 the genuine field norm respects this inversion.
 -/
 
+@[expose] public section
+
+universe u v w s
+
 noncomputable section
 
 open AlgebraicCurve
@@ -37,7 +44,7 @@ open scoped AlgebraicCurve.Place
 namespace FunctionField
 
 private theorem localArtinMonoidHom_norm_tower
-    (F E T : Type) [Field F] [Field E] [Field T]
+    (F : Type u) (E : Type v) (T : Type w) [Field F] [Field E] [Field T]
     [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
     [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E]
     [Algebra F E] [Algebra F T] [Algebra E T] [IsScalarTower F E T]
@@ -45,21 +52,21 @@ private theorem localArtinMonoidHom_norm_tower
     [(ValuativeRel.valuation F).HasExtension (ValuativeRel.valuation E)]
     [FiniteDimensional F T] [IsAbelianGalois F T]
     [FiniteDimensional E T] [IsAbelianGalois E T] (x : Eˣ) :
-    (LocalClassFieldTheory.abelianLocalArtinMonoidHom E T x).restrictScalars F =
-      LocalClassFieldTheory.abelianLocalArtinMonoidHom F T
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom E T x).restrictScalars F =
+      LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom F T
         (LocalFieldTheory.normUnits F E x) := by
   have h := DFunLike.congr_fun
-    (LocalClassFieldTheory.abelianLocalArtinMonoidHom_norm_restriction F E T T) x
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_norm_restriction F E T T) x
   apply AlgEquiv.ext
   intro y
   have heval := congrArg (fun σ : Gal(T/F) => σ y) h
   have hself := AlgEquiv.restrictNormal_commutes
-    (LocalClassFieldTheory.abelianLocalArtinMonoidHom E T x |>.restrictScalars F) T y
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom E T x |>.restrictScalars F) T y
   exact hself.symm.trans heval
 
 section CompletionEvaluation
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -67,18 +74,18 @@ variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
 
 /-- The actual local Artin automorphism acts on the embedded original field
 by the existing local reciprocity map with the arithmetic input convention. -/
-theorem localArtin_completion_apply (w : Place k L)
+theorem localArtin_completion_apply_universe (w : Place k L)
     (x : (w.restrict K).adicCompletionˣ) (y : L) :
     let _ : ValuativeRel (w.restrict K).adicCompletion :=
       placeCompletionValuativeRel (w.restrict K)
     let _ : IsNonarchimedeanLocalField (w.restrict K).adicCompletion :=
       placeCompletion_isNonarchimedeanLocalField (w.restrict K)
-    LocalClassFieldTheory.abelianLocalArtinMonoidHom
+    LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom
         (w.restrict K).adicCompletion w.adicCompletion x⁻¹
         (algebraMap L w.adicCompletion y) =
       algebraMap L w.adicCompletion (localArtin (K := K) w x y) := by
   intro hrelation hlocal
-  have h := localDecompositionArtin_completion (K := K) w x
+  have h := localDecompositionArtin_completion_universe (K := K) w x
   exact (congrArg (fun σ : Gal(w.adicCompletion/(w.restrict K).adicCompletion) =>
     σ (algebraMap L w.adicCompletion y)) h).symm.trans
       (IdeleGroup.decompositionCompletionEquiv_algebraMap w
@@ -90,7 +97,8 @@ section Tower
 
 open AlgebraicCurves.Places.Proofs.Place_sum_ramificationIndex_mul_inertiaDeg_exchange.BifibreW2
 
-variable {k K L M : Type} [Field k] [Finite k] [Field K] [Field L] [Field M]
+variable {k : Type u} {K : Type v} {L : Type w} {M : Type s}
+    [Field k] [Finite k] [Field K] [Field L] [Field M]
     [Algebra k K] [Algebra k L] [Algebra k M]
     [Algebra K L] [Algebra K M] [Algebra L M]
     [IsScalarTower k K L] [IsScalarTower k K M] [IsScalarTower k L M]
@@ -152,9 +160,37 @@ theorem localArtin_norm_restrictScalars (u : Place k M) :
   have heval := congrArg
     (fun σ : Gal(u.adicCompletion/v.adicCompletion) =>
       σ (algebraMap M u.adicCompletion y)) hlocal
-  exact (localArtin_completion_apply (K := L) u x y).symm.trans
-    (heval.trans (localArtin_completion_apply (K := K) u n y))
+  exact (localArtin_completion_apply_universe (K := L) u x y).symm.trans
+    (heval.trans (localArtin_completion_apply_universe (K := K) u n y))
 
 end Tower
+
+section NativeCompatibility
+
+variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
+
+/-- The actual local Artin automorphism acts on the embedded original field
+by the existing local reciprocity map with the arithmetic input convention. -/
+theorem localArtin_completion_apply (w : Place k L)
+    (x : (w.restrict K).adicCompletionˣ) (y : L) :
+    let _ : ValuativeRel (w.restrict K).adicCompletion :=
+      placeCompletionValuativeRel (w.restrict K)
+    let _ : IsNonarchimedeanLocalField (w.restrict K).adicCompletion :=
+      placeCompletion_isNonarchimedeanLocalField (w.restrict K)
+    LocalClassFieldTheory.abelianLocalArtinMonoidHom
+        (w.restrict K).adicCompletion w.adicCompletion x⁻¹
+        (algebraMap L w.adicCompletion y) =
+      algebraMap L w.adicCompletion (localArtin (K := K) w x y) := by
+  intro hrelation hlocal
+  simpa only [LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom,
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap_eq_native,
+    LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom] using
+    localArtin_completion_apply_universe (K := K) w x y
+
+end NativeCompatibility
 
 end FunctionField

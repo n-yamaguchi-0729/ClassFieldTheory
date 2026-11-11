@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.RationalDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Representation
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.InvariantNorm
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.RationalDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Representation
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.InvariantNorm
 
 /-!
 # Rational degree on actual fixed coefficients and norms
@@ -16,6 +18,10 @@ its normal closure. The resulting invariant additive functional evaluates
 the actual abstract relative norm by multiplication by its index.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
@@ -24,7 +30,7 @@ open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 open IdeleClassGroup IdeleClassGroup.FiniteExtensionLimit
 open IdeleClassGroup.FiniteExtensionSystem
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [FunctionField k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]

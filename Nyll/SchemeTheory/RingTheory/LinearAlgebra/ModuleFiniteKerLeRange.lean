@@ -11,11 +11,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Mathlib.RingTheory.Noetherian.Basic
 
 /-!
 Deduce module finiteness from a kernel contained in a range over a Noetherian ring.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

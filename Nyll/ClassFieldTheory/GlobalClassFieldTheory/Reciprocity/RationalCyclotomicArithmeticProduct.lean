@@ -6,6 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+import Nyll.GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicField
+import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
 /-!
 # The rational cyclotomic product formula in arithmetic normalization

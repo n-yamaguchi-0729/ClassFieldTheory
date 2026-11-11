@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFamily
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalInfinitePlaceHilbertSymbol
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicHilbertProductFormula
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormulaAlgEquiv
-import Mathlib.Algebra.BigOperators.Finprod
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFamily
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalInfinitePlaceHilbertSymbol
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicHilbertProductFormula
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormulaAlgEquiv
+public import Mathlib.Algebra.BigOperators.Finprod
 
 /-!
 # Existence of a coherent global Hilbert-pairing family
@@ -29,6 +31,8 @@ one family satisfying all the stated local pairing laws, including the
 Kummer norm-residue criterion, and the global formula.  It does not disguise
 the remaining choice of a value normalization as a definition.
 -/
+
+@[expose] public section
 
 open scoped BigOperators NumberField
 open NumberField IsDedekindDomain

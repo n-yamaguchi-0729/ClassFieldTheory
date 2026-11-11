@@ -17,10 +17,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Places.Basic
-import Mathlib.Algebra.Group.Action.Units
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Mathlib.Algebra.Group.Action.Units
 
 /-!
 # The principal divisor homomorphism and its constant kernel
@@ -29,6 +31,8 @@ The actual orders of a nonzero function define an equivariant homomorphism.
 Its image is precisely the principal divisors; when constants are the base,
 its kernel consists precisely of the base-field units.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,26 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.RingTheory.Flat.Product
-import Mathlib.RingTheory.Flat.Equalizer
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
-import Mathlib.LinearAlgebra.TensorProduct.Prod
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.LocallyConstantFibreEulerChar
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverCechSectionsOfBaseChangeEquiv
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteModules
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyIntegralIsIntegral
+module
+
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
+public import Mathlib.RingTheory.Flat.Equalizer
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.LocallyConstantFibreEulerChar
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverCechSectionsOfBaseChangeEquiv
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteModules
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyIntegralIsIntegral
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Euler characteristics under algebraically trivial tensor twists
@@ -38,6 +41,8 @@ Conjugate Cech complexes identify kernels and cokernels. Transport along scheme
 isomorphisms and constancy in a connected family show that tensoring by an
 algebraically trivial invertible module preserves the Euler characteristic.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -207,7 +212,7 @@ theorem nonempty_cokerBaseChangeEquiv (d : C0 →ₗ[R] C1) (A : Type*) [CommRin
   let qA : A ⊗[R] C1 →ₗ[A] A ⊗[R] (C1 ⧸ LinearMap.range d) := q.baseChange A
   have hsurj : Function.Surjective qA := by
     rw [show (qA : A ⊗[R] C1 → A ⊗[R] (C1 ⧸ LinearMap.range d)) = LinearMap.lTensor A q from
-      LinearMap.baseChange_eq_ltensor q]
+      LinearMap.baseChange_eq_lTensor q]
     exact LinearMap.lTensor_surjective A (Submodule.mkQ_surjective _)
   have hker : LinearMap.ker qA = LinearMap.range (d.baseChange A) := by
     have h1 : LinearMap.ker (LinearMap.lTensor A q) = LinearMap.range (LinearMap.lTensor A d) := by
@@ -219,13 +224,13 @@ theorem nonempty_cokerBaseChangeEquiv (d : C0 →ₗ[R] C1) (A : Type*) [CommRin
           (LinearMap.surjective_rangeRestrict d))
     ext x
     rw [LinearMap.mem_ker, LinearMap.mem_range]
-    have hx : qA x = LinearMap.lTensor A q x := congrFun (LinearMap.baseChange_eq_ltensor q) x
+    have hx : qA x = LinearMap.lTensor A q x := congrFun (LinearMap.baseChange_eq_lTensor q) x
     rw [hx, ← LinearMap.mem_ker, h1, LinearMap.mem_range]
     constructor
     · rintro ⟨y, rfl⟩
-      exact ⟨y, (congrFun (LinearMap.baseChange_eq_ltensor d) y)⟩
+      exact ⟨y, (congrFun (LinearMap.baseChange_eq_lTensor d) y)⟩
     · rintro ⟨y, rfl⟩
-      exact ⟨y, (congrFun (LinearMap.baseChange_eq_ltensor d) y).symm⟩
+      exact ⟨y, (congrFun (LinearMap.baseChange_eq_lTensor d) y).symm⟩
   exact ⟨(Submodule.quotEquivOfEq _ _ hker.symm).trans (qA.quotKerEquivOfSurjective hsurj)⟩
 
 end Coker
@@ -578,9 +583,9 @@ variable {k : Type u} [Field k] {A : Scheme.{u}} (a : A ⟶ Spec (.of k)) [IsPro
   (F : (pullback a h).Modules) (hF : Scheme.Modules.IsInvertible F)
 
 theorem fromSpec_comp_eq_specMap (W : T'.Opens) (hW : IsAffineOpen W) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom h W
+    let := Scheme.TwoAffineOpenCover.algebraOfHom h W
     hW.fromSpec ≫ h = Scheme.TwoAffineOpenCover.specMap k Γ(T', W) := by
-  let _ := Scheme.TwoAffineOpenCover.algebraOfHom h W
+  intro sharedOwner1
   have h' := IsAffineOpen.SpecMap_appLE_fromSpec h (isAffineOpen_top _) hW (le_top (a := W))
   rw [IsAffineOpen.fromSpec_top, Scheme.isoSpec_Spec_inv, ← Spec.map_comp] at h'
   change _ = Spec.map (CommRingCat.ofHom ((Scheme.ΓSpecIso (.of k)).inv ≫
@@ -592,10 +597,10 @@ theorem exists_algebra_of_range_subset (W : T'.Opens) (hW : IsAffineOpen W)
     (K : Type u) [Field K] [Algebra k K] (s : SchemeHomOver (Scheme.TwoAffineOpenCover.specMap k K)
         h)
     (hs : Set.range ⇑s.1 ⊆ (W : Set T')) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom h W
+    let := Scheme.TwoAffineOpenCover.algebraOfHom h W
     ∃ (_ : Algebra Γ(T', W) K) (_ : IsScalarTower k Γ(T', W) K),
       s.1 = Scheme.TwoAffineOpenCover.specMap Γ(T', W) K ≫ hW.fromSpec := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom h W
+  intro sharedOwner1
   have := hW.isOpenImmersion_fromSpec
   let τ : Spec (.of K) ⟶ Spec Γ(T', W) := IsOpenImmersion.lift hW.fromSpec s.1 (by
     rw [IsAffineOpen.range_fromSpec]; exact hs)

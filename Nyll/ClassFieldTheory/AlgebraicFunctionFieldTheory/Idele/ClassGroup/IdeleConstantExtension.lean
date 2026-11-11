@@ -4,17 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
-import Nyll.ProCGroups.Topologies.QuotientMaps
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.Order.Filter.Cofinite
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.Order.Filter.Cofinite
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 
 /-!
 # Constant-field enlargement on the actual idele groups
@@ -28,6 +30,8 @@ It sends a principal idele to the principal idele of the same function, descends
 to idele classes, and scales degrees by the constant-field extension degree.
 In particular this applies to the actual full constant field `algebraicClosure k K`.
 -/
+
+@[expose] public section
 
 open scoped RestrictedProduct
 
@@ -55,7 +59,8 @@ def constantExtensionHom : IdeleGroup k K →* IdeleGroup C K :=
     (fun w => MonoidHom.id w.adicCompletionˣ)
     (Filter.Eventually.of_forall fun _ _ hx => hx)
 
-private def constantRestrictionHom : IdeleGroup C K →* IdeleGroup k K :=
+/-- Restriction of constants on the original idele groups. -/
+def constantRestrictionHom : IdeleGroup C K →* IdeleGroup k K :=
   RestrictedProduct.mapAlongMonoidHom
     (B₁ := fun w : Place C K => w.adicCompletionIntegers.units)
     (B₂ := fun v : Place k K => v.adicCompletionIntegers.units)
@@ -85,7 +90,8 @@ theorem continuous_constantExtensionHom : Continuous (constantExtensionHom k C K
     (fun _ x => x) (Filter.Eventually.of_forall fun _ _ hx => hx)
     (fun _ => continuous_id)
 
-private theorem continuous_constantRestrictionHom :
+/-- Restriction of constants is continuous for the restricted-product topologies. -/
+theorem continuous_constantRestrictionHom :
     Continuous (constantRestrictionHom k C K) :=
   RestrictedProduct.mapAlong_continuous
     (A₁ := fun w : Place C K =>

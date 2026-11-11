@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Algebra.Tower
-import Mathlib.NumberTheory.FunctionField
-import Mathlib.RingTheory.Finiteness.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+module
+
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.NumberTheory.FunctionField
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 
 /-!
 # The function-field presentation of a finite extension
@@ -16,6 +19,8 @@ The rational parameter of the base field induces the finite extension's
 function-field presentation. The existing curve theorem then supplies
 principal divisors without an additional presentation as input.
 -/
+
+@[expose] public section
 
 noncomputable section
 

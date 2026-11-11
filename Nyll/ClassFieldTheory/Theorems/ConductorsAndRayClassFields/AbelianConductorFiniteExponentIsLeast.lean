@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
-import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.AbelianConductorFiniteNormCriterion
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
+public import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.AbelianConductorFiniteNormCriterion
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
 
 /-!
 # The finite conductor exponent is a genuine local minimum
@@ -18,18 +20,22 @@ every larger exponent, and at no smaller exponent.  The norm is taken from
 the whole completion tensor algebra, with no arbitrary place above `v`.
 -/
 
+@[expose] public section
+
 open scoped NumberField TensorProduct
 open NumberField IsDedekindDomain
 
 noncomputable section
+
+universe u v
 
 namespace ClassFieldTheory
 
 /-- The conductor exponent is the least index whose higher-unit group lies
 in the finite-place tensor norm image. In particular this set is nonempty. -/
 theorem IsAbelianConductor.finiteExponent_isLeast_tensorNorm
-    {K : Type} [Field K] [NumberField K]
-    {L : Type} [Field L] [NumberField L] [Algebra K L]
+    {K : Type u} [Field K] [NumberField K]
+    {L : Type v} [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     {c : RayClassModulus K}
     (hc : IsAbelianConductor K L c)

@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.FunctionField.FiniteArtin
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+module
+
+public import Nyll.ClassFieldTheory.Definitions.FunctionField.FiniteArtin
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
 
 /-!
 # Arithmetic Frobenius at an unramified function-field place
@@ -16,13 +20,17 @@ function field and finite extension supply the upper presentation and all
 principal-divisor hypotheses used by its construction.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped AlgebraicCurve.Place
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeAction
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeAction
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
 
 /-!
 # Equivariance for arbitrary finite intermediate idele classes
@@ -14,6 +17,8 @@ An ambient automorphism preserving a finite intermediate field acts on its
 idele classes through the actual restricted field automorphism. The proof
 passes through its finite normal closure and the completed base-change maps.
 -/
+
+@[expose] public section
 
 noncomputable section
 

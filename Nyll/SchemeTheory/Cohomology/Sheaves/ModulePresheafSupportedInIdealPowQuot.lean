@@ -11,14 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.RingTheory.Localization.Away.Basic
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafIdealFiltration
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafIdealFiltration
 
 /-!
 Support of a module-presheaf quotient by an ideal power.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Cyclic.MultiplicativeHilbert90
-import Mathlib.FieldTheory.Fixed
-import Mathlib.Algebra.Group.Action.Units
+module
+
+public import Nyll.GaloisCohomology.Cyclic.MultiplicativeHilbert90
+public import Mathlib.FieldTheory.Fixed
+public import Mathlib.Algebra.Group.Action.Units
 
 /-!
 # Hilbert 90 for finite faithful field actions
@@ -14,6 +16,8 @@ import Mathlib.Algebra.Group.Action.Units
 The fixed field supplies the actual finite extension. Thus a faithful finite
 field action suffices; no auxiliary finite extension is required as input.
 -/
+
+@[expose] public section
 
 noncomputable section
 

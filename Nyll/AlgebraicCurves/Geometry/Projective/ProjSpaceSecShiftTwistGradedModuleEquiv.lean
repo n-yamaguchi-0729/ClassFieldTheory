@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Cover
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.AlgebraicCurves.Geometry.Projective.ProjTwistDatum
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Cover
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.AlgebraicCurves.Geometry.Projective.ProjTwistDatum
 
 /-!
 # Sections of shifts of the projective twisting module
 
 Local homogeneous fractions identify shifted graded sections with twisting-module sections.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -1088,7 +1092,7 @@ theorem PsiNum_surjective (h : Γ(X, Wop φ I i₀)) :
       ring
     have h2 : (∑ j, ((Pi.single i₀ (K + R) : Fin (N + 1) → ℕ) j : ℤ)) = K + R := by
       rw [Finset.sum_eq_single i₀ (fun j _ hj =>
-        by simp [hj]) (fun h => absurd (Finset.mem_univ _) h)]
+        by rw [Pi.single_eq_of_ne hj, Nat.cast_zero]) (fun h => absurd (Finset.mem_univ _) h)]
       simp only [Pi.single_eq_same, Nat.cast_add]
     simp only [ha_def, Pi.add_apply, Nat.cast_add, Finset.sum_add_distrib, h1, h2, he₁]
     push_cast; ring

@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
-import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
-import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
-import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMemFinsetField
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
+public import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMemFinsetField
 
 /-!
 # The actual curve model of a smooth proper integral curve
@@ -23,6 +25,8 @@ Construct the model on the given scheme and its actual function field.
 In particular, the structure map is definitionally the given map, so iterated
 constant base changes can use the same scheme and field embeddings.
 -/
+
+@[expose] public section
 
 noncomputable section
 

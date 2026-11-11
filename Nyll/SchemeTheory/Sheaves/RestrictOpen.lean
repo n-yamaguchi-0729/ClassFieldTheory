@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Nyll.SchemeTheory.CategoryTheory.PresheafModulePushforward
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Nyll.SchemeTheory.CategoryTheory.PresheafModulePushforward
 
 /-!
 # Restriction of module presheaves and sheaves
 
 Compares restriction to open subschemes with the corresponding pullback constructions.
 -/
+
+@[expose] public section
 
 universe v v₁ v₂ u₁ u₂ u
 

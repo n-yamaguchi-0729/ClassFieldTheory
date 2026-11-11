@@ -10,13 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
-import Mathlib.RingTheory.RamificationInertia.Inertia
-import Mathlib.FieldTheory.SeparableClosure
+module
+
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+public import Mathlib.RingTheory.NormalClosure
+public import Mathlib.RingTheory.RamificationInertia.Inertia
+public import Mathlib.FieldTheory.SeparableClosure
 
 /-!
 # Rel Norm eq pow of is Maximal of is Separable
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -95,32 +100,11 @@ local instance : Algebra 𝕂 (FractionRing 𝕋) := FractionRing.liftAlgebra R 
 
 local instance : Algebra 𝕃 (FractionRing 𝕋) := FractionRing.liftAlgebra S (FractionRing 𝕋)
 
-local instance : IsGalois 𝕂 (FractionRing 𝕋) := by
-  refine IsGalois.of_equiv_equiv (F := 𝕂) (E := 𝔼)
-    (f := (FractionRing.algEquiv R 𝕂).symm.toRingEquiv)
-    (g := (FractionRing.algEquiv 𝕋 𝔼).symm.toRingEquiv) ?_
-  ext
-  simpa using IsFractionRing.algEquiv_commutes (FractionRing.algEquiv R 𝕂).symm
-    (FractionRing.algEquiv 𝕋 𝔼).symm _
-
-local instance : Module.Finite S 𝕋 := IsIntegralClosure.finite S 𝕃 𝔼 𝕋
-
-local instance : Module.Finite R 𝕋 := Module.Finite.trans S 𝕋
-
-local instance : IsDedekindDomain 𝕋 := integralClosure.isDedekindDomain S 𝕃 𝔼
-
 variable {R S}
 private theorem relNorm_eq_pow_of_isMaximal_fractionRing
     (P : Ideal S) (p : Ideal R) [P.LiesOver p] [P.IsMaximal] [p.IsMaximal] :
-    Ideal.relNorm R P = p ^ P.inertiaDeg R := by
-  obtain ⟨Q, hQ₁, hQ₂⟩ : ∃ Q : Ideal 𝕋, Q.IsMaximal ∧ Q.LiesOver P :=
-    Ideal.exists_maximal_ideal_liesOver_of_isIntegral P
-  have : Q.LiesOver p := Ideal.LiesOver.trans Q P p
-  have h := Ideal.relNorm_eq_pow_of_isPrime_isGalois Q p
-  have : IsGalois 𝕃 (FractionRing 𝕋) := IsGalois.tower_top_of_isGalois 𝕂 𝕃 (FractionRing 𝕋)
-  rwa [← Ideal.relNorm_relNorm R S, Ideal.relNorm_eq_pow_of_isPrime_isGalois Q P,
-    map_pow, Ideal.inertiaDeg_tower (R := R) P Q, pow_mul,
-    pow_left_inj (Ideal.inertiaDeg_pos Q S).ne'] at h
+    Ideal.relNorm R P = p ^ P.inertiaDeg R :=
+  Ideal.relNorm_eq_pow_of_isMaximal P p
 
 end Closure
 

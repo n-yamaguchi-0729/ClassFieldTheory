@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Sites.BigZariski
-import Mathlib.AlgebraicGeometry.Cover.Open
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
-import Nyll.SchemeTheory.Sheaves.IdealSheafDataComapEqOpenCover
-import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+module
+
+public import Mathlib.AlgebraicGeometry.Sites.BigZariski
+public import Mathlib.AlgebraicGeometry.Cover.Open
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+public import Nyll.SchemeTheory.Sheaves.IdealSheafDataComapEqOpenCover
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
 
 /-!
 The relative divisor functor is a sheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

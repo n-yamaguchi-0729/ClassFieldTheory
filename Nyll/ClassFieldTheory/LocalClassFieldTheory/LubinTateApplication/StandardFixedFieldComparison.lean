@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFilteredArtinComparison
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFilteredArtinComparison
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseSemilinearNaturality
+public import Nyll.ValuedFieldTheory.Ramification.Filtration
 
 /-!
 # Filtered reciprocity on the named standard Lubin--Tate fixed field
@@ -17,7 +21,11 @@ algebra equivalence with the represented fixed field transports both the
 Artin principal-unit filtration and the local upper filtration.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped ValuativeRel
 
@@ -29,13 +37,13 @@ open LocalClassFieldTheory
 open LocalFieldTheory
 open LubinTate
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- Mapping the Artin principal-unit step group through a base-linear
 equivalence gives the corresponding group on the equivalent extension. -/
 theorem artinPrincipalUnitStepGroup_map_standardFixedFieldEquiv
-    (L M : Type) [Field L] [Field M]
+    (L : Type v) (M : Type w) [Field L] [Field M]
     [Algebra K L] [Algebra K M]
     [FiniteDimensional K L] [FiniteDimensional K M]
     [IsAbelianGalois K L] [IsAbelianGalois K M]
@@ -46,7 +54,7 @@ theorem artinPrincipalUnitStepGroup_map_standardFixedFieldEquiv
   unfold artinPrincipalUnitStepGroup RamificationTheory.natCeilStepFiltration
     artinPrincipalUnitGroup
   rw [Subgroup.map_map]
-  rw [abelianLocalArtinMonoidHom_autCongr K L M e]
+  rw [Universe.abelianLocalArtinMonoidHom_autCongr K L M e]
 
 /-- Real filtered local reciprocity for the named fixed field represented
 by canonical standard Lubin--Tate level `m`. -/

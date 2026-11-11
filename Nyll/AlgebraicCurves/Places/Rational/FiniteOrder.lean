@@ -14,19 +14,23 @@ Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b3
 Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 -/
 
-import Mathlib.FieldTheory.RatFunc.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.ValuationRings.OrdEqNegLogValuationSubringEq
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Mathlib.Tactic.Ring
-import Lean.Elab.Tactic.Omega
+module
+
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OrdEqNegLogValuationSubringEq
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Mathlib.Tactic.Ring
+public import Lean.Elab.Tactic.Omega
 
 /-!
 # FiniteOrder
 
 Orders at polynomial primes and rational points, expressed by valuations and root multiplicity.
 -/
+
+@[expose] public section
 
 section
 

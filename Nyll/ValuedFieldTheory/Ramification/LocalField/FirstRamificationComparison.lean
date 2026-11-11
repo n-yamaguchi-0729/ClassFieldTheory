@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.FirstRamificationComparison
+module
+
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.FirstRamificationComparison
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RamificationCharacterization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
 
 /-!
 # The first lower ramification group of a local field extension
@@ -16,7 +21,11 @@ ramification group. The latter is transported from the decomposition group
 back to the full Galois group.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v
 
 open scoped ValuativeRel
 open ValuationTheory.DiscreteValuationField
@@ -29,7 +38,7 @@ open LocalFieldTheory
 /-- The first lower group of the chosen local extension is Hilbert's
 ramification group for its canonical valuation ring. -/
 theorem localLowerRamificationGroup_one_eq_hilbertRamificationGroup
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
@@ -62,7 +71,7 @@ theorem localLowerRamificationGroup_one_eq_hilbertRamificationGroup
 /-- Triviality of the first lower group is exactly triviality of Hilbert's
 ramification group; the two transports above are both injective. -/
 theorem localLowerRamificationGroup_one_eq_bot_iff_hilbertRamificationGroup_eq_bot
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :

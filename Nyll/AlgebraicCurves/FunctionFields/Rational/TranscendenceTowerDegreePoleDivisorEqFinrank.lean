@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Degree.PoleData
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Degree.PoleData
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
 
 /-! # Degree of the coordinate pole divisor -/
+
+@[expose] public section
 
 namespace AlgebraicCurve
 

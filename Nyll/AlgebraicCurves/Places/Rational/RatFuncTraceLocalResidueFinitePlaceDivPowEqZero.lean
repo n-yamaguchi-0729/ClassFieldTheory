@@ -10,45 +10,50 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.Differentials
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Mathlib.Algebra.BigOperators.Field
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
-import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
-import Nyll.AlgebraicCurves.Differentials.Residues.Construction
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTraceCompletionCommute
-import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncHasPrincipalDivisors
-import Nyll.AlgebraicCurves.Places.Rational.FiniteOrder
-import Nyll.AlgebraicCurves.Places.Rational.Classification
-import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
-import Nyll.AlgebraicCurves.Places.Differentials.CanonicalLocalResidueDataKResDifferentialCoeffDMulPowInvEqZero
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncSubsingletonSetOfNeOfHeightOneSpectrum
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteSetOfOrdNeZero
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Places.ValuationRings.OrdEqNegLogValuationSubringEq
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegreeEqZeroEqOrdAlgebraMap
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegreeEqZeroEqOrd
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
-import Nyll.AlgebraicCurves.Places.Orders.PositiveOrderElement
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.Differentials
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Mathlib.Algebra.BigOperators.Field
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTraceCompletionCommute
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncHasPrincipalDivisors
+public import Nyll.AlgebraicCurves.Places.Rational.FiniteOrder
+public import Nyll.AlgebraicCurves.Places.Rational.Classification
+public import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
+public import Nyll.AlgebraicCurves.Places.Differentials.CanonicalLocalResidueDataKResDifferentialCoeffDMulPowInvEqZero
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncSubsingletonSetOfNeOfHeightOneSpectrum
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteSetOfOrdNeZero
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OrdEqNegLogValuationSubringEq
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegreeEqZeroEqOrdAlgebraMap
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegreeEqZeroEqOrd
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
+public import Nyll.AlgebraicCurves.Places.Orders.PositiveOrderElement
+public import Nyll.AlgebraicCurves.Places.Orders.OrderOfSum
 
 /-!
 # Rational Function Field trace local Residue finite Place div pow eq zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -117,31 +122,8 @@ private theorem _root_.AlgebraicCurve.Place.ord_neg' (f : F) : v.ord (-f) = v.or
 open _root_.AlgebraicCurve.Place
 private theorem _root_.AlgebraicCurve.Place.ord_add_eq_min {f g : F} (hf : f ≠ 0) (hg : g ≠ 0) (h :
   v.ord f ≠ v.ord g) :
-    v.ord (f + g) = min (v.ord f) (v.ord g) := by
-  have hval : v.adicValuation f ≠ v.adicValuation g := by
-    intro hcon
-    exact h (by simp only [ord, hcon])
-  have h1 : v.adicValuation (f + g) = max (v.adicValuation f) (v.adicValuation g) :=
-    Valuation.map_add_of_distinct_val _ hval
-  have hfg : f + g ≠ 0 := by
-    intro hcon
-    rw [hcon, _root_.map_zero] at h1
-    rcases max_cases (v.adicValuation f) (v.adicValuation g) with ⟨hmax, -⟩ | ⟨hmax, -⟩ <;>
-      rw [hmax] at h1
-    · exact v.adicValuation_ne_zero hf h1.symm
-    · exact v.adicValuation_ne_zero hg h1.symm
-  rcases max_cases (v.adicValuation f) (v.adicValuation g) with ⟨hmax, hle⟩ | ⟨hmax, hlt⟩ <;>
-    rw [hmax] at h1
-  · have hlog := (WithZero.log_le_log (v.adicValuation_ne_zero hg)
-      (v.adicValuation_ne_zero hf)).mpr hle
-    have h2 : v.ord (f + g) = v.ord f := by simp only [ord, h1]
-    simp only [ord] at hlog h2 ⊢
-    omega
-  · have hlog := (WithZero.log_le_log (v.adicValuation_ne_zero hf)
-      (v.adicValuation_ne_zero hg)).mpr hlt.le
-    have h2 : v.ord (f + g) = v.ord g := by simp only [ord, h1]
-    simp only [ord] at hlog h2 ⊢
-    omega
+    v.ord (f + g) = min (v.ord f) (v.ord g) :=
+  _root_.AlgebraicCurve.Place.ord_add_eq_min_of_ne v hf hg h
 
 open _root_.AlgebraicCurve.Place
 end Place
@@ -221,7 +203,8 @@ theorem aeval_ratFuncX (q : K[X]) : aeval (RatFunc.X : RatFunc K) q = algebraMap
     Polynomial.aeval_algHom_apply, Polynomial.aeval_X_left]
   rfl
 
-private def gen : Kx K p hp := toKx K p hp (RatFunc.X : RatFunc K)
+/-- The variable generating the polynomial-substitution function-field extension. -/
+def gen : Kx K p hp := toKx K p hp (RatFunc.X : RatFunc K)
 
 /-- The polynomial relation obtained by subtracting the base variable
 from the substituted polynomial. -/
@@ -256,7 +239,7 @@ theorem monic_minP (hmon : p.Monic) : (minP K p).Monic := by
       exact Nat.lt_irrefl 0 hp)]
     exact_mod_cast hp)
 
-private theorem isIntegral_gen (hmon : p.Monic) : IsIntegral (RatFunc K) (gen K p hp) :=
+theorem isIntegral_gen (hmon : p.Monic) : IsIntegral (RatFunc K) (gen K p hp) :=
   ⟨minP K p, monic_minP K p hp hmon, by
     have h := aeval_gen_minP K p hp
     rwa [aeval_def] at h⟩

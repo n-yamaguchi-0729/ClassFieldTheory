@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierLocalConductor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierUnramified
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
-import Nyll.AlgebraicCurves.Places.Rational.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierLocalConductor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierUnramified
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
 
 /-!
 # Ray congruences are actual norms from bounded Artin–Schreier extensions
@@ -18,13 +20,17 @@ Outside that finite support the extension is unramified, so integral norm
 preimages assemble to an actual idele and then an actual idele class norm.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 open AlgebraicCurve
 open scoped WithZero AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

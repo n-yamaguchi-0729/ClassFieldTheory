@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.AbstractUnramified
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedFixedFieldComparison
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.AbstractUnramified
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedFixedFieldComparison
 
 /-!
 # Filtered reciprocity for the equal-characteristic standard compositum
@@ -17,6 +19,8 @@ factor.  The first factor has trivial Artin and upper groups at nonnegative
 indices, and filtered reciprocity holds on the second factor.  Joint
 injectivity of restriction therefore gives filtered reciprocity upstairs.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -9,6 +9,9 @@ import Nyll.ClassFieldTheory.Definitions.FunctionField.Norm
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GlobalFiniteNormSquare
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteClassGroupNorm
+import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
 
 /-!
 # Norm compatibility of finite function-field reciprocity
@@ -20,9 +23,11 @@ supplied by its actual finite extension of the original function field.
 
 noncomputable section
 
+universe u v w x y
+
 namespace ClassFieldTheory.FunctionField
 
-variable (k K F L M : Type) [Field k] [Finite k]
+variable (k : Type u) (K : Type v) (F : Type w) (L : Type x) (M : Type y) [Field k] [Finite k]
     [Field K] [Field F] [Field L] [Field M]
     [Algebra k K] [Algebra k F] [Algebra k L] [Algebra k M]
     [Algebra K F] [Algebra K L] [Algebra K M] [Algebra F M] [Algebra L M]

@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.CharP.Reduced
-import Mathlib.FieldTheory.KummerPolynomial
-import Mathlib.FieldTheory.PurelyInseparable.Exponent
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PrimePowerDescent
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
+module
+
+public import Mathlib.Algebra.CharP.Reduced
+public import Mathlib.FieldTheory.KummerPolynomial
+public import Mathlib.FieldTheory.PurelyInseparable.Exponent
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PrimePowerDescent
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 
 /-!
 # Completion preserves purely inseparable function-field degrees
@@ -21,6 +23,8 @@ descend to the original function field. A tower of prime-degree extensions
 then gives the result for every finite purely inseparable extension.
 -/
 
+@[expose] public section
+
 noncomputable section
 open AlgebraicCurve Polynomial
 open AlgebraicCurves.Places.Proofs
@@ -28,6 +32,8 @@ open Place_sum_ramificationIndex_mul_inertiaDeg_exchange.BifibreW2
 open scoped AlgebraicCurve.Place WithZero
 
 namespace FunctionField
+
+universe u w
 
 /-- Completion cannot increase the degree of a finite extension. -/
 theorem finrank_adicCompletion_le
@@ -49,7 +55,7 @@ theorem finrank_adicCompletion_le
   simpa only [Module.finrank_fin_fun] using h
 
 private theorem finrank_adicCompletion_eq_prime_of_root
-    {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+    {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] (w : Place k L)
@@ -76,7 +82,7 @@ private theorem finrank_adicCompletion_eq_prime_of_root
   exact (finrank_adicCompletion_le w |>.trans_eq hdegree).antisymm hlower
 
 private theorem exists_prime_adjoin_of_isPurelyInseparable
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K L : Type*) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsPurelyInseparable K L]
     (p : ℕ) [Fact p.Prime] [CharP K p]
     (hdegree : 1 < Module.finrank K L) :
@@ -121,10 +127,83 @@ private theorem exists_prime_adjoin_of_isPurelyInseparable
   rw [IntermediateField.adjoin.finrank (Algebra.IsIntegral.isIntegral β),
     ← hmin, natDegree_X_pow_sub_C]
 
+private theorem finrank_adicCompletion_eq_of_isPurelyInseparable_step
+    {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
+    [FiniteDimensional K L] [IsPurelyInseparable K L]
+    (p : ℕ) [Fact p.Prime] [CharP K p] (w : Place k L)
+    (hupper : ∀ (M : IntermediateField K L)
+      [IsScalarTower k M L] [FiniteDimensional M L] [IsPurelyInseparable M L] [CharP M p]
+      [Algebra (RatFunc k) M] [IsScalarTower k (RatFunc k) M] [FunctionField k M],
+      Module.finrank M L < Module.finrank K L →
+        Module.finrank (w.restrict M).adicCompletion w.adicCompletion = Module.finrank M L) :
+    Module.finrank (w.restrict K).adicCompletion w.adicCompletion = Module.finrank K L := by
+  by_cases hone : Module.finrank K L = 1
+  · have hle := finrank_adicCompletion_le (K := K) w
+    have hpos := Module.finrank_pos (R := (w.restrict K).adicCompletion)
+      (M := w.adicCompletion)
+    omega
+  have hn : 1 < Module.finrank K L :=
+    lt_of_le_of_ne (Module.finrank_pos : 0 < Module.finrank K L) (Ne.symm hone)
+  obtain ⟨a, β, hβ, ha, hMdegree⟩ :=
+    exists_prime_adjoin_of_isPurelyInseparable K L p hn
+  let M : IntermediateField K L := IntermediateField.adjoin K {β}
+  let βM : M := ⟨β, IntermediateField.mem_adjoin_simple_self K β⟩
+  have hβM : βM ^ p = algebraMap K M a := by
+    apply Subtype.ext
+    exact hβ
+  have hkML : IsScalarTower k M L := IsScalarTower.to₁₃₄ k K M L
+  have hML : FiniteDimensional M L := FiniteDimensional.right K M L
+  have hMsep : IsPurelyInseparable M L := IsPurelyInseparable.tower_top K M L
+  have hMp : CharP M p := (Algebra.charP_iff K M p).mp inferInstance
+  let presentation := ClassFieldTheory.FunctionField.finiteExtensionRatFuncAlgebra k K M
+  let aRM : Algebra (RatFunc k) M := presentation.val
+  have hkRM : IsScalarTower k (RatFunc k) M := presentation.property.1
+  have hMfunction : FunctionField k M := presentation.property.2
+  have hprod : p * Module.finrank M L = Module.finrank K L := by
+    rw [← hMdegree]
+    exact Module.finrank_mul_finrank K M L
+  have hless : Module.finrank M L < Module.finrank K L := by
+    have hp : 1 < p := (Fact.out : p.Prime).one_lt
+    have hpos : 0 < Module.finrank M L := Module.finrank_pos
+    nlinarith
+  have hupperM := hupper M hless
+  have hlower := finrank_adicCompletion_eq_prime_of_root
+    (w.restrict M) p a βM hβM ha hMdegree
+  have hfiniteLower : FiniteDimensional ((w.restrict M).restrict K).adicCompletion
+      (w.restrict M).adicCompletion := inferInstance
+  have hw : (w.restrict M).restrict K = w.restrict K :=
+    restrict_restrict (F := K) (E := M) w
+  let aVM : Algebra (w.restrict K).adicCompletion (w.restrict M).adicCompletion :=
+    (IdeleGroup.completionMapOver (w.restrict K) (w.restrict M) hw).toAlgebra
+  have hVM : FiniteDimensional (w.restrict K).adicCompletion
+      (w.restrict M).adicCompletion := by
+    cases hw
+    exact hfiniteLower
+  have hlower' : Module.finrank (w.restrict K).adicCompletion
+      (w.restrict M).adicCompletion = p := by
+    cases hw
+    exact hlower
+  have htower : IsScalarTower (w.restrict K).adicCompletion
+      (w.restrict M).adicCompletion w.adicCompletion :=
+    IsScalarTower.of_algebraMap_eq fun x =>
+      (congrArg (fun f : (w.restrict K).adicCompletion →+* w.adicCompletion => f x)
+        (IdeleGroup.completionMapOver_trans (w.restrict K) (w.restrict M) w
+          hw rfl rfl)).symm
+  calc
+    Module.finrank (w.restrict K).adicCompletion w.adicCompletion =
+        Module.finrank (w.restrict K).adicCompletion (w.restrict M).adicCompletion *
+          Module.finrank (w.restrict M).adicCompletion w.adicCompletion :=
+      (Module.finrank_mul_finrank (w.restrict K).adicCompletion
+        (w.restrict M).adicCompletion w.adicCompletion).symm
+    _ = _ := by rw [hlower', hupperM]; exact hprod
+
+-- The recursive base is an intermediate field of L, so it has L's universe.
 private theorem finrank_adicCompletion_eq_of_isPurelyInseparable_aux
-    (k L : Type) [Field k] [Finite k] [Field L] [Algebra k L]
+    (k : Type u) (L : Type w) [Field k] [Finite k] [Field L] [Algebra k L]
     (p : ℕ) [Fact p.Prime] (n : ℕ) :
-    ∀ (K : Type) [Field K] [Algebra k K] [Algebra K L] [IsScalarTower k K L]
+    ∀ (K : Type w) [Field K] [Algebra k K] [Algebra K L] [IsScalarTower k K L]
       [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
       [CharP K p] [FiniteDimensional K L] [IsPurelyInseparable K L],
       Module.finrank K L = n → ∀ w : Place k L,
@@ -132,77 +211,23 @@ private theorem finrank_adicCompletion_eq_of_isPurelyInseparable_aux
   induction n using Nat.strongRecOn with
   | ind n ih =>
     intro K hK akK aKL hkKL aRK hkRK hfunction hchar hfinite hpure hdegree w
-    by_cases hone : Module.finrank K L = 1
-    · have hle := finrank_adicCompletion_le (K := K) w
-      have hpos := Module.finrank_pos (R := (w.restrict K).adicCompletion)
-        (M := w.adicCompletion)
-      omega
-    have hn : 1 < Module.finrank K L :=
-      lt_of_le_of_ne (Module.finrank_pos : 0 < Module.finrank K L) (Ne.symm hone)
-    obtain ⟨a, β, hβ, ha, hMdegree⟩ :=
-      exists_prime_adjoin_of_isPurelyInseparable K L p hn
-    let M : IntermediateField K L := IntermediateField.adjoin K {β}
-    let βM : M := ⟨β, IntermediateField.mem_adjoin_simple_self K β⟩
-    have hβM : βM ^ p = algebraMap K M a := by
-      apply Subtype.ext
-      exact hβ
-    have hkML : IsScalarTower k M L := IsScalarTower.to₁₃₄ k K M L
-    have hML : FiniteDimensional M L := FiniteDimensional.right K M L
-    have hMsep : IsPurelyInseparable M L := IsPurelyInseparable.tower_top K M L
-    have hMp : CharP M p := (Algebra.charP_iff K M p).mp inferInstance
-    let presentation := ClassFieldTheory.FunctionField.finiteExtensionRatFuncAlgebra k K M
-    let aRM : Algebra (RatFunc k) M := presentation.val
-    have hkRM : IsScalarTower k (RatFunc k) M := presentation.property.1
-    have hMfunction : FunctionField k M := presentation.property.2
-    have hprod : p * Module.finrank M L = n := by
-      rw [← hMdegree]
-      exact (Module.finrank_mul_finrank K M L).trans hdegree
-    have hless : Module.finrank M L < n := by
-      have hp : 1 < p := (Fact.out : p.Prime).one_lt
-      have hpos : 0 < Module.finrank M L := Module.finrank_pos
-      nlinarith
-    have hupper := ih (Module.finrank M L) hless M rfl w
-    have hlower := finrank_adicCompletion_eq_prime_of_root
-      (w.restrict M) p a βM hβM ha hMdegree
-    have hfiniteLower : FiniteDimensional ((w.restrict M).restrict K).adicCompletion
-        (w.restrict M).adicCompletion := inferInstance
-    have hw : (w.restrict M).restrict K = w.restrict K :=
-      restrict_restrict (F := K) (E := M) w
-    let aVM : Algebra (w.restrict K).adicCompletion (w.restrict M).adicCompletion :=
-      (IdeleGroup.completionMapOver (w.restrict K) (w.restrict M) hw).toAlgebra
-    have hVM : FiniteDimensional (w.restrict K).adicCompletion
-        (w.restrict M).adicCompletion := by
-      cases hw
-      exact hfiniteLower
-    have hlower' : Module.finrank (w.restrict K).adicCompletion
-        (w.restrict M).adicCompletion = p := by
-      cases hw
-      exact hlower
-    have htower : IsScalarTower (w.restrict K).adicCompletion
-        (w.restrict M).adicCompletion w.adicCompletion :=
-      IsScalarTower.of_algebraMap_eq fun x =>
-        (congrArg (fun f : (w.restrict K).adicCompletion →+* w.adicCompletion => f x)
-          (IdeleGroup.completionMapOver_trans (w.restrict K) (w.restrict M) w
-            hw rfl rfl)).symm
-    calc
-      Module.finrank (w.restrict K).adicCompletion w.adicCompletion =
-          Module.finrank (w.restrict K).adicCompletion (w.restrict M).adicCompletion *
-            Module.finrank (w.restrict M).adicCompletion w.adicCompletion :=
-        (Module.finrank_mul_finrank (w.restrict K).adicCompletion
-          (w.restrict M).adicCompletion w.adicCompletion).symm
-      _ = n := by rw [hlower', hupper]; exact hprod
+    refine (finrank_adicCompletion_eq_of_isPurelyInseparable_step p w ?_).trans hdegree
+    intro M hkML hML hMpure hMp aRM hkRM hMfunction hless
+    exact ih (Module.finrank M L) (hless.trans_eq hdegree) M rfl w
 
 /-- A finite purely inseparable extension of a function field has the same
 degree after completing at any of its places. -/
 theorem finrank_adicCompletion_eq_of_isPurelyInseparable
-    {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+    {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsPurelyInseparable K L] (w : Place k L) :
     Module.finrank (w.restrict K).adicCompletion w.adicCompletion = Module.finrank K L := by
   have hp : Fact (ringChar k).Prime := ⟨CharP.char_is_prime k (ringChar k)⟩
   have hKp : CharP K (ringChar k) := (Algebra.charP_iff k K (ringChar k)).mp inferInstance
+  refine finrank_adicCompletion_eq_of_isPurelyInseparable_step (ringChar k) w ?_
+  intro M hkML hML hMpure hMp aRM hkRM hMfunction _
   exact finrank_adicCompletion_eq_of_isPurelyInseparable_aux k L (ringChar k)
-    (Module.finrank K L) K rfl w
+    (Module.finrank M L) M rfl w
 
 end FunctionField

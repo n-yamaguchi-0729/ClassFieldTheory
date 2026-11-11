@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Spectrum.Prime.Defs
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+module
+
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Spectrum.Prime.Defs
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
 
 /-!
 Finite free two-term complexes, their fibre dimensions and the canonical kernel base-change map.
 -/
+
+@[expose] public section
 
 noncomputable section
 

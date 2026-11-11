@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.BigOperators.GroupWithZero.Action
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+module
+
+public import Mathlib.Algebra.Group.Action.Basic
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 
 /-!
 # Multiplicative cyclic norms and Lang primitives
@@ -13,6 +16,8 @@ import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 Telescoping products supply periodic norm preimages from a multiplicative
 Lang equation. The formulas apply to actual field units and retain the period.
 -/
+
+@[expose] public section
 
 namespace CyclicAction
 

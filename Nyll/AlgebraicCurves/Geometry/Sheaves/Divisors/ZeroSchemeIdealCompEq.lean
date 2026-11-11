@@ -11,14 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.ZeroSchemeIdealCompLe
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.ZeroSchemeIdealCompLe
 
 /-!
 # Zero ideals are invariant under isomorphism
 
 Postcomposing a module section with an isomorphism preserves its zero-scheme ideal.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

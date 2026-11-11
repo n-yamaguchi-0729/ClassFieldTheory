@@ -11,13 +11,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.SeparatingTranscendental
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.SeparatingTranscendental
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
 
 /-!
 # Is Curve Over of transcendental of perfect Field
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

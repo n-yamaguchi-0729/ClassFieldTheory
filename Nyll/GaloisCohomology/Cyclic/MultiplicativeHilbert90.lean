@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
+module
+
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 
 /-!
 # Multiplicative Hilbert 90 in arbitrary universes
@@ -17,6 +19,8 @@ field-unit coboundary. For a subgroup of field automorphisms, passing to its
 fixed field gives the same conclusion; an injective automorphism homomorphism
 therefore suffices and need not be onto the full automorphism group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

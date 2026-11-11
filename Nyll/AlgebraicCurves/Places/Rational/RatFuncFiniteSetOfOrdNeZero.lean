@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.FieldTheory.RatFunc.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncSubsingletonSetOfNeOfHeightOneSpectrum
+module
+
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncSubsingletonSetOfNeOfHeightOneSpectrum
 
 /-!
 # RationalFunctionField finite setOf ord ne zero
 
 A nonzero rational function has nonzero order at only finitely many places.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurve.RationalFunctionField
 

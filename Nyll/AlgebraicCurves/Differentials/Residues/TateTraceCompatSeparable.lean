@@ -18,77 +18,83 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.Submodule.Range
-import Mathlib.RingTheory.Valuation.Integers
-import Mathlib.Algebra.Module.Submodule.Map
-import Mathlib.Algebra.Order.GroupWithZero.Canonical
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.LinearAlgebra.Isomorphisms
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.Finiteness.Finsupp
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.Localization.FractionRing
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
-import Mathlib.Tactic.NthRewrite
-import Mathlib.Tactic.Ring.RingNF
-import Lean.Elab.Tactic.NormCast
-import Lean.Elab.Tactic.Omega
-import Lean.Elab.Tactic.Ext
-import Lean.Elab.Tactic.RCases
-import Aesop.Frontend.Tactic
-import Aesop.BuiltinRules
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.Analysis.Normed.Group.Ultra
-import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
-import Mathlib.Analysis.SpecialFunctions.Pow.Real
-import Mathlib.Data.Int.WithZero
-import Mathlib.FieldTheory.Separable
-import Mathlib.FieldTheory.SeparableClosure
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Matrix.ToLin
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.RingTheory.Localization.Module
-import Mathlib.RingTheory.TensorProduct.Maps
-import Mathlib.RingTheory.Trace.Defs
-import Mathlib.RingTheory.Valuation.Discrete.RankOne
-import Mathlib.RingTheory.Valuation.Integral
-import Mathlib.Topology.Algebra.Valued.NormedValued
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Conv
-import Mathlib.RingTheory.LocalRing.Module
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Places.Restriction.ComapAlgebraMapNeTop
+public import Mathlib.Algebra.Module.Submodule.Range
+public import Mathlib.RingTheory.Valuation.Integers
+public import Mathlib.Algebra.Module.Submodule.Map
+public import Mathlib.Algebra.Order.GroupWithZero.Canonical
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Finiteness.Finsupp
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
+public import Mathlib.Tactic.NthRewrite
+public import Mathlib.Tactic.Ring.RingNF
+public import Lean.Elab.Tactic.NormCast
+public import Lean.Elab.Tactic.Omega
+public import Lean.Elab.Tactic.Ext
+public import Lean.Elab.Tactic.RCases
+public import Aesop.Frontend.Tactic
+public import Aesop.BuiltinRules
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.Analysis.Normed.Group.Ultra
+public import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
+public import Mathlib.Analysis.SpecialFunctions.Pow.Real
+public import Mathlib.Data.Int.WithZero
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.FieldTheory.SeparableClosure
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.Matrix.ToLin
+public import Mathlib.LinearAlgebra.Pi
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.RingTheory.Localization.Module
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.RingTheory.Trace.Defs
+public import Mathlib.RingTheory.Valuation.Discrete.RankOne
+public import Mathlib.RingTheory.Valuation.Integral
+public import Mathlib.Topology.Algebra.Valued.NormedValued
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Conv
+public import Mathlib.RingTheory.LocalRing.Module
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.CompletionQuotientFiniteness
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Compatibility of Tate residues with trace in separable function field extensions.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -426,22 +432,6 @@ private theorem algebraMap_ne_zero {f : F} (hf : f ≠ 0) : algebraMap F F' f �
 
 variable (w : Place K F')
 
-private theorem _root_.AlgebraicCurve.Place.comap_algebraMap_ne_top [Algebra.IsIntegral F F'] :
-    w.toValuationSubring.comap (algebraMap F F') ≠ ⊤ := by
-  intro htop
-  apply w.ne_top'
-  have hF : ∀ f : F, algebraMap F F' f ∈ w.toValuationSubring := fun f =>
-    ValuationSubring.mem_comap.mp (htop ▸ ValuationSubring.mem_top f)
-  refine SetLike.ext fun x => ⟨fun _ => ValuationSubring.mem_top x, fun _ => ?_⟩
-  let : Algebra F w.toValuationSubring :=
-    ((algebraMap F F').codRestrict w.toValuationSubring.toSubring hF).toAlgebra
-  let : IsScalarTower F w.toValuationSubring F' :=
-    IsScalarTower.of_algebraMap_eq fun f => rfl
-  have hx : _root_.IsIntegral w.toValuationSubring x :=
-    (Algebra.IsIntegral.isIntegral (R := F) x).tower_top
-  obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp hx
-  exact hy ▸ y.2
-
 open _root_.AlgebraicCurve.Place
 variable {w} in
 theorem mem_comap_iff_ord_nonneg {f : F} (hf : f ≠ 0) :
@@ -493,53 +483,9 @@ private theorem _root_.AlgebraicCurve.Place.exists_ord_algebraMap_pos [Algebra.I
 open _root_.AlgebraicCurve.Place
 variable [Algebra.IsIntegral F F']
 
-private theorem ramificationIndex_set_nonempty :
-    {n : ℕ | 0 < n ∧ ∃ f : F, f ≠ 0 ∧ w.ord (algebraMap F F' f) = n}.Nonempty := by
-  obtain ⟨f, hf0, hf⟩ := w.exists_ord_algebraMap_pos (F := F)
-  exact ⟨(w.ord (algebraMap F F' f)).toNat, by omega, f, hf0, by omega⟩
-
 theorem isPrincipalIdealRing_comap :
-    IsPrincipalIdealRing (w.toValuationSubring.comap (algebraMap F F')) := by
-  obtain ⟨g, hg0, hge⟩ := w.exists_ord_eq_ramificationIndex (F := F)
-  have hepos : 0 < ramificationIndex (F := F) w := w.ramificationIndex_pos (F := F)
-  have hgmem : g ∈ w.toValuationSubring.comap (algebraMap F F') :=
-    (mem_comap_iff_ord_nonneg hg0).mpr (by omega)
-  refine (IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
-    ⟨⟨g, hgmem⟩, irreducible_mk_comap w hg0 hgmem hge, ?_⟩).toIsPrincipalIdealRing
-  rintro ⟨f, hmem⟩ hx
-  have hf : f ≠ 0 := by simpa [Subtype.ext_iff] using hx
-  obtain ⟨c, hc⟩ := w.ramificationIndex_dvd_ord (F := F) hf
-  have hnonneg : 0 ≤ w.ord (algebraMap F F' f) := (mem_comap_iff_ord_nonneg hf).mp hmem
-  have hcnonneg : 0 ≤ c := by
-    by_contra hneg
-    have hcle : c ≤ -1 := by omega
-    have : (ramificationIndex (F := F) w : ℤ) * c ≤ (ramificationIndex (F := F) w : ℤ) * -1 :=
-      mul_le_mul_of_nonneg_left hcle (by omega)
-    omega
-  set n : ℕ := c.toNat with hn
-  have hcn : (n : ℤ) = c := Int.toNat_of_nonneg hcnonneg
-  refine ⟨n, ?_⟩
-  have hgn : g ^ n ≠ 0 := pow_ne_zero _ hg0
-  have hdiv0 : f / g ^ n ≠ 0 := div_ne_zero hf hgn
-  have hu0 : w.ord (algebraMap F F' (f / g ^ n)) = 0 := by
-    have hkey : algebraMap F F' (f / g ^ n)
-        = algebraMap F F' f * (algebraMap F F' g) ^ (-(n : ℤ)) := by
-      rw [div_eq_mul_inv, map_mul, map_inv₀, map_pow, ← zpow_natCast (algebraMap F F' g) n,
-        ← _root_.zpow_neg]
-    rw [hkey, w.ord_mul (algebraMap_ne_zero hf) (zpow_ne_zero _ (algebraMap_ne_zero hg0)),
-      w.ord_zpow, hge, hc, ← hcn]
-    ring
-  have humem : f / g ^ n ∈ w.toValuationSubring.comap (algebraMap F F') :=
-    (mem_comap_iff_ord_nonneg hdiv0).mpr (le_of_eq hu0.symm)
-  have hu : IsUnit (⟨f / g ^ n, humem⟩ : w.toValuationSubring.comap (algebraMap F F')) :=
-    (isUnit_mk_comap_iff hdiv0 humem).mpr hu0
-  refine ⟨hu.unit, ?_⟩
-  refine Subtype.ext ?_
-  have hcoe : ((hu.unit : w.toValuationSubring.comap (algebraMap F F')) : F) = f / g ^ n := by
-    rw [IsUnit.unit_spec]
-  push_cast
-  rw [hcoe, mul_comm, div_mul_cancel₀]
-  exact hgn
+    IsPrincipalIdealRing (w.toValuationSubring.comap (algebraMap F F')) :=
+  _root_.AlgebraicCurve.Place.isPrincipalIdealRing_comap (F := F) w
 
 section RestrictDef
 
@@ -812,7 +758,7 @@ variable {K F : Type*} [Field K] [Field F] [Algebra K F] (V : Place K F)
 theorem norm_adicCompletion_eq (x : V.adicCompletion) :
     let := kw_ffgc_rankOne_adicCompletion V
     ‖x‖ = (WithZeroMulInt.toNNReal (two_ne_zero) (Valued.v x) : ℝ) := by
-  let := kw_ffgc_rankOne_adicCompletion V
+  intro sharedOwner1
   have h := valueGroup₀_equiv_withZeroMulInt_restrict_apply_of_surjective
     (V.heightOneSpectrum.valuedAdicCompletion_surjective F) x
   simp only [Valued.toNormedField.norm_def, Valuation.RankOne.hom]
@@ -835,7 +781,7 @@ theorem absoluteValue_extends (c : (W.restrict F).adicCompletion) :
     let := kw_ffgc_rankOne_adicCompletion (W.restrict F)
     kw_ffgc_absoluteValue F W
       (algebraMap (W.restrict F).adicCompletion W.adicCompletion c) = ‖c‖ := by
-  let := kw_ffgc_rankOne_adicCompletion (W.restrict F)
+  intro sharedOwner1
   let := kw_ffgc_rankOne_adicCompletion W
   have hr : (0 : ℝ) < (W.ramificationIndex F : ℝ) :=
     Nat.cast_pos.mpr (W.ramificationIndex_pos (F := F))
@@ -1319,28 +1265,8 @@ theorem adicIntegersKSubmod_le_poleWindowKSubmod (πh : u.adicCompletionIntegers
 
 theorem clearPole (πh : u.adicCompletionIntegers) (hπh : Irreducible πh)
     (fh : u.adicCompletion) :
-    ∃ M : ℕ, (πh : u.adicCompletion)^M * fh ∈ u.adicCompletionIntegers := by
-  obtain ⟨a, b, hb, hfh⟩ := IsFractionRing.div_surjective
-    (A := u.adicCompletionIntegers) (K := u.adicCompletion) fh
-  have hb0 : b ≠ 0 := nonZeroDivisors.ne_zero hb
-  obtain ⟨M, ub, hbeq⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hb0 hπh
-  refine ⟨M, ?_⟩
-  have hcoe : ∀ x : u.adicCompletionIntegers,
-      (x : u.adicCompletion) = algebraMap _ u.adicCompletion x := fun _ => rfl
-  have hbK0 : (b : u.adicCompletion) ≠ 0 := by
-    rw [hcoe]; exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).mpr hb0
-  have hbfh : (b : u.adicCompletion) * fh = (a : u.adicCompletion) := by
-    rw [← hfh, hcoe b, hcoe a, mul_div_cancel₀ _ (hcoe b ▸ hbK0)]
-  have hπheq : ((ub⁻¹ : u.adicCompletionIntegersˣ) : u.adicCompletionIntegers) * b = πh ^ M := by
-    rw [hbeq, ← mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mul]
-  have hπheqK : ((((ub⁻¹ : u.adicCompletionIntegersˣ) : u.adicCompletionIntegers)
-        : u.adicCompletion)) * (b : u.adicCompletion)
-      = (πh : u.adicCompletion)^M := by
-    have := congrArg (algebraMap u.adicCompletionIntegers u.adicCompletion) hπheq
-    simp only [map_mul, map_pow] at this
-    exact this
-  rw [← hπheqK, mul_assoc, hbfh]
-  exact mul_mem (Subtype.coe_prop _) a.2
+    ∃ M : ℕ, (πh : u.adicCompletion)^M * fh ∈ u.adicCompletionIntegers :=
+  _root_.ModularCurve.KwF4gRRTate.clearPole u πh hπh fh
 
 variable (K L) in
 /-- Each pole window modulo the completed integers is finite dimensional over K at a place with
@@ -1627,14 +1553,10 @@ def poleWindowShiftEquiv (πh : u.adicCompletionIntegers) (hπh : Irreducible π
     ⟨poleWindowShift_injective u πh hπh M, poleWindowShift_surjective u πh hπh M⟩
 
 /-- The K-submodule of completed integers divisible by πh to the power M. -/
-def piPowKSubmod (πh : u.adicCompletionIntegers) (M : ℕ) :
-    Submodule K u.adicCompletionIntegers where
-  carrier := {y | ∃ x : u.adicCompletionIntegers, y = πh^M * x}
-  add_mem' := by rintro a b ⟨xa, rfl⟩ ⟨xb, rfl⟩; exact ⟨xa + xb, by ring⟩
-  zero_mem' := ⟨0, by ring⟩
-  smul_mem' c y := by
-    rintro ⟨x, rfl⟩
-    exact ⟨c • x, by rw [Algebra.smul_def, Algebra.smul_def, mul_left_comm]⟩
+abbrev piPowKSubmod (πh : u.adicCompletionIntegers) (M : ℕ) :
+    Submodule K u.adicCompletionIntegers :=
+  _root_.AlgebraicCurve.Place.CompletionQuotients.piPowKSubmodule
+    u πh M
 
 theorem poleWindowShift_image_integers (πh : u.adicCompletionIntegers) (M : ℕ) :
     Submodule.map (poleWindowShift u πh M)
@@ -1653,10 +1575,9 @@ theorem poleWindowShift_image_integers (πh : u.adicCompletionIntegers) (M : ℕ
 variable (K L) in
 /-- Quotients of completed integers by powers of an irreducible element are finite dimensional
 over K. -/
-def KwF4gRRTateDVRQuotPowKFinite : Prop :=
-  ∀ (u : Place K L) [u.FiniteResidue] (πh : u.adicCompletionIntegers) (_ : Irreducible πh)
-    (M : ℕ),
-    FiniteDimensional K (u.adicCompletionIntegers ⧸ piPowKSubmod u πh M)
+abbrev KwF4gRRTateDVRQuotPowKFinite : Prop :=
+  _root_.AlgebraicCurve.Place.CompletionQuotients.QuotientPowersFinite
+    K L
 
 theorem poleWindowFinite_of_DVRQuotPowKFinite
     (hDVR : KwF4gRRTateDVRQuotPowKFinite K L) :
@@ -2038,112 +1959,53 @@ variable {K L : Type*} [Field K] [Field L] [Algebra K L] (u : Place K L)
 
 theorem piPowKSubmod_eq_restrictScalars (πh : u.adicCompletionIntegers) (M : ℕ) :
     piPowKSubmod u πh M
-      = (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers).restrictScalars K := by
-  ext y
-  rw [Submodule.restrictScalars_mem, Ideal.mem_span_singleton]
-  exact ⟨fun ⟨x, h⟩ => ⟨x, h⟩, fun ⟨x, h⟩ => ⟨x, h⟩⟩
+      = (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers).restrictScalars K :=
+  _root_.AlgebraicCurve.Place.CompletionQuotients.piPowKSubmodule_eq_restrictScalars
+    u πh M
 
 /-- Identifies the quotient by the K-submodule of multiples of πh to the power M with the
 corresponding ideal quotient. -/
-def quotPiPowEquivIdealQuot (πh : u.adicCompletionIntegers) (M : ℕ) :
+abbrev quotPiPowEquivIdealQuot (πh : u.adicCompletionIntegers) (M : ℕ) :
     (u.adicCompletionIntegers ⧸ piPowKSubmod u πh M)
       ≃ₗ[K] (u.adicCompletionIntegers ⧸ (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers)) :=
-  (Submodule.quotEquivOfEq _ _ (piPowKSubmod_eq_restrictScalars u πh M)).trans
-    (Submodule.Quotient.restrictScalarsEquiv K _)
+  _root_.AlgebraicCurve.Place.CompletionQuotients.quotientPiPowLinearEquivIdealQuotient
+    u πh M
 
 variable (K L) in
 /-- The quotient of completed integers by an irreducible element is finite dimensional over K at
 each place with finite residue. -/
-def KwF4gRRTateDVRCotangentKFinite : Prop :=
-  ∀ (u : Place K L) [u.FiniteResidue] (πh : u.adicCompletionIntegers) (_ : Irreducible πh),
-    FiniteDimensional K
-      (u.adicCompletionIntegers ⧸ (Ideal.span {πh} : Ideal u.adicCompletionIntegers))
+abbrev KwF4gRRTateDVRCotangentKFinite : Prop :=
+  _root_.AlgebraicCurve.Place.CompletionQuotients.CotangentQuotientFinite
+    K L
 
 theorem range_mulLeft_eq_restrictScalars_span (a : u.adicCompletionIntegers) :
     LinearMap.range (LinearMap.mulLeft K a)
-      = (Ideal.span {a} : Ideal u.adicCompletionIntegers).restrictScalars K := by
-  ext y
-  simp only [LinearMap.mem_range, LinearMap.mulLeft_apply, Submodule.restrictScalars_mem,
-    Ideal.mem_span_singleton]
-  exact ⟨fun ⟨x, hx⟩ => ⟨x, hx.symm⟩, fun ⟨x, hx⟩ => ⟨x, hx.symm⟩⟩
+      = (Ideal.span {a} : Ideal u.adicCompletionIntegers).restrictScalars K :=
+  _root_.AlgebraicCurve.Place.CompletionQuotients.range_mulLeft_eq_restrictScalars_span
+    u a
 
 
 theorem finiteDimensional_restrictScalarsQuot_pow [u.FiniteResidue]
     (hCot : KwF4gRRTateDVRCotangentKFinite K L)
     (πh : u.adicCompletionIntegers) (hπh : Irreducible πh) (M : ℕ) :
     FiniteDimensional K (u.adicCompletionIntegers ⧸
-      (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers).restrictScalars K) := by
-  induction M with
-  | zero =>
-    rw [pow_zero, Ideal.span_singleton_one, Submodule.restrictScalars_top]
-    infer_instance
-  | succ M ih =>
-    have hle : (Ideal.span {πh^(M+1)} : Ideal u.adicCompletionIntegers)
-        ≤ Ideal.span {πh^M} := by
-      rw [Ideal.span_singleton_le_span_singleton, pow_succ]; exact ⟨πh, rfl⟩
-    have hle' : (Ideal.span {πh^(M+1)} : Ideal u.adicCompletionIntegers).restrictScalars K
-        ≤ (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers).restrictScalars K :=
-      Submodule.restrictScalars_mono K hle
-    set N : Submodule K (u.adicCompletionIntegers ⧸
-        (Ideal.span {πh^(M+1)} : Ideal u.adicCompletionIntegers).restrictScalars K) :=
-      (Submodule.restrictScalars K (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers)).map
-        (Submodule.restrictScalars K (Ideal.span {πh^(M+1)} : Ideal _)).mkQ with hN_def
-    have hquot : FiniteDimensional K
-        ((u.adicCompletionIntegers ⧸
-          (Ideal.span {πh^(M+1)} : Ideal _).restrictScalars K) ⧸ N) := by
-      have := ih
-      exact Module.Finite.equiv
-        (Submodule.quotientQuotientEquivQuotient _ _ hle').symm
-    have hN : FiniteDimensional K N := by
-      set φ : u.adicCompletionIntegers →ₗ[K] (u.adicCompletionIntegers ⧸
-          (Ideal.span {πh^(M+1)} : Ideal u.adicCompletionIntegers).restrictScalars K) :=
-        (Submodule.restrictScalars K
-            (Ideal.span {πh^(M+1)} : Ideal u.adicCompletionIntegers)).mkQ ∘ₗ
-          LinearMap.mulLeft K (πh^M) with hφ_def
-      have hrange : LinearMap.range φ = N := by
-        rw [hφ_def, LinearMap.range_comp, range_mulLeft_eq_restrictScalars_span, hN_def]
-      have hker : LinearMap.ker φ
-          = (Ideal.span {πh} : Ideal u.adicCompletionIntegers).restrictScalars K := by
-        simp only [hφ_def, LinearMap.ker_comp, Submodule.ker_mkQ]
-        ext x
-        simp only [Submodule.mem_comap, LinearMap.mulLeft_apply, Submodule.restrictScalars_mem,
-          Ideal.mem_span_singleton]
-        have hπM : (πh : u.adicCompletionIntegers)^M ≠ 0 := pow_ne_zero M hπh.ne_zero
-        constructor
-        · rintro ⟨c, hc⟩
-          exact ⟨c, mul_left_cancel₀ hπM (by rw [hc, pow_succ, mul_assoc])⟩
-        · rintro ⟨c, hc⟩
-          exact ⟨c, by rw [hc, pow_succ, mul_assoc]⟩
-      let e₁ : (u.adicCompletionIntegers ⧸
-            (Ideal.span {πh} : Ideal u.adicCompletionIntegers).restrictScalars K)
-          ≃ₗ[K] (u.adicCompletionIntegers ⧸ LinearMap.ker φ) :=
-        Submodule.quotEquivOfEq _ _ hker.symm
-      let e₂ : (u.adicCompletionIntegers ⧸ LinearMap.ker φ) ≃ₗ[K] LinearMap.range φ :=
-        φ.quotKerEquivRange
-      let e₃ : (LinearMap.range φ : Submodule K _) ≃ₗ[K] N := LinearEquiv.ofEq _ _ hrange
-      have hCK : FiniteDimensional K (u.adicCompletionIntegers ⧸
-          (Ideal.span {πh} : Ideal u.adicCompletionIntegers).restrictScalars K) := by
-        have := hCot u πh hπh
-        exact Module.Finite.equiv
-          (Submodule.Quotient.restrictScalarsEquiv K
-            (Ideal.span {πh} : Ideal u.adicCompletionIntegers)).symm
-      exact Module.Finite.equiv ((e₁.trans e₂).trans e₃)
-    exact Module.Finite.of_submodule_quotient N
+      (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers).restrictScalars K) :=
+  _root_.AlgebraicCurve.Place.CompletionQuotients.finiteDimensional_restrictScalarsQuot_pow
+    u hCot πh hπh M
 
 theorem finiteDimensional_idealQuot_pow [u.FiniteResidue]
     (hCot : KwF4gRRTateDVRCotangentKFinite K L)
     (πh : u.adicCompletionIntegers) (hπh : Irreducible πh) (M : ℕ) :
     FiniteDimensional K
-      (u.adicCompletionIntegers ⧸ (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers)) := by
-  have := finiteDimensional_restrictScalarsQuot_pow u hCot πh hπh M
-  exact Module.Finite.equiv (Submodule.Quotient.restrictScalarsEquiv K _)
+      (u.adicCompletionIntegers ⧸ (Ideal.span {πh^M} : Ideal u.adicCompletionIntegers)) :=
+  _root_.AlgebraicCurve.Place.CompletionQuotients.finiteDimensional_idealQuot_pow
+    u hCot πh hπh M
 
 theorem DVRQuotPowKFinite_of_cotangent
     (hCot : KwF4gRRTateDVRCotangentKFinite K L) :
-    KwF4gRRTateDVRQuotPowKFinite K L := by
-  intro u _ πh hπh M
-  have := finiteDimensional_idealQuot_pow u hCot πh hπh M
-  exact Module.Finite.equiv (quotPiPowEquivIdealQuot u πh M).symm
+    KwF4gRRTateDVRQuotPowKFinite K L :=
+  _root_.AlgebraicCurve.Place.CompletionQuotients.quotientPowersFinite_of_cotangent
+    hCot
 
 end DVRQuotDischarge
 
@@ -3130,9 +2992,7 @@ theorem tateRes_sum_fst {ι : Type*} (s : Finset ι) (f : ι → u.adicCompletio
     let := fun i => hfin u (f i) gh
     let := hfin u (∑ i ∈ s, f i) gh
     ∑ i ∈ s, tateRes u (f i) gh = tateRes u (∑ i ∈ s, f i) gh := by
-  let := fun i => hfin u (f i) gh
-  let := hfin u (∑ i ∈ s, f i) gh
-  change ∑ i ∈ s, tateRes u (f i) gh = tateRes u (∑ i ∈ s, f i) gh
+  intro sharedOwner1 sharedOwner2
   classical
   induction s using Finset.induction_on with
   | empty =>

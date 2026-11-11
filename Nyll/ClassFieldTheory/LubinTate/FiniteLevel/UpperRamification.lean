@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LowerRamification
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LowerRamification
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.RamificationQuotients
 
 /-!
 # Herbrand functions and upper groups of standard Lubin--Tate levels
@@ -16,6 +19,8 @@ integral-closure valuation on a standard finite Lubin--Tate level.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

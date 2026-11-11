@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
-import Mathlib.Algebra.Field.Rat
-import Mathlib.Data.Finset.Interval
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
+public import Mathlib.Algebra.Field.Rat
+public import Mathlib.Data.Finset.Interval
+public import Mathlib.SetTheory.Cardinal.Finite
 
 /-!
 # The Herbrand function at integral lower indices
 -/
+
+@[expose] public section
 
 open scoped BigOperators
 

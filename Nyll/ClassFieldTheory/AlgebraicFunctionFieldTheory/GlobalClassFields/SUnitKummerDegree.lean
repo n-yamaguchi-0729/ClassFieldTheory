@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitPowerIndex
-import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitPowerIndex
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
 
 /-!
 # Degree of the actual S-unit Kummer extension
@@ -16,13 +18,17 @@ with the S-unit power quotient. The existing Kummer pairing and finite
 character duality then compute the degree of the actual root field.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField.SUnits
 
 open AlgebraicCurve KummerTheory
 
-variable {k K : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
 
 /-- Ambient n-th powers among S-units are precisely powers of S-units. -/
 theorem nthPowers_subgroupOf_units (n : ℕ+) (S : Finset (Place k K)) :

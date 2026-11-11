@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Principal
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Topology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ProductFormula
+module
+
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Principal
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Topology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ProductFormula
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Discreteness and closedness of principal adeles
@@ -19,6 +23,8 @@ order zero. Intersecting the integral adeles with the strict unit ball at one
 place therefore isolates zero in the diagonal additive subgroup. The principal
 adeles form a discrete and closed subgroup for the all-place topology.
 -/
+
+@[expose] public section
 
 open scoped WithZero
 

@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExistsRatFuncTower
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncPlaceRatFuncTower
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteDimensionalLSpaceZero
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExistsRatFuncTower
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncPlaceRatFuncTower
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteDimensionalLSpaceZero
 
 /-! The genus exists when the constant field is the base field. -/
+
+@[expose] public section
 
 open AlgebraicCurve
 

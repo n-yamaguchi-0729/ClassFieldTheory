@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyConnectedProperBijectiveAppTop
-import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyIntegralSmooth
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyConnectedProperBijectiveAppTop
+public import Nyll.AlgebraicCurves.Geometry.Curves.GeometricallyIntegralSmooth
 
 /-!
 # Geometric integrality of a curve model over its full constants
@@ -18,13 +20,17 @@ are the base field, the structure map induces an isomorphism on global functions
 Properness and smoothness then give geometric connectedness and integrality.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 open CategoryTheory AlgebraicGeometry
 
 namespace AlgebraicCurve.CurveModel
 
-variable {k F : Type} [Field k] [Field F] [Algebra k F] (M : CurveModel k F)
+variable {k : Type u} {F : Type v} [Field k] [Field F] [Algebra k F] (M : CurveModel k F)
 
 /-- Every global function on the model is constant when the function field has full constants. -/
 theorem bijective_appTop_of_constantsAreBase (hC : ConstantsAreBase k F) :

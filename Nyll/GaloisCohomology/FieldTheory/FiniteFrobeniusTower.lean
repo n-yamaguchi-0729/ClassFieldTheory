@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finite.Basic
+module
+
+public import Mathlib.FieldTheory.Finite.Basic
 
 /-!
 # Frobenius in towers of finite constant fields
@@ -12,6 +14,8 @@ import Mathlib.FieldTheory.Finite.Basic
 Changing the finite ground field replaces its arithmetic Frobenius by the
 power given by the extension degree, on the same actual algebraic extension.
 -/
+
+@[expose] public section
 
 noncomputable section
 

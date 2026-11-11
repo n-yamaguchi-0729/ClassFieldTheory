@@ -10,24 +10,28 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSubsingletonH1SectionsOfSubsingletonH1
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreFinrankH0EqSubsingletonH1Iff
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSubsingletonH1SectionsOfSubsingletonH1
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreFinrankH0EqSubsingletonH1Iff
 
 /-!
 # Relative Picard varieties and fibre cohomology
 
 Transfer vanishing of first cohomology from a residue-field chart to the corresponding fibre.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

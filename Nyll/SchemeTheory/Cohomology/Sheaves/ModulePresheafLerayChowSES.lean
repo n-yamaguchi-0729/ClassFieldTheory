@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Cover
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayHomRelHPresheafZero
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafCoherentCoker
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafQuasicoherentCoker
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayCoherentRelHPresheafChow
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayQuasicoherentRelHPresheafChow
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Cover
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayHomRelHPresheafZero
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafCoherentCoker
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafQuasicoherentCoker
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayCoherentRelHPresheafChow
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayQuasicoherentRelHPresheafChow
+public import Mathlib.RingTheory.Noetherian.Basic
 
 /-!
 A short exact sequence from the Chow devissage construction for a module presheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

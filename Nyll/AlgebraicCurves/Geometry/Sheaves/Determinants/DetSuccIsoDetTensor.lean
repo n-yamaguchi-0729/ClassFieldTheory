@@ -10,17 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.ExteriorPower.Wedge
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.EpiWhiskerRightWedgeVec
-import Nyll.SchemeTheory.Modules.ExteriorPower.ExteriorPowerLocal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.InvertibleDetLocallyFree
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
-import Nyll.SchemeTheory.Modules.LocalMorphisms
+module
+
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Wedge
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.EpiWhiskerRightWedgeVec
+public import Nyll.SchemeTheory.Modules.ExteriorPower.ExteriorPowerLocal
+public import Nyll.SchemeTheory.Modules.Invertible.Determinant
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
 
 /-!
 # Determinants in a short exact sequence
@@ -28,6 +30,8 @@ import Nyll.SchemeTheory.Modules.LocalMorphisms
 For a locally free short exact complex with an invertible quotient, the determinant
 of the middle term is the determinant of the first term tensored with the quotient.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

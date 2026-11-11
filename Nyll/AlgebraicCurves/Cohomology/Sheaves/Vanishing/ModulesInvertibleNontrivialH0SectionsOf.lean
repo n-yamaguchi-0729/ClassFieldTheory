@@ -10,35 +10,40 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfUnitEquivStructureSheafSections
-import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1
-import Nyll.AlgebraicCurves.Places.Restriction.PlacesOfUnionEqUnivSupEqTop
-import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
-import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.CechRiemannRochGenusReached
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.CanonicalDivisorGenusRiemannRoch
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfUnitEquivStructureSheafSections
+public import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1
+public import Nyll.AlgebraicCurves.Places.Restriction.PlacesOfUnionEqUnivSupEqTop
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
+public import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.CechRiemannRochGenusReached
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.CanonicalDivisorGenusRiemannRoch
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 Nontrivial degree-zero sections of an invertible sheaf from an Euler characteristic bound.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -74,8 +79,6 @@ attribute [-instance] AlgebraicCurve.Place.instIsPrimeCenter
   AlgebraicCurve.Place.kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
 attribute [-instance] AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
@@ -286,8 +289,7 @@ attribute [-instance] AlgebraicCurve.RationalFunctionField.instNontrivialInftyVa
   AlgebraicCurve.Place.kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

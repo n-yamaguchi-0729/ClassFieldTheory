@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+module
+
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
 
 /-!
 # Sheafification comparisons on tensor sections
@@ -21,6 +23,8 @@ import Nyll.SchemeTheory.Modules.Tensor.TensorSections
 The monoidal sheafification comparison carries the tensor of two unit images to the
 unit image of their presheaf tensor.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

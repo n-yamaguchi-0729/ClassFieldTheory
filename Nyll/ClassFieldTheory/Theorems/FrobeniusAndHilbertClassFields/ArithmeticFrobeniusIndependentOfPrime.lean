@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.Frobenius
+module
+
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.Frobenius
 
 /-!
 # Independence of arithmetic Frobenius from the prime above
@@ -17,6 +19,8 @@ finite base prime give the same canonical arithmetic Frobenius element.
 This is the equality, rather than merely conjugacy, needed to avoid choosing
 an upstairs prime.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

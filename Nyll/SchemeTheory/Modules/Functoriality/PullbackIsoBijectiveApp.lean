@@ -11,15 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
 /-!
 # Pullback isomorphisms from bijective sections
 
 A map to the pushforward along an open immersion induces an isomorphism after pullback
 when its components are bijective over opens contained in the image.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

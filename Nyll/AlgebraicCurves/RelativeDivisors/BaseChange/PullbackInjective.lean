@@ -11,14 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
-import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
 
 /-!
 Injectivity of pullback of relative effective Cartier divisors.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

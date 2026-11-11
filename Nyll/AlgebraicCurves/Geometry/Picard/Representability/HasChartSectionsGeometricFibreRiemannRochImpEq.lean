@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ChartSections
-import Nyll.AlgebraicCurves.Models.EqGenusFFEllSubEllEq
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.GenusFFEqAlgEquiv
-import Nyll.AlgebraicCurves.Geometry.AlgEquivFunctionFieldIso
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ChartSections
+public import Nyll.AlgebraicCurves.Models.EqGenusFFEllSubEllEq
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.GenusFFEqAlgEquiv
+public import Nyll.AlgebraicCurves.Geometry.AlgEquivFunctionFieldIso
 
 /-!
 Identify geometric-fibre invariants using chart sections and the function-field Riemann--Roch
 comparison.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,30 +10,35 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeIsomorphism
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.IsoBaseChangeHomTwoAffineCover
-import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.IsPullbackBaseChangeSnd
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeIsomorphism
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.IsoBaseChangeHomTwoAffineCover
+public import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicBaseChange
 
 /-!
 Compare pushforward and pullback of an invertible sheaf under the stated geometric-fibre
 cohomology hypotheses.
 -/
+@[expose] public section
+
 section ProofImplementation
 
 namespace JacobianVarieties.Picard.Proofs.Nonempty_pushforward_pullback_iso_of_forall_fibre
@@ -62,11 +67,8 @@ variable {R : Type u} [CommRing R]
 
 theorem isPullback_baseChangeSnd {C T T' : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))
     {t : T ⟶ Spec (CommRingCat.of R)} {t' : T' ⟶ Spec (CommRingCat.of R)} (ψ : SchemeHomOver t' t) :
-    IsPullback (baseChangeSnd c ψ) (pullback.snd c t') (pullback.snd c t) ψ.1 := by
-  refine IsPullback.of_right (h₁₂ := pullback.fst c t) (v₁₃ := c) (h₂₂ := t) ?_
-    (RelPicard.BaseChange.baseChangeSnd_snd' (cc := c) (ψ := ψ)) (IsPullback.of_hasPullback c t)
-  rw [RelPicard.BaseChange.baseChangeSnd_fst' (cc := c) (ψ := ψ), ψ.2]
-  exact IsPullback.of_hasPullback c t'
+    IsPullback (baseChangeSnd c ψ) (pullback.snd c t') (pullback.snd c t) ψ.1 :=
+  _root_.AlgebraicGeometry.RelPicard.isPullback_baseChangeSnd c ψ
 
 theorem fromSpec_comp_eq_specMap {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) (W : T.Opens)
     (hW : IsAffineOpen W) :
@@ -100,7 +102,7 @@ theorem _root_.AlgebraicGeometry.RelPicard.nonempty_pushforward_pullback_iso_of_
       (baseChangeSnd c ψ)).obj F) ≅
       (Scheme.Modules.pullback ψ.1).obj ((Scheme.Modules.pushforward (pullback.snd c t)).obj F))
         := by
-  have hcart := isPullback_baseChangeSnd c ψ
+  have hcart := _root_.AlgebraicGeometry.RelPicard.isPullback_baseChangeSnd c ψ
   suffices hiso : IsIso (Scheme.Modules.baseChangeHom hcart.w F) from
     ⟨(asIso (Scheme.Modules.baseChangeHom hcart.w F)).symm⟩
   refine Scheme.Modules.isIso_baseChangeHom_of_forall_exists_isPullback hcart F ?_
@@ -138,7 +140,7 @@ theorem _root_.AlgebraicGeometry.RelPicard.nonempty_pushforward_pullback_iso_of_
     Γ(T', W')))
       (pullback.snd c (Scheme.TwoAffineOpenCover.specMap R Γ(T, W)))
       (Scheme.TwoAffineOpenCover.specMap Γ(T, W) Γ(T', W')) :=
-    isPullback_baseChangeSnd c ψW
+    _root_.AlgebraicGeometry.RelPicard.isPullback_baseChangeSnd c ψW
   refine ⟨W, W', hyW', Spec (CommRingCat.of Γ(T, W)), Spec (CommRingCat.of Γ(T', W')),
     pullback c (Scheme.TwoAffineOpenCover.specMap R Γ(T, W)),
     pullback c (Scheme.TwoAffineOpenCover.specMap R Γ(T', W')), hW.isoSpec.symm, hW'.isoSpec.symm,

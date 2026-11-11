@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Sites.SheafHom
-import Mathlib.CategoryTheory.Sites.Subsheaf
-import Mathlib.CategoryTheory.Monoidal.Limits.HasLimits
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
+module
+
+public import Mathlib.CategoryTheory.Sites.SheafHom
+public import Mathlib.CategoryTheory.Sites.Subsheaf
+public import Mathlib.CategoryTheory.Monoidal.Limits.HasLimits
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
 
 /-!
 # The sheaf condition for internal Hom
@@ -22,6 +24,8 @@ Natural linear families are identified with a subpresheaf of the ordinary preshe
 When the target module presheaf is a sheaf, this description proves that the internal-Hom
 module presheaf is also a sheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

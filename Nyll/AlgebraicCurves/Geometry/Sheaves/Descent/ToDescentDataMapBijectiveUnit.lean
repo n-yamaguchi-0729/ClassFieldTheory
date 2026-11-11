@@ -10,66 +10,70 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Mathlib.Algebra.Category.ModuleCat.Sheaf
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
-import Mathlib.Algebra.Category.Ring.Basic
-import Mathlib.Algebra.Group.Hom.Defs
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.AlgebraicGeometry.AffineSpace
-import Mathlib.AlgebraicGeometry.Modules.Presheaf
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.AlgebraicGeometry.Sites.Fpqc
-import Mathlib.CategoryTheory.Adjunction.Basic
-import Mathlib.CategoryTheory.Adjunction.Mates
-import Mathlib.CategoryTheory.Bicategory.Adjunction.Adj
-import Mathlib.CategoryTheory.Bicategory.Functor.Pseudofunctor
-import Mathlib.CategoryTheory.Bicategory.LocallyDiscrete
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Category.Cat
-import Mathlib.CategoryTheory.Category.Preorder
-import Mathlib.CategoryTheory.Comma.Over.Basic
-import Mathlib.CategoryTheory.ConcreteCategory.Basic
-import Mathlib.CategoryTheory.ConcreteCategory.Forget
-import Mathlib.CategoryTheory.EqToHom
-import Mathlib.CategoryTheory.Functor.Basic
-import Mathlib.CategoryTheory.Functor.Category
-import Mathlib.CategoryTheory.Functor.Flat
-import Mathlib.CategoryTheory.HomCongr
-import Mathlib.CategoryTheory.Iso
-import Mathlib.CategoryTheory.NatIso
-import Mathlib.CategoryTheory.NatTrans
-import Mathlib.CategoryTheory.Opposites
-import Mathlib.CategoryTheory.Sites.Canonical
-import Mathlib.CategoryTheory.Sites.Continuous
-import Mathlib.CategoryTheory.Sites.Descent.DescentData
-import Mathlib.CategoryTheory.Sites.Descent.IsPrestack
-import Mathlib.CategoryTheory.Sites.Grothendieck
-import Mathlib.CategoryTheory.Sites.IsSheafFor
-import Mathlib.CategoryTheory.Sites.Over
-import Mathlib.CategoryTheory.Sites.PrecoverageToGrothendieck
-import Mathlib.CategoryTheory.Sites.Sheaf
-import Mathlib.CategoryTheory.Sites.SheafOfTypes
-import Mathlib.CategoryTheory.Sites.Sieves.Basic
-import Mathlib.CategoryTheory.Sites.Sieves.Presieve
-import Mathlib.CategoryTheory.Types.Basic
-import Mathlib.CategoryTheory.Yoneda
-import Mathlib.Logic.Equiv.Defs
-import Mathlib.Order.BoundedOrder.Basic
-import Mathlib.Tactic.CategoryTheory.Reassoc
-import Mathlib.Tactic.Set
-import Mathlib.Topology.Category.TopCat.Opens
-import Mathlib.Topology.Sheaves.SheafCondition.Sites
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Mathlib.Algebra.Group.Hom.Defs
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.AlgebraicGeometry.AffineSpace
+public import Mathlib.AlgebraicGeometry.Modules.Presheaf
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.AlgebraicGeometry.Sites.Fpqc
+public import Mathlib.CategoryTheory.Adjunction.Basic
+public import Mathlib.CategoryTheory.Adjunction.Mates
+public import Mathlib.CategoryTheory.Bicategory.Adjunction.Adj
+public import Mathlib.CategoryTheory.Bicategory.Functor.Pseudofunctor
+public import Mathlib.CategoryTheory.Bicategory.LocallyDiscrete
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.CategoryTheory.Category.Cat
+public import Mathlib.CategoryTheory.Category.Preorder
+public import Mathlib.CategoryTheory.Comma.Over.Basic
+public import Mathlib.CategoryTheory.ConcreteCategory.Basic
+public import Mathlib.CategoryTheory.ConcreteCategory.Forget
+public import Mathlib.CategoryTheory.EqToHom
+public import Mathlib.CategoryTheory.Functor.Basic
+public import Mathlib.CategoryTheory.Functor.Category
+public import Mathlib.CategoryTheory.Functor.Flat
+public import Mathlib.CategoryTheory.HomCongr
+public import Mathlib.CategoryTheory.Iso
+public import Mathlib.CategoryTheory.NatIso
+public import Mathlib.CategoryTheory.NatTrans
+public import Mathlib.CategoryTheory.Opposites
+public import Mathlib.CategoryTheory.Sites.Canonical
+public import Mathlib.CategoryTheory.Sites.Continuous
+public import Mathlib.CategoryTheory.Sites.Descent.DescentData
+public import Mathlib.CategoryTheory.Sites.Descent.IsPrestack
+public import Mathlib.CategoryTheory.Sites.Grothendieck
+public import Mathlib.CategoryTheory.Sites.IsSheafFor
+public import Mathlib.CategoryTheory.Sites.Over
+public import Mathlib.CategoryTheory.Sites.PrecoverageToGrothendieck
+public import Mathlib.CategoryTheory.Sites.Sheaf
+public import Mathlib.CategoryTheory.Sites.SheafOfTypes
+public import Mathlib.CategoryTheory.Sites.Sieves.Basic
+public import Mathlib.CategoryTheory.Sites.Sieves.Presieve
+public import Mathlib.CategoryTheory.Types.Basic
+public import Mathlib.CategoryTheory.Yoneda
+public import Mathlib.Logic.Equiv.Defs
+public import Mathlib.Order.BoundedOrder.Basic
+public import Mathlib.Tactic.CategoryTheory.Reassoc
+public import Mathlib.Tactic.Set
+public import Mathlib.Topology.Category.TopCat.Opens
+public import Mathlib.Topology.Sheaves.SheafCondition.Sites
 
 /-!
 # Descent of endomorphisms of the unit module
 
 The fpqc sheaf property of functions gives descent of endomorphisms through pullback.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -132,7 +136,6 @@ lemma homEquiv_conjugate {C D : Type*} [Category C] [Category D] {L₁ L₂ : C 
   have h2 := (conjugateEquiv adj₁ adj₂ α).naturality f
   erw [← reassoc_of% h1, ← h2]
   try simp only [Category.assoc]
-  try rfl
 
 lemma conjugateEquiv_pullbackComp_hom (f : X ⟶ Y) (g : Y ⟶ Z) :
     conjugateEquiv (Scheme.Modules.pullbackPushforwardAdjunction (f ≫ g))
@@ -261,12 +264,11 @@ lemma evalOne_conj_pullHom (p₂ : Y ⟶ Z) (g : X ⟶ Y) (p₁ : X ⟶ Z) (w : 
     rw [← cancel_mono (ee (g ≫ p₂)).hom, Iso.inv_hom_id, E1']
     simp only [Category.assoc]
     erw [Iso.hom_inv_id_app_assoc]
-    erw [Iso.map_inv_hom_id_assoc]
+    erw [Iso.inv_hom_id_map_assoc]
     exact (ee g).inv_hom_id.symm
   rw [E1', E1'']
   simp only [Category.assoc, Functor.map_comp]
   erw [Iso.hom_inv_id_app_assoc, Iso.hom_inv_id_app_assoc]
-  try rfl
 
 theorem modMapComp'_eq {a b d : LocallyDiscrete Scheme.{u}ᵒᵖ} (s : a ⟶ b) (t : b ⟶ d) (M : MOD.obj
   a) :

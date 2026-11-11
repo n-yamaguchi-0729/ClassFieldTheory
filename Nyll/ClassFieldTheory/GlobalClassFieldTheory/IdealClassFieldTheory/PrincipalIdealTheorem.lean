@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
-import Mathlib.RingTheory.ClassGroup.ExtendedHom
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
+public import Mathlib.RingTheory.ClassGroup.ExtendedHom
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 
 /-!
 # The principal ideal theorem
@@ -19,6 +22,8 @@ map forms the naturality square with the existing ideal-class extension
 
 
 
+@[expose] public section
+
 open scoped NumberField
 
 noncomputable section
@@ -28,13 +33,8 @@ namespace IdealClassFieldTheory
 
 open NumberField
 
-/-- Canonical class-group commutativity supplies normality for the quotient. -/
-private theorem principalIdealTheoremClassGroupIsMulCommutative
-    (F : Type*) [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
-
-attribute [local instance] principalIdealTheoremClassGroupIsMulCommutative
+attribute [local instance]
+  GlobalClassFields.hilbertClassFieldComparison_ideleClassGroupIsMulCommutative
 
 section SmallHilbertIdeleExtension
 

@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimeIndexClassField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormAlgEquiv
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Mathlib.FieldTheory.IsSepClosed
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimeIndexClassField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormAlgEquiv
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Mathlib.FieldTheory.IsSepClosed
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Prime-index class fields in any separable closure
@@ -17,11 +20,15 @@ transported into a supplied separable closure. Its norm group is preserved
 by the existing algebra-isomorphism invariance theorem.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K] [IsSepClosure K Ω]

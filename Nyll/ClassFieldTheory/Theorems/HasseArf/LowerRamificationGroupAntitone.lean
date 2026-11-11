@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
 
 /-!
 # The lower ramification filtration decreases
@@ -12,6 +14,8 @@ import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
 The definition uses powers of the maximal ideal of a valuation subring.
 The inclusion below holds without local-field or finiteness hypotheses.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

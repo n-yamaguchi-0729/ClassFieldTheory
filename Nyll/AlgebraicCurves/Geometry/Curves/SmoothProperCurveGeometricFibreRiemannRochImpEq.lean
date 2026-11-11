@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Curves.FiniteMapFibreRiemannRochGenus
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveCurveModelRiemannRoch
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Curves.FiniteMapFibreRiemannRochGenus
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveCurveModelRiemannRoch
 
 /-!
 # Smooth Proper Curve forall geometric Fibre riemann Roch imp eq of is Alg Closed
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -66,8 +70,6 @@ attribute [-instance]
   AlgebraicCurve.Place.kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField

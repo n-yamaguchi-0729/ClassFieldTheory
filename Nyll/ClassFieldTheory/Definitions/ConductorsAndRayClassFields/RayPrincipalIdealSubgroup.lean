@@ -4,15 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsRayCongruent
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassPrimeToIdeals
-import Mathlib.RingTheory.ClassGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsRayCongruent
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassPrimeToIdeals
+public import Mathlib.RingTheory.ClassGroup.Basic
 
 /-!
 # Ray-principal ideals
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField

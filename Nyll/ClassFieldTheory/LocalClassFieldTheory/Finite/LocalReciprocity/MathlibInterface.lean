@@ -4,16 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConjugationNaturality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConjugationNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.LocalAbsoluteData
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
 
 /-!
 # Mathlib-facing finite local class field theory
@@ -22,25 +30,33 @@ This is the implementation layer for the reader-facing local CFT module.
 It collects the existing finite, absolute, naturality, normalization, and
 existence results without renaming them or wrapping them in an existence
 structure.
+
+The finite reciprocity and norm-subgroup statements allow independent field
+universes and use the specified Artin map. The abstract-existence statements
+retain the native class-formation model used by their classification source.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
 namespace ClassFieldTheory.LocalCFT
 
+universe u v
+
 open ClassFormation
 
 noncomputable local instance localNormQuotientTopologicalSpace
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [TopologicalSpace K] :
     TopologicalSpace (LocalFieldTheory.NormQuotient K L) := by
   change TopologicalSpace (Kˣ ⧸ LocalFieldTheory.localNormSubgroup K L)
   infer_instance
 
 noncomputable local instance fieldNormQuotientTopologicalSpace
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [TopologicalSpace K] :
     TopologicalSpace (FieldNormQuotient K L) := by
   change TopologicalSpace (Kˣ ⧸ fieldNormSubgroup K L)
@@ -70,7 +86,7 @@ theorem finiteAbelianLocalExistence_orderIso
 /-- Construction of the Artin map in the finite abelian local reciprocity
 theorem, expressed only through its mathematical universal properties. -/
 theorem finiteAbelianLocalReciprocity
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
@@ -78,40 +94,40 @@ theorem finiteAbelianLocalReciprocity
     ∃ artin : Kˣ →ₜ* (L ≃ₐ[K] L),
       Function.Surjective artin ∧
       ∀ x : Kˣ, artin x = 1 ↔ IsFieldNorm K L x := by
-  refine ⟨LocalClassFieldTheory.abelianLocalArtinMap K L,
-    LocalClassFieldTheory.abelianLocalArtinMap_surjective K L, ?_⟩
+  refine ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L,
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L, ?_⟩
   intro x
-  change x ∈ (LocalClassFieldTheory.abelianLocalArtinMap K L).toMonoidHom.ker ↔
+  change x ∈ (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L).toMonoidHom.ker ↔
     x ∈ fieldNormSubgroup K L
-  rw [LocalClassFieldTheory.abelianLocalArtinMap_ker]
-  rfl
+  rw [LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker]
 
 /-- The quotient form of finite abelian local reciprocity. -/
 theorem finiteAbelianLocalReciprocity_quotient
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
     Nonempty
       (FieldNormQuotient K L ≃ₜ* (L ≃ₐ[K] L)) := by
-  refine ⟨(LocalClassFieldTheory.localReciprocityEquiv K L).trans
-    (LocalClassFieldTheory.topologicalAbelianizationEquivSelf K L)⟩
+  obtain ⟨e, _, _⟩ := LocalClassFieldTheory.Universe.quotientEquiv_existsUnique K L
+  exact ⟨e⟩
 
 /-- The field-norm subgroup is open in the native topology on `Kˣ`. -/
 theorem isOpen_fieldNormSubgroup
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
     IsOpen (fieldNormSubgroup K L : Set Kˣ) := by
-  change IsOpen (LocalFieldTheory.localNormSubgroup K L : Set Kˣ)
-  exact LocalClassFieldTheory.localNormSubgroup_isOpen K L
+  rw [← LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K L]
+  exact (isOpen_discrete ({1} : Set Gal(L/K))).preimage
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L).continuous_toFun
 
 /-- The field-norm subgroup has finite index, by finite local reciprocity. -/
 theorem fieldNormSubgroup_finiteIndex
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
@@ -128,7 +144,7 @@ theorem fieldNormSubgroup_finiteIndex
 
 /-- The norm-subgroup index equals the degree of the abelian extension. -/
 theorem fieldNormSubgroup_index_eq_finrank
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]

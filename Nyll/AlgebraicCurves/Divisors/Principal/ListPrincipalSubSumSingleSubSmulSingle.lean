@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.CanonicalDivisorGenusRiemannRoch
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.LocalSections.RROpensEffectiveSubAddSmulSingleMemPrincipal
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.CanonicalDivisorGenusRiemannRoch
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.LocalSections.RROpensEffectiveSubAddSmulSingleMemPrincipal
 
 /-!
 # Exists list is Principal sub sum single sub smul single
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -39,8 +43,6 @@ attribute [-instance]
   kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  instAlgebra_restrictResidueField
-  instIsScalarTower_restrictResidueField
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
@@ -124,7 +126,7 @@ theorem exists_list_sum_single_eq (hdeg : ∀ v : Place K F, v.deg = 1) :
         intro w
         rcases eq_or_ne w v with rfl | hw
         · have hEv0 : E w = 0 := by simpa [Finsupp.mem_support_iff] using hv
-          simp [hEv0]
+          exact hEv0.symm.le
         · have := hEv w
           have hs : (Finsupp.single v n) w = 0 := Finsupp.single_eq_of_ne hw
           rw [Finsupp.add_apply, hs, zero_add] at this

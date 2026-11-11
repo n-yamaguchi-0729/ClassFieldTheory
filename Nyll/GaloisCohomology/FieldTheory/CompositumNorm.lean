@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.FieldTheory.ConstantTensorEquiv
-import Nyll.ValuedFieldTheory.Valuation.Completion.BaseChangeNormTrace
+module
+
+public import Nyll.GaloisCohomology.FieldTheory.ConstantTensorEquiv
+public import Nyll.ValuedFieldTheory.Valuation.Completion.BaseChangeNormTrace
 
 /-!
 # Norm comparison in a compositum with unchanged degree
@@ -14,6 +16,8 @@ The actual multiplication map identifies the compositum with the scalar extensio
 when its degree does not drop. The norm comparison follows from the determinant
 under scalar extension.
 -/
+
+@[expose] public section
 
 noncomputable section
 

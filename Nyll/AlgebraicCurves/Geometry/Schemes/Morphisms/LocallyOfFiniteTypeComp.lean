@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.RingTheory.Adjoin.Tower
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.RingTheory.Adjoin.Tower
 
 /-!
 # Descent of finite type through a finite flat cover
@@ -21,6 +23,8 @@ import Mathlib.RingTheory.Adjoin.Tower
 A finite, flat, surjective first morphism allows local finite type of its composite to
 descend to the second morphism over a locally Noetherian base.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

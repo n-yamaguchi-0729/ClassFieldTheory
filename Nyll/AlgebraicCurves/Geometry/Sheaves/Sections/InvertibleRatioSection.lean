@@ -10,9 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleIsFrameOnApp
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleIsFrameOnApp
+public import Nyll.SchemeTheory.Modules.Invertible.Invertible
 
 /-!
 # Ratios of sections of an invertible module
@@ -20,6 +23,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleIsFrameOnApp
 Two global sections of an invertible module have a ratio on any open disjoint from
 the support of the zero-scheme ideal of the denominator section.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -112,7 +117,8 @@ theorem main (hM : Scheme.Modules.IsInvertible M) (s t : 𝟙_ X.Modules ⟶ M) 
       := by
     intro a m
     change _ = (((U.1.ι.appIso ⊤).inv a : Γ(X, U.1.ι ''ᵁ ⊤)) • m : Γ(M, U.1.ι ''ᵁ ⊤))
-    (simp [Scheme.Opens.ι_appIso]; rfl)
+    rw [Scheme.Opens.ι_appIso]
+    rfl
   have key : restrictSection s U.1 =
       @HSMul.hSMul A N N _ (X.presheaf.map (homOfLE hW'V).op r) (restrictSection t U.1) := by
     rw [restrictSection_eq s U.1, restrictSection_eq t U.1, ← hXN]

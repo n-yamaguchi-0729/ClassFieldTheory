@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExistsRatFuncTower
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExistsRatFuncTower
 
 /-! A finite rational-function tower has a finite adelic quotient. -/
+
+@[expose] public section
 
 open AlgebraicCurve
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.IntegralHerbrand
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.IntegralOrbitBlocks
-import Nyll.AlgebraicCurves.Places.Ramification.FiniteRamification
-import Nyll.GaloisCohomology.Cyclic.Herbrand.AlmostTrivialProduct
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.IntegralHerbrand
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.IntegralOrbitBlocks
+public import Nyll.AlgebraicCurves.Places.Ramification.FiniteRamification
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.AlmostTrivialProduct
 
 /-!
 # Herbrand quotients of integral idele blocks
@@ -17,7 +19,11 @@ to each base-place fiber. Only the finitely many ramified fibers have nontrivial
 low-degree Tate groups.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField.IdeleGroup
 
@@ -25,7 +31,7 @@ open AlgebraicCurve CyclicCohomology
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 open scoped AlgebraicCurve.Place
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
 
@@ -104,7 +110,7 @@ theorem integralIdeles_herbrandQuotient (σ : L ≃ₐ[K] L)
         (integralSubgroup (k := k) (K := L)) σ) := hU.2
       herbrandQuotient (G := L ≃ₐ[K] L)
         (A := integralSubgroup (k := k) (K := L)) σ = 1 := by
-  let B : Place k K → Type := fun v => fiberIntegralUnits (L := L) v
+  let B : Place k K → Type w := fun v => fiberIntegralUnits (L := L) v
   let hAction : MulDistribMulAction (L ≃ₐ[K] L) (∀ v, B v) :=
     piMulDistribMulAction (L ≃ₐ[K] L) B
   let : SMul (L ≃ₐ[K] L) (∀ v, B v) := hAction.toMulAction.toSMul

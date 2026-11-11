@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LowerRamificationFormula
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.UpperRamification
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LowerRamificationFormula
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.UpperRamification
 
 /-!
 # Herbrand formula for finite Lubin--Tate levels
@@ -18,6 +20,8 @@ is the Galois image of the `k`-th principal-unit subgroup and has order
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -192,7 +196,7 @@ private theorem standardLubinTateHerbrandValueNat_pow_sub_one
       have hproduct :
           b * q ^ (n + 1 - (k + 1)) = (q - 1) * q ^ n := by
         rw [hb, hexponent, hpowSplit]
-        simp [Nat.mul_assoc]
+        exact Nat.mul_assoc _ _ _
       have hdenpos : 0 < (q - 1) * q ^ n :=
         Nat.mul_pos (Nat.sub_pos_of_lt hqone) (Nat.pow_pos hqpos)
       have htail :

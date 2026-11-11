@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.GeometricConstantTower
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.FieldTheory.Minpoly.Field
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.GeometricConstantTower
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.FieldTheory.Minpoly.Field
 
 /-!
 # Descending polynomial data from the geometric constant extension
@@ -15,13 +17,17 @@ Finitely many polynomials, including minimal polynomials and the numerator and
 denominator of a rational expression, are defined over one finite constant stage.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open Polynomial
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [IsSepClosed Ω]
     [Algebra k Ω] [IsScalarTower k K Ω]

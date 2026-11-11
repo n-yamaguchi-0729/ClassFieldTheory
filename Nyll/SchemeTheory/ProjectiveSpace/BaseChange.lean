@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.ConcreteCategory.Basic
-import Mathlib.AlgebraicGeometry.PullbackCarrier
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Mathlib.RingTheory.TensorProduct.MvPolynomial
+module
+
+public import Mathlib.CategoryTheory.ConcreteCategory.Basic
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Mathlib.RingTheory.TensorProduct.MvPolynomial
 
 /-!
 # Projective space under extension of coefficients
@@ -22,6 +24,8 @@ The morphism of projective spaces induced by an algebra map is a pullback of
 the structural morphism. Polynomial scalar extension identifies the affine
 charts and their overlaps.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

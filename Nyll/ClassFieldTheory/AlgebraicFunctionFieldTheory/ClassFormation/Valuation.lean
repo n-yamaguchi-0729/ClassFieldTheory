@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.BaseDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantResidueDegree
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.BaseDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantResidueDegree
 
 /-!
 # The actual function-field valuation datum
@@ -16,13 +18,17 @@ The norm-image axiom follows from the proved abstract norm degree formula,
 the actual constant-field index, and surjectivity of normalized degree.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]

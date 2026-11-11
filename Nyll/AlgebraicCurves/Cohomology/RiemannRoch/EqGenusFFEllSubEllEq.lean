@@ -10,20 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.GenusRiemannIndexCurve
-import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.IndexOfSpecialtyNsmulSingleEqZero
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
+module
+
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.GenusRiemannIndexCurve
+public import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.IndexOfSpecialtyNsmulSingleEqZero
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
 
 /-!
 Equality of the function-field genus from equality of the Riemann--Roch dimension differences.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

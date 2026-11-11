@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
 
 /-!
 # Adic completions under a number-field equivalence
@@ -13,6 +15,8 @@ The existing continuous maps of adic completions along an equivalence of
 number fields are mutual inverses. This bundles them as a field equivalence
 for transporting local Hilbert pairings.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

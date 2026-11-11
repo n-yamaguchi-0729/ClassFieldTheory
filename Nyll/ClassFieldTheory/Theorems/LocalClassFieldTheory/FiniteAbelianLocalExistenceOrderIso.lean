@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.MathlibInterface
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkLocalClassification
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.Order.Hom.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.MathlibInterface
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkLocalClassification
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.Order.Hom.Basic
 
 /-!
 # Order classification in finite abelian local existence
@@ -21,6 +24,8 @@ finite-index subgroups of `Kˣ` are ordered contravariantly.  The statement
 also records that the order isomorphism sends each extension to its actual
 field-norm subgroup.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -39,5 +44,30 @@ theorem finiteAbelianLocalExistence_orderIso
         (OrderDual.ofDual (e E)).1 = E.normSubgroup := by
   exact ⟨LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso K,
     LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply K⟩
+
+/-- The existing classification sends an actual finite extension to the
+kernel of its specified general local Artin map. -/
+theorem finiteAbelianLocalExistence_orderIso_artinKernel
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    [IsNonarchimedeanLocalField K] (E : FiniteAbelianLocalExtension K) :
+    (OrderDual.ofDual
+      (LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso K E)).1 =
+        (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1).toMonoidHom.ker :=
+  (LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply K E).trans
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K E.1).symm
+
+/-- The field selected by the same order isomorphism has Artin kernel
+exactly the original open finite-index subgroup. -/
+theorem finiteAbelianLocalExistence_orderIso_symm_artinKernel
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    [IsNonarchimedeanLocalField K] (H : OpenFiniteIndexSubgroup K) :
+    let E := (LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso K).symm
+      (OrderDual.toDual H)
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1).toMonoidHom.ker = H.1 := by
+  intro E
+  rw [← finiteAbelianLocalExistence_orderIso_artinKernel K E]
+  exact congrArg (fun J : (OpenFiniteIndexSubgroup K)ᵒᵈ => (OrderDual.ofDual J).1)
+    ((LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso K).apply_symm_apply
+      (OrderDual.toDual H))
 
 end ClassFieldTheory

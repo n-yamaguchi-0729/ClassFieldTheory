@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.IsPullbackBaseChangeSnd
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.IsPullbackBaseChangeSnd
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
 
 /-!
 Transport of affine-chart section rings between scalar-extension stages along a tower of
 algebras.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

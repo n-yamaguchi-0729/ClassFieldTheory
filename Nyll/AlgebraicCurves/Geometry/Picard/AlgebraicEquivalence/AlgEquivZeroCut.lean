@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SubPicCondition
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SubPicCondition
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
 
 /-!
 Fibrewise algebraic equivalence to zero and its pullback-stable condition on rigidified line
 bundles.
 -/
+
+@[expose] public section
 
 namespace AlgebraicGeometry.RelPicard
 

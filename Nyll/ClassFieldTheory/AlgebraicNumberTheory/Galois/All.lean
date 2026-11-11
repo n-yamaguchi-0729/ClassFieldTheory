@@ -16,4 +16,6 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.NormalFieldRange
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.RelativeAbelianization
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.UnboundedDegree
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.MaximalAbelianBaseEquiv
+
 /-! # Galois subextensions and fixed-field constructions -/

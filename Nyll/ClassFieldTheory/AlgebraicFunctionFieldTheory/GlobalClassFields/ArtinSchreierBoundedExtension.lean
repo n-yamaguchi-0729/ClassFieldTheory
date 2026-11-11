@@ -4,15 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierBoundedClasses
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierRayNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormCompositum
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
-import Nyll.GaloisCohomology.ArtinSchreier.FiniteExtension
-import Nyll.GaloisCohomology.ArtinSchreier.RestrictionDegree
-import Nyll.AlgebraicCurves.Divisors.Modulus.Modulus
-import Mathlib.Data.Finset.Insert
-import Mathlib.Data.Finset.Lattice.Fold
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierBoundedClasses
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierRayNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormCompositum
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.GaloisCohomology.ArtinSchreier.FiniteExtension
+public import Nyll.GaloisCohomology.ArtinSchreier.RestrictionDegree
+public import Nyll.AlgebraicCurves.Divisors.Modulus.Modulus
+public import Mathlib.Data.Finset.Insert
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.GaloisCohomology.ArtinSchreier.FiniteRestrictionKernel
 
 /-!
 # Actual finite extensions splitting all bounded Artin–Schreier classes
@@ -25,12 +29,16 @@ splits in this field, so the root-character degree bound supplies the required
 lower bound on its degree.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 open AlgebraicCurve
 
 namespace FunctionField
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K]
 
@@ -47,7 +55,7 @@ private theorem finiteSup_exponent_ray_norm
     let _ : IsScalarTower k (RatFunc k) (SeparableClosure K) :=
       IsScalarTower.of_algebraMap_eq (fun x => congrArg (algebraMap K (SeparableClosure K))
         (IsScalarTower.algebraMap_apply k (RatFunc k) K x))
-    ∀ {ι : Type} (A : ι → FiniteGaloisIntermediateField K (SeparableClosure K)),
+    ∀ {ι : Type w} (A : ι → FiniteGaloisIntermediateField K (SeparableClosure K)),
       (∀ i, IsAbelianGalois K (A i)) →
       (∀ i (σ : Gal(A i/K)), σ ^ p = 1) →
       (∀ i, RayClass.rayClassSubgroup (p • m) ≤

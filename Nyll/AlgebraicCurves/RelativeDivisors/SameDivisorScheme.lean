@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.SplittingCover
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraph
-import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.ProdKerGraphComapMapOnProdOver
-import Nyll.SchemeTheory.CategoryTheory.MorphismPropertyWidePullbackBase
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.SplittingCover
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraph
+public import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.ProdKerGraphComapMapOnProdOver
+public import Nyll.SchemeTheory.CategoryTheory.MorphismPropertyWidePullbackBase
 
 /-!
 Compare relative effective Cartier divisors with the same divisor scheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -92,7 +96,8 @@ theorem main :
       ∀ ⦃T' : Scheme.{u}⦄ (u v : T' ⟶ fibrePowOver f r)
         (huv : u ≫ fibrePowOver.toBase f r = v ≫ fibrePowOver.toBase f r),
         (∃ w : T' ⟶ R, w ≫ s = u ∧ w ≫ t = v) ↔
-          SameDivisor f (fun i => u ≫ fibrePowOver.proj f r i)
+          SameDivisor f (g := u ≫ fibrePowOver.toBase f r)
+            (fun i => u ≫ fibrePowOver.proj f r i)
             (fun i => by rw [Category.assoc, fibrePowOver.proj_comp])
             (fun i => v ≫ fibrePowOver.proj f r i)
             (fun i => by rw [Category.assoc, fibrePowOver.proj_comp, huv]) := by
@@ -128,7 +133,8 @@ theorem main :
   have hR : ∀ ⦃T' : Scheme.{u}⦄ (u v : T' ⟶ fibrePowOver f r)
       (huv : u ≫ fibrePowOver.toBase f r = v ≫ fibrePowOver.toBase f r),
       (∃ w : T' ⟶ R, w ≫ s = u ∧ w ≫ t = v) ↔
-        SameDivisor f (fun i => u ≫ fibrePowOver.proj f r i)
+        SameDivisor f (g := u ≫ fibrePowOver.toBase f r)
+          (fun i => u ≫ fibrePowOver.proj f r i)
           (fun i => by rw [Category.assoc, fibrePowOver.proj_comp])
           (fun i => v ≫ fibrePowOver.proj f r i)
           (fun i => by rw [Category.assoc, fibrePowOver.proj_comp, huv]) := by
@@ -199,7 +205,8 @@ theorem _root_.AlgebraicGeometry.RelEffCartierDiv.exists_sameDivisorScheme
       ∀ ⦃T' : Scheme.{u}⦄ (u v : T' ⟶ fibrePowOver f r)
         (huv : u ≫ fibrePowOver.toBase f r = v ≫ fibrePowOver.toBase f r),
         (∃ w : T' ⟶ R, w ≫ s = u ∧ w ≫ t = v) ↔
-          SameDivisor f (fun i => u ≫ fibrePowOver.proj f r i)
+          SameDivisor f (g := u ≫ fibrePowOver.toBase f r)
+            (fun i => u ≫ fibrePowOver.proj f r i)
             (fun i => by rw [Category.assoc, fibrePowOver.proj_comp])
             (fun i => v ≫ fibrePowOver.proj f r i)
             (fun i => by rw [Category.assoc, fibrePowOver.proj_comp, huv]) :=

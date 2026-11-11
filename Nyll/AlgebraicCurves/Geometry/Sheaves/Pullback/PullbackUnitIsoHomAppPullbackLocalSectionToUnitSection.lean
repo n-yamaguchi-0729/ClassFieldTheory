@@ -11,13 +11,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocalSection
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+module
+
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocalSection
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
 
 /-!
 # Scheme Modules pullback Unit Iso hom app pullback Local Section to Unit Section
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

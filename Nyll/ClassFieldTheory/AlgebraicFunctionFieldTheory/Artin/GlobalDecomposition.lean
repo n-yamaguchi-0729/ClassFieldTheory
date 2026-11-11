@@ -4,15 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalCompatibility
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalInertia
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSplitting
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalCompatibility
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalInertia
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSplitting
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
 
 /-!
 # Decomposition, inertia and splitting under the global Artin map
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 open AlgebraicCurve
@@ -20,7 +26,7 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

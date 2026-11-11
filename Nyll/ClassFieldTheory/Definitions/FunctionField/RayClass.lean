@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.RayPowerQuotient
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SplitRayQuotient
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.RayPowerQuotient
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SplitRayQuotient
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
 
 /-!
 # All-place ray class groups and their power quotients
@@ -20,19 +24,24 @@ integer degree direction; positive power quotients are finite.
 No class field realizing these quotients is included in these definitions.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace ClassFieldTheory.FunctionField
 
 /-- An effective modulus on all places, including places above infinity. -/
-abbrev RayClassModulus (k K : Type) [Field k] [Field K] [Algebra k K] : Type :=
+abbrev RayClassModulus (k : Type u) (K : Type v) [Field k] [Field K] [Algebra k K] :
+    Type v :=
   _root_.FunctionField.RayClass.Modulus k K
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
 
 /-- The actual full ray class group, with its degree direction retained. -/
-abbrev RayClassGroup (m : RayClassModulus k K) : Type :=
+abbrev RayClassGroup (m : RayClassModulus k K) : Type v :=
   let _ : AlgebraicCurve.HasPrincipalDivisors k K :=
     (_root_.FunctionField.isCurveOver k K).toHasPrincipalDivisors
   _root_.FunctionField.RayClass.RayClassGroup m
@@ -46,7 +55,7 @@ def powerRaySubgroup (m : RayClassModulus k K) (n : ℕ) :
   exact _root_.FunctionField.RayClass.powerRaySubgroup m n
 
 /-- The actual idele-class quotient by ray congruences and `n`-th powers. -/
-abbrev PowerRayClassGroup (m : RayClassModulus k K) (n : ℕ) : Type :=
+abbrev PowerRayClassGroup (m : RayClassModulus k K) (n : ℕ) : Type v :=
   let _ : AlgebraicCurve.HasPrincipalDivisors k K :=
     (_root_.FunctionField.isCurveOver k K).toHasPrincipalDivisors
   _root_.FunctionField.IdeleClassGroup k K ⧸ powerRaySubgroup k K m n
@@ -63,7 +72,7 @@ def splitRaySubgroup (m : RayClassModulus k K)
 
 /-- The actual ray quotient in which the prescribed local groups vanish. -/
 abbrev SplitRayClassGroup (m : RayClassModulus k K)
-    (S : Finset (AlgebraicCurve.Place k K)) : Type :=
+    (S : Finset (AlgebraicCurve.Place k K)) : Type v :=
   let _ : AlgebraicCurve.HasPrincipalDivisors k K :=
     (_root_.FunctionField.isCurveOver k K).toHasPrincipalDivisors
   _root_.FunctionField.IdeleClassGroup k K ⧸ splitRaySubgroup k K m S

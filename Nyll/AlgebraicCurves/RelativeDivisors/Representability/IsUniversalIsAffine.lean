@@ -10,26 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Mathlib.AlgebraicGeometry.Sites.Fpqc
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.SplittingCover
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraph
-import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.ProdKerGraphComapMapOnProdOver
-import Nyll.AlgebraicCurves.RelativeDivisors.SameDivisorScheme
-import Nyll.SchemeTheory.CategoryTheory.MorphismPropertyWidePullbackBase
-import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.AffineQuotientFiniteLocallyFreeEquivalenceRelation
-import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.UniquePullbackEq
-import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.PullbackInjective
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Mathlib.AlgebraicGeometry.Sites.Fpqc
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.SplittingCover
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraph
+public import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.ProdKerGraphComapMapOnProdOver
+public import Nyll.AlgebraicCurves.RelativeDivisors.SameDivisorScheme
+public import Nyll.SchemeTheory.CategoryTheory.MorphismPropertyWidePullbackBase
+public import Nyll.SchemeTheory.Descent.AffineFiniteLocallyFreeQuotient
+public import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.UniquePullbackEq
+public import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.PullbackInjective
 
 /-!
 Existence of a universal relative effective Cartier divisor over an affine scheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -11,8 +11,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Mathlib.RingTheory.Kaehler.Basic
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Mathlib.RingTheory.Kaehler.Basic
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -20,6 +22,8 @@ import Mathlib.RingTheory.Kaehler.Basic
 Uniformizer differentials, their coefficients, and differential orders at places of a function
 field.
 -/
+
+@[expose] public section
 
 open KaehlerDifferential
 
@@ -34,14 +38,15 @@ namespace Place
 variable {K F}
 variable (v : Place K F)
 
-private def uniformizer : F :=
+/-- A chosen irreducible element of the valuation ring, viewed in the function field. -/
+def uniformizer : F :=
   ((IsDiscreteValuationRing.exists_irreducible v.toValuationSubring).choose : F)
 
-private theorem ord_uniformizer : v.ord v.uniformizer = 1 := by
+theorem ord_uniformizer : v.ord v.uniformizer = 1 := by
   have hirr := (IsDiscreteValuationRing.exists_irreducible v.toValuationSubring).choose_spec
   simpa [uniformizer] using v.ord_coe_irreducible hirr
 
-private theorem uniformizer_ne_zero : v.uniformizer ≠ 0 := by
+theorem uniformizer_ne_zero : v.uniformizer ≠ 0 := by
   intro h
   simpa [h, v.ord_zero] using v.ord_uniformizer
 
@@ -73,18 +78,28 @@ theorem exists_eq_smul_dCoord [v.DCoordGenerates] (ω : Ω[F⁄K]) :
   rw [← DCoordGenerates.span_eq_top (v := v), Submodule.mem_span_singleton] at hω
   exact hω.imp fun _ hf => hf.symm
 
-theorem differentialCoeff_smul_dCoord [v.DCoordGenerates] (ω : Ω[F⁄K]) :
-    v.differentialCoeff ω • v.dCoord = ω := by
-  rw [differentialCoeff, dite_eq_left (v.exists_eq_smul_dCoord ω)]
-  exact (v.exists_eq_smul_dCoord ω).choose_spec.symm
+/-- An existing local-coordinate expression is recovered by the chosen coefficient. -/
+theorem differentialCoeff_smul_dCoord_of_exists {ω : Ω[F⁄K]}
+    (h : ∃ f : F, ω = f • v.dCoord) : v.differentialCoeff ω • v.dCoord = ω := by
+  rw [differentialCoeff, dite_eq_left h]
+  exact h.choose_spec.symm
 
-theorem differentialCoeff_unique [v.DCoordGenerates] [Nontrivial Ω[F⁄K]]
+/-- A nonzero coordinate makes every existing local-coordinate expression unique. -/
+theorem differentialCoeff_unique_of_ne_zero (hcoord : v.dCoord ≠ 0)
     {ω : Ω[F⁄K]} {f : F} (hf : ω = f • v.dCoord) : v.differentialCoeff ω = f := by
   have key : (v.differentialCoeff ω - f) • v.dCoord = 0 := by
-    rw [sub_smul, v.differentialCoeff_smul_dCoord ω, hf, sub_self]
+    rw [sub_smul, v.differentialCoeff_smul_dCoord_of_exists ⟨f, hf⟩, hf, sub_self]
   rcases smul_eq_zero.mp key with h | h
   · exact sub_eq_zero.mp h
-  · exact absurd h v.dCoord_ne_zero
+  · exact (hcoord h).elim
+
+theorem differentialCoeff_smul_dCoord [v.DCoordGenerates] (ω : Ω[F⁄K]) :
+    v.differentialCoeff ω • v.dCoord = ω :=
+  v.differentialCoeff_smul_dCoord_of_exists (v.exists_eq_smul_dCoord ω)
+
+theorem differentialCoeff_unique [v.DCoordGenerates] [Nontrivial Ω[F⁄K]]
+    {ω : Ω[F⁄K]} {f : F} (hf : ω = f • v.dCoord) : v.differentialCoeff ω = f :=
+  v.differentialCoeff_unique_of_ne_zero v.dCoord_ne_zero hf
 @[simp]
 theorem differentialCoeff_dCoord [v.DCoordGenerates] [Nontrivial Ω[F⁄K]] :
     v.differentialCoeff v.dCoord = 1 :=

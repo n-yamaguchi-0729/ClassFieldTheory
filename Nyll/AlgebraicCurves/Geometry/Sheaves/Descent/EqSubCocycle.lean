@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.OpenImmersionUnit
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.KerDSuccLeRangeD
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.KerDSuccLeRangeD
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
 
 /-!
 # Solving a cocycle on an affine open
 
 Quasicoherent Cech exactness produces local sections whose differences give the cocycle.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

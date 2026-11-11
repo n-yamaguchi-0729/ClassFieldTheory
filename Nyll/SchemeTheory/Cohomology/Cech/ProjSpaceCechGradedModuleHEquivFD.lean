@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwistDSq
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwistDSq
 
 /-!
 Equivalence between twist Cech cohomology and cohomology of the corresponding shifted free module.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

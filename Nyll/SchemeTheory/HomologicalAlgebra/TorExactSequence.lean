@@ -10,23 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.EpiMono
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Homology.Additive
-import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-import Mathlib.Algebra.Homology.HomologySequence
-import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.CategoryTheory.Abelian.LeftDerived
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Monoidal.Tor
-import Mathlib.RingTheory.Flat.CategoryTheory
-import Mathlib.Tactic.CategoryTheory.Slice
-import Mathlib.Tactic.Simps.Basic
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.EpiMono
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Homology.Additive
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.CategoryTheory.Abelian.LeftDerived
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Monoidal.Tor
+public import Mathlib.RingTheory.Flat.CategoryTheory
+public import Mathlib.Tactic.CategoryTheory.Slice
+public import Mathlib.Tactic.Simps.Basic
 
 /-!
 # Tor exact sequences for modules
@@ -35,6 +37,8 @@ Tensor a projective resolution with a short exact sequence, then transport its h
 sequence to Tor. Flat-module vanishing and the natural identification of Tor in degree
 zero with the tensor product are shared by the local flatness and regular-sequence proofs.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurves.Foundations.Algebra.TorExactSequence
 

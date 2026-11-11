@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Noetherian
-import Nyll.SchemeTheory.ProjectiveSpace.Cover
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOfKerDSuccLeRangeD
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayRelHPresheafObjEquiv
+module
+
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Nyll.SchemeTheory.ProjectiveSpace.Cover
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOfKerDSuccLeRangeD
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayRelHPresheafObjEquiv
 
 /-!
 Support of the relative cohomology presheaf arising from the Chow construction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

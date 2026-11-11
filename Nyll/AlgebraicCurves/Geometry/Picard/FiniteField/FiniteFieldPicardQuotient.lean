@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldPicardNorm
-import Nyll.GaloisCohomology.Cyclic.PeriodicNorm
-import Mathlib.Data.ZMod.Basic
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldInvariantClass
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldPicardNorm
+public import Nyll.GaloisCohomology.Cyclic.PeriodicNorm
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # The actual periodic geometric Picard norm quotient
@@ -18,6 +21,10 @@ exactly the periodic coboundary image. Descent to arithmetic divisor classes
 and to idele classes is not included in this comparison.
 -/
 
+@[expose] public section
+
+universe u
+
 noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicGeometry.SmoothProperCurve
@@ -25,9 +32,9 @@ open AlgebraicCurve NeronModelInfra CyclicAction
 
 namespace JacobianVarieties.Picard
 
-variable {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω F : Type u} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [IsProper c] [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
     (M : CurveModel Ω F) (eC : M.C ≅ pullback c (specMap k Ω))
     (heC : eC.hom ≫ pullback.snd c (specMap k Ω) = M.toBase)
@@ -39,7 +46,6 @@ local notation "φ" =>
 def constantFrobenius_picardNormQuotientEquiv (n : ℕ) (hn : n ≠ 0) :
     (periodicSubgroup (A := Pic Ω F) φ 1 ⧸ (periodicNorm (A := Pic Ω F) φ n).range) ≃+
       ZMod n := by
-  apply Classical.choice
   let d : periodicSubgroup (A := Pic Ω F) φ 1 →+ ZMod n :=
     ((Int.castAddHom (ZMod n)).comp (H1Gm.degree Ω F)).comp
       (periodicSubgroup (A := Pic Ω F) φ 1).subtype
@@ -55,26 +61,40 @@ def constantFrobenius_picardNormQuotientEquiv (n : ℕ) (hn : n ≠ 0) :
       exact ⟨y, y.property, congrArg Subtype.val hy⟩
     · rintro ⟨y, hy, he⟩
       exact ⟨⟨y, hy⟩, Subtype.ext he⟩
-  obtain ⟨D, hdeg, hD⟩ := exists_constantFrobenius_fixed_degree_one_class c M eC heC
-  have hfixed : φ • H1Gm.mk D = H1Gm.mk D := by
-    apply sub_eq_zero.mp
-    change H1Gm.mk (φ • D - D) = 0
-    exact (QuotientAddGroup.eq_zero_iff (φ • D - D)).mpr hD
-  let u : periodicSubgroup (A := Pic Ω F) φ 1 :=
-    ⟨H1Gm.mk D, by
-      change φ ^ 1 • H1Gm.mk D = H1Gm.mk D
-      simpa only [pow_one] using hfixed⟩
-  have hdu : d u = 1 := by
-    change (Divisor.degree D : ZMod n) = 1
-    rw [hdeg, Int.cast_one]
   have hsurj : Function.Surjective d := by
+    have hdegree : ∃ D : Divisor Ω F, Divisor.degree D = 1 ∧
+        (φ • D - D).IsPrincipal :=
+      exists_constantFrobenius_fixed_degree_one_class.{u}
+        (k := k) (Ω := Ω) (F := F) (C := C) c M eC heC
+    obtain ⟨D, hdeg, hD⟩ := hdegree
+    have hfixed : φ • H1Gm.mk D = H1Gm.mk D := by
+      apply sub_eq_zero.mp
+      change H1Gm.mk (φ • D - D) = 0
+      exact (QuotientAddGroup.eq_zero_iff (φ • D - D)).mpr hD
+    let u : periodicSubgroup (A := Pic Ω F) φ 1 :=
+      ⟨H1Gm.mk D, by
+        change φ ^ 1 • H1Gm.mk D = H1Gm.mk D
+        simpa only [pow_one] using hfixed⟩
+    have hdu : d u = 1 := by
+      change (Divisor.degree D : ZMod n) = 1
+      rw [hdeg, Int.cast_one]
     intro z
     obtain ⟨a, ha⟩ := ZMod.intCast_surjective z
     refine ⟨a • u, ?_⟩
     rw [map_zsmul, hdu, zsmul_eq_mul, mul_one]
     exact ha
-  exact ⟨(QuotientAddGroup.quotientAddEquivOfEq hker).trans
-    (QuotientAddGroup.quotientKerEquivOfSurjective d hsurj)⟩
+  exact (QuotientAddGroup.quotientAddEquivOfEq hker).trans
+    (QuotientAddGroup.quotientKerEquivOfSurjective d hsurj)
+
+/-- The geometric norm quotient is normalized by the degree of the given
+Frobenius-fixed class, not by an arbitrary additive automorphism of `ZMod n`. -/
+@[simp]
+theorem constantFrobenius_picardNormQuotientEquiv_mk (n : ℕ) (hn : n ≠ 0)
+    (x : periodicSubgroup (A := Pic Ω F) φ 1) :
+    constantFrobenius_picardNormQuotientEquiv c M eC heC n hn
+        (QuotientAddGroup.mk x) =
+      (H1Gm.degree Ω F (x : Pic Ω F) : ZMod n) :=
+  rfl
 
 /-- The periodic geometric Picard norm index equals the constant-field period. -/
 theorem natCard_constantFrobenius_picardNormQuotient (n : ℕ) (hn : n ≠ 0) :

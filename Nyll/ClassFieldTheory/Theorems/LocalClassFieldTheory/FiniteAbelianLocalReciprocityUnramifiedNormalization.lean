@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
 
 /-!
 # Arithmetic normalization of finite local reciprocity
@@ -21,17 +24,21 @@ to the arithmetic Frobenius on residues. The statement uses only Mathlib
 and public Definitions vocabulary; the implementation is used in the proof.
 -/
 
+@[expose] public section
+
 open scoped ValuativeRel
 
 noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- An unramified finite abelian extension admits a norm-kernel Artin map
 whose value on the inverse of each uniformizer acts by the arithmetic
 `q`-power Frobenius on the residue field. -/
 theorem finiteAbelianLocalReciprocity_unramifiedNormalization
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     [Field L] [ValuativeRel L] [UniformSpace L] [IsUniformAddGroup L]
@@ -53,12 +60,9 @@ theorem finiteAbelianLocalReciprocity_unramifiedNormalization
                 (IsLocalRing.residue 𝒪[L] x) ^ Nat.card 𝓀[K] := by
   have : LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
       K L := ⟨hUnram⟩
-  refine ⟨LocalClassFieldTheory.abelianLocalArtinMap K L, ?_, ?_, ?_⟩
-  · exact LocalClassFieldTheory.abelianLocalArtinMap_surjective K L
-  · change
-      (LocalClassFieldTheory.abelianLocalArtinMap K L).toMonoidHom.ker =
-        LocalFieldTheory.localNormSubgroup K L
-    exact LocalClassFieldTheory.abelianLocalArtinMap_ker K L
+  refine ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L, ?_, ?_, ?_⟩
+  · exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L
+  · exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K L
   · intro π hπ x
     let u : Kˣ := Units.mk0 (π : K) hπ.ne_zero
     have hvalUnit :
@@ -80,7 +84,7 @@ theorem finiteAbelianLocalReciprocity_unramifiedNormalization
                 LocalFieldTheory.IsNonarchimedeanLocalField.valuationMap_neg
                   K (Additive.ofMul u)
         _ = 1 := by rw [hvalUnit]; norm_num
-    exact finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow
+    exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_inverseUniformizer_residue_pow
       K L (u⁻¹) hval x
 
 end ClassFieldTheory

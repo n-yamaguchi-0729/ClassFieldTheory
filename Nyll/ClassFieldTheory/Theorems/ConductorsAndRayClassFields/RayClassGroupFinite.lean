@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Finiteness of the ideal-theoretic ray class group

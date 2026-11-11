@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.SchemeTheory.Modules.Sections.IhomSections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataRangeModuleIotaAppInjective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.SchemeTheory.Modules.Sections.IhomSections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
+public import Nyll.SchemeTheory.Sheaves.IdealSheafDataRangeModuleIotaAppInjective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
 
 /-!
 # The dual module of a line-bundle section
@@ -25,6 +27,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleM
 The dual of an invertible module is identified with the module of its invertible zero-scheme
 ideal, compatibly with the dual of the original section.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

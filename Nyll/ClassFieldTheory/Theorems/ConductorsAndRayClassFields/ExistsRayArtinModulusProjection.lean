@@ -12,6 +12,10 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayC
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 
 /-!
 # Existence of a modulus-compatible ray class field embedding
@@ -25,10 +29,12 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 private theorem rayArtin_prime_eq_arithmeticPrimeArtin
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     {m : RayClassModulus K} (R : RayClassFieldRealization K m)
     (v : HeightOneSpectrum (𝓞 K))
     (hv : v ∉ m.finitePart.support) :
@@ -51,7 +57,7 @@ private theorem rayArtin_prime_eq_arithmeticPrimeArtin
         (K := K) (L := R.extension) v w hw hunram).symm
 
 private theorem rayClassFieldRealization_norm_range
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     {m : RayClassModulus K} (R : RayClassFieldRealization K m) :
     (_root_.ideleClassNorm K R.extension).range =
       (GlobalClassFieldComparison.rayClassModulusToOriginal K m).congruenceSubgroup := by
@@ -84,7 +90,7 @@ private theorem rayClassFieldRealization_norm_range
 /-- A reduction of the modulus yields an embedding of any two ray-class-field
 realizations, and this embedding intertwines their Artin maps. -/
 theorem exists_rayArtin_modulusProjection
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     {m n : RayClassModulus K} (hmn : m ≤ n)
     (Rm : RayClassFieldRealization K m)
     (Rn : RayClassFieldRealization K n) :

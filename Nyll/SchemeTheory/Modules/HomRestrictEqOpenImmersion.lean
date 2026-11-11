@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Nyll.SchemeTheory.Modules.Sections.FibreProductSectionsBijective
-import Nyll.SchemeTheory.Modules.LocalMorphisms
+module
+
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Nyll.SchemeTheory.Modules.Sections.FibreProductSectionsBijective
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
 /-!
 Gluing compatible module morphisms from an open cover and their restriction equations.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

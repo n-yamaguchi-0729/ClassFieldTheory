@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.ValuedFieldTheory.Valuation.Completion.DiscreteRingEquiv
-import Mathlib.Algebra.Group.Units.Equiv
-import Mathlib.Topology.Algebra.Group.Units
-import Mathlib.Topology.DenseEmbedding
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.ValuedFieldTheory.Valuation.Completion.DiscreteRingEquiv
+public import Mathlib.Algebra.Group.Units.Equiv
+public import Mathlib.Topology.Algebra.Group.Units
+public import Mathlib.Topology.DenseEmbedding
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Basic
 
 /-!
 # Semilinear automorphisms on completed function fields
@@ -23,6 +26,8 @@ generic completion isomorphism and preserves the integral subrings and units.
 The base field may also be acted on: no choice of full constant field or
 separating parameter is needed.
 -/
+
+@[expose] public section
 
 open scoped WithZero
 
@@ -53,12 +58,14 @@ theorem place_adicValuation_smul (g : SemilinearAut k K) (v : Place k K) (x : K)
       _ = WithZero.exp (WithZero.log (v.adicValuation x)) := congrArg WithZero.exp hlog
       _ = v.adicValuation x := WithZero.exp_log (v.adicValuation_ne_zero hx)
 
-private def placeDiscreteValuation (v : Place k K) :
+/-- The existing normalized place valuation, bundled as a discrete valued field. -/
+def placeDiscreteValuation (v : Place k K) :
     ValuationTheory.DiscreteValuationField.DVF K where
   ValueGroup := ℤᵐ⁰
   valuation := v.adicValuation
 
-private theorem placeValuation_isEquiv (g : SemilinearAut k K) (v : Place k K) :
+/-- The semilinear field map identifies the two normalized place valuations. -/
+theorem placeValuation_isEquiv (g : SemilinearAut k K) (v : Place k K) :
     v.adicValuation.IsEquiv
       ((g • v).adicValuation.comap (SemilinearAut.toRingAut g).toRingHom) := by
   intro x y

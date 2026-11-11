@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Cyclic.Herbrand.Permutation.Module
+module
+
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.Permutation.Module
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.UniverseFiniteness
 
 /-!
 # Herbrand quotients under maps with finite kernel and cokernel
@@ -15,7 +18,11 @@ through its actual image and applies the existing short-exact-sequence theorem
 twice. No isomorphism of the individual Tate groups is asserted.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace CyclicCohomology
 
@@ -26,13 +33,13 @@ section Actions
 variable {G A B : Type*} [Group G] [CommGroup A] [CommGroup B]
     [MulDistribMulAction G A] [MulDistribMulAction G B]
 
-private theorem ker_stable (f : A →* B)
+theorem ker_stable (f : A →* B)
     (hf : ∀ (g : G) (a : A), f (g • a) = g • f a)
     (g : G) (a : A) (ha : a ∈ f.ker) : g • a ∈ f.ker := by
   change f (g • a) = 1
   rw [hf, show f a = 1 from ha, smul_one]
 
-private theorem range_stable (f : A →* B)
+theorem range_stable (f : A →* B)
     (hf : ∀ (g : G) (a : A), f (g • a) = g • f a)
     (g : G) (b : B) (hb : b ∈ f.range) : g • b ∈ f.range := by
   obtain ⟨a, rfl⟩ := hb
@@ -70,7 +77,7 @@ private theorem ker_rangeRestrict_exact (f : A →* B) (a : A) :
 
 end Actions
 
-variable {G A B : Type} [Group G] [Fintype G] [CommGroup A] [CommGroup B]
+variable {G : Type u} {A : Type v} {B : Type w} [Group G] [Fintype G] [CommGroup A] [CommGroup B]
     [MulDistribMulAction G A] [MulDistribMulAction G B]
 
 /-- Finite kernel and cokernel preserve the finiteness of both low-degree Tate groups. -/
@@ -90,19 +97,19 @@ theorem herbrandQuotientDefined_iff_of_finite_kernel_cokernel
     fun g a => Subtype.ext (hf g a)
   constructor
   · intro hA
-    have hR := herbrandQuotientDefined_right_of_left_middle
+    have hR := Universe.herbrandQuotientDefined_right_of_left_middle
       f.ker.subtype f.rangeRestrict hi hj (ker_rangeRestrict_exact f)
       f.ker.subtype_injective f.rangeRestrict_surjective σ hgen hK hA
-    exact herbrandQuotientDefined_middle_of_left_right
+    exact Universe.herbrandQuotientDefined_middle_of_left_right
       f.range.subtype (QuotientGroup.mk' f.range) (fun _ _ => rfl) (fun _ _ => rfl)
       (stableSubgroup_quotientMap_exact f.range) f.range.subtype_injective
       (QuotientGroup.mk'_surjective f.range) σ hgen hR hQ
   · intro hB
-    have hR := herbrandQuotientDefined_left_of_middle_right
+    have hR := Universe.herbrandQuotientDefined_left_of_middle_right
       f.range.subtype (QuotientGroup.mk' f.range) (fun _ _ => rfl) (fun _ _ => rfl)
       (stableSubgroup_quotientMap_exact f.range) f.range.subtype_injective
       (QuotientGroup.mk'_surjective f.range) σ hgen hB hQ
-    exact herbrandQuotientDefined_middle_of_left_right
+    exact Universe.herbrandQuotientDefined_middle_of_left_right
       f.ker.subtype f.rangeRestrict hi hj (ker_rangeRestrict_exact f)
       f.ker.subtype_injective f.rangeRestrict_surjective σ hgen hK hR
 
@@ -121,16 +128,16 @@ theorem herbrandQuotient_eq_of_finite_kernel_cokernel
     fun _ _ => rfl
   have hj : ∀ (g : G) (a : A), f.rangeRestrict (g • a) = g • f.rangeRestrict a :=
     fun g a => Subtype.ext (hf g a)
-  have hR := herbrandQuotientDefined_right_of_left_middle
+  have hR := Universe.herbrandQuotientDefined_right_of_left_middle
     f.ker.subtype f.rangeRestrict hi hj (ker_rangeRestrict_exact f)
     f.ker.subtype_injective f.rangeRestrict_surjective σ hgen
     ⟨inferInstance, inferInstance⟩ ⟨inferInstance, inferInstance⟩
   have : Finite (HerbrandH0 G f.range) := hR.1
   have : Finite (HerbrandHMinusOne G f.range σ) := hR.2
-  have hA := herbrandQuotient_multiplicative_of_shortExact
+  have hA := Universe.herbrandQuotient_multiplicative_of_shortExact
     f.ker.subtype f.rangeRestrict hi hj (ker_rangeRestrict_exact f)
     f.ker.subtype_injective f.rangeRestrict_surjective σ hgen
-  have hB := herbrandQuotient_multiplicative_of_shortExact
+  have hB := Universe.herbrandQuotient_multiplicative_of_shortExact
     f.range.subtype (QuotientGroup.mk' f.range) (fun _ _ => rfl) (fun _ _ => rfl)
     (stableSubgroup_quotientMap_exact f.range) f.range.subtype_injective
     (QuotientGroup.mk'_surjective f.range) σ hgen

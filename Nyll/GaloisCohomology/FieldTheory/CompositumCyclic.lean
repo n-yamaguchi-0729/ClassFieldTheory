@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.GaloisClosure
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+module
+
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 
 /-!
 # The actual cyclic Galois group of a compositum
@@ -14,6 +16,8 @@ The given intermediate field embeds into its compositum by inclusion.
 Restriction of relative automorphisms to that field is injective, so cyclicity
 is inherited from the original extension.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,8 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Transporting two-chart cohomology along a scheme isomorphism
@@ -19,6 +22,8 @@ import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
 A scheme isomorphism and a compatible module isomorphism transport a two-affine-open
 cover and give linear equivalences on its zeroth and first section cohomology.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

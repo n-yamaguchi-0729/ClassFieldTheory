@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Foundations.HomologicalAlgebra.ModuleMumfordTruncation
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.ModuleKerBaseChangeField
+module
+
+public import Nyll.AlgebraicCurves.Foundations.HomologicalAlgebra.ModuleMumfordTruncation
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.ModuleKerBaseChangeField
 
 /-!
 # Module ker base Change field of subsingleton H1
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

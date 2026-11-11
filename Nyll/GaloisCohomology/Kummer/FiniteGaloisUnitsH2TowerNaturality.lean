@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Kummer.FiniteGaloisTowerUnitsH2
+module
+
+public import Nyll.GaloisCohomology.Kummer.FiniteGaloisTowerUnitsH2
 
 /-!
 # Naturality of actual field-unit H² in towers
@@ -13,6 +15,8 @@ These identities compare restriction of actual field automorphisms and the
 specified inclusions of units. They also apply when the final field is a
 completion, without requiring it to be finite over the original global field.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 

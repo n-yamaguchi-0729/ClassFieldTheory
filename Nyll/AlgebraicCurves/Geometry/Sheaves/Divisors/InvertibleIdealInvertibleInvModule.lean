@@ -10,17 +10,22 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.SchemeTheory.Modules.Invertible.Invertible
 
 /-!
 # Invertibility of the inverse module of an ideal sheaf
 
 The inverse module is the dual of the module associated to the invertible ideal sheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

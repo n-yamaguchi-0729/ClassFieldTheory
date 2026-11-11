@@ -7,6 +7,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Approximation
 
 /-!
 # The local--global norm-symbol bridge
@@ -25,18 +28,20 @@ open IdeleGroup RelativeIdeleGroup
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
 private theorem productFormulaIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 attribute [local instance] productFormulaIdeleClassGroupIsMulCommutative
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]

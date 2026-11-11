@@ -4,22 +4,26 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.NormalFieldRange
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
-import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorLattice
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.QuotientTransport
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationCore
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Evaluation
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Evaluation
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidue
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.NormalFieldRange
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorLattice
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.QuotientTransport
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationCore
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Evaluation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Evaluation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidue
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Actual ray class fields
@@ -39,6 +43,10 @@ that original field, and obtain the genuine reciprocity equivalence
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField
 
 noncomputable section
@@ -52,13 +60,13 @@ open NumberField
 open Reciprocity
 open CyclicCohomology
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 /-- The concrete finite Galois norm neighbourhood used to select the
 ray class field attached to `m`. -/
 noncomputable abbrev rayClassFieldNormAmbient
-    (K : Type) [Field K] [NumberField K]
-    (m : RayClass.Modulus K) : Type :=
+    (K : Type u) [Field K] [NumberField K]
+    (m : RayClass.Modulus K) : Type u :=
   closedFiniteIndexClassFieldNormAmbient
     (K := K) (RayClass.Modulus.congruenceSubgroup m)
     (RayClass.isClosed_congruenceSubgroup m)
@@ -66,7 +74,7 @@ noncomputable abbrev rayClassFieldNormAmbient
 /-- The compatible abstract base subgroup used by the selected ray
 class-field realization. -/
 noncomputable abbrev rayClassFieldBaseSubgroup
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) :=
   closedFiniteIndexClassFieldBaseSubgroup
     (K := K) (RayClass.Modulus.congruenceSubgroup m)
@@ -75,7 +83,7 @@ noncomputable abbrev rayClassFieldBaseSubgroup
 /-- The finite abelian subextension selected by the ray congruence
 subgroup `C_K^m`. -/
 noncomputable abbrev rayClassFieldSubextension
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) :
     FiniteAbelianSubextension
       (rayClassFieldBaseSubgroup K m) :=
@@ -86,7 +94,7 @@ noncomputable abbrev rayClassFieldSubextension
 /-- The canonical fixed-field copy of the original number field in the
 selected ray class-field realization. -/
 noncomputable abbrev rayClassFieldBase
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) : Type :=
   closedFiniteIndexClassFieldBase
     (K := K) (RayClass.Modulus.congruenceSubgroup m)
@@ -96,7 +104,7 @@ noncomputable abbrev rayClassFieldBase
 inside the rational separable closure.  Its intrinsic realization in the
 fixed separable closure of `K` is `rayClassFieldSubfield`. -/
 noncomputable abbrev rayClassField
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) : Type :=
   closedFiniteIndexClassField
     (K := K) (RayClass.Modulus.congruenceSubgroup m)
@@ -182,7 +190,7 @@ theorem rayClassField_algebraMap_original
 /-- A chosen embedding of the finite ray-class-field realization into the
 fixed separable closure of its original base field. -/
 noncomputable def rayClassFieldEmbedding
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) :
     rayClassField K m →ₐ[K] SeparableClosure K :=
   IsSepClosed.lift
@@ -190,7 +198,7 @@ noncomputable def rayClassFieldEmbedding
 /-- The intrinsic ray class field as an intermediate field of the fixed
 separable closure of `K`. -/
 noncomputable def rayClassFieldSubfield
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClass.Modulus K) :
     IntermediateField K (SeparableClosure K) :=
   (rayClassFieldEmbedding K m).fieldRange
@@ -221,7 +229,7 @@ norm range is `C_K^m`.  This is the actual-field uniqueness statement
 for ray class fields. -/
 theorem
     nonempty_algEquiv_rayClassField_iff_ideleClassNorm_range_eq
-    (L : Type) [Field L] [NumberField L]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L]
     (m : RayClass.Modulus K) :
@@ -294,7 +302,7 @@ of modulus `m` exactly when `m` is a defining modulus for its genuine
 idèle-class norm subgroup. -/
 theorem
     nonempty_algHom_to_rayClassField_iff_isDefiningModulus
-    (L : Type) [Field L] [NumberField L]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L]
     (m : RayClass.Modulus K) :
@@ -313,7 +321,7 @@ theorem
 divisibility by the exact narrow finite conductor. -/
 theorem
     nonempty_algHom_to_rayClassField_narrowOfFinite_iff_narrowFiniteConductor_le
-    (L : Type) [Field L] [NumberField L]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L]
     (n : RayClass.FiniteModulus K) :
@@ -341,7 +349,7 @@ theorem
 contains the given finite abelian extension. -/
 theorem
     finiteAbelianExtension_nonempty_algHom_to_conductorRayClassField
-    (L : Type) [Field L] [NumberField L]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] :
     Nonempty
@@ -361,7 +369,7 @@ theorem
 /-- Every finite abelian extension is genuinely contained in a ray
 class field over the original base. -/
 theorem finiteAbelianExtension_exists_rayClassFieldEmbedding
-    (L : Type) [Field L] [NumberField L]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] :
     ∃ m : RayClass.Modulus K,
@@ -377,7 +385,7 @@ of the finite parts of the moduli of the actual ray class fields
 containing a finite abelian extension. -/
 theorem
     ideleClassNorm_narrowFiniteConductor_is_gcd_of_rayClassField_embeddings
-    (L : Type) [Field L] [NumberField L]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L] :
     (∀ m : RayClass.Modulus K,
@@ -586,7 +594,7 @@ private theorem rayClassGroup_mul_comm
 /-- Inversion of ray classes is a homomorphism because idèle classes
 commute. This form does not require a commutative-group instance on the
 quotient presentation. -/
-private def rayClassGroupInvHom (m : RayClass.Modulus K) :
+def rayClassGroupInvHom (m : RayClass.Modulus K) :
     RayClass.RayClassGroup m →* RayClass.RayClassGroup m where
   toFun := Inv.inv
   map_one' := inv_one

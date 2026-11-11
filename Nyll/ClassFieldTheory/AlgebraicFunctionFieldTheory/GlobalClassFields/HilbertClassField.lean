@@ -4,18 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.HilbertClassFieldConstruction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SplitRayQuotient
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormUniqueness
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalConductor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalCompatibility
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSplitting
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Conductor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.HilbertClassFieldConstruction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SplitRayQuotient
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormUniqueness
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalConductor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalCompatibility
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSplitting
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Conductor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
 
 /-!
 # Hilbert class fields with prescribed splitting places
@@ -26,7 +28,11 @@ zero-modulus ray subgroup with the prescribed local groups adjoined.
 Nonemptiness of the splitting set supplies finite index.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v
 
 open scoped AlgebraicCurve.Place
 
@@ -34,7 +40,7 @@ namespace FunctionField
 
 open AlgebraicCurve
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K]
 

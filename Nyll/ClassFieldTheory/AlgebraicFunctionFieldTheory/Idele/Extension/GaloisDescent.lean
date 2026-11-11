@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 
 /-!
 # Galois descent for principal ideles and fixed classes
@@ -20,6 +22,8 @@ representative of every invariant idele class.
 The fixed-representative argument uses an actual place to detect equality of
 diagonal functions. It does not assume a class-field-theoretic descent statement.
 -/
+
+@[expose] public section
 
 noncomputable section
 

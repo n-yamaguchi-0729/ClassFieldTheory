@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
-import Mathlib.GroupTheory.FiniteAbelian.Duality
-import Mathlib.RingTheory.RootsOfUnity.EnoughRootsOfUnity
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
+public import Mathlib.GroupTheory.FiniteAbelian.Duality
+public import Mathlib.RingTheory.RootsOfUnity.EnoughRootsOfUnity
+public import Mathlib.SetTheory.Cardinal.Finite
 
 /-!
 # Perfectness of a finite nondegenerate Hilbert pairing
@@ -16,6 +18,8 @@ When the power-class group is finite and the field contains a primitive
 `n`-th root of unity, its full group of `μₙ`-valued characters has the same
 order. Hence a nondegenerate pairing gives an equivalence with that dual.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.LocalHilbert90
-import Nyll.GaloisCohomology.Cyclic.MultiplicativeHilbert90
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.LocalHilbert90
+public import Nyll.GaloisCohomology.Cyclic.MultiplicativeHilbert90
 
 /-!
 # Hilbert 90 for actual decomposition groups
@@ -17,6 +19,8 @@ base completion element to be an integral unit. These concrete statements give
 the local field and unramified integral-unit vanishing needed for idele
 cohomology; neither assumes a class-field axiom or a completed Galois comparison.
 -/
+
+@[expose] public section
 
 noncomputable section
 

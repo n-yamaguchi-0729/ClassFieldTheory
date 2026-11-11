@@ -10,32 +10,36 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.SpanRank
-import Mathlib.Algebra.Module.SpanRankOperations
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Ideal.Quotient.Noetherian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.KrullDimension.Regular
-import Mathlib.RingTheory.KrullDimension.Zero
-import Mathlib.RingTheory.LocalRing.RingHom.Basic
-import Mathlib.RingTheory.Ideal.Cotangent
-import Mathlib.NumberTheory.Padics.RingHoms
-import Mathlib.NumberTheory.Padics.PadicIntegers
-import Mathlib.RingTheory.DualNumber
-import Mathlib.Algebra.DualNumber
-import Mathlib.Data.ZMod.Basic
-import Mathlib.Data.Set.Card
-import Mathlib.Data.Finset.Card
-import Mathlib.Algebra.Field.Rat
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.Tactic.Set
+module
+
+public import Mathlib.Algebra.Module.SpanRank
+public import Mathlib.Algebra.Module.SpanRankOperations
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Ideal.Quotient.Noetherian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.KrullDimension.Regular
+public import Mathlib.RingTheory.KrullDimension.Zero
+public import Mathlib.RingTheory.LocalRing.RingHom.Basic
+public import Mathlib.RingTheory.Ideal.Cotangent
+public import Mathlib.NumberTheory.Padics.RingHoms
+public import Mathlib.NumberTheory.Padics.PadicIntegers
+public import Mathlib.RingTheory.DualNumber
+public import Mathlib.Algebra.DualNumber
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.Data.Set.Card
+public import Mathlib.Data.Finset.Card
+public import Mathlib.Algebra.Field.Rat
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.Tactic.Set
 
 /-!
 # Lifting regularity through a non-zero-divisor quotient
 -/
+
+@[expose] public section
 
 noncomputable section
 

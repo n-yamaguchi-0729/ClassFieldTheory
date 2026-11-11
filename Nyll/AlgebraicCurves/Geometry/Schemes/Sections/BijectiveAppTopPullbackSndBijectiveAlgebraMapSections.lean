@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+module
+
+public import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 
 /-!
 Transfer bijectivity of algebra maps on affine base changes to sections of arbitrary base
 changes.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

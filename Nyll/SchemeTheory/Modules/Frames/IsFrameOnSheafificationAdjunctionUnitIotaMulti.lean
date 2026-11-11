@@ -10,13 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.LinearAlgebra.ExteriorPower.Basis
-import Mathlib.Topology.Sheaves.LocallySurjective
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+module
+
+public import Mathlib.LinearAlgebra.ExteriorPower.Basis
+public import Mathlib.Topology.Sheaves.LocallySurjective
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
 /-!
 # Scheme Modules is Frame On sheafification Adjunction unit iota Multi
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

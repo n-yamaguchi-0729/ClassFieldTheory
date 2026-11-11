@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveCokerMapBaseChange
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.Equalizer
-import Mathlib.LinearAlgebra.TensorProduct.Prod
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveCokerMapBaseChange
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.Equalizer
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
 
 /-!
 Bijectivity of kernel base change in the finite-presentation construction for a Cech differential.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -49,7 +53,7 @@ variable (A : Type u) [CommRing A] [Algebra R A]
 
 theorem subtype_baseChange_injective [Module.Flat R C1] :
     Function.Injective ((K0 d).subtype.baseChange A) := by
-  rw [LinearMap.baseChange_eq_ltensor]
+  rw [LinearMap.baseChange_eq_lTensor]
   exact LinearMap.lTensor_injective_of_exact_of_flat (d.coprod (lift d))
     (surjective_coprod d) _ (K0 d).subtype_injective (LinearMap.exact_subtype_ker_map _) A
 

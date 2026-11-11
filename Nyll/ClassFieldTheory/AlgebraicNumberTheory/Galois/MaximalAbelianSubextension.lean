@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
-import Nyll.GaloisCohomology.GroupTheory.Quotient
-import Mathlib.FieldTheory.Galois.Abelian
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NormalClosure
+public import Nyll.GaloisCohomology.GroupTheory.Quotient
+public import Mathlib.FieldTheory.Galois.Abelian
 
 /-!
 # Maximal abelian subextensions inside finite normal closures
@@ -16,6 +18,8 @@ distinguished copy of `L`.  The subgroup fixing that copy, together with the
 commutator subgroup of the full Galois group, cuts out the largest abelian
 Galois intermediate field contained in the distinguished copy.
 -/
+
+@[expose] public section
 
 noncomputable section
 

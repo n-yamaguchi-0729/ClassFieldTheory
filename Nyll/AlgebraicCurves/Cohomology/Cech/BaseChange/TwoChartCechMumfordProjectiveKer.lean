@@ -10,20 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Mathlib.RingTheory.Finiteness.Nakayama
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveK0
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveKerMapBaseChange
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveCokerMapBaseChange
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.Algebra.Module.Projective
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Mathlib.RingTheory.Finiteness.Nakayama
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveK0
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveKerMapBaseChange
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveCokerMapBaseChange
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.LinearAlgebra.Dimension.Finrank
 
 /-!
 Projectivity and base change of a Cech kernel from surjectivity of the fibre kernel comparisons.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -99,7 +103,7 @@ theorem dK_surjective
       (Submodule.mkQ_surjective _)
     refine (hex y).mpr ?_
     obtain ⟨x, hx⟩ := hsurjK y
-    exact ⟨x, by rw [← hx, LinearMap.baseChange_eq_ltensor]⟩
+    exact ⟨x, by rw [← hx, LinearMap.baseChange_eq_lTensor]⟩
   have : Subsingleton ((A ⧸ 𝔪) ⊗[A] Q) := ⟨fun a b => by rw [hQ0 a, hQ0 b]⟩
   have : Subsingleton (Q ⧸ 𝔪 • (⊤ : Submodule A Q)) :=
     (TensorProduct.quotTensorEquivQuotSMul Q 𝔪).symm.toEquiv.subsingleton

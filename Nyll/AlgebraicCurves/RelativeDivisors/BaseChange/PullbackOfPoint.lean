@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
+module
+
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
 
 /-!
 # Base change of the divisor of a section
 
 Relates pullback of the divisor of a section to the divisor of the pulled back section.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

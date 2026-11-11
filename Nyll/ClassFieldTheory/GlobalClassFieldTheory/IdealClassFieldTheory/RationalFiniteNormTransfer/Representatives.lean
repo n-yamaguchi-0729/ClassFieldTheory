@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
 
 /-!
 # Representatives and comparison endpoints for rational finite-norm transport
@@ -14,6 +16,8 @@ the shared fixed-field instance providers.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -56,7 +60,9 @@ noncomputable def rationalFiniteNormTransferAbstractRepresentative
     [hfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)]
     (a : KummerTheory.ambientFixedAddSubgroup
-      rationalIdeleClassRepresentation K) := by
+      rationalIdeleClassRepresentation K) :
+    rationalFiniteNormTransferExtensionIdeleClass
+      (hKfinite := hKfinite) (hfinite := hfinite) K L hLK := by
   letI hLfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K L hLK (hKfinite := hKfinite) (hfinite := hfinite)
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK

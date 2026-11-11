@@ -11,20 +11,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Maps.Maps
-import Nyll.AlgebraicCurves.Differentials.Residues.FibreIdentity
-import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTraceCompletionCommute
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
-import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Maps.Maps
+public import Nyll.AlgebraicCurves.Differentials.Residues.FibreIdentity
+public import Nyll.AlgebraicCurves.Differentials.Residues.ResidueTraceCompletionCommute
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
 
 /-!
 # Differentials, residues, and divisor correspondences
 
 Separable extensions with generating coordinate differentials satisfy the fibre residue identity.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

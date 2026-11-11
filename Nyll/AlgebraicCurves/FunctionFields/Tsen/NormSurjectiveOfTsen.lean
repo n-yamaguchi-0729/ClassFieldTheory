@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Tsen
-import Nyll.SchemeTheory.RingTheory.Polynomial.NormPolynomial
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.SeparatingTranscendental
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Tsen
+public import Nyll.SchemeTheory.RingTheory.Polynomial.NormPolynomial
+public import Nyll.AlgebraicCurves.FunctionFields.Extensions.CurveFiniteExtension
 
 /-!
 # Surjectivity of finite-extension norms over curve function fields
@@ -15,6 +17,8 @@ The actual algebra norm is represented by a homogeneous form of degree equal to 
 dimension. Tsen applied to N(Y) - a Z^d gives a nonzero point. Anisotropy of the field norm
 forces Z to be nonzero, so division by Z gives norm a.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -71,27 +75,6 @@ theorem norm_surjective_of_transcendental_of_finiteDimensional
   rw [map_mul, Algebra.norm_algebraMap, hnw]
   change (t⁻¹) ^ r * (a * t ^ r) = a
   rw [inv_pow, mul_left_comm, inv_mul_cancel₀ (pow_ne_zero r ht), mul_one]
-
-/-- A finite extension of a one-variable function field has an actual separating
-transcendental parameter. -/
-theorem exists_separating_transcendental_over_finite_extension
-    (K : Type*) [Field K] [IsAlgClosed K] {F : Type*} [Field F] [Algebra K F]
-    (x : F) (hx : Transcendental K x)
-    (hfin : FiniteDimensional (IntermediateField.adjoin K ({x} : Set F)) F)
-    (L : Type*) [Field L] [Algebra F L] [Algebra K L] [IsScalarTower K F L]
-    [FiniteDimensional F L] :
-    ∃ y : L, Transcendental K y ∧
-      FiniteDimensional (IntermediateField.adjoin K ({y} : Set L)) L ∧
-      Algebra.IsSeparable (IntermediateField.adjoin K ({y} : Set L)) L := by
-  have : FiniteDimensional (IntermediateField.adjoin K ({x} : Set F)) F := hfin
-  have : FiniteDimensional (IntermediateField.adjoin K ({x} : Set F)) L :=
-    Module.Finite.trans F L
-  have hfinL : FiniteDimensional
-      (IntermediateField.adjoin K ({algebraMap F L x} : Set L)) L :=
-    .of_restrictScalars_finite (IntermediateField.adjoin K ({x} : Set F)) _ _
-  have hxL : Transcendental K (algebraMap F L x) :=
-    (transcendental_algebraMap_iff (algebraMap F L).injective).mpr hx
-  exact exists_separating_transcendental_of_perfectField hxL hfinL
 
 /-- Norm surjectivity is preserved after a finite extension of the curve function
 field. The separating parameter is obtained from the existing perfect-field theorem. -/

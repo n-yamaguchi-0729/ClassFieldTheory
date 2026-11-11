@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.SchemeTheory.Morphisms.FrobeniusOver
-import Mathlib.AlgebraicGeometry.Pullbacks
+module
+
+public import Nyll.SchemeTheory.Morphisms.FrobeniusOver
+public import Mathlib.AlgebraicGeometry.Pullbacks
 
 /-!
 # Frobenius after extending finite constants
@@ -15,6 +17,8 @@ absolute Frobenius with inverse Frobenius on the constants. The resulting map
 is over the extended constants, is the base change of the original Frobenius,
 and has zero cotangent map at every stalk.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -33,10 +37,15 @@ local notation "Y" => pullback f b
 
 private local instance constantSpecOver : (Spec (.of Ω)).Over (Spec (CommRingCat.of k)) := ⟨b⟩
 
-private local instance constantPullbackOver : (Y).Over (Spec (CommRingCat.of k)) :=
+/-- The scalar structure on the pullback used for its finite-field Frobenius. -/
+@[instance_reducible]
+def constantPullbackOver : (Y).Over (Spec (CommRingCat.of k)) :=
   ⟨pullback.fst f b ≫ f⟩
 
-private def inverseFrobeniusOnConstants : Spec (.of Ω) ⟶ Spec (.of Ω) :=
+attribute [local instance] constantPullbackOver
+
+/-- The inverse finite-field Frobenius on the algebraic extension of constants. -/
+def inverseFrobeniusOnConstants : Spec (.of Ω) ⟶ Spec (.of Ω) :=
   Spec.map (CommRingCat.ofHom
     (FiniteField.frobeniusAlgEquivOfAlgebraic k Ω).symm.toRingHom)
 
@@ -48,7 +57,8 @@ private theorem inverseFrobeniusOnConstants_comp :
   ext a
   exact (FiniteField.frobeniusAlgEquivOfAlgebraic k Ω).symm.commutes a
 
-private def inverseConstantTwist : Y ⟶ Y :=
+/-- The pullback endomorphism induced by inverse Frobenius on the constants. -/
+def inverseConstantTwist : Y ⟶ Y :=
   pullback.lift (pullback.fst f b)
     (pullback.snd f b ≫ inverseFrobeniusOnConstants k Ω) (by
       rw [Category.assoc, inverseFrobeniusOnConstants_comp]

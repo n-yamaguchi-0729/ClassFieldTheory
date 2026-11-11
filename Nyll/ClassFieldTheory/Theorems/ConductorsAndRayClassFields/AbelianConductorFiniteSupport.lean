@@ -20,13 +20,15 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- A finite prime occurs in the conductor precisely when some prime above
 it is ramified. -/
 theorem IsAbelianConductor.mem_finiteSupport_iff_exists_ramified
-    {K : Type} [Field K] [NumberField K]
-    {L : Type} [Field L] [NumberField L]
+    {K : Type u} [Field K] [NumberField K]
+    {L : Type v} [Field L] [NumberField L]
     [Algebra K L] [IsAbelianGalois K L]
     {c : RayClassModulus K}
     (hc : IsAbelianConductor K L c)

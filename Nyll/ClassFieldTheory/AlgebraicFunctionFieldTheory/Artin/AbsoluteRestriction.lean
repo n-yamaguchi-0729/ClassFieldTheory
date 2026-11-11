@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteArtin
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.FiniteAbelianQuotientKernels
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteArtin
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.FiniteAbelianQuotientKernels
 
 /-!
 # Actual finite restrictions of the absolute function-field Artin map
@@ -14,13 +16,17 @@ Every finite abelian intermediate field recovers its native Artin map by
 restricting the absolute Artin value to that field.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open LocalClassFieldTheory
 
-private theorem absoluteAbelianRestriction_finiteProjection (K : Type) [Field K]
+private theorem absoluteAbelianRestriction_finiteProjection (K : Type v) [Field K]
     (N : OpenNormalSubgroup (localAbsoluteAbelianProfinite K))
     (x : localAbsoluteAbelianProfinite K) :
     absoluteAbelianRestriction K (absoluteFiniteQuotientField K N) x =
@@ -28,7 +34,7 @@ private theorem absoluteAbelianRestriction_finiteProjection (K : Type) [Field K]
   refine QuotientGroup.induction_on x fun σ => ?_
   rw [absoluteAbelianRestriction_mk, absoluteFiniteQuotientEquiv_mk_mk]
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 

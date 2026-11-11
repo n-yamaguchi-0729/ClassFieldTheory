@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.OrbitActions
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.DecompositionHilbert90
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormCohomology
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Cohomology
-import Nyll.ProCGroups.InducedFunctions.Cocycle
-import Nyll.AlgebraicCurves.Places.Ramification.FiniteRamification
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.OrbitActions
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.DecompositionHilbert90
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormCohomology
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Cohomology
+public import Nyll.ProCGroups.InducedFunctions.Cocycle
+public import Nyll.AlgebraicCurves.Places.Ramification.FiniteRamification
+public import Nyll.GaloisCohomology.Cyclic.MultiplicativeHilbert90
 
 /-!
 # Hilbert 90 for the actual all-place idele group
@@ -21,6 +24,8 @@ gluing then gives an actual idele primitive for every finite-Galois cocycle.
 For a cyclic extension this identifies the actual idele norm kernel with the
 augmentation image and proves vanishing of its Tate H⁻¹.
 -/
+
+@[expose] public section
 
 noncomputable section
 

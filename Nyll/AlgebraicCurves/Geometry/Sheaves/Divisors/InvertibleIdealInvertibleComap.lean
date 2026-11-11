@@ -15,20 +15,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
-import Mathlib.RingTheory.Localization.Free
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.Finiteness.Descent
-import Mathlib.RingTheory.Localization.Algebra
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.Algebra.Category.Ring.Constructions
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.RingTheory.IsTensorProduct
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+module
+
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+public import Nyll.SchemeTheory.RingTheory.PushoutKernel
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.RingTheory.Localization.Free
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.Finiteness.Descent
+public import Mathlib.RingTheory.Localization.Algebra
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.Algebra.Category.Ring.Constructions
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.RingTheory.IsTensorProduct
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
 
 /-!
 # Descent of invertible ideal sheaves
@@ -36,6 +41,8 @@ import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
 An ideal sheaf is invertible if its inverse image is invertible under a finite,
 flat, surjective scheme morphism.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -86,7 +93,8 @@ theorem Ideal.eq_bot_or_exists_span_singleton_nonZeroDivisor_of_free (I : Ideal 
       by_contra h
       have h0 : ((b i' : I) : R) • (b i) - ((b i : I) : R) • (b i') = (0 : I) := by
         ext
-        simp [mul_comm]
+        change (b i' : R) * (b i : R) - (b i : R) * (b i' : R) = 0
+        exact sub_eq_zero.mpr (mul_comm _ _)
       have hcoeff : ((b i' : I) : R) = 0 := by
         simpa only [map_sub, map_smul, Finsupp.sub_apply, Finsupp.smul_apply,
           Module.Basis.repr_self_apply, ite_eq_left rfl, ite_eq_right h, ite_true,
@@ -198,12 +206,12 @@ theorem Module.FinitePresentation.of_finitePresentation_tensorProduct_of_faithfu
   set K := LinearMap.ker f
   have hex : Function.Exact (K.subtype.baseChange B) (f.baseChange B) := by
     have := lTensor_exact B (f.exact_subtype_ker_map) hf
-    rwa [← LinearMap.baseChange_eq_ltensor, ← LinearMap.baseChange_eq_ltensor] at this
+    rwa [← LinearMap.baseChange_eq_lTensor, ← LinearMap.baseChange_eq_lTensor] at this
   have hinj : Function.Injective (K.subtype.baseChange B) := by
-    rw [LinearMap.baseChange_eq_ltensor]
+    rw [LinearMap.baseChange_eq_lTensor]
     exact Module.Flat.lTensor_preserves_injective_linearMap _ Subtype.val_injective
   have hsurj : Function.Surjective (f.baseChange B) := by
-    rw [LinearMap.baseChange_eq_ltensor]
+    rw [LinearMap.baseChange_eq_lTensor]
     exact LinearMap.lTensor_surjective B hf
   let e : B ⊗[A] K ≃ₗ[B] LinearMap.ker (f.baseChange B) :=
     LinearEquiv.ofInjective _ hinj ≪≫ₗ LinearEquiv.ofEq _ _ (LinearMap.exact_iff.mp hex).symm
@@ -228,7 +236,9 @@ theorem Ideal.nonempty_tensorProduct_linearEquiv_map [Module.Flat A B] (J : Idea
       simp [f, Algebra.smul_def]
     · rintro - ⟨x, rfl⟩
       induction x using TensorProduct.inductionOn with
-      | add _ _ _ _ => simp_all [Ideal.add_mem]
+      | add x y hx hy =>
+          rw [map_add]
+          exact Ideal.add_mem _ hx hy
       | tmul s x =>
         have : f (s ⊗ₜ[A] x) = s • f (1 ⊗ₜ x) := by simp [f]
         rw [this]
@@ -423,36 +433,7 @@ theorem ker_algebraMap_eq_map_ker
     [IsScalarTower R B P] [IsScalarTower R C P] [Algebra.IsPushout R B C P]
     (hC : Function.Surjective (algebraMap R C)) :
     RingHom.ker (algebraMap B P) = (RingHom.ker (algebraMap R C)).map (algebraMap R B) := by
-  let e : B ⊗[R] C ≃ₐ[B] P := Algebra.IsPushout.equiv R B C P
-  have h1 : algebraMap B P = e.toRingEquiv.toRingHom.comp
-      (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := B) (B := C)).toRingHom := by
-    ext b
-    simp [e]
-  rw [h1, RingHom.ker_comp_of_injective _ e.toRingEquiv.injective]
-  let g : R →ₐ[R] C := Algebra.ofId R C
-  have h2 : (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := B) (B := C)).toRingHom =
-      (Algebra.TensorProduct.map (AlgHom.id R B) g).toRingHom.comp
-        (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := B) (B := R)).toRingHom := by
-    ext b
-    simp [g]
-  have h3 : RingHom.ker (Algebra.TensorProduct.map (AlgHom.id R B) g).toRingHom =
-      (RingHom.ker (algebraMap R C)).map
-        (Algebra.TensorProduct.includeRight (R := R) (A := B) (B := R)).toRingHom := by
-    simpa only [AlgHom.ker_coe, AlgHom.coe_ideal_map, AlgHom.toRingHom_eq_coe,
-      g, Algebra.toRingHom_ofId] using
-      (Algebra.TensorProduct.lTensor_ker (A := B) g hC)
-  rw [h2, ← RingHom.comap_ker, h3]
-  let r : B ⊗[R] R ≃ₐ[R] B := Algebra.TensorProduct.rid R R B
-  have h4 : (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := B) (B := R)).toRingHom =
-      (r.toRingEquiv.symm : B →+* B ⊗[R] R) := by
-    ext b
-    apply r.toRingEquiv.injective
-    simp [r]
-  have h5 : (algebraMap R B) = (r.toRingEquiv : B ⊗[R] R →+* B).comp
-      (Algebra.TensorProduct.includeRight (R := R) (A := B) (B := R)).toRingHom := by
-    ext x
-    simp [r, Algebra.smul_def]
-  rw [h4, h5, ← Ideal.map_map, Ideal.comap_coe, Ideal.map_coe, Ideal.comap_symm]
+  exact _root_.Algebra.IsPushout.ker_algebraMap_eq_map_ker R B C P hC
 
 end Algebra.IsPushout
 
@@ -464,12 +445,7 @@ theorem ker_eq_map_ker_of_isPushout {R B C P : CommRingCat.{u}} {f : R ⟶ B} {g
     {inl : B ⟶ P} {inr : C ⟶ P} (h : IsPushout f g inl inr)
     (hg : Function.Surjective g.hom) :
     RingHom.ker inl.hom = (RingHom.ker g.hom).map f.hom := by
-  algebraize [f.hom, g.hom, inl.hom, inr.hom, inl.hom.comp f.hom]
-  have hw : inl.hom.comp f.hom = inr.hom.comp g.hom := by
-    simpa only [CommRingCat.hom_comp] using congr(($(h.w)).hom)
-  have : IsScalarTower R C P := .of_algebraMap_eq' hw
-  have : Algebra.IsPushout R B C P := CommRingCat.isPushout_iff_isPushout.mp h
-  exact Algebra.IsPushout.ker_algebraMap_eq_map_ker R B C P hg
+  exact _root_.CommRingCat.ker_eq_map_ker_of_isPushout h hg
 
 end CommRingCat
 
@@ -487,55 +463,14 @@ variable {X Y : Scheme.{u}}
 
 theorem ideal_comap_top [IsAffine X] [IsAffine Y] (I : X.IdealSheafData) (f : Y ⟶ X) :
     (I.comap f).ideal ⟨⊤, isAffineOpen_top Y⟩ =
-      (I.ideal ⟨⊤, isAffineOpen_top X⟩).map f.appTop.hom := by
-  have : IsAffine I.subscheme := isAffine_of_isAffineHom I.subschemeι
-  have H := isPushout_appTop_of_isPullback (IsPullback.of_hasPullback f I.subschemeι)
-  have := CommRingCat.ker_eq_map_ker_of_isPushout H
-    (I.subschemeι_app_surjective ⟨⊤, isAffineOpen_top X⟩)
-  rw [← ker_subschemeι_app I ⟨⊤, isAffineOpen_top X⟩, comap, Scheme.Hom.ker_apply]
-  exact this
+      (I.ideal ⟨⊤, isAffineOpen_top X⟩).map f.appTop.hom :=
+  _root_.AlgebraicGeometry.Scheme.IdealSheafData.ideal_comap_top I f
 
 
 theorem ideal_comap_of_le (I : X.IdealSheafData) (f : Y ⟶ X) (U : X.affineOpens)
     (V : Y.affineOpens) (hVU : (V : Y.Opens) ≤ f ⁻¹ᵁ (U : X.Opens)) :
-    (I.comap f).ideal V = (I.ideal U).map (f.appLE U V hVU).hom := by
-  suffices key : ∀ (U' : X.affineOpens) (V' : Y.affineOpens),
-      U' = ⟨(U : X.Opens).ι ''ᵁ ⊤, by simpa only [Scheme.Opens.ι_image_top] using U.2⟩ →
-      V' = ⟨(V : Y.Opens).ι ''ᵁ ⊤, by simpa only [Scheme.Opens.ι_image_top] using V.2⟩ →
-      ∀ (e : (V' : Y.Opens) ≤ f ⁻¹ᵁ (U' : X.Opens)),
-        (I.comap f).ideal V' = (I.ideal U').map (f.appLE U' V' e).hom from
-    key U V (Subtype.ext (U : X.Opens).ι_image_top.symm)
-      (Subtype.ext (V : Y.Opens).ι_image_top.symm) hVU
-  rintro _ _ rfl rfl e
-  have : IsAffine (U : X.Opens) := U.2
-  have : IsAffine (V : Y.Opens) := V.2
-  have h := ideal_comap_top (I.comap (U : X.Opens).ι) (f.resLE U V hVU)
-  rw [← comap_comp, Scheme.Hom.resLE_comp_ι, comap_comp,
-    ideal_comap_of_isOpenImmersion (I.comap f) (V : Y.Opens).ι,
-    ideal_comap_of_isOpenImmersion I (U : X.Opens).ι] at h
-  simp only [Scheme.Opens.ι_appIso, Iso.refl_inv, Scheme.Hom.appTop,
-    Scheme.Hom.resLE_app_top] at h
-  erw [CommRingCat.hom_id, Ideal.comap_id] at h
-  erw [CommRingCat.hom_id, Ideal.comap_id] at h
-  have he : f.appLE ((U : X.Opens).ι ''ᵁ ⊤) ((V : Y.Opens).ι ''ᵁ ⊤) e =
-      (U : X.Opens).topIso.hom ≫ f.appLE U V hVU ≫ (V : Y.Opens).topIso.inv := by
-    have hv := f.appLE_map hVU (eqToHom (V : Y.Opens).ι_image_top).op
-    have hu := f.map_appLE ((V : Y.Opens).ι_image_top.le.trans hVU)
-      (eqToHom (U : X.Opens).ι_image_top.symm).op
-    exact ((congrArg (fun φ : Γ(X, U) ⟶ Γ((V : Y.Opens), ⊤) =>
-      (U : X.Opens).topIso.hom ≫ φ) hv).trans hu).symm
-  exact h.trans (congrArg
-    (fun φ : Γ((U : X.Opens), ⊤) ⟶ Γ((V : Y.Opens), ⊤) =>
-      (I.ideal ⟨(U : X.Opens).ι ''ᵁ ⊤, by simpa only [Scheme.Opens.ι_image_top] using U.2⟩).map
-          φ.hom)
-    he).symm
-
-private theorem _root_.AlgebraicGeometry.Scheme.IdealSheafData.ideal_comap_of_isAffineHom (I :
-    X.IdealSheafData) (f : Y ⟶ X) [IsAffineHom f]
-    (U : X.affineOpens) :
-    (I.comap f).ideal ⟨f ⁻¹ᵁ U, U.2.preimage f⟩ = (I.ideal U).map (f.app U).hom := by
-  rw [Scheme.Hom.app_eq_appLE]
-  exact ideal_comap_of_le I f U ⟨f ⁻¹ᵁ U, U.2.preimage f⟩ le_rfl
+    (I.comap f).ideal V = (I.ideal U).map (f.appLE U V hVU).hom :=
+  _root_.AlgebraicGeometry.Scheme.IdealSheafData.ideal_comap_of_le I f U V hVU
 
 open _root_.AlgebraicGeometry.Scheme.IdealSheafData
 end AlgebraicGeometry.Scheme.IdealSheafData

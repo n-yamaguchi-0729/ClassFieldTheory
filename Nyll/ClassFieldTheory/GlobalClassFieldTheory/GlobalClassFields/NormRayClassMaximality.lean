@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Exact narrow finite ray-class presentations of norm quotients
@@ -18,9 +21,13 @@ conductor, equivalently the two finite quotient groups have the same order.
 
 
 
+@[expose] public section
+
 open scoped NumberField
 
 noncomputable section
+
+universe u v w
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
@@ -28,7 +35,7 @@ namespace GlobalClassFields
 open NumberField
 
 /-- Canonical class-group commutativity supplies normality for the quotient. -/
-private theorem normRayClassMaximalityClassGroupIsMulCommutative
+theorem normRayClassMaximalityClassGroupIsMulCommutative
     (F : Type*) [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   IsMulCommutative.of_comm (fun a b => mul_comm a b)
@@ -36,7 +43,7 @@ private theorem normRayClassMaximalityClassGroupIsMulCommutative
 attribute [local instance] normRayClassMaximalityClassGroupIsMulCommutative
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -160,7 +167,7 @@ conductor and maximal ray-class presentations have the same actual
 idèle-class norm subgroup. -/
 theorem
   ideleClassNorm_ranges_eq_of_narrowFiniteConductors_eq_of_rayClassGroup_cards_eq_normQuotient_cards
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M] [Algebra K M]
     [FiniteDimensional K M] [IsGalois K M]
     (hconductor :
@@ -209,7 +216,7 @@ theorem
 ray-class presentations with the same conductor are canonically equivalent.
 -/
 def normQuotientEquivOfNarrowFiniteConductorsEqOfRayClassGroupCardsEqNormQuotientCards
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M] [Algebra K M]
     [FiniteDimensional K M] [IsGalois K M]
     (hconductor :
@@ -248,7 +255,7 @@ ray-class norm quotients preserves every idèle-class representative. -/
 @[simp]
 theorem
     normQuotientEquivOfNarrowFiniteConductorsEqOfRayClassGroupCardsEqNormQuotientCards_mk
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M] [Algebra K M]
     [FiniteDimensional K M] [IsGalois K M]
     (hconductor :

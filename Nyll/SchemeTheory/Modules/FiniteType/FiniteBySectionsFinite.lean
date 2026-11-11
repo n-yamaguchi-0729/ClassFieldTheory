@@ -10,10 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+module
+
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
 /-!
 # Scheme Modules Finite By Sections is Finite of unit
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -96,7 +100,6 @@ section Chart
 variable {R : Type u} [CommRing R] {X : Scheme.{u}} (f : X ⟶ Spec (.of R)) {N : ℕ}
 
 local notation "𝒜" => MvPolynomial.homogeneousSubmodule (Fin (N + 1)) R
-local notation "ℙ" => Proj (MvPolynomial.homogeneousSubmodule (Fin (N + 1)) R)
 
 /-- The coefficient ring acting on sections through the structure morphism. -/
 def algR (V : X.Opens) : R →+* Γ(X, V) :=

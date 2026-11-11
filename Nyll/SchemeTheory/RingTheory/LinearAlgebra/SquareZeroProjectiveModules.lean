@@ -46,27 +46,31 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.Algebra.Module.Projective
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.LinearAlgebra.StdBasis
-import Mathlib.LinearAlgebra.TensorProduct.Quotient
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.Conv
-import Mathlib.Tactic.Ring.RingNF
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.Nakayama
-import Mathlib.RingTheory.Nilpotent.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.KrullDimension.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.TensorProduct.Tower
+module
+
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.LinearAlgebra.StdBasis
+public import Mathlib.LinearAlgebra.TensorProduct.Quotient
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.Conv
+public import Mathlib.Tactic.Ring.RingNF
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.Nakayama
+public import Mathlib.RingTheory.Nilpotent.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.KrullDimension.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
 
 /-!
 Lifting projective modules across a square-zero quotient using base change.
 -/
+
+@[expose] public section
 
 section Module_Projective_exists_baseChange_quotient_iso_of_squareZero
 
@@ -438,11 +442,10 @@ theorem _root_.Module.finrank_baseChange_eq_of_quotient_squareZero_linearEquiv
     (P : Type u) [AddCommGroup P] [Module S P]
     (P' : Type u) [AddCommGroup P'] [Module R P'] {n : ℕ}
     (hrk : ∀ (K : Type u) [Field K] [Algebra S K], Module.finrank K (K ⊗[S] P) = n) :
-    letI : Module (R ⧸ J) P := Module.compHom P φ.toRingHom
+    let : Module (R ⧸ J) P := Module.compHom P φ.toRingHom
     ((R ⧸ J) ⊗[R] P' ≃ₗ[R ⧸ J] P) →
     ∀ (K : Type u) [Field K] [Algebra R K], Module.finrank K (K ⊗[R] P') = n := by
-  let : Module (R ⧸ J) P := Module.compHom P φ.toRingHom
-  intro iso K _ _
+  intro quotientModule iso K _ _
   have hJK : ∀ x ∈ J, (algebraMap R K) x = 0 := fun x hx => by
     have h2 : (algebraMap R K x) ^ 2 = 0 := by
       rw [← map_pow]
@@ -480,16 +483,20 @@ theorem _root_.Module.finrank_baseChange_eq_of_quotient_squareZero_linearEquiv
       have hp : (s • p : P) = (φ.symm s : R ⧸ J) • p := by
         change s • p = (φ (φ.symm s) : S) • p; rw [φ.apply_symm_apply]
       rw [hk, hp]; exact smul_tmul (φ.symm s) k p)
+  have fwdAH_tmul (k : K) (p : P) :
+      fwdAH (k ⊗ₜ[R ⧸ J] p) = k ⊗ₜ[S] p := rfl
+  have bwdAH_tmul (k : K) (p : P) :
+      bwdAH (k ⊗ₜ[S] p) = k ⊗ₜ[R ⧸ J] p := rfl
   let e2AE : K ⊗[R ⧸ J] P ≃+ K ⊗[S] P :=
     { toFun := fwdAH
       invFun := bwdAH
       left_inv := fun x => by
         induction x using TensorProduct.inductionOn with
-        | tmul k p => simp [fwdAH, bwdAH, liftAddHom_tmul]
+        | tmul k p => rw [fwdAH_tmul, bwdAH_tmul]
         | add x y hx hy => simp only [map_add, hx, hy]
       right_inv := fun x => by
         induction x using TensorProduct.inductionOn with
-        | tmul k p => simp [fwdAH, bwdAH, liftAddHom_tmul]
+        | tmul k p => rw [bwdAH_tmul, fwdAH_tmul]
         | add x y hx hy => simp only [map_add, hx, hy]
       map_add' := map_add fwdAH }
   have e2 : K ⊗[R ⧸ J] P ≃ₗ[K] K ⊗[S] P := by
@@ -497,8 +504,8 @@ theorem _root_.Module.finrank_baseChange_eq_of_quotient_squareZero_linearEquiv
     intro c x
     induction x using TensorProduct.inductionOn with
     | tmul k p =>
-        simp only [e2AE, fwdAH, AddEquiv.coe_mk, Equiv.coe_fn_mk, smul_tmul', liftAddHom_tmul,
-          AddMonoidHom.mk'_apply]
+        change fwdAH (c • (k ⊗ₜ[R ⧸ J] p)) = c • fwdAH (k ⊗ₜ[R ⧸ J] p)
+        simp only [smul_tmul', fwdAH_tmul]
     | add x y hx hy => simp only [smul_add, map_add, hx, hy]
   rw [e2.finrank_eq]
   exact hrk K

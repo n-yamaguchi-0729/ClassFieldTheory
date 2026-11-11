@@ -23,8 +23,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
+module
+
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
 
 /-!
 # Horizontal composition of base-change comparisons
@@ -32,6 +34,8 @@ import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
 The module base-change comparison for a composite square agrees with the horizontal
 composition of the two comparisons, through the canonical pullback and pushforward maps.
 -/
+
+@[expose] public section
 
 section baseChangeHom_comp_horizontal
 

@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceAdicCompletionCongrEquiv
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertFiniteFactorNaturality
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceAdicCompletionCongrEquiv
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertFiniteFactorNaturality
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
+public import Mathlib.Algebra.FiniteSupport.Basic
 
 /-!
 # Hilbert-pairing families under equivalences of number fields
@@ -15,6 +18,8 @@ A number-field equivalence permutes finite places and identifies the
 corresponding adic completions. The local pairings and their finite factors
 can therefore be transported without changing their normalization.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -128,9 +133,10 @@ theorem globalHilbertPairingFamilyCongr_hasFiniteSupport
       (fun v : HeightOneSpectrum (𝓞 F) =>
         er (GlobalHilbertPairingFamily.finiteFactor F BF hmuF v
           (eu.symm a) (eu.symm b))) :=
-    (hBF (eu.symm a) (eu.symm b)).fun_comp (map_one er)
-  have hreindex := hsource.fun_comp_of_injective
-    (finitePlaceCongr e).symm.injective
+    Function.HasFiniteMulSupport.fun_comp
+      (hBF (eu.symm a) (eu.symm b)) (map_one er)
+  have hreindex := Function.HasFiniteMulSupport.fun_comp_of_injective
+    (finitePlaceCongr e).symm.injective hsource
   convert hreindex using 1
   funext W
   have hfactor := globalHilbertPairingFamilyCongr_finiteFactor

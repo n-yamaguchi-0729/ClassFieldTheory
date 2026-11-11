@@ -11,16 +11,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
-import Nyll.SchemeTheory.Modules.Sections.RankAtStalkSectionsEqOne
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.InvertibleModules
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
+public import Nyll.SchemeTheory.Modules.Sections.RankAtStalkSectionsEqOne
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.InvertibleModules
 
 /-!
 # Rank-one fibers of locally trivial module sections
 
 Shows that sections of a locally trivial module have rank-one fibers after field base change.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

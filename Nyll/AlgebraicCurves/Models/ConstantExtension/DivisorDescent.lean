@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.ModelExtension
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.UniquePullbackConstantsEq
-import Nyll.AlgebraicCurves.FunctionFields.LinearAlgebra.LinearIndependentAlgebraMap
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantFieldDegreeFormula
-import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusUnits
-import Mathlib.GroupTheory.GroupAction.FixedPoints
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.ModelExtension
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.UniquePullbackConstantsEq
+public import Nyll.AlgebraicCurves.FunctionFields.LinearAlgebra.LinearIndependentAlgebraMap
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantFieldDegreeFormula
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusUnits
+public import Mathlib.GroupTheory.GroupAction.FixedPoints
 
 /-!
 # Descent of actual Frobenius-fixed geometric divisors
@@ -18,6 +20,10 @@ The original-field embedding, generation, linear disjointness, and fixed
 constants are supplied from the actual curve models and finite-field Frobenius.
 Invariant geometric divisors descend uniquely, preserving their degrees.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -32,7 +38,7 @@ attribute [local instance]
   SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
   SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupDivisor
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]

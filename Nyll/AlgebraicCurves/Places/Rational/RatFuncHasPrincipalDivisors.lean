@@ -10,16 +10,20 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Mathlib.FieldTheory.RatFunc.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteSetOfOrdNeZero
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegreeEqZeroEqOrd
+module
+
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteSetOfOrdNeZero
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegreeEqZeroEqOrd
 
 /-!
 # RationalFunctionField hasPrincipalDivisors
 
 A rational function field has principal divisors with finite support and degree zero.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechKerBaseChangeTowerEquiv
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.LinearAlgebra.TensorProduct.Tower
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechKerBaseChangeTowerEquiv
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
 
 /-!
 The dimension of a Cech kernel after base change is unchanged by a field extension.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

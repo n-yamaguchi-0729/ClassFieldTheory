@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
 
 /-!
 # Determinant norm and scalar extension
@@ -15,6 +17,8 @@ base change, in the sense that the determinant norm of `1 ⊗ y` over a
 commutative `K`-algebra `A` is the image of its field norm over `K`.
 This applies to the whole tensor algebra, whether or not it is a field.
 -/
+
+@[expose] public section
 
 open scoped TensorProduct
 
@@ -40,8 +44,11 @@ theorem tensorNorm_includeRight
     Algebra.norm_eq_matrix_det b, (algebraMap K A).map_det]
   congr 1
   ext i j
-  simp [bA, b, Algebra.TensorProduct.includeRight,
-    Algebra.smul_def, Algebra.leftMulMatrix_eq_repr_mul,
-    Algebra.TensorProduct.tmul_mul_tmul]
+  simp only [Algebra.TensorProduct.includeRight, TensorProduct.AlgebraTensorModule.mk_apply,
+    ZeroHom.toFun_eq_coe, AddMonoidHom.toZeroHom_coe, LinearMap.toAddMonoidHom_coe,
+    LinearMap.coe_mk, AddHom.coe_mk, AlgHom.coe_mk, RingHom.coe_mk, MonoidHom.coe_mk, OneHom.coe_mk,
+    Algebra.leftMulMatrix_eq_repr_mul, Module.Basis.baseChange_apply,
+    Algebra.TensorProduct.tmul_mul_tmul, mul_one, Module.Basis.baseChange_repr_tmul,
+    Algebra.smul_def, RingHom.mapMatrix_apply, Matrix.map_apply, bA, b]
 
 end ClassFieldTheory

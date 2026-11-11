@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Mathlib.Algebra.Ring.Action.End
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Mathlib.Algebra.Ring.Action.End
+public import Mathlib.LinearAlgebra.Dimension.Finrank
 
 /-!
 # Algebra, divisors, and base change
@@ -20,6 +22,8 @@ import Mathlib.LinearAlgebra.Dimension.Finrank
 Semilinear automorphisms act compatibly on valuation rings, residue fields, and degree-zero
 divisor classes.
 -/
+
+@[expose] public section
 
 noncomputable section
 

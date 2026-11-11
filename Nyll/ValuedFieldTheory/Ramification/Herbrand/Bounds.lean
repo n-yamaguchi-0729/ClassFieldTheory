@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Ramification.Herbrand.Function
+module
+
+public import Nyll.ValuedFieldTheory.Ramification.Herbrand.Function
 
 /-!
 # Upper bounds for the Herbrand function
@@ -12,6 +14,8 @@ import Nyll.ValuedFieldTheory.Ramification.Herbrand.Function
 Every slope is at most one, since each lower group embeds into inertia.
 At integral levels this bounds the upper numbering by the lower numbering.
 -/
+
+@[expose] public section
 
 namespace RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration
 

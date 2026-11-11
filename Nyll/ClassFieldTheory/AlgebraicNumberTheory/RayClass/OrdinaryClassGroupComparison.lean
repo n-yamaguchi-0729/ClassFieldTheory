@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
-import Mathlib.RingTheory.ClassGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
+public import Mathlib.RingTheory.ClassGroup.Basic
 
 /-!
 # The ordinary ray class group and the ideal class group
@@ -17,6 +19,8 @@ the ordinary ideal class group.  The equivalence below also identifies their
 finite-prime classes.
 -/
 
+@[expose] public section
+
 open scoped NumberField
 open NumberField IsDedekindDomain
 
@@ -24,12 +28,15 @@ noncomputable section
 
 namespace ClassFieldTheory
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type*} [Field K] [NumberField K]
 
-private theorem ordinary_rayClassPrimeToIdeals_eq_top :
+/-- Every fractional ideal is prime to the ordinary ray modulus. -/
+theorem ordinary_rayClassPrimeToIdeals_eq_top :
     rayClassPrimeToIdeals (ordinaryRayClassModulus K) = ⊤ := by
   ext I
-  simp [rayClassPrimeToIdeals, ordinaryRayClassModulus]
+  simp only [rayClassPrimeToIdeals, ordinaryRayClassModulus, Finsupp.support_zero,
+    Finset.notMem_empty, IsEmpty.forall_iff, implies_true, Set.ofPred_true, Subgroup.mem_mk,
+    Submonoid.mem_mk, Subsemigroup.mem_mk, Set.mem_univ, Subgroup.mem_top]
 
 private theorem ordinary_rayPrincipalIdealSubgroup_eq_range :
     rayPrincipalIdealSubgroup (ordinaryRayClassModulus K) =
@@ -41,14 +48,17 @@ private theorem ordinary_rayPrincipalIdealSubgroup_eq_range :
             toPrincipalIdeal (𝓞 K) K x = I} =
         ((toPrincipalIdeal (𝓞 K) K).range : Set _) := by
     ext I
-    simp [IsRayCongruent, ordinaryRayClassModulus]
+    simp only [IsRayCongruent, ordinaryRayClassModulus, Finsupp.support_zero, Finset.notMem_empty,
+      Finsupp.coe_zero, Pi.zero_apply, IsEmpty.forall_iff, implies_true, and_self,
+      toPrincipalIdeal_eq_iff, true_and, Set.mem_ofPred_eq, MonoidHom.coe_range, Set.mem_range]
   calc
     rayPrincipalIdealSubgroup (ordinaryRayClassModulus K) =
         Subgroup.closure ((toPrincipalIdeal (𝓞 K) K).range : Set _) := by
       rw [rayPrincipalIdealSubgroup, hSet]
     _ = _ := Subgroup.closure_eq _
 
-private noncomputable def ordinaryRayIdealsEquiv :
+/-- The ordinary ray modulus imposes no restriction on fractional ideals. -/
+noncomputable def ordinaryRayIdealsEquiv :
     rayClassPrimeToIdeals (ordinaryRayClassModulus K) ≃*
       NumberFieldFractionalIdealGroup K :=
   (MulEquiv.subgroupCongr ordinary_rayClassPrimeToIdeals_eq_top).trans
@@ -58,7 +68,8 @@ private theorem ordinaryRayIdealsEquiv_apply
     (I : rayClassPrimeToIdeals (ordinaryRayClassModulus K)) :
     ordinaryRayIdealsEquiv I = I.1 := rfl
 
-private theorem ordinary_rayPrincipalIdealSubgroup_map :
+/-- The ordinary ray principal subgroup maps to the principal fractional ideals. -/
+theorem ordinary_rayPrincipalIdealSubgroup_map :
     (rayPrincipalIdealSubgroupInPrimeTo
       (ordinaryRayClassModulus K)).map
         (ordinaryRayIdealsEquiv (K := K) : _ →* _) =

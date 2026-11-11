@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
 
 /-!
 # Geometric pullback and reindexing of arithmetic constants
@@ -12,6 +14,8 @@ import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
 Changing the constant field inside the source function field does not change
 the actual pullback divisor or class in a common geometric field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

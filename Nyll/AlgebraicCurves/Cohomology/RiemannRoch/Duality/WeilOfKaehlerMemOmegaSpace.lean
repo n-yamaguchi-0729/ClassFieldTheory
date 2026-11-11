@@ -11,11 +11,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
 
 /-!
 # Weil Of Kaehler mem omega Space of residue Theorem
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

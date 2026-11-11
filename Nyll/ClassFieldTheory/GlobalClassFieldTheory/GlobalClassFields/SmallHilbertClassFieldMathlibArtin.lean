@@ -12,6 +12,10 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertCla
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
 
 /-!
 # Arithmetic Artin reciprocity for any small Hilbert class field
@@ -27,9 +31,11 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory.SmallHilbertClassFieldComparison
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 local instance smallHilbertArtinIdeleClassGroupIsMulCommutative :
     IsMulCommutative (IdeleClassGroup K) :=
@@ -145,12 +151,9 @@ theorem arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_prime
         (K := K) (L := E) v =
       GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom
         K E c := by
-    rw [GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin]
-    exact (DFunLike.congr_fun
-      (open _root_.GlobalClassFieldTheory.Reciprocity in
-        arithmeticGlobalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
-          (K := K) (L := E))
-      (IdeleGroup.finitePrimeIdele v)).symm
+    exact (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+      arithmeticFinitePlacePrimeArtin_eq_arithmeticGlobalNormResidue
+        (K := K) (L := E) v)
   rw [hArtin]
   rw [arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_globalNormResidue]
   rw [GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup_mk]

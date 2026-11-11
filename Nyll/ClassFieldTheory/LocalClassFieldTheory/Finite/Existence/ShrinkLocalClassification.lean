@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MathlibFieldClassification
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkChosenFiniteAbelianNorms
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkOpenSubgroups
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MathlibFieldClassification
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkChosenFiniteAbelianNorms
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkOpenSubgroups
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
 
 /-!
 # Finite abelian local classification in arbitrary universes
@@ -14,6 +18,8 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkOpenSu
 The concrete classification for a small local field transfers to an arbitrary
 nonarchimedean local field. The transfer respects the actual field-norm subgroup.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -50,7 +56,11 @@ theorem shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply
   let F := shrinkChosenFiniteAbelianField K E
   have hsmall := LocalClassFieldTheory.finiteAbelianFieldNormSubgroupOrderIso_apply
     (Shrink.{0} K) F
-  have hnorm := shrinkChosenFiniteAbelian_normSubgroup_map K E
+  have hnorm :
+      E.normSubgroup.map
+          (Units.mapEquiv (Shrink.ringEquiv K).symm.toMulEquiv).toMonoidHom =
+        F.normSubgroup :=
+    shrinkChosenFiniteAbelian_normSubgroup_map K E
   have heq :
       (Units.mapEquiv (Shrink.ringEquiv K).symm.toMulEquiv).toMonoidHom =
         (shrinkUnitsContinuousMulEquiv K).symm.toMulEquiv.toMonoidHom := by

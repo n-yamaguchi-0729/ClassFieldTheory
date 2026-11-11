@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardArtinComparison
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedLevelTower
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardArtinComparison
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedLevelTower
 
 /-!
 # Restriction kernels for transported upper ramification groups
@@ -16,7 +18,11 @@ level restriction, so the same kernel description holds for the
 transported target-field algebra.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u
 
 open scoped LaurentSeries ValuativeRel
 
@@ -32,7 +38,7 @@ open LocalFieldTheory.IsNonarchimedeanLocalField
 open LubinTate.EqualCharacteristic
 open RamificationTheory
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- For `1 ≤ k ≤ n + 1`, the `k`-th upper ramification group of the
@@ -45,14 +51,14 @@ theorem
     (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1) :
     let F := equalCharacteristicTargetLocalField K
     let B := F.residueField⸨X⸩
-    letI : CharP K F.residueCharacteristic :=
+    let : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let m := k - 1
     let E := equalCharacteristicLubinTateLevelField F m
     let L := equalCharacteristicLubinTateLevelField F n
-    letI : ValuativeRel B :=
+    let : ValuativeRel B :=
       equalCharacteristicLaurentValuativeRel F
-    letI : IsNonarchimedeanLocalField B :=
+    let : IsNonarchimedeanLocalField B :=
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
     letI : Algebra B E :=
       equalCharacteristicLubinTateLevelAlgebra F m
@@ -87,17 +93,7 @@ theorem
     localUpperRamificationGroup K L (k : ℝ) =
       (equalCharacteristicTransportedLubinTateRestrictNormalHom
         K p (hKp := hKp) ϖ hϖ (by omega : m ≤ n)).ker := by
-  let F := equalCharacteristicTargetLocalField K
-  let B := F.residueField⸨X⸩
-  let hKq : CharP K F.residueCharacteristic :=
-    equalCharacteristicTargetResidueCharacteristicCharP K p
-  let m := k - 1
-  let E := equalCharacteristicLubinTateLevelField F m
-  let L := equalCharacteristicLubinTateLevelField F n
-  let : ValuativeRel B :=
-    equalCharacteristicLaurentValuativeRel F
-  let : IsNonarchimedeanLocalField B :=
-    equalCharacteristicLaurentIsNonarchimedeanLocalField F
+  intro F B hKq m E L sharedOwner7 sharedOwner8
   let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let upperB := localUpperRamificationGroup B L

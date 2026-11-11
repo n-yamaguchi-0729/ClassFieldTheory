@@ -4,9 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Arithmetic prime Artin symbols on ray-class fixed fields
@@ -16,6 +21,10 @@ prime idèle, with the arithmetic global Artin symbol of that field.
 -/
 
 
+
+@[expose] public section
+
+universe u v w
 
 open scoped NumberField
 
@@ -27,7 +36,7 @@ namespace GlobalClassFields
 open NumberField IsDedekindDomain IdeleGroup Reciprocity
 
 private theorem arithmeticFinitePlacePrimeArtin_restrict_tower
-    (K L E : Type) [Field K] [Field L] [Field E]
+    (K : Type u) (L : Type v) (E : Type w) [Field K] [Field L] [Field E]
     [NumberField K] [NumberField L] [NumberField E]
     [Algebra K L] [Algebra K E] [Algebra E L] [IsScalarTower K E L]
     [IsAbelianGalois K L] [IsAbelianGalois K E]
@@ -45,7 +54,7 @@ private theorem arithmeticFinitePlacePrimeArtin_restrict_tower
         (IdeleGroup.finitePrimeIdele v))
 
 private theorem rayClassFieldGaloisEquivRayClassGroup_symm_mk
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     (m : RayClass.Modulus K) (c : IdeleClassGroup K) :
     (rayClassFieldGaloisEquivRayClassGroup (K := K) m).symm
         (QuotientGroup.mk' m.congruenceSubgroup c) =
@@ -55,7 +64,7 @@ private theorem rayClassFieldGaloisEquivRayClassGroup_symm_mk
     (K := K) m c).symm
 
 private theorem rayClassField_arithmeticFinitePlacePrimeArtin
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     (m : RayClass.Modulus K)
     (v : HeightOneSpectrum (𝓞 K)) :
     (rayClassFieldGaloisEquivRayClassGroup (K := K) m).symm
@@ -70,11 +79,11 @@ private theorem rayClassField_arithmeticFinitePlacePrimeArtin
   have hnormprime :
       Reciprocity.arithmeticGlobalNormResidueMonoidHom K (rayClassField K m) c =
         arithmeticFinitePlacePrimeArtin (K := K) (L := rayClassField K m) v := by
-    simpa only [c, arithmeticFinitePlacePrimeArtin, MonoidHom.comp_apply] using
-      DFunLike.congr_fun
-        (Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
-          (K := K) (L := rayClassField K m))
-        (IdeleGroup.finitePrimeIdele v)
+    rw [arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin]
+    exact DFunLike.congr_fun
+      (Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass
+        K (rayClassField K m) v)
+      (FiniteIdeleGroup.chosenLocalOrderSection v 1)
   change (rayClassFieldGaloisEquivRayClassGroup (K := K) m).symm
       ((QuotientGroup.mk' m.congruenceSubgroup c)⁻¹) = _
   rw [map_inv, hgeo]
@@ -82,7 +91,7 @@ private theorem rayClassField_arithmeticFinitePlacePrimeArtin
     K (rayClassField K m) c).symm.trans hnormprime
 
 private theorem rayClassSubgroup_restrict_transport
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     (m : RayClass.Modulus K)
     (H : Subgroup (RayClass.RayClassGroup m))
     (σ : rayClassField K m ≃ₐ[K] rayClassField K m) :
@@ -97,7 +106,7 @@ private theorem rayClassSubgroup_restrict_transport
       IsScalarTower.of_algebraMap_eq fun x => (f.commutes x).symm
     (AlgEquiv.autCongr α) (AlgEquiv.restrictNormalHom F σ) =
       AlgEquiv.restrictNormalHom E σ := by
-  let F := rayClassSubgroupFixedField (K := K) m H
+  intro F
   let L := rayClassField K m
   let E := rayClassSubgroupSubextension (K := K) m H
   let α : F ≃ₐ[K] E :=
@@ -126,7 +135,7 @@ private theorem rayClassSubgroup_restrict_transport
 /-- The fixed-field ray-class Artin map sends the ray class of an ordinary
 prime idèle to the arithmetic global Artin element of the fixed field. -/
 theorem rayClassSubgroupArtin_finitePrimeIdele
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     (m : RayClass.Modulus K)
     (H : Subgroup (RayClass.RayClassGroup m))
     (v : HeightOneSpectrum (𝓞 K)) :

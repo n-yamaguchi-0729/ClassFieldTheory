@@ -4,17 +4,25 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsKummerNorm
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.CanonicalKummerNorm
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairingNondegeneracy
-import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
-import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsKummerNorm
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClassGroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.CanonicalKummerNorm
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairingNondegeneracy
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbolLaws
+public import Nyll.GaloisCohomology.Kummer.Concrete.RootCharacters
+public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 
 /-!
 # Mathlib-facing local Hilbert pairing
@@ -25,11 +33,15 @@ power-class group and root-of-unity subgroup.
 
 
 
+@[expose] public section
+
 noncomputable section
+
+universe u
 
 namespace ClassFieldTheory
 
-variable (K : Type) [Field K]
+variable (K : Type u) [Field K]
 variable [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
@@ -324,7 +336,7 @@ namespace ClassFieldTheory
 it is the quotient of the Artin image of the chosen root by that root.
 The left pairing argument is the input to the canonical local Artin map. -/
 theorem localHilbertPairing_artin_rootQuotient
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
@@ -354,11 +366,11 @@ theorem localHilbertPairing_artin_rootQuotient
           K n hnK hmu a b) at h
   exact h
 
-/-- The public Type 0 Hilbert value agrees with the Artin root quotient for
+/-- The public Hilbert value agrees with the Artin root quotient for
 any root of `a` in the chosen simple Kummer extension, not only the root
 used to construct that extension. The pairing remains Artin-first. -/
 theorem localHilbertPairing_artin_rootQuotient_of_same_pow
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty)

@@ -10,23 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegPos
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.SeparableClosure
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegBifiber
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
-import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
-import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexComp
-import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegAlongComp
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Mathlib.FieldTheory.Separable
+module
+
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegPos
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.SeparableClosure
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegBifiber
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
+public import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexComp
+public import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegAlongComp
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Mathlib.FieldTheory.Separable
 
 /-!
 # Place sum ramification Index mul inertia Deg exchange
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

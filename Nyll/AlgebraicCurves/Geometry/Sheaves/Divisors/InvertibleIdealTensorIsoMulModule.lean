@@ -10,19 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.SchemeTheory.Modules.Sections.IhomSections
-import Nyll.SchemeTheory.Modules.Tensor.TensorSectionMaps
-import Nyll.SchemeTheory.Modules.Tensor.TensorSectionNaturality
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataRangeModuleIotaAppInjective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.SchemeTheory.Modules.Sections.IhomSections
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSectionMaps
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSectionNaturality
+public import Nyll.SchemeTheory.Sheaves.IdealSheafDataRangeModuleIotaAppInjective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # Tensor products and products of invertible ideals
@@ -31,6 +33,8 @@ Multiplication of ideal sections induces a tensor map into the structure sheaf. 
 factors through the module of the product ideal; for invertible ideals the resulting map is
 an isomorphism. The affine-local argument identifies its image with the product ideal.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

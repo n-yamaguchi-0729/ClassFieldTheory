@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+module
+
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 
 /-! # Compact products inside restricted products -/
+
+@[expose] public section
 
 open scoped RestrictedProduct
 

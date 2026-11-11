@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.Kernel
-import Mathlib.AlgebraicGeometry.Morphisms.FormallyUnramified
+module
+
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Kernel
+public import Mathlib.AlgebraicGeometry.Morphisms.FormallyUnramified
 
 /-!
 # Relative Group Law formally Unramified scheme Nsmul of forall sq Zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

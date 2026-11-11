@@ -10,31 +10,35 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroGroupCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
-import Nyll.AlgebraicCurves.Geometry.Picard.GroupLaw.RelativeGroupLaw
-import Nyll.AlgebraicCurves.Geometry.Picard.GroupLaw.RelativeGroupLawGrpObj
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.RelativePic0DesignationBaseChange
-import Nyll.AlgebraicCurves.Geometry.Picard.Poincare.PicardRepresentabilityPoincarePullbackMulIso
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicGroup
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicBaseChange
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroGroupCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Basic
+public import Nyll.AlgebraicCurves.Geometry.Picard.GroupLaw.RelativeGroupLawGrpObj
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.RelativePic0DesignationBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Picard.Poincare.PicardRepresentabilityPoincarePullbackMulIso
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicGroup
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicBaseChange
 
 /-!
 # Base change of Picard points and the Poincare bundle
 
 Compare points, multiplication, and the Poincare bundle after changing the base ring.
 -/
+@[expose] public section
+
 section ProofImplementation
 
 namespace JacobianVarieties.Picard.Proofs.BaseChange_points_mul_poincare_compat

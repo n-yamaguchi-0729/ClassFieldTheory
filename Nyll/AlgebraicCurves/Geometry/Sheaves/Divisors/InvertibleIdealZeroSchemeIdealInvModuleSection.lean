@@ -10,15 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.SchemeTheory.Modules.Sections.IhomSections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataRangeModuleIotaAppInjective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoEvAppIsoCurryBraidingEv
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.OfUnitSectionSectionDualApp
+module
+
+public import Nyll.SchemeTheory.Modules.Sections.BidualEvaluation
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.SchemeTheory.Modules.Sections.IhomSections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
+public import Nyll.SchemeTheory.Sheaves.IdealSheafDataRangeModuleIotaAppInjective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoEvAppIsoCurryBraidingEv
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.OfUnitSectionSectionDualApp
 
 /-!
 # The zero scheme of the inverse-ideal section
@@ -26,6 +29,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.OfUnitSectionSectionDualApp
 The canonical section of the inverse module of an invertible ideal sheaf has
 zero-scheme ideal equal to the original ideal sheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -68,22 +73,14 @@ open _root_.CategoryTheory.MonoidalClosed
 
 variable {C : Type u} [Category.{v} C] [MonoidalCategory C] [BraidedCategory C] [MonoidalClosed C]
 
-/-- The canonical map to the internal-Hom bidual, obtained by currying the braided evaluation
-    map. -/
-def toBidual (M : C) : M ⟶ (ihom ((ihom M).obj (𝟙_ C))).obj (𝟙_ C) :=
-  MonoidalClosed.curry ((β_ ((ihom M).obj (𝟙_ C)) M).hom ≫ (ihom.ev M).app (𝟙_ C))
-
 omit [BraidedCategory C] in
 theorem unitIsoSelf_inv (X : C) :
     (MonoidalClosed.unitIsoSelf X).inv = MonoidalClosed.curry (λ_ X).hom := by
-  have h := unit_conjugateEquiv (Adjunction.id (C := C)) (ihom.adjunction (𝟙_ C))
-    (leftUnitorNatIso C).hom X
-  dsimp at h
-  erw [Category.id_comp] at h
-  change (conjugateEquiv (Adjunction.id (C := C)) (ihom.adjunction (𝟙_ C))
-    (leftUnitorNatIso C).hom).app X = _
-  rw [h, MonoidalClosed.curry_eq]
-  try rfl
+  have h : 𝟙 X ≫ (MonoidalClosed.unitIsoSelf X).inv =
+      (ihom.coev (𝟙_ C)).app X ≫ (ihom (𝟙_ C)).map (λ_ X).hom :=
+    unit_conjugateEquiv (Adjunction.id (C := C)) (ihom.adjunction (𝟙_ C))
+      (leftUnitorNatIso C).hom X
+  simpa only [Category.id_comp, MonoidalClosed.curry_eq] using h
 
 theorem toBidual_comp_pre_app_comp_unitIsoSelf_hom {M : C} (ι : M ⟶ 𝟙_ C) :
     toBidual M ≫ (MonoidalClosed.pre (MonoidalClosed.curry' ι)).app (𝟙_ C) ≫

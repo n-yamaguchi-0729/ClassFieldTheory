@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
 
 /-!
 # Compatibility of rational finite-norm representatives
@@ -14,6 +16,8 @@ the shared fixed-field instance providers.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -108,6 +112,7 @@ theorem rationalFiniteNormTransferCanonicalBaseChangeCompatibility_proof
     rationalFiniteNormTransferCanonicalBaseChangeCompatibility
       K L hLK hnormal c := by
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K
+  let : NumberField F := RationalFiniteNormTransferInternal.fixedNumberField K
   obtain ⟨relativeClass, rfl⟩ :=
     (_root_.relativeIdeleClassBaseChangeMulEquiv
       (K := ℚ) (L := F)).surjective c

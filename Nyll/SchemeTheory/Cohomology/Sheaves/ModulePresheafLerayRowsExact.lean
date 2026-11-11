@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOfKerDSuccLeRangeD
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOfKerDZeroEqRangeAug
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOfAugInjective
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOfKerDSuccLeRangeD
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOfKerDZeroEqRangeAug
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOfAugInjective
 
 /-!
 Exactness of the Leray bicomplex rows for a quasicoherent module presheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

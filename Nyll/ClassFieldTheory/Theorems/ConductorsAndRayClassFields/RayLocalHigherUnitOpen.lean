@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 
 /-!
 # Openness of local higher-unit groups

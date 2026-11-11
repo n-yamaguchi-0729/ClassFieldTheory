@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Field.Subfield.Basic
-import Mathlib.Algebra.Ring.Action.End
+module
+
+public import Mathlib.Algebra.Field.Subfield.Basic
+public import Mathlib.Algebra.Ring.Action.End
 
 /-!
 # Restricting an automorphism to its periodic subfield
@@ -13,6 +15,8 @@ import Mathlib.Algebra.Ring.Action.End
 Elements fixed by the n-th power form an actual subfield. The original
 automorphism restricts to it, and its n-th power is the identity there.
 -/
+
+@[expose] public section
 
 namespace RingAut
 

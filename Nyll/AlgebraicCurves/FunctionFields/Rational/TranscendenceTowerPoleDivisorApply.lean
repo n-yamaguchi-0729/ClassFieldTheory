@@ -10,10 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Degree.PoleData
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Degree.PoleData
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
 
 /-! # Orders of the coordinate pole divisor -/
+
+@[expose] public section
 
 namespace AlgebraicCurve
 

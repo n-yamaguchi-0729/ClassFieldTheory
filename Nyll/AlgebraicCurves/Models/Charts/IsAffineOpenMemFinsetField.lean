@@ -11,15 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.FiniteHomProjProper
-import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.IsAffineOpenMemIsImmersionProj
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.FiniteHomProjProper
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.IsAffineOpenMemIsImmersionProj
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
 
 /-!
 # Exists is Affine Open forall mem of finset of field
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -11,12 +11,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+module
+
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
 
 /-!
 The empty relative divisor is universal.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -7,6 +7,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayPrincipalIdealMembership
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 
 /-!
 # Ray-principal ideals are prime to the modulus

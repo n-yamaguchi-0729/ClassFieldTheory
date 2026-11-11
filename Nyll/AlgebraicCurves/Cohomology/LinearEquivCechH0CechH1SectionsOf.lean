@@ -10,20 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDivisorRangeEqLSpaceOn
-import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1SectionsOfRangeEqLSpaceOn
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDivisorRangeEqLSpaceOn
+public import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1SectionsOfRangeEqLSpaceOn
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 Equivalences between module-sheaf Cech cohomology and divisor-section Cech cohomology.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -48,7 +53,7 @@ theorem _root_.AlgebraicCurve.nonempty_linearEquiv_cechH0_and_cechH1_sectionsOf
     [IsIntegral X] [IsSeparated x] [QuasiCompact x] [SmoothOfRelativeDimension 1 x]
     (h0 : Nonempty 𝒱.U0) (h1 : Nonempty 𝒱.U1)
     (M : X.Modules) (hM : Scheme.Modules.IsInvertible M) :
-    letI := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
     ∃ D : AlgebraicCurve.Divisor K X.functionField,
       Nonempty ((𝒱.sectionsOf x M).H0 ≃ₗ[K]
         ↥(AlgebraicCurve.cechH0 (AlgebraicCurve.placesOf x 𝒱.U0) (AlgebraicCurve.placesOf x 𝒱.U1)
@@ -56,7 +61,7 @@ theorem _root_.AlgebraicCurve.nonempty_linearEquiv_cechH0_and_cechH1_sectionsOf
       Nonempty ((𝒱.sectionsOf x M).H1 ≃ₗ[K]
         AlgebraicCurve.cechH1 (AlgebraicCurve.placesOf x 𝒱.U0) (AlgebraicCurve.placesOf x 𝒱.U1) D)
           := by
-  let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   obtain ⟨D, φ, hnat, hsmul, hinj, hrange, -⟩ :=
     Scheme.Modules.IsInvertible.exists_divisor_range_eq_lSpaceOn x M hM
   exact ⟨D, nonempty_linearEquiv_cechH0_and_cechH1_sectionsOf_of_range_eq_lSpaceOn 𝒱 x h0 h1 M D φ

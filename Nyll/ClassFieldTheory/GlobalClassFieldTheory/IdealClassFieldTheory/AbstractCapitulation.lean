@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainTransfer
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
-import Nyll.GaloisCohomology.GroupTheory.Transfer.Witt
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainTransfer
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
+public import Nyll.GaloisCohomology.GroupTheory.Transfer.Witt
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
 
 /-!
 # Transfer input for the principal ideal theorem
@@ -27,9 +29,11 @@ realization or norm-subgroup equality is assumed here.
 
 
 
+@[expose] public section
+
 noncomputable section
 
-universe u
+universe u uG uA
 
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
@@ -188,7 +192,7 @@ theorem commutatorIntermediateTransfer_eq_one
 
 section AbstractCapitulation
 
-variable {Γ : IntegralRepGroupType}
+variable {Γ : Type uG}
   [Group Γ] [TopologicalSpace Γ]
   [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ]
   [TotallyDisconnectedSpace Γ]
@@ -198,7 +202,7 @@ cut out by the commutator vanishes on the corresponding finite norm
 quotients.  This is the capitulation statement supplied by reciprocity and
 Witt transfer, before specializing the class formation to ideles. -/
 theorem intermediateNormQuotientInclusion_commutator_eq_zero
-    (D : DegreeData Γ) (A : Rep ℤ Γ)
+    (D : DegreeData Γ) (A : Rep.{uA} ℤ Γ)
     (v : ValuationData D A)
     (hcf : SatisfiesClassFieldAxiom A)
     (K : FiniteAbstractField Γ)

@@ -10,18 +10,28 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.UniversalData
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.UniversalData
 
 /-!
-# Relative effective divisors and base change
+# Finite flat relative closed subschemes and base change
 
-Describes relative effective divisors with finite, flat, locally finitely presented projections.
+`RelEffCartierDiv` retains its historical name for a carrier of closed subschemes with finite,
+flat, locally finitely presented projection of constant rank. For a general ambient morphism,
+this carrier alone does not assert that its ideal is invertible. On separated smooth relative
+curves, `RelEffCartierDiv.isInvertible_I` in `LineBundles/InvertibleI.lean` proves the Cartier
+condition from these data.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits
 
@@ -29,8 +39,9 @@ universe u
 
 namespace AlgebraicGeometry
 
-/-- A relative effective divisor of constant degree, with finite, flat, and locally finitely
-presented projection. -/
+/-- A relative closed subscheme of constant rank, with finite, flat, locally finitely presented
+projection. The historical name is used for the divisor construction on smooth relative curves;
+Cartier invertibility is proved separately there by `RelEffCartierDiv.isInvertible_I`. -/
 structure RelEffCartierDiv {𝒞 S : Scheme.{u}} (f : 𝒞 ⟶ S) (r : ℕ)
     {T : Scheme.{u}} (g : T ⟶ S) where
   /-- The ideal sheaf defining the divisor in the base changed curve. -/
@@ -48,6 +59,22 @@ structure RelEffCartierDiv {𝒞 S : Scheme.{u}} (f : 𝒞 ⟶ S) (r : ℕ)
     {T : Scheme.{u}} {g : T ⟶ S} {D₁ D₂ : RelEffCartierDiv f r g}
     (h : D₁.I = D₂.I) : D₁ = D₂ := by
   cases D₁; cases D₂; cases h; rfl
+
+/-- A finite flat relative closed subscheme of rank zero has the unit ideal. -/
+theorem RelEffCartierDiv.I_eq_top_of_degree_zero
+    {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} {T : Scheme.{u}} {g : T ⟶ S}
+    (D : RelEffCartierDiv f 0 g) : D.I = ⊤ := by
+  have := D.isFinite
+  have := D.flat
+  have hempty : IsEmpty ↥D.I.subscheme := by
+    by_contra h
+    rw [not_isEmpty_iff] at h
+    obtain ⟨x⟩ := h
+    have h1 := Scheme.Hom.one_le_finrank_map (D.I.subschemeι ≫ pullback.snd f g) x
+    rw [D.finrank_eq] at h1
+    exact Nat.not_succ_le_zero 0 h1
+  rw [← D.I.ker_subschemeι]
+  exact Scheme.ker_eq_top_of_isEmpty _
 
 /-- The map between base changed curves induced by a morphism over the original base. -/
 noncomputable def mapOnProdOver {𝒞 S : Scheme.{u}} (f : 𝒞 ⟶ S)

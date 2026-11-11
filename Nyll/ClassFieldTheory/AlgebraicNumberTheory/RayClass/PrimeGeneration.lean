@@ -4,7 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.Algebra.Group.Subgroup.Finite
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
 
 /-!
 # Prime generation of ray ideal classes
@@ -15,6 +21,8 @@ Frobenius-normalized ray reciprocity maps.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -31,7 +39,7 @@ agree if they agree on each prime ideal away from the modulus. -/
 theorem primeToModulusIdeals_hom_ext
     {K : Type u} [Field K] [NumberField K]
     (m : RayClass.Modulus K)
-    {G : Type v} [CommGroup G]
+    {G : Type v} [Monoid G]
     (f g : RayClass.primeToModulusIdeals m →* G)
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (hv : v ∉ m.finitePart.support),
@@ -79,12 +87,9 @@ theorem primeToModulusIdeals_hom_ext
     change FractionalIdealGroup.prime v ^ c v =
       (p v : FractionalIdealGroup K) ^ c v
     simp only [p, dite_eq_left hv', RayClass.primeToModulusIdeal_coe]
+  change I ∈ f.eqLocus g
   rw [hI]
-  change f (c.support.prod (fun v => p v ^ c v)) =
-    g (c.support.prod (fun v => p v ^ c v))
-  rw [map_prod, map_prod]
-  apply Finset.prod_congr rfl
-  intro v _
-  rw [map_zpow, map_zpow, hp]
+  change c.support.prod (fun v => p v ^ c v) ∈ f.eqLocus g
+  exact (f.eqLocus g).prod_mem fun v _ => (f.eqLocus g).zpow_mem (hp v) (c v)
 
 end RayClass

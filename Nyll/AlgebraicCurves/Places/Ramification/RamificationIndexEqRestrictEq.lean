@@ -11,15 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
-import Mathlib.FieldTheory.Galois.Basic
-import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
-import Nyll.AlgebraicCurves.Divisors.Semilinear.RamificationIndexSmul
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+public import Mathlib.FieldTheory.Galois.Basic
+public import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
+public import Nyll.AlgebraicCurves.Divisors.Semilinear.RamificationIndexSmul
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
 
 /-!
 # Place ramification Index eq of restrict eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

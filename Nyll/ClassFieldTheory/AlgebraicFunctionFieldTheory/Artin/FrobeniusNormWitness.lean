@@ -4,18 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityDefinition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.DegreeOneNormWitness
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.ReciprocityDefinition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.DegreeOneNormWitness
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Common degree-one norms for the actual Frobenius auxiliary fields
@@ -25,14 +28,19 @@ Transport of a degree-one idele class along this constructed field equivalence
 gives degree-one classes whose real norms to the fixed base coincide.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-private theorem relativeFixedField_constantTower
-    (k K Ω : Type) [Field k] [Field K] [Field Ω]
+/-- The constant-field action is compatible with the relative fixed-field tower. -/
+theorem relativeFixedField_constantTower
+    (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Field K] [Field Ω]
     [Algebra k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     (H S : ClosedSubgroup Gal(Ω/K)) (hSH : S.toSubgroup ≤ H.toSubgroup) :
     have _ : IsScalarTower k (abstractFixedField K Ω H) Ω :=
@@ -43,8 +51,9 @@ private theorem relativeFixedField_constantTower
     (R := k) (S := abstractFixedField K Ω H) (A := abstractRelativeFixedField K Ω hSH)
     (fun _ => Subtype.ext rfl)
 
-private theorem frobeniusFixedField_finiteDimensional
-    (F Ω : Type) [Field F] [Field Ω] [Algebra F Ω] [IsGalois F Ω]
+/-- The Frobenius fixed field is finite-dimensional over the original base field. -/
+theorem frobeniusFixedField_finiteDimensional
+    (F : Type v) (Ω : Type w) [Field F] [Field Ω] [Algebra F Ω] [IsGalois F Ω]
     (D : DegreeData Gal(Ω/F)) (H : FiniteAbstractField Gal(Ω/F))
     (T : FiniteGaloisSubextension H.field)
     (σ : D.FrobeniusElements (H.toFiniteResidueAbstractField D) T.field T.below) :
@@ -61,7 +70,7 @@ private theorem frobeniusFixedField_finiteDimensional
     (D.frobeniusFixedField (H.toFiniteResidueAbstractField D) T.field T.below σ)
     (D.frobeniusFixedField_absoluteFinite H T.field T.below σ)
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra k (SeparableClosure K)]
     [Algebra (RatFunc k) (SeparableClosure K)]

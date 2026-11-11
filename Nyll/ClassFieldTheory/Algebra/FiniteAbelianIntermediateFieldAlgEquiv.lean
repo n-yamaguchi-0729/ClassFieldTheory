@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.IntermediateFieldAlgEquivOrderIso
-import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
+module
+
+public import Nyll.ClassFieldTheory.Algebra.IntermediateFieldAlgEquivOrderIso
+public import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
 
 /-!
 # Finite abelian intermediate fields under an ambient algebra equivalence
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
 An algebra equivalence of ambient fields transports finite-dimensionality and
 the abelian Galois property of every intermediate field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

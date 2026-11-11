@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.RingTheory.Dimension.AlgebraFinrankQuotientSpanSubEq
-import Nyll.AlgebraicCurves.Geometry.Curves.IsDomainTensorSections
-import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveInjectiveAevalTensor
-import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveNontrivialTensorSections
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.RingTheory.Dimension.AlgebraFinrankQuotientSpanSubEq
+public import Nyll.AlgebraicCurves.Geometry.Curves.IsDomainTensorSections
+public import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveInjectiveAevalTensor
+public import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveNontrivialTensorSections
 
 /-!
 # Smooth Proper Curve finrank level Set field of two Chart Pole Datum
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -98,13 +102,12 @@ variable (L : Type u) [CommRing L] [Algebra R L]
 
 theorem isLocalization_away_baseChange {U W : C.Opens} (hU : IsAffineOpen U) (f : Γ(C, U))
     (hW : W ≤ U) (h : W = C.basicOpen f) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c W
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c W
     letI := (Algebra.TensorProduct.map (AlgHom.id L L)
       (Scheme.TwoAffineOpenCover.restrictAlgHom c hW)).toRingHom.toAlgebra
     IsLocalization.Away ((1 : L) ⊗ₜ[R] f) (L ⊗[R] Γ(C, W)) := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c W
+  intro sharedOwner1 sharedOwner2
   let algUW : Algebra Γ(C, U) Γ(C, W) := (C.presheaf.map (homOfLE hW).op).hom.toAlgebra
   have : IsScalarTower R Γ(C, U) Γ(C, W) := IsScalarTower.of_algebraMap_eq fun r =>
     ((Scheme.TwoAffineOpenCover.restrictAlgHom c hW).commutes r).symm

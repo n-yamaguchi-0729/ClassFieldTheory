@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.SubsetBasicOpenOrDisjoint
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleIsFrameOnApp
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
+module
+
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.SubsetBasicOpenOrDisjoint
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleIsFrameOnApp
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
 
 /-!
 # Scheme Modules Proj Presentation subset support zero Scheme Ideal or disjoint
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

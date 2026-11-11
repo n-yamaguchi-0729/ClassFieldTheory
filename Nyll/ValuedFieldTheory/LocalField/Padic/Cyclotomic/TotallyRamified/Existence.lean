@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.RamificationIndex
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.RamificationIndex
 
 /-!
 # The totally ramified cyclotomic endpoint
 
 This file packages the actual integral-closure complete-DVF model as a totally ramified extension.
 -/
+
+@[expose] public section
 
 noncomputable section
 

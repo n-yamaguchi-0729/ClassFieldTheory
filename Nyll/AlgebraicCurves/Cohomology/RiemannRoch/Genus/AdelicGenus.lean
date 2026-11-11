@@ -18,19 +18,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
-import Mathlib.Data.Int.LeastGreatest
-import Mathlib.Tactic.Linarith.Frontend
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
+public import Mathlib.Order.Int.LeastGreatest
+public import Mathlib.Tactic.Linarith.Frontend
+public import Mathlib.Tactic.Ring.RingNF
 
 /-! Bounded adelic quotients, attained genus, and their section and differential dimensions. -/
+
+@[expose] public section
 
 section
 

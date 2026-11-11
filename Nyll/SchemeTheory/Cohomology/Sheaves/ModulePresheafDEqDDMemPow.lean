@@ -10,10 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteProper
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteProper
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
+public import Nyll.SchemeTheory.Morphisms.AppLECongr
 
 /-!
 # Ideal-power control of proper Čech coboundaries
@@ -21,6 +24,8 @@ import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
 The Rees algebra and proper Čech finiteness give a uniform loss of ideal power when
 replacing a zero-cochain by one with the same coboundary.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -115,7 +120,8 @@ noncomputable section
 
 namespace SolKS
 
-private lemma le_preimage_top {Y Z : Scheme.{u}} (f : Y ⟶ Z) (W : Y.Opens) :
+/-- Every source open lies in the inverse image of the whole target. -/
+lemma le_preimage_top {Y Z : Scheme.{u}} (f : Y ⟶ Z) (W : Y.Opens) :
     W ≤ f ⁻¹ᵁ ⊤ := by
   rw [Scheme.Hom.preimage_top]
   exact le_top
@@ -130,8 +136,8 @@ lemma preimage_iInf {X Y : Scheme.{u}} (f : X ⟶ Y) {ι : Type*} [Finite ι] (U
   | insert a s ha ih => rw [Finset.inf_insert, Finset.inf_insert, Scheme.Hom.preimage_inf, ih]
 
 lemma appLE_congr_hom {Y Z : Scheme.{u}} {f g : Y ⟶ Z} (h : f = g) (U : Z.Opens) (V : Y.Opens)
-    (e : V ≤ f ⁻¹ᵁ U) (e' : V ≤ g ⁻¹ᵁ U) : f.appLE U V e = g.appLE U V e' := by
-  subst h; rfl
+    (e : V ≤ f ⁻¹ᵁ U) (e' : V ≤ g ⁻¹ᵁ U) : f.appLE U V e = g.appLE U V e' :=
+  _root_.AlgebraicGeometry.Scheme.Hom.appLE_congr_hom h U V e e'
 
 section Setup
 

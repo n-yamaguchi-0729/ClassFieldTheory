@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.GaloisNormLimitation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormAlgEquiv
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.GaloisNormLimitation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormAlgEquiv
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
 
 /-!
 # Actual abelian norm refinement down a tower
@@ -18,12 +20,16 @@ abelian refinement. The two norm groups are identified by an explicit
 algebra equivalence before the refinement.
 -/
 
+@[expose] public section
+
+universe u v w x y
+
 noncomputable section
 open AlgebraicCurve
 
 namespace FunctionField
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K] [IsSepClosure K Ω]
@@ -31,7 +37,7 @@ variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
 omit [Finite k] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
   [FunctionField k K] in
 private theorem norm_range_le_of_tower
-    {L M : Type} [Field L] [Field M]
+    {L : Type x} {M : Type y} [Field L] [Field M]
     [Algebra k L] [Algebra k M] [Algebra K L] [Algebra L M] [Algebra K M]
     [IsScalarTower k K L] [IsScalarTower k L M] [IsScalarTower k K M]
     [IsScalarTower K L M] [FiniteDimensional K L] [FiniteDimensional L M]

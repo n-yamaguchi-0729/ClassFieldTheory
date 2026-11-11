@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.Core
-import Nyll.ValuedFieldTheory.Valuation.Completion.DegreeNormTrace
-import Nyll.ValuedFieldTheory.Valuation.Completion.Padic
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionFieldLocalization
-import Mathlib.FieldTheory.Galois.Abelian
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.Core
+public import Nyll.ValuedFieldTheory.Valuation.Completion.DegreeNormTrace
+public import Nyll.ValuedFieldTheory.Valuation.Completion.Padic
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionFieldLocalization
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.AbsoluteValues
 
 /-!
 # Localizations at rational p-adic absolute values
@@ -20,7 +24,11 @@ nonarchimedean facts needed to compare a global algebraic localization with
 an extension of `ℚ_[p]`.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u
 
 namespace HilbertRamification
 
@@ -43,7 +51,7 @@ theorem transportedAlgebraAlongRingEquiv_algebraMap
   rfl
 
 variable (p : ℕ) [Fact p.Prime]
-variable (L : Type) [Field L] [Algebra ℚ L]
+variable (L : Type u) [Field L] [Algebra ℚ L]
   [FiniteDimensional ℚ L] [IsAbelianGalois ℚ L]
 
 /-- The localization of a finite global extension is finite over the
@@ -56,7 +64,7 @@ theorem globalPadicLocalizationModuleFinite
     letI := AbsoluteValue.completionAlgebra vK w.1 w.2
     Module.Finite vK.Completion
       (AbsoluteValue.algebraicLocalization vK w.1 w.2) := by
-  let vK := Rat.AbsoluteValue.padic p
+  intro vK
   let hvK := padicAbsoluteValue_isNontrivial p
   let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
   let : SMul ℚ w.1.Completion := hK.toSMul
@@ -77,7 +85,7 @@ theorem globalPadicLocalization_isAbelianGalois
     letI := AbsoluteValue.completionAlgebra vK w.1 w.2
     IsAbelianGalois vK.Completion
       (AbsoluteValue.algebraicLocalization vK w.1 w.2) := by
-  let vK := Rat.AbsoluteValue.padic p
+  intro vK
   let hvK := padicAbsoluteValue_isNontrivial p
   let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
   let : SMul ℚ w.1.Completion := hK.toSMul

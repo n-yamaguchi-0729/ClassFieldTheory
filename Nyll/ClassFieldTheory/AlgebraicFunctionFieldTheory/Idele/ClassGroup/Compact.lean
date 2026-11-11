@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.Topology.Compactness.Compact
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.IntegralUnits
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Topology
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.Topology.Compactness.Compact
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.IntegralUnits
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Topology
 
 /-!
 # Compactness of the degree-zero idele class group
@@ -20,6 +22,8 @@ kernel. The finite degree-zero Picard group supplies finitely many such fibres
 covering the degree-zero idele classes. Since degree zero is a closed condition,
 these classes form a compact subgroup.
 -/
+
+@[expose] public section
 
 noncomputable section
 

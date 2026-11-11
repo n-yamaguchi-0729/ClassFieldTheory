@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PrimePowerDescent
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitLocalPowerIndex
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitPowerIndex
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PrimePowerDescent
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitLocalPowerIndex
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitPowerIndex
 
 /-!
 # Localization of S-unit p-power classes
@@ -17,12 +19,16 @@ p-power quotient. The cardinality is supplied by the shared Herbrand
 calculation.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 open AlgebraicCurve
 
 namespace FunctionField.SUnits
 
-variable {k K : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     (p : ℕ) [Fact p.Prime] [CharP K p]
 

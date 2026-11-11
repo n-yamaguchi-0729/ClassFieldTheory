@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
-import Mathlib.Algebra.Order.Archimedean.Real.Basic
-import Mathlib.Algebra.Order.Floor.Ring
-import Mathlib.Basic.Real.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
+public import Mathlib.Algebra.Order.Archimedean.Real.Basic
+public import Mathlib.Algebra.Order.Floor.Ring
+public import Mathlib.Basic.Real.Basic
 
 /-!
 # Real-index lower ramification groups
@@ -16,6 +18,8 @@ The ideal exponent at a real index `s` is `max(0, ceil(s + 1))`.
 Consequently, indices at or below `-1` give the whole decomposition group,
 and natural indices recover the usual `m^(n+1)` displacement condition.
 -/
+
+@[expose] public section
 
 noncomputable section
 

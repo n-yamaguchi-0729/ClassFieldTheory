@@ -11,9 +11,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SubPicCondition
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SubPicCondition
 
 /-!
 # Universal families for relative sub-Picard conditions
@@ -23,6 +25,8 @@ sub-Picard condition through unique maps over the base. Its restriction to the c
 zero section is trivial. The chosen classifying map is characterized by this universal
 property.
 -/
+
+@[expose] public section
 
 namespace AlgebraicGeometry.RelPicard
 

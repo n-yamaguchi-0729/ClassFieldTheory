@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRamification
-import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.LevelAlgebra
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRamification
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.LevelAlgebra
 
 /-!
 # Towers of transported equal-characteristic Lubin--Tate levels
@@ -24,7 +26,11 @@ underlying Galois automorphisms.
 
 
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped LaurentSeries ValuativeRel
 
@@ -36,7 +42,7 @@ open LocalFieldTheory.IsNonarchimedeanLocalField
 open LubinTate.EqualCharacteristic
 open RamificationTheory
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- Restriction between two transported Lubin--Tate levels, viewed as
@@ -48,7 +54,7 @@ noncomputable def
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
     {m n : ℕ} (hmn : m ≤ n) :
     let F : LocalField K := equalCharacteristicTargetLocalField K
-    let B : Type := F.residueField⸨X⸩
+    let B : Type u := F.residueField⸨X⸩
     let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E : IntermediateField B (SeparableClosure B) :=
@@ -83,7 +89,7 @@ theorem
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
     {m n : ℕ} (hmn : m ≤ n) :
     let F : LocalField K := equalCharacteristicTargetLocalField K
-    let B : Type := F.residueField⸨X⸩
+    let B : Type u := F.residueField⸨X⸩
     let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E : IntermediateField B (SeparableClosure B) :=
@@ -144,7 +150,7 @@ theorem
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
     {m n : ℕ} (hmn : m ≤ n) :
     let F : LocalField K := equalCharacteristicTargetLocalField K
-    let B : Type := F.residueField⸨X⸩
+    let B : Type u := F.residueField⸨X⸩
     let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E : IntermediateField B (SeparableClosure B) :=

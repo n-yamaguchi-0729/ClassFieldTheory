@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-!
 # Presentations by twists on projective space
@@ -19,6 +21,8 @@ import Mathlib.AlgebraicGeometry.Modules.Sheaf
 A projective presentation describes a module as a quotient of a finite sum of twists
 of the structure sheaf. Pullbacks and tensor powers of twists retain these presentations.
 -/
+
+@[expose] public section
 
 noncomputable section
 

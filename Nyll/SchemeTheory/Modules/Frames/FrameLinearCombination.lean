@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Geometry.RingedSpace.Basic
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.Ideal.BigOperators
-import Mathlib.Algebra.Group.Units.Equiv
-import Mathlib.Tactic.Push
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Geometry.RingedSpace.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.Ideal.BigOperators
+public import Mathlib.Algebra.Group.Units.Equiv
+public import Mathlib.Tactic.Push
 
 /-!
 # Scheme Modules exists frame of frame sum smul
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

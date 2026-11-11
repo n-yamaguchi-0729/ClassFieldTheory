@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.FieldTheory.RatFunc.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegreeEqZeroEqOrdAlgebraMap
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteSetOfOrdNeZero
+module
+
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegreeEqZeroEqOrdAlgebraMap
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteSetOfOrdNeZero
 
 /-!
 # RationalFunctionField degree eq zero of forall eq ord
 
 The orders of a nonzero rational function form a divisor of degree zero.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

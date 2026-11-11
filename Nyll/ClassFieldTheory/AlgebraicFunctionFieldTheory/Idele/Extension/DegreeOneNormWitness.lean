@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegreeSurjective
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormalizedDegreeOne
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+module
+
+public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegreeSurjective
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormalizedDegreeOne
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Degree-one norm witnesses transported by actual field isomorphisms
@@ -20,11 +23,16 @@ normalized degree. Norm transitivity and the degree-one norm formula give
 degree-one classes in both fields with the same norm to the common base.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField.IdeleClassGroup
 
-variable (k F L M : Type) [Field k] [Finite k] [Field F] [Field L] [Field M]
+variable (k : Type u) (F : Type v) (L : Type w) (M : Type x)
+    [Field k] [Finite k] [Field F] [Field L] [Field M]
     [Algebra k F] [Algebra k L] [Algebra k M]
     [Algebra F L] [Algebra F M] [IsScalarTower k F L] [IsScalarTower k F M]
     [Algebra (RatFunc k) F] [IsScalarTower k (RatFunc k) F] [FunctionField k F]

@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.RingTheory.Flat.Product
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.LocallyConstantFibreEulerChar
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteModules
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.LocallyConstantFibreEulerChar
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteModules
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Local constancy of the fibre Euler characteristic of two-chart sections of an invertible sheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

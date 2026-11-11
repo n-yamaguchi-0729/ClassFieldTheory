@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Finite
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionGroup
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Finite
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionGroup
 
 /-!
 # Cardinality under inertia scalar restriction
@@ -13,6 +15,8 @@ import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionGrou
 This is the finite-cardinality consequence of the inertia-subgroup cardinality formula used when
 the base completion is identified with a concrete local field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

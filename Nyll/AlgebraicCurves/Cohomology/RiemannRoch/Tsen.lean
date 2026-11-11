@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.SchemeTheory.RingTheory.Polynomial.CommonZeros
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.EllMulLtMulEllDegreePos
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.CoefficientsAevalMemLSpace
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Places.Orders.BasicTranscendental
-import Mathlib.Logic.Equiv.Fin.Basic
+module
+
+public import Nyll.SchemeTheory.RingTheory.Polynomial.CommonZeros
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.EllMulLtMulEllDegreePos
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.CoefficientsAevalMemLSpace
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Places.Orders.BasicTranscendental
+public import Mathlib.Logic.Equiv.Fin.Basic
 
 /-!
 # Tsen's theorem for separable one-variable function fields
@@ -22,6 +24,8 @@ functions as unknowns, bounds the resulting coefficients, and solves the coordin
 over K by the Nullstellensatz dimension argument.
 Reference: Stacks Project, Theorem 59.67.10, Tag 03RD.
 -/
+
+@[expose] public section
 
 noncomputable section
 

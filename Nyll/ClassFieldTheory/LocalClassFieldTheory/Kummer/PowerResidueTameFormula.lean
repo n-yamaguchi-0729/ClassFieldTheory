@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
-import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
-import Nyll.GaloisCohomology.Kummer.Concrete.LocalUnitKummerUnramified
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueUnits
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionTopology
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
+public import Nyll.GaloisCohomology.Kummer.Concrete.LocalUnitKummerUnramified
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueUnits
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionTopology
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
 /-!
 # Tame local power-residue formula
@@ -21,6 +23,8 @@ This file constructs reduction of local roots of unity, proves its injectivity,
 identifies the arithmetic-Frobenius root quotient with the finite-field power
 residue symbol, and derives the tame formula for the local Hilbert symbol.
 -/
+
+@[expose] public section
 
 open scoped ValuativeRel
 
@@ -33,7 +37,9 @@ open KummerTheory
 open LocalFieldTheory
 open LocalFieldTheory.IsNonarchimedeanLocalField
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+universe u v
+
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- Every field-valued `n`-th root of unity has normalized valuation zero. -/
@@ -97,7 +103,7 @@ theorem localNthRootsReduction_apply
 
 /-- Reduction of roots of unity commutes with extension of valued fields. -/
 theorem localNthRootsReduction_nthRootsSubgroupMap
-    (L : Type) [Field L] [ValuativeRel L] [TopologicalSpace L]
+    (L : Type v) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Algebra K L]
     [Valuation.HasExtension
       (ValuativeRel.valuation K) (ValuativeRel.valuation L)]
@@ -128,7 +134,7 @@ omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 /-- An `n`-th root of the image of a valuation-ring unit again has normalized
 valuation zero. -/
 theorem valuationMap_eq_zero_of_pow_eq_map_integerUnit
-    (L : Type) [Field L] [ValuativeRel L] [TopologicalSpace L]
+    (L : Type v) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Algebra K L]
     [Valuation.HasExtension
       (ValuativeRel.valuation K) (ValuativeRel.valuation L)]
@@ -160,7 +166,7 @@ omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] in
 /-- The canonical valuation-ring lift of such a root has the prescribed
 `n`-th power. -/
 theorem integerUnitOfValuationMapZero_pow_eq_integerUnitsMap
-    (L : Type) [Field L] [ValuativeRel L] [TopologicalSpace L]
+    (L : Type v) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Algebra K L]
     [Valuation.HasExtension
       (ValuativeRel.valuation K) (ValuativeRel.valuation L)]
@@ -191,7 +197,7 @@ theorem integerUnitOfValuationMapZero_pow_eq_integerUnitsMap
 /-- Arithmetic Frobenius divided by the original integer unit reduces to its
 `q - 1` power, where `q` is the base residue-field cardinality. -/
 theorem residue_arithmeticFrobenius_integerUnitQuotient
-    (L : Type) [Field L] [ValuativeRel L] [TopologicalSpace L]
+    (L : Type v) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Valuation.HasExtension
@@ -411,7 +417,7 @@ theorem dvd_residueCard_sub_one_of_primitiveRoots
 /-- For an `n`-th root of a base integer unit, the residue of its arithmetic
 Frobenius quotient is the base residue unit raised to `(q - 1) / n`. -/
 theorem residue_arithmeticFrobenius_kummerRootQuotient
-    (L : Type) [Field L] [ValuativeRel L] [TopologicalSpace L]
+    (L : Type v) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Valuation.HasExtension
@@ -519,7 +525,7 @@ theorem localNthRootsReductionEquiv_localTamePowerResidueSymbol
     (hn : ValuativeRel.valuation K ((n : ℕ) : K) = 1)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
     (u : 𝒪[K]ˣ) :
-    letI : Fintype 𝓀[K] := Fintype.ofFinite _
+    let : Fintype 𝓀[K] := Fintype.ofFinite _
     localNthRootsReductionEquiv K n hn hmu
         (localTamePowerResidueSymbol K n hn hmu u) =
       AlgebraicNumberTheory.PowerResidueSymbols.finiteFieldPowerResidueSymbol
@@ -528,13 +534,13 @@ theorem localNthRootsReductionEquiv_localTamePowerResidueSymbol
           rw [← Nat.card_eq_fintype_card]
           exact dvd_residueCard_sub_one_of_primitiveRoots K n hn hmu)
         (integerUnitsToResidueUnits K u) := by
-  let : Fintype 𝓀[K] := Fintype.ofFinite _
+  intro sharedOwner1
   exact (localNthRootsReductionEquiv K n hn hmu).apply_symm_apply _
 
 /-- The tame power-residue symbol embedded in an unramified extension is the
 root quotient of an `n`-th root by arithmetic Frobenius. -/
 theorem nthRootsSubgroupMap_localTamePowerResidueSymbol_eq_arithmeticFrobenius_rootQuotient
-    (L : Type) [Field L] [ValuativeRel L] [TopologicalSpace L]
+    (L : Type v) [Field L] [ValuativeRel L] [TopologicalSpace L]
     [IsNonarchimedeanLocalField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [Valuation.HasExtension
@@ -776,8 +782,8 @@ theorem
   have hArtin :
       chosenSimpleKummerNormResidueAutomorphism K n hnK hmu b piInv =
         arithmeticFrobeniusOfUnramifiedValuation K E := by
-    change abelianLocalArtinMonoidHom K E piInv = _
-    rw [abelianLocalArtinMonoidHom_eq_frobenius_zpow,
+    change Universe.abelianLocalArtinMonoidHom K E piInv = _
+    rw [Universe.abelianLocalArtinMonoidHom_eq_frobenius_zpow,
       valuationMap_apply, v_inverseIntegerRingUniformizerFieldUnit, zpow_one]
   have hHilbertVal := congrArg Subtype.val
     (localHilbertSymbol_map_eq_rootQuotient K n hnK hmu piInv b)
@@ -921,8 +927,8 @@ theorem localHilbertSymbol_integerUnit_integerUnit_eq_one
     simpa only [a] using v_integerUnitsToFieldUnits K u
   have hArtin :
       chosenSimpleKummerNormResidueAutomorphism K n hnK hmu b a = 1 := by
-    change abelianLocalArtinMonoidHom K E a = 1
-    rw [abelianLocalArtinMonoidHom_eq_frobenius_zpow, haVal, zpow_zero]
+    change Universe.abelianLocalArtinMonoidHom K E a = 1
+    rw [Universe.abelianLocalArtinMonoidHom_eq_frobenius_zpow, haVal, zpow_zero]
   have hHilbertVal := congrArg Subtype.val
     (localHilbertSymbol_map_eq_rootQuotient K n hnK hmu a b)
   change localHilbertSymbol K n hnK hmu a b = 1

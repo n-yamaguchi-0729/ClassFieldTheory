@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Mathlib.Tactic.Linarith
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Mathlib.Tactic.Linarith
 
 /-! A finite adelic quotient bounds the Riemann genus. -/
+
+@[expose] public section
 
 namespace AlgebraicCurves.Cohomology.RiemannRoch.Proofs.RiemannGenusBoundedIndexFinite
 

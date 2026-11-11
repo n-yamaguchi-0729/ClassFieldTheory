@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Conductor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedNormQuotient
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Conductor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedNormQuotient
 
 /-!
 # The conductor of an actual finite-extension norm subgroup
@@ -17,13 +19,17 @@ conductor. Every divisible modulus maps surjectively to the finite norm quotient
 The construction and its tower monotonicity require no reciprocity assumption.
 -/
 
+@[expose] public section
+
+universe u v w s
+
 noncomputable section
 
 namespace FunctionField.RayClass
 
 open AlgebraicCurve
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
@@ -74,7 +80,7 @@ theorem rayToNormQuotient_surjective (m : Modulus k K)
 
 section Tower
 
-variable {M : Type} [Field M] [Algebra k M] [Algebra K M] [Algebra L M]
+variable {M : Type s} [Field M] [Algebra k M] [Algebra K M] [Algebra L M]
     [IsScalarTower k K M] [IsScalarTower k L M] [IsScalarTower K L M]
     [FiniteDimensional L M] [FiniteDimensional K M] [IsGalois K M]
     [Algebra.IsSeparable L M] [HasPrincipalDivisors k M]

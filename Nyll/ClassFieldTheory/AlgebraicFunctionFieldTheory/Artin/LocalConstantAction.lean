@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.Normal.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneAdjoinRangeEqTop
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalResidueNormalization
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
+module
+
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.Normal.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneAdjoinRangeEqTop
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalResidueNormalization
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
 
 /-!
 # Actual constant action of the local arithmetic Artin symbol
@@ -23,13 +25,18 @@ actual automorphism to those constants therefore lifts the residue power law
 back to the original field.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 open AlgebraicCurve
 
 namespace FunctionField
 
-variable {k C K E : Type} [Field k] [Finite k] [Field C] [Field K] [Field E]
+variable {k : Type u} {C : Type v} {K : Type w} {E : Type x}
+    [Field k] [Finite k] [Field C] [Field K] [Field E]
     [Algebra k C] [Algebra k K] [Algebra k E] [Algebra C E] [Algebra K E]
     [IsScalarTower k C E] [IsScalarTower k K E]
     [FiniteDimensional k C] [FiniteDimensional K E] [IsAbelianGalois K E]

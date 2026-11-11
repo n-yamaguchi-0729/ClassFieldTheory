@@ -4,14 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.Localization.AsSubring
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.ChevalleyExtension
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.LocalizationRamificationGroups
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
+module
+
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.RingTheory.Localization.AsSubring
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.ChevalleyExtension
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.LocalizationRamificationGroups
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.BaseChange
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionFieldLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
 
 /-!
 # The global valuation/prime-ideal bridge in the global cyclotomic inertia argument
@@ -28,6 +33,8 @@ by the localization and decomposition comparison applies to the chosen global pr
 extra compatibility
 hypothesis.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -308,7 +315,8 @@ theorem globalPadicPrime_localizationValuationSubring_eq
     have hs0 : s ≠ 0 := by
       intro hsZero
       apply hs
-      simp [hsZero]
+      rw [hsZero]
+      exact zero_mem _
     have hsM0 : (s : M) ≠ 0 := by
       simpa only [map_zero] using
         (IsFractionRing.injective (𝓞 M) M).ne hs0
@@ -355,7 +363,8 @@ theorem globalPadicPrime_localizationValuationSubring_eq
   have hs0 : s ≠ 0 := by
     intro hsZero
     apply hs
-    simp [hsZero]
+    rw [hsZero]
+    exact zero_mem _
   have hsM0 : (s : M) ≠ 0 := by
     simpa only [map_zero] using
       (IsFractionRing.injective (𝓞 M) M).ne hs0
@@ -430,7 +439,7 @@ private theorem globalPadicPrimeCompl_smul_of_mem_inertia
 omit [IsAbelianGalois ℚ M] in
 /-- An ideal-inertia automorphism preserves the localization of `𝓞 M` at
 the synchronized prime. -/
-private theorem globalPadicIdealInertia_maps_localization
+theorem globalPadicIdealInertia_maps_localization
     (w : AbsoluteValueExtension (Rat.AbsoluteValue.padic p) M)
     (sigma : HilbertRamification.Dedekind.inertiaGroup
       (globalPadicPrimeIdeal p M w) (M ≃ₐ[ℚ] M))
@@ -443,7 +452,8 @@ private theorem globalPadicIdealInertia_maps_localization
   have hs0 : s ≠ 0 := by
     intro hsZero
     apply hs
-    simp [hsZero]
+    rw [hsZero]
+    exact zero_mem _
   have hsM0 : (s : M) ≠ 0 := by
     simpa only [map_zero] using
       (IsFractionRing.injective (𝓞 M) M).ne hs0
@@ -501,7 +511,8 @@ private theorem
   have hs0 : s ≠ 0 := by
     intro hsZero
     apply hs
-    simp [hsZero]
+    rw [hsZero]
+    exact zero_mem _
   have hdeltaA : (sigma : M ≃ₐ[ℚ] M) • a - a ∈ P :=
     sigma.property a
   have hdeltaS : (sigma : M ≃ₐ[ℚ] M) • s - s ∈ P :=
@@ -550,7 +561,8 @@ private theorem
   exact hfrac
 
 omit [IsAbelianGalois ℚ M] in
-private theorem
+/-- The localization of ideal inertia acts trivially on the residue field. -/
+theorem
     globalPadicIdealInertiaToLocalizationDecomposition_mem_inertia
     (w : AbsoluteValueExtension (Rat.AbsoluteValue.padic p) M)
     (sigma : HilbertRamification.Dedekind.inertiaGroup

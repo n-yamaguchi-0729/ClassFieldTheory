@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Unramified.HenselianAlgebraicExtension
-import Nyll.ValuedFieldTheory.LocalField.Unramified.BasicInvariants
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Mathlib.FieldTheory.PrimitiveElement
-import Mathlib.FieldTheory.SeparableClosure
-import Mathlib.RingTheory.Adjoin.PowerBasis
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.HenselianAlgebraicExtension
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.BasicInvariants
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.FieldTheory.PrimitiveElement
+public import Mathlib.FieldTheory.SeparableClosure
+public import Mathlib.RingTheory.Adjoin.PowerBasis
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
 
 /-!
 # Separability sources for finite unramified extensions
@@ -20,6 +23,8 @@ primitive generator of the separable residue extension, use the fundamental ineq
 to show that its powers are a basis of the field extension, and compare its
 minimal polynomial with its separable reduction.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -40,21 +45,14 @@ theorem unramifiedValuationRing_polynomial_target_reduction_eq
     let V := LubinTate.Valuations.exponentialValuationSubring v
     let W := LubinTate.Valuations.exponentialValuationSubring w
     let i := unramifiedValuationRingValuationRingMap v w hExt
-    letI : IsLocalHom i :=
+    let : IsLocalHom i :=
       unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
     let k := IsLocalRing.ResidueField V
     let ell := IsLocalRing.ResidueField W
-    letI : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
+    let : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
     (P.map i).map (IsLocalRing.residue W) =
       (P.map (IsLocalRing.residue V)).map (algebraMap k ell) := by
-  let V := LubinTate.Valuations.exponentialValuationSubring v
-  let W := LubinTate.Valuations.exponentialValuationSubring w
-  let i := unramifiedValuationRingValuationRingMap v w hExt
-  let : IsLocalHom i :=
-    unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
-  let k := IsLocalRing.ResidueField V
-  let ell := IsLocalRing.ResidueField W
-  let : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
+  intro V W i sharedOwner4 k ell sharedOwner7
   ext n
   simp only [Polynomial.coeff_map]
   change IsLocalRing.residue W (i (P.coeff n)) =
@@ -73,24 +71,16 @@ theorem unramifiedValuationRing_polynomial_aeval_residue_eq
     let V := LubinTate.Valuations.exponentialValuationSubring v
     let W := LubinTate.Valuations.exponentialValuationSubring w
     let i := unramifiedValuationRingValuationRingMap v w hExt
-    letI : IsLocalHom i :=
+    let : IsLocalHom i :=
       unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
-    letI : Algebra V W := i.toAlgebra
+    let : Algebra V W := i.toAlgebra
     let k := IsLocalRing.ResidueField V
     let ell := IsLocalRing.ResidueField W
-    letI : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
+    let : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
     IsLocalRing.residue W (Polynomial.aeval x P) =
       ((P.map (IsLocalRing.residue V)).map (algebraMap k ell)).eval
         (IsLocalRing.residue W x) := by
-  let V := LubinTate.Valuations.exponentialValuationSubring v
-  let W := LubinTate.Valuations.exponentialValuationSubring w
-  let i := unramifiedValuationRingValuationRingMap v w hExt
-  let : IsLocalHom i :=
-    unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
-  let : Algebra V W := i.toAlgebra
-  let k := IsLocalRing.ResidueField V
-  let ell := IsLocalRing.ResidueField W
-  let : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
+  intro V W i sharedOwner4 sharedOwner5 k ell sharedOwner8
   calc
     IsLocalRing.residue W (Polynomial.aeval x P) =
         ((P.map i).map (IsLocalRing.residue W)).eval
@@ -127,11 +117,11 @@ theorem exists_primitive_lift_minpoly_of_finiteUnramifiedExtension
     let V := LubinTate.Valuations.exponentialValuationSubring v
     let W := LubinTate.Valuations.exponentialValuationSubring w
     let i := unramifiedValuationRingValuationRingMap v w hExt
-    letI : IsLocalHom i :=
+    let : IsLocalHom i :=
       unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
     let k := IsLocalRing.ResidueField V
     let ell := IsLocalRing.ResidueField W
-    letI : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
+    let : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
     ∃ a : W, ∃ F : Polynomial V,
       IntermediateField.adjoin K ({(a : L)} : Set L) = ⊤ ∧
         F.map V.subtype = minpoly K (a : L) ∧
@@ -139,19 +129,12 @@ theorem exists_primitive_lift_minpoly_of_finiteUnramifiedExtension
             minpoly k (IsLocalRing.residue W a) ∧
           (F.map (IsLocalRing.residue V)).Separable ∧
             IsSeparable K (a : L) := by
+  intro V W i localHom k ell residueAlgebra
   classical
   let : Algebra.IsAlgebraic K L := Algebra.IsAlgebraic.of_finite K L
   let Vv := LubinTate.Valuations.exponentialValuationSubringAsValuationSubring v
   let Wv := LubinTate.Valuations.exponentialValuationSubringAsValuationSubring w
-  let V := LubinTate.Valuations.exponentialValuationSubring v
-  let W := LubinTate.Valuations.exponentialValuationSubring w
-  let i := unramifiedValuationRingValuationRingMap v w hExt
-  let : IsLocalHom i :=
-    unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
   let : Algebra V W := i.toAlgebra
-  let k := IsLocalRing.ResidueField V
-  let ell := IsLocalRing.ResidueField W
-  let : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
   have hresfin : FiniteDimensional k ell :=
     residueExtension_finiteDimensional_of_finiteDimensional v w hExt
   let : FiniteDimensional k ell := hresfin
@@ -230,7 +213,6 @@ theorem exists_primitive_lift_minpoly_of_finiteUnramifiedExtension
         rfl }
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
-  let : Algebra V L := algVL
   let : SMul V L := algVL.toSMul
   let : SMul V K := (inferInstance : Algebra V K).toSMul
   let : IsScalarTower V K L :=

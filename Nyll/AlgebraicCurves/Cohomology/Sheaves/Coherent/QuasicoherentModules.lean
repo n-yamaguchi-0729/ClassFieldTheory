@@ -11,14 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
 
 /-!
 Quasicoherence of the section presheaf of a locally trivial scheme module.
 -/
+
+@[expose] public section
 
 /-! Quasicoherence of the presheaf associated to a locally trivial module. -/
 

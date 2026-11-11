@@ -10,20 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Mathlib.AlgebraicGeometry.Birational.RationalMap
-import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
-import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
+module
+
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Mathlib.AlgebraicGeometry.Birational.RationalMap
+public import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
+public import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Scheme
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Exists is Finite hom proj of is Proper
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -120,7 +125,7 @@ private lemma p_toSpecZero (f : C.functionField) :
       (MvPolynomial.mem_homogeneousSubmodule _ _).mp a.2
     have htd : (a : A K).totalDegree = 0 := by
       by_cases h0 : (a : A K) = 0
-      · simp [h0]
+      · rw [h0, MvPolynomial.totalDegree_zero]
       · exact hh.totalDegree h0
     have ha : (a : A K) = MvPolynomial.C ((a : A K).coeff 0) :=
       MvPolynomial.totalDegree_eq_zero_iff_eq_C.mp htd
@@ -182,7 +187,7 @@ private lemma mem_domain (f : C.functionField) (x : C) (hx : IsClosed ({x} : Set
       isFractionRing := inferInstance
       i₁ := p c f
       i₂ := C.fromSpecStalk x ≫ c ≫ sK K
-      commSq := ⟨by rw [p_toSpecZero, ← hspec]; simp only [Category.assoc]; try rfl⟩ }
+      commSq := ⟨by rw [p_toSpecZero, ← hspec]; simp only [Category.assoc]⟩ }
   obtain ⟨⟨l, hl₁, hl₂⟩⟩ := hsq.exists_lift
   have hl₁' : Spec.map (CommRingCat.ofHom (algebraMap (C.presheaf.stalk x) C.functionField)) ≫ l =
       p c f := hl₁
@@ -373,9 +378,9 @@ open AlgebraicCurve.FiniteMapToP1 in
 theorem _root_.AlgebraicCurve.exists_isFinite_hom_proj_of_isProper {K : Type u} [Field K] {C :
   Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of K))
     [IsIntegral C] [IsProper c] [SmoothOfRelativeDimension 1 c] :
-    letI := MvPolynomial.gradedAlgebra (σ := Fin 2) (R := K)
+    let := MvPolynomial.gradedAlgebra (σ := Fin 2) (R := K)
     ∃ φ : C ⟶ Proj (MvPolynomial.homogeneousSubmodule (Fin 2) K), IsFinite φ := by
-  let := MvPolynomial.gradedAlgebra (σ := Fin 2) (R := K)
+  intro sharedOwner1
   obtain ⟨f, x₀, hx₀, hf⟩ := exists_pole c
   have : LocallyQuasiFinite (φ c f) := .of_finite_preimage_singleton _ (finite_fibre c f x₀ hx₀ hf)
   exact ⟨φ c f, IsFinite.of_isProper_of_locallyQuasiFinite _⟩

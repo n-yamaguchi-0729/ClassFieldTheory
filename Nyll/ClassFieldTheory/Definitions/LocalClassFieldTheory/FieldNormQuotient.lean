@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # The field-norm quotient
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

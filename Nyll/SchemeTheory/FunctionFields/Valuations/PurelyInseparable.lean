@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.PurelyInseparable.Basic
-import Mathlib.RingTheory.Valuation.ValuationSubring
+module
+
+public import Mathlib.FieldTheory.PurelyInseparable.Basic
+public import Mathlib.RingTheory.Valuation.ValuationSubring
 
 /-!
 # Valuation subrings in purely inseparable extensions
@@ -20,6 +22,8 @@ This supplies the inseparable part of valuation-extension counting: after
 restricting from an algebraic extension to its maximal separable
 subextension, no two valuation subrings become equal.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -62,7 +66,7 @@ theorem mem_iff_pow_mem
             x ^ m * x * (x⁻¹) ^ m =
                 x * (x ^ m * (x⁻¹) ^ m) := by ac_rfl
             _ = x * (x * x⁻¹) ^ m := by rw [mul_pow]
-            _ = x := by simp [hxzero]
+            _ = x := by rw [mul_inv_cancel₀ hxzero, one_pow, mul_one]
         rwa [hidentity] at hproduct
 
 /-- Restrict a valuation subring along the field-extension map. -/

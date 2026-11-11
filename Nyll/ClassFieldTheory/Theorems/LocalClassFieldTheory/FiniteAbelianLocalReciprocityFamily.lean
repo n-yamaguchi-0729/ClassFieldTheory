@@ -5,7 +5,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
 
 /-!
 # A coherent family of finite local Artin maps
@@ -14,18 +16,20 @@ The finite-level Artin maps can be chosen simultaneously for all finite
 abelian subextensions of a fixed separable closure. Their norm kernels and
 restriction compatibility refer to the same family, not to independently
 chosen maps for each tower. The arithmetic-Frobenius normalization is a
-separate property of this family. This theorem currently uses the source
-construction at `Type 0`; arbitrary-universe transport remains separate.
+separate property of this family. The maps use the specified universe-polymorphic
+Artin construction and retain its equality with the native map at `Type 0`.
 -/
 
 noncomputable section
+
+universe u
 
 namespace ClassFieldTheory
 
 /-- One family of continuous local Artin maps has the expected norm kernels
 and commutes with inclusion of finite abelian subextensions. -/
 theorem finiteAbelianLocalReciprocity_family
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
     ∃ artin : (E : FiniteAbelianLocalExtension K) →
         Kˣ →ₜ* (E.1 ≃ₐ[K] E.1),
@@ -36,37 +40,37 @@ theorem finiteAbelianLocalReciprocity_family
         (hEF : E.1 ≤ F.1) (x : Kˣ) (y : E.1),
         IntermediateField.inclusion hEF ((artin E x) y) =
           (artin F x) (IntermediateField.inclusion hEF y) := by
-  refine ⟨fun E => LocalClassFieldTheory.abelianLocalArtinMap K E.1, ?_, ?_⟩
+  refine ⟨fun E => LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1, ?_, ?_⟩
   · intro E
     constructor
-    · exact LocalClassFieldTheory.abelianLocalArtinMap_surjective K E.1
+    · exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K E.1
     · change
-        (LocalClassFieldTheory.abelianLocalArtinMap K E.1).toMonoidHom.ker =
+        (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1).toMonoidHom.ker =
           LocalFieldTheory.localNormSubgroup K E.1
-      exact LocalClassFieldTheory.abelianLocalArtinMap_ker K E.1
+      exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K E.1
   · intro E F hEF x y
     have hrestrict := DFunLike.congr_fun
-      (LocalClassFieldTheory.abelianLocalArtinMap_restrict K E.1 F.1 hEF) x
+      (LocalClassFieldTheory.Universe.abelianLocalArtinMap_restrict K E.1 F.1 hEF) x
     change
       RamificationTheory.intermediateFieldRestrictNormalHom E.1 F.1 hEF
-          (LocalClassFieldTheory.abelianLocalArtinMap K F.1 x) =
-        LocalClassFieldTheory.abelianLocalArtinMap K E.1 x at hrestrict
+          (LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x) =
+        LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1 x at hrestrict
     apply Subtype.ext
     change
-      E.1.val ((LocalClassFieldTheory.abelianLocalArtinMap K E.1 x) y) =
-        F.1.val ((LocalClassFieldTheory.abelianLocalArtinMap K F.1 x)
+      E.1.val ((LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1 x) y) =
+        F.1.val ((LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x)
           (IntermediateField.inclusion hEF y))
     calc
-      E.1.val ((LocalClassFieldTheory.abelianLocalArtinMap K E.1 x) y) =
+      E.1.val ((LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1 x) y) =
           E.1.val
             ((RamificationTheory.intermediateFieldRestrictNormalHom
                 E.1 F.1 hEF
-                (LocalClassFieldTheory.abelianLocalArtinMap K F.1 x)) y) := by
+                (LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x)) y) := by
             rw [hrestrict]
-      _ = F.1.val ((LocalClassFieldTheory.abelianLocalArtinMap K F.1 x)
+      _ = F.1.val ((LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x)
             (IntermediateField.inclusion hEF y)) :=
           RamificationTheory.intermediateFieldRestrictNormalHom_apply_val
             E.1 F.1 hEF
-            (LocalClassFieldTheory.abelianLocalArtinMap K F.1 x) y
+            (LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x) y
 
 end ClassFieldTheory

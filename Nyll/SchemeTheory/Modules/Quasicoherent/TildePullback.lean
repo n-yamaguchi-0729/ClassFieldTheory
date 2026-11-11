@@ -46,15 +46,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.CategoryTheory.Adjunction.Unique
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.CategoryTheory.Adjunction.Unique
 
 /-!
 # Affine pullback and associated module sheaves
 
 Compares pullback of an associated module sheaf with extension of scalars.
 -/
+
+@[expose] public section
 
 section TildePullback
 

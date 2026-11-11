@@ -4,20 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.RingTheory.Norm.Defs
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.Group.Units
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
-import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.RingTheory.Norm.Defs
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.Group.Units
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Continuity and norm of idele inclusion
@@ -29,6 +32,8 @@ the local norm of an included component is its completed-degree power, and the
 completed degrees sum to the original field degree over the actual place fiber.
 Both statements descend to the quotient by principal ideles.
 -/
+
+@[expose] public section
 
 open scoped AlgebraicCurve.Place
 

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormClass
-import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormCriterion
-import Nyll.GaloisCohomology.ProP.FiniteCyclicCarryRestriction
+module
+
+public import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormClass
+public import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormCriterion
+public import Nyll.GaloisCohomology.ProP.FiniteCyclicCarryRestriction
 
 /-!
 # Restriction of a cyclic norm class with a normalized relative generator
@@ -15,6 +17,8 @@ The actual restricted inflation of the base-unit class is the class of the
 same unit over the new base field. The generator maps to the index power;
 the carry-coordinate comparison supplies the equality of cocycles.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 

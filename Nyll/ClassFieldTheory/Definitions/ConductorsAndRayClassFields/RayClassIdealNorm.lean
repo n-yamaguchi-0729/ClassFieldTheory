@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNorm
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNorm
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
 
 /-!
 # Ideal norms in an ideal-theoretic ray class group
@@ -17,6 +19,8 @@ this group into the fractional ideals of `K` prime to `m`; composing with the
 ray quotient gives its genuine ideal-norm image.  This construction does not
 identify ideal norms with idèle-class norms.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -86,7 +90,9 @@ theorem fractionalIdealNorm_count
   rw [NumberFieldFractionalIdealGroup.count_factorization]
   change fractionalIdealNormExponentMap K L e.toAdd w = _
   rw [he]
-  simp [fractionalIdealNormExponentMap, Finsupp.single_apply, eq_comm]
+  simp only [fractionalIdealNormExponentMap, Finsupp.liftAddHom_apply, AddMonoidHom.coe_comp,
+    AddMonoidHom.coe_mulLeft, Finsupp.sum_apply, Function.comp_apply, Finsupp.singleAddHom_apply,
+    Finsupp.single_apply, eq_comm]
 
 /-- The genuine fractional-ideal norm, restricted to ideals prime to the
 finite support of a base ray modulus. -/

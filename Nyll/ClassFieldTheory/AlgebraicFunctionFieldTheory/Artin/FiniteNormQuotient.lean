@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldPresentation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldPresentation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
 
 /-!
 # Finite reciprocity for ordinary function-field extensions
@@ -16,13 +19,18 @@ transports the fixed-field reciprocity isomorphism to the original norm
 quotient and the original relative Galois group.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w)
+    [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]

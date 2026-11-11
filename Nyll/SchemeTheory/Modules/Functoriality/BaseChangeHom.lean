@@ -14,14 +14,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.CategoryTheory.Adjunction.Mates
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.CategoryTheory.Adjunction.Mates
 /-!
 # Base change morphisms for module sheaves
 
 Iterated pullback comparisons determine base change morphisms by adjunction, with
 compatibility formulas for units, counits, and sections.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -67,20 +71,20 @@ def baseChangeNatTrans (h : g' ≫ π = π' ≫ ψ) :
 /-- The component at `F` of the base change transformation for the commutative square `h`. -/
 def baseChangeHom (h : g' ≫ π = π' ≫ ψ) (F : X.Modules) :
     (pullback ψ).obj ((pushforward π).obj F) ⟶ (pushforward π').obj ((pullback g').obj F) :=
-  (baseChangeNatTrans h).natTrans.app F
+  (baseChangeNatTrans h).app F
 
 theorem baseChangeNatTrans_app (h : g' ≫ π = π' ≫ ψ) (F : X.Modules) :
-    (baseChangeNatTrans h).natTrans.app F = baseChangeHom h F := rfl
+    (baseChangeNatTrans h).app F = baseChangeHom h F := rfl
 
 theorem baseChangeHom_naturality (h : g' ≫ π = π' ≫ ψ) {F G : X.Modules} (φ : F ⟶ G) :
     (pullback ψ).map ((pushforward π).map φ) ≫ baseChangeHom h G =
       baseChangeHom h F ≫ (pushforward π').map ((pullback g').map φ) :=
-  (baseChangeNatTrans h).natTrans.naturality φ
+  (baseChangeNatTrans h).naturality φ
 
 theorem baseChangeHom_counit (h : g' ≫ π = π' ≫ ψ) (F : X.Modules) :
     (pullback π').map (baseChangeHom h F) ≫
         (pullbackPushforwardAdjunction π').counit.app ((pullback g').obj F) =
-      (pullbackTwoSquare h).natTrans.app ((pushforward π).obj F) ≫
+      (pullbackTwoSquare h).app ((pushforward π).obj F) ≫
         (pullback g').map ((pullbackPushforwardAdjunction π).counit.app F) :=
   mateEquiv_counit (pullbackPushforwardAdjunction π) (pullbackPushforwardAdjunction π')
       (pullbackTwoSquare h) F
@@ -89,7 +93,7 @@ theorem unit_baseChangeHom (h : g' ≫ π = π' ≫ ψ) (M : T.Modules) :
     (pullback ψ).map ((pullbackPushforwardAdjunction π).unit.app M) ≫ baseChangeHom h ((pullback
         π).obj M) =
       (pullbackPushforwardAdjunction π').unit.app ((pullback ψ).obj M) ≫
-        (pushforward π').map ((pullbackTwoSquare h).natTrans.app M) :=
+        (pushforward π').map ((pullbackTwoSquare h).app M) :=
   unit_mateEquiv (pullbackPushforwardAdjunction π) (pullbackPushforwardAdjunction π')
       (pullbackTwoSquare h) M
 
@@ -102,15 +106,19 @@ theorem conjugateEquiv_pullbackCongr_hom {Y Z : Scheme.{u}} {f g : Y ⟶ Z} (e :
         (pullbackCongr e).hom =
       (pushforwardCongr e).inv := by
   subst e
-  have h1 : (pullbackCongr (rfl : f = f)).hom = 𝟙 _ := by simp [pullbackCongr]
+  have h1 : (pullbackCongr (rfl : f = f)).hom = 𝟙 _ := by rfl
   rw [h1, conjugateEquiv_id]
   ext M U : 3
-  simp [pushforwardCongr_inv_app_app]
+  rw [pushforwardCongr_inv_app_app]
+  change 𝟙 _ = M.presheaf.map (𝟙 _)
+  exact (M.presheaf.map_id _).symm
 
 theorem pushforwardCongr_symm_inv {Y Z : Scheme.{u}} {f g : Y ⟶ Z} (e : f = g) :
     (pushforwardCongr e.symm).inv = (pushforwardCongr e).hom := by
+  subst e
   ext M U : 3
-  simp [pushforwardCongr_inv_app_app, pushforwardCongr_hom_app_app]
+  simp only [pushforwardCongr_inv_app_app, pushforwardCongr_hom_app_app]
+  exact congrArg M.presheaf.map (Subsingleton.elim _ _)
 
 theorem conjugateEquiv_pullbackComp_hom {W Y Z : Scheme.{u}} (f : W ⟶ Y) (g : Y ⟶ Z) :
     conjugateEquiv (pullbackPushforwardAdjunction (f ≫ g))
@@ -124,7 +132,7 @@ theorem conjugateEquiv_pullbackComp_hom {W Y Z : Scheme.{u}} (f : W ⟶ Y) (g : 
 theorem conjugateEquiv_pullbackTwoSquare (h : g' ≫ π = π' ≫ ψ) :
     conjugateEquiv ((pullbackPushforwardAdjunction π).comp (pullbackPushforwardAdjunction g'))
         ((pullbackPushforwardAdjunction ψ).comp (pullbackPushforwardAdjunction π'))
-        (pullbackTwoSquare h).natTrans =
+        (pullbackTwoSquare h) =
       (pushforwardComp g' π).hom ≫ (pushforwardCongr h).hom ≫ (pushforwardComp π' ψ).inv := by
   change conjugateEquiv _ _ ((pullbackComp π' ψ).hom ≫ (pullbackCongr h.symm).hom ≫ (pullbackComp g'
       π).inv) = _
@@ -149,12 +157,12 @@ theorem pullbackPushforwardAdjunction_homEquiv_baseChangeHom (h : g' ≫ π = π
   simp only [NatTrans.comp_app] at it'
   rw [Adjunction.homEquiv_unit]
   have key' : (pullbackPushforwardAdjunction ψ).unit.app ((pushforward π).obj F) ≫
-      (pushforward ψ).map ((baseChangeNatTrans h).natTrans.app F) =
+      (pushforward ψ).map ((baseChangeNatTrans h).app F) =
       (pushforward π).map ((pullbackPushforwardAdjunction g').unit.app F) ≫
         (mateEquiv (pullbackPushforwardAdjunction g') (pullbackPushforwardAdjunction ψ)
           (baseChangeNatTrans h)).app ((pullback g').obj F) := key.symm
   change (pullbackPushforwardAdjunction ψ).unit.app ((pushforward π).obj F) ≫
-      (pushforward ψ).map ((baseChangeNatTrans h).natTrans.app F) = _
+      (pushforward ψ).map ((baseChangeNatTrans h).app F) = _
   rw [key']
   exact congrArg (fun t => (pushforward π).map ((pullbackPushforwardAdjunction g').unit.app F) ≫ t)
       it'

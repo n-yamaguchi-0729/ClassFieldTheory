@@ -8,12 +8,16 @@ The prescribed module pseudofunctor is fixed throughout. Native category,
 object and Iso.hom projections are set while all scheme maps remain abstract.
 The mathematical overlap law is the existing canonical descent comparison.
 -/
-import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
-import Nyll.SchemeTheory.CategoryTheory.DescentComparison
+module
+
+public import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
+public import Nyll.SchemeTheory.CategoryTheory.DescentComparison
 /-!
 Canonical pullback transitions and their comparison with the prescribed descent data.
 All scheme maps and module objects retain their original canonical owners.
 -/
+
+@[expose] public section
 
 universe t u
 
@@ -125,53 +129,9 @@ theorem prescribed_pullback_leg_relation
     (G₁ : r₁ ≫ f' i = m) (G₂ : r₂ ≫ f' j = m)
     (E₁ : s ≫ a₁ = r₁ ≫ p' i) (E₂ : s ≫ a₂ = r₂ ≫ p' j)
     (hq : s ≫ d = m ≫ p) :
-    let N :
-        (Scheme.Modules.pullback s).obj
-            ((Scheme.Modules.pullback a₁).obj ((Scheme.Modules.pullback (f i)).obj M)) ⟶
-          (Scheme.Modules.pullback s).obj
-            ((Scheme.Modules.pullback a₂).obj ((Scheme.Modules.pullback (f j)).obj M)) :=
-      (Scheme.Modules.pullback s).map
-        ((Mdl.mapComp' (f i).op.toLoc a₁.op.toLoc d.op.toLoc
-          (by rw [← e₁]; rfl)).inv.toNatTrans.app M ≫
-         (Mdl.mapComp' (f j).op.toLoc a₂.op.toLoc d.op.toLoc
-          (by rw [← e₂]; rfl)).hom.toNatTrans.app M)
-    let C₁ :
-        (Scheme.Modules.pullback s).obj
-            ((Scheme.Modules.pullback a₁).obj ((Scheme.Modules.pullback (f i)).obj M)) ≅
-          (Scheme.Modules.pullback r₁).obj
-            ((Scheme.Modules.pullback (p' i)).obj ((Scheme.Modules.pullback (f i)).obj M)) :=
-      (Cat.Hom.toNatIso (Mdl.isoMapOfCommSq (CommSq.mk E₁).op.toLoc)).symm.app
-        ((Scheme.Modules.pullback (f i)).obj M)
-    let C₂ :
-        (Scheme.Modules.pullback s).obj
-            ((Scheme.Modules.pullback a₂).obj ((Scheme.Modules.pullback (f j)).obj M)) ≅
-          (Scheme.Modules.pullback r₂).obj
-            ((Scheme.Modules.pullback (p' j)).obj ((Scheme.Modules.pullback (f j)).obj M)) :=
-      (Cat.Hom.toNatIso (Mdl.isoMapOfCommSq (CommSq.mk E₂).op.toLoc)).symm.app
-        ((Scheme.Modules.pullback (f j)).obj M)
-    let K₁ :
-        (Scheme.Modules.pullback (p' i)).obj ((Scheme.Modules.pullback (f i)).obj M) ≅
-          (Scheme.Modules.pullback (f' i)).obj ((Scheme.Modules.pullback p).obj M) :=
-      (Cat.Hom.toNatIso (Mdl.isoMapOfCommSq (CommSq.mk (w i)).op.toLoc)).symm.app M
-    let K₂ :
-        (Scheme.Modules.pullback (p' j)).obj ((Scheme.Modules.pullback (f j)).obj M) ≅
-          (Scheme.Modules.pullback (f' j)).obj ((Scheme.Modules.pullback p).obj M) :=
-      (Cat.Hom.toNatIso (Mdl.isoMapOfCommSq (CommSq.mk (w j)).op.toLoc)).symm.app M
-    let T₁ :
-        (Scheme.Modules.pullback r₁).obj
-            ((Scheme.Modules.pullback (f' i)).obj ((Scheme.Modules.pullback p).obj M)) ≅
-          (Scheme.Modules.pullback m).obj ((Scheme.Modules.pullback p).obj M) :=
-      (Cat.Hom.toNatIso (Mdl.mapComp' (f' i).op.toLoc r₁.op.toLoc
-        m.op.toLoc (by rw [← G₁]; rfl))).symm.app ((Scheme.Modules.pullback p).obj M)
-    let T₂ :
-        (Scheme.Modules.pullback r₂).obj
-            ((Scheme.Modules.pullback (f' j)).obj ((Scheme.Modules.pullback p).obj M)) ≅
-          (Scheme.Modules.pullback m).obj ((Scheme.Modules.pullback p).obj M) :=
-      (Cat.Hom.toNatIso (Mdl.mapComp' (f' j).op.toLoc r₂.op.toLoc
-        m.op.toLoc (by rw [← G₂]; rfl))).symm.app ((Scheme.Modules.pullback p).obj M)
-    N ≫ (C₂ ≪≫ (Scheme.Modules.pullback r₂).mapIso K₂ ≪≫ T₂).hom =
-      (C₁ ≪≫ (Scheme.Modules.pullback r₁).mapIso K₁ ≪≫ T₁).hom := by
-  exact CategoryTheory.Pseudofunctor.DescentComparison.canonical_pullback_leg_relation
+    CategoryTheory.Pseudofunctor.DescentComparison.CanonicalPullbackLegRelation
+      Mdl f f' p p' w M d m s i j a₁ a₂ r₁ r₂ e₁ e₂ G₁ G₂ E₁ E₂ :=
+  CategoryTheory.Pseudofunctor.DescentComparison.canonical_pullback_leg_relation
     Mdl f f' p p' w M d m s i j a₁ a₂ r₁ r₂ e₁ e₂ G₁ G₂ E₁ E₂ hq
 
 /-- Canonical overlap coherence in the native module categories.

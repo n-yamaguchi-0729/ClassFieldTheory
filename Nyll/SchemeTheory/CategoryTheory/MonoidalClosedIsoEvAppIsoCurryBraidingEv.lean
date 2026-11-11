@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Closed.Basic
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
-import Mathlib.CategoryTheory.Adjunction.Unique
-import Mathlib.CategoryTheory.Yoneda
-import Mathlib.Tactic.CategoryTheory.Monoidal.Basic
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Closed.Basic
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+public import Mathlib.CategoryTheory.Adjunction.Unique
+public import Mathlib.CategoryTheory.Yoneda
+public import Mathlib.Tactic.CategoryTheory.Monoidal.Basic
 
 /-!
 Evaluation and curried evaluation are isomorphisms for tensor-invertible objects.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

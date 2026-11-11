@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Order.Hom.TypeTags
-import Mathlib.GroupTheory.ArchimedeanDensely
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+module
+
+public import Mathlib.Algebra.Order.Hom.TypeTags
+public import Mathlib.GroupTheory.ArchimedeanDensely
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Basic
 
 /-!
 # The sign of the local reciprocity valuation on place completions
@@ -18,6 +21,8 @@ valuation. The idele divisor uses its negative. The uniqueness of the ordered
 integer value-group normalization identifies these two maps on the actual
 place completion, without choosing a uniformizer or a new valuation.
 -/
+
+@[expose] public section
 
 noncomputable section
 

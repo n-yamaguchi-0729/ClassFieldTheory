@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Mathlib.LinearAlgebra.Dimension.DivisionRing
-import Mathlib.NumberTheory.RamificationInertia.Inertia
-import Mathlib.NumberTheory.RamificationInertia.Ramification
-import Mathlib.RingTheory.Ideal.Norm.AbsNorm
-import Mathlib.RingTheory.Valuation.RamificationGroup
-import Mathlib.FieldTheory.Galois.Basic
-import Nyll.ValuedFieldTheory.Valuation.Subring.Ramification.SmulEqCardStabilizerEqRamificationIdxMulInertiaDeg
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Mathlib.LinearAlgebra.Dimension.DivisionRing
+public import Mathlib.NumberTheory.RamificationInertia.Inertia
+public import Mathlib.NumberTheory.RamificationInertia.Ramification
+public import Mathlib.RingTheory.Ideal.Norm.AbsNorm
+public import Mathlib.RingTheory.Valuation.RamificationGroup
+public import Mathlib.FieldTheory.Galois.Basic
+public import Nyll.ValuedFieldTheory.Valuation.Subring.Ramification.SmulEqCardStabilizerEqRamificationIdxMulInertiaDeg
 
 /-!
 # Place ramification Index mul inertia Deg mul nat Card stabilizer eq nat Card stabilizer
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -14,22 +14,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Basic
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.Data.Finsupp.SMul
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Ring.Subring.Pointwise
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.RingTheory.Bezout
+module
+
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.Valuation.Discrete.Basic
+public import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.Data.Finsupp.SMul
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Ring.Subring.Pointwise
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.Bezout
 
 /-!
 Divisors and divisor class groups of a field extension.
 The imported place orders define principal divisors and the degree-zero Picard group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtFinitePlace
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
+module
+
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtFinitePlace
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 
 /-!
 # Everywhere local norms
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

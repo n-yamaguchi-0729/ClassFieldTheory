@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Invertible.Rigidify
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+module
+
+public import Nyll.SchemeTheory.Modules.Invertible.Rigidify
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
 
 /-!
 # Rigidifying an invertible module
@@ -22,6 +24,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
 Rigidification along a section preserves invertibility and identifies the original module
 with the rigidified module tensored with the pullback of its value along the section.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

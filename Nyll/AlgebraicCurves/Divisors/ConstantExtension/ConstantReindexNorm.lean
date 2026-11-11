@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
-import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
+public import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
 
 /-!
 # Actual Picard norms after changing the common constants
@@ -13,6 +15,8 @@ import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
 Reindexing places preserves restriction and residue field extension degrees.
 Consequently it commutes with actual divisor pushforward and Picard norms.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.PlaceEquiv
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.PlaceEquiv
 
 /-!
 # Infinite completions under a number-field equivalence
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.PlaceEquiv
 The completion maps along an isomorphism of number fields are mutually
 inverse. This is the archimedean local input for the topology of `adeleCongr`.
 -/
+
+@[expose] public section
 
 open scoped NumberField TensorProduct
 open NumberField IsDedekindDomain
@@ -51,7 +55,7 @@ theorem infinitePlaceCompletionCongrHom_continuous
   let : W.1.LiesOver w.1 :=
     ⟨congrArg (fun v : InfinitePlace K => v.1) hKM⟩
   change Continuous (NumberField.LiesOver.completionMap (v := w) (w := W))
-  exact NumberField.LiesOver.continuous_completionMap
+  exact NumberField.LiesOver.continuous_completionMap w W
 
 /-- Transport along a field isomorphism is an equivalence of the
 corresponding infinite-place completions. -/
@@ -83,8 +87,8 @@ noncomputable def infinitePlaceCompletionCongrEquiv
       change f (g x) = x
       refine InfinitePlace.Completion.induction_on W x ?_ ?_
       · exact isClosed_eq
-          (NumberField.LiesOver.continuous_completionMap.comp
-            NumberField.LiesOver.continuous_completionMap)
+          ((NumberField.LiesOver.continuous_completionMap w W).comp
+            (NumberField.LiesOver.continuous_completionMap W w))
           continuous_id
       · intro y
         dsimp only [f, g]
@@ -104,8 +108,8 @@ noncomputable def infinitePlaceCompletionCongrEquiv
       change g (f x) = x
       refine InfinitePlace.Completion.induction_on w x ?_ ?_
       · exact isClosed_eq
-          (NumberField.LiesOver.continuous_completionMap.comp
-            NumberField.LiesOver.continuous_completionMap)
+          ((NumberField.LiesOver.continuous_completionMap W w).comp
+            (NumberField.LiesOver.continuous_completionMap w W))
           continuous_id
       · intro y
         dsimp only [f, g]

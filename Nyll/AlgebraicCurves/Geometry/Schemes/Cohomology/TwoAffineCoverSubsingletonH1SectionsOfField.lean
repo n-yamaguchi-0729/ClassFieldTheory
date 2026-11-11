@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Finiteness.Nakayama
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverCechSectionsOfBaseChangeEquiv
+module
+
+public import Mathlib.RingTheory.Finiteness.Nakayama
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverCechSectionsOfBaseChangeEquiv
 
 /-!
 # Scheme Two Affine Open Cover subsingleton H1 sections Of of forall field
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,27 +4,29 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalConstantGeneratedCompatibility
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactorRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalNormNaturality
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativeEmbeddedNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantDecompositionAuxiliaryField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGalois
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGaloisRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.CyclicFixedFieldLift
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.OnePlaceNorm
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalConstantGeneratedCompatibility
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactorRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalNormNaturality
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativeEmbeddedNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantDecompositionAuxiliaryField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGalois
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGaloisRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.CyclicFixedFieldLift
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.OnePlaceNorm
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
 
 /-!
 # Local and global reciprocity for finite abelian function-field extensions
@@ -32,6 +34,10 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Finit
 Cyclic fixed fields and constructed constant extensions reduce the comparison
 to the proved constant-generated case and the actual norm compatibility.
 -/
+
+@[expose] public section
+
+universe u v w x
 
 noncomputable section
 
@@ -42,7 +48,7 @@ open AlgebraicCurves.Places.Proofs.Place_sum_ramificationIndex_mul_inertiaDeg_ex
 namespace FunctionField
 
 private theorem norm_placeIdele_of_restrict_eq
-    {k K F : Type} [Field k] [Field K] [Field F]
+    {k : Type u} {K : Type v} {F : Type w} [Field k] [Field K] [Field F]
     [Algebra k K] [Algebra k F] [Algebra K F] [IsScalarTower k K F]
     [FiniteDimensional K F]
     (v : Place k K) (w : Place k F) (h : w.restrict K = v)
@@ -53,7 +59,7 @@ private theorem norm_placeIdele_of_restrict_eq
   exact IdeleGroup.norm_placeIdele w z
 
 private theorem classNorm_placeIdele_of_restrict_eq
-    {k K F : Type} [Field k] [Field K] [Field F]
+    {k : Type u} {K : Type v} {F : Type w} [Field k] [Field K] [Field F]
     [Algebra k K] [Algebra k F] [Algebra K F] [IsScalarTower k K F]
     [FiniteDimensional K F] [Algebra.IsSeparable K F]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k F]
@@ -72,7 +78,8 @@ private theorem classNorm_placeIdele_of_restrict_eq
         (norm_placeIdele_of_restrict_eq v w h z))
 
 private theorem fixedField_adjoin_restrictScalars
-    {K J Ω C : Type} [Field K] [Field J] [Field Ω] [Field C]
+    {K : Type u} {J : Type v} {Ω : Type w} {C : Type x}
+    [Field K] [Field J] [Field Ω] [Field C]
     [Algebra K J] [Algebra K Ω] [Algebra J Ω] [IsScalarTower K J Ω]
     (E : IntermediateField J Ω) [Algebra C E]
     (τ : Gal(E/K))
@@ -87,7 +94,8 @@ private theorem fixedField_adjoin_restrictScalars
   exact hgen
 
 private theorem localGlobalArtinFactor_restrictScalars_view
-    {k K J Ω : Type} [Field k] [Finite k] [Field K] [Field J] [Field Ω]
+    {k : Type u} {K : Type v} {J : Type w} {Ω : Type x}
+    [Field k] [Finite k] [Field K] [Field J] [Field Ω]
     [Algebra k K] [Algebra k J] [Algebra k Ω]
     [Algebra K J] [Algebra K Ω] [Algebra J Ω]
     [IsScalarTower k K J] [IsScalarTower k K Ω] [IsScalarTower k J Ω]
@@ -109,7 +117,8 @@ private theorem localGlobalArtinFactor_restrictScalars_view
   rfl
 
 private theorem localGlobalArtinFactor_restrictNormal_of_restrict_eq
-    {k K L M : Type} [Field k] [Finite k] [Field K] [Field L] [Field M]
+    {k : Type u} {K : Type v} {L : Type w} {M : Type x}
+    [Field k] [Finite k] [Field K] [Field L] [Field M]
     [Algebra k K] [Algebra k L] [Algebra k M]
     [Algebra K L] [Algebra K M] [Algebra L M]
     [IsScalarTower k K L] [IsScalarTower k K M] [IsScalarTower k L M]
@@ -126,9 +135,55 @@ private theorem localGlobalArtinFactor_restrictNormal_of_restrict_eq
   subst w
   exact localGlobalArtinFactor_restrictNormal W τ σ hτ
 
+private theorem localGlobalArtinFactor_descent_of_comparisons
+    {k : Type u} {K : Type v} {F : Type w} {E : Type x}
+    [Field k] [Finite k] [Field K] [Field F] [Field E]
+    [Algebra k K] [Algebra k F] [Algebra k E]
+    [Algebra K F] [Algebra K E] [Algebra F E]
+    [IsScalarTower k K F] [IsScalarTower k K E] [IsScalarTower k F E]
+    [IsScalarTower K F E]
+    [Algebra (RatFunc k) K] [Algebra (RatFunc k) F]
+    [IsScalarTower k (RatFunc k) K] [IsScalarTower k (RatFunc k) F]
+    [IsScalarTower (RatFunc k) K F] [FunctionField k K] [FunctionField k F]
+    [FiniteDimensional K F] [FiniteDimensional K E] [FiniteDimensional F E]
+    [IsAbelianGalois K E] [IsAbelianGalois F E]
+    [HasPrincipalDivisors k K] [HasPrincipalDivisors k F] [HasPrincipalDivisors k E]
+    (W : Place k E) (τ : IdeleGroup.decompositionGroup (K := F) W)
+    (hcompare : ∀ y : (W.restrict F).adicCompletionˣ,
+      localArtin (K := F) W y = abelianFiniteArtin k F E
+        (IdeleClassGroup.mk (k := k) (K := F) (IdeleGroup.placeIdele (W.restrict F) y)))
+    (hnorm : ∀ y : (W.restrict F).adicCompletionˣ,
+      abelianFiniteArtin k K E
+        (IdeleClassGroup.mk (k := k) (K := K) (IdeleGroup.placeIdele (W.restrict K)
+          (IdeleGroup.localNormOver (W.restrict K) (W.restrict F)
+            (restrict_restrict (F := K) (E := F) W) y))) =
+        (abelianFiniteArtin k F E
+          (IdeleClassGroup.mk (k := k) (K := F)
+            (IdeleGroup.placeIdele (W.restrict F) y))).restrictScalars K) :
+    localGlobalArtinFactor (K := K) W ⟨τ.1.restrictScalars K, τ.2⟩ =
+      τ.1.restrictScalars K := by
+  let τK : IdeleGroup.decompositionGroup (K := K) W := ⟨τ.1.restrictScalars K, τ.2⟩
+  let r : Gal(E/F) → Gal(E/K) := fun σ => σ.restrictScalars K
+  obtain ⟨y, hy⟩ := localDecompositionArtin_surjective (K := F) W τ
+  have hyτ : localArtin (K := F) W y = τ.1 := congrArg Subtype.val hy
+  let b : (W.restrict K).adicCompletionˣ := IdeleGroup.localNormOver
+    (W.restrict K) (W.restrict F) (restrict_restrict (F := K) (E := F) W) y
+  have hlocalNorm : r (localArtin (K := F) W y) = localArtin (K := K) W b :=
+    localArtin_norm_restrictScalars (K := K) (L := F) W y
+  have hbτ : localArtin (K := K) W b = τK.1 :=
+    hlocalNorm.symm.trans (congrArg r hyτ)
+  have haτ : abelianFiniteArtin k K E
+      (IdeleClassGroup.mk (k := k) (K := K) (IdeleGroup.placeIdele (W.restrict K) b)) =
+      τK.1 :=
+    (hnorm y).trans (congrArg r ((hcompare y).symm.trans hyτ))
+  have hbD : localDecompositionArtin (K := K) W b = τK := Subtype.ext hbτ
+  have heval := localGlobalArtinFactor_apply_localDecompositionArtin (K := K) W b
+  exact (congrArg (fun σ : IdeleGroup.decompositionGroup (K := K) W =>
+    localGlobalArtinFactor (K := K) W σ) hbD.symm).trans (heval.trans haτ)
+
 section CyclicReduction
 
-variable {k K C : Type} [Field k] [Finite k] [Field K] [Field C]
+variable {k : Type u} {K : Type v} {C : Type w} [Field k] [Finite k] [Field K] [Field C]
     [Algebra k K] [Algebra k (SeparableClosure K)]
     [IsScalarTower k K (SeparableClosure K)]
     [Algebra k C] [FiniteDimensional k C]
@@ -194,32 +249,13 @@ private theorem localGlobalArtinFactor_constantGenerated_descent
   have hEfield : FunctionField k E :=
     IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
       (k := k) (K := K) (Ω := SeparableClosure K) E
-  let τF : Gal(E/F) := τ.1
-  let τFD : IdeleGroup.decompositionGroup (K := F) W := τ
-  let τK : IdeleGroup.decompositionGroup (K := K) W := ⟨τ.1.restrictScalars K, τ.2⟩
-  obtain ⟨y, hy⟩ := localDecompositionArtin_surjective (K := F) W τFD
-  have hyτ : localArtin (K := F) W y = τF := congrArg Subtype.val hy
-  let c : IdeleClassGroup k F :=
-    IdeleClassGroup.mk (k := k) (K := F) (IdeleGroup.placeIdele (W.restrict F) y)
-  have hyglobal : abelianFiniteArtin k F E c = τF :=
-    (localArtin_constantGenerated (k := k) (C := C) (K := F) (E := E)
-      hgenA W y).symm.trans hyτ
-  have hFK : (W.restrict F).restrict K = W.restrict K :=
-    restrict_restrict (F := K) (E := F) W
-  let b : (W.restrict K).adicCompletionˣ :=
-    IdeleGroup.localNormOver (W.restrict K) (W.restrict F) hFK y
-  have hlocalNorm := localArtin_norm_restrictScalars (K := K) (L := F) W y
-  have hbτ : localArtin (K := K) W b = τK.1 :=
-    hlocalNorm.symm.trans (congrArg (AlgEquiv.restrictScalars K) hyτ)
-  have haτ : abelianFiniteArtin k K E
-      (IdeleClassGroup.mk (k := k) (K := K)
-        (IdeleGroup.placeIdele (W.restrict K) b)) = τK.1 :=
-    (abelianFiniteArtin_localNorm_placeIdele (k := k) (K := K) E F hFE W y).trans
-      (congrArg (AlgEquiv.restrictScalars K) hyglobal)
-  have hbD : localDecompositionArtin (K := K) W b = τK := Subtype.ext hbτ
-  have heval := localGlobalArtinFactor_apply_localDecompositionArtin W b
-  rw [hbD] at heval
-  exact heval.trans haτ
+  have hcompare (y : (W.restrict F).adicCompletionˣ) :
+      localArtin (K := F) W y = abelianFiniteArtin k F E
+        (IdeleClassGroup.mk (k := k) (K := F) (IdeleGroup.placeIdele (W.restrict F) y)) :=
+    localArtin_constantGenerated (k := k) (C := C) (K := F) (E := E) hgenA W y
+  have hnorm := abelianFiniteArtin_localNorm_placeIdele (k := k) (K := K) E F hFE W
+  exact localGlobalArtinFactor_descent_of_comparisons
+    (k := k) (K := K) (F := F) (E := E) W τ hcompare hnorm
 
 /-- A decomposition element whose cyclic fixed field generates the extension
 with finite constants has its expected one-place global Artin value. -/
@@ -259,7 +295,7 @@ end CyclicReduction
 
 section EmbeddedExtension
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra k (SeparableClosure K)]
     [IsScalarTower k K (SeparableClosure K)]
@@ -272,7 +308,7 @@ private theorem localGlobalArtinFactor_auxiliary_restrictScalars
     [IsScalarTower (RatFunc k) K (SeparableClosure K)]
     [IsScalarTower k (RatFunc k) (SeparableClosure K)]
     [IsScalarTower k L (SeparableClosure K)]
-    (C : Type) [Field C] [Algebra k C] [FiniteDimensional k C]
+    (C : Type w) [Field C] [Algebra k C] [FiniteDimensional k C]
     (E : FiniteGaloisIntermediateField L (SeparableClosure K))
     [IsScalarTower k K E] [FiniteDimensional K E] [IsAbelianGalois K E]
     [Algebra C E] [IsScalarTower k C E] [HasPrincipalDivisors k E]
@@ -302,7 +338,7 @@ private theorem localGlobalArtinFactor_auxiliary_descent
     [IsScalarTower (RatFunc k) K (SeparableClosure K)]
     [IsScalarTower k (RatFunc k) (SeparableClosure K)]
     [IsScalarTower k L (SeparableClosure K)]
-    (C : Type) [Field C] [Algebra k C] [FiniteDimensional k C]
+    (C : Type w) [Field C] [Algebra k C] [FiniteDimensional k C]
     (E : FiniteGaloisIntermediateField L (SeparableClosure K))
     [IsScalarTower k K E] [FiniteDimensional K E] [IsAbelianGalois K E]
     [Algebra C E] [IsScalarTower k C E] [HasPrincipalDivisors k E]
@@ -358,7 +394,7 @@ end EmbeddedExtension
 
 section ArbitraryExtension
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

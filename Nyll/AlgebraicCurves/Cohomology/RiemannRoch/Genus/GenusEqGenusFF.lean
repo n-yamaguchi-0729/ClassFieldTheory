@@ -10,14 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
-import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.EllCanonicalDivisorEqGenus
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
+public import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.EllCanonicalDivisorEqGenus
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
 
 /-!
 # Genus eq genus FF
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

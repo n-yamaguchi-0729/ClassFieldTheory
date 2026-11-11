@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal
 
 /-!
 # Internal Hom of module presheaves
@@ -19,6 +21,8 @@ The internal Hom is constructed from families of linear maps compatible with res
 Currying and uncurrying give the tensor-left adjunction, and hence the monoidal closed
 structure on module presheaves over a presheaf of commutative rings.
 -/
+
+@[expose] public section
 
 universe u v' u'
 

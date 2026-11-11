@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Mathlib.RingTheory.AdjoinRoot
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Mathlib.RingTheory.AdjoinRoot
 
 /-!
 # Finite freeness of a Kummer algebra
@@ -14,6 +16,8 @@ The polynomial `X ^ n - a` is monic for positive `n`. Its quotient algebra is
 finite free even when that polynomial is reducible, so no field assumption is
 placed on the Kummer algebra.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

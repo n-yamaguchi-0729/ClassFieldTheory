@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.RestrictedProductUnitsTopology
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.RestrictedProductUnitsTopology
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
 
 /-!
 # The finite idèle topology and adele units
@@ -16,6 +18,8 @@ is continuous for the restricted-product topology on idèles and the graph
 topology on units.  Both the value and inverse-value maps are induced by
 continuous maps on local factors.
 -/
+
+@[expose] public section
 
 open scoped NumberField RestrictedProduct
 open NumberField IsDedekindDomain

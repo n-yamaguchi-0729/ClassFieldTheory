@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.DiscreteValuationRing.Basic
-import Mathlib.RingTheory.RamificationInertia.Ramification
-import Mathlib.NumberTheory.RamificationInertia.Ramification
-import Mathlib.RingTheory.Ideal.Span
+module
+
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.RamificationInertia.Ramification
+public import Mathlib.NumberTheory.RamificationInertia.Ramification
+public import Mathlib.RingTheory.Ideal.Span
 
 /-!
 # Ramification indices as uniformizer orders
@@ -15,6 +17,8 @@ import Mathlib.RingTheory.Ideal.Span
 Identifies both ideal ramification-index conventions with the additive valuation of a mapped
 base uniformizer for an injective map of discrete valuation rings.
 -/
+
+@[expose] public section
 
 namespace RamificationTheory.HilbertRamification.DiscreteValuationRing
 

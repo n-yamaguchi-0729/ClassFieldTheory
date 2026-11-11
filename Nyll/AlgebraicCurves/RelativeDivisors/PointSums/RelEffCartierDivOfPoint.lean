@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
 
 /-!
 # Relative divisors defined by sections
 
 Constructs the divisor associated to the graph of a section over the base.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits
 

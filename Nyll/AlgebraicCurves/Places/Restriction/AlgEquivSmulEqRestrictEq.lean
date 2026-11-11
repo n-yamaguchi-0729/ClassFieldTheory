@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Mathlib.RingTheory.Invariant.Basic
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Mathlib.FieldTheory.Galois.Basic
+module
+
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.RingTheory.Invariant.Basic
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Mathlib.FieldTheory.Galois.Basic
 
 /-!
 # Place exists alg Equiv smul eq of restrict eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

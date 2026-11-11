@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
+module
 
-import Nyll.SchemeTheory.RingTheory.Polynomial.HomogeneousIdealHomogeneousPosMemNotMem
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+
+public import Nyll.SchemeTheory.RingTheory.Polynomial.HomogeneousIdealHomogeneousPosMemNotMem
 
 /-!
 # Affine neighbourhoods of finitely many points over projective space
@@ -22,6 +24,8 @@ import Nyll.SchemeTheory.RingTheory.Polynomial.HomogeneousIdealHomogeneousPosMem
 Finitely many points of a scheme affine over a projective spectrum lie in a common
 affine open, obtained from a homogeneous basic open of the projective spectrum.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,15 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Fin
+module
+
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Fin
 
 /-!
 # Summing over a finite cyclic group
 
 Enumerate an actual finite group by the powers of a proved generator.
 -/
+
+@[expose] public section
 
 namespace CyclicAction
 

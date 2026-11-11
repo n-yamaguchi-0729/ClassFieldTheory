@@ -4,16 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Algebra.ZMod
-import Mathlib.Algebra.CharP.Algebra
-import Mathlib.Algebra.CharP.Lemmas
-import Mathlib.Algebra.Polynomial.Derivative
-import Mathlib.Algebra.Polynomial.Monic
-import Mathlib.Algebra.Polynomial.Splits
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.Separable
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.Algebra.Algebra.ZMod
+public import Mathlib.Algebra.CharP.Algebra
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.Algebra.Polynomial.Derivative
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.Algebra.Polynomial.Splits
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.Tactic.Ring
 
 /-!
 # Splitting an Artin--Schreier polynomial from one root
@@ -22,6 +24,8 @@ In characteristic `p`, translating `X ^ p - X` by a root gives the full
 splitting of `X ^ p - X - C a`. This source is purely algebraic and places
 no irreducibility, degree, normality, or valuation hypothesis on the field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

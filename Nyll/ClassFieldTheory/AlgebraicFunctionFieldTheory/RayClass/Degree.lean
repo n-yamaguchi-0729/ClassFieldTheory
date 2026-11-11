@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Topology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Compact
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Topology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Compact
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # The finite degree-zero part of a ray class group
@@ -14,6 +17,8 @@ Congruence ideles have zero divisor and hence zero degree. Degree descends to th
 full ray quotient. Its kernel is a discrete image of the compact degree-zero idele
 class group, and is therefore finite. The full ray class group retains its degree part.
 -/
+
+@[expose] public section
 
 noncomputable section
 

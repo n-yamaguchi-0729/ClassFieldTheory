@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
 
 /-!
 The square of the graded-module Cech differential is zero.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -70,7 +74,10 @@ theorem GradedModule.d_sq' (i : ℕ) :
     rintro ⟨a', b'⟩ hab'
     have hlt : (b' : ℕ) < (a' : ℕ) := by
       simpa [S, Finset.compl_filter, Finset.mem_filter, not_le] using hab'
-    have ha'0 : a' ≠ 0 := fun h => by simp [h] at hlt
+    have ha'0 : a' ≠ 0 := by
+      intro h
+      have hlt0 : (b' : ℕ) < 0 := by simpa only [h, Fin.val_zero] using hlt
+      exact (Nat.not_lt_zero _) hlt0
     refine ⟨(Fin.castSucc b', a'.pred ha'0), ?_, ?_⟩
     · simp only [S, Finset.mem_filter, Finset.mem_univ, true_and, Fin.val_castSucc,
         Fin.val_pred]; omega
@@ -81,7 +88,7 @@ theorem GradedModule.d_sq' (i : ℕ) :
     have hba : (a : ℕ) ≤ (b : ℕ) := (Finset.mem_filter.mp hab).2
     set a' : Fin (i + 2) := Fin.castLT a (Nat.lt_of_le_of_lt hba b.isLt)
     have halt : a' ≤ b := Fin.le_def.mpr (by simpa [a'] using hba)
-    have hacs : a'.castSucc = a := Fin.eq_of_val_eq (by simp [a'])
+    have hacs : a'.castSucc = a := Fin.eq_of_val_eq rfl
     have hface :
         Idx.face n (Idx.face n s a) b
           = Idx.face n (Idx.face n s b.succ) a' := by

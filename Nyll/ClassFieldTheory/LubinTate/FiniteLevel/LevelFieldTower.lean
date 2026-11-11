@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelAutomorphisms
-import Mathlib.FieldTheory.SplittingField.IsSplittingField
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelAutomorphisms
+public import Mathlib.FieldTheory.SplittingField.IsSplittingField
 
 /-!
 # The tower of standard Lubin--Tate level fields
@@ -16,6 +18,8 @@ that the resulting simple fields nevertheless form an increasing tower.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

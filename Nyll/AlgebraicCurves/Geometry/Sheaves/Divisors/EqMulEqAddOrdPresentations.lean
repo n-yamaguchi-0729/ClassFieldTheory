@@ -10,24 +10,28 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Modules.EqMulPresentations
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.LocalSections.MemLSpaceOnAdicValuationEq
-import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
-import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
-import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
-import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Modules.EqMulPresentations
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.LocalSections.MemLSpaceOnAdicValuationEq
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+public import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
+public import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Divisors of equivalent function-field presentations
@@ -35,6 +39,8 @@ import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
 The rational function relating two function-field presentations of a module on a
 smooth proper curve also relates their representing divisors by its orders at the places.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -92,9 +98,9 @@ theorem exists_not_mem_placesOf {K : Type u} [Field K] {X : Scheme.{u}} (x : X �
     (CommRingCat.of K))
     [IsIntegral X] [IsProper x] [SmoothOfRelativeDimension 1 x] (U : X.Opens) (hU : IsAffineOpen
         U) [hUne : Nonempty U] :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     ∃ v₀ : Place K X.functionField, v₀ ∉ placesOf x U := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have hNA := not_isAffine_of_isProper_of_smoothOfRelativeDimension_one x
   have hne : U ≠ ⊤ := by
     intro h
@@ -170,12 +176,12 @@ theorem AlgebraicGeometry.Scheme.Modules.exists_eq_mul_and_eq_add_ord_of_present
         Set.range (φ' U) = (AlgebraicCurve.lSpaceOn (AlgebraicCurve.placesOf x U) D' : Set
             X.functionField))
     (hsec : ∃ (U : X.Opens) (m : Γ(M, U)), m ≠ 0) :
-    letI := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
     ∃ g : X.functionField, g ≠ 0 ∧
       (∀ (U : X.Opens) [Nonempty U] (m : Γ(M, U)), φ' U m = g * φ U m) ∧
       (∀ v : AlgebraicCurve.Place K X.functionField, D v = D' v + v.ord g) ∧
       AlgebraicCurve.Divisor.IsPrincipal (D - D') := by
-  let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have hcurve : IsCurveOver K X.functionField :=
     isCurveOver_of_isIntegral_of_smoothOfRelativeDimension_one x (RingEquiv.refl _) (fun _ => rfl)
   have : Algebra.EssFiniteType K X.functionField := essFiniteType_functionField x

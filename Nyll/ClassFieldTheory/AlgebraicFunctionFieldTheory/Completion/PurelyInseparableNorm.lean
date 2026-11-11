@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.TensorProduct.Finite
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PurelyInseparableDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
-import Nyll.ValuedFieldTheory.Valuation.Completion.BaseChangeNormTrace
-import Nyll.ValuedFieldTheory.Valuation.Completion.DenseTensorProduct
+module
+
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PurelyInseparableDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.ValuedFieldTheory.Valuation.Completion.BaseChangeNormTrace
+public import Nyll.ValuedFieldTheory.Valuation.Completion.DenseTensorProduct
 
 /-!
 # Principal norms for purely inseparable extensions
@@ -18,13 +20,15 @@ preserves the purely inseparable degree. The general scalar-extension formula
 for algebra norms therefore gives the principal local norm formula.
 -/
 
+@[expose] public section
+
 noncomputable section
 open AlgebraicCurve
 open scoped AlgebraicCurve.Place TensorProduct WithZero
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsPurelyInseparable K L]

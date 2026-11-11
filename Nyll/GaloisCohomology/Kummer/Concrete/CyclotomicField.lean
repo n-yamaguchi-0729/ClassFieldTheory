@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.Cyclotomic.Basic
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.Cyclotomic.Basic
 
 /-!
 # Concrete cyclotomic fields
@@ -15,14 +17,18 @@ model: it admits a primitive generator of the defining order, and divisibility
 of orders induces an algebra homomorphism between the corresponding fields.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace KummerTheory
 
+universe u
+
 /-- A concrete cyclotomic field has a primitive generator of its defining
 order. -/
 theorem exists_primitiveRoot_adjoin_eq_top_cyclotomicField
-    (K : Type) [Field K] [CharZero K] (m : ℕ) (hm : 0 < m) :
+    (K : Type u) [Field K] [CharZero K] (m : ℕ) (hm : 0 < m) :
     ∃ ζ : CyclotomicField m K,
       IsPrimitiveRoot ζ m ∧ Algebra.adjoin K ({ζ} : Set _) = ⊤ := by
   let : NeZero m := ⟨hm.ne'⟩
@@ -35,7 +41,7 @@ theorem exists_primitiveRoot_adjoin_eq_top_cyclotomicField
 /-- If `a` divides `b`, the concrete cyclotomic field of order `a` embeds in
 the concrete cyclotomic field of order `b`. -/
 theorem nonempty_algHom_cyclotomicField_of_dvd
-    (K : Type) [Field K] [CharZero K]
+    (K : Type u) [Field K] [CharZero K]
     (a b : ℕ) (ha : 0 < a) (hb : 0 < b) (hab : a ∣ b) :
     Nonempty (CyclotomicField a K →ₐ[K] CyclotomicField b K) := by
   let : NeZero a := ⟨ha.ne'⟩

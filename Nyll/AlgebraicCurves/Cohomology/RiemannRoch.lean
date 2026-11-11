@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 
 /-!
 Function-field Riemann--Roch and Weil duality statements.
 The index formula, adelic duality and differential-space dimensions are compared.
 -/
+
+@[expose] public section
 
 noncomputable section
 

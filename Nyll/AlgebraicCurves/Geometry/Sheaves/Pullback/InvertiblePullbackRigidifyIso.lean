@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Invertible.Rigidify
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
+module
+
+public import Nyll.SchemeTheory.Modules.Invertible.Rigidify
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
 
 /-!
 # Base change of rigidification
@@ -21,6 +23,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
 Rigidification of an invertible module commutes with pullback along a compatible square
 of structure morphisms and sections.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

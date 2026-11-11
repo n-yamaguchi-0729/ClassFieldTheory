@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Module.Basic
-import Mathlib.Algebra.BigOperators.GroupWithZero.Action
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Module.Basic
+public import Mathlib.Algebra.BigOperators.GroupWithZero.Action
 
 /-!
 # Periodic primitives from the Lang operator
@@ -15,6 +17,8 @@ If the difference between a cyclic action and the identity is surjective on an
 ambient module, a zero-norm element has a primitive fixed by the corresponding
 power. The proof uses the actual telescoping cyclic sum.
 -/
+
+@[expose] public section
 
 noncomputable section
 

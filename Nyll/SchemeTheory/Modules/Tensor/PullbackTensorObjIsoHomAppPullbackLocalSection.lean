@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PresheafPullbackMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocalSection
-import Nyll.SchemeTheory.Modules.Tensor.TensorSectionSheafification
-import Nyll.SchemeTheory.Modules.Tensor.TensorSectionMaps
+module
+
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PresheafPullbackMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocalSection
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSectionSheafification
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSectionMaps
 /-!
 # Scheme Modules pullback Tensor Obj Iso hom app pullback Local Section
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -67,7 +71,8 @@ local instance : (PresheafOfModules.pushforward.{u}
 local instance : (SheafOfModules.pushforward.{u} f.toRingCatSheafHom).IsRightAdjoint :=
   (Modules.pullbackPushforwardAdjunction f).isRightAdjoint
 
-private abbrev _root_.AlgebraicGeometry.Scheme.Modules.PullbackTensorSections.adj (Z : Scheme.{u})
+/-- The sheafification adjunction for modules on a scheme. -/
+abbrev _root_.AlgebraicGeometry.Scheme.Modules.PullbackTensorSections.adj (Z : Scheme.{u})
   : Modules.sheafify Z ⊣
     SheafOfModules.toPMod Z.sheaf.obj Z.ringCatSheaf.property :=
   SheafOfModules.sheafifyAdj Z.sheaf.obj Z.ringCatSheaf.property
@@ -77,7 +82,8 @@ open _root_.AlgebraicGeometry.Scheme.Modules.PullbackTensorSections
 abbrev ι (Z : Scheme.{u}) : Z.Modules ⥤ Z.PresheafOfModules :=
   SheafOfModules.toPMod Z.sheaf.obj Z.ringCatSheaf.property
 
-private abbrev _root_.AlgebraicGeometry.Scheme.Modules.PullbackTensorSections.pf :
+/-- The pushforward functor on presheaves of modules along the scheme morphism. -/
+abbrev _root_.AlgebraicGeometry.Scheme.Modules.PullbackTensorSections.pf :
   X.PresheafOfModules ⥤ Y.PresheafOfModules :=
   PresheafOfModules.PullbackMonoidal.pf (TopologicalSpace.Opens.map f.base)
   (R := X.sheaf.obj) (S := Y.sheaf.obj) f.c

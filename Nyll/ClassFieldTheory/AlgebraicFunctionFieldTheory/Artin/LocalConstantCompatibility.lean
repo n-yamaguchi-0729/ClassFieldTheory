@@ -13,6 +13,7 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionUnramified
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
+import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
 
 /-!
 # Local reciprocity on actual constant extensions
@@ -31,7 +32,7 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k K Ω : Type*) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]

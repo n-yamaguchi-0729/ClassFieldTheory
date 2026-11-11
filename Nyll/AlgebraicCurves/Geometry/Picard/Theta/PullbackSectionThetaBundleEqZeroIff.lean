@@ -10,39 +10,41 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardFibre
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeComposition
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.SchemeTheory.Sheaves.IdealSheafComap
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.IsoBaseChangeHomIsAffineHom
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.PullbackSectionDualDetEqZeroIffNotIso
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.IsPullbackBaseChangeSnd
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.IsIsoBaseChangeHomPushforward
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardThickeningSectionTwistDetIso
-import Nyll.AlgebraicCurves.Geometry.Schemes.Sections.FinrankSectionsPushforwardThickeningInjectiveUnitAppIff
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardFibre
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeComposition
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.IsoBaseChangeHomIsAffineHom
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.PullbackSectionDualDetEqZeroIffNotIso
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.IsPullbackBaseChangeSnd
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.IsIsoBaseChangeHomPushforward
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardThickeningSectionTwistDetIso
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Sections.FinrankSectionsPushforwardThickeningInjectiveUnitAppIff
 
 /-!
 # The theta section and fibrewise nonvanishing of sections
@@ -50,6 +52,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Sections.FinrankSectionsPushforward
 Compare restriction to a thickened section with fibre cohomology. The determinant
 of the evaluation map defines a theta section whose zero locus is detected by H0.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -459,7 +463,7 @@ theorem exists_addEquiv_comm_unit (k : Type u) [Field k] {C : Scheme.{u}}
   have hN : Scheme.Modules.IsInvertible ((Scheme.Modules.pullback ((sectionIdeal c ε t) ^
     n).subschemeι).obj (M.L ⊗ sectionTwist c ε t r)) := hG.pullback _
   have hβi := Scheme.Modules.isIso_baseChangeHom_of_isAffineHom htop _ hN.exists_trivialization
-  have hτ : IsIso ((Scheme.Modules.pullbackTwoSquare htop.w).natTrans.app (M.L ⊗ sectionTwist c ε t
+  have hτ : IsIso ((Scheme.Modules.pullbackTwoSquare htop.w).app (M.L ⊗ sectionTwist c ε t
     r)) := by
     change IsIso (((Scheme.Modules.pullbackComp _ _).hom ≫ (Scheme.Modules.pullbackCongr _).hom ≫
       (Scheme.Modules.pullbackComp _ _).inv).app _)
@@ -481,7 +485,7 @@ theorem exists_addEquiv_comm_unit (k : Type u) [Field k] {C : Scheme.{u}}
     ((sectionIdeal c ε t) ^ n).subschemeι).obj (M.L ⊗ sectionTwist c ε t r)))).trans
       ((appTopAddEquiv (inv ((Scheme.Modules.pushforward (((rigSection c (s ≫ t) ε).ker) ^
         n).subschemeι).map
-        ((Scheme.Modules.pullbackTwoSquare htop.w).natTrans.app (M.L ⊗ sectionTwist c ε t
+        ((Scheme.Modules.pullbackTwoSquare htop.w).app (M.L ⊗ sectionTwist c ε t
           r))))).trans
         (appTopAddEquivOfIso ((Scheme.Modules.pushforward (((rigSection c (s ≫ t) ε).ker) ^
           n).subschemeι).mapIso
@@ -496,7 +500,7 @@ theorem exists_addEquiv_comm_unit (k : Type u) [Field k] {C : Scheme.{u}}
           ⊗ sectionTwist c ε t r))).app ⊤ x))
     (IsIso.hom_inv_id ((Scheme.Modules.pushforward (((rigSection c (s ≫ t) ε).ker) ^
       n).subschemeι).map
-        ((Scheme.Modules.pullbackTwoSquare htop.w).natTrans.app (M.L ⊗ sectionTwist c ε t r))))
+        ((Scheme.Modules.pullbackTwoSquare htop.w).app (M.L ⊗ sectionTwist c ε t r))))
   simp only [Scheme.Modules.Hom.comp_app, CategoryTheory.comp_apply,
     Functor.id_map, Functor.comp_map] at h1 h2 h3
   have T1 := congrArg (fun z =>
@@ -505,7 +509,7 @@ theorem exists_addEquiv_comm_unit (k : Type u) [Field k] {C : Scheme.{u}}
         ((Scheme.Modules.pullback (((rigSection c (s ≫ t) ε).ker) ^ n).subschemeι).mapIso e))
       (appTopAddEquiv (inv ((Scheme.Modules.pushforward (((rigSection c (s ≫ t) ε).ker) ^
         n).subschemeι).map
-        ((Scheme.Modules.pullbackTwoSquare htop.w).natTrans.app (M.L ⊗ sectionTwist c ε t r)))) z))
+        ((Scheme.Modules.pullbackTwoSquare htop.w).app (M.L ⊗ sectionTwist c ε t r)))) z))
           h1
   have T2 := congrArg (fun z =>
       appTopAddEquivOfIso ((Scheme.Modules.pushforward (((rigSection c (s ≫ t) ε).ker) ^

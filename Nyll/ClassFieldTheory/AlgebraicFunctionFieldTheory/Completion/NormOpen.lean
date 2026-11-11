@@ -4,10 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
 
 /-!
 # Open local norm images and unramified integral lifting
@@ -17,6 +24,10 @@ one its restriction to the actual integral units is surjective. The comparison
 with local class field theory uses the valuative relation of the existing adic
 valuation and retains the original completions and their topologies.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -40,7 +51,7 @@ theorem completionInteger_eq {k K : Type*} [Field k] [Field K]
   exact (ValuativeRel.isEquiv (ValuativeRel.valuation v.adicCompletion)
     (Valued.v : Valuation v.adicCompletion ℤᵐ⁰)).le_one_iff_le_one
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
@@ -119,10 +130,9 @@ private theorem completionCanonical_span_uniformizer {k F : Type*}
       Valued.v (π : v.adicCompletion) =
         (↑(Multiplicative.ofAdd (-1 : ℤ)) : ℤᵐ⁰) →
       IsLocalRing.maximalIdeal 𝒪[v.adicCompletion] = Ideal.span {π} := by
-  let : ValuativeRel v.adicCompletion := placeCompletionValuativeRel v
+  intro sharedOwner1
   have : (Valued.v : Valuation v.adicCompletion ℤᵐ⁰).Compatible :=
     Valuation.Compatible.ofValuation (Valued.v : Valuation v.adicCompletion ℤᵐ⁰)
-  dsimp only
   intro π hπ
   ext x
   rw [IsLocalRing.mem_maximalIdeal]

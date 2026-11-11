@@ -10,12 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.LocalProperties.Exactness
-import Nyll.SchemeTheory.Modules.Invertible.Invertible
-import Nyll.SchemeTheory.Modules.Frames.Frames
-import Nyll.SchemeTheory.Modules.Frames.FrameFromTrivialization
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Mathlib.RingTheory.LocalProperties.Exactness
+public import Nyll.SchemeTheory.Modules.Invertible.Invertible
+public import Nyll.SchemeTheory.Modules.Frames.Frames
+public import Nyll.SchemeTheory.Modules.Frames.FrameFromTrivialization
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # Extended sections of an invertible module and pullback
@@ -23,6 +25,8 @@ import Mathlib.Util.WithWeakNamespace
 For an affine open with affine inverse image, extending sections of an invertible
 module gives the sections of its pullback, with the prescribed unit formula.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -173,7 +177,8 @@ theorem liftFun_map (hs : Scheme.Modules.IsFrameOn s V)
     Scheme.Modules.map_smul, map_map, map_coef]
 
 variable (P s) in
-private def _root_.P2mPullbackSectionsSol.lift (hs : Scheme.Modules.IsFrameOn s V)
+/-- The module morphism extending a section from the chosen framing open. -/
+def _root_.P2mPullbackSectionsSol.lift (hs : Scheme.Modules.IsFrameOn s V)
     (hP : ∀ W : X.Opens, Function.Bijective (P.presheaf.map (homOfLE (inf_le_left : W ⊓ V ≤ W)).op))
     (y : Γ(P, V)) : L ⟶ P :=
   ⟨{ app := fun W => ModuleCat.ofHom

@@ -10,25 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBaseChangeEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverToH0Bijective
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.TensorProduct.Prod
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBaseChangeEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverToH0Bijective
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
 
 /-!
 The base-changed structure-sheaf Cech kernel has dimension one for a smooth proper integral curve.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

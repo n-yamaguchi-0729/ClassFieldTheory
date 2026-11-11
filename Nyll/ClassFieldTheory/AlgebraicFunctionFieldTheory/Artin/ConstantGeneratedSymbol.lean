@@ -4,14 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finite.Basic
-import Nyll.ClassFieldTheory.Algebra.GaloisPresentationValue
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationConstantSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddingIndependence
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantFrobenius
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGeneratedUnramified
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
+module
+
+public import Mathlib.FieldTheory.Finite.Basic
+public import Nyll.ClassFieldTheory.Algebra.GaloisPresentationValue
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationConstantSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddingIndependence
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantFrobenius
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGeneratedUnramified
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Native Artin action in constant-generated extensions
@@ -22,6 +27,10 @@ by the normalized idele degree. The formula follows by evaluating the
 concrete fixed-field presentation in its ambient separable closure.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField
@@ -29,7 +38,8 @@ namespace FunctionField
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 open scoped IsMulCommutative
 
-variable (k K E : Type) {C : Type} [Field k] [Finite k] [Field K] [Field E] [Field C]
+variable (k : Type u) (K : Type v) (E : Type w) {C : Type x}
+    [Field k] [Finite k] [Field K] [Field E] [Field C]
     [Algebra k K] [Algebra k E] [Algebra K E] [IsScalarTower k K E]
     [Algebra k C] [Algebra C E] [IsScalarTower k C E] [FiniteDimensional k C]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]

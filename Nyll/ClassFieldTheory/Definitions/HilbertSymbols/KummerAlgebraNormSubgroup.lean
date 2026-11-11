@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Mathlib.RingTheory.Norm.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Mathlib.RingTheory.Norm.Basic
 
 /-!
 # Norm subgroup of a Kummer algebra
@@ -14,6 +16,8 @@ This is the image of the determinant norm on units of `K[X] / (X^n - a)`.
 The algebra need not be a field, so this subgroup is defined without any
 irreducibility assumption on the polynomial.
 -/
+
+@[expose] public section
 
 noncomputable section
 

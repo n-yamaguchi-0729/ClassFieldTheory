@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddingIndependence
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddingIndependence
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
 
 /-!
 # Restriction in arbitrary finite Galois towers
@@ -16,6 +19,10 @@ to the original fields. Embedding independence identifies the resulting
 maps with the intrinsic finite Artin maps.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField
@@ -23,7 +30,8 @@ namespace FunctionField
 open ClassFormation LocalClassFieldTheory
 open scoped IsMulCommutative
 
-variable (k K L M : Type) [Field k] [Finite k] [Field K] [Field L] [Field M]
+variable (k : Type u) (K : Type v) (L : Type w) (M : Type x)
+    [Field k] [Finite k] [Field K] [Field L] [Field M]
     [Algebra k K] [Algebra k L] [Algebra k M] [Algebra K L] [Algebra K M]
     [Algebra L M] [IsScalarTower k K L] [IsScalarTower k K M] [IsScalarTower K L M]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]

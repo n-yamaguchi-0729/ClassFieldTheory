@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.MathlibInterface
-import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocityQuotientEquivOfArtin
-import Mathlib.FieldTheory.KrullTopology
-import Mathlib.Topology.Algebra.Constructions
-import Mathlib.Topology.Algebra.Group.Quotient
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
+public import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocityQuotientEquivOfArtin
+public import Mathlib.FieldTheory.KrullTopology
+public import Mathlib.Topology.Algebra.Constructions
+public import Mathlib.Topology.Algebra.Group.Quotient
 
 /-!
 # The local norm quotient is induced by the Artin map
@@ -20,14 +22,18 @@ canonical Artin map is chosen, and its quotient isomorphism is characterized
 uniquely by its values on classes of nonzero field elements.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- The continuous norm-quotient equivalence is uniquely determined by the
 canonical finite local Artin map, with the expected value on every class. -/
 theorem finiteAbelianLocalReciprocity_quotientEquiv_mk
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
@@ -37,14 +43,9 @@ theorem finiteAbelianLocalReciprocity_quotientEquiv_mk
       artin.ker = fieldNormSubgroup K L ∧
       ∃! e : FieldNormQuotient K L ≃ₜ* (L ≃ₐ[K] L),
         ∀ x : Kˣ, e (QuotientGroup.mk' (fieldNormSubgroup K L) x) = artin x := by
-  let artin := LocalClassFieldTheory.abelianLocalArtinMap K L
-  have hker : artin.ker = fieldNormSubgroup K L := by
-    change (LocalClassFieldTheory.abelianLocalArtinMap K L).toMonoidHom.ker =
-      LocalFieldTheory.localNormSubgroup K L
-    exact LocalClassFieldTheory.abelianLocalArtinMap_ker K L
-  exact ⟨artin, LocalClassFieldTheory.abelianLocalArtinMap_surjective K L,
-    hker,
-    finiteAbelianLocalReciprocity_quotientEquiv_of_artin K L artin
-      (LocalClassFieldTheory.abelianLocalArtinMap_surjective K L) hker⟩
+  exact ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L,
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L,
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K L,
+    LocalClassFieldTheory.Universe.quotientEquiv_existsUnique K L⟩
 
 end ClassFieldTheory

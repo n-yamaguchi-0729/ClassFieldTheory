@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.HasseNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ClassHerbrand
-import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.TateComparison
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.HasseNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ClassHerbrand
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.TateComparison
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.IntegralTateComparison
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 
 /-!
 # The cyclic class-field axiom for actual function-field idele classes
@@ -16,6 +20,10 @@ the proved Herbrand quotient this computes the norm index and both low-degree
 Tate groups, without requiring an intermediate-field presentation.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField.IdeleClassGroup
@@ -23,7 +31,9 @@ namespace FunctionField.IdeleClassGroup
 open AlgebraicCurve CyclicCohomology
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+section Arithmetic
+
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]
@@ -57,6 +67,48 @@ theorem card_normQuotient_eq_finrank
     Nat.card_unique (α := HerbrandHMinusOne Gal(L/K) (IdeleClassGroup k L) g), mul_one]
   exact IsGalois.card_aut_eq_finrank K L
 
+/-- The actual integral Tate groups have the arithmetic class-field cardinalities
+for independent original constant, base-field and upper-field universes. -/
+theorem integral_tate_lowDegree_finite_card_eq_finrank
+    (g : Gal(L/K)) (hg : ∀ σ : Gal(L/K), σ ∈ Subgroup.zpowers g) :
+    let A := Rep.ofMulDistribMulAction Gal(L/K) (IdeleClassGroup k L)
+    Finite (IntegralGroupCohomology.Universe.tate A 0) ∧
+      Finite (IntegralGroupCohomology.Universe.tate A (-1)) ∧
+      Nat.card (IntegralGroupCohomology.Universe.tate A 0) = Module.finrank K L ∧
+      Nat.card (IntegralGroupCohomology.Universe.tate A (-1)) = 1 := by
+  intro A
+  obtain ⟨hC, _⟩ := herbrandQuotient_eq_card (k := k) g hg
+  have hfinite : Finite (HerbrandH0 Gal(L/K) (IdeleClassGroup k L)) := hC.1
+  have hminus : Subsingleton (HerbrandHMinusOne Gal(L/K) (IdeleClassGroup k L) g) :=
+    herbrandHMinusOne_subsingleton (k := k) g hg
+  let e0 := (integralTateH0EquivHerbrandH0 (G := Gal(L/K))
+    (A := IdeleClassGroup k L) g hg).toEquiv
+  let em := (integralTateHMinusOneEquivHerbrandHMinusOne (G := Gal(L/K))
+    (A := IdeleClassGroup k L) g hg).toEquiv
+  have h0finite : Finite (IntegralGroupCohomology.Universe.tate A 0) :=
+    Finite.of_injective e0 e0.injective
+  have hmfinite : Finite (IntegralGroupCohomology.Universe.tate A (-1)) :=
+    Finite.of_injective em em.injective
+  refine ⟨h0finite, hmfinite, ?_, ?_⟩
+  · rw [Nat.card_congr e0]
+    change Nat.card (HerbrandH0 Gal(L/K) (IdeleClassGroup k L)) = Module.finrank K L
+    rw [← Nat.card_congr (normQuotientEquivHerbrandH0 (k := k) (K := K) (L := L)).toEquiv]
+    exact card_normQuotient_eq_finrank g hg
+  · rw [Nat.card_congr em]
+    exact Nat.card_unique
+
+end Arithmetic
+
+section NativeCohomology
+
+variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
+    [FiniteDimensional K L] [IsGalois K L]
+    [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
+
+variable [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]
+
 /-- Finiteness and exact cardinalities in the actual Tate-cohomology formulation
 of the cyclic class-field axiom. -/
 theorem tate_lowDegree_finite_card_eq_finrank
@@ -83,5 +135,7 @@ theorem tate_lowDegree_finite_card_eq_finrank
     exact card_normQuotient_eq_finrank g hg
   · rw [Nat.card_congr em]
     exact Nat.card_unique
+
+end NativeCohomology
 
 end FunctionField.IdeleClassGroup

@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+module
 
-import Nyll.SchemeTheory.RingTheory.Dimension.SubalgebraNoetherianDimensionLEOne
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+
+public import Nyll.SchemeTheory.RingTheory.Dimension.SubalgebraNoetherianDimensionLEOne
 
 /-!
 # Valuation Subring is Discrete Valuation Ring of algebra Map mem of finite
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

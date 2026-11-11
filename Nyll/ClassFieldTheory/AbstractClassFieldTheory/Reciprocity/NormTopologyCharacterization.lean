@@ -17,18 +17,19 @@ reciprocity isomorphism of the abstract reciprocity theorem.  Parts (ii)--(iv) a
 imported valuation-, norm-, and norm-topology modules.
 -/
 
+universe u v
+
 noncomputable section
 
 namespace ClassFormation
 
 open ClassFormation CyclicCohomology KummerTheory
 
--- Mathlib's `Rep ℤ G` currently fixes the acting group to universe zero.
-variable {G : IntegralRepGroupType} [Group G] [TopologicalSpace G]
+variable {G : Type u} [Group G] [TopologicalSpace G]
 
 namespace ValuationData
 
-variable {D : DegreeData G} {A : Rep ℤ G}
+variable {D : DegreeData G} {A : Rep.{v} ℤ G}
 
 /-- The norm-subgroup basis characterization: in the norm topology, the open subgroups are
 exactly the closed subgroups of finite index.  Finiteness of every defining

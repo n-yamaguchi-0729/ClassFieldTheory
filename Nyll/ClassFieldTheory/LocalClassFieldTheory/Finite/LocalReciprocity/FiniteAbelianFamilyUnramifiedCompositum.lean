@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
-import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.CompositumRestriction
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.CompositumRestriction
 
 /-!
 # An unramified factor large enough for finite Artin rigidity
@@ -21,6 +23,10 @@ value of a valuation-one unit to a generator. These are the two field-level
 inputs to cyclic-quotient rigidity.
 -/
 
+@[expose] public section
+
+universe u
+
 noncomputable section
 
 namespace LocalClassFieldTheory
@@ -31,7 +37,7 @@ open scoped ValuativeRel
 /-- The Galois group of the compositum is annihilated by the unramified
 degree when that degree is divisible by the size of the first Galois group. -/
 theorem finiteAbelianUnramifiedCompositum_pow_eq_one
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (E : IntermediateField K (SeparableClosure K))
     [FiniteDimensional K E] [IsAbelianGalois K E]
@@ -65,7 +71,7 @@ theorem finiteAbelianUnramifiedCompositum_pow_eq_one
 /-- Restriction of the canonical local Artin value of a valuation-one unit
 generates the Galois group of the standard unramified extension. -/
 theorem finiteAbelianArtin_unramifiedRestriction_zpowers_eq_top
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (d : ℕ) (hd : 0 < d)
     (F : IntermediateField K (SeparableClosure K))
@@ -77,24 +83,24 @@ theorem finiteAbelianArtin_unramifiedRestriction_zpowers_eq_top
     Subgroup.zpowers
       (intermediateFieldRestrictNormalHom
         (localFiniteUnramifiedField K d hd) F hUF
-        (abelianLocalArtinMap K F u)) = ⊤ := by
+        (Universe.abelianLocalArtinMap K F u)) = ⊤ := by
   let U := localFiniteUnramifiedField K d hd
   let rU := intermediateFieldRestrictNormalHom U F hUF
-  have hrestrict : rU (abelianLocalArtinMap K F u) =
+  have hrestrict : rU (Universe.abelianLocalArtinMap K F u) =
       arithmeticFrobeniusOfUnramifiedValuation K U := by
     have h := DFunLike.congr_fun
-      (abelianLocalArtinMap_restrict K U F hUF) u
-    change rU (abelianLocalArtinMap K F u) =
-      abelianLocalArtinMap K U u at h
-    exact h.trans (ClassFieldTheory.finiteAbelianLocalArtinMap_uniformizer K U u hu)
+      (Universe.abelianLocalArtinMap_restrict K U F hUF) u
+    change rU (Universe.abelianLocalArtinMap K F u) =
+      Universe.abelianLocalArtinMap K U u at h
+    exact h.trans (Universe.abelianLocalArtinMap_uniformizer K U u hu)
   have hUcard : Nat.card (U ≃ₐ[K] U) = d := by
     rw [IsGalois.card_aut_eq_finrank]
     exact localFiniteUnramifiedField_finrank K d hd
   apply (Subgroup.card_eq_iff_eq_top
-    (Subgroup.zpowers (rU (abelianLocalArtinMap K F u)))).mp
+    (Subgroup.zpowers (rU (Universe.abelianLocalArtinMap K F u)))).mp
   calc
-    Nat.card (Subgroup.zpowers (rU (abelianLocalArtinMap K F u))) =
-        orderOf (rU (abelianLocalArtinMap K F u)) := Nat.card_zpowers _
+    Nat.card (Subgroup.zpowers (rU (Universe.abelianLocalArtinMap K F u))) =
+        orderOf (rU (Universe.abelianLocalArtinMap K F u)) := Nat.card_zpowers _
     _ = d := by
       rw [hrestrict]
       exact localFiniteUnramifiedField_arithmeticFrobenius_order K d hd

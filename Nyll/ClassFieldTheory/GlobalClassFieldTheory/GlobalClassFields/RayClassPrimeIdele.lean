@@ -4,10 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
 
 /-!
 # Prime idèles and ideal ray classes
@@ -20,7 +29,9 @@ constructions use exactly the same prime representative.
 
 
 
-open scoped NumberField
+@[expose] public section
+
+open scoped NumberField IsMulCommutative
 
 noncomputable section
 
@@ -29,14 +40,10 @@ namespace GlobalClassFields
 
 open NumberField IsDedekindDomain IdeleGroup
 
-universe u
+universe u v w
 
-private theorem rayClassPrimeIdeleClassGroupIsMulCommutative
-    (F : Type u) [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
-
-attribute [local instance] rayClassPrimeIdeleClassGroupIsMulCommutative
+-- Use the normality witness embedded in the imported ideal-Artin quotients.
+attribute [local instance] IdealClassFieldTheory.ideleClassSubgroupNormal
 
 section GenericPrimeIdele
 
@@ -163,7 +170,7 @@ theorem rayClassGroupEquivIdealRayClassGroup_mk_primeTo
 
 end GenericPrimeIdele
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 /-- The ideal Artin map of the fractional ideal attached to a
 prime-to-modulus idèle is its direct class in the idèle-class

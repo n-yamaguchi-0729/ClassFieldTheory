@@ -10,15 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Data.Int.Interval
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Degree.FiniteSetOfDegEq
+module
+
+public import Mathlib.Data.Int.Interval
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Degree.FiniteSetOfDegEq
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Card effective Divisors mul eq sum
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -53,7 +58,7 @@ theorem degree_eq_sum {K F : Type*} [Field K] [Field F] [Algebra K F]
     (D : Divisor K F) {S : Finset (Place K F)} (hS : D.support ⊆ S) :
     Divisor.degree D = ∑ v ∈ S, D v * (v.deg : ℤ) := by
   have h : Divisor.degree D = D.sum (fun w c => c * (w.deg : ℤ)) := by
-    simp [Divisor.degree, Finsupp.liftAddHom_apply]
+    simp only [Divisor.degree, Finsupp.liftAddHom_apply, AddMonoidHom.coe_mulRight]
   rw [h]
   exact Finsupp.sum_of_support_subset D hS (fun w c => c * (w.deg : ℤ)) (fun v _ => zero_mul _)
 
@@ -150,7 +155,8 @@ theorem _root_.AlgebraicCurve.finite_effective_divisors (m : ℕ) :
     {D : Divisor K F | 0 ≤ D ∧ Divisor.degree D = (m : ℤ)}.Finite := by
   classical
   set T : Finset (Place K F) := (finite_setOf_deg_le (K := K) (F := F) m).toFinset with hTdef
-  have hmemT : ∀ v, v ∈ T ↔ v.deg ≤ m := fun v => by simp [hTdef]
+  have hmemT : ∀ v, v ∈ T ↔ v.deg ≤ m := fun v => by simp only [hTdef,
+    Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
   let S : Set (Divisor K F) := {D | 0 ≤ D ∧ Divisor.degree D = (m : ℤ)}
   have hS : ∀ D ∈ S, (∀ w, 0 ≤ D w ∧ D w ≤ m) ∧ D.support ⊆ T := by
     intro D hD
@@ -175,7 +181,7 @@ theorem _root_.AlgebraicCurve.finite_effective_divisors (m : ℕ) :
       have h2 : D' w = 0 := by
         by_contra hne
         exact hw ((hS D' hD').2 (Finsupp.mem_support_iff.mpr hne))
-      simp [h1, h2]
+      simp only [h1, h2]
   have : Finite (Set.Icc (0 : ℤ) m) := Set.finite_Icc _ _
   exact Set.finite_coe_iff.mp (Finite.of_injective ι hι)
 
@@ -193,13 +199,14 @@ theorem main (n : ℕ) :
     fun m => _root_.AlgebraicCurve.finite_effective_divisors m
   set Ef : ℕ → Finset (Divisor K F) := fun m => (hfinE m).toFinset with hEfdef
   have hmemEf : ∀ m D, D ∈ Ef m ↔ 0 ≤ D ∧ Divisor.degree D = (m : ℤ) := fun m D => by
-    simp [hEfdef]
+    simp only [hEfdef, Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
   have hA : ∀ m, A m = (Ef m).card := fun m => by
     simp only [hAdef, hEfdef]
     exact Nat.card_eq_card_finite_toFinset (hfinE m)
   have hfinT := finite_setOf_deg_le (K := K) (F := F) n
   set T : Finset (Place K F) := hfinT.toFinset with hTdef
-  have hmemT : ∀ v, v ∈ T ↔ v.deg ≤ n := fun v => by simp [hTdef]
+  have hmemT : ∀ v, v ∈ T ↔ v.deg ≤ n := fun v => by simp only [hTdef,
+    Set.Finite.mem_toFinset, Set.mem_ofPred_eq]
   have hB : ∀ d, d ≤ n → B d = (T.filter fun v => v.deg = d).card := by
     intro d hd
     have hfin := AlgebraicCurve.Place.finite_setOf_deg_eq K F d

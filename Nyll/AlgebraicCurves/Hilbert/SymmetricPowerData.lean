@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
 
 /-!
 # Finite fiber powers and symmetric power data
 
 Constructs the permutation action on a finite fiber power and records symmetric power properties.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits
 
@@ -71,28 +75,29 @@ theorem permHom_mul (σ τ : Equiv.Perm (Fin r)) :
 
 /-- The automorphism of the fiber power induced by a permutation of its factors. -/
 noncomputable def permAut (σ : Equiv.Perm (Fin r)) : Aut (finFibrePow c r) where
-  hom := permHom c r σ
-  inv := permHom c r σ⁻¹
-  hom_inv_id := by rw [← permHom_mul, inv_mul_cancel, permHom_one]
-  inv_hom_id := by rw [← permHom_mul, mul_inv_cancel, permHom_one]
+  asIso :=
+    { hom := permHom c r σ
+      inv := permHom c r σ⁻¹
+      hom_inv_id := by rw [← permHom_mul, inv_mul_cancel, permHom_one]
+      inv_hom_id := by rw [← permHom_mul, mul_inv_cancel, permHom_one] }
 
 /-- The symmetric group action on the finite fiber power. -/
 noncomputable def permAct : Equiv.Perm (Fin r) →* Aut (finFibrePow c r) :=
   MonoidHom.mk' (permAut c r) (fun σ τ => by
-    ext : 1
-    change permHom c r (σ * τ) = (permAut c r τ).hom ≫ (permAut c r σ).hom
+    apply Aut.ext
+    apply Iso.ext
     exact permHom_mul c r σ τ)
 
-theorem permAct_hom (σ : Equiv.Perm (Fin r)) : (permAct c r σ).hom = permHom c r σ := rfl
+theorem permAct_hom (σ : Equiv.Perm (Fin r)) : (permAct c r σ).asIso.hom = permHom c r σ := rfl
 
-theorem permAct_inv (σ : Equiv.Perm (Fin r)) : (permAct c r σ).inv = permHom c r σ⁻¹ := rfl
+theorem permAct_inv (σ : Equiv.Perm (Fin r)) : (permAct c r σ).asIso.inv = permHom c r σ⁻¹ := rfl
 @[reassoc]
 theorem permAct_hom_proj (σ : Equiv.Perm (Fin r)) (i : Fin r) :
-    (permAct c r σ).hom ≫ proj c r (σ i) = proj c r i := by
+    (permAct c r σ).asIso.hom ≫ proj c r (σ i) = proj c r i := by
   rw [permAct_hom, permHom_proj, Equiv.Perm.inv_def, Equiv.symm_apply_apply]
 @[reassoc]
 theorem permAct_hom_toBase (σ : Equiv.Perm (Fin r)) :
-    (permAct c r σ).hom ≫ toBase c r = toBase c r := by
+    (permAct c r σ).asIso.hom ≫ toBase c r = toBase c r := by
   rw [permAct_hom, permHom_toBase]
 
 end finFibrePow
@@ -119,19 +124,20 @@ structure SymmetricPowerPackage {k : Type u} [Field k] {C : Scheme.{u}}
   /-- The quotient morphism preserves the structure morphism to the field. -/
   π_comp_csym : π ≫ csym = finFibrePow.toBase c r
   /-- The quotient morphism is invariant under permutation of the factors. -/
-  permAct_comp_π : ∀ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).hom ≫ π = π
+  permAct_comp_π : ∀ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).asIso.hom ≫ π = π
   /-- The quotient morphism is finite. -/
   isFinite_π : IsFinite π
   /-- The quotient morphism is surjective on points. -/
   surjective_π : Surjective π
   /-- Two points have the same quotient image exactly when a permutation relates them. -/
   π_apply_eq_iff : ∀ x x' : ↥(finFibrePow c r),
-    π.base x = π.base x' ↔ ∃ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).hom.base x = x'
+    π.base x = π.base x' ↔
+      ∃ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).asIso.hom.base x = x'
   /-- The quotient induces an injective map on sections over each open set. -/
   app_injective : ∀ V : Csym.Opens, Function.Injective (π.app V)
   /-- The image on sections consists exactly of the permutation-invariant sections. -/
   range_app : ∀ V : Csym.Opens, Set.range (π.app V) =
-    {s | ∀ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).hom.appLE (π ⁻¹ᵁ V) (π ⁻¹ᵁ V)
+    {s | ∀ σ : Equiv.Perm (Fin r), (finFibrePow.permAct c r σ).asIso.hom.appLE (π ⁻¹ᵁ V) (π ⁻¹ᵁ V)
       (le_preimage_of_comp_eq _ _ (permAct_comp_π σ) V) s = s}
   /-- An affine open of the curve gives an affine chart on the symmetric power. -/
   exists_affine_chart : ∀ U : C.Opens, IsAffineOpen U →

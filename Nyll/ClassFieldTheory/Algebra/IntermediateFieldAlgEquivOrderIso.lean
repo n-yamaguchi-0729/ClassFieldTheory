@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.IntermediateField.Basic
-import Mathlib.Logic.Equiv.Set
+module
+
+public import Mathlib.FieldTheory.IntermediateField.Basic
+public import Mathlib.Logic.Equiv.Set
 
 /-!
 # Intermediate fields under an algebra equivalence
@@ -14,6 +16,8 @@ An algebra equivalence of ambient fields induces an order equivalence of
 their intermediate-field lattices.  This is the ambient-change step used for
 Mathlib's chosen separable closures.
 -/
+
+@[expose] public section
 
 noncomputable section
 

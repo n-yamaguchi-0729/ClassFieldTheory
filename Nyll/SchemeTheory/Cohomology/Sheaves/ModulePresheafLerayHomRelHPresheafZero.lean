@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
 
 /-!
 A morphism from the degree-zero relative cohomology presheaf to the total-cohomology presheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -101,7 +105,12 @@ theorem ker_relAltd_zero :
           = (V'.presheaf.map (homOfLE hOτ).op).hom (z τ) := by
       intro a b hab σ τ hσ hτ O hOσ hOτ hOab
       let ρ : K'.Idx 1 := ⟨![a, b], by
-        intro c d hcd; fin_cases c <;> fin_cases d <;> simp_all⟩
+        intro c d hcd
+        fin_cases c <;> fin_cases d
+        · exact (Nat.lt_irrefl 0 hcd).elim
+        · exact hab
+        · exact (Nat.not_lt_zero 1 hcd).elim
+        · exact (Nat.lt_irrefl 1 hcd).elim⟩
       have h00 : Fin.succAbove (0 : Fin 2) 0 = 1 := by decide
       have h10 : Fin.succAbove (1 : Fin 2) 0 = 0 := by decide
       have hρ0 : K'.face ρ 0 = τ := idx_zero_ext K'

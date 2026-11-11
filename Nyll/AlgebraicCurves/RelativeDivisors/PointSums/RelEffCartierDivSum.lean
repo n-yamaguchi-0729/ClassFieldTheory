@@ -10,15 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Limits
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
-import Nyll.AlgebraicCurves.Hilbert.SymmetricPowerData
+module
+
+public import Mathlib.AlgebraicGeometry.Limits
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
+public import Nyll.AlgebraicCurves.Hilbert.SymmetricPowerData
 
 /-!
 # Divisors defined by products of section ideals
 
 Defines sums of section divisors, fiber powers, and their tautological ideal.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits
 
@@ -60,16 +65,18 @@ theorem prodKerGraph_eq_prod (a : Fin r → (T ⟶ 𝒞)) (ha : ∀ i, a i ≫ f
 
 @[simp] theorem prodKerGraph_zero (a : Fin 0 → (T ⟶ 𝒞)) (ha : ∀ i, a i ≫ f = g) :
     prodKerGraph f a ha = ⊤ := by
-  simp [prodKerGraph]
+  simp only [prodKerGraph, Finset.univ_eq_empty, Finset.prod_empty,
+    Scheme.IdealSheafData.one_eq_top]
 
 @[simp] theorem prodKerGraph_one (a : Fin 1 → (T ⟶ 𝒞)) (ha : ∀ i, a i ≫ f = g) :
     prodKerGraph f a ha = (graphOver f (a 0) (ha 0)).ker := by
-  simp [prodKerGraph]
+  simp only [prodKerGraph, Finset.univ_unique, Fin.default_eq_zero, Fin.isValue,
+    Finset.prod_singleton]
 
 theorem prodKerGraph_succ (a : Fin (r + 1) → (T ⟶ 𝒞)) (ha : ∀ i, a i ≫ f = g) :
     prodKerGraph f a ha =
       (graphOver f (a 0) (ha 0)).ker * prodKerGraph f (fun i => a i.succ) (fun i => ha i.succ) := by
-  simp [prodKerGraph, Fin.prod_univ_succ]
+  simp only [prodKerGraph, Fin.prod_univ_succ]
 
 theorem prodKerGraph_comp_equiv (σ : Equiv.Perm (Fin r)) (a : Fin r → (T ⟶ 𝒞))
     (ha : ∀ i, a i ≫ f = g) :
@@ -82,7 +89,8 @@ theorem ideal_prodKerGraph (a : Fin r → (T ⟶ 𝒞)) (ha : ∀ i, a i ≫ f =
   classical
   unfold prodKerGraph
   induction (Finset.univ : Finset (Fin r)) using Finset.cons_induction with
-  | empty => simp [Ideal.one_eq_top]
+  | empty => simp only [Finset.prod_empty, Scheme.IdealSheafData.one_eq_top,
+    Scheme.IdealSheafData.ideal_top, Pi.top_apply, Ideal.one_eq_top]
   | cons i s hi ih => rw [Finset.prod_cons, Finset.prod_cons, ← ih]; rfl
 
 /-- The two families of sections define the same product of graph ideals. -/
@@ -151,19 +159,6 @@ noncomputable def RelEffCartierDiv.empty (g : T ⟶ S) : RelEffCartierDiv f 0 g 
   rfl
 
 variable {f}
-
-theorem RelEffCartierDiv.I_eq_top_of_degree_zero (D : RelEffCartierDiv f 0 g) : D.I = ⊤ := by
-  have := D.isFinite
-  have := D.flat
-  have hempty : IsEmpty ↥D.I.subscheme := by
-    by_contra h
-    rw [not_isEmpty_iff] at h
-    obtain ⟨x⟩ := h
-    have h1 := Scheme.Hom.one_le_finrank_map (D.I.subschemeι ≫ pullback.snd f g) x
-    rw [D.finrank_eq] at h1
-    exact Nat.not_succ_le_zero 0 h1
-  rw [← D.I.ker_subschemeι]
-  exact Scheme.ker_eq_top_of_isEmpty _
 
 instance RelEffCartierDiv.subsingleton_of_degree_zero : Subsingleton (RelEffCartierDiv f 0 g) :=
   ⟨fun D E => RelEffCartierDiv.ext (by rw [D.I_eq_top_of_degree_zero, E.I_eq_top_of_degree_zero])⟩

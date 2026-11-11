@@ -10,6 +10,10 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteDegree
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteConstantDegree
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.TopologicalProfiniteCompletion
+import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotients
 
 /-!
 # Continuous and profinite function-field reciprocity
@@ -19,20 +23,22 @@ finite quotients are the existing canonical constructions. The Artin map
 and the topological group isomorphism use the proved reciprocity maps.
 -/
 
+universe u v
+
 noncomputable section
 
 namespace ClassFieldTheory.FunctionField
 
 /-- The actual absolute abelian Galois group with its profinite topology. -/
-abbrev AbsoluteAbelianGaloisGroup (K : Type) [Field K] : ProfiniteGrp :=
+abbrev AbsoluteAbelianGaloisGroup (K : Type v) [Field K] : ProfiniteGrp.{v} :=
   LocalClassFieldTheory.localAbsoluteAbelianProfinite K
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
 
 /-- The completion over all finite quotients open for the ordinary
 idele-class topology. -/
-abbrev IdeleClassProfiniteCompletion : ProfiniteGrp :=
+abbrev IdeleClassProfiniteCompletion : ProfiniteGrp.{v} :=
   let _ : AlgebraicCurve.HasPrincipalDivisors k K :=
     (_root_.FunctionField.isCurveOver k K).toHasPrincipalDivisors
   LocalClassFieldTheory.TopologicalProfiniteCompletion (_root_.FunctionField.IdeleClassGroup k K)

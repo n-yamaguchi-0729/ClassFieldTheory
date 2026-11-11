@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.Logic.Function.Basic
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.RingTheory.Valuation.Extension
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.Logic.Function.Basic
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.RingTheory.Valuation.Extension
 
 /-!
 # The inverse Herbrand function for a canonical local extension
@@ -16,6 +18,8 @@ import Mathlib.RingTheory.Valuation.Extension
 The defining choice is verified to be a two-sided inverse for finite Abelian
 local extensions in the theorem layer.
 -/
+
+@[expose] public section
 
 noncomputable section
 

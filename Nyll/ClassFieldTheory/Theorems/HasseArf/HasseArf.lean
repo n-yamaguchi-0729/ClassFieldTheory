@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
-import Nyll.ClassFieldTheory.Definitions.HasseArf.IsLowerRamificationJump
-import Nyll.ClassFieldTheory.HasseArf
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.RingTheory.Valuation.Extension
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.IsLowerRamificationJump
+public import Nyll.ClassFieldTheory.HasseArf
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.RingTheory.Valuation.Extension
 
 /-!
 # Hasse--Arf theorem
@@ -25,6 +27,8 @@ lower groups and the Herbrand value are defined explicitly in
 `ClassFieldTheory.Definitions.HasseArf` modules from Mathlib's valuation-subring
 data.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -51,60 +55,6 @@ theorem hasseArf
     ∃ z : ℤ,
       herbrandFunctionAtLowerIndex K
         (ValuativeRel.valuation L).valuationSubring n = (z : ℚ) :=
-  letI : Small.{0} K := LocalFieldTheory.nonarchimedeanLocalField_small K
-  letI : Small.{0} L := LocalFieldTheory.nonarchimedeanLocalField_small L
-  letI : Algebra (Shrink.{0} K) (Shrink.{0} L) := HasseArf.shrinkAlgebra K L
-  letI : FiniteDimensional (Shrink.{0} K) (Shrink.{0} L) :=
-    HasseArf.shrink_finiteDimensional K L
-  letI : IsAbelianGalois (Shrink.{0} K) (Shrink.{0} L) :=
-    HasseArf.shrink_isAbelianGalois K L
-  letI : ValuativeRel (Shrink.{0} K) := LocalFieldTheory.shrinkLocalFieldValuativeRel K
-  letI : ValuativeRel (Shrink.{0} L) := LocalFieldTheory.shrinkLocalFieldValuativeRel L
-  letI : IsNonarchimedeanLocalField (Shrink.{0} K) :=
-    LocalFieldTheory.shrinkLocalField_isNonarchimedeanLocalField K
-  letI : IsNonarchimedeanLocalField (Shrink.{0} L) :=
-    LocalFieldTheory.shrinkLocalField_isNonarchimedeanLocalField L
-  letI : Valuation.HasExtension
-      (LocalFieldTheory.shrinkLocalFieldValuation K)
-      (LocalFieldTheory.shrinkLocalFieldValuation L) := by
-    have hcomm (a : Shrink.{0} K) :
-        Shrink.ringEquiv L (algebraMap (Shrink.{0} K) (Shrink.{0} L) a) =
-          algebraMap K L (Shrink.ringEquiv K a) := by
-      have h := congrArg
-        (fun F : K →+* Shrink.{0} L => F (Shrink.ringEquiv K a))
-        (HasseArf.shrinkAlgebra_commutes K L)
-      simpa using congrArg (Shrink.ringEquiv L) h
-    exact LocalFieldTheory.hasExtension_comap_ringEquivs
-      (Shrink.ringEquiv K) (Shrink.ringEquiv L) hcomm
-      (ValuativeRel.valuation K) (ValuativeRel.valuation L)
-  letI : Valuation.HasExtension
-      (ValuativeRel.valuation (Shrink.{0} K))
-      (ValuativeRel.valuation (Shrink.{0} L)) := by
-    have hK :
-        (LocalFieldTheory.shrinkLocalFieldValuation K).IsEquiv
-          (ValuativeRel.valuation (Shrink.{0} K)) :=
-      letI : (LocalFieldTheory.shrinkLocalFieldValuation K).Compatible :=
-        Valuation.Compatible.ofValuation _
-      ValuativeRel.isEquiv _ _
-    have hL :
-        (LocalFieldTheory.shrinkLocalFieldValuation L).IsEquiv
-          (ValuativeRel.valuation (Shrink.{0} L)) :=
-      letI : (LocalFieldTheory.shrinkLocalFieldValuation L).Compatible :=
-        Valuation.Compatible.ofValuation _
-      ValuativeRel.isEquiv _ _
-    exact LocalFieldTheory.hasExtension_of_isEquiv
-      (LocalFieldTheory.shrinkLocalFieldValuation K)
-      (ValuativeRel.valuation (Shrink.{0} K))
-      (LocalFieldTheory.shrinkLocalFieldValuation L)
-      (ValuativeRel.valuation (Shrink.{0} L)) hK hL
-  by
-    have hn' : IsLowerRamificationJump (Shrink.{0} K)
-        (ValuativeRel.valuation (Shrink.{0} L)).valuationSubring n :=
-      (HasseArf.shrink_isLowerRamificationJump_iff K L n).mpr hn
-    obtain ⟨z, hz⟩ := HasseArf.hasseArf_canonical
-      (Shrink.{0} K) (Shrink.{0} L) hn'
-    refine ⟨z, ?_⟩
-    rw [← HasseArf.shrink_herbrandFunctionAtLowerIndex_eq K L n]
-    exact hz
+  HasseArf.hasseArf_canonical K L hn
 
 end ClassFieldTheory

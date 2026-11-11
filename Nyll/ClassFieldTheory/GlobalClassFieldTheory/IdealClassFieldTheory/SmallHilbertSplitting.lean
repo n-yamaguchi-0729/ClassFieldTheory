@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
 
 /-!
 # Splitting in the small Hilbert class field
@@ -17,6 +21,8 @@ ideal class, and it is trivial precisely when the prime ideal is principal.
 
 
 
+@[expose] public section
+
 open scoped NumberField
 
 noncomputable section
@@ -26,13 +32,8 @@ namespace IdealClassFieldTheory
 
 open NumberField IsDedekindDomain
 
-/-- Canonical class-group commutativity supplies normality for the quotient. -/
-private theorem smallHilbertSplittingClassGroupIsMulCommutative
-    (F : Type*) [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
-
-attribute [local instance] smallHilbertSplittingClassGroupIsMulCommutative
+attribute [local instance]
+  GlobalClassFields.smallHilbertClassFieldIdeleClassGroupIsMulCommutative
 
 variable {K : Type*} [Field K] [NumberField K]
 

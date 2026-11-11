@@ -10,12 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Mathlib.AlgebraicGeometry.Cover.Open
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.RingTheory.LocalProperties.Submodule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
-import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Mathlib.AlgebraicGeometry.Cover.Open
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.RingTheory.LocalProperties.Submodule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
 
 /-!
 # Pullback of the zero scheme of a section
@@ -23,6 +25,8 @@ import Nyll.SchemeTheory.Sheaves.IdealSheafComap
 The zero-scheme ideal of a section of an invertible module pulls back to the
 zero-scheme ideal of the pulled-back section.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
 
 /-!
 # Integral correction of local Hilbert 90 primitives
@@ -15,6 +18,8 @@ Hilbert 90 primitive by such an element makes it an integral unit and preserves
 all coboundaries for automorphisms over the base completion. This applies in
 every residue characteristic.
 -/
+
+@[expose] public section
 
 noncomputable section
 

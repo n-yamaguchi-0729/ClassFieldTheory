@@ -4,11 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteConstantH2Descent
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Tower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ConstantUnitsH2
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteConstantH2Descent
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Tower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ConstantUnitsH2
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.GaloisCohomology.FieldTheory.CompositumCyclic
 
 /-!
 # The local-global principle for cyclic unit H²
@@ -18,6 +22,8 @@ extension after inflation to the actual compositum. Local inflation detects
 vanishing, so the constant-extension local-global theorem kills that class.
 Injectivity of global inflation then kills the original class.
 -/
+
+@[expose] public section
 
 noncomputable section
 

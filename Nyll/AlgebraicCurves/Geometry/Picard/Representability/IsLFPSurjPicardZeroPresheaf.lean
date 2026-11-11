@@ -10,32 +10,34 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
-import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.SchemeTheory.Descent.FGSubalgebra
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraIsLimitSpecCone
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicEquivalenceIffEulerCharSectionsOfEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreFinrankH0EqFinrankH1Eq
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsLFPSurjRelPicardPresheaf
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.IsOpenSetOfAlgebraicEquivalenceFibre
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
-import Mathlib.AlgebraicGeometry.AffineTransitionLimit
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.RingTheory.Spectrum.Prime.Defs
-import Mathlib.CategoryTheory.Filtered.Basic
-import Mathlib.CategoryTheory.Opposites
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.SchemeTheory.Descent.FGSubalgebra
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraIsLimitSpecCone
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgebraicEquivalenceIffEulerCharSectionsOfEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.TwoAffineCoverFibreFinrankH0EqFinrankH1Eq
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.IsLFPSurjRelPicardPresheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.IsOpenSetOfAlgebraicEquivalenceFibre
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Mathlib.AlgebraicGeometry.AffineTransitionLimit
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.RingTheory.Spectrum.Prime.Defs
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Mathlib.CategoryTheory.Opposites
 
 /-!
 # Finite presentation surjectivity for the algebraically trivial Picard presheaf
@@ -44,6 +46,8 @@ Descend a rigidified line bundle to a finitely generated subalgebra, then enlarg
 subalgebra so its fibres are algebraically trivial. Openness of the triviality locus
 and the affine limit comparison ensure that the descended class has the required property.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -131,8 +135,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom
@@ -855,9 +859,9 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
+  AlgebraicCurve.instHasCanonicalLocalResidueK
 attribute [-instance]
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

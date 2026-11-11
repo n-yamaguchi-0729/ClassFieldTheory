@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LaurentPrincipalUnitTransport
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LaurentPrincipalUnitTransport
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
 
 /-!
 # Exact transported Lubin--Tate norm subgroup
@@ -16,7 +19,11 @@ subgroup formula.
 
 
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped LaurentSeries ValuativeRel
 
@@ -27,7 +34,7 @@ open LocalClassFieldTheory
 open LocalFieldTheory
 open LocalFieldTheory.IsNonarchimedeanLocalField
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- The transported level-`m+1` Lubin--Tate norm subgroup is exactly

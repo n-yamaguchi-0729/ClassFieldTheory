@@ -23,27 +23,30 @@ is assumed. Upstream Mathlib and Anthropic FLT notices remain in the imported
 maintained sources.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Mathlib.AlgebraicGeometry.PullbackCarrier
-import Mathlib.CategoryTheory.Bicategory.Adjunction.Adj
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.ChosenPullback
-import Mathlib.CategoryTheory.Sites.Descent.DescentDataPrime
-import Mathlib.Tactic.CategoryTheory.Reassoc
-import Nyll.SchemeTheory.CategoryTheory.DescentComparison
-import Nyll.SchemeTheory.Modules.Functoriality.CanonicalPullbackLegRelation
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.InvertibleToDescentDataMapBijective
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoMapPullbackRigSectionCompEq
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoEqMapPullbackRigSectionCompEq
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackCompPullbackCongrPasteSquaresApp
+module
 
-import Mathlib.Util.WithWeakNamespace
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.IsPullbackBaseChangeSnd
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Mathlib.CategoryTheory.Bicategory.Adjunction.Adj
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.ChosenPullback
+public import Mathlib.CategoryTheory.Sites.Descent.DescentDataPrime
+public import Mathlib.Tactic.CategoryTheory.Reassoc
+public import Nyll.SchemeTheory.CategoryTheory.DescentComparison
+public import Nyll.SchemeTheory.Modules.Functoriality.CanonicalPullbackLegRelation
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.InvertibleToDescentDataMapBijective
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoMapPullbackRigSectionCompEq
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoEqMapPullbackRigSectionCompEq
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackCompPullbackCongrPasteSquaresApp
+
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # Reflection of rigidified line-bundle isomorphisms
@@ -52,6 +55,8 @@ Compatible isomorphisms after affine faithfully flat pullback descend to the ori
 rigidified line bundles, using the bijectivity of global sections.
 -/
 
+
+@[expose] public section
 
 noncomputable section FiniteNativeDescentReflection
 
@@ -371,12 +376,8 @@ variable {R : Type u} [CommRing R] {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat
 
 lemma isPullback_baseChangeSnd_snd {T T' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
     {t' : T' ⟶ Spec (CommRingCat.of R)} (ψ : SchemeHomOver t' t) :
-    IsPullback (baseChangeSnd c ψ) (pullback.snd c t') (pullback.snd c t) ψ.1 := by
-  have big : IsPullback (baseChangeSnd c ψ ≫ pullback.fst c t) (pullback.snd c t') c (ψ.1 ≫ t) := by
-    rw [ψ.2, show baseChangeSnd c ψ ≫ pullback.fst c t = pullback.fst c t' from
-      (pullback.lift_fst _ _ _).trans (Category.comp_id _)]
-    exact IsPullback.of_hasPullback c t'
-  exact big.of_right ((pullback.lift_snd _ _ _)) (IsPullback.of_hasPullback c t)
+    IsPullback (baseChangeSnd c ψ) (pullback.snd c t') (pullback.snd c t) ψ.1 :=
+  _root_.AlgebraicGeometry.RelPicard.isPullback_baseChangeSnd c ψ
 
 lemma isPullback_baseChangeSnd {X U V W : Scheme.{u}} {x : X ⟶ Spec (CommRingCat.of R)}
     {uS : U ⟶ Spec (CommRingCat.of R)} {vS : V ⟶ Spec (CommRingCat.of R)}
@@ -384,21 +385,8 @@ lemma isPullback_baseChangeSnd {X U V W : Scheme.{u}} {x : X ⟶ Spec (CommRingC
     (u : SchemeHomOver uS x) (v : SchemeHomOver vS x)
     (a : SchemeHomOver wS uS) (b : SchemeHomOver wS vS)
     (h : IsPullback a.1 b.1 u.1 v.1) :
-    IsPullback (baseChangeSnd c a) (baseChangeSnd c b) (baseChangeSnd c u) (baseChangeSnd c v) := by
-  have hbig : IsPullback (pullback.snd c wS ≫ a.1) (baseChangeSnd c b) u.1
-      (pullback.snd c vS ≫ v.1) :=
-    (isPullback_baseChangeSnd_snd c b).flip.paste_horiz h
-  have hbig' : IsPullback (baseChangeSnd c a ≫ pullback.snd c uS) (baseChangeSnd c b) u.1
-      (baseChangeSnd c v ≫ pullback.snd c x) := by
-    rw [show baseChangeSnd c a ≫ pullback.snd c uS = pullback.snd c wS ≫ a.1
-        from pullback.lift_snd _ _ _,
-      show baseChangeSnd c v ≫ pullback.snd c x = pullback.snd c vS ≫ v.1
-        from pullback.lift_snd _ _ _]
-    exact hbig
-  refine hbig'.of_right ?_ (isPullback_baseChangeSnd_snd c u).flip
-  rw [baseChangeSnd_comp, baseChangeSnd_comp]
-  congr 1
-  exact Subtype.ext h.w
+    IsPullback (baseChangeSnd c a) (baseChangeSnd c b) (baseChangeSnd c u) (baseChangeSnd c v) :=
+  _root_.AlgebraicGeometry.RelPicard.isPullback_baseChangeSnd_of_isPullback c u v a b h
 
 /-- The structure map of the fibre product of two schemes over the same base. -/
 abbrev strMap₁₂ {T T₁ T₂ : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}

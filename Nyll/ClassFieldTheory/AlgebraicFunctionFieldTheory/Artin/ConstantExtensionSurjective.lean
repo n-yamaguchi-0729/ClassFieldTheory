@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegreeSurjective
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegreeSurjective
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Surjectivity of the actual constant-extension Frobenius character
@@ -16,11 +18,15 @@ Frobenius. Since that actual Frobenius has the full Galois-group order, the
 character is surjective and its kernel quotient has exactly the extension degree.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField.IdeleClassGroup
 
-variable (k K : Type) (Ω : Type*) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [AlgebraicCurve.HasPrincipalDivisors k K]
     [Algebra K Ω] [IsSepClosed Ω]

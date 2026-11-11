@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Places.Completion
-import Mathlib.Algebra.Group.Submonoid.Units
-import Mathlib.Topology.Algebra.RestrictedProduct.Basic
+module
+
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Mathlib.Algebra.Group.Submonoid.Units
+public import Mathlib.Topology.Algebra.RestrictedProduct.Basic
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Ideles over all places of a function field
@@ -16,6 +19,8 @@ above infinity in an affine presentation are included. The restricted factors
 are the multiplicative groups of the existing completions, with respect to the
 unit groups of their valuation subrings.
 -/
+
+@[expose] public section
 
 open scoped RestrictedProduct
 

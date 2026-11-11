@@ -10,16 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.Restriction.NatCardSetOfComapEqEqDeg
-import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneConstantExtension
-import Nyll.AlgebraicCurves.Places.ConstantExtension.ForgetConstantsRestrictEq
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.Restriction.NatCardSetOfComapEqEqDeg
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneConstantExtension
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.ForgetConstantsRestrictEq
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Divisor exists Unique pullback Constants eq of forall smul eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

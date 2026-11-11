@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVRStalkIsClosed
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVRStalkIsClosed
 
 /-!
 # Proper integral smooth curves are not affine
 
 A proper integral scheme smooth of relative dimension one over a field cannot be affine.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

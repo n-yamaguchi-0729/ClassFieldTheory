@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraUniformFieldFactors
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFinrank
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteEtale
-import Mathlib.LinearAlgebra.Dimension.Constructions
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraUniformFieldFactors
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFinrank
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteEtale
+public import Mathlib.LinearAlgebra.Dimension.Constructions
 
 /-!
 # Degree and number of uniform Kummer factors
@@ -17,6 +19,8 @@ When the `n`-th roots of unity lie in the base field, every field factor of
 the Kummer algebra has the same positive degree `d`. The total rank `n` is
 the number of factors times `d`.
 -/
+
+@[expose] public section
 
 noncomputable section
 

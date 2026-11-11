@@ -11,13 +11,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+module
+
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
 
 /-!
 # Scheme Modules nonempty tensor Pow mul iso
 -/
+
+@[expose] public section
 
 section nonempty_tensorPow_mul_iso
 

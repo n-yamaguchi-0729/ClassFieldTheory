@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalValuationNormalization
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalValuationNormalization
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 
 /-!
 # Local Artin symbols in the actual global decomposition group
@@ -20,6 +23,10 @@ The existing local reciprocity valuation is the negative of the divisor
 order, so inversion on the input gives the arithmetic divisor convention.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open AlgebraicCurve
@@ -27,7 +34,10 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+section UniverseFields
+
+variable {k : Type u} {K : Type v} {L : Type w}
+    [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -42,18 +52,18 @@ def localDecompositionArtin (w : Place k L) :
     placeCompletion_isNonarchimedeanLocalField (w.restrict K)
   exact
     { toMonoidHom := (IdeleGroup.decompositionCompletionEquiv (K := K) w).symm.toMonoidHom.comp
-        ((LocalClassFieldTheory.abelianLocalArtinMap
+        ((LocalClassFieldTheory.Universe.abelianLocalArtinMap
           (w.restrict K).adicCompletion w.adicCompletion).toMonoidHom.comp
             (invMonoidHom : (w.restrict K).adicCompletionˣ →*
               (w.restrict K).adicCompletionˣ))
       continuous_toFun := (continuous_of_discreteTopology :
         Continuous (IdeleGroup.decompositionCompletionEquiv (K := K) w).symm).comp
-        (LocalClassFieldTheory.abelianLocalArtinMap
+        (LocalClassFieldTheory.Universe.abelianLocalArtinMap
           (w.restrict K).adicCompletion w.adicCompletion).continuous |>.comp continuous_inv }
 
 /-- The completed decomposition automorphism is the existing local Artin
 value with the arithmetic input convention. -/
-theorem localDecompositionArtin_completion (w : Place k L)
+theorem localDecompositionArtin_completion_universe (w : Place k L)
     (x : (w.restrict K).adicCompletionˣ) :
     let _ : ValuativeRel (w.restrict K).adicCompletion :=
       placeCompletionValuativeRel (w.restrict K)
@@ -61,16 +71,16 @@ theorem localDecompositionArtin_completion (w : Place k L)
       placeCompletion_isNonarchimedeanLocalField (w.restrict K)
     IdeleGroup.decompositionCompletionEquiv (K := K) w
         (localDecompositionArtin (K := K) w x) =
-      LocalClassFieldTheory.abelianLocalArtinMonoidHom
+      LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom
         (w.restrict K).adicCompletion w.adicCompletion x⁻¹ := by
   intro hrelation hlocal
   change IdeleGroup.decompositionCompletionEquiv (K := K) w
     ((IdeleGroup.decompositionCompletionEquiv (K := K) w).symm
-      (LocalClassFieldTheory.abelianLocalArtinMap
+      (LocalClassFieldTheory.Universe.abelianLocalArtinMap
         (w.restrict K).adicCompletion w.adicCompletion x⁻¹)) = _
   rw [MulEquiv.apply_symm_apply]
   exact DFunLike.congr_fun
-    (LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMap_toMonoidHom
       (w.restrict K).adicCompletion w.adicCompletion) x⁻¹
 
 /-- Every actual decomposition automorphism is a local Artin value. -/
@@ -81,12 +91,12 @@ theorem localDecompositionArtin_surjective (w : Place k L) :
   have : IsNonarchimedeanLocalField (w.restrict K).adicCompletion :=
     placeCompletion_isNonarchimedeanLocalField (w.restrict K)
   intro σ
-  obtain ⟨x, hx⟩ := LocalClassFieldTheory.abelianLocalArtinMap_surjective
+  obtain ⟨x, hx⟩ := LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective
     (w.restrict K).adicCompletion w.adicCompletion
     (IdeleGroup.decompositionCompletionEquiv (K := K) w σ)
   refine ⟨x⁻¹, ?_⟩
   change (IdeleGroup.decompositionCompletionEquiv (K := K) w).symm
-    (LocalClassFieldTheory.abelianLocalArtinMap
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMap
       (w.restrict K).adicCompletion w.adicCompletion (x⁻¹)⁻¹) = σ
   rw [inv_inv, hx, MulEquiv.symm_apply_apply]
 
@@ -100,12 +110,12 @@ theorem localDecompositionArtin_ker (w : Place k L) :
     placeCompletion_isNonarchimedeanLocalField (w.restrict K)
   ext x
   change (IdeleGroup.decompositionCompletionEquiv (K := K) w).symm
-      (LocalClassFieldTheory.abelianLocalArtinMap
+      (LocalClassFieldTheory.Universe.abelianLocalArtinMap
         (w.restrict K).adicCompletion w.adicCompletion x⁻¹) = 1 ↔ _
   rw [MulEquiv.map_eq_one_iff, map_inv, inv_eq_one]
-  change x ∈ (LocalClassFieldTheory.abelianLocalArtinMap
+  change x ∈ (LocalClassFieldTheory.Universe.abelianLocalArtinMap
       (w.restrict K).adicCompletion w.adicCompletion).toMonoidHom.ker ↔ _
-  rw [LocalClassFieldTheory.abelianLocalArtinMap_ker]
+  rw [LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker]
   rfl
 
 /-- The same local symbol viewed as an actual global automorphism. -/
@@ -131,5 +141,35 @@ theorem localArtin_eq_one_iff (w : Place k L) (x : (w.restrict K).adicCompletion
   rw [← Subgroup.coe_one (IdeleGroup.decompositionGroup (K := K) w), Subtype.val_inj]
   change x ∈ (localDecompositionArtin (K := K) w).toMonoidHom.ker ↔ _
   rw [localDecompositionArtin_ker]
+
+end UniverseFields
+
+section NativeCompatibility
+
+variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
+
+/-- The completed decomposition automorphism is the existing local Artin
+value with the arithmetic input convention. -/
+theorem localDecompositionArtin_completion (w : Place k L)
+    (x : (w.restrict K).adicCompletionˣ) :
+    let _ : ValuativeRel (w.restrict K).adicCompletion :=
+      placeCompletionValuativeRel (w.restrict K)
+    have _ : IsNonarchimedeanLocalField (w.restrict K).adicCompletion :=
+      placeCompletion_isNonarchimedeanLocalField (w.restrict K)
+    IdeleGroup.decompositionCompletionEquiv (K := K) w
+        (localDecompositionArtin (K := K) w x) =
+      LocalClassFieldTheory.abelianLocalArtinMonoidHom
+        (w.restrict K).adicCompletion w.adicCompletion x⁻¹ := by
+  intro hrelation hlocal
+  simpa only [LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom,
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap_eq_native,
+    LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom] using
+    localDecompositionArtin_completion_universe (K := K) w x
+
+end NativeCompatibility
 
 end FunctionField

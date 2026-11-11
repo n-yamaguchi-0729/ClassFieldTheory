@@ -10,13 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Basic
-import Mathlib.RingTheory.Valuation.LocalSubring
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.LinearAlgebra.Dimension.Free
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Places.Restriction.ComapAlgebraMapNeTop
+public import Mathlib.RingTheory.Valuation.LocalSubring
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Basic
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.LinearAlgebra.Dimension.Free
 
 /-!
 # Algebra, divisors, and base change
@@ -24,6 +27,8 @@ import Mathlib.LinearAlgebra.Dimension.Free
 Restriction of places and residue fields, ramification indices, and divisor pullback and
 pushforward over field extensions.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -55,22 +60,6 @@ private theorem algebraMap_ne_zero {f : F} (hf : f ≠ 0) : algebraMap F F' f �
   simpa using hf
 
 variable (w : Place K F')
-
-private theorem comap_algebraMap_ne_top [Algebra.IsIntegral F F'] :
-    w.toValuationSubring.comap (algebraMap F F') ≠ ⊤ := by
-  intro htop
-  apply w.ne_top'
-  have hF : ∀ f : F, algebraMap F F' f ∈ w.toValuationSubring := fun f =>
-    ValuationSubring.mem_comap.mp (htop ▸ ValuationSubring.mem_top f)
-  refine SetLike.ext fun x => ⟨fun _ => ValuationSubring.mem_top x, fun _ => ?_⟩
-  let halgebra : Algebra F w.toValuationSubring :=
-    ((algebraMap F F').codRestrict w.toValuationSubring.toSubring hF).toAlgebra
-  let htower : IsScalarTower F w.toValuationSubring F' :=
-    IsScalarTower.of_algebraMap_eq fun f => rfl
-  have hx : IsIntegral w.toValuationSubring x :=
-    (Algebra.IsIntegral.isIntegral (R := F) x).tower_top
-  obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp hx
-  exact hy ▸ y.2
 
 variable {w} in
 private theorem mem_comap_iff_ord_nonneg {f : F} (hf : f ≠ 0) :
@@ -205,7 +194,8 @@ theorem irreducible_mk_comap {g : F} (hg0 : g ≠ 0)
     have h2 := w.ramificationIndex_le_ord (F := F) hb0 hbpos
     omega
 
-private theorem isPrincipalIdealRing_comap :
+/-- The restricted valuation ring of an integral field extension is principal. -/
+theorem isPrincipalIdealRing_comap :
     IsPrincipalIdealRing (w.toValuationSubring.comap (algebraMap F F')) := by
   obtain ⟨g, hg0, hge⟩ := w.exists_ord_eq_ramificationIndex (F := F)
   have hepos : 0 < ramificationIndex (F := F) w := w.ramificationIndex_pos (F := F)

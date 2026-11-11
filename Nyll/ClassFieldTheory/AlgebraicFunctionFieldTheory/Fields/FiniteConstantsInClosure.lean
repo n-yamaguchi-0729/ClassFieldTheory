@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finite.Extension
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.Galois.GaloisClosure
-import Mathlib.FieldTheory.IntermediateField.Algebraic
-import Mathlib.FieldTheory.IsSepClosed
-import Mathlib.FieldTheory.Normal.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
+module
+
+public import Mathlib.FieldTheory.Finite.Extension
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.FieldTheory.IntermediateField.Algebraic
+public import Mathlib.FieldTheory.IsSepClosed
+public import Mathlib.FieldTheory.Normal.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
 
 /-!
 # Finite constant fields inside a separably closed ambient field
@@ -20,6 +22,8 @@ ambient separably closed field. Its actual image is a finite Galois intermediate
 field of the requested degree. Thus the subsequent constant compositum can be
 formed inside the original ambient field, with no assumed extension data.
 -/
+
+@[expose] public section
 
 noncomputable section
 

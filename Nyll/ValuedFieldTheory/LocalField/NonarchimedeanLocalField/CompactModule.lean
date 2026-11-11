@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Analysis.LocallyConvex.Bounded
-import Mathlib.Analysis.Normed.Field.Basic
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Mathlib.Analysis.LocallyConvex.Bounded
+public import Mathlib.Analysis.Normed.Field.Basic
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.RingTheory.Noetherian.Basic
 
 /-!
 # Compact modules over open scalar subrings
@@ -17,6 +19,8 @@ A compact submodule of a finite-dimensional vector space is finite over an open
 Noetherian scalar subring. A scalar multiple of a basis lattice contains the
 compact set; the Noetherian property then supplies finite generation.
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 open Topology

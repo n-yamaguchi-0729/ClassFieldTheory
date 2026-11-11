@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
-import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
 
 /-!
 # Infinite-place Kummer root characters
@@ -18,6 +20,8 @@ leaf rather than being introduced as an assumption.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField

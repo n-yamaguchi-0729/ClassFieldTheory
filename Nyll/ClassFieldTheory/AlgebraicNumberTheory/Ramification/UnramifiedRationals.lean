@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.NumberField.Discriminant.Different
+module
+
+public import Mathlib.NumberTheory.NumberField.Discriminant.Different
 
 /-!
 # No nontrivial everywhere-unramified extension of ℚ
@@ -15,6 +17,8 @@ discriminant bound to show that this field is ℚ.  This file records that
 source theorem directly in terms of the local unramified predicates on the
 prime ideals of the ring of integers.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -51,8 +55,8 @@ theorem numberField_finrank_eq_one_of_forall_isUnramifiedAt
     have hgt := abs_discr_gt_two (K := K) (by omega)
     have habs : |discr K| = 1 := by
       rcases Int.natAbs_eq_iff.mp hdiscr with h | h
-      · simp [h]
-      · simp [h]
+      · simp only [h, Nat.cast_one, abs_one]
+      · simp only [h, Nat.cast_one, Int.reduceNeg, abs_neg, abs_one]
     omega
   have hpos : 0 < Module.finrank ℚ K := Module.finrank_pos
   omega

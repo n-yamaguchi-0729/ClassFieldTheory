@@ -10,13 +10,17 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+module
+
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
 
 /-!
 # Powers of invertible ideal sheaves
 
 Invertibility is preserved by each natural-number power of ideal-sheaf data.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

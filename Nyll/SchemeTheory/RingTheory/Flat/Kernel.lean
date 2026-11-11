@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Exact.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Map
-import Mathlib.RingTheory.Flat.Basic
-import Nyll.SchemeTheory.RingTheory.Flat.TensorInjectivity
+module
+
+public import Mathlib.Algebra.Exact.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Map
+public import Mathlib.RingTheory.Flat.Basic
+public import Nyll.SchemeTheory.RingTheory.Flat.TensorInjectivity
 
 /-!
 # Module Flat ker of surjective of flat
 -/
 
 /-! Flatness of the kernel of a surjection between flat modules. -/
+
+@[expose] public section
 
 section ProofImplementation
 

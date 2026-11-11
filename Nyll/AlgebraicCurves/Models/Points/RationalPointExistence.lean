@@ -4,12 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Mathlib.AlgebraicGeometry.AlgClosed.Basic
-import Mathlib.Topology.JacobsonSpace
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+public import Mathlib.Topology.JacobsonSpace
 
 /-! # Existence of a rational point on a curve model over an algebraically closed field -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -20,7 +26,7 @@ namespace AlgebraicCurve.CurveModel
 /-- A curve model has a rational point over an algebraically closed base.
 The point is constructed from an actual closed point of its Jacobson space. -/
 theorem nonempty_rationalPoint
-    {K F : Type} [Field K] [IsAlgClosed K] [Field F] [Algebra K F]
+    {K : Type u} {F : Type v} [Field K] [IsAlgClosed K] [Field F] [Algebra K F]
     (M : CurveModel K F) :
     Nonempty (SchemeHomOver (𝟙 (Spec (.of K))) M.toBase) := by
   have : JacobsonSpace M.C := LocallyOfFiniteType.jacobsonSpace M.toBase

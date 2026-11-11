@@ -5,19 +5,25 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FrobeniusNormWitness
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativePrimeNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FrobeniusNormWitness
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativePrimeNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 
 /-!
 # Native reciprocity on the intrinsic Frobenius auxiliary field
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -25,7 +31,7 @@ namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra k (SeparableClosure K)]
     [IsScalarTower k K (SeparableClosure K)]
@@ -115,9 +121,9 @@ theorem native_frobenius_norm_eq_ambient
     abstractExtensionQuotientEquivGaloisGroup
       K (SeparableClosure K) H.field T.field T.below T.normal
   have hEcomm : IsMulCommutative Gal(E/F) :=
-    qA.surjective.isMulCommutative inferInstance
+    qA.surjective.isMulCommutative
   have hEIcomm : IsMulCommutative EI.extensionQuotient :=
-    qI.symm.surjective.isMulCommutative hEcomm
+    qI.symm.surjective.isMulCommutative
   have hEI : Finite EI.extensionQuotient := EI.finite
   let DI := fullConstantDegreeData k F (SeparableClosure F)
   let RI := (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI

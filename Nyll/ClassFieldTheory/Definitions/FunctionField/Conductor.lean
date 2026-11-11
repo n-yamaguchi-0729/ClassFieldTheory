@@ -10,6 +10,8 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
+import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 
 /-!
 # Actual global and local conductors
@@ -22,11 +24,13 @@ supplied internally.
 
 noncomputable section
 
+universe u v w
+
 open scoped AlgebraicCurve.Place
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

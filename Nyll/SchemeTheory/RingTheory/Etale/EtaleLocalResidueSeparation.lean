@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.RingTheory.Etale.StandardEtale
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.RingTheory.Etale.StandardEtale
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring.RingNF
 
 /-!
 # Is Local Ring exists finite etale faithfully Flat is Local Ring sub mem maximal Ideal imp
 eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

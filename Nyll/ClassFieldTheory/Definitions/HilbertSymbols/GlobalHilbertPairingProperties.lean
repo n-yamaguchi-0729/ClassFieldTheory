@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
 
 /-!
 # Locality and support conditions for global Hilbert pairing families
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

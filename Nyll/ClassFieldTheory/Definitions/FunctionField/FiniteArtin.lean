@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Algebra.Tower
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+module
+
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
 
 /-!
 # Continuous finite Artin reciprocity for function fields
@@ -23,11 +27,15 @@ The rational parameter of the base field induces the finite extension's
 function-field presentation. Its curve theorem supplies principal divisors.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
     [FiniteDimensional K L]

@@ -4,18 +4,22 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.GaloisAction
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalField
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationAddVal
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
-import Mathlib.RingTheory.Discriminant
-import Mathlib.RingTheory.Polynomial.Eisenstein.IsIntegral
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.GaloisAction
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalField
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationAddVal
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.RingTheory.Polynomial.Eisenstein.IsIntegral
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Complete
+public import Nyll.ValuedFieldTheory.Valuation.ValuedAdicComplete
 
 /-!
 # The chosen complete valuation and primitive Lubin--Tate point
@@ -26,6 +30,8 @@ primitive point generates the integral closure and is a uniformizer.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -40,7 +46,7 @@ open RamificationTheory.HilbertRamification.Higher
 open ValuationTheory.DiscreteValuationField
 open ValuationTheory.DiscreteValuationField.ValuedExtension
 
-universe u v y
+universe u v w x y
 
 variable {K : Type u} [Field K]
 
@@ -156,13 +162,13 @@ private theorem
 
 section ChosenRamificationTarget
 
-variable {K₀ : Type} [Field K₀]
+variable {K₀ : Type u} [Field K₀]
 
 /-- The canonical complete discrete valuation on the equal-characteristic
 Laurent-series base used by the explicit Lubin--Tate level construction. -/
 noncomputable def equalCharacteristicLubinTateBaseCompleteDVF
-    (F : LocalField.{0, v} K₀) :
-    ValuationTheory.DiscreteValuationField.CompleteDVF.{0, 0}
+    (F : LocalField.{u, v} K₀) :
+    ValuationTheory.DiscreteValuationField.CompleteDVF.{u, u}
       F.residueField⸨X⸩ := by
   letI : ValuativeRel F.residueField⸨X⸩ :=
     equalCharacteristicLaurentValuativeRel F
@@ -173,13 +179,12 @@ noncomputable def equalCharacteristicLubinTateBaseCompleteDVF
 /-- The valuation packaged by the chosen Laurent-series base is the canonical
 valuation induced by the equal-characteristic valuative relation. -/
 theorem equalCharacteristicLubinTateBaseCompleteDVF_valuation_eq
-    (F : LocalField.{0, v} K₀) :
+    (F : LocalField.{u, v} K₀) :
+    let : ValuativeRel F.residueField⸨X⸩ :=
+      equalCharacteristicLaurentValuativeRel F
     (equalCharacteristicLubinTateBaseCompleteDVF F).valuation =
-      letI : ValuativeRel F.residueField⸨X⸩ :=
-        equalCharacteristicLaurentValuativeRel F
       ValuativeRel.valuation F.residueField⸨X⸩ := by
-  let : ValuativeRel F.residueField⸨X⸩ :=
-    equalCharacteristicLaurentValuativeRel F
+  intro valuativeRelation
   let : IsNonarchimedeanLocalField F.residueField⸨X⸩ :=
     equalCharacteristicLaurentIsNonarchimedeanLocalField F
   change
@@ -191,15 +196,14 @@ theorem equalCharacteristicLubinTateBaseCompleteDVF_valuation_eq
 
 /-- Identity on Laurent-series elements identifies the canonical valuative
 integer ring with the valuation ring packaged by the chosen complete DVF. -/
-private noncomputable def
+noncomputable def
     equalCharacteristicLaurentValuativeIntegerEquivLubinTateBaseValuationSubring
-    (F : LocalField.{0, v} K₀) :
-    letI : ValuativeRel F.residueField⸨X⸩ :=
+    (F : LocalField.{u, v} K₀) :
+    let : ValuativeRel F.residueField⸨X⸩ :=
       equalCharacteristicLaurentValuativeRel F
     (ValuativeRel.valuation F.residueField⸨X⸩).integer ≃+*
       (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring := by
-  letI : ValuativeRel F.residueField⸨X⸩ :=
-    equalCharacteristicLaurentValuativeRel F
+  intro sharedOwner1
   let hval :=
     equalCharacteristicLubinTateBaseCompleteDVF_valuation_eq F
   exact
@@ -224,7 +228,7 @@ private noncomputable def
 equal-characteristic Laurent-series base. -/
 noncomputable def
     equalCharacteristicPowerSeriesEquivLubinTateBaseValuationSubring
-    (F : LocalField.{0, v} K₀) :
+    (F : LocalField.{u, v} K₀) :
     F.residueField⟦X⟧ ≃+*
       (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring := by
   letI : ValuativeRel F.residueField⸨X⸩ :=
@@ -239,7 +243,7 @@ coercion to the Laurent-series field. -/
 @[simp]
 theorem
     equalCharacteristicPowerSeriesEquivLubinTateBaseValuationSubring_coe
-    (F : LocalField.{0, v} K₀) (f : F.residueField⟦X⟧) :
+    (F : LocalField.{u, v} K₀) (f : F.residueField⟦X⟧) :
     ((equalCharacteristicPowerSeriesEquivLubinTateBaseValuationSubring F f :
         (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring) :
       F.residueField⸨X⸩) =
@@ -249,7 +253,7 @@ theorem
 /-- The Laurent parameter `T`, now regarded as an element of the valuation
 ring packaged by the chosen base complete DVF. -/
 noncomputable def equalCharacteristicLubinTateBaseUniformizerInteger
-    (F : LocalField.{0, v} K₀) :
+    (F : LocalField.{u, v} K₀) :
     (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring :=
   equalCharacteristicPowerSeriesEquivLubinTateBaseValuationSubring F
     (PowerSeries.X : F.residueField⟦X⟧)
@@ -257,7 +261,7 @@ noncomputable def equalCharacteristicLubinTateBaseUniformizerInteger
 /-- The chosen base valuation-ring parameter has Laurent-series value `T`. -/
 @[simp]
 theorem equalCharacteristicLubinTateBaseUniformizerInteger_coe
-    (F : LocalField.{0, v} K₀) :
+    (F : LocalField.{u, v} K₀) :
     (equalCharacteristicLubinTateBaseUniformizerInteger F :
       F.residueField⸨X⸩) =
         equalCharacteristicLaurentUniformizer F := by
@@ -268,7 +272,7 @@ theorem equalCharacteristicLubinTateBaseUniformizerInteger_coe
 /-- The Laurent parameter is irreducible in the valuation ring packaged by
 the chosen base complete DVF. -/
 theorem equalCharacteristicLubinTateBaseUniformizerInteger_irreducible
-    (F : LocalField.{0, v} K₀) :
+    (F : LocalField.{u, v} K₀) :
     Irreducible (equalCharacteristicLubinTateBaseUniformizerInteger F) := by
   exact
     PowerSeries.X_irreducible.map
@@ -278,7 +282,7 @@ theorem equalCharacteristicLubinTateBaseUniformizerInteger_irreducible
 transported from `κ[[T]]` to the chosen base valuation ring. -/
 noncomputable def
     equalCharacteristicLubinTatePrimitivePolynomialInBaseValuationSubring
-    (F : LocalField.{0, v} K₀) (n : ℕ) :
+    (F : LocalField.{u, v} K₀) (n : ℕ) :
     Polynomial
       (equalCharacteristicLubinTateBaseCompleteDVF F).valuationSubring :=
   (equalCharacteristicLubinTateIntegralPrimitivePolynomial F n).map
@@ -288,7 +292,7 @@ noncomputable def
 chosen base valuation ring. -/
 theorem
     equalCharacteristicLubinTatePrimitivePolynomialInBaseValuationSubring_monic
-    (F : LocalField.{0, v} K₀) (n : ℕ) :
+    (F : LocalField.{u, v} K₀) (n : ℕ) :
     (equalCharacteristicLubinTatePrimitivePolynomialInBaseValuationSubring
       F n).Monic :=
   (equalCharacteristicLubinTateIntegralPrimitivePolynomial_monic F n).map _
@@ -297,7 +301,7 @@ theorem
 field recovers the original primitive division polynomial. -/
 theorem
     equalCharacteristicLubinTatePrimitivePolynomialInBaseValuationSubring_map
-    (F : LocalField.{0, v} K₀) (n : ℕ) :
+    (F : LocalField.{u, v} K₀) (n : ℕ) :
     (equalCharacteristicLubinTatePrimitivePolynomialInBaseValuationSubring
         F n).map
           (algebraMap
@@ -311,12 +315,13 @@ theorem
 
 open _root_.ValuationTheory.DiscreteValuationField.ValuedExtension
   (exists_integralClosure_standard_fundamental_identity) in
-private theorem equalCharacteristicLubinTateLevelCompleteDVFData_exists
-    (F : LocalField.{0, v} K₀)
+/-- The primitive Lubin--Tate level carries its integral-closure complete discrete valuation. -/
+theorem equalCharacteristicLubinTateLevelCompleteDVFData_exists
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     ∃ target :
-        ValuationTheory.DiscreteValuationField.CompleteDVF.{0, 0}
+        ValuationTheory.DiscreteValuationField.CompleteDVF.{u, 0}
           (equalCharacteristicLubinTateLevelField F n),
       ∃ hExt :
           (equalCharacteristicLubinTateBaseCompleteDVF F).valuation.HasExtension
@@ -352,10 +357,10 @@ private theorem equalCharacteristicLubinTateLevelCompleteDVFData_exists
 Lubin--Tate level field, chosen from its actual integral closure over
 `κ((T))`. -/
 noncomputable def equalCharacteristicLubinTateLevelCompleteDVF
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
-    ValuationTheory.DiscreteValuationField.CompleteDVF.{0, 0}
+    ValuationTheory.DiscreteValuationField.CompleteDVF.{u, 0}
       (equalCharacteristicLubinTateLevelField F n) :=
   Classical.choose
     (equalCharacteristicLubinTateLevelCompleteDVFData_exists F n)
@@ -363,7 +368,7 @@ noncomputable def equalCharacteristicLubinTateLevelCompleteDVF
 /-- The chosen level valuation extends the canonical Laurent-series base
 valuation. -/
 theorem equalCharacteristicLubinTateLevelCompleteDVF_hasExtension
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     (equalCharacteristicLubinTateBaseCompleteDVF F).valuation.HasExtension
@@ -376,7 +381,7 @@ theorem equalCharacteristicLubinTateLevelCompleteDVF_hasExtension
 equal-characteristic Lubin--Tate level valuation. -/
 noncomputable instance
     equalCharacteristicLubinTateLevelCompleteDVF_hasExtensionInstance
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     (equalCharacteristicLubinTateBaseCompleteDVF F).valuation.HasExtension
@@ -386,7 +391,7 @@ noncomputable instance
 /-- The valuation ring of the chosen level target is the actual integral
 closure of the Laurent-series base valuation ring. -/
 theorem equalCharacteristicLubinTateLevelCompleteDVF_isIntegralClosure
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsIntegralClosure
@@ -400,7 +405,7 @@ theorem equalCharacteristicLubinTateLevelCompleteDVF_isIntegralClosure
 /-- The chosen integral-closure valuation realizes the fundamental identity
 for the explicit finite Lubin--Tate level. -/
 theorem equalCharacteristicLubinTateLevelCompleteDVF_fundamentalIdentity
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     ValuationTheory.DiscreteValuationField.ValuedExtension.degree
@@ -421,7 +426,7 @@ ring.  Its witness is the transported integral primitive polynomial, not a
 field-level integrality surrogate. -/
 theorem
     equalCharacteristicLubinTateLevelPowerBasis_gen_isIntegral_over_baseValuationSubring
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsIntegral
@@ -464,7 +469,7 @@ theorem
 integral-closure valuation ring selected on the level field. -/
 theorem
     equalCharacteristicLubinTateLevelPowerBasis_gen_mem_valuationSubring
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     (equalCharacteristicLubinTateLevelPowerBasis F n).gen ∈
@@ -495,7 +500,7 @@ theorem
 target valuation ring.  Its norm computation below proves that this element
 is a uniformizer. -/
 noncomputable def equalCharacteristicLubinTatePrimitivePointInteger
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     (equalCharacteristicLubinTateLevelCompleteDVF F n).valuationSubring :=
@@ -506,7 +511,7 @@ noncomputable def equalCharacteristicLubinTatePrimitivePointInteger
 as its underlying level-field element. -/
 @[simp]
 theorem equalCharacteristicLubinTatePrimitivePointInteger_coe
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     (equalCharacteristicLubinTatePrimitivePointInteger F n).val =
@@ -517,7 +522,7 @@ theorem equalCharacteristicLubinTatePrimitivePointInteger_coe
 chosen Laurent uniformizer. -/
 theorem
     equalCharacteristicLubinTatePrimitivePolynomialInBaseValuationSubring_isEisensteinAt
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     (equalCharacteristicLubinTatePrimitivePolynomialInBaseValuationSubring
@@ -544,7 +549,7 @@ theorem
 /-- The integral minimal polynomial of the primitive point is the transported
 Lubin--Tate primitive polynomial. -/
 theorem equalCharacteristicLubinTatePrimitivePoint_minpoly
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     minpoly
@@ -567,7 +572,7 @@ theorem equalCharacteristicLubinTatePrimitivePoint_minpoly
 /-- The primitive Lubin--Tate point generates the entire chosen integral
 closure over the Laurent-series valuation ring. -/
 theorem equalCharacteristicLubinTatePrimitivePointInteger_adjoin_eq_top
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     Algebra.adjoin
@@ -618,10 +623,10 @@ open _root_.ValuationTheory.DiscreteValuationField.ValuedExtension (
 extension on the explicit level field. -/
 theorem
     equalCharacteristicLubinTateLevelCompleteDVF_hasUniqueValuationExtension
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
-    HasUniqueValuationExtension.{0, 0, 0, 0, y}
+    HasUniqueValuationExtension.{u, u, u, 0, y}
       (base := equalCharacteristicLubinTateBaseCompleteDVF F)
       (target := equalCharacteristicLubinTateLevelCompleteDVF F n) := by
   let : FiniteDimensional F.residueField⸨X⸩
@@ -634,7 +639,7 @@ theorem
     (hasUniqueValuationExtension_of_finite_separable
         (equalCharacteristicLubinTateBaseCompleteDVF F)
         (equalCharacteristicLubinTateLevelCompleteDVF F n) :
-      HasUniqueValuationExtension.{0, 0, 0, 0, y}
+      HasUniqueValuationExtension.{u, u, u, 0, y}
         (base := equalCharacteristicLubinTateBaseCompleteDVF F)
         (target := equalCharacteristicLubinTateLevelCompleteDVF F n))
 
@@ -642,21 +647,21 @@ theorem
 real lower ramification groups. -/
 theorem
     equalCharacteristicLubinTateLevelCompleteDVF_hasUniqueDVFValuationExtension
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
-    RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, y}
+    RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{u, u, u, 0, y}
       (equalCharacteristicLubinTateBaseCompleteDVF F).toDVF
       (equalCharacteristicLubinTateLevelCompleteDVF F n).toDVF :=
   equalCharacteristicLubinTateLevelCompleteDVF_hasUniqueValuationExtension F n
 
 private theorem addVal_prod_valuationSubringAut
-    {K₁ L₁ : Type} [Field K₁] [Field L₁] [Algebra K₁ L₁]
+    {K₁ : Type u} {L₁ : Type w} [Field K₁] [Field L₁] [Algebra K₁ L₁]
     [FiniteDimensional K₁ L₁] [IsGalois K₁ L₁]
-    (base : DVF.{0, 0} K₁) (target : DVF.{0, 0} L₁)
+    (base : DVF.{u, v} K₁) (target : DVF.{w, x} L₁)
     [base.valuation.HasExtension target.valuation]
     (huniq :
-      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+      RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{u, v, w, x, x}
         base target)
     (a : target.valuationSubring) :
     IsDiscreteValuationRing.addVal target.valuationSubring
@@ -690,7 +695,7 @@ section PrimitivePointUniformizer
 
 noncomputable local instance
     equalCharacteristicLubinTateLevelField_finiteDimensional_forUniformizer
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     FiniteDimensional F.residueField⸨X⸩
@@ -699,19 +704,20 @@ noncomputable local instance
 
 noncomputable local instance
     equalCharacteristicLubinTateLevelField_isGalois_forUniformizer
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsGalois F.residueField⸨X⸩
       (equalCharacteristicLubinTateLevelField F n) :=
   equalCharacteristicLubinTateLevelField_isGalois F n
 
-private theorem
+/-- The primitive Lubin--Tate level has a unique extension of the base discrete valuation. -/
+theorem
     equalCharacteristicLubinTateLevelCompleteDVF_hasUniqueDVFValuationExtension_zero
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
-    RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+    RamificationTheory.DiscreteValuationField.DVF.HasUniqueValuationExtension.{u, u, u, 0, 0}
       (equalCharacteristicLubinTateBaseCompleteDVF F).toDVF
       (equalCharacteristicLubinTateLevelCompleteDVF F n).toDVF :=
   equalCharacteristicLubinTateLevelCompleteDVF_hasUniqueDVFValuationExtension F n
@@ -719,7 +725,7 @@ private theorem
 /-- The image of the Laurent parameter in a Lubin--Tate level has additive
 valuation equal to the ramification index. -/
 theorem equalCharacteristicLubinTateBaseUniformizerInteger_map_addVal
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsDiscreteValuationRing.addVal
@@ -740,7 +746,7 @@ theorem equalCharacteristicLubinTateBaseUniformizerInteger_map_addVal
 /-- The norm identity for the negative primitive point, lifted to the chosen
 valuation rings as the product of its full Galois orbit. -/
 theorem equalCharacteristicLubinTateBaseUniformizer_orbitProduct
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     let base := equalCharacteristicLubinTateBaseCompleteDVF F
@@ -811,7 +817,7 @@ theorem equalCharacteristicLubinTateBaseUniformizer_orbitProduct
 /-- The chosen primitive Lubin--Tate division point has normalized additive
 valuation one in the integral-closure valuation ring. -/
 theorem equalCharacteristicLubinTatePrimitivePointInteger_addVal
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsDiscreteValuationRing.addVal
@@ -902,7 +908,7 @@ theorem equalCharacteristicLubinTatePrimitivePointInteger_addVal
 /-- The chosen primitive point is irreducible in the integral-closure
 valuation ring. -/
 theorem equalCharacteristicLubinTatePrimitivePointInteger_irreducible
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     Irreducible (equalCharacteristicLubinTatePrimitivePointInteger F n) := by
@@ -922,7 +928,7 @@ theorem equalCharacteristicLubinTatePrimitivePointInteger_irreducible
 /-- The chosen primitive Lubin--Tate division point is a uniformizer of the
 explicit level field with its integral-closure valuation. -/
 theorem equalCharacteristicLubinTatePrimitivePoint_isUniformizer
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     (equalCharacteristicLubinTateLevelCompleteDVF F n).valuation.IsUniformizer
@@ -939,7 +945,7 @@ bracket polynomial for `a - 1`.  The normalized valuation is computed below
 from the first nonzero visible coefficient. -/
 theorem
     equalCharacteristicLubinTatePrimitivePointInteger_displacement_coe_eq_aeval
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
     (σ : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
@@ -1023,7 +1029,7 @@ section PrimitivePointDisplacementValuation
 
 noncomputable local instance
     equalCharacteristicLubinTateLevelField_finiteDimensional_forDisplacementValuation
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     FiniteDimensional F.residueField⸨X⸩
@@ -1032,7 +1038,7 @@ noncomputable local instance
 
 noncomputable local instance
     equalCharacteristicLubinTateLevelField_isGalois_forDisplacementValuation
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsGalois F.residueField⸨X⸩
@@ -1042,7 +1048,7 @@ noncomputable local instance
 /-- In the chosen level valuation, the Laurent parameter has additive
 valuation equal to the explicit Lubin--Tate degree `(q - 1)q^n`. -/
 theorem equalCharacteristicLubinTateBaseUniformizerInteger_map_addVal_eq_degree
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsDiscreteValuationRing.addVal

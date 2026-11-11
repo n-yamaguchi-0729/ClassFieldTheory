@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.Analysis.Normed.Field.ProperSpace
-import Mathlib.RingTheory.Valuation.ValuativeRel.Basic
-import Mathlib.Topology.Algebra.Valued.LocallyCompact
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
+module
+
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.Analysis.Normed.Field.ProperSpace
+public import Mathlib.RingTheory.Valuation.ValuativeRel.Basic
+public import Mathlib.Topology.Algebra.Valued.LocallyCompact
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
 
 /-!
 # Local fields at all places of a global function field
@@ -24,6 +26,8 @@ by local class field theory. Places above infinity are included.
 The valuation relation is passed explicitly from the existing adic valuation; the
 completion, its topology and its integral subring are not reconstructed.
 -/
+
+@[expose] public section
 
 open scoped Valued WithZero
 

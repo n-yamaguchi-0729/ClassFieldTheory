@@ -32,7 +32,9 @@ variable {K : Type u} [Field K] [NumberField K]
 private theorem narrow_rayClassPrimeToIdeals_eq_top :
     rayClassPrimeToIdeals (narrowRayClassModulus K) = ⊤ := by
   ext I
-  simp [rayClassPrimeToIdeals, narrowRayClassModulus]
+  simp only [rayClassPrimeToIdeals, narrowRayClassModulus, Finsupp.support_zero,
+    Finset.notMem_empty, IsEmpty.forall_iff, implies_true, Set.ofPred_true, Subgroup.mem_mk,
+    Submonoid.mem_mk, Subsemigroup.mem_mk, Set.mem_univ, Subgroup.mem_top]
 
 private theorem narrow_rayPrincipalIdealSubgroup_eq_positive :
     rayPrincipalIdealSubgroup (narrowRayClassModulus K) =
@@ -59,7 +61,7 @@ private theorem narrow_rayPrincipalIdealSubgroup_eq_positive :
       refine ⟨x, ?_, rfl⟩
       constructor
       · intro v hv
-        simp [narrowRayClassModulus] at hv
+        simp only [narrowRayClassModulus, Finsupp.support_zero, Finset.notMem_empty] at hv
       · intro v _
         exact hx v
   calc

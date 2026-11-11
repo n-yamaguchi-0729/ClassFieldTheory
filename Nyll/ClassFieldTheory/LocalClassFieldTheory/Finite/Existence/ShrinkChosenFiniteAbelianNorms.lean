@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkChosenFiniteAbelianFields
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFiniteAbelianNorms
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkChosenFiniteAbelianFields
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFiniteAbelianNorms
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbelianIntermediateFieldAlgEquiv
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
 
 /-!
 # Actual norm subgroups in the chosen small-base separable closure
@@ -13,6 +18,8 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFinite
 The finite-abelian-field order equivalence carries the actual field-norm
 subgroup, not merely an abstract subgroup assigned by a classification.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -27,11 +34,11 @@ variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
 subgroup after identifying the multiplicative groups of `K` and `Shrink K`. -/
 theorem shrinkChosenFiniteAbelian_normSubgroup_map
     (E : ClassFieldTheory.FiniteAbelianLocalExtension K) :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Small.{0} K := nonarchimedeanLocalField_small K
     (E.normSubgroup).map
         (Units.mapEquiv (Shrink.ringEquiv K).symm.toMulEquiv).toMonoidHom =
       (shrinkChosenFiniteAbelianField K E).normSubgroup := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
+  intro sharedOwner1
   let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
     shrinkSeparableClosureAlgebra K
   let M := shrinkIntermediateField K E.1

@@ -11,20 +11,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
-import Nyll.AlgebraicCurves.Geometry.Picard.LFPFgIsoPullback
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
+public import Nyll.AlgebraicCurves.Geometry.Picard.LFPFgIsoPullback
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
 /-!
 # Relative Picard varieties and fibre cohomology
 
 Obtain finite-presentation surjectivity of the relative Picard presheaf from the line-bundle
 pullback construction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

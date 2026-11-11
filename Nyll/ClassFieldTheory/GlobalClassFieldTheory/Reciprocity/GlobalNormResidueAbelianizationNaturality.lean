@@ -22,6 +22,8 @@ open NumberField
 
 noncomputable section
 
+universe u v w x
+
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
@@ -32,43 +34,14 @@ open KummerTheory
 open CyclicCohomology
 
 private theorem abelianizationNaturalityIdeleClassIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 attribute [local instance] abelianizationNaturalityIdeleClassIsMulCommutative
 
-/-- Transport by an equality-induced field equivalence leaves the underlying
-rational direct-limit idèle class unchanged. -/
-private theorem rationalIdeleClassEquivFixed_congr_apply_val
-    {A B : IntermediateField ℚ (SeparableClosure ℚ)}
-    [FiniteDimensional ℚ A] [FiniteDimensional ℚ B]
-    (h : A = B)
-    (e : B ≃ₐ[ℚ] A)
-    (he : e.trans (IntermediateField.equivOfEq h) =
-      (AlgEquiv.refl : B ≃ₐ[ℚ] B))
-    (c : Additive (IdeleClassGroup B)) :
-    ((rationalIdeleClassEquivFixed A)
-        (MulEquiv.toAdditive (ideleClassCongr e) c)).1 =
-      ((rationalIdeleClassEquivFixed B) c).1 := by
-  cases h
-  have he' : e = AlgEquiv.refl := by
-    apply AlgEquiv.ext
-    intro x
-    have hx := DFunLike.congr_fun he x
-    change e x = x at hx
-    exact hx
-  rw [he']
-  have hc :
-      MulEquiv.toAdditive
-          (ideleClassCongr (AlgEquiv.refl : A ≃ₐ[ℚ] A)) c = c := by
-    cases c with
-    | ofMul c =>
-        exact congrArg Additive.ofMul (ideleClassCongr_refl c)
-  rw [hc]
-
 private theorem rationalIdeleClassEquivFixed_transport_commonTop_val
-    {T : Type} [Field T] [NumberField T]
+    {T : Type x} [Field T] [NumberField T]
     {A B : IntermediateField ℚ (SeparableClosure ℚ)}
     [hA : FiniteDimensional ℚ A] [hB : FiniteDimensional ℚ B]
     (h : A = B) (e : T ≃ₐ[ℚ] B) (c : IdeleClassGroup T) :
@@ -86,7 +59,7 @@ private theorem rationalIdeleClassEquivFixed_transport_commonTop_val
 section CommonTop
 
 variable
-    (K M N : Type)
+    (K : Type u) (M : Type v) (N : Type w)
     [Field K] [NumberField K]
     [Field M] [NumberField M]
     [Field N] [NumberField N]
@@ -295,7 +268,7 @@ theorem globalNormResidueAbelianizationMonoidHomOfEmbedding_apply
     [FiniteDimensional K N] [IsGalois K N]
     (j : N →ₐ[ℚ] SeparableClosure ℚ)
     (c : IdeleClassGroup K) :
-    letI _ : Finite
+    let _ : Finite
         ((numberFieldEmbeddedBaseSubgroup K N j).toSubgroup ⧸
           extensionSubgroup
             (numberFieldEmbeddedBaseSubgroup K N j)
@@ -318,14 +291,7 @@ theorem globalNormResidueAbelianizationMonoidHomOfEmbedding_apply
               (numberFieldEmbeddedTopSubgroup_le_baseSubgroup K N j)
               (numberFieldEmbeddedIdeleClassEquivAmbientFixed
                 K N j (Additive.ofMul c))))) := by
-  dsimp only
-  let hRelativeFinite : Finite
-      ((numberFieldEmbeddedBaseSubgroup K N j).toSubgroup ⧸
-        extensionSubgroup
-          (numberFieldEmbeddedBaseSubgroup K N j)
-          (numberFieldEmbeddedTopSubgroup K N j)
-          (numberFieldEmbeddedTopSubgroup_le_baseSubgroup K N j)) :=
-    numberFieldEmbeddedExtensionQuotient_finite K N j
+  intro hRelativeFinite
   have hclass :=
     numberFieldEmbeddedFiniteNormQuotientEquivIdeleClassNormQuotient_ideleClass
       K N j c
@@ -546,11 +512,11 @@ theorem
     numberFieldEmbeddedAbelianizedExtensionQuotientEquivGaloisAbelianization_restriction
     [FiniteDimensional K N] [IsGalois K N]
     (j : N →ₐ[ℚ] SeparableClosure ℚ) :
-    letI _ : FiniteDimensional K M :=
+    let _ : FiniteDimensional K M :=
       commonTopBaseIntermediateFiniteDimensional K M N
-    letI _ : FiniteDimensional M N :=
+    let _ : FiniteDimensional M N :=
       commonTopIntermediateTopFiniteDimensional K M N
-    letI _ : IsGalois M N :=
+    let _ : IsGalois M N :=
       commonTopIntermediateTopIsGalois K M N
     ∀ z : Abelianization
         (numberFieldEmbeddedFiniteGaloisSubextension M N j).extensionQuotient,
@@ -577,14 +543,7 @@ theorem
             (normResidueNaturalityAbelianizedRestriction
               H H' J J hJH hJH' hH'H le_rfl)
             (Additive.ofMul z))) := by
-  dsimp only
-  let : FiniteDimensional K M :=
-    commonTopBaseIntermediateFiniteDimensional K M N
-  let : FiniteDimensional M N :=
-    commonTopIntermediateTopFiniteDimensional K M N
-  let : IsGalois M N :=
-    commonTopIntermediateTopIsGalois K M N
-  intro z
+  intro reusedStructure1 reusedStructure2 reusedStructure3 z
   let H := numberFieldEmbeddedBaseSubgroup K N j
   let H' := numberFieldEmbeddedBaseSubgroup M N j
   let J := numberFieldEmbeddedTopSubgroup K N j
@@ -654,23 +613,18 @@ theorem
     globalNormResidueAbelianizationMonoidHomOfEmbedding_norm_restriction
     [FiniteDimensional K N] [IsGalois K N]
     (j : N →ₐ[ℚ] SeparableClosure ℚ) :
-    letI _ : FiniteDimensional K M :=
+    let _ : FiniteDimensional K M :=
       commonTopBaseIntermediateFiniteDimensional K M N
-    letI _ : FiniteDimensional M N :=
+    let _ : FiniteDimensional M N :=
       commonTopIntermediateTopFiniteDimensional K M N
-    letI _ : IsGalois M N :=
+    let _ : IsGalois M N :=
       commonTopIntermediateTopIsGalois K M N
     (Abelianization.map
         (AlgEquiv.restrictScalarsHom K : Gal(N / M) →* Gal(N / K))).comp
         (globalNormResidueAbelianizationMonoidHomOfEmbedding M N j) =
       (globalNormResidueAbelianizationMonoidHomOfEmbedding K N j).comp
         (_root_.ideleClassNorm K M) := by
-  let : FiniteDimensional K M :=
-    commonTopBaseIntermediateFiniteDimensional K M N
-  let : FiniteDimensional M N :=
-    commonTopIntermediateTopFiniteDimensional K M N
-  let : IsGalois M N :=
-    commonTopIntermediateTopIsGalois K M N
+  intro sharedOwner1 sharedOwner2 sharedOwner3
   let H := numberFieldEmbeddedBaseSubgroup K N j
   let H' := numberFieldEmbeddedBaseSubgroup M N j
   let J := numberFieldEmbeddedTopSubgroup K N j
@@ -829,23 +783,18 @@ tower with a common Galois top field.  No Galois hypothesis is imposed on
 the intermediate extension. -/
 theorem globalNormResidueAbelianizationMonoidHom_norm_restriction
     [FiniteDimensional K N] [IsGalois K N] :
-    letI _ : FiniteDimensional K M :=
+    let _ : FiniteDimensional K M :=
       commonTopBaseIntermediateFiniteDimensional K M N
-    letI _ : FiniteDimensional M N :=
+    let _ : FiniteDimensional M N :=
       commonTopIntermediateTopFiniteDimensional K M N
-    letI _ : IsGalois M N :=
+    let _ : IsGalois M N :=
       commonTopIntermediateTopIsGalois K M N
     (Abelianization.map
         (AlgEquiv.restrictScalarsHom K : Gal(N / M) →* Gal(N / K))).comp
         (globalNormResidueAbelianizationMonoidHom M N) =
       (globalNormResidueAbelianizationMonoidHom K N).comp
         (_root_.ideleClassNorm K M) := by
-  let : FiniteDimensional K M :=
-    commonTopBaseIntermediateFiniteDimensional K M N
-  let : FiniteDimensional M N :=
-    commonTopIntermediateTopFiniteDimensional K M N
-  let : IsGalois M N :=
-    commonTopIntermediateTopIsGalois K M N
+  intro sharedOwner1 sharedOwner2 sharedOwner3
   rw [globalNormResidueAbelianizationMonoidHom_eq_ofEmbedding_standard,
     globalNormResidueAbelianizationMonoidHom_eq_ofEmbedding_standard]
   exact

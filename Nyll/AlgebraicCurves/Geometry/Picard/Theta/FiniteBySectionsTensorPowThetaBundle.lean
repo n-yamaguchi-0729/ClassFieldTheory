@@ -10,48 +10,52 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.RingTheory.RegularLocal.RegularLocalRingQuotientNonZeroDivisorAscent
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroGroupCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.Geometry.Picard.Poincare.SubsingletonH1FinrankH0FibrePoincareTensorSectionTwist
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.InvertibleThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.TranslateThetaBundleTensorIso
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaSectionNeZeroStabilizerTrivial
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.IsFrameOnTensorPowThree
-import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.ProjPresentationFiniteToProjPullbackSectionEqZeroIff
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.SubsingletonHSuccTensorPow
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowerIsomorphisms
-import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySections
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.EquivModulesIso
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.InvertibleTensorPow
-import Nyll.AlgebraicCurves.Geometry.Curves.IsIntegralSmooth
-import Nyll.AlgebraicCurves.Geometry.Picard.IsFiniteToBaseGeometricFibreGenusEqZero
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveGeometricFibreRiemannRochImpEq
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.FiniteBySectionsFinite
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.SubsingletonHSucc
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicGroup
+public import Nyll.SchemeTheory.RingTheory.RegularLocal.RegularLocalRingQuotientNonZeroDivisorAscent
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroGroupCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.Geometry.Picard.Poincare.SubsingletonH1FinrankH0FibrePoincareTensorSectionTwist
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.InvertibleThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.TranslateThetaBundleTensorIso
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaSectionNeZeroStabilizerTrivial
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.IsFrameOnTensorPowThree
+public import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.ProjPresentationFiniteToProjPullbackSectionEqZeroIff
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.SubsingletonHSuccTensorPow
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowerIsomorphisms
+public import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySections
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.EquivModulesIso
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.InvertibleTensorPow
+public import Nyll.AlgebraicCurves.Geometry.Curves.IsIntegralSmooth
+public import Nyll.AlgebraicCurves.Geometry.Picard.IsFiniteToBaseGeometricFibreGenusEqZero
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveGeometricFibreRiemannRochImpEq
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.FiniteBySectionsFinite
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.SubsingletonHSucc
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicGroup
 
 /-!
 Construct finite presentations by sections for powers of the theta bundle over an algebraically
 closed field, using its translation law and stabilizer.
 -/
+@[expose] public section
+
 section ProofImplementation
 
 namespace JacobianVarieties.Picard.Proofs.ThetaFiniteSections
@@ -138,8 +142,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom
@@ -511,8 +515,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

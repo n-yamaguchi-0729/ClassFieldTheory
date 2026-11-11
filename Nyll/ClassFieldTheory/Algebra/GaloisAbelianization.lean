@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Algebra.Equiv
-import Mathlib.GroupTheory.Abelianization.Defs
+module
+
+public import Mathlib.Algebra.Algebra.Equiv
+public import Mathlib.GroupTheory.Abelianization.Defs
 
 /-!
 # Independence of the abelianized Galois group from a presentation
@@ -13,6 +15,8 @@ import Mathlib.GroupTheory.Abelianization.Defs
 Two algebra isomorphisms between the same fields differ by an automorphism.
 Their induced conjugations agree after abelianization.
 -/
+
+@[expose] public section
 
 noncomputable section
 

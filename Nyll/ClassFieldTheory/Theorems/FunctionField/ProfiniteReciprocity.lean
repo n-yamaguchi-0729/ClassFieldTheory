@@ -12,6 +12,14 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteRestrict
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteReciprocity
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteDegree
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
+import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteFiniteCoordinates
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.FiniteAbelianQuotientKernels
+import Nyll.GaloisCohomology.ProfiniteIntegers.ProfiniteIntegerCore
 
 /-!
 # The dense absolute Artin map and its profinite extension
@@ -21,11 +29,13 @@ reciprocity, and is the restriction of the topological profinite
 reciprocity isomorphism along the canonical completion map.
 -/
 
+universe u v
+
 noncomputable section
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
 
 /-- Absolute reciprocity has dense image in the actual abelian Galois group. -/

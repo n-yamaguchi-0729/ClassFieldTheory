@@ -7,7 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealModulusProjection
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassIdealModulusProjectionPrime
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
+import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassGroupHomExtFinitePrime
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 
 /-!
 # Surjectivity of the ideal-theoretic modulus projection
@@ -40,52 +44,8 @@ private theorem rayClassGroup_hom_ext_of_prime
       (hv : v ∉ n.finitePart.support),
         f (rayClassOfFinitePrime n v hv) =
           g (rayClassOfFinitePrime n v hv)) :
-    f = g := by
-  let n' := GlobalClassFieldComparison.rayClassModulusToOriginal K n
-  let e := GlobalClassFieldComparison.rayClassGroupEquivOriginal K n
-  let ι : RayClass.primeToModulusIdeals n' →* RayClassGroup n :=
-    e.symm.toMonoidHom.comp
-      (QuotientGroup.mk' (RayClass.principalRayIdealSubgroup n'))
-  have hιprime (v : HeightOneSpectrum (𝓞 K))
-      (hv : v ∉ n.finitePart.support) :
-      ι (RayClass.primeToModulusIdeal n' v hv) =
-        rayClassOfFinitePrime n v hv := by
-    apply e.injective
-    calc
-      e (ι (RayClass.primeToModulusIdeal n' v hv)) =
-          QuotientGroup.mk' (RayClass.principalRayIdealSubgroup n')
-            (RayClass.primeToModulusIdeal n' v hv) := by
-        change e (e.symm
-          (QuotientGroup.mk' (RayClass.principalRayIdealSubgroup n')
-            (RayClass.primeToModulusIdeal n' v hv))) = _
-        exact e.apply_symm_apply _
-      _ = e (rayClassOfFinitePrime n v hv) :=
-        (GlobalClassFieldComparison.rayClassGroupEquivOriginal_prime
-          K n v hv).symm
-  have hι : Function.Surjective ι := by
-    intro q
-    obtain ⟨I, hI⟩ :=
-      QuotientGroup.mk'_surjective
-        (RayClass.principalRayIdealSubgroup n') (e q)
-    refine ⟨I, ?_⟩
-    apply e.injective
-    change e (e.symm
-      (QuotientGroup.mk' (RayClass.principalRayIdealSubgroup n') I)) = e q
-    rw [e.apply_symm_apply]
-    exact hI
-  have hcomp : f.comp ι = g.comp ι := by
-    refine RayClass.primeToModulusIdeals_hom_ext
-      (G := RayClassGroup m) n' (f.comp ι) (g.comp ι) ?_
-    intro v hv
-    change f (ι (RayClass.primeToModulusIdeal n' v hv)) =
-      g (ι (RayClass.primeToModulusIdeal n' v hv))
-    rw [hιprime v hv]
-    exact hprime v hv
-  apply MonoidHom.ext
-  intro q
-  obtain ⟨I, rfl⟩ := hι q
-  exact congrArg
-    (fun h : RayClass.primeToModulusIdeals n' →* RayClassGroup m => h I) hcomp
+    f = g :=
+  rayClassGroup_hom_ext_finitePrime K n f g hprime
 
 /-- Reducing a ray modulus gives a surjection of ideal-theoretic ray class
 groups. -/

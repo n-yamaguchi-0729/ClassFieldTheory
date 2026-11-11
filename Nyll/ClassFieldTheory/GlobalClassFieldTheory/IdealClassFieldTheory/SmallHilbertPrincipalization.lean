@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTheorem
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTransfer
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTheorem
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTransfer
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
 
 /-!
 # Principalization in the selected small Hilbert class field
@@ -30,6 +34,10 @@ of principalization over the original number field.
 
 
 
+@[expose] public section
+
+universe u
+
 open scoped IsMulCommutative NumberField
 
 noncomputable section
@@ -45,19 +53,19 @@ open Reciprocity
 
 local instance
     smallHilbertPrincipalization_ideleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 local instance
     smallHilbertPrincipalization_ideleClassSubgroupNormal
-    {F : Type} [Field F] [NumberField F]
+    {F : Type*} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
   N.normal_of_isMulCommutative
 
 local instance
     smallHilbertPrincipalization_smallHilbertQuotientGroup
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     Group
       (IdeleClassGroup F ⧸
         smallHilbertClassFieldNormSubgroup (K := F)) :=
@@ -66,14 +74,14 @@ local instance
 
 local instance
     smallHilbertPrincipalization_smallHilbertQuotientOne
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     One
       (IdeleClassGroup F ⧸
         smallHilbertClassFieldNormSubgroup (K := F)) :=
   ⟨(smallHilbertPrincipalization_smallHilbertQuotientGroup
     (F := F)).one⟩
 
-variable (K : Type) [Field K] [NumberField K]
+variable (K : Type u) [Field K] [NumberField K]
 
 private theorem smallHilbertClassFieldIdeleExtensionMap_apply_eq_one
     (q : IdeleClassGroup K ⧸

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
 
 /-!
 # Mathlib intermediate fields and finite local class-field theory
@@ -16,6 +18,8 @@ The finite-existence theorem is formulated internally using closed subgroups
 of the absolute Galois group.  Here we identify those objects with finite
 abelian intermediate fields of Mathlib's chosen separable closure.
 -/
+
+@[expose] public section
 
 noncomputable section
 

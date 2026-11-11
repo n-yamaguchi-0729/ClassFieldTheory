@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.Finiteness.Finsupp
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnits
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+module
+
+public import Mathlib.RingTheory.Finiteness.Finsupp
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnits
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # The finite kernel of the S-unit divisor map
@@ -17,6 +21,8 @@ place. Over the actual full field of constants such a function belongs to
 finite, so the kernel is finite. Together with the finite divisor cokernel this
 gives the finite errors needed to compare S-units with their divisor lattice.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,83 +4,85 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LaurentPrincipalUnitTransport
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
-import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedCompletedLevel
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedCompletedPrimitiveAction
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedPolynomialEvaluation
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizer
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizerNormalization
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusBaseEquiv
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusContinuity
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedField
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldAlgebra
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldCoefficientDescent
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldDegree
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldGeneration
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldPowerBasis
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldPrimitive
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusLift
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedNorm
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedLevel
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveAction
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveIrreducible
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectBracketAtCompletedLevel
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracket
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracketRecursion
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectTargetLevelEmbedding
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaAtCompletedLevel
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaFirstIdentity
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaFrobeniusFixed
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaIteration
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaSeries
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ThetaAtCompletedLevel
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ThetaLocalInverse
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalField
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentModel
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.AmbientDivisionTorsion
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.DivisionPolynomial
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FreeRankOne
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAbelian
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveAction
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.UnitQuotientGalois
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.AmbientBracketAction
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.DivisionModuleEndomorphisms
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateAction
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateEndomorphism
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CoefficientFrobenius
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CompletedUnramifiedField
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.ContractingEquation
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.LaurentSeriesFrobenius
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldEmbedding
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldEquiv
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldMembership
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldSurjective
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFrobeniusFixed
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitLevelMapFixed
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnits
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitsNorm
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.LevelAlgebra
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.StandardSubgroupNorm
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNorm
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UnitQuotientCard
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UnitTransport
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaCoefficients
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaEvaluation
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaFirstIdentity
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaSeries
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaUniqueness
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.RealIndexSteps
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LaurentPrincipalUnitTransport
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedCompletedLevel
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedCompletedPrimitiveAction
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedPolynomialEvaluation
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizer
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ChangedUniformizerNormalization
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusBaseEquiv
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusContinuity
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedField
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldAlgebra
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldCoefficientDescent
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldDegree
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldGeneration
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldPowerBasis
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedFieldPrimitive
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusLift
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedFrobeniusFixedNorm
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedLevel
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveAction
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.CompletedPrimitiveIrreducible
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectBracketAtCompletedLevel
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracket
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectLubinTateBracketRecursion
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectTargetLevelEmbedding
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaAtCompletedLevel
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaFirstIdentity
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaFrobeniusFixed
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaIteration
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.DirectThetaSeries
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ThetaAtCompletedLevel
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.ThetaLocalInverse
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentLocalField
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentModel
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Existence.LaurentUniformizerNormalization
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.AmbientDivisionTorsion
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.DivisionPolynomial
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FiniteParameters
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.FreeRankOne
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAbelian
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelAutomorphisms
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelFieldTower
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUniformizer
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveAction
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.UnitQuotientGalois
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.AmbientBracketAction
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.DivisionModuleEndomorphisms
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateAction
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FormalModule.LubinTateEndomorphism
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CoefficientFrobenius
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.CompletedUnramifiedField
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.ContractingEquation
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Frobenius.LaurentSeriesFrobenius
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldEmbedding
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldEquiv
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldMembership
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFixedFieldSurjective
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitFrobeniusFixed
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitLevelMapFixed
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnits
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.HigherUnitsNorm
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.LevelAlgebra
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.StandardSubgroupNorm
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UniformizerNorm
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UnitQuotientCard
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.NormSubgroup.UnitTransport
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaCoefficients
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaEvaluation
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaFirstIdentity
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaSeries
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Theta.ThetaUniqueness
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.RealIndexSteps
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
 
 /-!
 # Upper ramification groups on transported equal-characteristic levels
@@ -94,7 +96,11 @@ ramification filtrations.
 
 
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped LaurentSeries ValuativeRel
 
@@ -106,7 +112,7 @@ open LocalFieldTheory.DiscreteValuationField
 open LocalFieldTheory.IsNonarchimedeanLocalField
 open LubinTate.EqualCharacteristic
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- The two algebra maps from the Laurent model and the target local field
@@ -117,7 +123,7 @@ theorem equalCharacteristicTransportedLubinTate_algebraMap_compat
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
     (n : ℕ) :
     let F : LocalField K := equalCharacteristicTargetLocalField K
-    let B : Type := F.residueField⸨X⸩
+    let B : Type u := F.residueField⸨X⸩
     let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E : IntermediateField B (SeparableClosure B) :=
@@ -144,7 +150,7 @@ noncomputable def equalCharacteristicTransportedLubinTateGaloisEquiv
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
     (n : ℕ) :
     let F : LocalField K := equalCharacteristicTargetLocalField K
-    let B : Type := F.residueField⸨X⸩
+    let B : Type u := F.residueField⸨X⸩
     let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E : IntermediateField B (SeparableClosure B) :=
@@ -167,7 +173,7 @@ theorem equalCharacteristicTransportedLubinTateGaloisEquiv_apply
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
     (n : ℕ) :
     let F : LocalField K := equalCharacteristicTargetLocalField K
-    let B : Type := F.residueField⸨X⸩
+    let B : Type u := F.residueField⸨X⸩
     let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E : IntermediateField B (SeparableClosure B) :=
@@ -194,7 +200,7 @@ theorem equalCharacteristicTransportedLubinTateLocalUpperRamificationGroup_map_e
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1)
     (n : ℕ) (t : ℝ) :
     let F : LocalField K := equalCharacteristicTargetLocalField K
-    let B : Type := F.residueField⸨X⸩
+    let B : Type u := F.residueField⸨X⸩
     let _ : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E : IntermediateField B (SeparableClosure B) :=

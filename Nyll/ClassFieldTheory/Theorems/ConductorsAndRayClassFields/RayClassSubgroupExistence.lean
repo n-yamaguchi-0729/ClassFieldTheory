@@ -21,11 +21,13 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- Every ray-class subgroup has a finite abelian class-field realization. -/
 theorem rayClassSubgroup_existence
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K) (H : Subgroup (RayClassGroup m)) :
     Nonempty (RayClassSubgroupRealization K m H) := by
   exact GlobalClassFieldComparison.rayClassSubgroup_existence K m H

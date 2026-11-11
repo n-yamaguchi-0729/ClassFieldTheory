@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
+module
+
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # A consequence of the principal-divisor product formula
@@ -14,6 +17,8 @@ A nonzero function integral at every place cannot have positive order at a place
 residue degree. This argument is shared by the discreteness of principal ideles and the
 identification of the full constant field.
 -/
+
+@[expose] public section
 
 namespace FunctionField
 

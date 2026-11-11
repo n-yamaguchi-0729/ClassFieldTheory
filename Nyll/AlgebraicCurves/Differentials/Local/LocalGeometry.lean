@@ -13,15 +13,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.Different
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
-import Nyll.AlgebraicCurves.Differentials.Kaehler.KaehlerDifferentialSpanDEqTop
-import Nyll.AlgebraicCurves.Differentials.Kaehler.KaehlerDifferentialDNeZero
+module
+
+public import Mathlib.RingTheory.DedekindDomain.Different
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.KaehlerDifferentialSpanDEqTop
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.KaehlerDifferentialDNeZero
 
 /-!
 # Local geometry of curve function fields
@@ -30,6 +32,8 @@ A single finite-type valuation-ring construction proves that uniformizer differe
 the local differential module. Its consequences give integral differential coefficients,
 comparison between uniformizers, and the finite support needed for canonical divisors.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -46,7 +50,8 @@ section Transport
 
 variable {K F : Type*} [Field K] [Field F] [Algebra K F] (v : Place K F)
 
-private noncomputable def _root_.AlgebraicCurve.Place.uniformizerSubring' : v.toValuationSubring :=
+/-- A uniformizer in the original valuation ring. -/
+noncomputable def _root_.AlgebraicCurve.Place.uniformizerSubring' : v.toValuationSubring :=
   (IsDiscreteValuationRing.exists_irreducible v.toValuationSubring).choose
 
 open _root_.AlgebraicCurve.Place
@@ -89,7 +94,8 @@ section CotangentEngine
 variable {K F : Type*} [Field K] [Field F] [Algebra K F] (v : Place K F)
 
 open _root_.AlgebraicCurve.Place
-@[reducible] private noncomputable def _root_.AlgebraicCurve.Place.polynomialAlgebra :
+/-- The polynomial algebra determined by the chosen valuation-ring uniformizer. -/
+@[reducible] noncomputable def _root_.AlgebraicCurve.Place.polynomialAlgebra :
   Algebra K[X] v.toValuationSubring :=
   (Polynomial.aeval (R := K) v.uniformizerSubring').toRingHom.toAlgebra
 
@@ -427,7 +433,8 @@ variable {K F : Type*} [Field K] [Field F] [Algebra K F] (v : Place K F)
 
 variable (A : Subalgebra K F) (hA : (A : Set F) ⊆ (v.toValuationSubring : Set F))
 
-@[reducible] private noncomputable def _root_.AlgebraicCurve.Place.modelInclusion :
+/-- The actual inclusion of the finite-type model into the valuation ring. -/
+@[reducible] noncomputable def _root_.AlgebraicCurve.Place.modelInclusion :
   A →+* v.toValuationSubring :=
   (Subring.inclusion (show A.toSubring ≤ v.toValuationSubring.toSubring from hA))
 
@@ -435,12 +442,14 @@ open _root_.AlgebraicCurve.Place
 @[scoped simp] theorem coe_modelInclusion (a : A) :
     ((v.modelInclusion A hA a : v.toValuationSubring) : F) = (a : F) := rfl
 
-@[reducible] private noncomputable def _root_.AlgebraicCurve.Place.modelAlgebra :
+/-- The valuation-ring algebra induced by the model inclusion. -/
+@[reducible] noncomputable def _root_.AlgebraicCurve.Place.modelAlgebra :
   Algebra A v.toValuationSubring :=
   (v.modelInclusion A hA).toAlgebra
 
 open _root_.AlgebraicCurve.Place
-@[reducible] private noncomputable def _root_.AlgebraicCurve.Place.centerIdeal : Ideal A :=
+/-- The centre of the valuation on its given subalgebra. -/
+@[reducible] noncomputable def _root_.AlgebraicCurve.Place.centerIdeal : Ideal A :=
   let := v.modelAlgebra A hA
   (IsLocalRing.maximalIdeal v.toValuationSubring).comap (algebraMap A v.toValuationSubring)
 
@@ -470,7 +479,7 @@ private theorem _root_.AlgebraicCurve.Place.modelAlgebra_isScalarTower :
   intro modelAlgebra
   refine IsScalarTower.of_algebraMap_eq fun c => ?_
   apply Subtype.ext
-  simp only [coe_modelInclusion, RingHom.algebraMap_toAlgebra]
+  simp only [RingHom.algebraMap_toAlgebra]
   rfl
 
 open _root_.AlgebraicCurve.Place
@@ -575,7 +584,8 @@ section LocalizationSubalgebra
 variable {K F : Type*} [Field K] [Field F] [Algebra K F] (v : Place K F)
   (A : Subalgebra K F) (hA : (A : Set F) ⊆ (v.toValuationSubring : Set F))
 
-@[reducible] private noncomputable def _root_.AlgebraicCurve.Place.centerLocalizationSubalgebra
+/-- The localization at the centre, realized inside the original function field. -/
+@[reducible] noncomputable def _root_.AlgebraicCurve.Place.centerLocalizationSubalgebra
   [IsFractionRing A F] :
     Subalgebra A F :=
   Localization.subalgebra.ofField F (v.centerIdeal A hA).primeCompl
@@ -590,7 +600,8 @@ scoped instance centerLocalizationSubalgebra_isDomain [IsFractionRing A F] :
     IsDomain (v.centerLocalizationSubalgebra A hA) :=
   inferInstanceAs (IsDomain (_ : Subalgebra A F))
 
-private theorem _root_.AlgebraicCurve.Place.centerLocalizationSubalgebra_isDiscreteValuationRing
+/-- Localization of the Dedekind model at its nonzero centre is a discrete valuation ring. -/
+theorem _root_.AlgebraicCurve.Place.centerLocalizationSubalgebra_isDiscreteValuationRing
     [IsDedekindDomain A] [IsFractionRing A F] :
     IsDiscreteValuationRing (v.centerLocalizationSubalgebra A hA) :=
   IsLocalization.AtPrime.isDiscreteValuationRing_of_dedekind_domain A
@@ -611,7 +622,8 @@ private theorem _root_.AlgebraicCurve.Place.centerLocalizationSubalgebra_subset
   exact div_mem_of_not_mem_centerIdeal v A hA a hs
 
 open _root_.AlgebraicCurve.Place
-private noncomputable def _root_.AlgebraicCurve.Place.centerLocalizationValuationSubring
+/-- The localization at the centre, regarded as a valuation subring of the function field. -/
+noncomputable def _root_.AlgebraicCurve.Place.centerLocalizationValuationSubring
     [IsDedekindDomain A] [IsFractionRing A F] : ValuationSubring F where
   toSubring := (v.centerLocalizationSubalgebra A hA).toSubring
   mem_or_inv_mem' x := by

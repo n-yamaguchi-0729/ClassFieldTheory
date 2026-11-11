@@ -10,17 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Cohomology.FiniteH0H1StructureSheafAlgClosed
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Cohomology.FiniteH0H1StructureSheafAlgClosed
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 Dimensions of base-changed structure-sheaf Cech kernels and cokernels over an algebraically closed
 field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

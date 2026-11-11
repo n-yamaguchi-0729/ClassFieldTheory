@@ -10,20 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.SchemeTheory.Modules.Invertible.Rigidify
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.SchemeTheory.Modules.Invertible.Rigidify
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
 
 /-!
 Rigidified line bundles, their tensor products and tensor inverses, and compatibility with
 pullback.
 -/
+
+@[expose] public section
 
 universe u
 

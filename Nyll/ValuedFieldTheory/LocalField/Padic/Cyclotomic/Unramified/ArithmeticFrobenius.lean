@@ -4,11 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Unramified.BaseChangeCore
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
-import Mathlib.RingTheory.Polynomial.Cyclotomic.Factorization
-import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.BaseChangeCore
+public import Mathlib.Algebra.CharP.CharAndCard
+public import Mathlib.Data.ZMod.Units
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegralClosure.Basic
+public import Mathlib.RingTheory.Polynomial.Cyclotomic.Factorization
+public import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
+public import Nyll.ValuedFieldTheory.Valuation.HenselLemma
+public import Nyll.ValuedFieldTheory.Valuation.Henselian.Core
 
 /-!
 # Arithmetic Frobenius on the unramified cyclotomic extension
@@ -34,6 +42,8 @@ The proof follows the arithmetic construction directly and uses no comparison ce
 * the reverse integral-ring inclusion by residue generation, ramification
   index one, and Nakayama, yielding `O_{K(ζ)} = O_K[ζ]`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -103,7 +113,7 @@ theorem padicCyclotomicUnramified_primitiveRoot_isIntegral
 
 /-- Turn a literal equality with the integral closure into the standard
 `IsIntegralClosure` instance. -/
-private theorem padicCyclotomicUnramified_isIntegralClosure_of_subring_eq
+theorem padicCyclotomicUnramified_isIntegralClosure_of_subring_eq
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     (V : Subring K) (W : Subring L) [Algebra V L]
     (h : W = (integralClosure V L).toSubring) :
@@ -194,7 +204,6 @@ noncomputable def padicCyclotomicUnramified_galIntegerRingEquiv
   let W := LubinTate.Valuations.exponentialValuationSubring vL
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
-  letI : Algebra V L := algVL
   letI : SMul V L := algVL.toSMul
   letI : Module V L := algVL.toModule
   letI : IsScalarTower V K L := IsScalarTower.of_algebraMap_eq
@@ -262,11 +271,12 @@ theorem padicCyclotomicUnramified_residueFiniteDimensional
     (vK : LubinTate.Valuations.ExponentialValuation K)
     (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x) :
-    letI : Algebra (padicCyclotomicUnramifiedResidueField vK)
+    let : Algebra (padicCyclotomicUnramifiedResidueField vK)
         (padicCyclotomicUnramifiedResidueField vL) :=
       padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
     FiniteDimensional (padicCyclotomicUnramifiedResidueField vK)
       (padicCyclotomicUnramifiedResidueField vL) := by
+  intro residueAlgebra
   let V := LubinTate.Valuations.exponentialValuationSubring vK
   let W := LubinTate.Valuations.exponentialValuationSubring vL
   let i := unramifiedValuationRingValuationRingMap vK vL hExt
@@ -274,7 +284,6 @@ theorem padicCyclotomicUnramified_residueFiniteDimensional
     unramifiedValuationRingValuationRingMap_isLocalHom vK vL hExt
   let k := IsLocalRing.ResidueField V
   let ell := IsLocalRing.ResidueField W
-  let : Algebra k ell := padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
   let algebraModule : Module k ell :=
     (inferInstance : Algebra k ell).toModule
   let : Algebra V W := i.toAlgebra
@@ -302,12 +311,13 @@ theorem padicCyclotomicUnramified_exponentialResidueDegree_eq_finrank
     (vK : LubinTate.Valuations.ExponentialValuation K)
     (vL : LubinTate.Valuations.ExponentialValuation L)
     (hExt : ∀ x : K, vL (algebraMap K L x) = vK x) :
-    letI : Algebra (padicCyclotomicUnramifiedResidueField vK)
+    let : Algebra (padicCyclotomicUnramifiedResidueField vK)
         (padicCyclotomicUnramifiedResidueField vL) :=
       padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
     exponentialResidueDegree vK vL hExt =
       Module.finrank (padicCyclotomicUnramifiedResidueField vK)
         (padicCyclotomicUnramifiedResidueField vL) := by
+  intro residueAlgebra
   let V := LubinTate.Valuations.exponentialValuationSubring vK
   let W := LubinTate.Valuations.exponentialValuationSubring vL
   let i := exponentialValuationRingMap vK vL hExt
@@ -315,7 +325,6 @@ theorem padicCyclotomicUnramified_exponentialResidueDegree_eq_finrank
     exponentialValuationRingMap_isLocalHom vK vL hExt
   let k := IsLocalRing.ResidueField V
   let ell := IsLocalRing.ResidueField W
-  let : Algebra k ell := padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
   let algebraModule : Module k ell :=
     (inferInstance : Algebra k ell).toModule
   let : Algebra V W := i.toAlgebra
@@ -334,12 +343,12 @@ theorem padicCyclotomicUnramified_exponentialResidueDegree_eq_finrank
 
 /-- A ring equivalence of a local extension which fixes the base ring induces
 an algebra equivalence of residue fields. -/
-private theorem padicCyclotomicUnramified_residueMapEquiv_commutes
+theorem padicCyclotomicUnramified_residueMapEquiv_commutes
     {R S : Type*} [CommRing R] [IsLocalRing R]
     [CommRing S] [IsLocalRing S]
     (i : R →+* S) [IsLocalHom i] (e : S ≃+* S)
     (hfix : ∀ x : R, e (i x) = i x) :
-    letI : Algebra (IsLocalRing.ResidueField R)
+    let : Algebra (IsLocalRing.ResidueField R)
         (IsLocalRing.ResidueField S) :=
       (IsLocalRing.ResidueField.map i).toAlgebra
     ∀ x : IsLocalRing.ResidueField R,
@@ -347,10 +356,7 @@ private theorem padicCyclotomicUnramified_residueMapEquiv_commutes
           (IsLocalRing.ResidueField R) (IsLocalRing.ResidueField S) x) =
         algebraMap (IsLocalRing.ResidueField R)
           (IsLocalRing.ResidueField S) x := by
-  let : Algebra (IsLocalRing.ResidueField R)
-      (IsLocalRing.ResidueField S) :=
-    (IsLocalRing.ResidueField.map i).toAlgebra
-  intro x
+  intro sharedOwner1 x
   obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
   change IsLocalRing.ResidueField.mapEquiv e
       (IsLocalRing.ResidueField.map i (IsLocalRing.residue R y)) =
@@ -383,7 +389,7 @@ noncomputable def padicCyclotomicUnramified_galResidueAlgEquiv
   letI : Algebra k ell := padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
   let eW := padicCyclotomicUnramified_galIntegerRingEquiv vK vL hExt hhens σ
   let eell : ell ≃+* ell := IsLocalRing.ResidueField.mapEquiv eW
-  apply AlgEquiv.ofRingEquiv
+  apply AlgEquiv.ofRingEquiv (f := eell)
   apply padicCyclotomicUnramified_residueMapEquiv_commutes i eW
   intro y
   apply Subtype.ext
@@ -502,7 +508,8 @@ variable {k : Type u} {Ω : Type v}
 variable [Field k] [Fintype k] [Field Ω] [Algebra k Ω]
 variable {p r n : ℕ} [hp : Fact p.Prime]
 
-private theorem padicCyclotomicUnramified_order_pos (hpn : p.Coprime n) : 0 < n := by
+/-- A natural number coprime to the residue characteristic is positive. -/
+theorem padicCyclotomicUnramified_order_pos (hpn : p.Coprime n) : 0 < n := by
   apply Nat.pos_of_ne_zero
   intro hn
   have hnot : ¬p ∣ n := hp.out.coprime_iff_not_dvd.mp hpn
@@ -561,7 +568,7 @@ theorem padicCyclotomicUnramified_residue_adjoin_galois_generated_by_frobenius
         ∃ i < padicCyclotomicUnramifiedResidueDegree n (p ^ r) (hpn.pow_left r),
           φ ^ i = σ) ∧
       ∀ x : ell, φ x = x ^ (p ^ r) := by
-  let ell := IntermediateField.adjoin k ({ζ} : Set Ω)
+  intro ell
   have hζint : IsIntegral k ζ :=
     padicCyclotomicUnramified_primitiveRoot_isIntegral
       (padicCyclotomicUnramified_order_pos hpn) hζ
@@ -623,10 +630,8 @@ theorem padicCyclotomicUnramified_finiteUnramifiedExtension
   let : IsLocalHom i :=
     unramifiedValuationRingValuationRingMap_isLocalHom vK vL hExt
   let algVW : Algebra V W := i.toAlgebra
-  let : Algebra V W := algVW
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
-  let : Algebra V L := algVL
   let : Algebra.IsAlgebraic K L := Algebra.IsAlgebraic.of_finite K L
   have hn : 0 < n := padicCyclotomicUnramified_order_pos hpn
   have hclosureVv :
@@ -689,7 +694,6 @@ theorem padicCyclotomicUnramified_finrank_eq_residueDegree
   let k := IsLocalRing.ResidueField V
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
-  let : Algebra V L := algVL
   let : SMul V L := algVL.toSMul
   let : Module V L := algVL.toModule
   let : IsScalarTower V K L := IsScalarTower.of_algebraMap_eq
@@ -807,7 +811,6 @@ theorem padicCyclotomicUnramified_galToResidueGal_injective
   let : Algebra k ell := padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
-  let : Algebra V L := algVL
   let : SMul V L := algVL.toSMul
   let : Module V L := algVL.toModule
   let : IsScalarTower V K L := IsScalarTower.of_algebraMap_eq
@@ -996,14 +999,12 @@ noncomputable def padicCyclotomicUnramified_galEquivResidueGal
     (hk : Fintype.card (padicCyclotomicUnramifiedResidueField vK) = p ^ r)
     (hpn : p.Coprime n) {ζ : L} (hζ : IsPrimitiveRoot ζ n)
     (hζgen : Algebra.adjoin K ({ζ} : Set L) = ⊤) :
-    letI : Algebra (padicCyclotomicUnramifiedResidueField vK)
+    let : Algebra (padicCyclotomicUnramifiedResidueField vK)
         (padicCyclotomicUnramifiedResidueField vL) :=
       padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
     Gal(L/K) ≃*
       Gal(padicCyclotomicUnramifiedResidueField vL / padicCyclotomicUnramifiedResidueField vK) := by
-  letI : Algebra (padicCyclotomicUnramifiedResidueField vK)
-      (padicCyclotomicUnramifiedResidueField vL) :=
-    padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
+  intro sharedOwner2
   exact MulEquiv.ofBijective
     (padicCyclotomicUnramified_galToResidueGal vK vL hExt hhens)
     (padicCyclotomicUnramified_galToResidueGal_bijective
@@ -1097,7 +1098,6 @@ theorem padicCyclotomicUnramifiedArithmeticFrobenius_apply_primitiveRoot
   let : Algebra.IsAlgebraic k ell := Algebra.IsAlgebraic.of_finite k ell
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
-  let : Algebra V L := algVL
   let : SMul V L := algVL.toSMul
   let : Module V L := algVL.toModule
   let : IsScalarTower V K L := IsScalarTower.of_algebraMap_eq
@@ -1298,22 +1298,17 @@ theorem padicCyclotomicUnramified_valuationSubring_adjoin_eq_top
     let V := LubinTate.Valuations.exponentialValuationSubring vK
     let W := LubinTate.Valuations.exponentialValuationSubring vL
     let i := unramifiedValuationRingValuationRingMap vK vL hExt
-    letI : Algebra V W := i.toAlgebra
+    let : Algebra V W := i.toAlgebra
     ∃ a : W, (a : L) = ζ ∧
       Algebra.adjoin V ({a} : Set W) = (⊤ : Subalgebra V W) := by
+  intro V W i algVW
   classical
   let Vv := LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vK
   let Wv := LubinTate.Valuations.exponentialValuationSubringAsValuationSubring vL
-  let V := LubinTate.Valuations.exponentialValuationSubring vK
-  let W := LubinTate.Valuations.exponentialValuationSubring vL
-  let i := unramifiedValuationRingValuationRingMap vK vL hExt
   let : IsLocalHom i :=
     unramifiedValuationRingValuationRingMap_isLocalHom vK vL hExt
-  let algVW : Algebra V W := i.toAlgebra
-  let : Algebra V W := algVW
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
-  let : Algebra V L := algVL
   let : SMul V L := algVL.toSMul
   let : SMul V W := algVW.toSMul
   let : Module V L := algVL.toModule
@@ -1632,10 +1627,10 @@ private theorem padicCyclotomicUnramified_of_finiteDimensional
     let V := LubinTate.Valuations.exponentialValuationSubring vK
     let W := LubinTate.Valuations.exponentialValuationSubring vL
     let i := unramifiedValuationRingValuationRingMap vK vL hExt
-    letI : IsLocalHom i :=
+    let : IsLocalHom i :=
       unramifiedValuationRingValuationRingMap_isLocalHom vK vL hExt
-    letI : Algebra V W := i.toAlgebra
-    letI : Algebra (padicCyclotomicUnramifiedResidueField vK)
+    let : Algebra V W := i.toAlgebra
+    let : Algebra (padicCyclotomicUnramifiedResidueField vK)
         (padicCyclotomicUnramifiedResidueField vL) :=
       padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
     FiniteUnramifiedExtension vK vL hExt ∧
@@ -1656,15 +1651,7 @@ private theorem padicCyclotomicUnramified_of_finiteDimensional
               vK vL hExt hhens hk hpn hζ hζgen ^ j = σ) ∧
       ∃ a : W, (a : L) = ζ ∧
         Algebra.adjoin V ({a} : Set W) = (⊤ : Subalgebra V W) := by
-  let V := LubinTate.Valuations.exponentialValuationSubring vK
-  let W := LubinTate.Valuations.exponentialValuationSubring vL
-  let i := unramifiedValuationRingValuationRingMap vK vL hExt
-  let : IsLocalHom i :=
-    unramifiedValuationRingValuationRingMap_isLocalHom vK vL hExt
-  let : Algebra V W := i.toAlgebra
-  let : Algebra (padicCyclotomicUnramifiedResidueField vK)
-      (padicCyclotomicUnramifiedResidueField vL) :=
-    padicCyclotomicUnramifiedResidueAlgebra vK vL hExt
+  intro V W i sharedOwner4 sharedOwner5 sharedOwner6
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact padicCyclotomicUnramified_finiteUnramifiedExtension
       vK vL hExt hhens hk hpn hζ hζgen
@@ -1690,7 +1677,7 @@ variable {K : Type u} {L : Type v} [Field K] [Field L] [Algebra K L]
 /-- A field generated by one integral element is finite-dimensional.  This
 removes the redundant finite-dimensionality assumption from the literal
 the unramified cyclotomic theorem endpoint. -/
-private theorem padicCyclotomicUnramified_finiteDimensional_of_primitiveRoot_adjoin_eq_top
+theorem padicCyclotomicUnramified_finiteDimensional_of_primitiveRoot_adjoin_eq_top
     {n : ℕ} {ζ : L} (hn : 0 < n) (hζ : IsPrimitiveRoot ζ n)
     (hζgen : Algebra.adjoin K ({ζ} : Set L) = ⊤) :
     FiniteDimensional K L := by
@@ -1731,7 +1718,7 @@ theorem padicCyclotomicUnramified
     (hk : Fintype.card (padicCyclotomicUnramifiedResidueField vK) = p ^ r)
     (hpn : p.Coprime n) {ζ : L} (hζ : IsPrimitiveRoot ζ n)
     (hζgen : Algebra.adjoin K ({ζ} : Set L) = ⊤) :
-    letI : FiniteDimensional K L :=
+    let : FiniteDimensional K L :=
       padicCyclotomicUnramified_finiteDimensional_of_primitiveRoot_adjoin_eq_top
         (padicCyclotomicUnramified_order_pos hpn) hζ hζgen
     let V := LubinTate.Valuations.exponentialValuationSubring vK
@@ -1761,9 +1748,7 @@ theorem padicCyclotomicUnramified
               vK vL hExt hhens hk hpn hζ hζgen ^ j = σ) ∧
       ∃ a : W, (a : L) = ζ ∧
         Algebra.adjoin V ({a} : Set W) = (⊤ : Subalgebra V W) := by
-  let : FiniteDimensional K L :=
-    padicCyclotomicUnramified_finiteDimensional_of_primitiveRoot_adjoin_eq_top
-      (padicCyclotomicUnramified_order_pos hpn) hζ hζgen
+  intro sharedOwner1
   exact padicCyclotomicUnramified_of_finiteDimensional
     vK vL hExt hvdisc hhens hk hpn hζ hζgen
 

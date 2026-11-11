@@ -35,14 +35,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.PullbackCarrier
-import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
-import Nyll.SchemeTheory.Modules.OpenImmersionUnit
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeComposition
-import Nyll.SchemeTheory.Modules.LocalMorphisms
+module
+
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
+public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeComposition
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
 
 /-!
 # Independence of a Cartesian presentation of base change
@@ -50,6 +52,8 @@ import Nyll.SchemeTheory.Modules.LocalMorphisms
 The isomorphism property of a module base-change comparison is independent of the
 chosen scheme realizing the same Cartesian square.
 -/
+
+@[expose] public section
 
 section isIso_baseChangeHom_iff_of_isPullback
 
@@ -252,9 +256,7 @@ theorem _root_.AlgebraicGeometry.Scheme.Modules.isIso_baseChangeHom_of_isOpenImm
         (Scheme.Modules.baseChangeHom hu.w F).app (j ⁻¹ᵁ (j ''ᵁ V))) := by
     rw [key]
     refine @IsIso.comp_isIso _ _ _ _ _ _ _ i2 ?_
-    first
-      | exact Functor.map_isIso _ _
-      | exact @Functor.map_isIso _ _ _ _ _ _ _ _ (isIso_op _)
+    exact @Functor.map_isIso _ _ _ _ _ _ _ _ (isIso_op _)
   exact IsIso.of_isIso_comp_left (((Scheme.Modules.pullbackPushforwardAdjunction j).unit.app
     ((Scheme.Modules.pushforward π).obj F)).app (j ''ᵁ V)) ((Scheme.Modules.baseChangeHom hu.w
         F).app (j ⁻¹ᵁ (j ''ᵁ V)))

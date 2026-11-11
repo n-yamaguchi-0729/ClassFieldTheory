@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantClosure
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantClosure
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
+public import Nyll.ClassFieldTheory.Algebra.NormalEmbeddingRange
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
 
 /-!
 # Actual constant extensions in the abstract class formation
@@ -15,13 +19,17 @@ concrete constant-field degree datum. Normality identifies its canonical
 separable-closure realization with its given intermediate field.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
 
 /-- The actual degree-`n` constant extension is unramified for the actual degree datum. -/

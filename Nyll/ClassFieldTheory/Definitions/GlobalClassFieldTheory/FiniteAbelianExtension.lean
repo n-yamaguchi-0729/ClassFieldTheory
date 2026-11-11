@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.FieldTheory.IsSepClosed
-import Mathlib.NumberTheory.NumberField.Basic
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.FieldTheory.IsSepClosed
+public import Mathlib.NumberTheory.NumberField.Basic
 
 /-!
 # Finite abelian extensions of number fields
@@ -16,6 +18,8 @@ separable closure.  It contains no class-field-theory implementation.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

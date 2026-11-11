@@ -10,6 +10,7 @@ import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHil
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
 
 /-!
 # Degree of the big Hilbert class field
@@ -23,11 +24,13 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- The big Hilbert class field has degree equal to the narrow class number. -/
 theorem bigHilbertClassField_degree_eq_narrowClassGroup_card
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (E : FiniteAbelianExtension K) (hE : IsBigHilbertClassField E) :
     Module.finrank K E =
       Nat.card (RayClassGroup (narrowRayClassModulus K)) := by

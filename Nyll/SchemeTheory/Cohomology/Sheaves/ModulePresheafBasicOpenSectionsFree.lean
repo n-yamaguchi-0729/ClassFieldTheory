@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.Data.Fintype.EquivFin
+module
+
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.Data.Fintype.EquivFin
 
 /-!
 Generic freeness of quasicoherent module-presheaf sections on an integral scheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

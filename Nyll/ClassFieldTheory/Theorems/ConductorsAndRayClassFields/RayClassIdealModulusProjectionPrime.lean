@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealModulusProjection
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
-import Mathlib.Data.Finsupp.Order
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealModulusProjection
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
+public import Mathlib.Data.Finsupp.Order
 
 /-!
 # Prime classes and reduction of a ray modulus
@@ -14,6 +16,8 @@ import Mathlib.Data.Finsupp.Order
 An ideal prime to the larger modulus represents the same prime ideal after
 projection to the ray class group of the smaller modulus.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

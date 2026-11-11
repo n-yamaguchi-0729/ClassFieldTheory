@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearAutBaseAutEqPointPlaceEqSmul
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearAutBaseAutEqPointPlaceEqSmul
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
 
 /-! # Actual coefficient actions on scalar-extension curve models
 
@@ -23,6 +25,10 @@ The imported function-field and valuation theorem retains its Anthropic FLT
 provenance in its source. The pullback construction here is an original proof.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 open CategoryTheory CategoryTheory.Limits
@@ -32,7 +38,7 @@ open scoped Pointwise
 namespace AlgebraicCurve.CurveModel
 
 private theorem coefficient_spec_comp
-    {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] (σ : Ω ≃ₐ[K] Ω) :
+    {K Ω : Type u} [Field K] [Field Ω] [Algebra K Ω] (σ : Ω ≃ₐ[K] Ω) :
     Spec.map (CommRingCat.ofHom σ.toRingHom) ≫ specMap K Ω = specMap K Ω := by
   rw [← Spec.map_comp]
   apply congrArg Spec.map
@@ -44,8 +50,8 @@ private theorem coefficient_spec_comp
 function field. The action fixes the projection to the original curve and retains
 the induced formulas on germs and on point valuations. -/
 theorem exists_baseChange_semilinear_action
-    {K Ω F : Type} [Field K] [Field Ω] [IsAlgClosed Ω] [Algebra K Ω]
-    [Field F] [Algebra Ω F] {C : Scheme} (c : C ⟶ Spec (.of K))
+    {K Ω : Type u} {F : Type v} [Field K] [Field Ω] [IsAlgClosed Ω] [Algebra K Ω]
+    [Field F] [Algebra Ω F] {C : Scheme.{u}} (c : C ⟶ Spec (.of K))
     (M : CurveModel Ω F) (e : M.C ≅ pullback c (specMap K Ω))
     (he : e.hom ≫ pullback.snd c (specMap K Ω) = M.toBase)
     (σ : Ω ≃ₐ[K] Ω) :

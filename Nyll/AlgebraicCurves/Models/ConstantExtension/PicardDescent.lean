@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.DivisorDescent
-import Nyll.AlgebraicCurves.Models.ConstantExtension.FixedDivisor
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardAction
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.PrincipalPrincipalPullbackConstants
-import Nyll.GaloisCohomology.Cyclic.PeriodicNorm
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.DivisorDescent
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.FixedDivisor
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardAction
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.PrincipalPrincipalPullbackConstants
+public import Nyll.GaloisCohomology.Cyclic.PeriodicNorm
 
 /-!
 # The arithmetic Picard group as actual Frobenius invariants
@@ -17,6 +19,10 @@ Pullback along the actual model embedding is injective by descent of principal
 divisors. Its image consists exactly of the classes fixed by geometric Frobenius,
 using a fixed representative and actual divisor descent.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -33,7 +39,7 @@ attribute [local instance]
   SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
   SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupDivisor
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]

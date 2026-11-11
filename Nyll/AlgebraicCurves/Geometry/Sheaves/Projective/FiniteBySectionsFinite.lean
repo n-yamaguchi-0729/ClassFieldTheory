@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
-import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+public import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
 
 /-!
 # Scheme Modules Finite By Sections of is Finite
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

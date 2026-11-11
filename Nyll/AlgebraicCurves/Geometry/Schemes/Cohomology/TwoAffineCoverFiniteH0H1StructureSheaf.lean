@@ -10,13 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteUnit
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
+public import Nyll.SchemeTheory.Cohomology.Cech.FiniteUnit
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Finite structure-sheaf cohomology on two affine charts
@@ -24,6 +27,8 @@ import Mathlib.RingTheory.Noetherian.Basic
 For a proper scheme over a Noetherian affine base, the zeroth and first cohomology
 of the structure-sheaf section complex of a two-affine-open cover are finite modules.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,20 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.RingHomProperties
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Mathlib.RingTheory.RingHom.StandardSmooth
-import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Pasting
-import Mathlib.Tactic.Algebraize
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.GroupLaw.RelativeGroupLaw
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Nyll.SchemeTheory.Morphisms.SmoothDimensionCharts
+public import Mathlib.AlgebraicGeometry.Morphisms.RingHomProperties
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Mathlib.RingTheory.RingHom.StandardSmooth
+public import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Pasting
+public import Mathlib.Tactic.Algebraize
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Basic
 
 /-!
 # Relative Group Law exists smooth Of Relative Dimension of smooth of is Local Ring
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -48,21 +53,9 @@ theorem appLE_basicOpen_basicOpen
     (e : V.1 ≤ f ⁻¹ᵁ U.1) (h : P (f.appLE U V e).hom)
     (r : Γ(Y, U)) (s : Γ(X, X.basicOpen (f.appLE U V e r)))
     (e' : X.basicOpen s ≤ f ⁻¹ᵁ Y.basicOpen r) :
-    P (f.appLE (Y.basicOpen r) (X.basicOpen s) e').hom := by
-  have ha : IsAffineOpen (X.basicOpen (f.appLE U V e r)) := V.2.basicOpen _
-  have := V.2.isLocalization_basicOpen (f.appLE U V e r)
-  have := U.2.isLocalization_basicOpen r
-  have := ha.isLocalization_basicOpen s
-  have heq : f.appLE (Y.basicOpen r) (X.basicOpen s) e' =
-      f.appLE (Y.basicOpen r) (X.basicOpen (f.appLE U V e r)) (by simp [Scheme.Hom.appLE]) ≫
-        CommRingCat.ofHom (algebraMap _ _) := by
-    exact (f.appLE_map (by
-      rw [Scheme.basicOpen_appLE]
-      exact inf_le_right) (homOfLE (X.basicOpen_le s)).op).symm
-  rw [heq]
-  apply hPa _ s _
-  rw [U.2.appLE_eq_away_map f V.2]
-  exact hPl _ _ _ _ h
+    P (f.appLE (Y.basicOpen r) (X.basicOpen s) e').hom :=
+  _root_.AlgebraicGeometry.SmoothDimensionCharts.appLE_basicOpen_basicOpen
+    (P := P) hPa hPl f U V e h r s e'
 
 end descend
 
@@ -71,52 +64,14 @@ theorem eq_of_isStandardSmoothOfRelativeDimension_appLE {X Y : Scheme.{u}} (f : 
     (U : Y.affineOpens) (V : X.affineOpens) (hx : x ∈ V.1) (e : V.1 ≤ f ⁻¹ᵁ U.1)
     (h : (f.appLE U V e).hom.IsStandardSmoothOfRelativeDimension n)
     (U' : Y.affineOpens) (V' : X.affineOpens) (hx' : x ∈ V'.1) (e' : V'.1 ≤ f ⁻¹ᵁ U'.1)
-    (h' : (f.appLE U' V' e').hom.IsStandardSmoothOfRelativeDimension n') : n = n' := by
-  have hPa : ∀ m : ℕ, StableUnderCompositionWithLocalizationAwayTarget
-      (IsStandardSmoothOfRelativeDimension m) :=
-    fun m => (isStandardSmoothOfRelativeDimension_stableUnderCompositionWithLocalizationAway m).2
-  have hPl : ∀ m : ℕ, LocalizationAwayPreserves (IsStandardSmoothOfRelativeDimension m) :=
-    fun m => (isStandardSmoothOfRelativeDimension_localizationPreserves m).away
-  obtain ⟨r, s, hxs, ers, hA⟩ := exists_basicOpen_le_appLE_of_appLE_of_isAffine (hPa n) (hPl n)
-    x U' U V' V hx' hx e h (e' hx')
-  let Br : Y.affineOpens := ⟨Y.basicOpen r, U'.2.basicOpen r⟩
-  let Bs : X.affineOpens := ⟨X.basicOpen s, V'.2.basicOpen s⟩
-  have hfx : f x ∈ Br.1 := ers hxs
-  obtain ⟨r₂, s₂, hxs₂, ers₂, hB⟩ := exists_basicOpen_le_appLE_of_appLE_of_isAffine (hPa n')
-    (hPl n') x Br U' Bs V' hxs hx' e' h' hfx
-  let B' : X.Opens := X.basicOpen (f.appLE Br.1 Bs.1 ers r₂)
-  have hle : X.basicOpen s₂ ≤ B' := by
-    change X.basicOpen s₂ ≤ X.basicOpen (f.appLE Br.1 Bs.1 ers r₂)
-    rw [Scheme.basicOpen_appLE]
-    exact le_inf (X.basicOpen_le s₂) ers₂
-  have hB'le : B' ≤ X.basicOpen s := X.basicOpen_le _
-  let s₂' : Γ(X, B') := X.presheaf.map (homOfLE hB'le).op s₂
-  have hBs₂ : X.basicOpen s₂' = X.basicOpen s₂ := by
-    rw [Scheme.basicOpen_res]
-    exact inf_eq_right.mpr hle
-  have ers₂' : X.basicOpen s₂' ≤ f ⁻¹ᵁ Y.basicOpen r₂ := hBs₂ ▸ ers₂
-  have hC : (f.appLE (Y.basicOpen r₂) (X.basicOpen s₂')
-      ers₂').hom.IsStandardSmoothOfRelativeDimension n :=
-    appLE_basicOpen_basicOpen (hPa n) (hPl n) f Br Bs ers hA r₂ s₂' ers₂'
-  have hC' : (f.appLE (Y.basicOpen r₂) (X.basicOpen s₂)
-      ers₂).hom.IsStandardSmoothOfRelativeDimension n :=
-    (f.appLE_congr ers₂' rfl hBs₂ (fun g => g.hom.IsStandardSmoothOfRelativeDimension n)).mp hC
-  have : Nonempty (X.basicOpen s₂) := ⟨⟨x, hxs₂⟩⟩
-  have : Nontrivial Γ(X, X.basicOpen s₂) := inferInstance
-  algebraize [(f.appLE (Y.basicOpen r₂) (X.basicOpen s₂) ers₂).hom]
-  have h1 : Module.rank Γ(X, X.basicOpen s₂) Ω[Γ(X, X.basicOpen s₂)⁄Γ(Y, Y.basicOpen r₂)] = n :=
-    Algebra.IsStandardSmoothOfRelativeDimension.rank_kaehlerDifferential n
-  have h2 : Module.rank Γ(X, X.basicOpen s₂) Ω[Γ(X, X.basicOpen s₂)⁄Γ(Y, Y.basicOpen r₂)] = n' :=
-    Algebra.IsStandardSmoothOfRelativeDimension.rank_kaehlerDifferential n'
-  exact_mod_cast h1.symm.trans h2
+    (h' : (f.appLE U' V' e').hom.IsStandardSmoothOfRelativeDimension n') : n = n' :=
+  _root_.AlgebraicGeometry.SmoothDimensionCharts.eq_of_isStandardSmoothOfRelativeDimension_appLE
+    f x U V hx e h U' V' hx' e' h'
 
 theorem exists_chart {X Y : Scheme.{u}} (f : X ⟶ Y) [Smooth f] (x : X) :
     ∃ (n : ℕ) (U : Y.affineOpens) (V : X.affineOpens) (_ : x ∈ V.1) (e : V.1 ≤ f ⁻¹ᵁ U.1),
-      (f.appLE U V e).hom.IsStandardSmoothOfRelativeDimension n := by
-  obtain ⟨U, hU, V, hV, hx, e, hstd⟩ := Smooth.exists_isStandardSmooth f x
-  algebraize [(f.appLE U V e).hom]
-  obtain ⟨ι, σ, _, hfin, ⟨P⟩⟩ := hstd.out
-  exact ⟨P.dimension, ⟨U, hU⟩, ⟨V, hV⟩, hx, e, ⟨⟨ι, σ, ‹_›, hfin, P, rfl⟩⟩⟩
+      (f.appLE U V e).hom.IsStandardSmoothOfRelativeDimension n :=
+  _root_.AlgebraicGeometry.SmoothDimensionCharts.exists_chart f x
 
 end R1NeronObjE7
 

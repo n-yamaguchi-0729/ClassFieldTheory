@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.SplittingCover
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraph
-import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.ProdKerGraphComapMapOnProdOver
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.SplittingCover
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraph
+public import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.ProdKerGraphComapMapOnProdOver
 
 /-!
 Construct the sum map for universal relative effective Cartier divisors.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

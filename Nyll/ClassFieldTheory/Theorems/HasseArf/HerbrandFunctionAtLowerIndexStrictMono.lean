@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
-import Nyll.ClassFieldTheory.HasseArf
-import Mathlib.Order.Monotone.Basic
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
+public import Nyll.ClassFieldTheory.HasseArf
+public import Mathlib.Order.Monotone.Basic
+public import Mathlib.SetTheory.Cardinal.Finite
 
 /-!
 # Strict growth of the integral-index Herbrand function
@@ -16,6 +18,8 @@ For a finite extension, each lower ramification group is finite and
 nonempty. Thus every increment of the rational Herbrand function is
 strictly positive. This does not assert integrality of its values.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

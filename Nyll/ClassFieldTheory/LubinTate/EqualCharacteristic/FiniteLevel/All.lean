@@ -16,6 +16,7 @@ import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.NormUnifo
 import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveAction
 import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveIrreducible
 import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.PrimitiveTorsion
+import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.UnitActionRestriction
 import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.UnitQuotientGalois
 
 /-!

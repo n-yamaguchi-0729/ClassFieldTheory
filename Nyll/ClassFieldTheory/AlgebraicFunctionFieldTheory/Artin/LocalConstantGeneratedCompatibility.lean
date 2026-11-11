@@ -4,15 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneAdjoinRangeEqTop
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantGeneratedSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalConstantAction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
+module
+
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneAdjoinRangeEqTop
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantGeneratedSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalConstantAction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Local-global reciprocity for constant-generated extensions
@@ -23,6 +26,10 @@ uniformizer values. The proved local Frobenius power formula and the
 existing norm-kernel factor extend equality to every local element.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 open AlgebraicCurve
@@ -30,7 +37,8 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable {k C K E : Type} [Field k] [Finite k] [Field C] [Field K] [Field E]
+variable {k : Type u} {C : Type v} {K : Type w} {E : Type x}
+    [Field k] [Finite k] [Field C] [Field K] [Field E]
     [Algebra k C] [Algebra k K] [Algebra k E] [Algebra C E] [Algebra K E]
     [IsScalarTower k C E] [IsScalarTower k K E]
     [FiniteDimensional k C] [FiniteDimensional K E] [IsAbelianGalois K E]

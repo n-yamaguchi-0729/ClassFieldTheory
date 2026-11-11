@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Herbrand
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Herbrand
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.UniverseFiniteness
 
 /-!
 # The Herbrand quotient of actual integral completion units
@@ -15,7 +19,11 @@ integer module. Both have Herbrand quotient equal to the decomposition-group ord
 so the actual integral units have quotient one, including at wildly ramified places.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField.IdeleGroup
 
@@ -48,7 +56,7 @@ open AlgebraicCurve CyclicCohomology
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 open scoped AlgebraicCurve.Place
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
@@ -96,7 +104,7 @@ theorem decomposition_integralUnits_herbrandQuotient (w : Place k L)
         w.adicCompletion hval n.toAdd,
       Multiplicative.ext (RestrictedProduct.DiscreteValuation.localOrder_chosenLocalOrderSection
         w.adicCompletion hval n.toAdd)⟩
-  have hU := herbrandQuotientDefined_left_of_middle_right
+  have hU := Universe.herbrandQuotientDefined_left_of_middle_right
     w.adicCompletionIntegers.units.subtype (localOrder w) hi hj hexact
     w.adicCompletionIntegers.units.subtype_injective hsurj σ hσ hB hZ
   refine ⟨hU, ?_⟩
@@ -105,7 +113,7 @@ theorem decomposition_integralUnits_herbrandQuotient (w : Place k L)
   have : Finite (HerbrandHMinusOne (decompositionGroup (K := K) w) w.adicCompletionˣ σ) := hB.2
   have : Finite (HerbrandH0 (decompositionGroup (K := K) w) (Multiplicative ℤ)) := hZ.1
   have : Finite (HerbrandHMinusOne (decompositionGroup (K := K) w) (Multiplicative ℤ) σ) := hZ.2
-  have h := herbrandQuotient_multiplicative_of_shortExact
+  have h := Universe.herbrandQuotient_multiplicative_of_shortExact
     w.adicCompletionIntegers.units.subtype (localOrder w) hi hj hexact
     w.adicCompletionIntegers.units.subtype_injective hsurj σ hσ
   rw [decomposition_fieldUnits_herbrandQuotient w σ hσ,

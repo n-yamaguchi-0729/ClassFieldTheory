@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Finsupp.WellFounded
-import Mathlib.Order.Minimal
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basis
+module
+
+public import Mathlib.Data.Finsupp.WellFounded
+public import Mathlib.Order.Minimal
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basis
 
 /-!
 # The least conductor of an open idele-class subgroup
@@ -21,6 +23,8 @@ modulus for every open subgroup of the idele class group.
 This construction can be applied to norm subgroups once their openness is
 proved; no norm-index or reciprocity statement is used here.
 -/
+
+@[expose] public section
 
 noncomputable section
 

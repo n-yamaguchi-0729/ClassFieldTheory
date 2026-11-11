@@ -4,18 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.SchemeTheory.NoetherNormalization.Nonvanishing
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
-import Mathlib.AlgebraicGeometry.PullbackCarrier
-import Mathlib.AlgebraicGeometry.Morphisms.FormallyUnramified
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.FieldTheory.Perfect
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.RingTheory.Unramified.LocalStructure
-import Mathlib.Topology.JacobsonSpace
+module
+
+public import Nyll.SchemeTheory.NoetherNormalization.Nonvanishing
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Mathlib.AlgebraicGeometry.Morphisms.FormallyUnramified
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.Unramified.LocalStructure
+public import Mathlib.Topology.JacobsonSpace
 
 /-!
 # Points over finite intermediate extensions
@@ -25,6 +27,8 @@ one in a specified algebraic closure yields an actual finite intermediate
 field and an actual closed point over that field. For a formally unramified
 scheme, the same point is defined over a finite separable extension.
 -/
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory

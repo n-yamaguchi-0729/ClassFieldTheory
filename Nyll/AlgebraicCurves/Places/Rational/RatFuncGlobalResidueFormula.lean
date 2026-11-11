@@ -11,20 +11,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Residues.RationalSimplePoles
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncTraceLocalResiduePlaceInftyXPowEqZero
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Residues.RationalSimplePoles
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncTraceLocalResiduePlaceInftyXPowEqZero
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Rational Function Field trace local Residue finite Place add trace local Residue place
 Infty eq zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

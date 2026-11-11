@@ -4,14 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.FieldTheory.AlgebraicClosure
-import Mathlib.FieldTheory.Perfect
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Mathlib.NumberTheory.FunctionField
-import Mathlib.RingTheory.EssentialFiniteness
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
+module
+
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.FieldTheory.AlgebraicClosure
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.NumberTheory.FunctionField
+public import Mathlib.RingTheory.EssentialFiniteness
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Full constants and function-field degrees
@@ -25,6 +28,8 @@ The degree of this constant field over `k` is positive and divides every residue
 and every divisor degree computed over `k`. These statements keep track of the change from
 base-field degrees to full-constant-field degrees, needed when normalizing global degree maps.
 -/
+
+@[expose] public section
 
 namespace FunctionField
 

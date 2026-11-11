@@ -10,10 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyClosed
-import Mathlib.AlgebraicGeometry.Morphisms.Immersion
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
+module
+
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyClosed
+public import Mathlib.AlgebraicGeometry.Morphisms.Immersion
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
 
 /-!
 # Separatedness descends through a universally closed cover
@@ -21,6 +24,8 @@ import Mathlib.AlgebraicGeometry.Morphisms.Proper
 If the first morphism is universally closed and surjective, separatedness of the
 composite implies separatedness of the second morphism.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

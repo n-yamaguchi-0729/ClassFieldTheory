@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleComapZeroSchemeIdeal
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleComapZeroSchemeIdeal
 
 /-!
 # Vanishing of a pulled-back section at a field-valued point
@@ -20,6 +22,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleComapZeroSchemeI
 An invertible-module section vanishes after pullback to a field-valued point exactly
 when that point lies in the support of the zero-scheme ideal of the section.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

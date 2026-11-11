@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # The divisor and degree of a function-field idele
@@ -15,6 +18,8 @@ All places, including the places above infinity, contribute to the divisor.
 The normalized order construction is shared with the number-field ideal map.
 The target is the existing curve divisor group, rather than a second copy of it.
 -/
+
+@[expose] public section
 
 noncomputable section
 

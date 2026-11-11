@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Mathlib.FieldTheory.SeparableClosure
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+module
+
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Mathlib.FieldTheory.SeparableClosure
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
 
 /-!
 # Constant-generated extensions for the actual degree datum
@@ -18,13 +21,18 @@ contains the inertia of the concrete degree datum. This applies to the
 cyclic auxiliary extension after changing its base to the cyclic fixed field.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K E : Type) {C : Type} [Field k] [Finite k] [Field K] [Field E] [Field C]
+variable (k : Type u) (K : Type v) (E : Type w) {C : Type x}
+    [Field k] [Finite k] [Field K] [Field E] [Field C]
     [Algebra k K] [Algebra k E] [Algebra K E] [IsScalarTower k K E]
     [Algebra k C] [Algebra C E] [IsScalarTower k C E] [FiniteDimensional k C]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]

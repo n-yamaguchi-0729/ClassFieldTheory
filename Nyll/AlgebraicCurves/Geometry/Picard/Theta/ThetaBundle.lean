@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.RelativeSectionTwist
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.RelativeSectionTwist
 
 /-!
 # Relative Picard and theta bundles
@@ -22,6 +24,8 @@ The Picard bundle pushes a tensor product of a rigidified line bundle and a modu
 forward to the test scheme. The theta bundle is the dual of the determinant of this
 pushforward after twisting by the chosen relative section.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -8,6 +8,64 @@ Missing upstream copyright notices do not establish a copyright holder.
 The entries below retain the current source headers and distinguish local
 NYLL extensions from adapted upstream ports. Only included files are listed.
 
+## [Nyll/EtaleFundamentalGroups/GeometricFiber/FundamentalGroup.lean](../GeometricFiber/FundamentalGroup.lean)
+
+Role: `nyll_extension`.
+
+Nyll completions of upstream Point.lean placeholders and dependent fiber-action/fundamental-group repairs; existing IsSepClosed and IsSepClosure assumptions preserved.
+
+```text
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+```
+
+- [Upstream `Pi1/FundamentalGroup/Point.lean`](https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/FundamentalGroup/Point.lean)
+
+## [Nyll/EtaleFundamentalGroups/Pi1/FiniteEtale/GaloisCategory.lean](FiniteEtale/GaloisCategory.lean)
+
+Role: `adapted_upstream_port`.
+
+Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.
+
+```text
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+```
+
+- [Upstream `Pi1/FundamentalGroup/Galois.lean`](https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/FundamentalGroup/Galois.lean)
+
+## [Nyll/EtaleFundamentalGroups/Pi1/GaloisCategories/FundamentalGroup.lean](GaloisCategories/FundamentalGroup.lean)
+
+Role: `adapted_upstream_port`.
+
+Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.
+
+```text
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+The cited pi1 file has no copyright or Authors header. Its copyright holder
+requires review. The Authors line above is retained from the previous NYLL
+integration and is not a verbatim attribution from the cited upstream file.
+```
+
+- [Upstream `Pi1/Mathlib/CategoryTheory/Galois/IsFundamentalGroup.lean`](https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/Mathlib/CategoryTheory/Galois/IsFundamentalGroup.lean)
+
+## [Nyll/EtaleFundamentalGroups/Pi1/GeometricFiber/FieldPoints.lean](GeometricFiber/FieldPoints.lean)
+
+Role: `adapted_upstream_port`.
+
+Maintained adaptation: namespace/declaration ownership retained, paths/imports and Lean/mathlib APIs updated.
+
+```text
+Copyright (c) 2025 Christian Merten. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Christian Merten
+```
+
+- [Upstream `Pi1/FundamentalGroup/Point.lean`](https://github.com/chrisflav/pi1/blob/5c5c0171efc863ce9990171bdf46d7cb5fd582fb/Pi1/FundamentalGroup/Point.lean)
+
 ## [Nyll/SchemeTheory/Descent/EqualizerScalars.lean](../../SchemeTheory/Descent/EqualizerScalars.lean)
 
 Role: `nyll_extension`.

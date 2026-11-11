@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
+module
+
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
 
 /-!
 # Prime factorization of nonzero fractional ideals
@@ -19,6 +21,8 @@ entirely in Mathlib and public Definitions vocabulary.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -59,7 +63,8 @@ theorem factorization_val
       exps.toAdd.prod fun v n =>
         (v.asIdeal : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) ^ n := by
   classical
-  simp [factorization, primePowerHom, finitePrimeFractionalIdeal, Finsupp.prod]
+  simp only [factorization, Finsupp.prod, primePowerHom, finitePrimeFractionalIdeal,
+    MonoidHom.mk'_apply, toAdd_ofAdd, Units.coe_prod, Units.val_zpow_eq_zpow_val, Units.val_mk0]
 
 /-- Only finitely many finite primes occur with nonzero exponent in a
 nonzero fractional ideal. -/

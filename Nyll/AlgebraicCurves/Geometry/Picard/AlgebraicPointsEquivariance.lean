@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Pic0EquivPointsPicardRepresentability
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicGroup
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardZero
-import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseChangeSemilinearAction
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.AlgebraicPoints
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Pic0EquivPointsPicardRepresentability
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicGroup
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardZero
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseChangeSemilinearAction
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.AlgebraicPoints
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
 
 /-!
 # Equivariance of the actual Picard point comparison
@@ -20,6 +22,10 @@ through the actual pullback curve and its function field. Agreement on
 point-minus-basepoint divisors extends to every degree-zero divisor class.
 The cohomological Abel–Jacobi comparison is not asserted here.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -39,16 +45,16 @@ attribute [local instance]
 /-- The Picard equivalence over an algebraically closed extension is compatible
 with the actual coefficient action on the original representing scheme. -/
 theorem exists_pic0_algPoints_equivariant_of_abelJacobi
-    {K Ω F : Type} [Field K] [Field Ω] [IsAlgClosed Ω] [Algebra K Ω]
+    {K Ω : Type u} {F : Type v} [Field K] [Field Ω] [IsAlgClosed Ω] [Algebra K Ω]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    {C : Scheme} (c : C ⟶ Spec (.of K))
+    {C : Scheme.{u}} (c : C ⟶ Spec (.of K))
     [IsProper c] [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
     (ε : SchemeHomOver (𝟙 (Spec (.of K))) c)
     (D : RelativePic0Designation K c)
     (hD : RepresentsRelSubPic c ε (algEquivZeroCut c ε) D)
     [Smooth D.toBase] [IsProper D.toBase] [GeometricallyConnected D.toBase]
     (aj : SchemeHomOver c D.toBase)
-    (hclass : ∀ (L : Type) [Field L] (t : Spec (.of L) ⟶ Spec (.of K))
+    (hclass : ∀ (L : Type u) [Field L] (t : Spec (.of L) ⟶ Spec (.of K))
       (x : SchemeHomOver t c),
       Nonempty ((hD.poincare.pullbackAlong
         ⟨x.1 ≫ aj.1, (Category.assoc _ _ _).trans

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Valuation
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Valuation
 
 /-!
 # Normalized valuation on each actual fixed field
@@ -14,13 +16,17 @@ of its actual idele classes. The residue-degree norm identity and injectivity
 of multiplication on the profinite integers give the comparison.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]

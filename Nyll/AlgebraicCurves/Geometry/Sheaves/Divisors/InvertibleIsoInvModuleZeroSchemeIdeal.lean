@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Adjunction.Mates
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDualIsoModuleZeroSchemeIdeal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoEvAppIsoCurryBraidingEv
+module
+
+public import Mathlib.CategoryTheory.Adjunction.Mates
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDualIsoModuleZeroSchemeIdeal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoEvAppIsoCurryBraidingEv
 
 /-!
 # The inverse ideal module of a line-bundle section
@@ -22,6 +24,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoEvAppIsoCur
 An invertible module with an invertible zero-scheme ideal is isomorphic to the inverse ideal
 module, carrying its section to the canonical section of that inverse module.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -92,14 +96,11 @@ def toBidual (M : C) : M ⟶ (ihom ((ihom M).obj (𝟙_ C))).obj (𝟙_ C) :=
 omit [BraidedCategory C] in
 theorem unitIsoSelf_inv (X : C) :
     (MonoidalClosed.unitIsoSelf X).inv = MonoidalClosed.curry (λ_ X).hom := by
-  have h := unit_conjugateEquiv (Adjunction.id (C := C)) (ihom.adjunction (𝟙_ C))
-    (leftUnitorNatIso C).hom X
-  dsimp at h
-  erw [Category.id_comp] at h
-  change (conjugateEquiv (Adjunction.id (C := C)) (ihom.adjunction (𝟙_ C))
-    (leftUnitorNatIso C).hom).app X = _
-  rw [h, MonoidalClosed.curry_eq]
-  rfl
+  have h : 𝟙 X ≫ (MonoidalClosed.unitIsoSelf X).inv =
+      (ihom.coev (𝟙_ C)).app X ≫ (ihom (𝟙_ C)).map (λ_ X).hom :=
+    unit_conjugateEquiv (Adjunction.id (C := C)) (ihom.adjunction (𝟙_ C))
+      (leftUnitorNatIso C).hom X
+  simpa only [Category.id_comp, MonoidalClosed.curry_eq] using h
 
 omit [BraidedCategory C] in
 theorem uncurry_eq_of_comp_unitIsoSelf_hom {X Y : C} (k : Y ⟶ (ihom (𝟙_ C)).obj X) (m : Y ⟶ X)

@@ -11,15 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Mathlib.Topology.JacobsonSpace
-import Mathlib.Topology.Closure
-import Mathlib.Topology.Irreducible
-import Mathlib.Tactic.Push
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.Topology.JacobsonSpace
+public import Mathlib.Topology.Closure
+public import Mathlib.Topology.Irreducible
+public import Mathlib.Tactic.Push
 
 /-!
 # exists mem is Closed singleton ne of is Irreducible
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

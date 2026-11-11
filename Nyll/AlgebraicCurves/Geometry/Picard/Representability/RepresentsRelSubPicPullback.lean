@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.Pullback
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.Pullback
 
 /-!
 # Pullback on representing Picard schemes
 
 Classify pullback of the Poincare bundle to obtain the induced morphism of Picard schemes.
 -/
+
+@[expose] public section
 
 universe u
 

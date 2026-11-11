@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.CompositumEmbedding
-import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumCyclotomicTarget
-import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.CompositumEmbedding
+public import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumCyclotomicTarget
+public import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicLocalizationCanonicalValuation
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
 
 /-!
 # The left-factor ring embedding for the global compositum
@@ -18,6 +21,8 @@ local cyclotomic target, so elaborating its type never unfolds completion
 or transported-algebra instances.  Rational linearity is added separately
 in the global-factor file by `map_ratCast`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -58,19 +63,15 @@ theorem kroneckerWeberGlobalLeftRingEmbedding
   let _ : Field vK.Completion := inferInstance
   let _ : Field w.1.Completion := inferInstance
   let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
-  let _ : Algebra ℚ w.1.Completion := hK
   let _ : SMul ℚ w.1.Completion := hK.toSMul
   let _ := AbsoluteValue.completionAlgebra vK w.1 w.2
   let E := AbsoluteValue.algebraicLocalization vK w.1 w.2
   let hE : Field E := inferInstance
-  let _ : Field E := hE
   let hBaseE : Algebra vK.Completion E := inferInstance
-  let _ : Algebra vK.Completion E := hBaseE
   let e := padicAbsoluteValueCompletionRingEquiv p.1
   let hQpE : Algebra ℚ_[p.1] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p.1] E _ _
       (@CommRing.toCommSemiring E hE.toCommRing) hBaseE e
-  let _ : Algebra ℚ_[p.1] E := hQpE
   let _ : Module.Finite vK.Completion E :=
     globalPadicLocalizationModuleFinite p.1 L w
   let _ : Algebra ℚ_[p.1] vK.Completion := e.symm.toRingHom.toAlgebra

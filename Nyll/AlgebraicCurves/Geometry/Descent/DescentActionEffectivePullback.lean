@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.FlatDescent
-import Nyll.AlgebraicCurves.Geometry.Descent.DescentAction
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatDescent
+public import Nyll.AlgebraicCurves.Geometry.Descent.DescentAction
 
 /-!
 # Descent Action effective of is Pullback of flat surjective
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

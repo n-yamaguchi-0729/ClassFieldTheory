@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.FieldTheory.CompositumNorm
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+module
+
+public import Nyll.GaloisCohomology.FieldTheory.CompositumNorm
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 
 /-!
 # Norms in simple extensions with unchanged minimal polynomial
@@ -13,6 +15,8 @@ import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 Equality of minimal polynomials under the specified scalar embedding gives
 equality of the actual field norms in the common ambient field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
-import Nyll.ClassFieldTheory.Theorems.HasseArf.LowerRamificationGroupAntitone
-import Mathlib.FieldTheory.Fixed
-import Mathlib.RingTheory.Filtration
-import Mathlib.RingTheory.Localization.FractionRing
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
+public import Nyll.ClassFieldTheory.Theorems.HasseArf.LowerRamificationGroupAntitone
+public import Mathlib.FieldTheory.Fixed
+public import Mathlib.RingTheory.Filtration
+public import Mathlib.RingTheory.Localization.FractionRing
 
 /-!
 # Eventual triviality of lower ramification groups
@@ -18,6 +20,8 @@ nonidentity automorphism moves an element of the valuation ring by a nonzero
 amount. Krull's intersection theorem then excludes that automorphism from
 some lower group. Finiteness gives a common bound for all automorphisms.
 -/
+
+@[expose] public section
 
 noncomputable section
 

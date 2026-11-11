@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
 
 /-!
 # The decomposition group on the actual residue field
@@ -13,6 +15,8 @@ A field automorphism stabilizing a place preserves its valuation ring. Its
 induced automorphism of the residue field fixes the residue field below.
 The construction uses the original valuation rings and their residue maps.
 -/
+
+@[expose] public section
 
 noncomputable section
 

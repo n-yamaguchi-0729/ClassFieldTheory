@@ -8,6 +8,11 @@ import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianRec
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 
 /-!
 # Comparing the public and ideal-theoretic Artin kernels
@@ -23,10 +28,12 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
 private theorem finiteAbelianReciprocity_primeArtin_eq_original
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -53,7 +60,7 @@ private theorem finiteAbelianReciprocity_primeArtin_eq_original
         (K := K) (L := L) v w hw hunram).symm
 
 private theorem finiteAbelianReciprocity_originalPrimeNormalization
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -82,7 +89,7 @@ private theorem finiteAbelianReciprocity_originalPrimeNormalization
 extension's genuine idèle-class norm subgroup.  This follows from prime
 normalization, rather than being an additional field of the data. -/
 theorem finiteAbelianReciprocity_modulus_isDefining
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -108,7 +115,7 @@ theorem finiteAbelianReciprocity_modulus_isDefining
 /-- On a fractional ideal prime to the modulus, the public Artin map is
 trivial exactly when the original ideal Artin map is trivial. -/
 theorem publicArtinKer_iff_idealArtinKernel
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]

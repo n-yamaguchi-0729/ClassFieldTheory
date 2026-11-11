@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameters
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameters
 
 /-!
 # Principal-unit filtration on finite Lubin--Tate parameters
@@ -16,6 +18,8 @@ filtration.  For `1 ≤ k ≤ n + 1`, that image has cardinality
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

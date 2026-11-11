@@ -10,27 +10,32 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.LocalizedModule.Basic
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.LinearAlgebra.DirectSum.Finsupp
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Isomorphisms
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.Filtration
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.Tensor
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.Tactic.LinearCombination
+module
+
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.Algebra.Module.Submodule.LinearMap
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.LinearAlgebra.DirectSum.Finsupp
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.Filtration
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.Tensor
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.Tactic.LinearCombination
 
 /-!
 Local flatness criteria.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -150,7 +155,7 @@ theorem lTensor_injective_of_comap_cover
     apply _hf
     rw [LinearMap.comp_apply, hu_apply]
     have : v g = 0 := g.2
-    simp [this]
+    simp only [Submodule.coe_inclusion, this, LinearMap.zero_apply, map_zero]
 
 theorem lTensor_mapRange_injective (I : Ideal R)
     (hI : Function.Injective (I.subtype.lTensor M)) (ι : Type*) :
@@ -166,7 +171,7 @@ theorem lTensor_mapRange_injective (I : Ideal R)
     | tmul m z =>
       ext i
       simp [e₁, e₂, TensorProduct.finsuppRight_apply_tmul_apply]
-    | add x y hx hy => simp [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add, hx, hy]
   intro x y hxy
   have := congrArg e₂ hxy
   rw [key, key] at this

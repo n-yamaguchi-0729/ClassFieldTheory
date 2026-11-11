@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
 
 /-!
 # Actual completions of finite separable extensions
@@ -17,6 +19,10 @@ restricted-place completion. Transport along a restriction equality retains
 the existing completion map, its finite degree, and its canonical valuation.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open AlgebraicCurve
@@ -24,7 +30,7 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField.IdeleGroup
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
 
 /-- A finite separable function-field extension induces a separable extension

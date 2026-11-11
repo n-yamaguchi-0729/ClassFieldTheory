@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
 
 /-!
 # Scheme Modules Proj Presentation exists of iso
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

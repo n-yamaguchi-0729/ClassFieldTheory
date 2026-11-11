@@ -11,14 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
 /-!
 # Exterior powers and determinants of module sheaves
 
 Presheaf exterior powers descend through sheafification to exterior-power functors
 on module sheaves; their objects define the determinant notation.
 -/
+
+@[expose] public section
 
 universe u
 

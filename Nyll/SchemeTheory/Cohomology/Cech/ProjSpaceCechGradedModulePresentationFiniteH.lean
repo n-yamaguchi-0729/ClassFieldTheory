@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.Finiteness.Finsupp
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleDSq
+module
+
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.Finiteness.Finsupp
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleDSq
 
 /-!
 Finiteness of graded-module Cech cohomology from a presentation short exact sequence.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

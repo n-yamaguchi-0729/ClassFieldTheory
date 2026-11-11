@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Mathlib.RingTheory.AdjoinRoot
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Mathlib.RingTheory.AdjoinRoot
 
 /-!
 # Rank of a Kummer algebra
@@ -13,6 +15,8 @@ import Mathlib.RingTheory.AdjoinRoot
 The rank of `K[X] / (X ^ n - a)` is `n` regardless of whether the polynomial
 is irreducible. This is distinct from the index of its norm subgroup.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

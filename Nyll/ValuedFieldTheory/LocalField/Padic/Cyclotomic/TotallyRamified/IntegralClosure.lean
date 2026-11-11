@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.EisensteinPolynomial
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.EisensteinPolynomial
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
 
 /-!
 # The integral closure in the totally ramified cyclotomic extension
@@ -12,6 +15,8 @@ import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.Eisens
 This file identifies `ℤ_[p][ζ]` with the actual integral closure and proves
 that it is a discrete valuation ring.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardFrobenius
-import Nyll.AlgebraicCurves.Divisors.Norm.PicardNormBaseChange
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.PicardNormConstants
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindexBaseChange
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardFrobenius
+public import Nyll.AlgebraicCurves.Divisors.Norm.PicardNormBaseChange
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.PicardNormConstants
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindexBaseChange
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
 
 /-!
 # Comparing actual arithmetic and geometric Picard norms
@@ -15,6 +18,10 @@ import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindexBaseChange
 The norm is actual divisor pushforward after reindexing the extended constants.
 Its geometric pullback equals the sum of powers of the actual Frobenius action.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -25,21 +32,20 @@ namespace AlgebraicCurve.CurveModel
 
 attribute [local instance] SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]
     (M₀ : CurveModel k F₀) [GeometricallyIntegral M₀.toBase] (M : CurveModel Ω F)
     (e : M.C ≅ pullback M₀.toBase (specMap k Ω))
     (he : e.hom ≫ pullback.snd M₀.toBase (specMap k Ω) = M.toBase)
-    (E : Type) [Field E] [Fintype E] [Algebra k E] [Algebra E Ω]
+    (E : Type u) [Field E] [Fintype E] [Algebra k E] [Algebra E Ω]
     [IsScalarTower k E Ω] [Algebra.IsAlgebraic E Ω]
 
 local notation "CE" => pullback M₀.toBase (specMap k E)
 local notation "cE" => pullback.snd M₀.toBase (specMap k E)
 local notation "φ" => M.constantSemilinearAction M₀.toBase e he
   (FiniteField.frobeniusAlgEquivOfAlgebraic k Ω)
-local notation "σ" => SemilinearAut.toRingAut φ
 local notation "d" => Module.finrank k E
 
 /-- The actual arithmetic norm from the finite constant base change. -/

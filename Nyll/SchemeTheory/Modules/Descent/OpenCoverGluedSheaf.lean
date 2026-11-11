@@ -10,62 +10,66 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
-import Mathlib.Algebra.Category.Grp.Basic
-import Mathlib.Algebra.Category.Grp.Limits
-import Mathlib.Algebra.Category.ModuleCat.Presheaf
-import Mathlib.Algebra.Category.ModuleCat.Sheaf
-import Mathlib.Algebra.Group.Hom.Defs
-import Mathlib.Algebra.Module.Pi
-import Mathlib.Algebra.Module.Submodule.Defs
-import Mathlib.Algebra.Notation.Pi.Defs
-import Mathlib.AlgebraicGeometry.Modules.Presheaf
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Mathlib.AlgebraicGeometry.Restrict
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.CategoryTheory.Adjunction.Basic
-import Mathlib.CategoryTheory.Adjunction.Mates
-import Mathlib.CategoryTheory.Adjunction.Unique
-import Mathlib.CategoryTheory.Bicategory.Adjunction.Adj
-import Mathlib.CategoryTheory.Bicategory.Functor.Cat
-import Mathlib.CategoryTheory.Bicategory.Functor.Pseudofunctor
-import Mathlib.CategoryTheory.Bicategory.LocallyDiscrete
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Category.Cat
-import Mathlib.CategoryTheory.Category.Preorder
-import Mathlib.CategoryTheory.ConcreteCategory.Basic
-import Mathlib.CategoryTheory.ConcreteCategory.Forget
-import Mathlib.CategoryTheory.EqToHom
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.EssentialImage
-import Mathlib.CategoryTheory.Functor.Basic
-import Mathlib.CategoryTheory.Functor.Category
-import Mathlib.CategoryTheory.Functor.ReflectsIso.Basic
-import Mathlib.CategoryTheory.Iso
-import Mathlib.CategoryTheory.NatIso
-import Mathlib.CategoryTheory.NatTrans
-import Mathlib.CategoryTheory.Opposites
-import Mathlib.CategoryTheory.Sites.Descent.DescentData
-import Mathlib.CategoryTheory.Sites.Descent.IsPrestack
-import Mathlib.CategoryTheory.Sites.Sieves.Basic
-import Mathlib.CategoryTheory.Sites.Sieves.Presieve
-import Mathlib.CategoryTheory.Sites.Spaces
-import Mathlib.CategoryTheory.Types.Basic
-import Mathlib.Data.Set.Image
-import Mathlib.Order.BoundedOrder.Lattice
-import Mathlib.Order.Lattice
-import Mathlib.Tactic.CategoryTheory.Reassoc
-import Mathlib.Tactic.Choose
-import Mathlib.Topology.Category.TopCat.Opens
-import Mathlib.Topology.Sets.Opens
-import Mathlib.Topology.Sheaves.Presheaf
-import Mathlib.Topology.Sheaves.Sheaf
-import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
+module
+
+public import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
+public import Mathlib.Algebra.Category.Grp.Basic
+public import Mathlib.Algebra.Category.Grp.Limits
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf
+public import Mathlib.Algebra.Group.Hom.Defs
+public import Mathlib.Algebra.Module.Pi
+public import Mathlib.Algebra.Module.Submodule.Defs
+public import Mathlib.Algebra.Notation.Pi.Defs
+public import Mathlib.AlgebraicGeometry.Modules.Presheaf
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Mathlib.AlgebraicGeometry.Restrict
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.CategoryTheory.Adjunction.Basic
+public import Mathlib.CategoryTheory.Adjunction.Mates
+public import Mathlib.CategoryTheory.Adjunction.Unique
+public import Mathlib.CategoryTheory.Bicategory.Adjunction.Adj
+public import Mathlib.CategoryTheory.Bicategory.Functor.Cat
+public import Mathlib.CategoryTheory.Bicategory.Functor.Pseudofunctor
+public import Mathlib.CategoryTheory.Bicategory.LocallyDiscrete
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.CategoryTheory.Category.Cat
+public import Mathlib.CategoryTheory.Category.Preorder
+public import Mathlib.CategoryTheory.ConcreteCategory.Basic
+public import Mathlib.CategoryTheory.ConcreteCategory.Forget
+public import Mathlib.CategoryTheory.EqToHom
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.EssentialImage
+public import Mathlib.CategoryTheory.Functor.Basic
+public import Mathlib.CategoryTheory.Functor.Category
+public import Mathlib.CategoryTheory.Functor.ReflectsIso.Basic
+public import Mathlib.CategoryTheory.Iso
+public import Mathlib.CategoryTheory.NatIso
+public import Mathlib.CategoryTheory.NatTrans
+public import Mathlib.CategoryTheory.Opposites
+public import Mathlib.CategoryTheory.Sites.Descent.DescentData
+public import Mathlib.CategoryTheory.Sites.Descent.IsPrestack
+public import Mathlib.CategoryTheory.Sites.Sieves.Basic
+public import Mathlib.CategoryTheory.Sites.Sieves.Presieve
+public import Mathlib.CategoryTheory.Sites.Spaces
+public import Mathlib.CategoryTheory.Types.Basic
+public import Mathlib.Data.Set.Image
+public import Mathlib.Order.BoundedOrder.Lattice
+public import Mathlib.Order.Lattice
+public import Mathlib.Tactic.CategoryTheory.Reassoc
+public import Mathlib.Tactic.Choose
+public import Mathlib.Topology.Category.TopCat.Opens
+public import Mathlib.Topology.Sets.Opens
+public import Mathlib.Topology.Sheaves.Presheaf
+public import Mathlib.Topology.Sheaves.Sheaf
+public import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
 /-!
 Effectivity of descent data for sheaves of scheme modules on an open cover.
 Compatible local sections form the glued sheaf and recover the prescribed transitions.
 -/
+
+@[expose] public section
 
 open _root_.AlgebraicCurves.Geometry.Sheaves.Proofs
 open Scheme_Modules_toDescentData_map_bijective_of_openCover.AlgebraicGeometry.Scheme.Modules.HomZar

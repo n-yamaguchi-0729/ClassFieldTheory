@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Prod
+module
+
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
 
 /-!
 # Flatness of a product of modules
 
 The product proof is shared by the Cech, projective-resolution, and Picard constructions.
 -/
+
+@[expose] public section
 
 universe u v w
 

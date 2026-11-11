@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGalois
+module
+
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGalois
 
 /-!
 # Supplying Kummer roots of unity by an actual constant extension
@@ -20,6 +22,8 @@ the original separably closed ambient field. Its actual compositum with the
 function field therefore contains the same primitive root. The extension is
 formed by the existing finite Galois constant-stage construction.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -38,7 +42,7 @@ theorem exists_constantStage_primitiveRoot (n : ℕ) [NeZero (n : k)] :
   have hnΩ : NeZero (n : Ω) := by
     simpa only [map_natCast] using
       (inferInstance : NeZero (n : k)).of_injective (algebraMap k Ω).injective
-  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_primitiveRoot Ω n
+  obtain ⟨ζ, hζ⟩ := HasEnoughRootsOfUnity.exists_isPrimitiveRoot Ω n
   have hζintegral : IsIntegral k ζ := IsIntegral.of_pow (Nat.pos_of_ne_zero hn.out) (by
     rw [hζ.pow_eq_one]
     exact isIntegral_one)

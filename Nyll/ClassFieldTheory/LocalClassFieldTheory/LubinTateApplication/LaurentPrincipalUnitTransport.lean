@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+public import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
 
 /-!
 # Exact principal-unit transport from the Laurent model
@@ -18,7 +22,11 @@ corresponding target principal-unit level.
 
 
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped LaurentSeries PowerSeries ValuativeRel
 
@@ -30,7 +38,7 @@ open LocalFieldTheory
 open LocalFieldTheory.DiscreteValuationField
 open LocalFieldTheory.IsNonarchimedeanLocalField
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- Power-series evaluation at the chosen target uniformizer, with codomain
@@ -41,7 +49,7 @@ noncomputable def equalCharacteristicTargetPowerSeriesEvalSubringHom
     (hϖ : valuationMap K (Additive.ofMul ϖ) = 1) :
     let F := equalCharacteristicTargetLocalField K
     F.residueField⟦X⟧ →+* F.valuationSubring := by
-  let F := equalCharacteristicTargetLocalField K
+  intro F
   letI : CharP K F.residueCharacteristic :=
     equalCharacteristicTargetResidueCharacteristicCharP K p
   exact
@@ -141,8 +149,7 @@ theorem equalCharacteristicTargetLaurentRingEquiv_val_le_one_iff
     ValuativeRel.valuation B x ≤ 1 ↔
       ValuativeRel.valuation K
         (equalCharacteristicTargetLaurentRingEquiv K p ϖ hϖ x) ≤ 1 := by
-  let F := equalCharacteristicTargetLocalField K
-  let B := F.residueField⸨X⸩
+  intro F B
   let e := equalCharacteristicTargetLaurentRingEquiv K p ϖ hϖ
   let eval := equalCharacteristicTargetPowerSeriesEvalSubringHom K p ϖ hϖ
   have heval (f : F.residueField⟦X⟧) :
@@ -264,7 +271,7 @@ theorem
         (equalCharacteristicPowerSeriesUnitsEquivTargetInteger
           K p ϖ hϖ).toMonoidHom =
       principalUnits K (m + 1) := by
-  let F := equalCharacteristicTargetLocalField K
+  intro F
   let e :=
     equalCharacteristicPowerSeriesUnitsEquivTargetInteger K p ϖ hϖ
   ext u
@@ -274,7 +281,7 @@ theorem
       (equalCharacteristicPowerSeriesUnitsEquivTargetInteger_mem_principalUnits_iff
         K p ϖ hϖ m a).2 ha
   · intro hu
-    refine ⟨e.symm u, ?_, by simp [e]⟩
+    refine ⟨e.symm u, ?_, e.apply_symm_apply u⟩
     exact
       (equalCharacteristicPowerSeriesUnitsEquivTargetInteger_mem_principalUnits_iff
         K p ϖ hϖ m (e.symm u)).1 (by simpa [e] using hu)
@@ -319,14 +326,12 @@ theorem equalCharacteristicTargetLaurent_fieldPrincipalUnits_map_eq
     (m : ℕ) :
     let F := equalCharacteristicTargetLocalField K
     let B := F.residueField⸨X⸩
-    letI : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+    let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
     (LocalFieldTheory.fieldPrincipalUnits B (m + 1)).map
         (equalCharacteristicTargetLaurentUnitsEquiv
           K p ϖ hϖ).toMonoidHom =
       LocalFieldTheory.fieldPrincipalUnits K (m + 1) := by
-  let F := equalCharacteristicTargetLocalField K
-  let B := F.residueField⸨X⸩
-  let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
+  intro F B sharedOwner3
   let H := equalCharacteristicLubinTateHigherUnitSubgroup F m
   let source :=
     equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F

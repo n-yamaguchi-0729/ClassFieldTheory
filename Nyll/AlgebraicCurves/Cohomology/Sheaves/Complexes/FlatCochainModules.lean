@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
 
 /-!
 # OModule Presheaf flat cochain of Modules of locally Trivial
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Mathlib.AlgebraicGeometry.Noetherian
-import Nyll.SchemeTheory.ProjectiveSpace.Cover
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteUnitClosedImmersionProj
-import Nyll.SchemeTheory.ProjectiveSpace.BaseChange
-import Nyll.SchemeTheory.ProjectiveSpace.StandardChartsBaseChange
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
+module
+
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Nyll.SchemeTheory.ProjectiveSpace.Cover
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteUnitClosedImmersionProj
+public import Nyll.SchemeTheory.ProjectiveSpace.BaseChange
+public import Nyll.SchemeTheory.ProjectiveSpace.StandardChartsBaseChange
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
 
 /-!
 Coherence of the relative cohomology presheaf in the Chow construction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

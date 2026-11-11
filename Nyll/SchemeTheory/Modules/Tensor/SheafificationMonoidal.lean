@@ -10,11 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Localization
-import Mathlib.CategoryTheory.Localization.Monoidal.Basic
-import Mathlib.CategoryTheory.Monoidal.Braided.Reflection
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.InternalHomSheaf
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Localization
+public import Mathlib.CategoryTheory.Functor.ReflectsIso.Balanced
+public import Mathlib.CategoryTheory.Localization.Monoidal.Basic
+public import Mathlib.CategoryTheory.Monoidal.Braided.Reflection
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.InternalHomSheaf
 
 /-!
 # Tensor compatibility of module sheafification equivalences
@@ -23,6 +26,8 @@ For a locally bijective morphism of ring presheaves, the module-presheaf morphis
 underlying additive presheaf maps are sheafification equivalences form a monoidal morphism
 property. The proof uses the internal-Hom adjunction and the sheafification adjunction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -52,7 +57,8 @@ variable {C : Type u} [Category.{u} C] {J : GrothendieckTopology C}
 /-- The category of module presheaves over the given commutative-ring presheaf. -/
 abbrev PMod := PresheafOfModules.{u} (𝒪 ⋙ forget₂ CommRingCat RingCat)
 
-private abbrev W : MorphismProperty (PMod 𝒪) :=
+/-- Module-presheaf morphisms whose underlying additive maps are sheafification equivalences. -/
+abbrev W : MorphismProperty (PMod 𝒪) :=
   (J.W (A := AddCommGrpCat.{u})).inverseImage
     (PresheafOfModules.toPresheaf (𝒪 ⋙ forget₂ CommRingCat RingCat))
 

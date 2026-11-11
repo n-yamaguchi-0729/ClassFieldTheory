@@ -8,6 +8,7 @@ import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIde
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicIdealArtinKernelComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicIdealNormQuotientComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
 
 /-!
 # The ideal norm subgroup is the Artin kernel
@@ -22,12 +23,14 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- For finite abelian reciprocity data, the image of genuine ideal norms
 in the ideal ray class group equals the normalized Artin kernel. -/
 theorem rayClassIdealNormImage_eq_artinKer
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]

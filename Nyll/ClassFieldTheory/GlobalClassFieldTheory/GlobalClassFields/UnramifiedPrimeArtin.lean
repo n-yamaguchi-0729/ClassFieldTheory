@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.CompletionToIdeal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.LocalNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
 
 /-!
 # Prime Artin elements at unramified finite places
@@ -27,9 +30,13 @@ place splits completely.
 
 
 
+@[expose] public section
+
 open scoped NumberField
 
 noncomputable section
+
+universe u v
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
@@ -37,7 +44,7 @@ namespace GlobalClassFields
 open NumberField IsDedekindDomain IdeleGroup
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]

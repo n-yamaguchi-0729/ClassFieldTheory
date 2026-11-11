@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.GroupTheory.Augmentation
-import Mathlib.Algebra.MonoidAlgebra.MapDomain
-import Mathlib.GroupTheory.Transfer
+module
+
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.Algebra.Group.Defs
+public import Nyll.GaloisCohomology.GroupTheory.Augmentation
+public import Mathlib.Algebra.MonoidAlgebra.MapDomain
+public import Mathlib.GroupTheory.Transfer
 
 /-!
 # Transfer and relative augmentation quotients
@@ -21,6 +25,8 @@ from the integral group rings themselves.
 -/
 
 
+
+@[expose] public section
 
 open scoped Pointwise
 
@@ -76,7 +82,7 @@ theorem subgroupRingMap_single
     (H : Subgroup G) (h : H) (n : ℤ) :
     subgroupRingMap H (MonoidAlgebra.single h n) =
       MonoidAlgebra.single (h : G) n := by
-  simp [subgroupRingMap]
+  exact MonoidAlgebra.mapDomain_single (f := H.subtype) (a := h) (r := n)
 
 theorem subgroupRingMap_injective
     (H : Subgroup G) :
@@ -304,8 +310,8 @@ theorem transversalLinearization_single
         (MonoidAlgebra.single g n) =
       n • Additive.ofMul
         (Abelianization.of (transversalComponent H T g)) := by
-  simp [transversalLinearization,
-    transversalCoefficientToAbelianization]
+  exact Finsupp.liftAddHom_apply_single
+    (transversalCoefficientToAbelianization H T) g n
 
 /-- On the embedded subgroup ideal, transversal linearization is the
 ordinary abelianization linearization. -/
@@ -662,7 +668,7 @@ theorem leftRepresentative_mul_transferComponent
     leftRepresentative H T q *
         (transferComponent H T g q : G) =
       leftRepresentative H (g • T) q := by
-  simp [transferComponent, leftRepresentative]
+  exact mul_inv_cancel_left _ _
 
 /-- The transfer is the product of the transversal components. -/
 theorem abelianizedTransfer_of_eq_prod_transferComponent
@@ -689,13 +695,13 @@ def transversalNormElement
 theorem sum_shifted_leftRepresentatives
     (H : Subgroup G) [H.FiniteIndex]
     (T : H.LeftTransversal) (g : G) :
-    letI := H.fintypeQuotientOfFiniteIndex
+    let := H.fintypeQuotientOfFiniteIndex
     ∑ q : G ⧸ H,
         MonoidAlgebra.single
           (leftRepresentative H (g • T) q) (1 : ℤ) =
       MonoidAlgebra.single g 1 *
         transversalNormElement H T := by
-  let := H.fintypeQuotientOfFiniteIndex
+  intro sharedOwner1
   calc
     ∑ q : G ⧸ H,
         MonoidAlgebra.single
@@ -753,27 +759,18 @@ theorem single_mul_embeddedDelta_mem_numerator
   rw [← MonoidAlgebra.one_def]
   noncomm_ring
 
-/-- The group-ring element `δg · ∑ρ` belongs to the relative
-augmentation numerator. -/
-theorem delta_mul_transversalNormElement_mem_numerator
+/-- The group-ring identity underlying the norm-element formula. -/
+theorem delta_mul_transversalNormElement_eq_sum
     (H : Subgroup G) [H.FiniteIndex]
     (T : H.LeftTransversal) (g : G) :
+    let := H.fintypeQuotientOfFiniteIndex
     (deltaElement G g : IntegralGroupRing G) *
-        transversalNormElement H T ∈
-      relativeAugmentationNumerator H := by
-  let := H.fintypeQuotientOfFiniteIndex
-  have hsum :
+        transversalNormElement H T =
       ∑ q : G ⧸ H,
-          MonoidAlgebra.single
-              (leftRepresentative H T q) 1 *
-            embeddedDelta H (transferComponent H T g q) ∈
-        relativeAugmentationNumerator H := by
-    apply AddSubgroup.sum_mem
-    intro q _
-    exact single_mul_embeddedDelta_mem_numerator H
-      (leftRepresentative H T q)
-      (transferComponent H T g q)
-  convert hsum using 1
+        MonoidAlgebra.single
+            (leftRepresentative H T q) 1 *
+          embeddedDelta H (transferComponent H T g q) := by
+  intro sharedOwner1
   simp only [embeddedDelta_eq, deltaElement_val]
   simp_rw [mul_sub]
   rw [Finset.sum_sub_distrib]
@@ -783,26 +780,20 @@ theorem delta_mul_transversalNormElement_mem_numerator
   rw [sum_shifted_leftRepresentatives H T g]
   simp [transversalNormElement, sub_mul, Finset.mul_sum]
 
-/-- The group-ring identity underlying the norm-element formula. -/
-theorem delta_mul_transversalNormElement_eq_sum
+/-- The group-ring element `δg · ∑ρ` belongs to the relative
+augmentation numerator. -/
+theorem delta_mul_transversalNormElement_mem_numerator
     (H : Subgroup G) [H.FiniteIndex]
     (T : H.LeftTransversal) (g : G) :
-    letI := H.fintypeQuotientOfFiniteIndex
     (deltaElement G g : IntegralGroupRing G) *
-        transversalNormElement H T =
-      ∑ q : G ⧸ H,
-        MonoidAlgebra.single
-            (leftRepresentative H T q) 1 *
-          embeddedDelta H (transferComponent H T g q) := by
+        transversalNormElement H T ∈
+      relativeAugmentationNumerator H := by
   let := H.fintypeQuotientOfFiniteIndex
-  simp only [embeddedDelta_eq, deltaElement_val]
-  simp_rw [mul_sub]
-  rw [Finset.sum_sub_distrib]
-  simp_rw [MonoidAlgebra.single_mul_single]
-  simp only [mul_one]
-  simp_rw [leftRepresentative_mul_transferComponent H T g]
-  rw [sum_shifted_leftRepresentatives H T g]
-  simp [transversalNormElement, sub_mul, Finset.mul_sum]
+  rw [delta_mul_transversalNormElement_eq_sum H T g]
+  apply AddSubgroup.sum_mem
+  intro q _
+  exact single_mul_embeddedDelta_mem_numerator H
+    (leftRepresentative H T q) (transferComponent H T g q)
 
 /-- A single summand in the norm formula, intrinsically valued in the
 relative numerator. -/
@@ -873,11 +864,11 @@ theorem deltaNormClass_eq_zero_iff
 theorem sum_relativeDeltaClass_transferComponent_eq_deltaNormClass
     (H : Subgroup G) [H.FiniteIndex]
     (T : H.LeftTransversal) (g : G) :
-    letI := H.fintypeQuotientOfFiniteIndex
+    let := H.fintypeQuotientOfFiniteIndex
     ∑ q : G ⧸ H,
         relativeDeltaClass H (transferComponent H T g q) =
       deltaNormClass H T g := by
-  let := H.fintypeQuotientOfFiniteIndex
+  intro sharedOwner1
   calc
     ∑ q : G ⧸ H,
         relativeDeltaClass H (transferComponent H T g q) =

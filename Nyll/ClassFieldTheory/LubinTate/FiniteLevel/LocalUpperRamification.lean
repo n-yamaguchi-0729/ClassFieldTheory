@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
-import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.HerbrandFormula
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelFieldTower
+module
+
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.HerbrandFormula
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelFieldTower
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
 
 /-!
 # Upper ramification groups of standard Lubin--Tate levels
@@ -25,7 +29,11 @@ integral upper group at `k` with the kernel of restriction to level `k - 1`.
 
 
 
+@[expose] public section
+
 noncomputable section
+
+universe u
 
 open scoped ValuativeRel
 
@@ -39,7 +47,7 @@ open RamificationTheory.LocalField
 open ValuationTheory.DiscreteValuationField
 open ValuationTheory.DiscreteValuationField.ValuedExtension
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- The explicit complete-DVF upper group on a standard Lubin--Tate level
@@ -53,18 +61,13 @@ theorem
     (n : ℕ) (t : ℝ) :
     let F := standardLocalField K
     let L := standardLubinTateLevelField hπ n
-    letI : FiniteDimensional K L :=
+    let : FiniteDimensional K L :=
       standardLubinTateLevelField_finiteDimensional hπ n
-    letI : IsGalois K L :=
+    let : IsGalois K L :=
       standardLubinTateLevelField_isGalois (F := F) hπ n
     standardLubinTateRealUpperRamificationGroup hπ n t =
       localUpperRamificationGroup K L t := by
-  let F := standardLocalField K
-  let L := standardLubinTateLevelField hπ n
-  let : FiniteDimensional K L :=
-    standardLubinTateLevelField_finiteDimensional hπ n
-  let : IsGalois K L :=
-    standardLubinTateLevelField_isGalois (F := F) hπ n
+  intro F L sharedOwner3 sharedOwner4
   let base := localCompleteDVF K
   let targetLocal := chosenLocalExtensionCompleteDVF K L
   let targetLT := standardLubinTateLevelCompleteDVF hπ n
@@ -115,30 +118,19 @@ theorem standardLubinTateRealUpperRamificationGroup_eq_restrictKer
     let m := k - 1
     let E := standardLubinTateLevelField hπ m
     let L := standardLubinTateLevelField hπ n
-    letI : FiniteDimensional K E :=
+    let : FiniteDimensional K E :=
       standardLubinTateLevelField_finiteDimensional hπ m
-    letI : FiniteDimensional K L :=
+    let : FiniteDimensional K L :=
       standardLubinTateLevelField_finiteDimensional hπ n
-    letI : IsGalois K E :=
+    let : IsGalois K E :=
       standardLubinTateLevelField_isGalois (F := F) hπ m
-    letI : IsGalois K L :=
+    let : IsGalois K L :=
       standardLubinTateLevelField_isGalois (F := F) hπ n
     let hEL : E ≤ L :=
       standardLubinTateLevelField_mono hπ (by omega)
     standardLubinTateRealUpperRamificationGroup hπ n (k : ℝ) =
       (RamificationTheory.intermediateFieldRestrictNormalHom E L hEL).ker := by
-  let F := standardLocalField K
-  let m := k - 1
-  let E := standardLubinTateLevelField hπ m
-  let L := standardLubinTateLevelField hπ n
-  let : FiniteDimensional K E :=
-    standardLubinTateLevelField_finiteDimensional hπ m
-  let : FiniteDimensional K L :=
-    standardLubinTateLevelField_finiteDimensional hπ n
-  let : IsGalois K E :=
-    standardLubinTateLevelField_isGalois (F := F) hπ m
-  let : IsGalois K L :=
-    standardLubinTateLevelField_isGalois (F := F) hπ n
+  intro F m E L sharedOwner5 sharedOwner6 sharedOwner7 sharedOwner8
   let hmn : m ≤ n := by
     dsimp only [m]
     omega

@@ -47,9 +47,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
+module
+
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
 
 /-!
 # Projection morphisms for module sheaves
@@ -57,6 +59,8 @@ import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
 The monoidal pullback comparison and adjunction counit define a projection morphism
 and its mate under the pullback-pushforward adjunction.
 -/
+
+@[expose] public section
 
 section ProjectionMorphism
 

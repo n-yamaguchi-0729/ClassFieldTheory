@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGalois
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionLinearDisjoint
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+module
+
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionGalois
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionLinearDisjoint
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Galois groups and Frobenius of actual constant-field extensions
@@ -23,6 +26,8 @@ field, with the expected order and action on constants.
 The final specialization uses the actual full constant field of any finite-base
 function field; the separable-constants condition is then a proved theorem.
 -/
+
+@[expose] public section
 
 noncomputable section
 

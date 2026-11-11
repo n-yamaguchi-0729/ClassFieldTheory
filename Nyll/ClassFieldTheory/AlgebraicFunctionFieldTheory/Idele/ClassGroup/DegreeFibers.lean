@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Maps.Proper.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Compact
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Topology
+module
+
+public import Mathlib.Topology.Maps.Proper.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Compact
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Topology
 
 /-!
 # Properness of idele-class degree
@@ -15,6 +17,8 @@ Every nonempty degree fiber is a translate of the compact degree-zero subgroup.
 Since integer degree has the discrete topology, its continuous map is proper.
 This does not assert that every integer is a degree of an idele class.
 -/
+
+@[expose] public section
 
 noncomputable section
 

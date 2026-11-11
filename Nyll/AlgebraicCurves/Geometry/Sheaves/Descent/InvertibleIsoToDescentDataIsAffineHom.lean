@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.CategoryTheory.PseudofunctorDescentDataIsoToDescentDataObj
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.InvertibleIsoToDescentDataIsAffine
-import Nyll.SchemeTheory.Modules.Descent.IsStackForOpenCover
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.InvertibleToDescentDataMapBijective
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.CategoryTheory.PseudofunctorDescentDataIsoToDescentDataObj
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.InvertibleIsoToDescentDataIsAffine
+public import Nyll.SchemeTheory.Modules.Descent.IsStackForOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.InvertibleToDescentDataMapBijective
 
 /-!
 # Descent of invertible modules along affine faithfully flat morphisms
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

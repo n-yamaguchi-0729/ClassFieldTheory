@@ -7,7 +7,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalValuationNormalization
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
+import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
 /-!
 # Arithmetic normalization on actual unramified completions
@@ -26,7 +29,7 @@ open scoped AlgebraicCurve.Place ValuativeRel
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]
@@ -66,11 +69,9 @@ theorem localDecompositionArtin_completion_eq_frobenius_zpow
         (IdeleGroup.localOrder (w.restrict K) x).toAdd := by
     rw [LocalFieldTheory.IsNonarchimedeanLocalField.valuationMap_ofMul_inv,
       placeCompletion_valuationMap_eq_neg_localOrder, neg_neg]
-  change IdeleGroup.decompositionCompletionEquiv (K := K) w
-      ((IdeleGroup.decompositionCompletionEquiv (K := K) w).symm
-        (LocalClassFieldTheory.abelianLocalArtinMap
-          (w.restrict K).adicCompletion w.adicCompletion x⁻¹)) = _
-  rw [MulEquiv.apply_symm_apply,
-    ClassFieldTheory.finiteAbelianLocalArtinMap_eq_frobenius_zpow, hx]
+  have hnormalized := LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_eq_frobenius_zpow
+    (w.restrict K).adicCompletion w.adicCompletion x⁻¹
+  rw [hx] at hnormalized
+  exact (localDecompositionArtin_completion_universe (K := K) w x).trans hnormalized
 
 end FunctionField

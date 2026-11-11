@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPrimePower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassTopology
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPrimePower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassTopology
 
 /-!
 # Finite-depth detection of S-unit characteristic-power classes
@@ -17,12 +19,16 @@ principal-unit depth. Local p-power descent then detects the original
 global p-power class.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 open AlgebraicCurve
 
 namespace FunctionField.SUnits
 
-variable {k K : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K]
     (p : ℕ) [Fact p.Prime] [CharP K p]

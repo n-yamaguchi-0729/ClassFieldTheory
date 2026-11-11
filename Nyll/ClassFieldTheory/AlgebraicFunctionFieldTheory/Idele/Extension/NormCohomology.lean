@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisAction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormProduct
-import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisAction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormProduct
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
 
 /-!
 # Actual function-field norms and the Tate norm
@@ -17,6 +19,8 @@ base change, with the existing Tate norm. Injectivity of base change identifies
 their kernels. The norm images correspond under base change, while the base
 idele groups map into the actual fixed subgroups.
 -/
+
+@[expose] public section
 
 noncomputable section
 

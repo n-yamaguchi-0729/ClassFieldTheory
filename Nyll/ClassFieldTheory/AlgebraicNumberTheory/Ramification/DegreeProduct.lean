@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.GaloisClosure
-import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
-import Nyll.ValuedFieldTheory.Ramification.InertiaCardinality
+module
+
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.NumberTheory.Cyclotomic.PrimitiveRoots
+public import Nyll.ValuedFieldTheory.Ramification.InertiaCardinality
 
 /-!
 # A finite-group degree product
@@ -16,6 +18,8 @@ their orders satisfy the local prime-power bounds, the global degree is at
 most the totient of the conductor candidate.  This file isolates that finite
 group calculation from the arithmetic construction of the chosen primes.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -46,7 +50,7 @@ theorem totient_prod_primePowers
 
 /-- The finite-group degree bound obtained from the inertia subgroups. -/
 theorem finrank_le_totient_prod_primePowers_of_inertia_bounds
-    (M : Type) [Field M] [Algebra ℚ M]
+    (M : Type*) [Field M] [Algebra ℚ M]
     [FiniteDimensional ℚ M] [IsAbelianGalois ℚ M]
     (S : Finset Nat.Primes) (e : Nat.Primes → ℕ)
     (I : Nat.Primes → Subgroup (M ≃ₐ[ℚ] M))

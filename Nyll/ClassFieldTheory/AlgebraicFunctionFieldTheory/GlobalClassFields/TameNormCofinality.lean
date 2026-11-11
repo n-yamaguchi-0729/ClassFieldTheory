@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.KummerRayExistence
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormRefinementTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SubextensionCorrespondence
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantCyclotomicExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basis
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.KummerRayExistence
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormRefinementTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SubextensionCorrespondence
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantCyclotomicExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basis
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
 
 /-!
 # Actual norm cofinality at prime-to-characteristic index
@@ -22,12 +25,16 @@ supplies a norm subgroup inside this inverse image. The norm tower and
 the actual normal-closure abelian refinement return to the original base.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 open AlgebraicCurve
 
 namespace FunctionField
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K] [IsSepClosure K Ω]

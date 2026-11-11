@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FixedFieldDegreeComparison
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.FixedFieldSpecialization
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusClosure
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusQuotientTransport
-import Nyll.GaloisCohomology.ProfiniteIntegers.TopologicalGeneration
-import Nyll.ValuedFieldTheory.LocalField.GroupTheory.ContinuousQuotientEquiv
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FixedFieldDegreeComparison
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.BaseComparison.FixedFieldSpecialization
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusClosure
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusQuotientTransport
+public import Nyll.GaloisCohomology.ProfiniteIntegers.TopologicalGeneration
+public import Nyll.ValuedFieldTheory.LocalField.GroupTheory.ContinuousQuotientEquiv
 
 /-!
 # Transport of function-field Frobenius quotients across separable closures
@@ -22,13 +24,17 @@ with the concrete comparison of full-constant degrees, identifies extension
 inertia and its quotient. No reciprocity comparison is assumed.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra k (SeparableClosure K)]
     [IsScalarTower k K (SeparableClosure K)]
@@ -409,7 +415,7 @@ theorem intrinsicConstantFrobeniusRestriction_eq_ambientFixedField
 abbrev intrinsicFixedBaseFrobeniusElements
     (T : FiniteGaloisSubextension H.field)
     (e : SeparableClosure (abstractFixedField K (SeparableClosure K) H.field)
-      ≃ₐ[abstractFixedField K (SeparableClosure K) H.field] SeparableClosure K) : Type :=
+      ≃ₐ[abstractFixedField K (SeparableClosure K) H.field] SeparableClosure K) : Type v :=
   let F := abstractFixedField K (SeparableClosure K) H.field
   let E := abstractRelativeFixedField K (SeparableClosure K) T.below
   let EI := finiteGaloisAbstractExtensionOfEmbedding F E (e.symm.toAlgHom.comp E.val)

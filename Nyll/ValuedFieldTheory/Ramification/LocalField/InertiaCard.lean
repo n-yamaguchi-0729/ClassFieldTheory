@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.InertiaRamificationCard
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.InertiaRamificationCard
 
 /-!
 # Inertia order and ramification index for a chosen local extension
@@ -16,7 +18,11 @@ residue field, hence a separable residue extension.  This supplies the
 residue-separability hypothesis of the general inertia-cardinality theorem.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v
 
 open scoped ValuativeRel
 open ValuationTheory.DiscreteValuationField
@@ -30,7 +36,7 @@ open RamificationTheory.HilbertRamification.CompleteDVF
 /-- The inertia group of the chosen valuation ring has order equal to the
 ramification index of the chosen finite Galois local extension. -/
 theorem chosenLocalExtension_inertia_card_eq_ramificationIndex
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :

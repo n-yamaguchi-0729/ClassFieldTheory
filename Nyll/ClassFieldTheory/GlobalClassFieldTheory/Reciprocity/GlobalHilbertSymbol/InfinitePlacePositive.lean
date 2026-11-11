@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceCharacter
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealSquare
-import Nyll.ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceCharacter
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlaceRealSquare
+public import Nyll.ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
 
 /-!
 # The positive-radicand real infinite-place branch
@@ -18,6 +20,8 @@ Artin automorphism and its Kummer root character are trivial.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField

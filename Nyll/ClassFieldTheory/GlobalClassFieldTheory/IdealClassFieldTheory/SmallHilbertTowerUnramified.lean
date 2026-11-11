@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldMaximalSubextension
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerRealization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationSubextension
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitAbstractFixedField
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldMaximalSubextension
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerRealization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteGaloisRealizationSubextension
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitAbstractFixedField
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.EverywhereUnramifiedTower
+public import Nyll.GaloisCohomology.Cyclic.NormKernelVanishing
 
 /-!
 # Unramifiedness of the two-stage small Hilbert tower
@@ -21,6 +25,10 @@ unramifiedness at both finite and infinite places.
 
 
 
+@[expose] public section
+
+universe u
+
 open scoped NumberField
 
 noncomputable section
@@ -33,18 +41,9 @@ open KummerTheory
 open LocalClassFieldTheory
 open GlobalClassFields
 
-/-- Transitivity over a number field, with the relative module fixed by
-the given algebra before the concrete fixed-field carriers are inserted. -/
-private theorem smallHilbertTowerAbsoluteFiniteDimensionalOfRelative
-    (F N : Type) [Field F] [NumberField F] [Field N]
-    [Algebra ℚ N] [Algebra F N] [IsScalarTower ℚ F N]
-    [FiniteDimensional F N] :
-    FiniteDimensional ℚ N :=
-  FiniteDimensional.trans ℚ F N
-
 section SelectedTower
 
-variable (K : Type) [Field K] [NumberField K]
+variable (K : Type u) [Field K] [NumberField K]
 
 /-- The actual top field in the selected two-stage small Hilbert
 tower, viewed over the selected first small Hilbert class field. -/
@@ -52,49 +51,10 @@ abbrev smallHilbertTowerTopField :=
   abstractRelativeFixedField ℚ (SeparableClosure ℚ)
     (smallHilbertTowerSecondSubextension K).below
 
-private noncomputable abbrev smallHilbertTowerFirstStageFiniteAbstractField :
-    FiniteAbstractField
-      (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ) :=
-  let K₀ :=
-    Reciprocity.numberFieldTowerFiniteAbstractField K
-      (smallHilbertClassFieldNormAmbient K)
-  let L := smallHilbertClassFieldSubextension K
-  { field := L.field
-    finite := by
-      let : Finite
-          ((baseField
-            (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
-            CyclicCohomology.extensionSubgroup
-              (baseField
-                (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
-              K₀.field (le_baseField K₀.field)) :=
-        K₀.finite
-      let : Finite
-          (K₀.field.toSubgroup ⧸
-            CyclicCohomology.extensionSubgroup
-              K₀.field L.field L.below) :=
-        L.finite
-      exact
-        FiniteGaloisSubextension.finite_extension_trans
-          L.below (le_baseField K₀.field) }
-
-private noncomputable instance
-    smallHilbertTowerFirstStageAbsoluteQuotientFinite :
-    Finite
-      ((baseField
-        (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
-        CyclicCohomology.extensionSubgroup
-          (baseField
-            (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
-          (smallHilbertClassFieldSubextension K).field
-          (le_baseField
-            (smallHilbertClassFieldSubextension K).field)) :=
-  (smallHilbertTowerFirstStageFiniteAbstractField K).finite
-
 /-- The relative algebra is the canonical algebra carried by the
 intermediate-field presentation of the selected top field. -/
 @[reducible]
-private noncomputable instance
+noncomputable def
     smallHilbertTowerTopAlgebra :
     Algebra
       (smallHilbertClassField K)
@@ -104,7 +64,7 @@ private noncomputable instance
 /-- Freeze the scalar-action owner induced by the canonical relative
 algebra. -/
 @[reducible]
-private noncomputable def
+noncomputable def
     smallHilbertTowerTopSMul :
     SMul
       (smallHilbertClassField K)
@@ -114,7 +74,7 @@ private noncomputable def
 /-- Freeze the module owner induced by the same canonical relative
 algebra. -/
 @[reducible]
-private noncomputable def
+noncomputable def
     smallHilbertTowerTopModule :
     Module
       (smallHilbertClassField K)
@@ -125,9 +85,15 @@ private noncomputable def
     _ _
     (smallHilbertTowerTopAlgebra K)
 
-section
+end SelectedTower
 
+attribute [local instance] smallHilbertTowerTopAlgebra
+attribute [local instance] smallHilbertTowerTopSMul
 attribute [local instance] smallHilbertTowerTopModule
+
+section SelectedTower
+
+variable (K : Type u) [Field K] [NumberField K]
 
 /-- The second selected stage is finite-dimensional over the first
 small Hilbert class field. -/
@@ -135,10 +101,10 @@ noncomputable instance smallHilbertTowerTopFiniteDimensional :
     FiniteDimensional
       (smallHilbertClassField K)
       (smallHilbertTowerTopField K) :=
-  finiteAbelianSubextensionAbstractRelativeFixedFieldFiniteDimensional
-    (smallHilbertTowerSecondSubextension K)
-
-end
+  secondSmallHilbertClassFieldTopFiniteDimensional
+    (Reciprocity.numberFieldTowerFiniteAbstractField K
+      (smallHilbertClassFieldNormAmbient K))
+    (smallHilbertClassFieldSubextension K)
 
 /-- The rational base, first small Hilbert class field, and second
 selected stage form the actual scalar tower. -/
@@ -146,20 +112,27 @@ noncomputable instance smallHilbertTowerTopScalarTower :
     IsScalarTower ℚ
       (smallHilbertClassField K)
       (smallHilbertTowerTopField K) :=
-  IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
+  secondSmallHilbertClassFieldTopScalarTower
+    (Reciprocity.numberFieldTowerFiniteAbstractField K
+      (smallHilbertClassFieldNormAmbient K))
+    (smallHilbertClassFieldSubextension K)
 
 /-- The selected second stage is a finite extension of the rational
 field. -/
 noncomputable instance smallHilbertTowerTopAbsoluteFiniteDimensional :
     FiniteDimensional ℚ (smallHilbertTowerTopField K) :=
-  smallHilbertTowerAbsoluteFiniteDimensionalOfRelative
-    (smallHilbertClassField K)
-    (smallHilbertTowerTopField K)
+  secondSmallHilbertClassFieldTopAbsoluteFiniteDimensional
+    (Reciprocity.numberFieldTowerFiniteAbstractField K
+      (smallHilbertClassFieldNormAmbient K))
+    (smallHilbertClassFieldSubextension K)
 
 /-- The selected second-stage fixed field is a number field. -/
 noncomputable instance smallHilbertTowerTopNumberField :
     NumberField (smallHilbertTowerTopField K) :=
-  NumberField.of_module_finite ℚ (smallHilbertTowerTopField K)
+  secondSmallHilbertClassFieldTopNumberField
+    (Reciprocity.numberFieldTowerFiniteAbstractField K
+      (smallHilbertClassFieldNormAmbient K))
+    (smallHilbertClassFieldSubextension K)
 
 /-- The selected second stage is an abelian Galois extension of the
 first small Hilbert class field. -/
@@ -176,7 +149,7 @@ end SelectedTower
 the intrinsic small-Hilbert subgroup of the first stage. -/
 @[simp]
 theorem smallHilbertTowerSecondStage_ideleClassNorm_range
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     (_root_.ideleClassNorm
       (smallHilbertClassField K)
       (smallHilbertTowerTopField K)).range =
@@ -201,7 +174,7 @@ theorem smallHilbertTowerSecondStage_ideleClassNorm_range
 /-- The actual second stage in the selected two-stage small Hilbert
 tower is everywhere unramified over the first stage. -/
 theorem smallHilbertTowerSecondStage_isEverywhereUnramified
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     IsEverywhereUnramified
       (smallHilbertClassField K)
       (smallHilbertTowerTopField K) :=
@@ -212,7 +185,7 @@ theorem smallHilbertTowerSecondStage_isEverywhereUnramified
 intermediate extension of the top over the original base is exactly
 the first small Hilbert class field. -/
 theorem smallHilbertTower_maximalAbelianSubextension_eq_firstStage
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     maximalAbelianSubextension
         (smallHilbertTowerGaloisRealization K) =
       smallHilbertClassFieldSubextension K := by

@@ -10,17 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.ExteriorPower.Wedge
-import Nyll.SchemeTheory.Modules.Exactness
-import Nyll.SchemeTheory.Modules.LocalMorphisms
-import Nyll.SchemeTheory.Modules.Frames.LocallyFreeBasis
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleBasisOne
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Wedge
+public import Nyll.SchemeTheory.Modules.Exactness
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
+public import Nyll.SchemeTheory.Modules.Frames.LocallyFreeBasis
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleBasisOne
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # Exterior powers of a short exact sequence
@@ -28,6 +30,8 @@ import Mathlib.Util.WithWeakNamespace
 Shows that wedging the exterior power of the first map with the middle module is epimorphic
 when the quotient is invertible.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -68,7 +72,7 @@ lemma ιMulti_comp_mem {A : Type u} [CommRing A] {M : Type u} [AddCommGroup M] [
     push Not at hφ
     obtain ⟨i, j, hij, hne⟩ := hφ
     have : exteriorPower.ιMulti A m (w ∘ φ) = 0 :=
-      AlternatingMap.map_eq_zero_of_eq _ (w ∘ φ) (by simp [hij]) hne
+      AlternatingMap.map_eq_zero_of_eq _ (w ∘ φ) (by simp only [Function.comp_apply, hij]) hne
     rw [this]
     exact P.zero_mem
 
@@ -146,21 +150,21 @@ theorem _root_.AlgebraicGeometry.Scheme.Modules.epi_whiskerRight_wedgeVec_of_sho
     let c : A := b₃.repr (gV m) 0
     have hc : gV m = c • b₃ 0 := by
       conv_lhs => rw [← b₃.sum_repr (gV m)]
-      simp [c]
+      simp only [Finset.univ_unique, Fin.default_eq_zero, Fin.isValue, Finset.sum_singleton, c]
     have hker : S.g.app V (m - c • etV) = 0 := by
       rw [← hgV, LinearMap.map_sub, LinearMap.map_smul, hget, hc, sub_self]
     obtain ⟨e₁, he₁⟩ := exists_app_eq_of_exact_of_app_eq_zero S hS.exact V (m - c • etV) hker
     have hm : m = fV e₁ + c • etV := by rw [hfV, he₁, sub_add_cancel]
     rw [hm]
     refine Submodule.add_mem _ ?_ (Submodule.smul_mem _ _ (Submodule.subset_span ⟨Fin.natAdd n 0,
-      by simp [w]⟩))
+      by simp only [Fin.isValue, Fin.append_right, w]⟩))
     have : fV e₁ = ∑ i, (b₁.repr e₁ i) • fV (b₁ i) := by
       conv_lhs => rw [← b₁.sum_repr e₁]
       rw [map_sum]
       exact Finset.sum_congr rfl (fun i _ => LinearMap.map_smul fV _ _)
     rw [this]
     exact Submodule.sum_mem _ (fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span
-      ⟨Fin.castAdd 1 i, by simp [w]⟩))
+      ⟨Fin.castAdd 1 i, by simp only [Fin.append_left, w]⟩))
   let θV : (TensorProduct A (⋀[A]^n E₁) E₂) →ₗ[A] ⋀[A]^(n + 1) E₂ := (θ.app (op V)).hom
   have hθV : θV (exteriorPower.ιMulti A n (fun i => b₁ i) ⊗ₜ[A] etV) =
       exteriorPower.ιMulti A (n + 1) w := by

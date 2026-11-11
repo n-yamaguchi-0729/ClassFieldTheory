@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.KummerSplit
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerUnramified
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SupportedLocalNorms
-import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
-import Nyll.AlgebraicCurves.Places.Ramification.NcardAlgHomCompEqPreimageEqRamificationIndex
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.KummerSplit
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerUnramified
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SupportedLocalNorms
+public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
+public import Nyll.AlgebraicCurves.Places.Ramification.NcardAlgHomCompEqPreimageEqRamificationIndex
 
 /-!
 # Detecting S-unit powers at a finite set of places
@@ -20,6 +22,10 @@ is split at S and unramified elsewhere. Actual local norm preimages give
 surjectivity of its idele-class norm, and the proved first norm inequality
 forces its degree to be one.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -32,9 +38,35 @@ open KummerTheory
 open AlgebraicCurves.Places.Proofs
 open Place_ncard_algHom_comp_eq_preimage_eq_ramificationIndexAlong.AlgebraicCurve
 
-variable {k K : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
+
+private theorem ramificationIndex_eq_one_of_le_kummerExtension
+    {Ω : Type w} [Field Ω] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
+    [IsSepClosure K Ω] (n : ℕ+) (hn : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (S : Finset (Place k K))
+    (M : IntermediateField K Ω) [FiniteDimensional K M]
+    (hME : M ≤ kummerExtension (Ω := Ω) n S)
+    (w : Place k M) (hw : w.restrict K ∉ S) : w.ramificationIndex K = 1 := by
+  let E := kummerExtension (Ω := Ω) n S
+  have hEfinite : FiniteDimensional K E := kummerExtension_finiteDimensional n hn hmu S
+  have hEgalois : IsGalois K E := kummerRadicalExtension_isGalois n (units k K S)
+  let aME : Algebra M E := (IntermediateField.inclusion hME).toRingHom.toAlgebra
+  have hKME : IsScalarTower K M E := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  have hkME : IsScalarTower k M E := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  have hMEfinite : FiniteDimensional M E := FiniteDimensional.right K M E
+  have hMEsep : Algebra.IsSeparable M E := Algebra.isSeparable_tower_top_of_isSeparable K M E
+  obtain ⟨W, hW⟩ := Place.exists_restrict_eq (K := k) (F' := M) (M := E) w
+  have hnot : W.restrict K ∉ S := by
+    rw [← SpecialisationCount.restrict_restrict (F := K) (F' := M), hW]
+    exact hw
+  have he : W.ramificationIndex K = 1 :=
+    kummerExtension_ramificationIndex_eq_one n hn hmu S W hnot
+  have hmul := SpecialisationCount.ramificationIndex_tower (F := K) (F' := M) W
+  rw [he, hW] at hmul
+  exact Nat.eq_one_of_dvd_one ⟨W.ramificationIndex M,
+    hmul.trans (Nat.mul_comm _ _)⟩
 
 /-- Local power detection for S-units, using the actual S-idele presentation
 and the actual cyclic norm inequality. -/
@@ -70,8 +102,6 @@ theorem mem_nthPowers_of_local_powers (n : ℕ+) (hn : ((n : ℕ) : K) ≠ 0)
     rfl
   have hAway (w : Place k M) (hw : w.restrict K ∉ S) : w.ramificationIndex K = 1 := by
     let E := kummerExtension (Ω := Ω) n S
-    have hEfinite : FiniteDimensional K E := kummerExtension_finiteDimensional n hn hmu S
-    have hEgalois : IsGalois K E := kummerRadicalExtension_isGalois n (units k K S)
     have hME : M ≤ E := by
       apply IntermediateField.adjoin_le_iff.mpr
       intro z hz
@@ -80,21 +110,7 @@ theorem mem_nthPowers_of_local_powers (n : ℕ+) (hn : ((n : ℕ) : K) ≠ 0)
       exact IntermediateField.subset_adjoin K
         (kummerRootSet (K := K) (Omega := Ω) n (units k K S))
         ⟨b, chosenSimpleKummerRoot_pow K n hn b.val⟩
-    let aME : Algebra M E := (IntermediateField.inclusion hME).toRingHom.toAlgebra
-    have hKME : IsScalarTower K M E := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
-    have hkME : IsScalarTower k M E := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
-    have hMEfinite : FiniteDimensional M E := FiniteDimensional.right K M E
-    have hMEsep : Algebra.IsSeparable M E := Algebra.isSeparable_tower_top_of_isSeparable K M E
-    obtain ⟨W, hW⟩ := Place.exists_restrict_eq (M := E) w
-    have hnot : W.restrict K ∉ S := by
-      rw [← SpecialisationCount.restrict_restrict (F := K) (F' := M), hW]
-      exact hw
-    have he : W.ramificationIndex K = 1 :=
-      kummerExtension_ramificationIndex_eq_one n hn hmu S W hnot
-    have hmul := SpecialisationCount.ramificationIndex_tower (F := K) (F' := M) W
-    rw [he, hW] at hmul
-    exact Nat.eq_one_of_dvd_one ⟨W.ramificationIndex M,
-      hmul.trans (Nat.mul_comm _ _)⟩
+    exact ramificationIndex_eq_one_of_le_kummerExtension n hn hmu S M hME w hw
   have hSplit (v : Place k K) (hv : v ∈ S) (w : Place k M) (hw : w.restrict K = v) :
       Function.Surjective (IdeleGroup.localNormOver v w hw) := by
     subst v

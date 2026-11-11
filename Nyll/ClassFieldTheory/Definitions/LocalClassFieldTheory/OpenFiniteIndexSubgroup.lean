@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.Index
-import Mathlib.Topology.Algebra.Group.Units
+module
+
+public import Mathlib.GroupTheory.Index
+public import Mathlib.Topology.Algebra.Group.Units
 
 /-!
 # Open finite-index subgroups of a field's multiplicative group
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

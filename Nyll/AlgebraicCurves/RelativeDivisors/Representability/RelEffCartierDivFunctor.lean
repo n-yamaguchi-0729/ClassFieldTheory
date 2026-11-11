@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+module
+
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
 
 /-!
 Functoriality of relative effective Cartier divisors.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits Opposite
 

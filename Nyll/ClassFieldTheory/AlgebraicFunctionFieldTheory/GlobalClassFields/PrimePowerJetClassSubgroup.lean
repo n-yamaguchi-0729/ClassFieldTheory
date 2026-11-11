@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPrimePowerJets
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPowerRay
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SupportedComponents
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPrimePowerJets
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPowerRay
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SupportedComponents
 
 /-!
 # Finite-depth power classes of actual S-ideles
@@ -17,11 +19,15 @@ Local power-and-unit representatives factor into an actual global power
 and a ray-congruent idele.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 open AlgebraicCurve
 namespace FunctionField.IdeleGroup
 
-variable {k K : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
 
 /-- The local p-power jets of an actual S-idele. -/
 def sIdelePrimePowerJet (p : ℕ) (m : RayClass.Modulus k K) (S : Finset (Place k K)) :

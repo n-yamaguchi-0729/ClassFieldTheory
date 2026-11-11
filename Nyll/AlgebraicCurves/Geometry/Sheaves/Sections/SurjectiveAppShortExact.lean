@@ -10,17 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.SchemeTheory.Modules.LocalMorphisms
-import Nyll.SchemeTheory.Modules.Exactness
-import Nyll.SchemeTheory.Modules.OpenImmersionUnit
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.KerDSuccLeRangeD
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleModuleFrames
-import Nyll.SchemeTheory.Modules.Frames.IsFrameOnPullbackIsoUnit
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
+public import Nyll.SchemeTheory.Modules.Exactness
+public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.KerDSuccLeRangeD
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleModuleFrames
+public import Nyll.SchemeTheory.Modules.Frames.IsFrameOnPullbackIsoUnit
 
 /-!
 # Affine sections of a locally trivial exact sequence
@@ -29,6 +31,8 @@ A short exact sequence whose kernel is locally trivial remains surjective on
 affine sections. Local lifts are compared on intersections and glued to a
 section over the affine open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

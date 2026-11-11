@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Mathlib.RingTheory.Norm.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Mathlib.RingTheory.Norm.Basic
 
 /-!
 # Norms from Kummer algebras
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

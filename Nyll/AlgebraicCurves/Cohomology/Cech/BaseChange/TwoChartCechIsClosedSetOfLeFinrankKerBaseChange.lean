@@ -11,17 +11,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.BaseChange.CoherentBaseChangeFamily
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFibreH0Family
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.CoherentBaseChangeFibreH0FamilyIsClosedSetOfLeH0
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.BaseChange.CoherentBaseChangeFamily
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFibreH0Family
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.CoherentBaseChangeFibreH0FamilyIsClosedSetOfLeH0
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
 
 /-!
 Closedness of the locus where a fibre kernel has dimension at least a fixed bound.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

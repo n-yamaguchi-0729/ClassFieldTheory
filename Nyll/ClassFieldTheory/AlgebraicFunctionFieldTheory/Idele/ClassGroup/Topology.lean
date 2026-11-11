@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.ValuationTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
-import Mathlib.Topology.Algebra.Group.Quotient
+module
+
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.ValuationTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Continuous degree and the degree-zero idele classes
@@ -18,6 +22,8 @@ Local orders give a continuous map to discrete divisors. The degree map is
 therefore continuous, and it descends continuously to the idele class group.
 Its degree-zero subgroup is both open and closed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

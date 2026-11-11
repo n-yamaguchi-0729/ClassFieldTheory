@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.TypeTags.Finite
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitHerbrandFormula
-import Nyll.GaloisCohomology.Cyclic.Herbrand.TrivialAction
+module
+
+public import Mathlib.Algebra.Group.TypeTags.Finite
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitHerbrandFormula
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.TrivialAction
 
 /-!
 # Power index of actual S-units
@@ -18,6 +20,10 @@ S-unit Herbrand formula, applied to the trivial cyclic action, computes the
 power index without adding a second proof of the S-unit rank theorem.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField.SUnits
@@ -25,7 +31,7 @@ namespace FunctionField.SUnits
 open AlgebraicCurve CyclicCohomology
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 
-variable {k K : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
 
 /-- A root in the base field of an S-unit is again an S-unit. -/
 theorem mem_units_of_pow_mem (S : Finset (Place k K)) (n : ℕ) (hn : n ≠ 0)

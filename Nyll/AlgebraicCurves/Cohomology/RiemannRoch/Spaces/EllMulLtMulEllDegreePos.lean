@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.EllEqDegreeAddOneSubGenusFF
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.EllEqDegreeAddOneSubGenusFF
 
 /-!
 # The Riemann--Roch dimension inequality for Tsen's argument
@@ -15,6 +17,8 @@ evaluated form, even after allowing a fixed divisor E for its coefficients.
 This uses the existing function-field Riemann--Roch theorem, not a genus-growth assumption.
 See Stacks Project, Tag 03RD.
 -/
+
+@[expose] public section
 
 noncomputable section
 

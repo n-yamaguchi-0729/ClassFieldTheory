@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.RationalDegreeFixed
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.RationalDegreeFixed
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
 
 /-!
 # Actual degree of the abstract norm to the base
@@ -15,6 +17,10 @@ denominator in the rational degree, so the actual abstract norm to the base
 has precisely the ordinary degree of the represented upper-field idele class.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
@@ -23,7 +29,7 @@ open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
 /-- The base-relative coset cardinal is the actual fixed-field degree,
 including nonnormal fields. -/
-theorem abstractFixedField_finrank_eq_card (K Ω : Type) [Field K] [Field Ω]
+theorem abstractFixedField_finrank_eq_card (K : Type v) (Ω : Type w) [Field K] [Field Ω]
     [Algebra K Ω] [IsGalois K Ω] (H : ClosedSubgroup Gal(Ω/K)) :
     Module.finrank K (abstractFixedField K Ω H) =
       Nat.card ((baseField Gal(Ω/K)).toSubgroup ⧸
@@ -34,7 +40,7 @@ theorem abstractFixedField_finrank_eq_card (K Ω : Type) [Field K] [Field Ω]
   rw [← Subgroup.relIndex_top_right]
   rfl
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [FunctionField k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.GaloisRestriction
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.RestrictionSymbol
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.GaloisRestriction
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.RestrictionSymbol
 
 /-!
 # Compatibility of finite Artin maps with actual Galois restriction
@@ -16,13 +18,18 @@ Artin symbol to the lower field gives the lower Artin symbol. The target map
 is the actual restriction of field automorphisms.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w)
+    [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]

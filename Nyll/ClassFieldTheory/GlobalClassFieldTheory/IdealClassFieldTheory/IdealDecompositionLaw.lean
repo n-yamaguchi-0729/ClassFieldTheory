@@ -4,11 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # The ideal-theoretic unramified decomposition law
@@ -28,9 +35,13 @@ are related by the global ideal decomposition law.
 
 
 
+@[expose] public section
+
 open scoped NumberField BigOperators
 
 noncomputable section
+
+universe u v
 
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
@@ -39,7 +50,7 @@ open NumberField IsDedekindDomain
 open HilbertRamification
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -77,6 +88,18 @@ theorem idealArtinGaloisMap_primeToIdealMap_eq_globalArtin
           (K := K) (L := L))
       (a : IdeleGroup K)
 
+private theorem finitePlacePrimeArtin_eq_globalNormResidue
+    (v : HeightOneSpectrum (𝓞 K)) :
+    GlobalClassFields.finitePlacePrimeArtin (K := K) (L := L) v =
+      Reciprocity.globalNormResidueMonoidHom K L
+        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+          (IdeleGroup.finitePrimeIdele v)) := by
+  rw [GlobalClassFields.finitePlacePrimeArtin_eq_chosenFinitePlaceArtin]
+  exact (DFunLike.congr_fun
+    (Reciprocity.globalNormResidueMonoidHom_comp_finitePlaceIdeleClass
+      (K := K) (L := L) v)
+    (FiniteIdeleGroup.chosenLocalOrderSection v 1)).symm
+
 /-- The Galois-valued ideal Artin map sends a prime ideal outside a
 defining modulus to the actual global prime Artin element.  The latter
 is, by finite-place local-global compatibility, the genuine chosen
@@ -93,12 +116,8 @@ theorem idealArtinGaloisMap_primeIdeal_eq_finitePlacePrimeArtin
       GlobalClassFields.finitePlacePrimeArtin
         (K := K) (L := L) v := by
   rw [← GlobalClassFields.primeToIdealMap_finitePrimeIdele m v hv]
-  exact
-    idealArtinGaloisMap_primeToIdealMap_eq_globalArtin
-      (K := K) (L := L) m hm
-      ⟨IdeleGroup.finitePrimeIdele v,
-        GlobalClassFields.finitePrimeIdele_mem_idelePrimeToModulusSubgroup
-            m v hv⟩
+  rw [idealArtinGaloisMap_apply, GlobalClassFields.idealArtinMap_primeToIdealMap]
+  exact (finitePlacePrimeArtin_eq_globalNormResidue (K := K) (L := L) v).symm
 
 /-- Direct local form of the prime-ideal Artin identification: the
 ideal Artin symbol is the chosen finite-place Artin value of the
@@ -456,7 +475,7 @@ theorem unramifiedPrime_idealDecompositionLaw
 
 section SmallHilbertPrimeSplitting
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 /-- Under actual reciprocity for the selected small Hilbert class
 field, its genuine prime Frobenius automorphism is the ordinary ideal
@@ -470,14 +489,7 @@ theorem
             (K := K)
             (L := GlobalClassFields.smallHilbertClassField K) v) =
       ClassGroup.mk K (FractionalIdealGroup.prime v) := by
-  rw [GlobalClassFields.finitePlacePrimeArtin]
-  rw [
-    ← DFunLike.congr_fun
-      (Reciprocity.globalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
-          (K := K)
-          (L := GlobalClassFields.smallHilbertClassField K))
-      (IdeleGroup.finitePrimeIdele v)]
-  rw [MonoidHom.comp_apply]
+  rw [finitePlacePrimeArtin_eq_globalNormResidue]
   rw [
     GlobalClassFields.smallHilbertClassFieldGaloisEquivClassGroupOverOriginal_idele,
     IdeleGroup.idealClass_finitePrimeIdele]

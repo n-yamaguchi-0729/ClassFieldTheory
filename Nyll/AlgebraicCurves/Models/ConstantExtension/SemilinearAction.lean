@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.FunctionFields.FunctionFieldAutomorphisms
-import Nyll.SchemeTheory.Morphisms.ConstantTwist
+module
+
+public import Nyll.AlgebraicCurves.Models.FunctionFields.FunctionFieldAutomorphisms
+public import Nyll.SchemeTheory.Morphisms.ConstantTwist
 
 /-!
 # The actual action of constant-field automorphisms
@@ -14,6 +16,10 @@ Pullback along coefficient twists gives a group homomorphism into semilinear
 function-field automorphisms. The construction retains the two projections
 and the formula on actual germs.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -28,8 +34,8 @@ namespace AlgebraicCurve.CurveModel
 attribute [local instance]
   SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
 
-variable {k Ω F : Type} [Field k] [Field Ω] [Algebra k Ω] [Field F] [Algebra Ω F]
-    (M : CurveModel Ω F) {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+variable {k Ω : Type u} {F : Type v} [Field k] [Field Ω] [Algebra k Ω] [Field F] [Algebra Ω F]
+    (M : CurveModel Ω F) {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     (e : M.C ≅ pullback c (specMap k Ω))
 
 /-- The actual coefficient twist transported to the chosen curve model. -/

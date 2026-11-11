@@ -10,12 +10,16 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Mathlib.Topology.Sheaves.SheafCondition.Sites
+module
+
+public import Mathlib.Topology.Sheaves.SheafCondition.Sites
 /-!
 # Sheaf isomorphisms detected on a basis
 
 Detects an isomorphism of sheaves from its components on a basis of open sets.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

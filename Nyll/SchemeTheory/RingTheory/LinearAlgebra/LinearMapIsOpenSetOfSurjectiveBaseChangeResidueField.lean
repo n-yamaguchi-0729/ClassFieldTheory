@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.RingTheory.Spectrum.Prime.Module
-import Mathlib.LinearAlgebra.TensorProduct.Quotient
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.Tactic.Ext
+module
+
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.RingTheory.Spectrum.Prime.Module
+public import Mathlib.LinearAlgebra.TensorProduct.Quotient
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.Tactic.Ext
 
 /-!
 The locus where a linear map is surjective after residue-field base change is open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -39,7 +43,7 @@ theorem _root_.LinearMap.isOpen_setOf_surjective_baseChange_residueField
       Function.Surjective (d.baseChange K) ↔ Subsingleton (K ⊗[A] (Q ⧸ LinearMap.range d)) := by
     intro K _ _
     rw [(TensorProduct.tensorQuotientEquiv K (LinearMap.range d)).toEquiv.subsingleton_congr,
-      Submodule.Quotient.subsingleton_iff, LinearMap.baseChange_eq_ltensor, ←
+      Submodule.Quotient.subsingleton_iff, LinearMap.baseChange_eq_lTensor, ←
         LinearMap.range_eq_top]
     have : (TensorProduct.map LinearMap.id (LinearMap.range d).subtype).range =
       (LinearMap.lTensor K d).range :=

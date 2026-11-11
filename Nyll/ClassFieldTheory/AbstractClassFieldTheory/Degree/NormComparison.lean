@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Norm
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Norm
 
 /-!
 # Reindexing actual relative norms through coefficient homomorphisms
@@ -13,16 +15,20 @@ A proved comparison of individual coset actions determines the entire norm.
 The sum is reindexed by an actual equivalence of its finite indexing types.
 -/
 
+@[expose] public section
+
+universe u v
+
 namespace ClassFormation
 
 open KummerTheory CyclicCohomology
 open scoped BigOperators
 
-variable {G : IntegralRepGroupType} [Group G] [TopologicalSpace G]
+variable {G : Type u} [Group G] [TopologicalSpace G]
     {B S : Type*} [AddCommMonoid B] [Fintype S]
 
 /-- A coset-action comparison identifies the actual norm with a mapped finite sum. -/
-theorem relativeNorm_eq_mapped_sum (A : Rep ℤ G)
+theorem relativeNorm_eq_mapped_sum (A : Rep.{v} ℤ G)
     (H J : ClosedSubgroup G) (hJH : J.toSubgroup ≤ H.toSubgroup)
     [Finite (H.toSubgroup ⧸ extensionSubgroup H J hJH)]
     (x : ambientFixedAddSubgroup A J) (i : B →+ A.V)

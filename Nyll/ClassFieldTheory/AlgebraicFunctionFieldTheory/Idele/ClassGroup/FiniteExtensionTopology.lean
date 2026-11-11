@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionFixed
-import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
-import Mathlib.FieldTheory.Galois.Profinite
-import Mathlib.Topology.Algebra.MulAction
-import Mathlib.Topology.Algebra.OpenSubgroup
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionFixed
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Basic
+public import Mathlib.FieldTheory.Galois.Profinite
+public import Mathlib.Topology.Algebra.MulAction
+public import Mathlib.Topology.Algebra.OpenSubgroup
 
 /-!
 # The discrete Galois module of actual idele classes
@@ -20,6 +22,8 @@ the actual ambient Krull Galois action is continuous. The finite-stage compariso
 also agrees with the fixed subgroup used by the existing Herbrand framework.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace FunctionField.IdeleClassGroup.FiniteExtensionLimit
@@ -27,11 +31,22 @@ namespace FunctionField.IdeleClassGroup.FiniteExtensionLimit
 open FiniteExtensionSystem
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 
+/-- Compare the two fixed-subgroup constructors before specializing their group dictionaries. -/
+private theorem fixedPoints_subgroup_eq_herbrandFixed
+    (G A : Type*) [Group G] [CommGroup A] [MulDistribMulAction G A] :
+    FixedPoints.subgroup G A = fixedSubgroup G A := by
+  exact SetLike.ext fun _ => Iff.rfl
+
 variable {k K Ω : Type*} [Field k] [PerfectField k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]
     [IsScalarTower k (RatFunc k) Ω] [FunctionField k K]
+
+/-- A finite stage uses the canonical commutative idele-class quotient group. -/
+noncomputable local instance finiteExtensionTopologyStageCommGroup
+    (E : FiniteGaloisIntermediateField K Ω) : CommGroup (stage (k := k) E) :=
+  QuotientGroup.Quotient.commGroup (G := IdeleGroup k E) (IdeleGroup.principalSubgroup k E)
 
 /-- The coefficient topology for Galois cohomology is discrete. -/
 instance coefficientTopology : TopologicalSpace (Limit k K Ω) := ⊥
@@ -70,9 +85,9 @@ theorem fixedOverStage_eq_herbrandFixed (E : FiniteGaloisIntermediateField K Ω)
       fixedSubgroup
         (AlgEquiv.restrictNormalHom E : (Ω ≃ₐ[K] Ω) →* (E ≃ₐ[K] E)).ker
         (Limit k K Ω) := by
-  apply Subgroup.ext
-  intro c
-  rfl
+  exact fixedPoints_subgroup_eq_herbrandFixed
+    (AlgEquiv.restrictNormalHom E : (Ω ≃ₐ[K] Ω) →* (E ≃ₐ[K] E)).ker
+    (Limit k K Ω)
 
 variable [Normal K Ω]
 
@@ -83,14 +98,17 @@ def stageEquivHerbrandFixed (E : FiniteGaloisIntermediateField K Ω) :
         (AlgEquiv.restrictNormalHom E : (Ω ≃ₐ[K] Ω) →* (E ≃ₐ[K] E)).ker
         (Limit k K Ω) :=
   (stageEquivFixed (k := k) (K := K) (Ω := Ω) E).trans
-    (MulEquiv.subgroupCongr (fixedOverStage_eq_herbrandFixed E))
+    (@MulEquiv.subgroupCongr (Limit k K Ω)
+      (inferInstance : CommGroup (Limit k K Ω)).toGroup _ _
+      (fixedOverStage_eq_herbrandFixed (k := k) (K := K) (Ω := Ω) E))
 
 /-- The Herbrand fixed-part comparison is the original finite-stage inclusion. -/
 @[simp]
 theorem coe_stageEquivHerbrandFixed (E : FiniteGaloisIntermediateField K Ω)
     (c : stage (k := k) E) :
     (stageEquivHerbrandFixed (k := k) (K := K) (Ω := Ω) E c : Limit k K Ω) =
-      of (k := k) (K := K) (Ω := Ω) E c :=
-  rfl
+      of (k := k) (K := K) (Ω := Ω) E c := by
+  simpa only [stageEquivHerbrandFixed, MulEquiv.trans_apply, MulEquiv.subgroupCongr_apply] using
+    coe_stageEquivFixed (k := k) (K := K) (Ω := Ω) E c
 
 end FunctionField.IdeleClassGroup.FiniteExtensionLimit

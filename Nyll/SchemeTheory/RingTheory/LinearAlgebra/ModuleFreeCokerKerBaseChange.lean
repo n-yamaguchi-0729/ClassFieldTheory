@@ -10,20 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Exact.Basic
-import Mathlib.Algebra.Module.Projective
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.Tactic.Abel
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.Tactic.Ext
+module
+
+public import Mathlib.Algebra.Exact.Basic
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.Tactic.Abel
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.Tactic.Ext
 
 /-!
 # Module free coker and ker base Change of ker le range residue Field
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -108,11 +112,11 @@ theorem lTensor_dbar_injective (d0 : C0 →ₗ[R] C1) (d1 : C1 →ₗ[R] C2) (hd
   obtain ⟨y, rfl⟩ := hsurj x
   rw [LinearMap.mem_ker, ← LinearMap.comp_apply, ← LinearMap.lTensor_comp, dbar_comp_mkQ] at hx
   have hy : y ∈ LinearMap.ker (d1.baseChange κ) := by
-    rw [LinearMap.mem_ker, LinearMap.baseChange_eq_ltensor]; exact hx
+    rw [LinearMap.mem_ker, LinearMap.baseChange_eq_lTensor]; exact hx
   have hy' := hH1 hy
   obtain ⟨z, hz⟩ := hy'
   rw [Submodule.mem_bot]
-  have : y ∈ LinearMap.range (d0.lTensor κ) := ⟨z, by rw [← hz, LinearMap.baseChange_eq_ltensor]⟩
+  have : y ∈ LinearMap.range (d0.lTensor κ) := ⟨z, by rw [← hz, LinearMap.baseChange_eq_lTensor]⟩
   rw [← LinearMap.mem_ker]
   exact (hex y).mpr this |> fun h => by rw [LinearMap.mem_ker]; exact h
 omit [Module.Free R C1] in
@@ -193,8 +197,8 @@ theorem ker_baseChange (d0 : C0 →ₗ[R] C1) (d1 : C1 →ₗ[R] C2) (hdd : d1 �
         LinearMap.coe_mk, AddHom.coe_mk, LinearMap.id_apply, sub_add_cancel]) A
   refine ⟨?_, ?_⟩
   · ext x
-    rw [LinearMap.mem_range, LinearMap.mem_ker, LinearMap.baseChange_eq_ltensor,
-      LinearMap.baseChange_eq_ltensor]
+    rw [LinearMap.mem_range, LinearMap.mem_ker, LinearMap.baseChange_eq_lTensor,
+      LinearMap.baseChange_eq_lTensor]
     have hx : x ∈ LinearMap.range (K.subtype.lTensor A) ↔ x ∈ LinearMap.ker
       (d0.rangeRestrict.lTensor A) := by
       rw [hrange]
@@ -209,7 +213,7 @@ theorem ker_baseChange (d0 : C0 →ₗ[R] C1) (d1 : C1 →ₗ[R] C2) (hdd : d1 �
   · intro x y hxy
     apply hinj
     have := hxy
-    rwa [LinearMap.baseChange_eq_ltensor] at this
+    rwa [LinearMap.baseChange_eq_lTensor] at this
 
 end Main
 

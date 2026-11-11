@@ -19,12 +19,14 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- Two Frobenius-normalized class-field realizations for the same modulus
 and ray-class subgroup are isomorphic over the base number field. -/
 theorem rayClassSubgroupRealizations_equiv
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K) (H : Subgroup (RayClassGroup m))
     (R₁ R₂ : RayClassSubgroupRealization K m H) :
     Nonempty (R₁.extension ≃ₐ[K] R₂.extension) := by

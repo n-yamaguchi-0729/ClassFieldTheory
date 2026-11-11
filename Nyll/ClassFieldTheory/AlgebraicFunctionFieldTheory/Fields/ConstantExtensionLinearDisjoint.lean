@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.AlgebraicClosure
-import Mathlib.FieldTheory.LinearDisjoint
-import Mathlib.RingTheory.Algebraic.Integral
-import Nyll.SchemeTheory.RingTheory.FieldExtensions.SeparableConstantsTensor
+module
+
+public import Mathlib.FieldTheory.AlgebraicClosure
+public import Mathlib.FieldTheory.LinearDisjoint
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Nyll.SchemeTheory.RingTheory.FieldExtensions.SeparableConstantsTensor
 
 /-!
 # Linear disjointness for actual constant extensions
@@ -18,6 +20,8 @@ that constant field to `K` preserves its degree over `k`. This uses the existing
 tensor-field theorem for separably closed constants and the existing degree
 formula for linearly disjoint fields.
 -/
+
+@[expose] public section
 
 open scoped TensorProduct
 

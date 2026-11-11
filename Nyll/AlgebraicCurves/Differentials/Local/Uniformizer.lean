@@ -11,13 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Local.Order
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
 
 /-!
 # Differentials, residues, and divisor correspondences
 
 A chosen uniformizer in each place valuation ring and its order and nonvanishing properties.
 -/
+
+@[expose] public section
 
 open KaehlerDifferential
 
@@ -31,21 +36,17 @@ namespace Place
 
 variable (v : Place K F)
 
-/-- A chosen irreducible element of the valuation ring, viewed in the function field. -/
-def uniformizer : F :=
-  ((IsDiscreteValuationRing.exists_irreducible v.toValuationSubring).choose : F)
-
-theorem ord_uniformizer : v.ord v.uniformizer = 1 := by
-  have hirr := (IsDiscreteValuationRing.exists_irreducible v.toValuationSubring).choose_spec
-  simpa [uniformizer] using v.ord_coe_irreducible hirr
-
-theorem uniformizer_ne_zero : v.uniformizer ≠ 0 := by
-  intro h
-  simpa [h, v.ord_zero] using v.ord_uniformizer
-
 theorem dCoord_eq : v.dCoord = KaehlerDifferential.D K F v.uniformizer := rfl
 
 end Place
+
+open scoped AlgebraicCurve.Place in
+/-- The differential of the restricted place uniformizer in the extension field. -/
+noncomputable def Place.restrictDCoord (F : Type*) {F' : Type*}
+    [Field F] [Field F'] [Algebra K F] [Algebra K F'] [Algebra F F']
+    [IsScalarTower K F F'] [Algebra.IsIntegral F F']
+    (w : Place K F') : Ω[F'⁄K] :=
+  KaehlerDifferential.D K F' (algebraMap F F' (w.restrict F).uniformizer)
 
 end AlgebraicCurve
 

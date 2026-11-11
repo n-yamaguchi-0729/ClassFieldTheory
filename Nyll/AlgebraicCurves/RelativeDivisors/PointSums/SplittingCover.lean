@@ -10,21 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqKerGraphOverMul
-import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
-import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.PullbackOfPoint
-import Nyll.SchemeTheory.Sheaves.IdealSheafComap
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealMulLeftCancel
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFinrankCompFinrankEqConst
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqKerGraphOverMul
+public import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
+public import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.PullbackOfPoint
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealMulLeftCancel
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFinrankCompFinrankEqConst
 /-!
 Split relative effective Cartier divisors.
 -/
 
+@[expose] public section
 
 section ProofImplementation
 
@@ -56,7 +59,7 @@ lemma graphOver_comp_mapOnProdOver {T' : Scheme.{u}} {g' : T' ⟶ S} (q : T' ⟶
   · rw [Category.assoc, mapOnProdOver_snd, graphOver_snd_assoc]
     exact (pullback.lift_snd _ _ _).symm
 
-private theorem _root_.AlgebraicGeometry.RelEffCartierDiv.pullbackAlong_I_le_ker_graphOver_iff
+theorem _root_.AlgebraicGeometry.RelEffCartierDiv.pullbackAlong_I_le_ker_graphOver_iff
     (D : RelEffCartierDiv f r g) {T' : Scheme.{u}}
     {g' : T' ⟶ S} (q : T' ⟶ T) (hq : q ≫ g = g') (a : T' ⟶ 𝒞) (ha : a ≫ f = g') :
     (D.pullbackAlong q hq).I ≤ (graphOver f a ha).ker ↔
@@ -74,7 +77,8 @@ private theorem _root_.AlgebraicGeometry.RelEffCartierDiv.pullbackAlong_I_le_ker
 
 open _root_.AlgebraicGeometry.RelEffCartierDiv
 
-private noncomputable def _root_.AlgebraicGeometry.RelEffCartierDiv.liftOfLE (D :
+/-- The lift into a relative divisor determined by containment in the graph ideal. -/
+noncomputable def _root_.AlgebraicGeometry.RelEffCartierDiv.liftOfLE (D :
     RelEffCartierDiv f r g) {T' : Scheme.{u}} {g' : T' ⟶ S}
     (q : T' ⟶ T) (hq : q ≫ g = g') (a : T' ⟶ 𝒞) (ha : a ≫ f = g')
     (h : (D.pullbackAlong q hq).I ≤ (graphOver f a ha).ker) : T' ⟶ D.I.subscheme :=

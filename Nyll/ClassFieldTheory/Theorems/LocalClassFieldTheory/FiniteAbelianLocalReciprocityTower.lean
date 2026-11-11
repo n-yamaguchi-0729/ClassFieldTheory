@@ -5,7 +5,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
 
 /-!
 # Tower compatibility of finite local reciprocity
@@ -18,13 +19,15 @@ single compatible construction in the implementation layer.
 
 noncomputable section
 
+universe u v w
+
 namespace ClassFieldTheory
 
 /-- In a finite abelian tower `K ⊆ E ⊆ L`, one can choose the two continuous
 Artin maps so that restriction of the upper map equals the lower map. Both
 maps retain the expected norm kernels. -/
 theorem finiteAbelianLocalReciprocity_tower
-    (K E L : Type)
+    (K : Type u) (E : Type v) (L : Type w)
     [Field K] [Field E] [Field L]
     [Algebra K E] [Algebra E L] [Algebra K L]
     [IsScalarTower K E L]
@@ -40,19 +43,19 @@ theorem finiteAbelianLocalReciprocity_tower
         artinE.ker = fieldNormSubgroup K E ∧
         (AlgEquiv.restrictNormalHom E).comp artinL.toMonoidHom =
           artinE.toMonoidHom := by
-  refine ⟨LocalClassFieldTheory.abelianLocalArtinMap K L,
-    LocalClassFieldTheory.abelianLocalArtinMap K E,
-    LocalClassFieldTheory.abelianLocalArtinMap_surjective K L,
-    LocalClassFieldTheory.abelianLocalArtinMap_surjective K E,
+  refine ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L,
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap K E,
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L,
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K E,
     ?_, ?_, ?_⟩
-  · change (LocalClassFieldTheory.abelianLocalArtinMap K L).toMonoidHom.ker =
+  · change (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L).toMonoidHom.ker =
       LocalFieldTheory.localNormSubgroup K L
-    exact LocalClassFieldTheory.abelianLocalArtinMap_ker K L
-  · change (LocalClassFieldTheory.abelianLocalArtinMap K E).toMonoidHom.ker =
+    exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K L
+  · change (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E).toMonoidHom.ker =
       LocalFieldTheory.localNormSubgroup K E
-    exact LocalClassFieldTheory.abelianLocalArtinMap_ker K E
-  · rw [LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom K L,
-      LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom K E]
-    exact LocalClassFieldTheory.abelianLocalArtinMonoidHom_restrict_tower K E L
+    exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K E
+  · rw [LocalClassFieldTheory.Universe.abelianLocalArtinMap_toMonoidHom K L,
+      LocalClassFieldTheory.Universe.abelianLocalArtinMap_toMonoidHom K E]
+    exact LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_restrict_tower K E L
 
 end ClassFieldTheory

@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.RingTheory.Flat.ModuleFlatFinitePresentation
-import Nyll.AlgebraicCurves.Geometry.Curves.IsDomainTensorSections
-import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveInjectiveAevalTensor
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.RingTheory.Flat.ModuleFlatFinitePresentation
+public import Nyll.AlgebraicCurves.Geometry.Curves.IsDomainTensorSections
+public import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveInjectiveAevalTensor
 
 /-!
 # Smooth Proper Curve flat aeval of two Chart Pole Datum
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -142,9 +146,9 @@ theorem main
     (hf : U ⊓ V = C.basicOpen f) (hg : U ⊓ V = C.basicOpen g)
     (hfg : (C.presheaf.map (homOfLE (inf_le_left : U ⊓ V ≤ U)).op).hom f *
       (C.presheaf.map (homOfLE (inf_le_right : U ⊓ V ≤ V)).op).hom g = 1) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     (Polynomial.aeval f : Polynomial R →ₐ[R] Γ(C, U)).toRingHom.Flat := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   have : Smooth c := SmoothOfRelativeDimension.smooth 1 c
   have : Module.Flat R Γ(C, U) := flat_sections c hU
   have : Algebra.FinitePresentation R Γ(C, U) := finitePresentation_sections c hU

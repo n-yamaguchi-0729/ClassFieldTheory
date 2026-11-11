@@ -23,10 +23,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Mathlib.CategoryTheory.Monoidal.Closed.Basic
-import Mathlib.CategoryTheory.Adjunction.Mates
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+module
+
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Mathlib.CategoryTheory.Monoidal.Closed.Basic
+public import Mathlib.CategoryTheory.Adjunction.Mates
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
 
 /-!
 # Rigidification of sheaves of modules
@@ -34,6 +36,8 @@ import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
 Tensor a module with the pullback of the dual of its restriction to a chosen section.
 Module isomorphisms induce isomorphisms of these rigidifications.
 -/
+
+@[expose] public section
 
 section Rigidify
 

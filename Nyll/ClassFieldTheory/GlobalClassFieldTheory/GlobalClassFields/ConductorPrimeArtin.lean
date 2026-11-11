@@ -7,6 +7,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorRayClassMaximality
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # Prime Artin classes at an exact narrow finite conductor
@@ -27,7 +30,7 @@ namespace GlobalClassFields
 
 open NumberField IsDedekindDomain IdeleGroup
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type*} [Field K] [NumberField K]
 
 -- Keep quotient witnesses definitionally aligned with the imported
 -- ideal-Artin construction and avoid repeating generic normality search.

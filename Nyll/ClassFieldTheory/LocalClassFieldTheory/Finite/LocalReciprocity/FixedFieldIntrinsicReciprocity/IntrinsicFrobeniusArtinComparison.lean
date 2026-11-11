@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Basic
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.PrimeComparison
+module
+
+public import Mathlib.FieldTheory.Galois.Basic
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.PrimeComparison
 
 /-!
 # Intrinsic Frobenius Artin comparison
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Fixed
 This module identifies the canonical local Artin homomorphism of an actual
 finite fixed-field extension with its ambient fixed-field norm-residue symbol.
 -/
+
+@[expose] public section
 
 noncomputable section
 

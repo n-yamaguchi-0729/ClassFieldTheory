@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+module
+
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
 
 /-!
 # Values of Galois transport through fixed-field presentations
@@ -14,13 +16,17 @@ Transport from a relative fixed field to an isomorphic extension retains
 the action of the original ambient automorphism on embedded elements.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace ClassFieldTheory
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (K L Ω : Type) [Field K] [Field L] [Field Ω]
+variable (K : Type u) (L : Type v) (Ω : Type w) [Field K] [Field L] [Field Ω]
     [Algebra K L] [Algebra K Ω] [IsGalois K Ω]
 
 /-- The transported quotient automorphism acts through the given ambient embedding. -/

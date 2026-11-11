@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
-import Mathlib.GroupTheory.Abelianization.Defs
+module
+
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
+public import Mathlib.GroupTheory.Abelianization.Defs
 
 /-!
 # Galois restriction under compatible field presentations
@@ -13,6 +15,8 @@ import Mathlib.GroupTheory.Abelianization.Defs
 Conjugating field automorphisms by compatible algebra isomorphisms commutes
 with restriction, including after a degree-one change of the base field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,11 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRamification
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.ConstantResidueComparison
-import Nyll.ValuedFieldTheory.Ramification.LocalField.ResidueInertia
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueGalois
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.ConstantResidueComparison
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseInertia
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueGalois
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.GaloisIntegerRing
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
 
 /-!
 # Local unit images and the actual residue inertia
@@ -17,6 +23,10 @@ The existing completed filtration is transported to the kernel of the
 decomposition group's action on the original residue field.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open AlgebraicCurve
@@ -24,7 +34,7 @@ open scoped AlgebraicCurve.Place ValuativeRel
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]
@@ -121,16 +131,26 @@ theorem localDecompositionArtin_units_eq_residue_ker (w : Place k L) :
   have := IdeleGroup.completionCanonical_hasExtension (K := K) w
   have : IsIntegralClosure 𝒪[w.adicCompletion] 𝒪[(w.restrict K).adicCompletion]
       w.adicCompletion := IdeleGroup.completionCanonical_isIntegralClosure (K := K) w
-  have : IsNoetherian 𝒪[(w.restrict K).adicCompletion] 𝒪[w.adicCompletion] :=
-    IsIntegralClosure.isNoetherian 𝒪[(w.restrict K).adicCompletion]
-      (w.restrict K).adicCompletion w.adicCompletion 𝒪[w.adicCompletion]
-  have : Module.Finite 𝒪[(w.restrict K).adicCompletion] 𝒪[w.adicCompletion] :=
-    Module.IsNoetherian.finite _ _
-  have hmap := localDecompositionArtin_higherUnits_completion (K := K) w 0
-  dsimp only at hmap
-  rw [Nat.cast_zero] at hmap
-  rw [RamificationTheory.LocalField.localUpperRamificationGroup_zero_eq_residue_ker]
-    at hmap
+  have hmap :
+      ((RayClass.localHigherUnitGroup (w.restrict K) 0).map
+        (localDecompositionArtin (K := K) w).toMonoidHom).map
+          (IdeleGroup.decompositionCompletionEquiv (K := K) w).toMonoidHom =
+        (LocalFieldTheory.galoisGroupResidueAlgEquivHomOfIsIntegralClosure
+          (w.restrict K).adicCompletion w.adicCompletion).ker := by
+    rw [← LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_units_eq_residue_ker,
+      Subgroup.map_map]
+    apply Subgroup.ext
+    intro σ
+    constructor
+    · rintro ⟨x, hx, hσ⟩
+      refine ⟨x⁻¹, (RayClass.localHigherUnitGroup (w.restrict K) 0).inv_mem hx, ?_⟩
+      exact (localDecompositionArtin_completion_universe (K := K) w x).symm.trans hσ
+    · rintro ⟨x, hx, hσ⟩
+      refine ⟨x⁻¹, (RayClass.localHigherUnitGroup (w.restrict K) 0).inv_mem hx, ?_⟩
+      change IdeleGroup.decompositionCompletionEquiv (K := K) w
+        (localDecompositionArtin (K := K) w x⁻¹) = σ
+      rw [localDecompositionArtin_completion_universe, inv_inv]
+      exact hσ
   apply Subgroup.ext
   intro σ
   have hker := decompositionCompletion_mem_residue_ker_iff (K := K) w σ

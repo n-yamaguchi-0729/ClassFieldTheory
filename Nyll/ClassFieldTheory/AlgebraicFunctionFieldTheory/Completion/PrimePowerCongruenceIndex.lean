@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrimePowerCongruenceIndex
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Mathlib.FieldTheory.Finiteness
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrimePowerCongruenceIndex
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Mathlib.FieldTheory.Finiteness
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
 
 /-!
 # Prime-power congruence indices at actual places
@@ -16,6 +19,8 @@ import Mathlib.FieldTheory.Finiteness
 The completion residue comparison and the residue degree turn the intrinsic
 local index into the base-constant-field cardinality needed by Riemann–Roch.
 -/
+
+@[expose] public section
 
 noncomputable section
 open AlgebraicCurve

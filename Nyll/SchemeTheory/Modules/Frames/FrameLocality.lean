@@ -47,10 +47,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.Conv
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.Conv
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
 
 /-!
 # Local bijectivity of multiplication by a section
@@ -58,6 +60,8 @@ import Nyll.SchemeTheory.Modules.Tensor.TensorSections
 Multiplication by a fixed global section is bijective on every open when it is bijective
 on a suitable neighbourhood of each point.
 -/
+
+@[expose] public section
 
 section FrameLocality
 

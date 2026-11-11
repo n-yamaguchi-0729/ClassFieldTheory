@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.RingTheory.Valuation.Extension
-import Mathlib.RingTheory.Valuation.ValuativeRel.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.RingTheory.Valuation.Extension
+public import Mathlib.RingTheory.Valuation.ValuativeRel.Basic
 
 /-!
 # Canonical real lower ramification groups
@@ -16,6 +18,8 @@ import Mathlib.RingTheory.Valuation.ValuativeRel.Basic
 The real-index filtration is decreasing directly from the antitonicity of
 powers of the maximal ideal. No choice of a local extension is needed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

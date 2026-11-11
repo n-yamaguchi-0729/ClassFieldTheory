@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Places.Residue.ConstantResidueDegree
-import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionUnramified
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+module
+
+public import Nyll.AlgebraicCurves.Places.Residue.ConstantResidueDegree
+public import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionUnramified
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Residue degrees and splitting in the actual constant tower
@@ -17,6 +20,8 @@ actual intermediate fields constructed here. For the degree-`n` extension of
 the full constants, a place of degree `d` has residue extension degree
 `n / gcd(n,d)` and splits into exactly `gcd(n,d)` places.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverCechSectionsOfBaseChangeEquiv
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteModules
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.LinearMapIsOpenSetOfSurjectiveBaseChangeResidueField
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverCechSectionsOfBaseChangeEquiv
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteModules
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.LinearMapIsOpenSetOfSurjectiveBaseChangeResidueField
 
 /-!
 # Openness of vanishing fibre cohomology
@@ -25,6 +27,8 @@ import Nyll.SchemeTheory.RingTheory.LinearAlgebra.LinearMapIsOpenSetOfSurjective
 For an invertible module on a proper scheme with a two-affine-open cover, the
 base points with vanishing first cohomology on the fibre form an open subset.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -154,7 +158,7 @@ theorem nonempty_cokerBaseChangeEquiv {R : Type*} [CommRing R] {C0 C1 : Type*} [
   let qK : K ⊗[R] C1 →ₗ[K] K ⊗[R] (C1 ⧸ LinearMap.range d) := q.baseChange K
   have hsurj : Function.Surjective qK := by
     rw [show (qK : K ⊗[R] C1 → K ⊗[R] (C1 ⧸ LinearMap.range d)) = LinearMap.lTensor K q from
-      LinearMap.baseChange_eq_ltensor q]
+      LinearMap.baseChange_eq_lTensor q]
     exact LinearMap.lTensor_surjective K (Submodule.mkQ_surjective _)
   have hker : LinearMap.ker qK = LinearMap.range (d.baseChange K) := by
     have h1 : LinearMap.ker (LinearMap.lTensor K q) = LinearMap.range (LinearMap.lTensor K d) := by
@@ -166,13 +170,13 @@ theorem nonempty_cokerBaseChangeEquiv {R : Type*} [CommRing R] {C0 C1 : Type*} [
           (LinearMap.surjective_rangeRestrict d))
     ext x
     rw [LinearMap.mem_ker, LinearMap.mem_range]
-    have hx : qK x = LinearMap.lTensor K q x := congrFun (LinearMap.baseChange_eq_ltensor q) x
+    have hx : qK x = LinearMap.lTensor K q x := congrFun (LinearMap.baseChange_eq_lTensor q) x
     rw [hx, ← LinearMap.mem_ker, h1, LinearMap.mem_range]
     constructor
     · rintro ⟨y, rfl⟩
-      exact ⟨y, (congrFun (LinearMap.baseChange_eq_ltensor d) y)⟩
+      exact ⟨y, (congrFun (LinearMap.baseChange_eq_lTensor d) y)⟩
     · rintro ⟨y, rfl⟩
-      exact ⟨y, (congrFun (LinearMap.baseChange_eq_ltensor d) y).symm⟩
+      exact ⟨y, (congrFun (LinearMap.baseChange_eq_lTensor d) y).symm⟩
   exact ⟨(Submodule.quotEquivOfEq _ _ hker.symm).trans (qK.quotKerEquivOfSurjective hsurj)⟩
 
 theorem surjective_baseChange_iff {R : Type*} [CommRing R] {C0 C1 : Type*} [AddCommGroup C0]

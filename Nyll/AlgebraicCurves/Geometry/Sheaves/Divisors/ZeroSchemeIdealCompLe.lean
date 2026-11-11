@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
 
 /-!
 # The zero ideal after postcomposition
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
 The zero-scheme ideal of a postcomposed module section is contained in the zero-scheme
 ideal of the original section.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

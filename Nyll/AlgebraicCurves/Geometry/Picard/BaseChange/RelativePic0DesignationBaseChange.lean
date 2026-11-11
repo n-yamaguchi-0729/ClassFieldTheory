@@ -10,13 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
 
 /-!
 Base change of a relative Picard-zero designation and the resulting structure morphism and zero
 section.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -51,6 +56,38 @@ theorem baseChange_zeroSection_fst :
     (D.baseChange R').zeroSection ≫ pullback.fst D.toBase (specMap R R') = specMap R R' ≫
       D.zeroSection :=
   pullback.lift_fst _ _ _
+
+open NeronModelInfra
+
+/-- Lift the same point to the pullback defining the base-changed designation. -/
+def baseChangeLift {R : Type u} [CommRing R] {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat.of R)}
+    (D : RelativePic0Designation R c) (R' : Type u) [CommRing R'] [Algebra R R']
+    {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R'))
+    (a : SchemeHomOver (t ≫ specMap R R') D.toBase) :
+    SchemeHomOver t (D.baseChange R').toBase :=
+  ⟨pullback.lift a.1 t a.2, pullback.lift_snd _ _ _⟩
+
+/-- The first projection of the base change lift is the original point. -/
+theorem baseChangeLift_fst {R : Type u} [CommRing R] {C : Scheme.{u}}
+    {c : C ⟶ Spec (CommRingCat.of R)}
+    (D : RelativePic0Designation R c) (R' : Type u) [CommRing R'] [Algebra R R']
+    {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R'))
+    (a : SchemeHomOver (t ≫ specMap R R') D.toBase) :
+    (baseChangeLift D R' t a).1 ≫ pullback.fst D.toBase (specMap R R') = a.1 :=
+  pullback.lift_fst _ _ _
+
+/-- The first projection determines a point of the base-changed designation. -/
+theorem eq_baseChangeLift {R : Type u} [CommRing R] {C : Scheme.{u}}
+    {c : C ⟶ Spec (CommRingCat.of R)}
+    (D : RelativePic0Designation R c) (R' : Type u) [CommRing R'] [Algebra R R']
+    {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R'))
+    (z : SchemeHomOver t (D.baseChange R').toBase)
+    (a : SchemeHomOver (t ≫ specMap R R') D.toBase)
+    (hz : z.1 ≫ pullback.fst D.toBase (specMap R R') = a.1) : z = baseChangeLift D R' t a := by
+  apply Subtype.ext
+  apply pullback.hom_ext
+  · exact hz.trans (baseChangeLift_fst D R' t a).symm
+  · exact z.2.trans (pullback.lift_snd _ _ _).symm
 
 end GoodReductionJacobian.RelativePic0Designation
 

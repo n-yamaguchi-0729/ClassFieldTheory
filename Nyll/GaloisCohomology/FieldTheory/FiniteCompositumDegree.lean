@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Nat.GCD.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.Normal.Defs
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.LinearAlgebra.Dimension.Free
+module
+
+public import Mathlib.Data.Nat.GCD.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.Normal.Defs
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.LinearAlgebra.Dimension.Free
 
 /-!
 # Degree of a compositum of finite fields
@@ -19,6 +21,8 @@ When two intermediate fields generate a finite ambient field, its degree is
 the least common multiple of their degrees. The proof restricts the ambient
 Frobenius to each generating subfield and compares their orders.
 -/
+
+@[expose] public section
 
 namespace FiniteField
 

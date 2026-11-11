@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
 Transport of field structures, places, divisors, and degree-zero Picard groups along base-field
 algebra homomorphisms.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -32,14 +36,16 @@ variable {K F F' : Type*} [Field K] [Field F] [Field F'] [Algebra K F] [Algebra 
 abbrev algebraAlong (φ : F →ₐ[K] F') : Algebra F F' := φ.toRingHom.toAlgebra
 
 theorem isScalarTower_along (φ : F →ₐ[K] F') :
-    letI := algebraAlong φ; IsScalarTower K F F' :=
-  letI := algebraAlong φ
-  IsScalarTower.of_algebraMap_eq fun k => (φ.commutes k).symm
+    let : Algebra F F' := algebraAlong φ
+    IsScalarTower K F F' := by
+  intro sharedAlgebra
+  exact IsScalarTower.of_algebraMap_eq fun k => (φ.commutes k).symm
 
 theorem isIntegral_along (φ : F →ₐ[K] F') (hφ : φ.toRingHom.IsIntegral) :
-    letI := algebraAlong φ; Algebra.IsIntegral F F' :=
-  letI := algebraAlong φ
-  ⟨hφ⟩
+    let : Algebra F F' := algebraAlong φ
+    Algebra.IsIntegral F F' := by
+  intro sharedAlgebra
+  exact ⟨hφ⟩
 
 variable (K) in
 /-- The ramification and inertia fundamental identity for the field extension induced by the

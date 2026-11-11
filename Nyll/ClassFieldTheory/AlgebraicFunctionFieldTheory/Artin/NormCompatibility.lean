@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Main
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.NormComparison
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Representation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Valuation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormIsomorphism
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Main
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.NormComparison
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Representation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Valuation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormIsomorphism
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
 
 /-!
 # Norm compatibility for actual fixed-field Artin symbols
@@ -25,6 +27,10 @@ both vertical maps. Comparing symbols constructed from different ambient
 class formations is a separate assertion.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
@@ -32,7 +38,7 @@ namespace FunctionField
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
 private theorem abstractFixedField_restrictScalars_abelianization
-    (K Ω : Type) [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
+    (K : Type v) (Ω : Type w) [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
     (H J U : ClosedSubgroup Gal(Ω/K))
     (hJH : J.toSubgroup ≤ H.toSubgroup)
     (hUH : U.toSubgroup ≤ H.toSubgroup)
@@ -77,7 +83,7 @@ private theorem abstractFixedField_restrictScalars_abelianization
       (abstractExtensionQuotientEquivGaloisGroup_mk_apply_val K Ω H U
         hUH hUnormal (Subgroup.inclusion hJH σ) x)
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]
@@ -189,7 +195,7 @@ theorem fixedFieldArtin_norm_restrictScalars
 
 /-- Ambient norm reciprocity descends through an actual degree-one base presentation. -/
 theorem fixedFieldArtin_norm_of_basePresentation
-    (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+    (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [AlgebraicCurve.HasPrincipalDivisors k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]

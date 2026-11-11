@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
-import Nyll.AlgebraicCurves.Places.Completion
-import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
 
 /-!
 # Is Local Ring hensel lift unique
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -232,9 +236,9 @@ open WithZeroMulInt Valuation.IsRankOneDiscrete
 variable {K F : Type*} [Field K] [Field F] [Algebra K F] (V : Place K F)
 
 theorem norm_adicCompletion_eq (x : V.adicCompletion) :
-    letI := kw_ffgc_rankOne_adicCompletion V
+    let := kw_ffgc_rankOne_adicCompletion V
     ‖x‖ = (WithZeroMulInt.toNNReal (two_ne_zero) (Valued.v x) : ℝ) := by
-  let := kw_ffgc_rankOne_adicCompletion V
+  intro sharedOwner1
   have h := valueGroup₀_equiv_withZeroMulInt_restrict_apply_of_surjective
     (V.heightOneSpectrum.valuedAdicCompletion_surjective F) x
   simp only [Valued.toNormedField.norm_def, Valuation.RankOne.hom]
@@ -253,10 +257,10 @@ variable (F)
 variable [Algebra F F'] [IsScalarTower K F F'] [Algebra.IsIntegral F F'] (W : Place K F')
 
 theorem absoluteValue_extends (c : (W.restrict F).adicCompletion) :
-    letI := kw_ffgc_rankOne_adicCompletion (W.restrict F)
+    let := kw_ffgc_rankOne_adicCompletion (W.restrict F)
     kw_ffgc_absoluteValue F W
       (algebraMap (W.restrict F).adicCompletion W.adicCompletion c) = ‖c‖ := by
-  let := kw_ffgc_rankOne_adicCompletion (W.restrict F)
+  intro sharedOwner1
   let := kw_ffgc_rankOne_adicCompletion W
   have hr : (0 : ℝ) < (W.ramificationIndex F : ℝ) :=
     Nat.cast_pos.mpr (W.ramificationIndex_pos (F := F))

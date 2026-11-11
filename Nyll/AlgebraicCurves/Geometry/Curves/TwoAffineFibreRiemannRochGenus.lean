@@ -10,24 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.RingTheory.Flat.Product
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteH0H1StructureSheaf
-import Nyll.SchemeTheory.RingTheory.TwoChartCechGrothendieckComplex
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.GenusFFEqAlgEquiv
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverFinrankCechDiffBaseChange
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoTermEulerCharacteristic
-import Nyll.AlgebraicCurves.Models.EqGenusFFEllSubEllEq
-import Nyll.AlgebraicCurves.Geometry.AlgEquivFunctionFieldIso
+module
+
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteH0H1StructureSheaf
+public import Nyll.SchemeTheory.RingTheory.TwoChartCechGrothendieckComplex
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.GenusFFEqAlgEquiv
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverFinrankCechDiffBaseChange
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoTermEulerCharacteristic
+public import Nyll.AlgebraicCurves.Models.EqGenusFFEllSubEllEq
+public import Nyll.AlgebraicCurves.Geometry.AlgEquivFunctionFieldIso
 
 /-!
 # Uniqueness of the Riemann--Roch genus on geometric fibres
@@ -35,6 +37,8 @@ import Nyll.AlgebraicCurves.Geometry.AlgEquivFunctionFieldIso
 A smooth proper curve with a two-affine-open cover over a local Noetherian base has
 one genus that agrees with every Riemann--Roch genus on its algebraically closed fibres.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

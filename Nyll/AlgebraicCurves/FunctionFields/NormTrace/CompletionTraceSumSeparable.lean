@@ -10,11 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
-import Nyll.ValuedFieldTheory.Valuation.Completion.TensorProductProductFormulas
+module
+
+public import Mathlib.Analysis.Normed.Unbundled.SpectralNorm
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
+public import Nyll.ValuedFieldTheory.Valuation.Completion.TensorProductProductFormulas
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
 
 /-!
 # CompletionTraceSum of isSeparable
@@ -22,6 +28,8 @@ import Nyll.ValuedFieldTheory.Valuation.Completion.TensorProductProductFormulas
 A separable algebraic function-field extension satisfies the completed trace-sum identity, using
 semilocal completions and ramification and inertia degrees.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -56,7 +64,7 @@ private theorem gapsw7_x3x_trace_pi (R : Type*) [CommRing R] {ι : Type*} [Finty
     · rw [Matrix.blockDiagonal'_apply_ne _ _ _ hne,
         Algebra.leftMulMatrix_eq_repr_mul, Pi.basis_apply, Pi.basis_repr]
       have hx : (x * Pi.single i' (b i' j')) i = 0 := by
-        simp [Pi.single_eq_of_ne hne]
+        simp only [Pi.mul_apply, Pi.single_eq_of_ne hne, mul_zero]
       rw [hx, map_zero, Finsupp.zero_apply]
   rw [Algebra.trace_eq_matrix_trace (Pi.basis b), key,
     Matrix.trace_blockDiagonal']
@@ -98,9 +106,9 @@ open WithZeroMulInt Valuation.IsRankOneDiscrete
 variable {K F : Type*} [Field K] [Field F] [Algebra K F] (V : Place K F)
 
 private theorem norm_adicCompletion_eq (x : V.adicCompletion) :
-    letI := kw_ffgc_rankOne_adicCompletion V
+    let := kw_ffgc_rankOne_adicCompletion V
     ‖x‖ = (WithZeroMulInt.toNNReal (two_ne_zero) (Valued.v x) : ℝ) := by
-  let := kw_ffgc_rankOne_adicCompletion V
+  intro sharedOwner1
   have h := valueGroup₀_equiv_withZeroMulInt_restrict_apply_of_surjective
     (V.heightOneSpectrum.valuedAdicCompletion_surjective F) x
   simp only [Valued.toNormedField.norm_def, Valuation.RankOne.hom]
@@ -120,10 +128,10 @@ variable (F)
 variable [Algebra F F'] [IsScalarTower K F F'] [Algebra.IsIntegral F F'] (W : Place K F')
 
 private theorem absoluteValue_extends (c : (W.restrict F).adicCompletion) :
-    letI := kw_ffgc_rankOne_adicCompletion (W.restrict F)
+    let := kw_ffgc_rankOne_adicCompletion (W.restrict F)
     kw_ffgc_absoluteValue F W
       (algebraMap (W.restrict F).adicCompletion W.adicCompletion c) = ‖c‖ := by
-  let := kw_ffgc_rankOne_adicCompletion (W.restrict F)
+  intro sharedOwner1
   let := kw_ffgc_rankOne_adicCompletion W
   have hr : (0 : ℝ) < (W.ramificationIndex F : ℝ) :=
     Nat.cast_pos.mpr (W.ramificationIndex_pos (F := F))
@@ -253,13 +261,6 @@ private def kw_ffgc_residueFieldEquivCompletionResidueField :
     V.ResidueField ≃+* IsLocalRing.ResidueField V.adicCompletionIntegers :=
   ResidueFieldEquivCompletionResidueField F V.heightOneSpectrum
 
-private theorem residueFieldEquivCompletionResidueField_residue (a : V.toValuationSubring) :
-    kw_ffgc_residueFieldEquivCompletionResidueField V
-        (IsLocalRing.residue V.toValuationSubring a)
-      = IsLocalRing.residue V.adicCompletionIntegers
-          (algebraMap V.toValuationSubring V.adicCompletionIntegers a) :=
-  rfl
-
 end ResidueCompletion
 
 section Semilocal
@@ -310,7 +311,8 @@ variable {K : Type*} (F : Type*) [Field K] [Field F] [Algebra K F]
 variable {E : Type*} [Field E] [Algebra K E] [Algebra E F] [IsScalarTower K E F]
 variable [Algebra.IsIntegral E F] [HasPrincipalDivisors K E] [HasPrincipalDivisors K F]
 
-private def kwF4R1V384a_semilocalComponent (v : Place K E) (w' : v.fiber F) :
+/-- The component map multiplies the two scalar embeddings into the chosen completion. -/
+def completionTensorComponent (v : Place K E) (w' : v.fiber F) :
     v.adicCompletion ⊗[E] F →ₐ[v.adicCompletion] w'.1.adicCompletion :=
   Algebra.TensorProduct.lift (Algebra.ofId v.adicCompletion w'.1.adicCompletion)
     (IsScalarTower.toAlgHom E F w'.1.adicCompletion) (fun _ _ => Commute.all _ _)
@@ -319,17 +321,18 @@ omit [HasPrincipalDivisors K E] in
 @[scoped simp]
 private theorem semilocalComponent_tmul (v : Place K E) (w' : v.fiber F)
     (c : v.adicCompletion) (g : F) :
-    kwF4R1V384a_semilocalComponent F v w' (c ⊗ₜ[E] g)
+    completionTensorComponent F v w' (c ⊗ₜ[E] g)
       = algebraMap v.adicCompletion w'.1.adicCompletion c
           * algebraMap F w'.1.adicCompletion g := by
-  unfold kwF4R1V384a_semilocalComponent
+  unfold completionTensorComponent
   rw [Algebra.TensorProduct.lift_tmul]
   rfl
 
-private def kwF4R1V384a_semilocalDiag (v : Place K E) :
+/-- The semilocal tensor map collects the actual completion component maps. -/
+def completionTensorDiagonal (v : Place K E) :
     v.adicCompletion ⊗[E] F →ₐ[v.adicCompletion]
       ((w' : v.fiber F) → w'.1.adicCompletion) :=
-  AlgHom.pi (kwF4R1V384a_semilocalComponent F v)
+  AlgHom.pi (completionTensorComponent F v)
 
 variable {F}
 
@@ -337,11 +340,11 @@ omit [HasPrincipalDivisors K E] in
 @[scoped simp]
 private theorem semilocalDiag_apply (v : Place K E) (x : v.adicCompletion ⊗[E] F)
     (w' : v.fiber F) :
-    kwF4R1V384a_semilocalDiag F v x w' = kwF4R1V384a_semilocalComponent F v w' x := rfl
+    completionTensorDiagonal F v x w' = completionTensorComponent F v w' x := rfl
 
 omit [HasPrincipalDivisors K E] in
 private theorem semilocalDiag_one_tmul (v : Place K E) (g : F) (w' : v.fiber F) :
-    kwF4R1V384a_semilocalDiag F v ((1 : v.adicCompletion) ⊗ₜ[E] g) w'
+    completionTensorDiagonal F v ((1 : v.adicCompletion) ⊗ₜ[E] g) w'
       = algebraMap F w'.1.adicCompletion g := by
   rw [semilocalDiag_apply, semilocalComponent_tmul,
     map_one, one_mul]
@@ -357,7 +360,7 @@ variable [Algebra.IsIntegral E F]
 private def KwF4R1V384aCompletionSemilocalBij : Prop :=
   ∀ [HasPrincipalDivisors K E] [HasPrincipalDivisors K F] [FiniteDimensional E F]
     (v : Place K E),
-    Function.Bijective (kwF4R1V384a_semilocalDiag (K := K) (E := E) F v)
+    Function.Bijective (completionTensorDiagonal (K := K) (E := E) F v)
 
 end Mint
 
@@ -383,7 +386,7 @@ private theorem completionLinearCombination_surjective
 
 omit [HasPrincipalDivisors K E] in
 private theorem semilocalComponent_surjective (v : Place K E) (w' : v.fiber F) :
-    Function.Surjective (kwF4R1V384a_semilocalComponent F v w') := by
+    Function.Surjective (completionTensorComponent F v w') := by
   rcases w' with ⟨w', hw'⟩
   have hv : w'.restrict E = v := Place.mem_fiber.mp hw'
   subst hv
@@ -408,8 +411,8 @@ variable [Algebra.IsIntegral E F]
 private def KwF4R1V384aDistinctKernels : Prop :=
   ∀ [HasPrincipalDivisors K E] [HasPrincipalDivisors K F] [FiniteDimensional E F]
     (v : Place K E) (w' w'' : v.fiber F), w' ≠ w'' →
-    RingHom.ker (kwF4R1V384a_semilocalComponent (K := K) (E := E) F v w').toRingHom
-      ≠ RingHom.ker (kwF4R1V384a_semilocalComponent (K := K) (E := E) F v w'').toRingHom
+    RingHom.ker (completionTensorComponent (K := K) (E := E) F v w').toRingHom
+      ≠ RingHom.ker (completionTensorComponent (K := K) (E := E) F v w'').toRingHom
 
 private def KwF4R1V384aFinrankCompletionEF : Prop :=
   ∀ [HasPrincipalDivisors K E] [HasPrincipalDivisors K F] [FiniteDimensional E F]
@@ -428,18 +431,18 @@ variable [Algebra.IsIntegral E F]
 private scoped instance kwF4R1V384a_ker_semilocalComponent_isMaximal
     [HasPrincipalDivisors K E] [HasPrincipalDivisors K F] [FiniteDimensional E F]
     (v : Place K E) (w' : v.fiber F) :
-    (RingHom.ker (kwF4R1V384a_semilocalComponent F v w').toRingHom).IsMaximal :=
-  RingHom.ker_isMaximal_of_surjective (kwF4R1V384a_semilocalComponent F v w').toRingHom
+    (RingHom.ker (completionTensorComponent F v w').toRingHom).IsMaximal :=
+  RingHom.ker_isMaximal_of_surjective (completionTensorComponent F v w').toRingHom
     (semilocalComponent_surjective v w')
 
 private theorem semilocalDiag_surjective_of_distinctKernels
     [HasPrincipalDivisors K E] [HasPrincipalDivisors K F] [FiniteDimensional E F]
     (hdist : KwF4R1V384aDistinctKernels K F E) (v : Place K E) :
-    Function.Surjective (kwF4R1V384a_semilocalDiag F v) := by
+    Function.Surjective (completionTensorDiagonal F v) := by
   classical
   intro y
   let m : v.fiber F → Ideal (v.adicCompletion ⊗[E] F) :=
-    fun w' => RingHom.ker (kwF4R1V384a_semilocalComponent F v w').toRingHom
+    fun w' => RingHom.ker (completionTensorComponent F v w').toRingHom
   have : ∀ w', (m w').IsMaximal :=
     kwF4R1V384a_ker_semilocalComponent_isMaximal v
   have hcop : Pairwise (Function.onFun IsCoprime m) := fun i j hij =>
@@ -449,12 +452,12 @@ private theorem semilocalDiag_surjective_of_distinctKernels
     Ideal.quotientInfToPiQuotient_surj hcop (fun w' => Ideal.Quotient.mk (m w') (xw w'))
   obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective xbar
   refine ⟨x, funext fun w' => ?_⟩
-  change kwF4R1V384a_semilocalComponent F v w' x = y w'
+  change completionTensorComponent F v w' x = y w'
   have hcomp : Ideal.Quotient.mk (m w') x = Ideal.Quotient.mk (m w') (xw w') := by
     have := congrFun hxbar w'
     rwa [Ideal.quotientInfToPiQuotient_mk' m x w'] at this
   have hmod : x - xw w' ∈ m w' := Ideal.Quotient.eq.mp hcomp
-  have hzero : kwF4R1V384a_semilocalComponent F v w' (x - xw w') = 0 := hmod
+  have hzero : completionTensorComponent F v w' (x - xw w') = 0 := hmod
   rw [map_sub, sub_eq_zero] at hzero
   rw [hzero, hxw w']
 
@@ -500,14 +503,14 @@ private theorem completionSemilocalBij_of_distinctKernels_finrankEF
       = Module.finrank E F := by
     rw [Module.finrank_tensorProduct, Module.finrank_self, one_mul]
   have hsurj' : Function.Surjective
-      (kwF4R1V384a_semilocalDiag F v).toLinearMap := hsurj
+      (completionTensorDiagonal F v).toLinearMap := hsurj
   have fdPi : FiniteDimensional v.adicCompletion
       ((w' : v.fiber F) → w'.1.adicCompletion) := inferInstance
   exact (@LinearMap.injective_iff_surjective_of_finrank_eq_finrank
     v.adicCompletion (v.adicCompletion ⊗[E] F) _ _ _
     ((w' : v.fiber F) → w'.1.adicCompletion) _ modPi _ fdPi
     (hdimdom.trans hdimcod.symm)
-    (kwF4R1V384a_semilocalDiag F v).toLinearMap).mpr hsurj'
+    (completionTensorDiagonal F v).toLinearMap).mpr hsurj'
 
 end BijEngine
 
@@ -534,14 +537,14 @@ private theorem completionTraceSum_of_semilocalBij
   intro _ _ _ v g
   let e : v.adicCompletion ⊗[E] F ≃ₐ[v.adicCompletion]
       ((w' : v.fiber F) → w'.1.adicCompletion) :=
-    AlgEquiv.ofBijective (kwF4R1V384a_semilocalDiag F v) (hbij v)
+    AlgEquiv.ofBijective (completionTensorDiagonal F v) (hbij v)
   have freeFib : ∀ w' : v.fiber F, Module.Free v.adicCompletion w'.1.adicCompletion :=
     fun w' => Module.Free.of_divisionRing v.adicCompletion w'.1.adicCompletion
   rw [gapsw7_x3x_trace_decomposition_of_prod_iso E v.adicCompletion F
         (fun w' : v.fiber F => w'.1.adicCompletion) e g]
   refine Finset.sum_congr rfl fun w' _ => ?_
   rw [show e ((1 : v.adicCompletion) ⊗ₜ[E] g) w'
-      = kwF4R1V384a_semilocalDiag F v ((1 : v.adicCompletion) ⊗ₜ[E] g) w' from rfl,
+      = completionTensorDiagonal F v ((1 : v.adicCompletion) ⊗ₜ[E] g) w' from rfl,
     semilocalDiag_one_tmul,
     trace_algebraMap_eq_completionTraceAt]
 
@@ -632,14 +635,12 @@ variable [Algebra.IsIntegral E F]
 
 private theorem spectralNorm_eq_absoluteValue [FiniteDimensional E F]
     (w' : Place K F) (y : w'.adicCompletion) :
-    letI := kw_ffgc_rankOne_adicCompletion (w'.restrict E)
-    letI : NontriviallyNormedField (w'.restrict E).adicCompletion :=
+    let := kw_ffgc_rankOne_adicCompletion (w'.restrict E)
+    let : NontriviallyNormedField (w'.restrict E).adicCompletion :=
       Valued.toNontriviallyNormedField (w'.restrict E).adicCompletion ℤᵐ⁰
     spectralNorm (w'.restrict E).adicCompletion w'.adicCompletion y
       = kw_ffgc_absoluteValue E w' y := by
-  let := kw_ffgc_rankOne_adicCompletion (w'.restrict E)
-  let : NontriviallyNormedField (w'.restrict E).adicCompletion :=
-    Valued.toNontriviallyNormedField (w'.restrict E).adicCompletion ℤᵐ⁰
+  intro sharedOwner1 sharedOwner2
   have : IsUltrametricDist (w'.restrict E).adicCompletion :=
     IsUltrametricDist.isUltrametricDist_of_isNonarchimedean_norm
       (fun a b => Valuation.norm_add_le Valued.v a b)
@@ -698,25 +699,25 @@ private theorem distinctKernels :
   intro _ _ _ v w' w'' hne hker
   apply hne
   have hsurj' := semilocalComponent_surjective v w'
-  have hann : ∀ a ∈ RingHom.ker (kwF4R1V384a_semilocalComponent F v w').toRingHom,
-      kwF4R1V384a_semilocalComponent F v w'' a = 0 := fun a ha => by
-    have : a ∈ RingHom.ker (kwF4R1V384a_semilocalComponent F v w'').toRingHom :=
+  have hann : ∀ a ∈ RingHom.ker (completionTensorComponent F v w').toRingHom,
+      completionTensorComponent F v w'' a = 0 := fun a ha => by
+    have : a ∈ RingHom.ker (completionTensorComponent F v w'').toRingHom :=
       hker ▸ ha
     exact this
   let σ : w'.1.adicCompletion →ₐ[v.adicCompletion] w''.1.adicCompletion :=
-    (Ideal.Quotient.liftₐ _ (kwF4R1V384a_semilocalComponent F v w'') hann).comp
+    (Ideal.Quotient.liftₐ _ (completionTensorComponent F v w'') hann).comp
       (Ideal.quotientKerAlgEquivOfSurjective hsurj').symm.toAlgHom
-  have hσcomp : ∀ x, σ (kwF4R1V384a_semilocalComponent F v w' x)
-      = kwF4R1V384a_semilocalComponent F v w'' x := by
+  have hσcomp : ∀ x, σ (completionTensorComponent F v w' x)
+      = completionTensorComponent F v w'' x := by
     intro x
     have hstep1 : (Ideal.quotientKerAlgEquivOfSurjective hsurj').symm
-        (kwF4R1V384a_semilocalComponent F v w' x) = Ideal.Quotient.mk _ x := by
-      rw [show kwF4R1V384a_semilocalComponent F v w' x
+        (completionTensorComponent F v w' x) = Ideal.Quotient.mk _ x := by
+      rw [show completionTensorComponent F v w' x
           = Ideal.quotientKerAlgEquivOfSurjective hsurj' (Ideal.Quotient.mk _ x) from rfl,
         AlgEquiv.symm_apply_apply]
-    change (Ideal.Quotient.liftₐ _ (kwF4R1V384a_semilocalComponent F v w'') hann)
+    change (Ideal.Quotient.liftₐ _ (completionTensorComponent F v w'') hann)
       ((Ideal.quotientKerAlgEquivOfSurjective hsurj').symm
-        ((kwF4R1V384a_semilocalComponent F v w') x)) = _
+        ((completionTensorComponent F v w') x)) = _
     erw [hstep1, Ideal.Quotient.lift_mk]
   have hσF : ∀ g : F, σ (algebraMap F w'.1.adicCompletion g)
       = algebraMap F w''.1.adicCompletion g := by
@@ -954,6 +955,17 @@ theorem _root_.AlgebraicCurve.completionTraceSum_of_isSeparable
   completionTraceSum_of_separable_fiber_degrees (K := K) (F := F) (E := E)
 open scoped AlgebraicCurve.Place TensorProduct
 
+/-- The actual semilocal tensor map is bijective for a finite separable extension. -/
+theorem completionTensorDiagonal_bijective
+    {k K L : Type*} [Field k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [AlgebraicCurve.HasPrincipalDivisors k K] [AlgebraicCurve.HasPrincipalDivisors k L]
+    (v : AlgebraicCurve.Place k K) :
+    Function.Bijective (completionTensorDiagonal L v) :=
+  completionSemilocalBij_of_distinctKernels_finrankEF
+    distinctKernels finrankCompletionEF v
+
 /-- The actual semilocal completion isomorphism. Its bijectivity follows from distinct
 component kernels and the proved sum of the local ramification and inertia degrees.
 The fiber algebra structures are the scoped canonical structures defined in this module. -/
@@ -965,9 +977,8 @@ noncomputable def _root_.AlgebraicCurve.completionTensorEquiv
     (v : AlgebraicCurve.Place k K) :
     v.adicCompletion ⊗[K] L ≃ₐ[v.adicCompletion]
       ((w : v.fiber L) → w.1.adicCompletion) :=
-  AlgEquiv.ofBijective (kwF4R1V384a_semilocalDiag L v)
-    (completionSemilocalBij_of_distinctKernels_finrankEF
-      distinctKernels finrankCompletionEF v)
+  AlgEquiv.ofBijective (completionTensorDiagonal L v)
+    (completionTensorDiagonal_bijective v)
 
 /-- Each component of the semilocal isomorphism multiplies the actual two scalar maps. -/
 theorem _root_.AlgebraicCurve.completionTensorEquiv_tmul

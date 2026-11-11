@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassField
+module
+
+public import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.ClassField
 
 /-!
 # Profinite reciprocity facade
@@ -15,6 +17,8 @@ bundled profinite group.  The bundle supplies the ambient topology, compactness,
 separation, and total disconnectedness instances required by the generic
 theorems.
 -/
+
+@[expose] public section
 
 noncomputable section
 

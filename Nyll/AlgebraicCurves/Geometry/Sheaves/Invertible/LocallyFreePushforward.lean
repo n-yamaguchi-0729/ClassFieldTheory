@@ -10,17 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.RingTheory.Flat.Product
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.Quasicoherent.IsoFromTildeGammaPushforward
-import Nyll.SchemeTheory.Modules.Quasicoherent.LocallyFreeTilde
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveKer
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
+module
+
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.Quasicoherent.IsoFromTildeGammaPushforward
+public import Nyll.SchemeTheory.Modules.Quasicoherent.LocallyFreeTilde
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveKer
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Local freeness of pushforward from two-chart cohomology
@@ -28,6 +31,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseCha
 Finite two-chart cohomology, vanishing fibre first cohomology and constant fibre rank
 give local freeness of the pushforward of a locally trivial module.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

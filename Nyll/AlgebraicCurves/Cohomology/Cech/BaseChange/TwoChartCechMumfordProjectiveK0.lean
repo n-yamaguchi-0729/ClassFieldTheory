@@ -11,18 +11,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFiniteK0
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFlatK0
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.EquationalCriterion
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.Algebra.Module.Projective
-import Mathlib.Algebra.Module.FinitePresentation
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFiniteK0
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFlatK0
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.EquationalCriterion
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.Algebra.Module.FinitePresentation
 
 /-!
 Projectivity of the enlarged kernel in the finite-presentation construction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

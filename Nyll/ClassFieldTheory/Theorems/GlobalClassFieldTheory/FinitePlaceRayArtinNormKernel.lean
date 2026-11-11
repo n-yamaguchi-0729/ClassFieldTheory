@@ -7,8 +7,16 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteReciprocityDataComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 
 /-!
 # The local kernel of a ray-class Artin map
@@ -16,8 +24,8 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtin
 The local-to-ray map is constructed from a one-place idèle class.  This
 statement compares the kernel of the resulting ray-class Artin map with the
 determinant norm of the entire local tensor algebra, at every finite place,
-including places in the modulus.  It is a kernel comparison; the stronger
-equality of the Artin values is a separate normalization question.
+including places in the modulus. The shared `FiniteReciprocityDataComparison`
+owner also identifies the actual arithmetic Artin value on every idèle class.
 -/
 
 open scoped NumberField TensorProduct
@@ -27,11 +35,13 @@ noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- At every finite place, including a ramified place, the ray-class Artin
 map has the local tensor-norm subgroup as its kernel after the canonical
 one-place map into the ray class group. -/
 theorem exists_finitePlaceRayArtin_normKernel
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -50,34 +60,7 @@ theorem exists_finitePlaceRayArtin_normKernel
           (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
             (IdeleGroup.finitePrimeIdele p))) =
           GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-            (K := K) (L := L) p := by
-    intro p hp
-    have hpD : p ∉ D.modulus.finitePart.support := hp
-    change D.artin (e.symm (QuotientGroup.mk' m.congruenceSubgroup
-      (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-        (IdeleGroup.finitePrimeIdele p)))) = _
-    rw [← GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele_prime
-      K D.modulus p hpD]
-    have hFrob :
-        D.artin (rayClassOfFinitePrime D.modulus p hpD) =
-          GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-            (K := K) (L := L) p := by
-      let w₀ := _root_.chosenFinitePlaceExtension (L := L) p
-      let w := _root_.finitePlaceExtensionCentre (K := K) (L := L) p w₀
-      have hw : w.asIdeal.LiesOver p.asIdeal :=
-        _root_.finitePlaceExtensionCentre_liesOver
-          (K := K) (L := L) p w₀
-      have hunram : Algebra.IsUnramifiedAt (𝓞 K) w.asIdeal :=
-        (D.unramifiedOutsideModulus.1 p hpD) w.asIdeal inferInstance hw
-      calc
-        D.artin (rayClassOfFinitePrime D.modulus p hpD) =
-            arithmeticFrobeniusAt (K := K) w :=
-          D.artin_frobenius p hpD w hw
-        _ = GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-              (K := K) (L := L) p :=
-          (GlobalClassFieldComparison.arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
-            (K := K) (L := L) p w hw hunram).symm
-    simpa only [e, MulEquiv.symm_apply_apply] using hFrob
+            (K := K) (L := L) p := D.originalArtin_prime
   have hNorm :=
     GlobalClassFieldTheory.GlobalClassFields.rayModulus_normSubgroup_eq_artinKer_preimage
       m a hprime

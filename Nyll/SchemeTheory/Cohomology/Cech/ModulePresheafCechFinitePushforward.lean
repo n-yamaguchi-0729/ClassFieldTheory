@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafBasicOpenSectionsFree
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESLeft
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESMid
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESRight
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.Data.Fintype.EquivFin
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafBasicOpenSectionsFree
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESLeft
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESMid
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESRight
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.Data.Fintype.EquivFin
 
 /-!
 Finiteness of pushforward Cech cohomology by induction on the integral support.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

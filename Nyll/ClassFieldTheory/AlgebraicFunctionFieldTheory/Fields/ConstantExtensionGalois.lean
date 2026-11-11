@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.Galois.GaloisClosure
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
+module
+
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
 
 /-!
 # Finite Galois extensions obtained by adjoining constants
@@ -19,6 +21,8 @@ subfields. The Galois assertion follows from the existing theorem that a finite
 Galois extension remains Galois after taking a compositum. No condition on the
 intersection of `K` with `C` is needed here.
 -/
+
+@[expose] public section
 
 noncomputable section
 

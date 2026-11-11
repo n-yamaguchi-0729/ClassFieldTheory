@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseEmbedding
-import Nyll.AlgebraicCurves.Geometry.Schemes.LocalGeometry.RingEquivStalkPullbackLocalizationTensorStalk
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseEmbedding
+public import Nyll.SchemeTheory.LocalGeometry.StalkPullbackLocalization
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 
 /-!
 # Generation of the actual geometric function field
@@ -14,6 +16,10 @@ import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 The stalk description of a scheme pullback as a localized tensor product shows
 that constants and the actual original function field generate the geometric field.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -23,8 +29,8 @@ open scoped TensorProduct
 
 namespace AlgebraicCurve.CurveModel
 
-variable {k Ω F : Type} [Field k] [Field Ω] [Algebra k Ω] [Field F] [Algebra Ω F]
-    (M : CurveModel Ω F) {C : Scheme} [IsIntegral C]
+variable {k Ω : Type u} {F : Type v} [Field k] [Field Ω] [Algebra k Ω] [Field F] [Algebra Ω F]
+    (M : CurveModel Ω F) {C : Scheme.{u}} [IsIntegral C]
     (c : C ⟶ Spec (CommRingCat.of k))
     (e : M.C ≅ pullback c (specMap k Ω))
     (he : e.hom ≫ pullback.snd c (specMap k Ω) = M.toBase)

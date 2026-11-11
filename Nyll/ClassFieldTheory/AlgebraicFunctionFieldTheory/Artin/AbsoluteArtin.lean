@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteFiniteCoordinates
-import Nyll.ProCGroups.Topologies.FiniteQuotientLift
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteFiniteCoordinates
+public import Nyll.ProCGroups.Topologies.FiniteQuotientLift
 
 /-!
 # Continuous absolute function-field reciprocity
@@ -16,13 +18,18 @@ absolute Galois group. Its range is dense. Its kernel is the intersection
 of the actual norms from the finite abelian fixed fields.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open LocalClassFieldTheory
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v)
+    [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 

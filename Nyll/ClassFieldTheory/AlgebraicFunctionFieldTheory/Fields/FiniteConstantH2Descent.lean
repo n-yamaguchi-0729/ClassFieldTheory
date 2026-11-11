@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteConstantNormDescent
-import Nyll.GaloisCohomology.FieldTheory.CompositumCyclic
-import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormClass
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteConstantNormDescent
+public import Nyll.GaloisCohomology.FieldTheory.CompositumCyclic
+public import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormClass
 
 /-!
 # Finite constant descent of cyclic unit H²
@@ -15,6 +17,8 @@ Every actual unit H² class of a finite cyclic function-field extension vanishes
 after base change to a constructed finite constant extension. The field norm
 preimage is supplied by Tsen and its finite-stage descent.
 -/
+
+@[expose] public section
 
 noncomputable section
 

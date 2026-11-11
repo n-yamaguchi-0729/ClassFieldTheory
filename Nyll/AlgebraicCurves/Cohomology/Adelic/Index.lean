@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
 
 /-!
 Adelic spaces, indices of specialty and Weil differentials.
 Valuation bounds and global functions define the quotients and genus conditions.
 -/
+
+@[expose] public section
 
 noncomputable section
 

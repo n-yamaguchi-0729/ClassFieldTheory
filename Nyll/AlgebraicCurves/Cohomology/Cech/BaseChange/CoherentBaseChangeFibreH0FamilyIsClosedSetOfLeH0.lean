@@ -10,22 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.BaseChange.CoherentBaseChangeFamily
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.LinearAlgebra.Matrix.Rank
-import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
-import Mathlib.RingTheory.Finiteness.Prod
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.Data.Fintype.EquivFin
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.BaseChange.CoherentBaseChangeFamily
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.FreeModule.StrongRankCondition
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.LinearAlgebra.Matrix.Rank
+public import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
+public import Mathlib.RingTheory.Finiteness.Prod
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.Data.Fintype.EquivFin
 
 /-!
 Closedness of fibre zeroth-cohomology dimension bounds, using matrix minors on affine charts.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -97,7 +101,7 @@ theorem exists_det_submatrix_ne_zero_of_le_rank
     simp only [hN, Matrix.submatrix_apply, id_eq]
   rw [hsub]
   exact ((Matrix.isUnit_iff_isUnit_det _).mp
-    (Matrix.linearIndependent_rows_iff_isUnit.mp hsli)).ne_zero
+    (Matrix.linearIndependent_row_iff_isUnit.mp hsli)).ne_zero
 
 theorem rank_le_of_det_submatrix_eq_zero
     (M : Matrix m n K) (r : ℕ)

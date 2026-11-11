@@ -10,28 +10,32 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Charts.ChartAlgebra
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Mathlib.RingTheory.Extension.Presentation.Submersive
-import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
-import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
-import Mathlib.RingTheory.Smooth.Field
-import Mathlib.RingTheory.Smooth.Locus
-import Mathlib.RingTheory.RingHom.LocallyStandardSmooth
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
-import Mathlib.RingTheory.Smooth.Fiber
-import Mathlib.RingTheory.Unramified.LocalRing
-import Mathlib.RingTheory.LocalRing.ResidueField.Instances
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.RingTheory.Flat.TorsionFree
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Charts.ChartAlgebra
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Mathlib.RingTheory.Extension.Presentation.Submersive
+public import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
+public import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+public import Mathlib.RingTheory.Smooth.Field
+public import Mathlib.RingTheory.Smooth.Locus
+public import Mathlib.RingTheory.RingHom.LocallyStandardSmooth
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.AlgebraicIndependent.Transcendental
+public import Mathlib.RingTheory.Smooth.Fiber
+public import Mathlib.RingTheory.Unramified.LocalRing
+public import Mathlib.RingTheory.LocalRing.ResidueField.Instances
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.RingTheory.Flat.TorsionFree
 
 /-!
 # Smoothness
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -47,7 +51,8 @@ noncomputable def freeSubmersivePresentation (R : Type u) [CommRing R] (ι : Typ
     SubmersivePresentation R (MvPolynomial ι R) ι (PEmpty : Type) where
   __ := Generators.mvPolynomial R ι
   relation := PEmpty.elim
-  span_range_relation_eq_ker := by simp [Set.range_eq_empty, Generators.ker_mvPolynomial]
+  span_range_relation_eq_ker := by
+    simp only [Set.range_eq_empty, Ideal.span_empty, Generators.ker_mvPolynomial]
   map := PEmpty.elim
   map_inj := fun a => a.elim
   jacobian_isUnit := by
@@ -58,7 +63,7 @@ scoped instance isStandardSmoothOfRelativeDimension_polynomial (R : Type u) [Com
     IsStandardSmoothOfRelativeDimension 1 R R[X] := by
   have h : IsStandardSmoothOfRelativeDimension 1 R (MvPolynomial PUnit R) :=
     (freeSubmersivePresentation R PUnit).isStandardSmoothOfRelativeDimension
-      (by simp [Presentation.dimension])
+      (by simp only [Presentation.dimension, Nat.card_unique, Nat.card_of_isEmpty, Nat.sub_zero])
   exact IsStandardSmoothOfRelativeDimension.of_algEquiv (n := 1) (R := R)
     (S := MvPolynomial PUnit R) (MvPolynomial.uniqueAlgEquiv R PUnit)
 
@@ -186,7 +191,7 @@ theorem formallySmooth_chartRing_localization_bot [CharZero K]
     FormallySmooth K (Localization.AtPrime (⊥ : Ideal (chartRing K ({s} : Set L)))) := by
   let A := chartRing K ({s} : Set L)
   have heq : (⊥ : Ideal A).primeCompl = nonZeroDivisors A := by
-    ext x; simp [Ideal.primeCompl, mem_nonZeroDivisors_iff_ne_zero]
+    exact Ideal.primeCompl_bot
   have : IsLocalization (⊥ : Ideal A).primeCompl L :=
     heq.symm ▸ (inferInstance : IsFractionRing A L)
   let e : L ≃ₐ[K] Localization.AtPrime (⊥ : Ideal A) :=

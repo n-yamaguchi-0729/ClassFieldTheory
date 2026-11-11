@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.FunctionField
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
 
 /-!
 # Places
 
 Open subsets of a curve determine sets of places through their closed-point local rings.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -51,9 +55,9 @@ theorem placesOf_mono {U V : C.Opens} (h : U ≤ V) :
   exact ⟨x, h hxU, hx, hv⟩
 
 theorem placesOf_sup (U V : C.Opens) :
-    letI := (baseToFunctionField c).toAlgebra
+    let := (baseToFunctionField c).toAlgebra
     placesOf c (U ⊔ V) = placesOf c U ∪ placesOf c V := by
-  let := (baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   apply Set.Subset.antisymm
   · rintro v ⟨x, hxUV, hx, hv⟩
     rcases (show x ∈ (U : Set C) ∪ (V : Set C) from hxUV) with h | h
@@ -64,9 +68,9 @@ theorem placesOf_sup (U V : C.Opens) :
     · exact placesOf_mono c le_sup_right h
 
 theorem placesOf_bot :
-    letI := (baseToFunctionField c).toAlgebra
+    let := (baseToFunctionField c).toAlgebra
     placesOf c (⊥ : C.Opens) = ∅ := by
-  let := (baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   ext v
   simp only [Set.mem_empty_iff_false, iff_false]
   rintro ⟨x, hx, -, -⟩

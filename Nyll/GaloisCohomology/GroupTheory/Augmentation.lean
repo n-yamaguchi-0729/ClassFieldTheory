@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.MonoidAlgebra.Lift
-import Mathlib.Algebra.Module.BigOperators
-import Mathlib.GroupTheory.Abelianization.Defs
-import Mathlib.RingTheory.TwoSidedIdeal.Kernel
-import Mathlib.RingTheory.TwoSidedIdeal.Operations
-import Mathlib.Tactic.NoncommRing
+module
+
+public import Mathlib.Algebra.MonoidAlgebra.Lift
+public import Mathlib.Algebra.Module.BigOperators
+public import Mathlib.GroupTheory.Abelianization.Defs
+public import Mathlib.RingTheory.TwoSidedIdeal.Kernel
+public import Mathlib.RingTheory.TwoSidedIdeal.Operations
+public import Mathlib.Tactic.NoncommRing
 
 /-!
 # Integral group-ring augmentation
@@ -21,6 +23,8 @@ transfer theorem.
 -/
 
 
+
+@[expose] public section
 
 open scoped Pointwise
 
@@ -148,7 +152,7 @@ theorem deltaCombination_eq_of_mem_ideal
             rw [Finsupp.sum]
             apply Finset.sum_congr rfl
             intro g _
-            simp [MonoidAlgebra.smul_single]
+            simp only [MonoidAlgebra.smul_single, Int.zsmul_eq_mul, mul_one]
       _ = x := MonoidAlgebra.sum_coeff_single x
   unfold deltaCombination
   simp_rw [smul_sub]
@@ -175,7 +179,8 @@ theorem deltaCombinationElement_val
     (deltaCombinationElement G x : IntegralGroupRing G) =
       deltaCombination G x :=
   by
-    simp [deltaCombinationElement, deltaCombination]
+    simp only [deltaCombinationElement, AddSubmonoidClass.coe_finsetSum, SetLike.val_smul_of_tower,
+      deltaElement_val, zsmul_eq_mul, deltaCombination]
 
 theorem deltaCombinationElement_eq_of_mem_ideal
     (x : IntegralGroupRing G) (hx : x ∈ ideal G) :
@@ -326,13 +331,17 @@ def linearization :
 theorem linearization_single (g : G) (n : ℤ) :
     linearization G (MonoidAlgebra.single g n) =
       n • Additive.ofMul (Abelianization.of g) := by
-  simp [linearization, coefficientToAbelianization]
+  simp only [linearization, AddEquiv.toAddMonoidHom_eq_coe, AddMonoidHom.coe_comp,
+    AddMonoidHom.coe_ofClass, Function.comp_apply, MonoidAlgebra.coeffAddEquiv_apply,
+    MonoidAlgebra.coeff_single, Finsupp.liftAddHom_apply, coefficientToAbelianization,
+    AddMonoidHom.coe_mk, ZeroHom.coe_mk, zero_smul, Finsupp.sum_single_index]
 
 @[simp]
 theorem linearization_deltaElement (g : G) :
     linearization G (deltaElement G g) =
       Additive.ofMul (Abelianization.of g) := by
-  simp [deltaElement, linearization_single]
+  simp only [deltaElement, map_sub, linearization_single, one_smul, map_one, ofMul_one, smul_zero,
+    sub_zero]
 
 /-- Products of two basic augmentation differences vanish after
 linearization. -/
@@ -342,8 +351,9 @@ theorem linearization_deltaElement_mul_deltaElement
         ((deltaElement G g : IntegralGroupRing G) *
           (deltaElement G h : IntegralGroupRing G)) =
       0 := by
-  simp [deltaElement, map_sub,
-    MonoidAlgebra.single_mul_single, mul_sub, sub_mul]
+  simp only [deltaElement, mul_sub, sub_mul, MonoidAlgebra.single_mul_single, mul_one, one_mul,
+    map_sub, linearization_single, map_mul, ofMul_mul, smul_add, one_smul, add_sub_cancel_right,
+    map_one, ofMul_one, smul_zero, sub_zero, sub_self]
 
 /-- Linearization kills a product of two augmentation-zero elements. -/
 theorem linearization_mul_eq_zero_of_mem_ideal
@@ -392,9 +402,9 @@ theorem linearization_eq_zero_of_mem_square
     · intro a b
       rw [mul_zero, zero_mul, map_zero]
     · intro x y hx hy hlinx hliny a b
-      simp [mul_add, add_mul, hlinx a b, hliny a b]
+      simp only [mul_add, add_mul, map_add, hlinx a b, hliny a b, add_zero]
     · intro x hx hlin a b
-      simp [hlin a b]
+      simp only [mul_neg, neg_mul, map_neg, hlin a b, neg_zero]
     · intro c x hx hlin a b
       simpa only [mul_assoc] using hlin (a * c) b
     · intro c x hx hlin a b

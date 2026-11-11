@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
-import Mathlib.FieldTheory.KummerExtension
-import Mathlib.FieldTheory.Separable
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Norm.Basic
+module
+
+public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
+public import Mathlib.FieldTheory.KummerExtension
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Norm.Basic
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
 
 /-!
 # Norms from an irreducible Kummer algebra
@@ -21,13 +24,17 @@ the algebra norm through that isomorphism.
 
 
 
+@[expose] public section
+
 noncomputable section
 
 namespace LocalClassFieldTheory.Kummer
 
+universe u v w
+
 /-- Algebra norms multiply across a product of finite algebras. -/
 private theorem norm_prod_apply
-    (K S T : Type) [Field K] [CommRing S] [CommRing T]
+    (K : Type u) (S : Type v) (T : Type w) [Field K] [CommRing S] [CommRing T]
     [Algebra K S] [Algebra K T]
     [Module.Free K S] [Module.Finite K S]
     [Module.Free K T] [Module.Finite K T]
@@ -45,7 +52,7 @@ private theorem norm_prod_apply
 /-- If `X^n - a` is irreducible, being a norm from its canonical root algebra
 is equivalent to being a norm from the chosen simple Kummer field. -/
 theorem adjoinRoot_norm_iff_chosenSimpleKummerNorm_of_irreducible
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (a b : Kˣ)
     (hirr : Irreducible
       (Polynomial.X ^ (n : ℕ) - Polynomial.C (a : K))) :
@@ -90,7 +97,7 @@ theorem adjoinRoot_norm_iff_chosenSimpleKummerNorm_of_irreducible
 into the factor containing the chosen radical and a complementary factor.
 The two factors are coprime because `n` is nonzero in the base field. -/
 theorem adjoinRoot_decompose_chosenMinpoly
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (a : Kˣ) :
     let p : Polynomial K := Polynomial.X ^ (n : ℕ) - Polynomial.C (a : K)
     let q : Polynomial K :=
@@ -127,7 +134,7 @@ theorem adjoinRoot_decompose_chosenMinpoly
 /-- The norm from the canonical Kummer algebra factors through the chosen
 simple Kummer field and the complementary algebra. -/
 theorem adjoinRoot_norm_decompose_chosenMinpoly
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (a : Kˣ) :
     let p : Polynomial K := Polynomial.X ^ (n : ℕ) - Polynomial.C (a : K)
     let E := KummerTheory.chosenSimpleKummerExtension K n hnK a
@@ -176,7 +183,7 @@ theorem adjoinRoot_norm_decompose_chosenMinpoly
 /-- Every `n`-th root of `a` inside the chosen simple Kummer extension
 generates that extension when the base contains the `n`-th roots of unity. -/
 theorem adjoin_root_eq_top_of_pow_eq
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (a : Kˣ)
     (γ : KummerTheory.chosenSimpleKummerExtension K n hnK a)
     (hγ : γ ^ (n : ℕ) =
@@ -236,7 +243,7 @@ theorem adjoin_root_eq_top_of_pow_eq
 /-- Every monic irreducible factor of `X^n - a` defines the same Kummer
 extension, because all of its roots are scalar multiples of the chosen one. -/
 theorem adjoinRoot_factor_equiv_chosenSimpleKummer
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (a : Kˣ)
     (f : Polynomial K) (hfmonic : f.Monic) (hfirr : Irreducible f)
     (hfp : f ∣ Polynomial.X ^ (n : ℕ) - Polynomial.C (a : K)) :
@@ -300,7 +307,7 @@ theorem adjoinRoot_factor_equiv_chosenSimpleKummer
 /-- For coprime monic polynomials, the norm from an adjunction algebra is the
 product of the norms from the two factors. -/
 theorem adjoinRoot_norm_decompose_coprime
-    (K : Type) [Field K] (q r : Polynomial K)
+    (K : Type u) [Field K] (q r : Polynomial K)
     (hq : q.Monic) (hr : r.Monic) (hqr : IsCoprime q r) :
     ∃ e : AdjoinRoot (q * r) ≃ₐ[K] (AdjoinRoot q × AdjoinRoot r),
       ∀ y : AdjoinRoot (q * r),
@@ -333,7 +340,7 @@ theorem adjoinRoot_norm_decompose_coprime
 /-- The norm of a unit from any monic factor of `X^n - a` is a norm from the
 chosen simple Kummer extension. This includes reducible factors. -/
 theorem adjoinRoot_factor_norm_is_chosenSimpleKummerNorm
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (a : Kˣ)
     (f : Polynomial K) (hfmonic : f.Monic)
     (hfp : f ∣ Polynomial.X ^ (n : ℕ) - Polynomial.C (a : K))
@@ -434,7 +441,7 @@ theorem adjoinRoot_factor_norm_is_chosenSimpleKummerNorm
 /-- For the (possibly reducible) canonical Kummer algebra, the norm image on
 units agrees with that of the chosen simple Kummer extension. -/
 theorem adjoinRoot_norm_iff_chosenSimpleKummerNorm
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (a b : Kˣ) :
     (∃ y : (AdjoinRoot
           (Polynomial.X ^ (n : ℕ) - Polynomial.C (a : K)))ˣ,

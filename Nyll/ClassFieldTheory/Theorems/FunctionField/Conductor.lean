@@ -9,6 +9,10 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.ExtensionCond
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalConductor
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Conductor
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
 
 /-!
 # Conductor minimality and ramification support
@@ -20,11 +24,13 @@ of actual norms, and every place outside it is unramified.
 
 noncomputable section
 
+universe u v w
+
 open scoped AlgebraicCurve.Place
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

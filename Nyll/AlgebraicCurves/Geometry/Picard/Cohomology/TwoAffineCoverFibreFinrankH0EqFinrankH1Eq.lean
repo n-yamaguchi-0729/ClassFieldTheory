@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfBaseChangeEquiv
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBaseChangeEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfBaseChangeEquiv
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBaseChangeEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
 
 /-!
 # Relative Picard varieties and fibre cohomology
@@ -25,6 +27,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEqui
 Transport two-affine fibre covers through field extension while preserving the dimensions of their
 two cohomology groups.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -128,10 +132,10 @@ theorem main
     have h := lTensor_exact k' (LinearMap.exact_map_mkQ_range d) (Submodule.mkQ_surjective _)
     intro y
     have hy := h y
-    simp only [LinearMap.baseChange_eq_ltensor, Set.mem_range] at hy ⊢
+    simp only [LinearMap.baseChange_eq_lTensor, Set.mem_range] at hy ⊢
     exact hy
   have hsurj : Function.Surjective ((LinearMap.range d).mkQ.baseChange k') := by
-    rw [LinearMap.baseChange_eq_ltensor]
+    rw [LinearMap.baseChange_eq_lTensor]
     exact LinearMap.lTensor_surjective k' (Submodule.mkQ_surjective _)
   have q2 : ((k' ⊗[k] P01) ⧸ LinearMap.range (d.baseChange k')) ≃ₗ[k'] k' ⊗[k]
     (P01 ⧸ LinearMap.range d) :=

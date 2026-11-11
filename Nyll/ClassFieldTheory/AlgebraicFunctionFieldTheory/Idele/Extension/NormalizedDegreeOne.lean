@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
-import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
+public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
 
 /-!
 # Normalized degree under degree-one field inclusions
@@ -14,6 +16,8 @@ An isomorphism of the fields identifies their algebraic constant fields.
 Together with the actual degree formula for base change, this preserves the
 normalized idele-class degree.
 -/
+
+@[expose] public section
 
 noncomputable section
 

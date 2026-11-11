@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Mathlib.Tactic.Set
-import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
-import Nyll.SchemeTheory.LocalGeometry.LocalRepresentabilityULift
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.Tactic.Set
+public import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
+public import Nyll.SchemeTheory.LocalGeometry.LocalRepresentabilityULift
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Extend a family of locally finitely presented maps to open immersions covering the total
 presheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

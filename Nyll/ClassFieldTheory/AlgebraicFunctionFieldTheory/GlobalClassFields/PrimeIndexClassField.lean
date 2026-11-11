@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimePowerNormCofinality
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.TameNormCofinality
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SubextensionCorrespondence
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.RayPowerQuotient
-import Mathlib.GroupTheory.Nilpotent
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Mathlib.Algebra.CharP.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimePowerNormCofinality
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.TameNormCofinality
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SubextensionCorrespondence
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.RayPowerQuotient
+public import Mathlib.GroupTheory.Nilpotent
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Algebra.CharP.Basic
 
 /-!
 # Actual class fields at prime index
@@ -20,13 +22,17 @@ construction cover every prime index. A nontrivial finite idele-class
 quotient supplies an open overgroup of such an index.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open scoped IsMulCommutative
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 

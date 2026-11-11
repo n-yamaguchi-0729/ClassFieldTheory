@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.DegreeProduct
-import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.ChosenInertiaCoverage
-import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.InertiaGeneration
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.DegreeProduct
+public import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.ChosenInertiaCoverage
+public import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.InertiaGeneration
 
 /-!
 # Global degree bound from chosen finite-prime inertia groups
@@ -15,6 +17,8 @@ This combines three generic steps in the global degree estimate: coverage by one
 prime over each member of `S`, generation of the full Galois group by all
 finite-prime inertia, and the finite abelian product bound.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -27,7 +31,7 @@ open scoped NumberField IsMulCommutative
 /-- The generic global degree estimate used by the concrete inertia-field
 compositum. -/
 theorem finrank_le_totient_prod_primePowers_of_chosen_primes
-    (M : Type) [Field M] [NumberField M] [IsAbelianGalois ℚ M]
+    (M : Type*) [Field M] [NumberField M] [IsAbelianGalois ℚ M]
     (S : Finset Nat.Primes) (e : Nat.Primes → ℕ)
     (chosen : ∀ p : Nat.Primes,
       Ideal.primesOver (rationalPrimeIdeal p) (𝓞 M))

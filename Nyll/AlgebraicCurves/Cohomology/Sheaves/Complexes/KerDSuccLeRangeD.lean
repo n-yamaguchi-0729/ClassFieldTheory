@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.RingTheory.LocalProperties.Submodule
-import Mathlib.RingTheory.Localization.Away.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.RingTheory.LocalProperties.Submodule
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
 
 /-!
 Exactness of positive Cech degrees for a quasicoherent module presheaf on an affine cover.
 An insertion homotopy and localization on basic opens establish the kernel-range inclusion.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -590,9 +594,9 @@ theorem smul_pow_mem_range (hF : F.IsQuasicoherent) (hW : IsAffineOpen W)
     (f : Γ(V, W)) (i₀ : K.ι) (hfi : V.basicOpen f ≤ K.U i₀)
     (p : ℕ) (z : cochainOf F K (p + 1))
     (hz : dOf F K (p + 1) z = 0) :
-    letI := moduleW_altC π F K (p + 1)
+    let := moduleW_altC π F K (p + 1)
     ∃ N : ℕ, f ^ N • z ∈ rangeW π F K p := by
-  let := moduleW_altC π F K (p + 1)
+  intro sharedOwner1
   let := moduleW_altC π F K p
   set Kf := restrictBasic π K hW f with hKf
   have hi₀f : Kf.U i₀ = V.basicOpen f := inf_eq_right.mpr hfi

@@ -10,13 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.Algebra.Ring.CompTypeclasses
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfOverlapLinearEquivBaseChange
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.Algebra.Ring.CompTypeclasses
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfOverlapLinearEquivBaseChange
 
 /-!
 # Transporting an overlap comparison through chart quotients
@@ -24,6 +26,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOf
 Compatible lifts of the two chart quotients identify scalar extension to the overlap
 with overlap sections, compatibly with restrictions and adjunction unit sections.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -48,15 +52,12 @@ theorem transportAndApply_exists (φR : R ≃+* R') (φS : S ≃+* S')
     (hcompat : ∀ r, φS (ψ r) = ρ (φR r))
     (M N : Type u) [AddCommGroup M] [Module R' M] [AddCommGroup N] [Module S' N]
     (e : letI : Algebra R' S' := ρ.toAlgebra; S' ⊗[R'] M ≃ₗ[S'] N) :
-    letI : Algebra R S := ψ.toAlgebra
-    letI : Algebra R' S' := ρ.toAlgebra
-    letI : Module R M := Module.compHom M φR.toRingHom
-    letI : Module S N := Module.compHom N φS.toRingHom
+    let : Algebra R S := ψ.toAlgebra
+    let : Algebra R' S' := ρ.toAlgebra
+    let : Module R M := Module.compHom M φR.toRingHom
+    let : Module S N := Module.compHom N φS.toRingHom
     ∃ ta : (S ⊗[R] M) ≃ₗ[S] N, ∀ m : M, ta ((1:S) ⊗ₜ[R] m) = e ((1:S') ⊗ₜ[R'] m) := by
-  let : Algebra R S := ψ.toAlgebra
-  let : Algebra R' S' := ρ.toAlgebra
-  let : Module R M := Module.compHom M φR.toRingHom
-  let : Module S N := Module.compHom N φS.toRingHom
+  intro sharedOwner1 sharedOwner2 sharedOwner3 sharedOwner4
   have : RingHomInvPair (φR : R →+* R') (φR.symm : R' →+* R) :=
     RingHomInvPair.of_ringEquiv φR
   have : RingHomInvPair (φR.symm : R' →+* R) (φR : R →+* R') :=
@@ -95,31 +96,27 @@ noncomputable def transportAndApply (φR : R ≃+* R') (φS : S ≃+* S')
     (hcompat : ∀ r, φS (ψ r) = ρ (φR r))
     (M N : Type u) [AddCommGroup M] [Module R' M] [AddCommGroup N] [Module S' N]
     (e : letI : Algebra R' S' := ρ.toAlgebra; S' ⊗[R'] M ≃ₗ[S'] N) :
-    letI : Algebra R S := ψ.toAlgebra
-    letI : Module R M := Module.compHom M φR.toRingHom
-    letI : Module S N := Module.compHom N φS.toRingHom
-    (S ⊗[R] M) ≃ₗ[S] N :=
-  letI : Algebra R S := ψ.toAlgebra
+    let : Algebra R S := ψ.toAlgebra
+    let : Module R M := Module.compHom M φR.toRingHom
+    let : Module S N := Module.compHom N φS.toRingHom
+    (S ⊗[R] M) ≃ₗ[S] N := by
+  intro sharedOwner5
   letI : Algebra R' S' := ρ.toAlgebra
-  letI : Module R M := Module.compHom M φR.toRingHom
-  letI : Module S N := Module.compHom N φS.toRingHom
-  (transportAndApply_exists φR φS ψ ρ hcompat M N e).choose
+  intro sharedOwner6 sharedOwner7
+  exact (transportAndApply_exists φR φS ψ ρ hcompat M N e).choose
 
 theorem transportAndApply_one_tmul (φR : R ≃+* R') (φS : S ≃+* S')
     (ψ : R →+* S) (ρ : R' →+* S')
     (hcompat : ∀ r, φS (ψ r) = ρ (φR r))
     (M N : Type u) [AddCommGroup M] [Module R' M] [AddCommGroup N] [Module S' N]
     (e : letI : Algebra R' S' := ρ.toAlgebra; S' ⊗[R'] M ≃ₗ[S'] N) (m : M) :
-    letI : Algebra R S := ψ.toAlgebra
-    letI : Algebra R' S' := ρ.toAlgebra
-    letI : Module R M := Module.compHom M φR.toRingHom
-    letI : Module S N := Module.compHom N φS.toRingHom
-    transportAndApply φR φS ψ ρ hcompat M N e ((1:S) ⊗ₜ[R] m) = e ((1:S') ⊗ₜ[R'] m) :=
-  letI : Algebra R S := ψ.toAlgebra
-  letI : Algebra R' S' := ρ.toAlgebra
-  letI : Module R M := Module.compHom M φR.toRingHom
-  letI : Module S N := Module.compHom N φS.toRingHom
-  (transportAndApply_exists φR φS ψ ρ hcompat M N e).choose_spec m
+    let : Algebra R S := ψ.toAlgebra
+    let : Algebra R' S' := ρ.toAlgebra
+    let : Module R M := Module.compHom M φR.toRingHom
+    let : Module S N := Module.compHom N φS.toRingHom
+    transportAndApply φR φS ψ ρ hcompat M N e ((1:S) ⊗ₜ[R] m) = e ((1:S') ⊗ₜ[R'] m) := by
+  intro sourceAlgebra targetAlgebra sourceModule targetModule
+  exact (transportAndApply_exists φR φS ψ ρ hcompat M N e).choose_spec m
 
 end N4Transport
 
@@ -157,13 +154,13 @@ theorem exists_linearEquiv_overlap_quotient_baseChange_of_lift_of_compat
                 (𝒱BI.cover cBI).ρ1 (φ1 (Ideal.Quotient.mk J1 a)))
       (P0' : Type u) [AddCommGroup P0'] [Module A0B P0'] [Module.Projective A0B P0']
       (P1' : Type u) [AddCommGroup P1'] [Module A1B P1'] [Module.Projective A1B P1'],
-      letI : Module (A0B ⧸ J0) P0 := Module.compHom P0 φ0.toRingHom
-      letI : Module (A1B ⧸ J1) P1 := Module.compHom P1 φ1.toRingHom
+      let : Module (A0B ⧸ J0) P0 := Module.compHom P0 φ0.toRingHom
+      let : Module (A1B ⧸ J1) P1 := Module.compHom P1 φ1.toRingHom
       ∀ (iso0 : (A0B ⧸ J0) ⊗[A0B] P0' ≃ₗ[A0B ⧸ J0] P0)
         (iso1 : (A1B ⧸ J1) ⊗[A1B] P1' ≃ₗ[A1B ⧸ J1] P1),
-      letI : Algebra A0B A01B := (𝒱B.cover cB).ρ0.toRingHom.toAlgebra
-      letI : Algebra A1B A01B := (𝒱B.cover cB).ρ1.toRingHom.toAlgebra
-      letI : Module (A01B ⧸ J01) (𝒱BI.sectionsOf cBI M).M01 := Module.compHom _ φ01.toRingHom
+      let : Algebra A0B A01B := (𝒱B.cover cB).ρ0.toRingHom.toAlgebra
+      let : Algebra A1B A01B := (𝒱B.cover cB).ρ1.toRingHom.toAlgebra
+      let : Module (A01B ⧸ J01) (𝒱BI.sectionsOf cBI M).M01 := Module.compHom _ φ01.toRingHom
       ∃ (iso01₀ : (A01B ⧸ J01) ⊗[A01B] (A01B ⊗[A0B] P0') ≃ₗ[A01B ⧸ J01] (𝒱BI.sectionsOf cBI M).M01)
         (iso01₁ : (A01B ⧸ J01) ⊗[A01B] (A01B ⊗[A1B] P1') ≃ₗ[A01B ⧸ J01] (𝒱BI.sectionsOf cBI M).M01),
         (∀ p : P0', iso01₀ ((1 : A01B ⧸ J01) ⊗ₜ[A01B] ((1 : A01B) ⊗ₜ[A0B] p)) =
@@ -171,11 +168,7 @@ theorem exists_linearEquiv_overlap_quotient_baseChange_of_lift_of_compat
         (∀ p : P1', iso01₁ ((1 : A01B ⧸ J01) ⊗ₜ[A01B] ((1 : A01B) ⊗ₜ[A1B] p)) =
               (𝒱BI.sectionsOf cBI M).r1 (iso1 ((1 : A1B ⧸ J1) ⊗ₜ[A1B] p))) := by
   intro 𝒱B cB 𝒱BI cBI A0B A1B A01B P0 P1 φ0 φ1 φ01 hφρ0 hφρ1
-    P0' _ _ _ P1' _ _ _ iso0 iso1
-  let instM0 : Module (A0B ⧸ J0) P0 := Module.compHom P0 φ0.toRingHom
-  let instM1 : Module (A1B ⧸ J1) P1 := Module.compHom P1 φ1.toRingHom
-  let instAlg0 : Algebra A0B A01B := (𝒱B.cover cB).ρ0.toRingHom.toAlgebra
-  let instAlg1 : Algebra A1B A01B := (𝒱B.cover cB).ρ1.toRingHom.toAlgebra
+    P0' _ _ _ P1' _ _ _ instM0 instM1 iso0 iso1 instAlg0 instAlg1 quotientModule01
   set A0BI := (𝒱BI.cover cBI).A0
   set A1BI := (𝒱BI.cover cBI).A1
   set A01BI := (𝒱BI.cover cBI).A01
@@ -207,8 +200,6 @@ theorem exists_linearEquiv_overlap_quotient_baseChange_of_lift_of_compat
   let e3₀ : (A01B ⧸ J01) ⊗[A0B ⧸ J0] ((A0B ⧸ J0) ⊗[A0B] P0') ≃ₗ[A01B ⧸ J01]
       (A01B ⧸ J01) ⊗[A0B ⧸ J0] P0 :=
     LinearEquiv.baseChange (A0B ⧸ J0) (A01B ⧸ J01) _ _ iso0
-  let : Module (A01B ⧸ J01) (𝒱BI.sectionsOf cBI M).M01 :=
-    Module.compHom (𝒱BI.sectionsOf cBI M).M01 φ01.toRingHom
   let e4₀ : (A01B ⧸ J01) ⊗[A0B ⧸ J0] P0 ≃ₗ[A01B ⧸ J01] (𝒱BI.sectionsOf cBI M).M01 :=
     transportAndApply φ0 φ01 ψ0 (𝒱BI.cover cBI).ρ0.toRingHom hψ0 P0 _ rbc0
   have hker1 : ∀ a ∈ J1, (Ideal.Quotient.mk J01) ((𝒱B.cover cB).ρ1 a) = 0 := by

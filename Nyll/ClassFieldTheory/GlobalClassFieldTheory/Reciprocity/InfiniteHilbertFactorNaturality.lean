@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.PlaceEquiv
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalInfinitePlaceHilbertSymbol
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.PlaceEquiv
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalInfinitePlaceHilbertSymbol
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
 
 /-!
 # Naturality of the infinite Hilbert factor
@@ -15,6 +17,8 @@ The real-place sign in the explicit infinite Hilbert factor is unchanged
 under an equivalence of number fields. This reindexes the infinite part of
 the product formula when a field is replaced by a small model.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField

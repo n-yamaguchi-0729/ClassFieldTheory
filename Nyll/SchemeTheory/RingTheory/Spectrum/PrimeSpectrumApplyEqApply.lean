@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Spectrum.Prime.Noetherian
-import Mathlib.Tactic.Ext
+module
+
+public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
+public import Mathlib.Tactic.Ext
 
 /-!
 # Prime Spectrum apply eq apply of forall le of connected Space
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

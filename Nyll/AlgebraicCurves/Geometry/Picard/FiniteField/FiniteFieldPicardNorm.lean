@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldInvariantClass
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.PicardLangNorm
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldInvariantClass
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.PicardLangNorm
 
 /-!
 # Norms of actual geometric Picard classes over finite fields
@@ -14,6 +16,10 @@ For arithmetic Frobenius, every zero-norm class has a periodic primitive.
 A fixed class is a norm from the period-n classes exactly when its degree is
 divisible by n. All Lang and degree-one inputs are constructed from the curve.
 -/
+
+@[expose] public section
+
+universe u
 
 noncomputable section
 
@@ -26,9 +32,9 @@ attribute [local instance]
   SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupDivisor
   SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupPic0
 
-variable {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω F : Type u} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [IsProper c] [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
     (M : CurveModel Ω F) (eC : M.C ≅ pullback c (specMap k Ω))
     (heC : eC.hom ≫ pullback.snd c (specMap k Ω) = M.toBase)

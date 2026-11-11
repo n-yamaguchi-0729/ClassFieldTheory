@@ -10,38 +10,40 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.Grp.Zero
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.CategoryTheory.MorphismProperty.Limits
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ShortExactMapPushforwardThickening
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.LocallyFreeOneIffInvertible
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.DetSuccIsoDetTensor
-import Nyll.SchemeTheory.Modules.ExteriorPower.ExteriorPowerLocal
-import Nyll.SchemeTheory.Modules.Exactness
-import Nyll.SchemeTheory.Modules.Functoriality.LocallyFreePushforwardFinite
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealShortExactThickeningUnit
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealEpiUnitAppTensorInvModulePowShortExact
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
-import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+module
+
+public import Mathlib.Algebra.Category.Grp.Zero
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.CategoryTheory.MorphismProperty.Limits
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ShortExactMapPushforwardThickening
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.SchemeTheory.Modules.Invertible.RankOne
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.DetSuccIsoDetTensor
+public import Nyll.SchemeTheory.Modules.ExteriorPower.ExteriorPowerLocal
+public import Nyll.SchemeTheory.Modules.Exactness
+public import Nyll.SchemeTheory.Modules.Functoriality.LocallyFreePushforwardFinite
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealShortExactThickeningUnit
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealEpiUnitAppTensorInvModulePowShortExact
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
+public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
 
 /-!
 # Sections on an infinitesimal thickening of a curve section
@@ -50,6 +52,8 @@ This file studies a rigidified line bundle, tensored with a section twist, on th
 thickenings of a section of a proper smooth relative curve. Its pushforward is locally free of
 the thickness rank, and its determinant is isomorphic to the unit sheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

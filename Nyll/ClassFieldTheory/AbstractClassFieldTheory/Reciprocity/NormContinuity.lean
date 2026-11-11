@@ -14,19 +14,20 @@ extension `M / K` is finite Galois.  Norm transitivity then sends its norm
 subgroup into , providing the key continuity input.
 -/
 
+universe u v
+
 noncomputable section
 
 namespace ClassFormation
 
 open ClassFormation CyclicCohomology KummerTheory
 
--- Mathlib's `Rep ℤ G` currently fixes the acting group to universe zero.
-variable {G : IntegralRepGroupType} [Group G] [TopologicalSpace G]
+variable {G : Type u} [Group G] [TopologicalSpace G]
 
 /-- The norm from a finite extension is continuous for the norm topologies
 of its source and target (continuity of norms). -/
 theorem normTopology_norm_continuous
-    (A : Rep ℤ G) (K L : ClosedSubgroup G)
+    (A : Rep.{v} ℤ G) (K L : ClosedSubgroup G)
     (hLK : L.toSubgroup ≤ K.toSubgroup)
     [hLKfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)] :

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.ValuationRingEquiv
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationIdeal
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.ValuationRingEquiv
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationIdeal
 
 /-!
 # The ramification index of the totally ramified cyclotomic extension
@@ -13,6 +15,8 @@ import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.RamificationIdea
 This file maps the Eisenstein unit relation into the target valuation ring and proves
 `e = [L : ℚ_[p]]`, together with the uniformizer statement.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -34,15 +34,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.Free
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
 
 /-!
 # Scheme modules locally free of a fixed rank
 
 Defines local freeness by trivializations on neighborhoods of every point.
 -/
+
+@[expose] public section
 
 section LocallyFreeOfRank
 

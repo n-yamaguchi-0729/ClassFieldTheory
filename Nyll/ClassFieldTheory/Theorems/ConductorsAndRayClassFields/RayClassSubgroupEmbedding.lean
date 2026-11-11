@@ -11,6 +11,10 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeni
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 
 /-!
 # Antitone class fields of ray-class subgroups
@@ -25,10 +29,12 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v w
+
 namespace ClassFieldTheory
 
 private theorem subgroupArtin_prime_eq_arithmeticPrimeArtin
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     {m : RayClassModulus K} {H : Subgroup (RayClassGroup m)}
     (R : RayClassSubgroupRealization K m H)
     (v : HeightOneSpectrum (𝓞 K))
@@ -52,7 +58,7 @@ private theorem subgroupArtin_prime_eq_arithmeticPrimeArtin
         (K := K) (L := R.extension) v w hw hunram).symm
 
 private theorem subgroupRealization_mem_norm_range_iff
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     {m : RayClassModulus K} {H : Subgroup (RayClassGroup m)}
     (R : RayClassSubgroupRealization K m H)
     (x : IdeleClassGroup K) :
@@ -90,7 +96,7 @@ private theorem subgroupRealization_mem_norm_range_iff
   rw [← MonoidHom.mem_ker, R.artin_ker]
 
 private theorem arithmeticPrimeArtin_restrict_tower
-    {K E L : Type}
+    {K : Type u} {E : Type v} {L : Type w}
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Field L] [NumberField L]
@@ -113,26 +119,17 @@ private theorem arithmeticPrimeArtin_restrict_tower
           (K := K) (L := L) (E := E))
         (IdeleGroup.finitePrimeIdele v))
 
-/-- If `H ≤ J`, every Frobenius-normalized realization of the class field
-of `J` embeds into every such realization for `H`; the embedding commutes
-with their Artin actions. -/
-theorem exists_rayClassSubgroupEmbedding_artinNaturality
-    (K : Type) [Field K] [NumberField K]
+/-- Every actual embedding of Frobenius-normalized subgroup class fields
+intertwines their Artin actions. -/
+theorem rayClassSubgroupEmbedding_artinNaturality
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K)
-    {H J : Subgroup (RayClassGroup m)} (hHJ : H ≤ J)
+    {H J : Subgroup (RayClassGroup m)}
     (RH : RayClassSubgroupRealization K m H)
-    (RJ : RayClassSubgroupRealization K m J) :
-    ∃ f : RJ.extension →ₐ[K] RH.extension,
-      ∀ (x : RayClassGroup m) (y : RJ.extension),
-        RH.artin x (f y) = f (RJ.artin x y) := by
-  have hnorm : (_root_.ideleClassNorm K RH.extension).range ≤
-      (_root_.ideleClassNorm K RJ.extension).range := by
-    intro c hc
-    apply (subgroupRealization_mem_norm_range_iff RJ c).2
-    exact hHJ ((subgroupRealization_mem_norm_range_iff RH c).1 hc)
-  obtain ⟨f⟩ :=
-    GlobalClassFieldTheory.GlobalClassFields.finiteAbelianExtension_nonempty_algHom_of_normRange_le
-      (K := K) RJ.extension RH.extension hnorm
+    (RJ : RayClassSubgroupRealization K m J)
+    (f : RJ.extension →ₐ[K] RH.extension)
+    (x : RayClassGroup m) (y : RJ.extension) :
+    RH.artin x (f y) = f (RJ.artin x y) := by
   let : Algebra RJ.extension RH.extension := f.toRingHom.toAlgebra
   let : IsScalarTower K RJ.extension RH.extension :=
     IsScalarTower.of_algebraMap_eq fun z => (f.commutes z).symm
@@ -149,11 +146,75 @@ theorem exists_rayClassSubgroupEmbedding_artinNaturality
     rw [subgroupArtin_prime_eq_arithmeticPrimeArtin RH v hv,
       subgroupArtin_prime_eq_arithmeticPrimeArtin RJ v hv]
     exact arithmeticPrimeArtin_restrict_tower v
-  refine ⟨f, ?_⟩
-  intro x y
   have hx := DFunLike.congr_fun hnat x
   change AlgEquiv.restrictNormalHom RJ.extension (RH.artin x) = RJ.artin x at hx
   have hy := congrArg (fun σ : RJ.extension ≃ₐ[K] RJ.extension => f (σ y)) hx
   exact (AlgEquiv.restrictNormal_commutes (RH.artin x) RJ.extension y).symm.trans hy
+
+
+/-- The identity embedding keeps the original Artin value. -/
+theorem rayClassSubgroupEmbedding_artinNaturality_refl
+    (K : Type u) [Field K] [NumberField K]
+    (m : RayClassModulus K) {H : Subgroup (RayClassGroup m)}
+    (R : RayClassSubgroupRealization K m H)
+    (x : RayClassGroup m) (y : R.extension) :
+    R.artin x (AlgHom.id K R.extension y) =
+      AlgHom.id K R.extension (R.artin x y) := rfl
+
+/-- Composing the actual subgroup-field embeddings composes their
+Artin-equivariant actions, without choosing a new embedding. -/
+theorem rayClassSubgroupEmbedding_artinNaturality_comp
+    (K : Type u) [Field K] [NumberField K]
+    (m : RayClassModulus K)
+    {H J T : Subgroup (RayClassGroup m)}
+    (RH : RayClassSubgroupRealization K m H)
+    (RJ : RayClassSubgroupRealization K m J)
+    (RT : RayClassSubgroupRealization K m T)
+    (f : RJ.extension →ₐ[K] RH.extension)
+    (g : RT.extension →ₐ[K] RJ.extension)
+    (x : RayClassGroup m) (y : RT.extension) :
+    RH.artin x ((f.comp g) y) = (f.comp g) (RT.artin x y) := by
+  change RH.artin x (f (g y)) = f (g (RT.artin x y))
+  rw [rayClassSubgroupEmbedding_artinNaturality K m RH RJ f,
+    rayClassSubgroupEmbedding_artinNaturality K m RJ RT g]
+
+/-- If `H ≤ J`, every Frobenius-normalized realization of the class field
+of `J` embeds into every such realization for `H`; the embedding commutes
+with their Artin actions. -/
+theorem exists_rayClassSubgroupEmbedding_artinNaturality
+    (K : Type u) [Field K] [NumberField K]
+    (m : RayClassModulus K)
+    {H J : Subgroup (RayClassGroup m)} (hHJ : H ≤ J)
+    (RH : RayClassSubgroupRealization K m H)
+    (RJ : RayClassSubgroupRealization K m J) :
+    ∃ f : RJ.extension →ₐ[K] RH.extension,
+      ∀ (x : RayClassGroup m) (y : RJ.extension),
+        RH.artin x (f y) = f (RJ.artin x y) := by
+  have hnorm : (_root_.ideleClassNorm K RH.extension).range ≤
+      (_root_.ideleClassNorm K RJ.extension).range := by
+    intro c hc
+    apply (subgroupRealization_mem_norm_range_iff RJ c).2
+    exact hHJ ((subgroupRealization_mem_norm_range_iff RH c).1 hc)
+  obtain ⟨f⟩ :=
+    GlobalClassFieldTheory.GlobalClassFields.finiteAbelianExtension_nonempty_algHom_of_normRange_le
+      (K := K) RJ.extension RH.extension hnorm
+  exact ⟨f, rayClassSubgroupEmbedding_artinNaturality K m RH RJ f⟩
+
+/-- A chain of subgroup inclusions admits successive embeddings whose
+actual composite retains the same Artin action. -/
+theorem exists_rayClassSubgroupEmbedding_artinNaturality_trans
+    (K : Type u) [Field K] [NumberField K]
+    (m : RayClassModulus K)
+    {H J T : Subgroup (RayClassGroup m)} (hHJ : H ≤ J) (hJT : J ≤ T)
+    (RH : RayClassSubgroupRealization K m H)
+    (RJ : RayClassSubgroupRealization K m J)
+    (RT : RayClassSubgroupRealization K m T) :
+    ∃ (f : RJ.extension →ₐ[K] RH.extension)
+      (g : RT.extension →ₐ[K] RJ.extension),
+      ∀ (x : RayClassGroup m) (y : RT.extension),
+        RH.artin x ((f.comp g) y) = (f.comp g) (RT.artin x y) := by
+  obtain ⟨f, _⟩ := exists_rayClassSubgroupEmbedding_artinNaturality K m hHJ RH RJ
+  obtain ⟨g, _⟩ := exists_rayClassSubgroupEmbedding_artinNaturality K m hJT RJ RT
+  exact ⟨f, g, rayClassSubgroupEmbedding_artinNaturality_comp K m RH RJ RT f g⟩
 
 end ClassFieldTheory

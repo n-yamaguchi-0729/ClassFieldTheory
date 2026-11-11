@@ -4,13 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedResidueUniqueness
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.Valuation.Extension
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.Valuation.Discrete.Basic
+public import Mathlib.RingTheory.Valuation.Extension
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
 
 /-!
 # Arithmetic Frobenius in the coherent local reciprocity family
@@ -22,16 +27,20 @@ essential: residue-field behavior is a normalization of the same family,
 not a separate independently chosen reciprocity map.
 -/
 
+@[expose] public section
+
 open scoped ValuativeRel
 
 noncomputable section
+
+universe u
 
 namespace ClassFieldTheory
 
 /-- A coherent finite local reciprocity family whose inverse-uniformizer
 value is characterized uniquely by arithmetic Frobenius on residues. -/
 theorem finiteAbelianLocalReciprocity_family_arithmeticFrobenius
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
     ∃ artin : (E : FiniteAbelianLocalExtension K) →
         Kˣ →ₜ* (E.1 ≃ₐ[K] E.1),
@@ -57,44 +66,44 @@ theorem finiteAbelianLocalReciprocity_family_arithmeticFrobenius
                 IsLocalRing.residue 𝒪[E.1] z =
                   (IsLocalRing.residue 𝒪[E.1] x) ^ Nat.card 𝓀[K]) ↔
             σ = artin E ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) := by
-  refine ⟨fun E => LocalClassFieldTheory.abelianLocalArtinMap K E.1,
+  refine ⟨fun E => LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1,
     ?_, ?_, ?_⟩
   · intro E
     constructor
-    · exact LocalClassFieldTheory.abelianLocalArtinMap_surjective K E.1
+    · exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K E.1
     · change
-        (LocalClassFieldTheory.abelianLocalArtinMap K E.1).toMonoidHom.ker =
+        (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1).toMonoidHom.ker =
           LocalFieldTheory.localNormSubgroup K E.1
-      exact LocalClassFieldTheory.abelianLocalArtinMap_ker K E.1
+      exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K E.1
   · intro E F hEF x y
     have hrestrict := DFunLike.congr_fun
-      (LocalClassFieldTheory.abelianLocalArtinMap_restrict K E.1 F.1 hEF) x
+      (LocalClassFieldTheory.Universe.abelianLocalArtinMap_restrict K E.1 F.1 hEF) x
     change
       RamificationTheory.intermediateFieldRestrictNormalHom E.1 F.1 hEF
-          (LocalClassFieldTheory.abelianLocalArtinMap K F.1 x) =
-        LocalClassFieldTheory.abelianLocalArtinMap K E.1 x at hrestrict
+          (LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x) =
+        LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1 x at hrestrict
     apply Subtype.ext
     change
-      E.1.val ((LocalClassFieldTheory.abelianLocalArtinMap K E.1 x) y) =
-        F.1.val ((LocalClassFieldTheory.abelianLocalArtinMap K F.1 x)
+      E.1.val ((LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1 x) y) =
+        F.1.val ((LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x)
           (IntermediateField.inclusion hEF y))
     calc
-      E.1.val ((LocalClassFieldTheory.abelianLocalArtinMap K E.1 x) y) =
+      E.1.val ((LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1 x) y) =
           E.1.val
             ((RamificationTheory.intermediateFieldRestrictNormalHom
                 E.1 F.1 hEF
-                (LocalClassFieldTheory.abelianLocalArtinMap K F.1 x)) y) := by
+                (LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x)) y) := by
             rw [hrestrict]
-      _ = F.1.val ((LocalClassFieldTheory.abelianLocalArtinMap K F.1 x)
+      _ = F.1.val ((LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x)
             (IntermediateField.inclusion hEF y)) :=
           RamificationTheory.intermediateFieldRestrictNormalHom_apply_val
             E.1 F.1 hEF
-            (LocalClassFieldTheory.abelianLocalArtinMap K F.1 x) y
+            (LocalClassFieldTheory.Universe.abelianLocalArtinMap K F.1 x) y
   · intro E _ _ _ _ _ hUnram π hπ σ
     exact
-      letI : LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
+      let : LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
           K E.1 := ⟨hUnram⟩
-      finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow_iff
+      LocalClassFieldTheory.Universe.abelianLocalArtinMap_inverseUniformizer_residue_pow_iff
         K E.1 π hπ σ
 
 end ClassFieldTheory

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.KroneckerWeber.Setup
+module
+
+public import Nyll.ClassFieldTheory.KroneckerWeber.Setup
 
 /-!
 # The common local cyclotomic target
@@ -14,6 +16,8 @@ At a ramified prime `p`, the structured local embedding of `L` has order
 `c` prime to `p`.  Their common target has order
 `((p^f - 1) * c) * p^e`; crucially, it uses the same exponent `e`.
 -/
+
+@[expose] public section
 
 noncomputable section
 

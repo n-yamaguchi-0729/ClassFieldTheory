@@ -10,10 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-! Invertible scheme modules and the canonical pullback of the unit module. -/
+
+@[expose] public section
 
 universe u
 

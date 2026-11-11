@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
-import Nyll.AlgebraicCurves.Places.ValuationRings.ToValuationSubringEqComapRingHom
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendentalSeparable
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
+public import Nyll.AlgebraicCurves.Places.ValuationRings.ToValuationSubringEqComapRingHom
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendentalSeparable
 
 /-!
 # Place ncard alg Hom comp eq preimage eq ramification Index Along
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

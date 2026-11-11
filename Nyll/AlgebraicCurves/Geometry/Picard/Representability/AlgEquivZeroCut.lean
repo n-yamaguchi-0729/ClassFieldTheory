@@ -10,29 +10,33 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ChartSections
-import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
-import Nyll.SchemeTheory.LocalGeometry.LocalRepresentabilityULift
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RelSubPicGlue
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.IsSheafPicardZeroPresheafZariskiFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.OpenChartsPicardZeroPresheaf
-import Nyll.AlgebraicCurves.Geometry.Picard.IsProperGeometricallyConnected
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SmoothPicardRepresentabilityAlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.LocallyOfFiniteTypePicardRepresentabilityAlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.HasChartSectionsGeometricFibreRiemannRochImpEq
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ChartSections
+public import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
+public import Nyll.SchemeTheory.LocalGeometry.LocalRepresentabilityULift
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RelSubPicGlue
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.IsSheafPicardZeroPresheafZariskiFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.OpenChartsPicardZeroPresheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.IsProperGeometricallyConnected
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.SmoothPicardRepresentabilityAlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.LocallyOfFiniteTypePicardRepresentabilityAlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.HasChartSectionsGeometricFibreRiemannRochImpEq
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
 
 /-!
 # Picard representability over a reduced base
 
 Open Picard charts glue to a smooth proper geometrically connected representing scheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -166,8 +170,6 @@ attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
@@ -706,8 +708,6 @@ attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField

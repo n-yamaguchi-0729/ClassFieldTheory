@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardAction
-import Nyll.GaloisCohomology.Cyclic.LangNormKernel
-import Mathlib.Tactic.Abel
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardAction
+public import Nyll.GaloisCohomology.Cyclic.LangNormKernel
+public import Mathlib.Tactic.Abel
 
 /-!
 # Cyclic Picard norms from the degree sequence and Lang surjectivity
@@ -15,6 +17,8 @@ The degree-zero Lang operator supplies all primitives and norm preimages.
 A fixed degree-one class identifies the only obstruction to a norm with
 integer degree modulo the length of the cyclic norm.
 -/
+
+@[expose] public section
 
 noncomputable section
 

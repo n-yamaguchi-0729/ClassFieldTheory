@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.CategoryTheory.Adjunction.Basic
-import Mathlib.CategoryTheory.Adjunction.Unique
-import Mathlib.CategoryTheory.Equivalence
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.CategoryTheory.Adjunction.Basic
+public import Mathlib.CategoryTheory.Adjunction.Unique
+public import Mathlib.CategoryTheory.Equivalence
 /-!
 # Scheme Modules nonempty pushforward hom comp iso
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

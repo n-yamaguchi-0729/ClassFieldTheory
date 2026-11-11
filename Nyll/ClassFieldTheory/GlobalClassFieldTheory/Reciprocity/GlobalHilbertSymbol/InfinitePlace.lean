@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Kummer.Concrete.RootCharacters
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+module
+
+public import Nyll.GaloisCohomology.Kummer.Concrete.RootCharacters
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
 
 /-!
 # Hilbert symbols at infinite places
@@ -17,6 +19,8 @@ The definition below records that evaluation directly in `μₙ(K)`.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField
@@ -59,7 +63,7 @@ theorem infinitePlaceHilbertSymbol_eq_one_of_isComplex
     infinitePlaceHilbertSymbol K n v a b = 1 := by
   have hvNotReal : ¬v.IsReal :=
     InfinitePlace.not_isReal_iff_isComplex.mpr hv
-  simp [infinitePlaceHilbertSymbol, hvNotReal]
+  simp only [infinitePlaceHilbertSymbol, hvNotReal, ↓reduceDIte, dite_eq_ite, ite_self]
 
 omit [NumberField K] in
 /-- Away from the quadratic exponent, every infinite-place factor is
@@ -69,7 +73,7 @@ theorem infinitePlaceHilbertSymbol_eq_one_of_ne_two
     (n : ℕ+) (v : InfinitePlace K) (a b : Kˣ)
     (hn : (n : ℕ) ≠ 2) :
     infinitePlaceHilbertSymbol K n v a b = 1 := by
-  simp [infinitePlaceHilbertSymbol, hn]
+  simp only [infinitePlaceHilbertSymbol, hn, ↓reduceDIte]
 
 omit [NumberField K] in
 /-- Explicit real-place evaluation of the quadratic Hilbert symbol. -/
@@ -84,9 +88,11 @@ theorem infinitePlaceHilbertSymbol_real_apply
         1 := by
   by_cases ha : InfinitePlace.embedding_of_isReal hv (a : K) < 0
   · by_cases hb : InfinitePlace.embedding_of_isReal hv (b : K) < 0
-    · simp [infinitePlaceHilbertSymbol, hn, hv, ha, hb]
-    · simp [infinitePlaceHilbertSymbol, hn, hv, ha, hb]
-  · simp [infinitePlaceHilbertSymbol, hn, hv, ha]
+    · simp only [infinitePlaceHilbertSymbol, hn, ↓reduceDIte, hv, ha, hb, and_self, ↓reduceIte]
+    · simp only [infinitePlaceHilbertSymbol, hn, ↓reduceDIte, hv, ha, hb, OneMemClass.coe_one,
+      and_false, ↓reduceIte]
+  · simp only [infinitePlaceHilbertSymbol, hn, ↓reduceDIte, hv, ha, OneMemClass.coe_one, false_and,
+    ↓reduceIte]
 
 end Reciprocity
 end GlobalClassFieldTheory

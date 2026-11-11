@@ -11,14 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
 
 /-!
 # Is Curve Over iff exists transcendental finite Dimensional
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

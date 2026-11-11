@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldPrimeNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.DegreeOne
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormIsomorphism
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
+module
+
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldPrimeNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.DegreeOne
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormIsomorphism
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 
 /-!
 # Prime-norm values under native field presentations
@@ -19,6 +21,10 @@ Norm transitivity and the degree-one inverse identify the norm to the original
 base with the norm to its actual fixed-field presentation. Thus the concrete
 Frobenius prime-norm formula survives the presentation used by finite Artin.
 -/
+
+@[expose] public section
+
+universe u v w x
 
 noncomputable section
 
@@ -33,7 +39,8 @@ attribute [local instance]
   intrinsicFrobeniusAuxiliaryModule
   intrinsicFrobeniusAuxiliaryConstantAlgebra
 
-variable (k K L Ω : Type) [Field k] [Finite k] [Field K] [Field L] [Field Ω]
+variable (k : Type u) (K : Type v) (L : Type w) (Ω : Type x)
+    [Field k] [Finite k] [Field K] [Field L] [Field Ω]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]

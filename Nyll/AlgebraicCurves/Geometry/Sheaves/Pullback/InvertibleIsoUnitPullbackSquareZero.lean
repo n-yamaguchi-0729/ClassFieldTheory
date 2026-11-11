@@ -10,12 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.SquareZeroProjectiveModules
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.SquareZeroProjectiveModules
 
 /-!
 # Triviality of an invertible module across a square-zero thickening
@@ -23,6 +25,8 @@ import Nyll.SchemeTheory.RingTheory.LinearAlgebra.SquareZeroProjectiveModules
 An invertible module on an affine scheme is trivial when its pullback to a square-zero
 quotient is trivial.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -37,9 +41,9 @@ noncomputable section
 
 private theorem proj_of_ringEquiv {R S : Type u} [CommRing R] [CommRing S] (e : R ≃+* S)
     (M : Type u) [AddCommGroup M] [Module S M] [Module.Projective S M] :
-    letI : Module R M := Module.compHom M e.toRingHom
+    let : Module R M := Module.compHom M e.toRingHom
     Module.Projective R M := by
-  let : Module R M := Module.compHom M e.toRingHom
+  intro sharedOwner1
   have : RingHomInvPair (e.symm : S →+* R) (e : R →+* S) := RingHomInvPair.of_ringEquiv e.symm
   have : RingHomInvPair (e : R →+* S) (e.symm : S →+* R) := RingHomInvPair.of_ringEquiv e
   have slEq : M ≃ₛₗ[(e.symm : S →+* R)] M :=
@@ -54,9 +58,9 @@ private theorem proj_of_ringEquiv {R S : Type u} [CommRing R] [CommRing S] (e : 
 private theorem fin_of_surj {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S)
     (hf : Function.Surjective f) (M : Type u) [AddCommGroup M] [Module S M]
     [Module.Finite S M] :
-    letI : Module R M := Module.compHom M f
+    let : Module R M := Module.compHom M f
     Module.Finite R M := by
-  let : Module R M := Module.compHom M f
+  intro sharedOwner1
   obtain ⟨s, hs⟩ := ‹Module.Finite S M›.1
   refine ⟨s, ?_⟩
   rw [eq_top_iff]; intro m _

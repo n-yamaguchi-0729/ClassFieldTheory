@@ -4,15 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictionComposition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.AlgEquiv
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.Topology.DenseEmbedding
+module
+
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictionComposition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.AlgEquiv
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.Topology.DenseEmbedding
 
 /-!
 # Conjugation invariance of completed and all-place norms
@@ -25,6 +28,8 @@ and the equality descends to idele classes.
 
 These naturality results are used by the Galois product formula in `NormProduct`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -91,8 +96,6 @@ theorem localNormOver_algAut (σ : L ≃ₐ[K] L) (v : Place k K)
     Algebra.norm v.adicCompletion (x : w.adicCompletion)
   exact Algebra.norm_eq_of_algEquiv e (x : w.adicCompletion)
 
-variable [Algebra.IsSeparable K L]
-
 private def inverseAutomorphismFiberEquiv (σ : L ≃ₐ[K] L) (v : Place k K) :
     v.fiberOver L ≃ v.fiberOver L where
   toFun w := ⟨(SemilinearAut.ofAlgAut (σ.restrictScalars k))⁻¹ • w.1,
@@ -105,7 +108,7 @@ private def inverseAutomorphismFiberEquiv (σ : L ≃ₐ[K] L) (v : Place k K) :
   right_inv w := Subtype.ext (inv_smul_smul (SemilinearAut.ofAlgAut (σ.restrictScalars k)) w.1)
 
 /-- The all-place norm is invariant under the actual completed action of every
-automorphism of the finite separable extension. Galoisness is not required. -/
+automorphism of the finite extension, including its inseparable part. -/
 theorem norm_algAut_smul (σ : L ≃ₐ[K] L) (a : IdeleGroup k L) :
     norm (k := k) (K := K) (L := L)
         (SemilinearAut.ofAlgAut (σ.restrictScalars k) • a) =
@@ -141,8 +144,24 @@ end IdeleGroup
 
 namespace IdeleClassGroup
 
+variable [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
+
+/-- Conjugation invariance of the actual norm descends to the original class
+group for every finite function-field extension, without separability. -/
+theorem finiteNorm_algAut_smul [Finite k]
+    [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
+    (σ : L ≃ₐ[K] L) (c : IdeleClassGroup k L) :
+    finiteNorm (k := k) (K := K) (L := L)
+        (SemilinearAut.ofAlgAut (σ.restrictScalars k) • c) =
+      finiteNorm (k := k) (K := K) (L := L) c := by
+  obtain ⟨a, rfl⟩ := mk_surjective (k := k) (K := L) c
+  rw [smul_mk]
+  change mk (IdeleGroup.norm (K := K) (L := L)
+      (SemilinearAut.ofAlgAut (σ.restrictScalars k) • a)) =
+    mk (IdeleGroup.norm (K := K) (L := L) a)
+  exact congrArg (mk (k := k) (K := K)) (IdeleGroup.norm_algAut_smul σ a)
+
 variable [Algebra.IsSeparable K L]
-    [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
 
 /-- Conjugation invariance descends through the actual principal-idele quotient. -/
 theorem norm_algAut_smul (σ : L ≃ₐ[K] L) (c : IdeleClassGroup k L) :

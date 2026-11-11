@@ -10,15 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Flat.Equalizer
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverCechSectionsOfBaseChangeEquiv
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Mathlib.RingTheory.Flat.Equalizer
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverCechSectionsOfBaseChangeEquiv
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # Relative Picard varieties and fibre cohomology
@@ -26,6 +28,8 @@ import Mathlib.Util.WithWeakNamespace
 Compare the cohomology of a fibre cover with the base change of its chart Čech differential to the
 residue field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -89,7 +93,7 @@ theorem nonempty_cokerBaseChangeEquiv (d : C0 →ₗ[R] C1) (A : Type*) [CommRin
   let qA : A ⊗[R] C1 →ₗ[A] A ⊗[R] (C1 ⧸ LinearMap.range d) := q.baseChange A
   have hsurj : Function.Surjective qA := by
     rw [show (qA : A ⊗[R] C1 → A ⊗[R] (C1 ⧸ LinearMap.range d)) = LinearMap.lTensor A q from
-      LinearMap.baseChange_eq_ltensor q]
+      LinearMap.baseChange_eq_lTensor q]
     exact LinearMap.lTensor_surjective A (Submodule.mkQ_surjective _)
   have hker : LinearMap.ker qA = LinearMap.range (d.baseChange A) := by
     have h1 : LinearMap.ker (LinearMap.lTensor A q) = LinearMap.range (LinearMap.lTensor A d) := by
@@ -101,13 +105,13 @@ theorem nonempty_cokerBaseChangeEquiv (d : C0 →ₗ[R] C1) (A : Type*) [CommRin
         (LinearMap.surjective_rangeRestrict d))
     ext x
     rw [LinearMap.mem_ker, LinearMap.mem_range]
-    have hx : qA x = LinearMap.lTensor A q x := congrFun (LinearMap.baseChange_eq_ltensor q) x
+    have hx : qA x = LinearMap.lTensor A q x := congrFun (LinearMap.baseChange_eq_lTensor q) x
     rw [hx, ← LinearMap.mem_ker, h1, LinearMap.mem_range]
     constructor
     · rintro ⟨y, rfl⟩
-      exact ⟨y, (congrFun (LinearMap.baseChange_eq_ltensor d) y)⟩
+      exact ⟨y, (congrFun (LinearMap.baseChange_eq_lTensor d) y)⟩
     · rintro ⟨y, rfl⟩
-      exact ⟨y, (congrFun (LinearMap.baseChange_eq_ltensor d) y).symm⟩
+      exact ⟨y, (congrFun (LinearMap.baseChange_eq_lTensor d) y).symm⟩
   exact ⟨(Submodule.quotEquivOfEq _ _ hker.symm).trans (qA.quotKerEquivOfSurjective hsurj)⟩
 
 end Coker

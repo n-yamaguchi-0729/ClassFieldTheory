@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.SplitGenerator
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.SplitGenerator
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
 /-!
 # Splitting of a Kummer extension at an actual place
@@ -15,6 +17,8 @@ root lies there because the roots of unity already lie in the base field.
 The actual decomposition group therefore fixes the generating radical and
 is trivial. This computes the completed degree and gives actual norm preimages.
 -/
+
+@[expose] public section
 
 noncomputable section
 

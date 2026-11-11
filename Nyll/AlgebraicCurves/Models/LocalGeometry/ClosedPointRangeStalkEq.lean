@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ValuativeCriterion
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.ValuationRingStalkSmoothOfRelativeDimensionOne
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
-import Mathlib.Algebra.Category.Ring.Basic
-import Mathlib.AlgebraicGeometry.FunctionField
+module
+
+public import Mathlib.AlgebraicGeometry.ValuativeCriterion
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.ValuationRingStalkSmoothOfRelativeDimensionOne
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Exists closedPoint range stalk eq
@@ -24,6 +28,8 @@ import Mathlib.AlgebraicGeometry.FunctionField
 The valuative criterion for a proper smooth integral curve realizes each place as the image of a
 closed-point local ring in the function field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -19,6 +19,12 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormal
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidueAbelianization
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldConstruction
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldOriginalField
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
 
 /-!
 # Global class field theory implementation
@@ -36,12 +42,14 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
 /-- The idèle class group is commutative.  Keeping this witness public
 stabilizes normal-subgroup arguments in exported quotient statements. -/
 theorem ideleClassGroupIsMulCommutative
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     IsMulCommutative (IdeleClassGroup K) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
@@ -51,7 +59,7 @@ attribute [local instance 2000] ideleClassGroupIsMulCommutative
 produces a public modulus outside which a number-field extension is
 unramified, independently of any Artin-map construction. -/
 theorem exists_unramifiedOutsideModulus
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] :
     ∃ m : RayClassModulus K, IsUnramifiedOutsideModulus K L m := by
@@ -96,7 +104,7 @@ theorem exists_unramifiedOutsideModulus
 
 /-- The public narrow modulus whose finite part is the actual norm conductor. -/
 noncomputable def normConductorRayClassModulus
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L] : RayClassModulus K := by
@@ -109,7 +117,7 @@ noncomputable def normConductorRayClassModulus
 
 /-- The public norm-conductor modulus is the original narrow modulus. -/
 theorem normConductorRayClassModulus_original
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L] :
@@ -128,7 +136,7 @@ open _root_.GlobalClassFieldTheory.GlobalClassFields (
 /-- The actual narrow finite norm conductor, together with every real place,
 is a public modulus outside which a finite abelian extension is unramified. -/
 theorem normConductorRayClassModulus_unramifiedOutside
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L] :
@@ -163,7 +171,7 @@ theorem normConductorRayClassModulus_unramifiedOutside
 /-- The norm conductor yields a public modulus outside which the extension
 is unramified. -/
 theorem unramifiedOutside_normConductorModulus
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L] :
@@ -182,7 +190,7 @@ open _root_.GlobalClassFieldTheory.GlobalClassFields (
 /-- The public norm-conductor modulus is a defining modulus for the actual
 idèle-class norm subgroup. -/
 private theorem normConductorRayClassModulus_isDefining
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L] :
@@ -196,7 +204,7 @@ private theorem normConductorRayClassModulus_isDefining
 /-- Arithmetic global reciprocity, descended to the public ray class group
 at the actual narrow norm conductor. -/
 noncomputable def normConductorArtin
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L] :
@@ -214,7 +222,7 @@ noncomputable def normConductorArtin
 
 /-- The conductor ray-class Artin map is onto the finite abelian Galois group. -/
 theorem normConductorArtin_surjective
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L] :
@@ -234,7 +242,7 @@ open _root_.GlobalClassFieldTheory.IdealClassFieldTheory (
 /-- At a prime away from the norm conductor, the public Artin map agrees
 with the arithmetic prime Artin element of the original idèle theory. -/
 theorem normConductorArtin_prime
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -265,7 +273,7 @@ theorem normConductorArtin_prime
 /-- The class field selected from a closed finite-index idèle-class subgroup
 has exactly that subgroup as its norm group. -/
 theorem classFieldExistence_normSubgroup
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (H : Subgroup (IdeleClassGroup K))
     (hclosed : IsClosed (H : Set (IdeleClassGroup K)))
     [H.FiniteIndex] :
@@ -278,7 +286,7 @@ theorem classFieldExistence_normSubgroup
 /-- The degree of the selected class field is the index of its defining
 idèle-class subgroup. -/
 theorem classFieldExistence_degree
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (H : Subgroup (IdeleClassGroup K))
     (hclosed : IsClosed (H : Set (IdeleClassGroup K)))
     [H.FiniteIndex] :
@@ -291,7 +299,7 @@ theorem classFieldExistence_degree
 /-- The implemented arithmetic norm-residue isomorphism proves finite
 abelian global reciprocity in quotient form. -/
 theorem finiteAbelianGlobalReciprocity
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L] :
@@ -304,7 +312,7 @@ theorem finiteAbelianGlobalReciprocity
 /-- Maximal abelian reciprocity after quotienting by the identity
 component. -/
 theorem maximalAbelianGlobalReciprocity
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     Nonempty
       (ideleClassComponentQuotient K ≃ₜ*
         (maximalAbelianExtension K ≃ₐ[K] maximalAbelianExtension K)) := by

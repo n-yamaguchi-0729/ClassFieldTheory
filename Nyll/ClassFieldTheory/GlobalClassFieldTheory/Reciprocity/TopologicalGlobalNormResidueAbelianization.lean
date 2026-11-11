@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbelianization
-import Mathlib.FieldTheory.KrullTopology
-import Mathlib.Topology.Algebra.Group.Quotient
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UniverseNormConductor
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbelianization
+public import Mathlib.FieldTheory.KrullTopology
+public import Mathlib.Topology.Algebra.Group.Quotient
 
 /-!
 # Topological global reciprocity for finite Galois extensions
@@ -27,16 +29,20 @@ isomorphisms between finite groups.
 
 
 
+@[expose] public section
+
 open scoped IsMulCommutative NumberField
 open NumberField
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
 variable
-    (K L : Type) [Field K] [NumberField K]
+    (K : Type u) (L : Type v) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
 
@@ -65,8 +71,7 @@ theorem ideleClassNormAbelianizationQuotient_discreteTopology :
         (_root_.ideleClassNorm K L).range) := by
   apply QuotientGroup.discreteTopology
   exact
-    GlobalClassFields.ideleClassNorm_range_isOpen
-      (K := K) (L := L)
+    GlobalClassFields.ideleClassNorm_range_isOpen_universe K L
 
 omit [NumberField K] [NumberField L] [IsGalois K L] in
 /-- The abelianization of a finite Krull Galois group carries the

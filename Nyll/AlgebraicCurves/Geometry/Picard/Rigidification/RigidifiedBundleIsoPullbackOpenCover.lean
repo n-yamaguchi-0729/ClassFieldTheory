@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoMapPullbackRigSectionCompEq
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoEqMapPullbackRigSectionCompEq
-import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackCompPullbackCongrPasteSquaresApp
+module
 
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Mathlib.CategoryTheory.Sites.Descent.DescentDataPrime
-import Nyll.SchemeTheory.CategoryTheory.DescentComparison
-import Nyll.SchemeTheory.Modules.Functoriality.CanonicalPullbackLegRelation
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.IsPullbackBaseChangeSnd
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoMapPullbackRigSectionCompEq
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoEqMapPullbackRigSectionCompEq
+public import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackCompPullbackCongrPasteSquaresApp
+
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Mathlib.CategoryTheory.Sites.Descent.DescentDataPrime
+public import Nyll.SchemeTheory.CategoryTheory.DescentComparison
+public import Nyll.SchemeTheory.Modules.Functoriality.CanonicalPullbackLegRelation
 
 /-!
 # Descent of rigidified line-bundle isomorphisms
@@ -32,6 +36,8 @@ cover when the structural map has bijective global sections after base change.
 Chosen fibre products and section pullback isomorphisms track the transition
 morphisms used by the descent comparison.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -113,12 +119,12 @@ noncomputable def τ (f : X₀ ⟶ X₁) (g : X₁ ⟶ X₂) (m : X₀ ⟶ X₂)
 theorem τ_hom_app (f : X₀ ⟶ X₁) (g : X₁ ⟶ X₂) (m : X₀ ⟶ X₂) (e : f ≫ g = m) (M : X₂.Modules) :
     (τ f g m e).hom.app M = (pullbackComp f g).hom.app M ≫ eqToHom (by rw [e]) := by
   subst e
-  simp [τ, pullbackCongr]
+  rfl
 
 theorem τ_inv_app (f : X₀ ⟶ X₁) (g : X₁ ⟶ X₂) (m : X₀ ⟶ X₂) (e : f ≫ g = m) (M : X₂.Modules) :
     (τ f g m e).inv.app M = eqToHom (by rw [e]) ≫ (pullbackComp f g).inv.app M := by
   subst e
-  simp [τ, pullbackCongr]
+  rfl
 
 /-- The pullback isomorphism associated with a commutative square of scheme morphisms. -/
 noncomputable def sqIso {W X Y Z : Scheme.{u}} {f : W ⟶ X} {g : X ⟶ Z} {h : W ⟶ Y} {k : Y ⟶ Z}
@@ -238,12 +244,8 @@ variable {R : Type u} [CommRing R] {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat
 
 lemma isPullback_baseChangeSnd_snd {T T' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
     {t' : T' ⟶ Spec (CommRingCat.of R)} (ψ : SchemeHomOver t' t) :
-    IsPullback (baseChangeSnd c ψ) (pullback.snd c t') (pullback.snd c t) ψ.1 := by
-  have big : IsPullback (baseChangeSnd c ψ ≫ pullback.fst c t) (pullback.snd c t') c (ψ.1 ≫ t) := by
-    rw [ψ.2, show baseChangeSnd c ψ ≫ pullback.fst c t = pullback.fst c t' from
-      (pullback.lift_fst _ _ _).trans (Category.comp_id _)]
-    exact IsPullback.of_hasPullback c t'
-  exact big.of_right ((pullback.lift_snd _ _ _)) (IsPullback.of_hasPullback c t)
+    IsPullback (baseChangeSnd c ψ) (pullback.snd c t') (pullback.snd c t) ψ.1 :=
+  _root_.AlgebraicGeometry.RelPicard.isPullback_baseChangeSnd c ψ
 
 lemma isPullback_baseChangeSnd {X U V W : Scheme.{u}} {x : X ⟶ Spec (CommRingCat.of R)}
     {uS : U ⟶ Spec (CommRingCat.of R)} {vS : V ⟶ Spec (CommRingCat.of R)} {wS : W ⟶ Spec
@@ -251,21 +253,8 @@ lemma isPullback_baseChangeSnd {X U V W : Scheme.{u}} {x : X ⟶ Spec (CommRingC
     (u : SchemeHomOver uS x) (v : SchemeHomOver vS x) (a : SchemeHomOver wS uS) (b : SchemeHomOver
         wS vS)
     (h : IsPullback a.1 b.1 u.1 v.1) :
-    IsPullback (baseChangeSnd c a) (baseChangeSnd c b) (baseChangeSnd c u) (baseChangeSnd c v) := by
-  have hbig : IsPullback (pullback.snd c wS ≫ a.1) (baseChangeSnd c b) u.1 (pullback.snd c vS ≫ v.1)
-      :=
-    (isPullback_baseChangeSnd_snd c b).flip.paste_horiz h
-  have hbig' : IsPullback (baseChangeSnd c a ≫ pullback.snd c uS) (baseChangeSnd c b) u.1
-      (baseChangeSnd c v ≫ pullback.snd c x) := by
-    rw [show baseChangeSnd c a ≫ pullback.snd c uS = pullback.snd c wS ≫ a.1 from pullback.lift_snd
-        _ _ _,
-      show baseChangeSnd c v ≫ pullback.snd c x = pullback.snd c vS ≫ v.1 from pullback.lift_snd _ _
-          _]
-    exact hbig
-  refine hbig'.of_right ?_ (isPullback_baseChangeSnd_snd c u).flip
-  rw [baseChangeSnd_comp, baseChangeSnd_comp]
-  congr 1
-  exact Subtype.ext h.w
+    IsPullback (baseChangeSnd c a) (baseChangeSnd c b) (baseChangeSnd c u) (baseChangeSnd c v) :=
+  _root_.AlgebraicGeometry.RelPicard.isPullback_baseChangeSnd_of_isPullback c u v a b h
 
 /-- The structural map from the overlap of two schemes over the affine base. -/
 abbrev strMap₁₂ {T T₁ T₂ : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)} {t₁ : T₁ ⟶ Spec

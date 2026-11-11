@@ -11,8 +11,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardAction
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardAction
 
 /-!
 # Semilinear equivariance with changing constants
@@ -21,6 +23,8 @@ Extend the valuation-ring and ramification arguments from the semilinear
 restriction lemmas to two different constant fields. Consequently actual
 constant-field pullback commutes with intertwining field automorphisms.
 -/
+
+@[expose] public section
 
 noncomputable section
 

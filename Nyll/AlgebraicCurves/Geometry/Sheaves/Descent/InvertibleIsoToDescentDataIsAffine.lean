@@ -10,25 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Sites.Descent.DescentData
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
-import Nyll.SchemeTheory.Descent.AlgebraDescentCofaces
-import Nyll.SchemeTheory.Descent.ModuleFaithfullyFlatSubmoduleIsBaseChange
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesInvertibleTilde
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.FinrankBaseChangeSectionsEqOne
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.InvertibleModules
+module
+
+public import Mathlib.CategoryTheory.Sites.Descent.DescentData
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
+public import Nyll.SchemeTheory.Descent.AlgebraDescentCofaces
+public import Nyll.SchemeTheory.Descent.ModuleFaithfullyFlatSubmoduleIsBaseChange
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesInvertibleTilde
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.FinrankBaseChangeSectionsEqOne
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.InvertibleModules
 
 /-!
 # Scheme Modules Is Invertible exists iso to Descent Data of is Affine of is Affine Hom of
 flat of surjective
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -252,11 +256,11 @@ theorem Mod_mapComp'_inv_app (fg : X ⟶ Z) (h : f ≫ g = fg) (L : Z.Modules) :
 
 theorem pullbackCongr_hom_app {f f' : X ⟶ Y} (h : f = f') (L : Y.Modules) :
     (pullbackCongr h).hom.app L = eqToHom (by rw [h]) := by
-  subst h; simp [pullbackCongr]
+  subst h; rfl
 
 theorem pullbackCongr_inv_app {f f' : X ⟶ Y} (h : f = f') (L : Y.Modules) :
     (pullbackCongr h).inv.app L = eqToHom (by rw [h]) := by
-  subst h; simp [pullbackCongr]
+  subst h; rfl
 
 theorem pullbackCongr_symm_hom {f f' : X ⟶ Y} (h : f = f') :
     (pullbackCongr h.symm).hom = (pullbackCongr h).inv := by
@@ -274,15 +278,14 @@ theorem pullbackCongr_hom_app_trans {f f' f'' : X ⟶ Y} (h : f = f') (h' : f' =
   :
     (pullbackCongr h).hom.app L ≫ (pullbackCongr h').hom.app L = (pullbackCongr (h.trans
       h')).hom.app L := by
-  subst h h'; simp [pullbackCongr]
+  subst h h'
+  exact Category.id_comp _
 
 theorem pullbackCongr_rfl_hom_app (f : X ⟶ Y) (L : Y.Modules) :
-    (pullbackCongr (rfl : f = f)).hom.app L = 𝟙 _ := by
-  simp [pullbackCongr]
+    (pullbackCongr (rfl : f = f)).hom.app L = 𝟙 _ := rfl
 
 theorem pullbackCongr_rfl_inv_app (f : X ⟶ Y) (L : Y.Modules) :
-    (pullbackCongr (rfl : f = f)).inv.app L = 𝟙 _ := by
-  simp [pullbackCongr]
+    (pullbackCongr (rfl : f = f)).inv.app L = 𝟙 _ := rfl
 
 theorem pullHom_MOD {X₁ X₂ Y Y' : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules} {f₁ : Y ⟶ X₁} {f₂
   : Y ⟶ X₂}
@@ -549,7 +552,7 @@ theorem tilde_face {i₁ i₂ : S ⟶ T} {N : ModuleCat.{u} S}
   dsimp only [Functor.comp_obj]
   rw [Category.comp_id]
   erw [← H₂]
-  rw [Iso.map_inv_hom_id_assoc]
+  rw [Iso.inv_hom_id_map_assoc]
   erw [Hn, reassoc_of% H₁]
   simp only [Iso.inv_hom_id_app_assoc]
 

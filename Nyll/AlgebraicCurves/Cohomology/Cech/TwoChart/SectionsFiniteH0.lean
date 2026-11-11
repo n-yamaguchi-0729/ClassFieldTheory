@@ -10,18 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH1
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechKerMapInjective
-import Mathlib.Algebra.Polynomial.Laurent
-import Mathlib.RingTheory.Adjoin.Basic
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Mathlib.LinearAlgebra.Pi
+
+public import Mathlib.Algebra.Module.LinearMap.Defs
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH1
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechKerMapInjective
+public import Mathlib.Algebra.Polynomial.Laurent
+public import Mathlib.RingTheory.Adjoin.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Noetherian.Basic
 
 /-!
 Finiteness of matching sections from finite chart modules and localization on the overlap.
 A projective-line presentation and its kernel section system supply the comparison.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -56,21 +64,12 @@ theorem P1Cover_ρ1_apply (p : R[X]) :
   M0 := Fin m → R[X]
   M1 := Fin m → R[X]
   M01 := Fin m → R[T;T⁻¹]
-  r0 :=
-    { toFun := fun v i => Polynomial.toLaurent (v i)
-      map_add' := fun v w => funext fun i => map_add _ _ _
-      map_smul' := fun r v => funext fun i => by
-        simp only [Pi.smul_apply, RingHom.id_apply]
-        exact map_smul (Polynomial.toLaurentAlg (R := R)) r (v i) }
-  r1 :=
-    { toFun := fun v i => T (-(a : ℤ)) * LaurentPolynomial.invert (Polynomial.toLaurent (v i))
-      map_add' := fun v w => funext fun i => by
-        simp only [Pi.add_apply, map_add, mul_add]
-      map_smul' := fun r v => funext fun i => by
-        simp only [Pi.smul_apply, RingHom.id_apply]
-        have h1 : Polynomial.toLaurent (r • v i) = r • Polynomial.toLaurent (v i) :=
-          map_smul (Polynomial.toLaurentAlg (R := R)) r (v i)
-        rw [h1, map_smul, mul_smul_comm] }
+  r0 := LinearMap.pi fun i =>
+    (Polynomial.toLaurentAlg (R := R)).toLinearMap.comp (LinearMap.proj i)
+  r1 := LinearMap.pi fun i =>
+    (LinearMap.mulLeft R (T (-(a : ℤ)))).comp
+      ((LaurentPolynomial.invert (R := R)).toLinearEquiv.toLinearMap.comp
+        ((Polynomial.toLaurentAlg (R := R)).toLinearMap.comp (LinearMap.proj i)))
   r0_smul p v := funext fun i => by
     change Polynomial.toLaurent ((p • v) i) = Polynomial.toLaurent p * Polynomial.toLaurent (v i)
     simp only [Pi.smul_apply, smul_eq_mul, map_mul]
@@ -731,7 +730,6 @@ theorem finite_H0 [IsNoetherianRing R] (D : SerreData S f g)
     simp only [LinearMap.comp_apply] at h0 h1
     change S.r1 (D.π1 w) - S.r0 (D.π0 v) = D.π01 (E.r1 w) - D.π01 (E.r0 v)
     rw [h0, h1]
-    try rfl
   have hi1 : Function.Injective i1 := fun x y hxy => Subtype.ext hxy
   have hp0 : Function.Surjective p0 := fun ⟨x, y⟩ => by
     obtain ⟨v, rfl⟩ := D.surj0 x

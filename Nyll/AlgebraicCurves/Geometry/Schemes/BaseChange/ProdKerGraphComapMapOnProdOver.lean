@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.PullbackOfPoint
-import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.BaseChange.PullbackOfPoint
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
 
 /-!
 # Base change of products of graph ideals
 
 The ideal kernels of graphs commute with base change, as do their finite products.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

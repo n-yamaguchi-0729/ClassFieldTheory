@@ -10,12 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Adjunction
-import Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal
-import Mathlib.Algebra.Category.ModuleCat.Presheaf.PushforwardZeroMonoidal
-import Mathlib.CategoryTheory.Monoidal.FunctorCategory
-import Mathlib.Tactic.CategoryTheory.Reassoc
-import Mathlib.Tactic.Ext
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Adjunction
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf.Monoidal
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf.PushforwardZeroMonoidal
+public import Mathlib.CategoryTheory.Monoidal.FunctorCategory
+public import Mathlib.Tactic.CategoryTheory.Reassoc
+public import Mathlib.Tactic.Ext
 
 /-!
 # Monoidal pullback of module presheaves
@@ -24,6 +26,8 @@ Restriction of scalars, free module presheaves, and free representables provide 
 and unit comparisons for module-presheaf pullback. Preservation of finite products on the
 base category makes these pullback comparisons invertible.
 -/
+
+@[expose] public section
 
 universe v u v₁ u₁ v₂ u₂
 

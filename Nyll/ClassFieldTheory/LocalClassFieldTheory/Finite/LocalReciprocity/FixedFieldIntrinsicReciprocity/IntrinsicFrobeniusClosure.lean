@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Basic
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusQuotientTransport
+module
+
+public import Mathlib.FieldTheory.Galois.Basic
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusQuotientTransport
 
 /-!
 # Intrinsic Frobenius closure comparison
@@ -14,6 +16,8 @@ This module compares the intrinsic and ambient Frobenius closures after
 the quotient transport has been constructed.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace LocalClassFieldTheory
@@ -21,6 +25,20 @@ namespace LocalClassFieldTheory
 open LocalFieldTheory RamificationTheory CyclicCohomology KummerTheory
 open ClassFormation
 open scoped ValuativeRel
+
+/-- Compute membership in a Frobenius closure before specializing the quotient carrier. -/
+private theorem frobeniusClosure_mk_mem_iff_singleton
+    {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
+    (D : DegreeData G) (R : D.FiniteResidueAbstractField)
+    (J : ClosedSubgroup G) (hJR : J.toSubgroup ≤ R.field.toSubgroup)
+    [hJnormal : (extensionSubgroup R.field J hJR).Normal]
+    (σ : D.FrobeniusElements R J hJR) (τ : R.field.toSubgroup) :
+    (QuotientGroup.mk τ : R.field.toSubgroup ⧸ D.extensionInertiaWithin R.field J hJR) ∈
+        (D.frobeniusClosure R J hJR σ).toSubgroup ↔
+      (QuotientGroup.mk τ : R.field.toSubgroup ⧸ D.extensionInertiaWithin R.field J hJR) ∈
+        (closedSubgroupGenerated ({σ.1} : Set
+          (R.field.toSubgroup ⧸ D.extensionInertiaWithin R.field J hJR))).toSubgroup := by
+  rw [DegreeData.frobeniusClosure, Set.range_unique]
 
 /-- Membership in the intrinsic Frobenius closure, expressed either with the
 residue datum's carrier or with the canonical fixed-field quotient. -/
@@ -37,22 +55,22 @@ theorem intrinsicFixedFieldFrobeniusClosure_mem_iff
     (e : intrinsicFixedFieldSeparableClosureEquiv K H)
     (σ : intrinsicFixedFieldFrobeniusElements K H J hJH e) :
     let F := abstractFixedField K (SeparableClosure K) H.field
-    letI : Algebra F (SeparableClosure F) :=
+    let : Algebra F (SeparableClosure F) :=
       (separableClosure F (AlgebraicClosure F)).algebra
     let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-    letI : FiniteDimensional K F :=
+    let : FiniteDimensional K F :=
       abstractFixedField_finiteDimensional
         K (SeparableClosure K) H.field H.finite
-    letI : NontriviallyNormedField F :=
+    let : NontriviallyNormedField F :=
       finiteExtensionSpectralNormedField K F
-    letI : ValuativeRel F :=
+    let : ValuativeRel F :=
       finiteExtensionSpectralValuativeRel K F
-    letI : IsNonarchimedeanLocalField F :=
+    let : IsNonarchimedeanLocalField F :=
       finiteExtensionSpectralIsNonarchimedeanLocalField K F
-    letI : FiniteDimensional F E :=
+    let : FiniteDimensional F E :=
       abstractRelativeFixedField_finiteDimensional
         K (SeparableClosure K) H.field J hJH H.finite hJfinite
-    letI : IsGalois F E :=
+    let : IsGalois F E :=
       abstractRelativeFixedField_isGalois
         K (SeparableClosure K) H.field J hJH hJnormal
     let i : E →ₐ[F] SeparableClosure F :=
@@ -75,52 +93,10 @@ theorem intrinsicFixedFieldFrobeniusClosure_mem_iff
             ({σ.1} : Set
               (intrinsicFixedFieldFrobeniusQuotient
                 K H J hJH e)) : Subgroup _) := by
-  dsimp only
-  let F := abstractFixedField K (SeparableClosure K) H.field
-  let : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  let : FiniteDimensional K F :=
-    abstractFixedField_finiteDimensional
-      K (SeparableClosure K) H.field H.finite
-  let : NontriviallyNormedField F :=
-    finiteExtensionSpectralNormedField K F
-  let : ValuativeRel F :=
-    finiteExtensionSpectralValuativeRel K F
-  let : IsNonarchimedeanLocalField F :=
-    finiteExtensionSpectralIsNonarchimedeanLocalField K F
-  let : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  let : IsGalois F E :=
-    abstractRelativeFixedField_isGalois
-      K (SeparableClosure K) H.field J hJH hJnormal
-  let i : E →ₐ[F] SeparableClosure F :=
-    e.symm.toAlgHom.comp E.val
-  let EI := finiteGaloisAbstractExtensionOfEmbedding F E i
-  let RF :=
-    (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
-      (localResidueDatum F)
-  intro τ
-  let τRF : RF.field.toSubgroup :=
-    ⟨τ.1, by
-      simpa only [RF, intrinsicFiniteAbstractBase,
-        FiniteAbstractField.toFiniteResidueAbstractField] using τ.2⟩
-  constructor
-  · intro h
-    convert h using 1
-    all_goals
-      simp only [DegreeData.frobeniusClosure, Set.range_unique,
-        intrinsicFixedFieldFrobeniusQuotient,
-        intrinsicFiniteAbstractBase,
-        FiniteAbstractField.toFiniteResidueAbstractField]
-  · intro h
-    convert h using 1
-    all_goals
-      simp only [DegreeData.frobeniusClosure, Set.range_unique,
-        intrinsicFixedFieldFrobeniusQuotient,
-        intrinsicFiniteAbstractBase,
-        FiniteAbstractField.toFiniteResidueAbstractField]
+  intro F reusedStructure2 E reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
+    reusedStructure8 reusedStructure9 i EI RF τ τRF
+  exact frobeniusClosure_mk_mem_iff_singleton
+    (localResidueDatum F) RF EI.field EI.below (hJnormal := EI.normal) σ τRF
 
 /-- Membership in the ambient Frobenius closure, expressed either with the
 residue datum's carrier or with the canonical ambient quotient. -/
@@ -137,22 +113,22 @@ theorem ambientFixedFieldFrobeniusClosure_mem_iff
     (e : intrinsicFixedFieldSeparableClosureEquiv K H)
     (σ : intrinsicFixedFieldFrobeniusElements K H J hJH e) :
     let F := abstractFixedField K (SeparableClosure K) H.field
-    letI : Algebra F (SeparableClosure F) :=
+    let : Algebra F (SeparableClosure F) :=
       (separableClosure F (AlgebraicClosure F)).algebra
     let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-    letI : FiniteDimensional K F :=
+    let : FiniteDimensional K F :=
       abstractFixedField_finiteDimensional
         K (SeparableClosure K) H.field H.finite
-    letI : NontriviallyNormedField F :=
+    let : NontriviallyNormedField F :=
       finiteExtensionSpectralNormedField K F
-    letI : ValuativeRel F :=
+    let : ValuativeRel F :=
       finiteExtensionSpectralValuativeRel K F
-    letI : IsNonarchimedeanLocalField F :=
+    let : IsNonarchimedeanLocalField F :=
       finiteExtensionSpectralIsNonarchimedeanLocalField K F
-    letI : FiniteDimensional F E :=
+    let : FiniteDimensional F E :=
       abstractRelativeFixedField_finiteDimensional
         K (SeparableClosure K) H.field J hJH H.finite hJfinite
-    letI : IsGalois F E :=
+    let : IsGalois F E :=
       abstractRelativeFixedField_isGalois
         K (SeparableClosure K) H.field J hJH hJnormal
     let RH :=
@@ -176,47 +152,10 @@ theorem ambientFixedFieldFrobeniusClosure_mem_iff
             ({σH.1} : Set
               (ambientFixedFieldFrobeniusQuotient
                 K H J hJH)) : Subgroup _) := by
-  dsimp only
-  let F := abstractFixedField K (SeparableClosure K) H.field
-  let : Algebra F (SeparableClosure F) :=
-    (separableClosure F (AlgebraicClosure F)).algebra
-  let E := abstractRelativeFixedField K (SeparableClosure K) hJH
-  let : FiniteDimensional K F :=
-    abstractFixedField_finiteDimensional
-      K (SeparableClosure K) H.field H.finite
-  let : NontriviallyNormedField F :=
-    finiteExtensionSpectralNormedField K F
-  let : ValuativeRel F :=
-    finiteExtensionSpectralValuativeRel K F
-  let : IsNonarchimedeanLocalField F :=
-    finiteExtensionSpectralIsNonarchimedeanLocalField K F
-  let : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      K (SeparableClosure K) H.field J hJH H.finite hJfinite
-  let : IsGalois F E :=
-    abstractRelativeFixedField_isGalois
-      K (SeparableClosure K) H.field J hJH hJnormal
-  let RH :=
-    H.toFiniteResidueAbstractField (localResidueDatum K)
-  let σH :=
-    intrinsicFrobeniusElementToAmbientFixedField
-      K H J hJH e σ
-  let ψ := intrinsicBaseEquivAmbientFixedField K H e
-  intro τ
-  let ψτRH : RH.field.toSubgroup :=
-    ⟨(ψ τ).1, by
-      simpa only [RH,
-        FiniteAbstractField.toFiniteResidueAbstractField] using
-          (ψ τ).2⟩
-  constructor
-  · intro h
-    simpa only [DegreeData.frobeniusClosure, Set.range_unique,
-      ambientFixedFieldFrobeniusQuotient,
-      FiniteAbstractField.toFiniteResidueAbstractField] using h
-  · intro h
-    simpa only [DegreeData.frobeniusClosure, Set.range_unique,
-      ambientFixedFieldFrobeniusQuotient,
-      FiniteAbstractField.toFiniteResidueAbstractField] using h
+  intro F reusedStructure2 E reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
+    reusedStructure8 reusedStructure9 RH σH ψ τ ψτRH
+  exact frobeniusClosure_mk_mem_iff_singleton
+    (localResidueDatum K) RH J hJH (hJnormal := hJnormal) σH ψτRH
 
 /-- The canonical fixed-field quotient equivalence maps the intrinsic
 Frobenius closure into the ambient Frobenius closure. -/

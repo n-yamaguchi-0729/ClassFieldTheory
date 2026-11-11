@@ -10,22 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFiniteK0
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFlatK0
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveKerMapBaseChange
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveCokerMapBaseChange
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.RingTheory.TensorProduct.Finite
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFiniteK0
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFlatK0
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveKerMapBaseChange
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveCokerMapBaseChange
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.RingTheory.TensorProduct.Finite
 
 /-!
 Local constancy of the fibre kernel-minus-cokernel dimension of a finite flat two-term model.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

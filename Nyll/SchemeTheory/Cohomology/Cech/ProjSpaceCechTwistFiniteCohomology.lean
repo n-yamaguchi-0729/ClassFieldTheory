@@ -10,17 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Data.Finset.Sort
-import Mathlib.LinearAlgebra.Finsupp.LSum
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.Algebra.BigOperators.Fin
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Finiteness.Finsupp
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+module
+
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.LinearAlgebra.Finsupp.LSum
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.Algebra.BigOperators.Fin
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Finiteness.Finsupp
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
 
 /-!
 Finiteness of twist cohomology on projective space through the monomial Cech complex.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -535,7 +540,7 @@ theorem Twist.dh_hd_coeff (j₁ : Fin (n + 1)) (i : ℕ)
         rw [Twist.altPos_eq_card, Twist.img_altInsert,
           Finset.filter_insert, hQ_def]
         split_ifs with h
-        · rw [Finset.card_insert_of_notMem (by simp [mem_filter, hmem])]
+        · rw [Finset.card_insert_of_notMem (fun hj => hmem (Finset.mem_filter.mp hj).1)]
         · rfl
       have hinsval :
           (Twist.insPos (Idx.face n s j) j₁ hjface : ℕ)
@@ -544,7 +549,10 @@ theorem Twist.dh_hd_coeff (j₁ : Fin (n + 1)) (i : ℕ)
           Finset.filter_erase, hP_def]
         split_ifs with h
         · rw [Finset.card_erase_of_mem (Finset.mem_filter.mpr ⟨hms, h⟩)]
-        · rw [Finset.erase_eq_of_notMem (by simp [mem_filter, h])]; omega
+        · rw [Finset.erase_eq_of_notMem
+            (show m ∉ (Idx.img n s).filter (· < j₁) from
+              fun hm => h (Finset.mem_filter.mp hm).2)]
+          exact (Nat.sub_zero _).symm
       have hPpos : (if m < j₁ then 1 else 0) ≤ P := by
         split_ifs with h
         · exact Nat.one_le_iff_ne_zero.mpr
@@ -760,7 +768,12 @@ theorem Twist.ker_edge {f : Twist.cochain R n d 0}
         = Twist.coeff R d f (Twist.vtx y) a := by
     intro x y hxy
     set s : Idx n 1 := ⟨![x, y], by
-      intro a b hab; fin_cases a <;> fin_cases b <;> simp_all⟩
+      intro a b hab
+      fin_cases a <;> fin_cases b
+      · exact (Nat.lt_irrefl 0 hab).elim
+      · exact hxy
+      · exact (Nat.not_lt_zero 1 hab).elim
+      · exact (Nat.lt_irrefl 1 hab).elim⟩
     have hf0 : (Idx.face n s 0) = Twist.vtx y :=
       Subtype.ext (funext fun p => Fin.fin_one_eq_zero p ▸ rfl)
     have hf1 : (Idx.face n s 1) = Twist.vtx x :=

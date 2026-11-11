@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionAction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionLimit
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedIdeles
-import Mathlib.GroupTheory.GroupAction.Defs
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionAction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionLimit
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedIdeles
+public import Mathlib.GroupTheory.GroupAction.Defs
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
 
 /-!
 # Galois fixed points of the actual idele-class direct limit
@@ -17,6 +20,8 @@ limit. When the ambient extension is normal, restriction of automorphisms is
 surjective. Injectivity of the finite-stage embeddings then reduces fixed-point
 descent to the proved finite Galois descent of actual idele classes.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -31,12 +36,14 @@ variable {k K Ω : Type*} [Field k] [PerfectField k] [Field K] [Field Ω]
     [IsScalarTower (RatFunc k) K Ω] [IsScalarTower k (RatFunc k) Ω]
     [FunctionField k K]
 
-private def stageActionToLimit (σ : Ω ≃ₐ[K] Ω) (E : FiniteGaloisIntermediateField K Ω) :
+/-- The finite-stage action followed by the canonical map into the idele-class limit. -/
+def stageActionToLimit (σ : Ω ≃ₐ[K] Ω) (E : FiniteGaloisIntermediateField K Ω) :
     stage (k := k) E →* Limit k K Ω :=
   (of (k := k) (K := K) (Ω := Ω) E).comp
     (MulDistribMulAction.toMonoidHom (stage (k := k) E) σ)
 
-private theorem stageActionToLimit_transition (σ : Ω ≃ₐ[K] Ω)
+/-- Finite-stage actions commute with the transition into the idele-class limit. -/
+theorem stageActionToLimit_transition (σ : Ω ≃ₐ[K] Ω)
     (E F : FiniteGaloisIntermediateField K Ω) (h : E ≤ F) (c : stage (k := k) E) :
     stageActionToLimit (k := k) (K := K) (Ω := Ω) σ F
         (transition (k := k) E F h c) =
@@ -62,13 +69,15 @@ theorem actionHom_of (σ : Ω ≃ₐ[K] Ω) (E : FiniteGaloisIntermediateField K
       of (k := k) (K := K) (Ω := Ω) E (σ • c) :=
   rfl
 
-private theorem actionHom_one_apply (c : Limit k K Ω) :
+/-- The identity automorphism acts trivially on the idele-class limit. -/
+theorem actionHom_one_apply (c : Limit k K Ω) :
     actionHom (k := k) (K := K) (Ω := Ω) 1 c = c := by
   obtain ⟨E, a, rfl⟩ := exists_of (k := k) (K := K) (Ω := Ω) c
   exact (actionHom_of (k := k) (K := K) (Ω := Ω) 1 E a).trans
     (congrArg (of (k := k) (K := K) (Ω := Ω) E) (one_smul (Ω ≃ₐ[K] Ω) a))
 
-private theorem actionHom_mul_apply (σ τ : Ω ≃ₐ[K] Ω) (c : Limit k K Ω) :
+/-- Composition of automorphisms acts by composition on the idele-class limit. -/
+theorem actionHom_mul_apply (σ τ : Ω ≃ₐ[K] Ω) (c : Limit k K Ω) :
     actionHom (k := k) (K := K) (Ω := Ω) (σ * τ) c =
       actionHom (k := k) (K := K) (Ω := Ω) σ
         (actionHom (k := k) (K := K) (Ω := Ω) τ c) := by

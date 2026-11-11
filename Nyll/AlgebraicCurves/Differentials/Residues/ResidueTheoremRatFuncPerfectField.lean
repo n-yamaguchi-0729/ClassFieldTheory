@@ -10,29 +10,31 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Residues.RationalSimplePoles
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.Differentials.Residues.Construction
-import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Rational.Classification
-import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncGlobalResidueFormula
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncTraceLocalResidueFinitePlaceDivPowEqZero
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncTraceLocalResiduePlaceInftyXPowEqZero
-import Mathlib.Algebra.Polynomial.PartialFractions
-import Mathlib.RingTheory.UniqueFactorizationDomain.NormalizedFactors
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Lean.Elab.Tactic.Omega
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Residues.RationalSimplePoles
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Rational.Classification
+public import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncGlobalResidueFormula
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncTraceLocalResidueFinitePlaceDivPowEqZero
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncTraceLocalResiduePlaceInftyXPowEqZero
+public import Mathlib.Algebra.Polynomial.PartialFractions
+public import Mathlib.RingTheory.UniqueFactorizationDomain.NormalizedFactors
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Lean.Elab.Tactic.Omega
 
 /-!
 # The residue theorem over a perfect rational-function field
@@ -40,6 +42,8 @@ import Lean.Elab.Tactic.Omega
 Partial fractions reduce the residue sum to polynomial monomials and principal parts.
 The local residue computations and differential orders come from the shared rational core.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurves.Differentials.Residues.Proofs.RatFuncResidue
 namespace AlgebraicCurve

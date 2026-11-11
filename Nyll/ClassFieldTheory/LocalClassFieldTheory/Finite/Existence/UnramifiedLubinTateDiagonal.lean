@@ -5,6 +5,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.LubinTateUniformizerDiagonal
+import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
 
 /-!
 # The unramified--Lubin--Tate diagonal field

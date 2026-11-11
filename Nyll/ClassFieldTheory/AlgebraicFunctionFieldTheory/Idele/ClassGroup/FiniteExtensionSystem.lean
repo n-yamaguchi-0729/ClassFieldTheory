@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.GaloisClosure
-import Mathlib.Order.DirectedInverseSystem
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
+module
+
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.Order.DirectedInverseSystem
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 
 /-!
 # The finite-extension system of function-field idele classes
@@ -22,6 +25,8 @@ law and Galois descent make this a directed system of injective homomorphisms.
 The ambient field is arbitrary. In particular, the same system applies to a
 chosen separable closure without replacing its stages by abstract groups.
 -/
+
+@[expose] public section
 
 noncomputable section
 

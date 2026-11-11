@@ -10,197 +10,199 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.Algebra.Algebra.Defs
-import Mathlib.Algebra.Algebra.Equiv
-import Mathlib.Algebra.Algebra.Hom
-import Mathlib.Algebra.Algebra.Operations
-import Mathlib.Algebra.Algebra.Tower
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.BigOperators.Group.Finset.Defs
-import Mathlib.Algebra.Category.Ring.Basic
-import Mathlib.Algebra.Category.Ring.Constructions
-import Mathlib.Algebra.Divisibility.Basic
-import Mathlib.Algebra.Exact.Basic
-import Mathlib.Algebra.Field.Defs
-import Mathlib.Algebra.Group.Action.Defs
-import Mathlib.Algebra.Group.Action.Faithful
-import Mathlib.Algebra.Group.Basic
-import Mathlib.Algebra.Group.Commute.Defs
-import Mathlib.Algebra.Group.Defs
-import Mathlib.Algebra.Group.Hom.Basic
-import Mathlib.Algebra.Group.Hom.Defs
-import Mathlib.Algebra.Group.Idempotent
-import Mathlib.Algebra.Group.Monoid
-import Mathlib.Algebra.Group.Semigroup
-import Mathlib.Algebra.Group.Units.Basic
-import Mathlib.Algebra.Group.Units.Defs
-import Mathlib.Algebra.Group.Units.Hom
-import Mathlib.Algebra.GroupWithZero.Action.Defs
-import Mathlib.Algebra.GroupWithZero.Units.Basic
-import Mathlib.Algebra.Module.Defs
-import Mathlib.Algebra.Module.Equiv.Basic
-import Mathlib.Algebra.Module.Equiv.Defs
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.Algebra.Module.LinearMap.Defs
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.Module.LocalizedModule.Basic
-import Mathlib.Algebra.Module.Projective
-import Mathlib.Algebra.Module.Submodule.Defs
-import Mathlib.Algebra.Module.Submodule.Equiv
-import Mathlib.Algebra.Module.Submodule.Ker
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.Algebra.Module.Submodule.LinearMap
-import Mathlib.Algebra.Module.Submodule.Map
-import Mathlib.Algebra.Module.Submodule.Range
-import Mathlib.Algebra.Module.Submodule.RestrictScalars
-import Mathlib.Algebra.Module.Submodule.Union
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Notation.Pi.Basic
-import Mathlib.Algebra.Notation.Pi.Defs
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Coeff
-import Mathlib.Algebra.Polynomial.Degree.Defs
-import Mathlib.Algebra.Polynomial.Degree.Operations
-import Mathlib.Algebra.Polynomial.Div
-import Mathlib.Algebra.Polynomial.Eval.Coeff
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.Algebra.Polynomial.Monic
-import Mathlib.Algebra.Ring.Defs
-import Mathlib.Algebra.Ring.Equiv
-import Mathlib.Algebra.Ring.Hom.Defs
-import Mathlib.Algebra.Ring.Idempotent
-import Mathlib.Algebra.Ring.Subring.Basic
-import Mathlib.Algebra.Ring.Subring.Defs
-import Mathlib.Algebra.Ring.Units
-import Mathlib.Basic.Finite.Defs
-import Mathlib.Basic.Nontrivial.Defs
-import Mathlib.CategoryTheory.Iso
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.PullbackCone
-import Mathlib.Data.ENat.Basic
-import Mathlib.Data.ENat.Defs
-import Mathlib.Data.Fin.Tuple.Basic
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Finset.Insert
-import Mathlib.Data.Finset.Lattice.Fold
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Defs
-import Mathlib.Data.Fintype.EquivFin
-import Mathlib.Data.Nat.Cast.Basic
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Set.Defs
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.Set.Image
-import Mathlib.Data.Set.Insert
-import Mathlib.Data.Set.Operations
-import Mathlib.Data.SetLike.Basic
-import Mathlib.GroupTheory.GroupAction.Hom
-import Mathlib.GroupTheory.OreLocalization.Basic
-import Mathlib.LinearAlgebra.Basis.Defs
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Charpoly.BaseChange
-import Mathlib.LinearAlgebra.Charpoly.Basic
-import Mathlib.LinearAlgebra.Charpoly.ToMatrix
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Finsupp.VectorSpace
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.LinearAlgebra.LinearIndependent.Defs
-import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.LinearAlgebra.Span.Basic
-import Mathlib.LinearAlgebra.Span.Defs
-import Mathlib.LinearAlgebra.StdBasis
-import Mathlib.LinearAlgebra.TensorProduct.Associator
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Defs
-import Mathlib.LinearAlgebra.TensorProduct.Map
-import Mathlib.LinearAlgebra.TensorProduct.Pi
-import Mathlib.LinearAlgebra.TensorProduct.Quotient
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.Logic.Function.Basic
-import Mathlib.Logic.Function.Defs
-import Mathlib.Order.BoundedOrder.Basic
-import Mathlib.Order.BoundedOrder.Lattice
-import Mathlib.Order.CompleteLattice.Defs
-import Mathlib.Order.Lattice
-import Mathlib.Order.SetNotation
-import Mathlib.RingTheory.FinitePresentation
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Finiteness.Descent
-import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.EquationalCriterion
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.Flat.Stability
-import Mathlib.RingTheory.Ideal.Defs
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.RingTheory.Ideal.Lattice
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Ideal.Maximal
-import Mathlib.RingTheory.Ideal.Nonunits
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Defs
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.IntegralClosure.Algebra.Defs
-import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
-import Mathlib.RingTheory.IsTensorProduct
-import Mathlib.RingTheory.Jacobson.Ideal
-import Mathlib.RingTheory.LocalProperties.Basic
-import Mathlib.RingTheory.LocalProperties.Exactness
-import Mathlib.RingTheory.LocalProperties.Submodule
-import Mathlib.RingTheory.LocalRing.Basic
-import Mathlib.RingTheory.LocalRing.Defs
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Localization.BaseChange
-import Mathlib.RingTheory.Localization.Defs
-import Mathlib.RingTheory.Nakayama
-import Mathlib.RingTheory.OreLocalization.Ring
-import Mathlib.RingTheory.Polynomial.Basic
-import Mathlib.RingTheory.Polynomial.Tower
-import Mathlib.RingTheory.QuasiFinite.Basic
-import Mathlib.RingTheory.RingHom.Finite
-import Mathlib.RingTheory.RingHom.FinitePresentation
-import Mathlib.RingTheory.RingHom.Flat
-import Mathlib.RingTheory.Spectrum.Prime.Defs
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Mathlib.RingTheory.Spectrum.Prime.RingHom
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.RingTheory.TensorProduct.Maps
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.Convert
-import Mathlib.Tactic.NthRewrite
-import Mathlib.Tactic.Push
-import Mathlib.Topology.Defs.Basic
-import Mathlib.Topology.LocallyConstant.Basic
+module
+
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.Algebra.Algebra.Defs
+public import Mathlib.Algebra.Algebra.Equiv
+public import Mathlib.Algebra.Algebra.Hom
+public import Mathlib.Algebra.Algebra.Operations
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.BigOperators.Group.Finset.Defs
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Mathlib.Algebra.Category.Ring.Constructions
+public import Mathlib.Algebra.Divisibility.Basic
+public import Mathlib.Algebra.Exact.Basic
+public import Mathlib.Algebra.Field.Defs
+public import Mathlib.Algebra.Group.Action.Defs
+public import Mathlib.Algebra.Group.Action.Faithful
+public import Mathlib.Algebra.Group.Basic
+public import Mathlib.Algebra.Group.Commute.Defs
+public import Mathlib.Algebra.Group.Defs
+public import Mathlib.Algebra.Group.Hom.Basic
+public import Mathlib.Algebra.Group.Hom.Defs
+public import Mathlib.Algebra.Group.Idempotent
+public import Mathlib.Algebra.Group.Monoid
+public import Mathlib.Algebra.Group.Semigroup
+public import Mathlib.Algebra.Group.Units.Basic
+public import Mathlib.Algebra.Group.Units.Defs
+public import Mathlib.Algebra.Group.Units.Hom
+public import Mathlib.Algebra.GroupWithZero.Action.Defs
+public import Mathlib.Algebra.GroupWithZero.Units.Basic
+public import Mathlib.Algebra.Module.Defs
+public import Mathlib.Algebra.Module.Equiv.Basic
+public import Mathlib.Algebra.Module.Equiv.Defs
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.Algebra.Module.LinearMap.Defs
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.Algebra.Module.Submodule.Defs
+public import Mathlib.Algebra.Module.Submodule.Equiv
+public import Mathlib.Algebra.Module.Submodule.Ker
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.Algebra.Module.Submodule.LinearMap
+public import Mathlib.Algebra.Module.Submodule.Map
+public import Mathlib.Algebra.Module.Submodule.Range
+public import Mathlib.Algebra.Module.Submodule.RestrictScalars
+public import Mathlib.Algebra.Module.Submodule.Union
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Notation.Pi.Basic
+public import Mathlib.Algebra.Notation.Pi.Defs
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Coeff
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.Algebra.Polynomial.Degree.Operations
+public import Mathlib.Algebra.Polynomial.Div
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.Algebra.Ring.Defs
+public import Mathlib.Algebra.Ring.Equiv
+public import Mathlib.Algebra.Ring.Hom.Defs
+public import Mathlib.Algebra.Ring.Idempotent
+public import Mathlib.Algebra.Ring.Subring.Basic
+public import Mathlib.Algebra.Ring.Subring.Defs
+public import Mathlib.Algebra.Ring.Units
+public import Mathlib.Basic.Finite.Defs
+public import Mathlib.Basic.Nontrivial.Defs
+public import Mathlib.CategoryTheory.Iso
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.PullbackCone
+public import Mathlib.Data.ENat.Basic
+public import Mathlib.Data.ENat.Defs
+public import Mathlib.Data.Fin.Tuple.Basic
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Finset.Insert
+public import Mathlib.Data.Finset.Lattice.Fold
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Defs
+public import Mathlib.Data.Fintype.EquivFin
+public import Mathlib.Data.Nat.Cast.Basic
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Set.Defs
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Set.Image
+public import Mathlib.Data.Set.Insert
+public import Mathlib.Data.Set.Operations
+public import Mathlib.Basic.SetLike.Basic
+public import Mathlib.GroupTheory.GroupAction.Hom
+public import Mathlib.GroupTheory.OreLocalization.Basic
+public import Mathlib.LinearAlgebra.Basis.Defs
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Charpoly.BaseChange
+public import Mathlib.LinearAlgebra.Charpoly.Basic
+public import Mathlib.LinearAlgebra.Charpoly.ToMatrix
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.Finsupp.VectorSpace
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.LinearAlgebra.LinearIndependent.Defs
+public import Mathlib.LinearAlgebra.LinearIndependent.Lemmas
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.LinearAlgebra.Span.Basic
+public import Mathlib.LinearAlgebra.Span.Defs
+public import Mathlib.LinearAlgebra.StdBasis
+public import Mathlib.LinearAlgebra.TensorProduct.Associator
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+public import Mathlib.LinearAlgebra.TensorProduct.Map
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+public import Mathlib.LinearAlgebra.TensorProduct.Quotient
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.Logic.Function.Basic
+public import Mathlib.Logic.Function.Defs
+public import Mathlib.Order.BoundedOrder.Basic
+public import Mathlib.Order.BoundedOrder.Lattice
+public import Mathlib.Order.CompleteLattice.Defs
+public import Mathlib.Order.Lattice
+public import Mathlib.Order.SetNotation
+public import Mathlib.RingTheory.FinitePresentation
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Finiteness.Descent
+public import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.EquationalCriterion
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.Flat.Stability
+public import Mathlib.RingTheory.Ideal.Defs
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.RingTheory.Ideal.Lattice
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Ideal.Maximal
+public import Mathlib.RingTheory.Ideal.Nonunits
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Defs
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.IntegralClosure.Algebra.Defs
+public import Mathlib.RingTheory.IntegralClosure.IsIntegral.Basic
+public import Mathlib.RingTheory.IsTensorProduct
+public import Mathlib.RingTheory.Jacobson.Ideal
+public import Mathlib.RingTheory.LocalProperties.Basic
+public import Mathlib.RingTheory.LocalProperties.Exactness
+public import Mathlib.RingTheory.LocalProperties.Submodule
+public import Mathlib.RingTheory.LocalRing.Basic
+public import Mathlib.RingTheory.LocalRing.Defs
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Localization.BaseChange
+public import Mathlib.RingTheory.Localization.Defs
+public import Mathlib.RingTheory.Nakayama
+public import Mathlib.RingTheory.OreLocalization.Ring
+public import Mathlib.RingTheory.Polynomial.Basic
+public import Mathlib.RingTheory.Polynomial.Tower
+public import Mathlib.RingTheory.QuasiFinite.Basic
+public import Mathlib.RingTheory.RingHom.Finite
+public import Mathlib.RingTheory.RingHom.FinitePresentation
+public import Mathlib.RingTheory.RingHom.Flat
+public import Mathlib.RingTheory.Spectrum.Prime.Defs
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Mathlib.RingTheory.Spectrum.Prime.RingHom
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.Convert
+public import Mathlib.Tactic.NthRewrite
+public import Mathlib.Tactic.Push
+public import Mathlib.Topology.Defs.Basic
+public import Mathlib.Topology.LocallyConstant.Basic
 
 /-!
 # Algebra, divisors, and base change
@@ -208,6 +210,8 @@ import Mathlib.Topology.LocallyConstant.Basic
 Finite locally free equivalence relations on rings yield the invariant-ring tensor-square pushout
 comparison.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -484,7 +488,7 @@ theorem eq_zero_or_eq_one_of_isIdempotentElem [IsLocalRing C] {e : A} (he : IsId
       have h := hc.eq
       nth_rw 3 [← mul_one c] at h
       exact hu.mul_left_cancel h
-    simp [this]
+    rw [this, map_one]
   · left
     have h1 : IsIdempotentElem (1 - c) := hc.one_sub
     have : 1 - c = 1 := by
@@ -494,7 +498,7 @@ theorem eq_zero_or_eq_one_of_isIdempotentElem [IsLocalRing C] {e : A} (he : IsId
     have : c = 0 := by
       have := congrArg (fun x => 1 - x) this
       simpa using this
-    simp [this]
+    rw [this, map_zero]
 include hgen hequiv hinj hinv in
 theorem rankAtStalk_eq_rankAtStalk_of_isLocalRing [IsLocalRing C] (p q : PrimeSpectrum A) :
     Module.rankAtStalk (R := A) B p = Module.rankAtStalk (R := A) B q := by
@@ -845,7 +849,8 @@ open L1
 noncomputable def 𝓔₀ : Envelope R S := Classical.choice (nonempty_envelope R S)
 
 
-private noncomputable def charpoly (r : ℕ) (_hr : ∀ p, Module.rankAtStalk (R := R) S p = r) (b :
+/-- The characteristic polynomial obtained from a finite free envelope at constant rank. -/
+noncomputable def charpoly (r : ℕ) (_hr : ∀ p, Module.rankAtStalk (R := R) S p = r) (b :
   S) :
     R[X] :=
   χ (𝓔₀ R S) b /ₘ (X - 1) ^ ((𝓔₀ R S).n - r)
@@ -1096,14 +1101,14 @@ noncomputable def vA (t : A →+* B) (x : Fin r → A) : (Fin r → A) →ₗ[A]
   Fintype.linearCombination A (fun i => t (x i))
 omit [Algebra C A] in
 theorem vA_apply (a : Fin r → A) : vA t x a = ∑ i, algebraMap A B (a i) * t (x i) := by
-  simp [vA, Fintype.linearCombination_apply, Algebra.smul_def]
+  simp only [vA, Fintype.linearCombination_apply, Algebra.smul_def]
 
 /-- The linear-combination map of the specified family over the invariant ring. -/
 noncomputable def vC (x : Fin r → A) : (Fin r → C) →ₗ[C] A :=
   Fintype.linearCombination C x
 omit [Algebra A B] in
 theorem vC_apply (w : Fin r → C) : vC (C := C) x w = ∑ i, algebraMap C A (w i) * x i := by
-  simp [vC, Fintype.linearCombination_apply, Algebra.smul_def]
+  simp only [vC, Fintype.linearCombination_apply, Algebra.smul_def]
 
 /-- The tensor-valued linear combination of the images of the specified family under the
 relation map. -/
@@ -1121,7 +1126,7 @@ theorem vB_injective : Function.Injective (vB t x) := by
   have h𝒷 : ∀ i, 𝒷 i = t (x i) := fun i => by
     rw [Module.Basis.coe_ofEquivFun, LinearEquiv.symm_symm]
     change vA t x (Pi.single i 1) = _
-    simp [vA, Fintype.linearCombination_apply_single]
+    rw [vA, Fintype.linearCombination_apply_single, one_smul]
   let 𝒷₁ : Module.Basis (Fin r) (Tgt t) (P₁ t) := Algebra.TensorProduct.basis (Tgt t) 𝒷
   have key : ∀ b : Fin r → B, vB t x b = 𝒷₁.equivFun.symm (fun i => Tgt.of t (b i)) := fun b => by
     rw [Module.Basis.equivFun_symm_apply]
@@ -1209,7 +1214,7 @@ theorem isPushout_of_basis :
   have h𝓍 : ∀ i, 𝓍 i = x i := fun i => by
     rw [Module.Basis.coe_ofEquivFun, LinearEquiv.symm_symm]
     change vC (C := C) x (Pi.single i 1) = _
-    simp [vC, Fintype.linearCombination_apply_single]
+    rw [vC, Fintype.linearCombination_apply_single, one_smul]
   let 𝓍A : Module.Basis (Fin r) A (A ⊗[C] A) := Algebra.TensorProduct.basis A 𝓍
   have hΦ' : ∀ a : Fin r → A, Φ (𝓍A.equivFun.symm a) = ∑ i, algebraMap A B (a i) * t (x i) := by
     intro a
@@ -1306,7 +1311,7 @@ noncomputable def bc : C' ⊗[C] A →ₐ[C'] C' ⊗[C] B :=
   Algebra.TensorProduct.map (AlgHom.id C' C') (algHomOf u hu)
 
 @[scoped simp] theorem bc_tmul (c : C') (a : A) : bc C' u hu (c ⊗ₜ[C] a) = c ⊗ₜ[C] u a := by
-  simp [bc]
+  exact Algebra.TensorProduct.map_tmul (AlgHom.id C' C') (algHomOf u hu) c a
 
 attribute [local instance] Algebra.TensorProduct.rightAlgebra in
 theorem bc_eq_comp :
@@ -1316,9 +1321,7 @@ theorem bc_eq_comp :
     (bc C' u hu).toRingHom =
       (Algebra.IsPushout.cancelBaseChangeAlg C C' A (C' ⊗[C] A) B).toRingEquiv.toRingHom.comp
         (algebraMap (C' ⊗[C] A) ((C' ⊗[C] A) ⊗[A] B)) := by
-  let _ : Algebra A B := u.toAlgebra
-  let _ : IsScalarTower C A B :=
-    IsScalarTower.of_algebraMap_eq fun c => (RingHom.congr_fun hu c).symm
+  intro mapAlgebra scalarTower
   have key := Algebra.IsPushout.cancelBaseChange_symm_comp_lTensor C A B C'
   have hg : IsScalarTower.toAlgHom C A B = algHomOf u hu := AlgHom.ext fun _ => rfl
   apply RingHom.ext
@@ -1372,7 +1375,7 @@ theorem projective_bc (hproj : letI : Algebra A B := u.toAlgebra; Module.Project
   let _ : Algebra A B := u.toAlgebra
   let _ : IsScalarTower C A B :=
     IsScalarTower.of_algebraMap_eq fun c => (RingHom.congr_fun hu c).symm
-  let _ : Algebra (C' ⊗[C] A) (C' ⊗[C] B) := (bc C' u hu).toRingHom.toAlgebra
+  intro baseChangeAlgebra
   let _ : Module.Projective A B := hproj
   let e := Algebra.IsPushout.cancelBaseChangeAlg C C' A (C' ⊗[C] A) B
   have he : ∀ a', e (algebraMap (C' ⊗[C] A) ((C' ⊗[C] A) ⊗[A] B) a') =
@@ -1466,7 +1469,8 @@ scoped instance instIsScalarTowerPrimed : IsScalarTower C' (C' ⊗[C] A) (C' ⊗
 @[scoped simp] theorem algebraMap_primed_tmul (c : C') (a : A) :
     algebraMap (C' ⊗[C] A) (C' ⊗[C] B) (c ⊗ₜ[C] a) = c ⊗ₜ[C] algebraMap A B a := by
   change s' C' (c ⊗ₜ[C] a) = _
-  simp [s']
+  exact Algebra.TensorProduct.map_tmul (AlgHom.id C' C')
+    (IsScalarTower.toAlgHom C A B) c a
 
 theorem algebraMap_primed_eq_bc :
     algebraMap (C' ⊗[C] A) (C' ⊗[C] B) = (bc C' (algebraMap A B)
@@ -1622,7 +1626,8 @@ theorem L7_algebraMap_injective [Module.Flat C C'] (hinj : Function.Injective (a
   have h2 : (algebraMap C' (C' ⊗[C] A) : C' → C' ⊗[C] A) =
       LinearMap.lTensor C' (Algebra.linearMap C A) ∘ (TensorProduct.rid C C').symm := by
     funext c
-    simp [Algebra.TensorProduct.algebraMap_apply]
+    change c ⊗ₜ[C] (1 : A) = c ⊗ₜ[C] algebraMap C A 1
+    rw [map_one]
   rw [h2]
   exact h1.comp (TensorProduct.rid C C').symm.injective
 
@@ -1643,7 +1648,9 @@ theorem L7_invariants [Module.Flat C C']
     intro x
     induction x using TensorProduct.inductionOn with
     | add x y hx hy => rw [map_add, hx, hy, map_add, map_add]; abel
-    | tmul c a => simp [LinearMap.lTensor_tmul, hsL, htL]
+    | tmul c a =>
+        rw [LinearMap.lTensor_tmul, algebraMap_primed_tmul, t'_tmul, hsL, htL]
+        exact TensorProduct.tmul_sub (R := C) c (algebraMap A B a) (t a)
   have e2 : Set.range (LinearMap.lTensor C' (Algebra.linearMap C A)) =
       Set.range (algebraMap C' (C' ⊗[C] A)) := by
     ext x
@@ -1993,7 +2000,7 @@ theorem t_algebraMap_eq [Algebra C A]
 noncomputable def Tfib (hinv : ∀ a : A, algebraMap A B a = t a ↔ a ∈ Set.range (algebraMap C A)) :
     A →ₗ[C] Fib 𝔪 (B := B) where
   toFun a := (1 : A ⧸ 𝔪) ⊗ₜ[A] t a
-  map_add' a b := by simp [tmul_add]
+  map_add' a b := by rw [map_add, TensorProduct.tmul_add]
   map_smul' c a := by
     simp only [RingHom.id_apply]
     rw [Algebra.smul_def, map_mul, t_algebraMap_eq t hinv c, ← Algebra.smul_def, tmul_smul,
@@ -2255,8 +2262,8 @@ theorem L5_exists_basis_of_isLocalRing [Infinite (IsLocalRing.ResidueField C)]
     LinearMap.range_eq_top.mp (range_linearCombination_eq_top (t := t) hinv ℳ hall x hspan)
   have hbij := bijective_of_surjective_of_rankAtStalk_eq (B := B) hr _ hsurj
   convert hbij using 1
-  ext a
-  simp [Fintype.linearCombination_apply, Algebra.smul_def]
+  funext a
+  exact (vA_apply x a).symm
 
 end heart
 
@@ -2288,7 +2295,8 @@ noncomputable def theta : A ⊗[C] A →ₐ[A] B :=
 
 @[scoped simp] theorem theta_tmul (a a' : A) : theta t hinv (a ⊗ₜ[C] a') =
   algebraMap A B a * t a' := by
-  simp [theta, Algebra.ofId_apply]
+  exact Algebra.TensorProduct.lift_tmul (Algebra.ofId A B) (tAlgHom t hinv)
+    (fun _ _ => .all _ _) a a'
 
 theorem isPushout_of_bijective_theta (hθ : Function.Bijective (theta t hinv)) :
     IsPushout (CommRingCat.ofHom (algebraMap C A)) (CommRingCat.ofHom (algebraMap C A))
@@ -2338,8 +2346,10 @@ theorem baseChange_baseChange_bijective_iff {R : Type u} [CommRing R] [Algebra C
   let eN := TensorProduct.AlgebraTensorModule.cancelBaseChange C R C' C' N
   have hcomm : (θ.baseChange C').restrictScalars C' ∘ₗ eM.toLinearMap =
       eN.toLinearMap ∘ₗ ((θ.baseChange R).baseChange C').restrictScalars C' := by
-    ext m
-    simp [eM, eN]
+    apply LinearMap.ext
+    intro z
+    exact eN.symm_apply_eq.mp
+      (LinearMap.congr_fun (LinearMap.baseChange_baseChange (A := R) (B := C') θ) z).symm
   have h1 : (θ.baseChange C' : C' ⊗[C] M → C' ⊗[C] N) ∘ eM = eN ∘
     ((θ.baseChange R).baseChange C') := by
     funext z; exact LinearMap.congr_fun hcomm z
@@ -2370,7 +2380,7 @@ theorem bijective_of_forall_exists_faithfullyFlat {M N : Type u} [AddCommGroup M
   change Function.Bijective (θ.baseChange (Localization.AtPrime P))
   rw [← Module.FaithfullyFlat.lTensor_bijective_iff_bijective (R := Localization.AtPrime P)
     (M := C'),
-    ← LinearMap.baseChange_eq_ltensor, baseChange_baseChange_bijective_iff]
+    ← LinearMap.baseChange_eq_lTensor, baseChange_baseChange_bijective_iff]
   exact hbij
 
 theorem flat_of_forall_exists_faithfullyFlat {M : Type u} [AddCommGroup M] [Module C M]
@@ -2481,7 +2491,9 @@ theorem bijective_baseChange_theta_of_isPushout (C' : Type u) [CommRing C'] [Alg
   have hκ : ∀ (c₁ c₂ : C') (a₁ a₂ : A), κ ((c₁ ⊗ₜ[C] a₁) ⊗ₜ[C'] (c₂ ⊗ₜ[C] a₂)) =
       (c₂ * c₁) ⊗ₜ[C] (a₁ ⊗ₜ[C] a₂) := by
     intro c₁ c₂ a₁ a₂
-    simp [κ, TensorProduct.smul_tmul']
+    change (c₂ • c₁) ⊗ₜ[C] (a₁ ⊗ₜ[C] a₂) =
+      (c₂ * c₁) ⊗ₜ[C] (a₁ ⊗ₜ[C] a₂)
+    exact congrArg (fun c : C' => c ⊗ₜ[C] (a₁ ⊗ₜ[C] a₂)) (smul_eq_mul c₂ c₁)
   have key : ∀ z, ((thetaLin t hinv).baseChange C') (κ z) = ψ z := by
     intro z
     induction z using TensorProduct.inductionOn with

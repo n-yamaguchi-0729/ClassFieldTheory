@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
-import Nyll.ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
 
 /-!
 # Real-index upper ramification groups
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.Definitions.HasseArf.RealLowerRamificationGroup
 The upper group at `t` is the public real lower group at the inverse
 Herbrand index `ψ(t)`.
 -/
+
+@[expose] public section
 
 noncomputable section
 

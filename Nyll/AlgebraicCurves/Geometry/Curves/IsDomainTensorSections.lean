@@ -10,12 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Pasting
-import Mathlib.RingTheory.TensorProduct.Maps
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Pasting
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 
 /-!
 # Tensor products of affine sections of a geometrically integral scheme
@@ -23,6 +25,8 @@ import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 A nontrivial scalar extension of the section ring of an affine open in a geometrically
 integral scheme to a field is a domain.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -40,9 +44,9 @@ variable {R : Type u} [CommRing R] {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat
   (U : C.Opens) (hU : IsAffineOpen U) (K : Type u) [Field K] [Algebra R K]
 
 theorem ι_comp_eq :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     U.ι ≫ c = hU.isoSpec.hom ≫ Spec.map (CommRingCat.ofHom (algebraMap R Γ(C, U))) := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   have h1 : hU.fromSpec ≫ c = Spec.map (c.appLE ⊤ U le_top) ≫ (isAffineOpen_top (Spec (.of
       R))).fromSpec :=
     (IsAffineOpen.SpecMap_appLE_fromSpec c (isAffineOpen_top _) hU le_top).symm
@@ -75,9 +79,9 @@ include hU in
 private theorem isDomain (hne : letI := Scheme.TwoAffineOpenCover.algebraOfHom c U; Nontrivial
     (K ⊗[R] Γ(C, U)))
     [GeometricallyIntegral c] :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     IsDomain (K ⊗[R] Γ(C, U)) := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   let g := Spec.map (CommRingCat.ofHom (algebraMap R K))
   have : IsIntegral (pullback c g) :=
     GeometricallyIntegral.geometrically_isIntegral _ _ _ (.of_hasPullback c g)

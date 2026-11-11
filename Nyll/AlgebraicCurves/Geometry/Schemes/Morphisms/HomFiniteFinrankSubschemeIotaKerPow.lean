@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraph
-import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+module
+
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqProdKerGraph
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
 
 /-!
 Finiteness, flatness and rank of thickenings of a section cut out by powers of its kernel ideal.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

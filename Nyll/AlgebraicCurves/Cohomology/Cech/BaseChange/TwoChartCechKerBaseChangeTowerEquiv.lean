@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.TensorProduct.Free
-import Mathlib.LinearAlgebra.TensorProduct.Tower
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.FreeModule.Finite.Basic
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.TensorProduct.Free
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
 
 /-!
 Equivalences between kernel base changes along a tower of fields.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -47,15 +51,15 @@ theorem kerBaseChangeHom_bijective_of_flat {R : Type u} [CommRing R] {C0 C1 : Ty
     have h' := congrArg Subtype.val h
     rw [kerBaseChangeHom_apply_coe, kerBaseChangeHom_apply_coe] at h'
     have hinj : Function.Injective ((LinearMap.ker d).subtype.baseChange A) := by
-      rw [LinearMap.baseChange_eq_ltensor]
+      rw [LinearMap.baseChange_eq_lTensor]
       exact Module.Flat.lTensor_preserves_injective_linearMap _ (LinearMap.ker d).subtype_injective
     exact hinj h'
   · rintro ⟨y, hy⟩
     have hex := Module.Flat.lTensor_exact A (LinearMap.exact_subtype_ker_map d)
-    have hy' : (d.lTensor A) y = 0 := by rw [← LinearMap.baseChange_eq_ltensor]; exact hy
+    have hy' : (d.lTensor A) y = 0 := by rw [← LinearMap.baseChange_eq_lTensor]; exact hy
     obtain ⟨x, hx⟩ := (hex y).mp hy'
     refine ⟨x, Subtype.ext ?_⟩
-    rw [kerBaseChangeHom_apply_coe, LinearMap.baseChange_eq_ltensor]
+    rw [kerBaseChangeHom_apply_coe, LinearMap.baseChange_eq_lTensor]
     exact hx
 
 section ChangeField

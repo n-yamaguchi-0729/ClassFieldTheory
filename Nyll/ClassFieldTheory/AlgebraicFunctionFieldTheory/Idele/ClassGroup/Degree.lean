@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Mathlib.Basic.Finite.Defs
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Mathlib.Basic.Finite.Defs
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 
 /-!
 # The noncompact degree direction
@@ -16,6 +20,8 @@ An actual place gives an idele class of positive degree, without assuming a plac
 of degree one. Its integer powers show that the full idele class group is infinite.
 Degrees computed over a smaller constant field retain the full constant-field factor.
 -/
+
+@[expose] public section
 
 noncomputable section
 

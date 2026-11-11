@@ -10,28 +10,33 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.Algebra.Colimit.Module
-import Mathlib.LinearAlgebra.TensorProduct.DirectLimit
-import Mathlib.LinearAlgebra.TensorProduct.Map
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.LinearAlgebra.TensorProduct.Pi
-import Mathlib.LinearAlgebra.TensorProduct.Quotient
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.Data.Finset.Order
-import Mathlib.Order.DirectedInverseSystem
-import Mathlib.Tactic.Choose
+module
+
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.Algebra.Colimit.Module
+public import Mathlib.LinearAlgebra.TensorProduct.DirectLimit
+public import Mathlib.LinearAlgebra.TensorProduct.Map
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+public import Mathlib.LinearAlgebra.TensorProduct.Quotient
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.Pi
+public import Mathlib.Data.Finset.Order
+public import Mathlib.Order.DirectedInverseSystem
+public import Mathlib.Tactic.Choose
 
 /-!
 Descend a finitely presented module to a stage of a direct limit.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -51,29 +56,33 @@ theorem rTensor_algHom_smul (σ : S →ₐ[R] T) (Q : Type*) [AddCommGroup Q] [M
     (b : S) (z : S ⊗[R] Q) :
     σ.toLinearMap.rTensor Q (b • z) = σ b • σ.toLinearMap.rTensor Q z := by
   induction z using TensorProduct.inductionOn with
-  | tmul s q => simp [TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => simp [smul_add, hx, hy]
+  | tmul s q => simp only [TensorProduct.smul_tmul', LinearMap.rTensor_tmul,
+      AlgHom.toLinearMap_apply, smul_eq_mul, map_mul]
+  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
 
 theorem ext_one_tmul {P N : Type*} [AddCommGroup P] [Module R P] [AddCommGroup N] [Module R N]
     [Module S N] [IsScalarTower R S N]
     {f₁ f₂ : S ⊗[R] P →ₗ[S] N} (h : ∀ p, f₁ (1 ⊗ₜ p) = f₂ (1 ⊗ₜ p)) : f₁ = f₂ := by
   apply TensorProduct.AlgebraTensorModule.ext
   intro s p
-  have : s ⊗ₜ[R] p = s • ((1 : S) ⊗ₜ[R] p) := by simp [TensorProduct.smul_tmul']
+  have : s ⊗ₜ[R] p = s • ((1 : S) ⊗ₜ[R] p) := by
+    simp only [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   rw [this, map_smul, map_smul, h]
 
 theorem rTensor_comp_apply_tmul (σ : S →ₐ[R] T) {P Q : Type*} [AddCommGroup P] [Module R P]
     [AddCommGroup Q] [Module R Q] (ξ : S ⊗[R] P →ₗ[S] S ⊗[R] Q) (b : S) (p : P) :
     (σ.toLinearMap.rTensor Q ∘ₗ ξ.restrictScalars R) (b ⊗ₜ p) =
       σ b • σ.toLinearMap.rTensor Q (ξ (1 ⊗ₜ p)) := by
-  have hb : b ⊗ₜ[R] p = b • ((1 : S) ⊗ₜ[R] p) := by simp [TensorProduct.smul_tmul']
+  have hb : b ⊗ₜ[R] p = b • ((1 : S) ⊗ₜ[R] p) := by
+    simp only [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   rw [LinearMap.comp_apply, LinearMap.restrictScalars_apply, hb, ξ.map_smul, rTensor_algHom_smul]
 
 theorem comp_rTensor_apply_tmul (σ : S →ₐ[R] T) {P N : Type*} [AddCommGroup P] [Module R P]
     [AddCommGroup N] [Module R N] [Module T N] [IsScalarTower R T N]
     (ξ : T ⊗[R] P →ₗ[T] N) (b : S) (p : P) :
     (ξ.restrictScalars R ∘ₗ σ.toLinearMap.rTensor P) (b ⊗ₜ p) = σ b • ξ (1 ⊗ₜ p) := by
-  have hb : σ b ⊗ₜ[R] p = σ b • ((1 : T) ⊗ₜ[R] p) := by simp [TensorProduct.smul_tmul']
+  have hb : σ b ⊗ₜ[R] p = σ b • ((1 : T) ⊗ₜ[R] p) := by
+    simp only [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
   rw [LinearMap.comp_apply, LinearMap.restrictScalars_apply, LinearMap.rTensor_tmul,
     AlgHom.toLinearMap_apply, hb, ξ.map_smul]
 
@@ -412,7 +421,8 @@ theorem iso_desc [Module.FinitePresentation B₀ P] [Module.FinitePresentation B
     have := LinearMap.congr_fun E₁ (1 ⊗ₜ p)
     simp only [LinearMap.comp_apply, LinearMap.restrictScalars_apply, LinearMap.id_apply] at this
     rw [this]
-    simp [LinearMap.rTensor_tmul]
+    simp only [LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply, map_one,
+      LinearMap.id_apply]
   have inv₂ : ψ k hik ∘ₗ ψ' k hik = LinearMap.id := by
     apply ext_one_tmul
     intro q
@@ -423,7 +433,8 @@ theorem iso_desc [Module.FinitePresentation B₀ P] [Module.FinitePresentation B
     have := LinearMap.congr_fun E₂ (1 ⊗ₜ q)
     simp only [LinearMap.comp_apply, LinearMap.restrictScalars_apply, LinearMap.id_apply] at this
     rw [this]
-    simp [LinearMap.rTensor_tmul]
+    simp only [LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply, map_one,
+      LinearMap.id_apply]
   refine ⟨k, LinearEquiv.ofLinearMap (ψ k hik) (ψ' k hik) inv₂ inv₁, ?_⟩
   apply TensorProduct.ext'
   intro b p
@@ -482,13 +493,14 @@ theorem obj (Y : Type w) [AddCommGroup Y] [Module Bω Y] [Module.FinitePresentat
         | add z₁ z₂ _ _ h₁ h₂ =>
           have : (fun j => (z₁ + z₂) j • b) = (fun j => z₁ j • b) + (fun j => z₂ j • b) := by
             funext j
-            simp [add_smul]
+            exact add_smul (z₁ j) (z₂ j) b
           rw [this]
           exact add_mem (h₁ b) (h₂ b)
         | smul c z _ hz =>
           have : (fun j => (c • z) j • b) = fun j => z j • (c • b) := by
             funext j
-            simp [mul_comm c, mul_smul]
+            exact (congrArg (fun d : B i => d • b) (mul_comm c (z j))).trans
+              (mul_smul (z j) c b)
           rw [this]
           exact hz _
     · rw [← hv, Submodule.span_le]

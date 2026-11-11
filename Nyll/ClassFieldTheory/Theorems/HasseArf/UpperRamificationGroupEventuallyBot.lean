@@ -10,6 +10,7 @@ import Nyll.ClassFieldTheory.Theorems.HasseArf.RealLowerRamificationGroupNat
 import Nyll.ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupAntitone
 import Nyll.ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupCanonical
 import Nyll.ClassFieldTheory.HasseArf
+import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
 
 /-!
 # Eventual triviality of upper ramification groups
@@ -23,10 +24,12 @@ noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- The canonical upper ramification groups of a finite Abelian local
 extension are trivial above some real upper index. -/
 theorem upperRamificationGroup_eventually_bot
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]

@@ -5,16 +5,22 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 
 /-!
 # Surjectivity of intrinsic Frobenius transport
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -22,7 +28,7 @@ namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra k (SeparableClosure K)]
     [Algebra (RatFunc k) (SeparableClosure K)]

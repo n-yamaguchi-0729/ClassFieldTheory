@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.OrdinaryClassGroupComparison
-import Mathlib.RingTheory.ClassGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.OrdinaryClassGroupComparison
+public import Mathlib.RingTheory.ClassGroup.Basic
 
 /-!
 # The ordinary ray class group is the ideal class group
@@ -19,17 +21,21 @@ class group agrees with Mathlib's ideal class group. The comparison also
 preserves the class of each finite prime, fixing its arithmetic meaning.
 -/
 
+@[expose] public section
+
 open scoped NumberField
 open NumberField IsDedekindDomain
 
 noncomputable section
+
+universe u
 
 namespace ClassFieldTheory
 
 /-- The ordinary ray class group is isomorphic to the ideal class group,
 and the isomorphism sends each finite-prime ray class to its ideal class. -/
 theorem exists_ordinaryRayClassGroupEquivClassGroup
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     ∃ e : RayClassGroup (ordinaryRayClassModulus K) ≃* ClassGroup (𝓞 K),
       ∀ v : HeightOneSpectrum (𝓞 K),
         e (ordinaryRayClassOfFinitePrime v) =

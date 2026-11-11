@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameterFiltration
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.FiniteParameterFiltration
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
 
 /-!
 # Principal-unit filtration on finite Lubin--Tate Galois groups
@@ -18,6 +20,8 @@ valuation-ring unit representatives, and preserves the expected cardinality
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

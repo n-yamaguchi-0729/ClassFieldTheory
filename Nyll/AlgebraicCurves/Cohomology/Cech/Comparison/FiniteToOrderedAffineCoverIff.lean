@@ -10,12 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Mathlib.RingTheory.Finiteness.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 Comparison of two-chart Cech cohomology with the associated ordered affine cover.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -46,12 +51,14 @@ open _root_.AlgebraicGeometry.Scheme
 
 local notation "K" => 𝒱.toOrderedAffineCover
 
-private def _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.idx0 (i : ULift.{u} (Fin 2)) :
+/-- The degree-zero ordered index attached to one of the two affine charts. -/
+def _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.idx0 (i : ULift.{u} (Fin 2)) :
     (K).Idx 0 := ⟨fun _ => i, fun a b h => absurd h ( by omega)⟩
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 
-private def _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.idx01 : (K).Idx 1 :=
+/-- The degree-one ordered index containing both affine charts. -/
+def _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.idx01 : (K).Idx 1 :=
   ⟨fun j => ⟨j⟩, fun a b h => by
     change (⟨a⟩ : ULift.{u} (Fin 2)) < ⟨b⟩
     exact h⟩
@@ -59,7 +66,8 @@ private def _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.idx01 : (K).Idx 1
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 theorem idx0_val (i : ULift.{u} (Fin 2)) (j : Fin 1) : (𝒱.idx0 i).1 j = i := rfl
 
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.eq_idx0 (s : (K).Idx 0) : s =
+/-- Every degree-zero index is determined by its only chart. -/
+theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.eq_idx0 (s : (K).Idx 0) : s =
     𝒱.idx0 (s.1 0) :=
   Subtype.ext (funext fun j => by fin_cases j; rfl)
 
@@ -72,7 +80,8 @@ def idxZeroEquiv : (K).Idx 0 ≃ ULift.{u} (Fin 2) where
   left_inv s := (𝒱.eq_idx0 s).symm
   right_inv _ := rfl
 
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.eq_idx01 (s : (K).Idx 1) : s =
+/-- Every degree-one index of a two-chart ordered cover contains both charts. -/
+theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.eq_idx01 (s : (K).Idx 1) : s =
     𝒱.idx01 := by
   apply Subtype.ext; funext j
   have hs := s.2
@@ -102,7 +111,8 @@ private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.isEmpty_Idx_a
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inter_idx0 (i : ULift.{u} (Fin
+/-- The intersection for a degree-zero index is its chart. -/
+theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inter_idx0 (i : ULift.{u} (Fin
     2)) : (K).inter (𝒱.idx0 i) = (K).U i :=
   le_antisymm (iInf_le _ 0) (le_iInf fun _ => le_rfl)
 
@@ -119,7 +129,8 @@ namespace OModulePresheaf
 open _root_.AlgebraicGeometry.OModulePresheaf
 open _root_.AlgebraicGeometry.OModulePresheaf
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.resEq {U U' : X.Opens} (h : U = U') : F.obj
+/-- The linear equivalence of sections induced by equality of open sets. -/
+def _root_.AlgebraicGeometry.OModulePresheaf.resEq {U U' : X.Opens} (h : U = U') : F.obj
     U' ≃ₗ[R] F.obj U where
   toLinearMap := F.res h.le
   invFun := F.res h.ge
@@ -139,7 +150,8 @@ theorem res_resEq {U U' W : X.Opens} (h : U = U') (hW : W ≤ U) (x : F.obj U') 
 
 local notation "K" => 𝒱.toOrderedAffineCover
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.pick (p : F.obj 𝒱.U0 × F.obj 𝒱.U1) : ∀ i :
+/-- The section on the selected chart of a two-chart cover. -/
+def _root_.AlgebraicGeometry.OModulePresheaf.pick (p : F.obj 𝒱.U0 × F.obj 𝒱.U1) : ∀ i :
     ULift.{u} (Fin 2), F.obj ((K).U i)
   | ⟨⟨0, _⟩⟩ => p.1
   | ⟨⟨1, _⟩⟩ => p.2
@@ -148,7 +160,8 @@ open _root_.AlgebraicGeometry.OModulePresheaf
 theorem pick_zero (p : F.obj 𝒱.U0 × F.obj 𝒱.U1) : F.pick 𝒱 p ⟨0⟩ = p.1 := rfl
 theorem pick_one (p : F.obj 𝒱.U0 × F.obj 𝒱.U1) : F.pick 𝒱 p ⟨1⟩ = p.2 := rfl
 
-private theorem _root_.AlgebraicGeometry.OModulePresheaf.pick_add (p q : F.obj 𝒱.U0 × F.obj 𝒱.U1)
+/-- Selecting a chart section preserves addition. -/
+theorem _root_.AlgebraicGeometry.OModulePresheaf.pick_add (p q : F.obj 𝒱.U0 × F.obj 𝒱.U1)
     (i : ULift.{u} (Fin 2)) :
     F.pick 𝒱 (p + q) i = F.pick 𝒱 p i + F.pick 𝒱 q i := by
   rcases i with ⟨⟨_ | _ | n, hn⟩⟩
@@ -157,7 +170,8 @@ private theorem _root_.AlgebraicGeometry.OModulePresheaf.pick_add (p q : F.obj �
   · omega
 
 open _root_.AlgebraicGeometry.OModulePresheaf
-private theorem _root_.AlgebraicGeometry.OModulePresheaf.pick_smul (r : R) (p : F.obj 𝒱.U0 × F.obj
+/-- Selecting a chart section preserves scalar multiplication. -/
+theorem _root_.AlgebraicGeometry.OModulePresheaf.pick_smul (r : R) (p : F.obj 𝒱.U0 × F.obj
     𝒱.U1) (i : ULift.{u} (Fin 2)) :
     F.pick 𝒱 (r • p) i = r • F.pick 𝒱 p i := by
   rcases i with ⟨⟨_ | _ | n, hn⟩⟩
@@ -167,7 +181,8 @@ private theorem _root_.AlgebraicGeometry.OModulePresheaf.pick_smul (r : R) (p : 
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.pickₗ (i : ULift.{u} (Fin 2)) : F.obj 𝒱.U0 ×
+/-- The linear map selecting a chart section of a two-chart cover. -/
+def _root_.AlgebraicGeometry.OModulePresheaf.pickₗ (i : ULift.{u} (Fin 2)) : F.obj 𝒱.U0 ×
     F.obj 𝒱.U1 →ₗ[R] F.obj ((K).U i) where
   toFun p := F.pick 𝒱 p i
   map_add' p q := F.pick_add 𝒱 p q i
@@ -175,14 +190,16 @@ private def _root_.AlgebraicGeometry.OModulePresheaf.pickₗ (i : ULift.{u} (Fin
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.cochainZeroTo : F.cochain K 0 →ₗ[R] F.obj
+/-- The linear map from degree-zero cochains to the pair of chart sections. -/
+def _root_.AlgebraicGeometry.OModulePresheaf.cochainZeroTo : F.cochain K 0 →ₗ[R] F.obj
     𝒱.U0 × F.obj 𝒱.U1 :=
   ((F.resEq (𝒱.inter_idx0 ⟨0⟩)).symm.toLinearMap.comp (LinearMap.proj (𝒱.idx0 ⟨0⟩))).prod
     ((F.resEq (𝒱.inter_idx0 ⟨1⟩)).symm.toLinearMap.comp (LinearMap.proj (𝒱.idx0 ⟨1⟩)))
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.cochainZeroOf : F.obj 𝒱.U0 × F.obj 𝒱.U1 →ₗ[R]
+/-- The degree-zero cochain associated to a pair of chart sections. -/
+def _root_.AlgebraicGeometry.OModulePresheaf.cochainZeroOf : F.obj 𝒱.U0 × F.obj 𝒱.U1 →ₗ[R]
     F.cochain K 0 :=
   LinearMap.pi fun s => (F.res ((K).inter_le s 0)).comp (F.pickₗ 𝒱 (s.1 0))
 
@@ -324,12 +341,14 @@ private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.face_idx01_on
   Subtype.ext (funext fun j => by fin_cases j; rfl)
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inter_le_inf (s : (K).Idx 1) :
+/-- Every degree-one intersection lies in the intersection of both charts. -/
+theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inter_le_inf (s : (K).Idx 1) :
     (K).inter s ≤ 𝒱.U0 ⊓ 𝒱.U1 := by
   rw [𝒱.eq_idx01 s, 𝒱.inter_idx01]
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inf_le_inter (s : (K).Idx 1) :
+/-- The intersection of both charts lies in every degree-one intersection. -/
+theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inf_le_inter (s : (K).Idx 1) :
     𝒱.U0 ⊓ 𝒱.U1 ≤ (K).inter s := by
   rw [𝒱.eq_idx01 s, 𝒱.inter_idx01]
 
@@ -349,13 +368,15 @@ private theorem _root_.AlgebraicGeometry.OModulePresheaf.res_congr_idx {i : ℕ}
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.cochainOneTo : F.cochain K 1 →ₗ[R] F.obj
+/-- The linear map evaluating a degree-one cochain on the chart intersection. -/
+def _root_.AlgebraicGeometry.OModulePresheaf.cochainOneTo : F.cochain K 1 →ₗ[R] F.obj
     (𝒱.U0 ⊓ 𝒱.U1) :=
   (F.res (𝒱.inf_le_inter 𝒱.idx01)).comp (LinearMap.proj 𝒱.idx01)
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.cochainOneOf : F.obj (𝒱.U0 ⊓ 𝒱.U1) →ₗ[R]
+/-- The degree-one cochain associated to a section on the chart intersection. -/
+def _root_.AlgebraicGeometry.OModulePresheaf.cochainOneOf : F.obj (𝒱.U0 ⊓ 𝒱.U1) →ₗ[R]
     F.cochain K 1 :=
   LinearMap.pi fun s => F.res (𝒱.inter_le_inf s)
 

@@ -10,19 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 Identify sheaf Cech cohomology with divisor-section cohomology from chartwise range
 identifications.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -91,7 +96,7 @@ variable {K : Type u} [Field K] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of
 theorem placesOf_inf' [IsSeparated x] [SmoothOfRelativeDimension 1 x] (U V : X.Opens) :
     let := (baseToFunctionField x).toAlgebra
     placesOf x (U ⊓ V) = placesOf x U ∩ placesOf x V := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   apply Set.Subset.antisymm
   · exact fun v hv => ⟨placesOf_mono x inf_le_left hv, placesOf_mono x inf_le_right hv⟩
   · rintro v ⟨⟨y, hyU, hy, hvy⟩, ⟨z, hzV, -, hvz⟩⟩
@@ -172,10 +177,10 @@ theorem nonempty_linearEquiv_cechH0_and_cechH1_sectionsOf_of_range_eq
     (hrange : letI := (baseToFunctionField x).toAlgebra
       ∀ U : X.Opens, IsAffineOpen U → Nonempty U →
         Set.range (φ U) = (lSpaceOn (placesOf x U) D : Set X.functionField)) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     Nonempty ((𝒱.sectionsOf x M).H0 ≃ₗ[K] ↥(cechH0 (placesOf x 𝒱.U0) (placesOf x 𝒱.U1) D)) ∧
       Nonempty ((𝒱.sectionsOf x M).H1 ≃ₗ[K] cechH1 (placesOf x 𝒱.U0) (placesOf x 𝒱.U1) D) := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have := h0
   have := h1
   have h01 : Nonempty (𝒱.U0 ⊓ 𝒱.U1 : X.Opens) := by

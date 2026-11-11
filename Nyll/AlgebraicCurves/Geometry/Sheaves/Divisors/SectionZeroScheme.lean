@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
 
 /-!
 # Zero schemes of module sections
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
 Local coefficients of a module section generate its zero-scheme ideal. This file supplies
 restriction and pullback operations, coefficient maps, and the associated closed subscheme.
 -/
+
+@[expose] public section
 
 universe u
 

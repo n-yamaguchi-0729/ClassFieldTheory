@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraProductDecomposition
-import Mathlib.FieldTheory.KummerExtension
-import Mathlib.FieldTheory.SplittingField.Construction
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraProductDecomposition
+public import Mathlib.FieldTheory.KummerExtension
+public import Mathlib.FieldTheory.SplittingField.Construction
 
 /-!
 # Uniform field factors of a Kummer algebra
@@ -16,6 +18,8 @@ If the base field contains the `n`-th roots of unity, every field factor of
 `K[X] / (X ^ n - a)` is a splitting field of the same polynomial. Thus all
 factors in the finite product decomposition are isomorphic over the base.
 -/
+
+@[expose] public section
 
 noncomputable section
 

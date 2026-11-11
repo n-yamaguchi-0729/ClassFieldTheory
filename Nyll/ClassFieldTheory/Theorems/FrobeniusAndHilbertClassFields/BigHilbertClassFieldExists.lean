@@ -19,11 +19,13 @@ chosen by the implementation appears in the statement.
 
 open scoped NumberField
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- A maximal finite-prime-unramified finite abelian extension exists. -/
 theorem exists_bigHilbertClassField
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     ∃ E : FiniteAbelianExtension K, IsBigHilbertClassField E :=
   GlobalClassFieldComparison.exists_bigHilbertClassField K
 

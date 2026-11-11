@@ -4,10 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalNorm
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalNorm
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
+public import Nyll.ValuedFieldTheory.Valuation.Completion.DegreeNormTrace
+public import Nyll.ValuedFieldTheory.Valuation.Completion.TensorProductDecomposition
 
 /-!
 # Local norm as a product over completions
@@ -17,6 +22,8 @@ the absolute values above `v`.  Its determinant norm is the product of the
 norms of those components.  The theorem exposes the decomposition and norm
 formula using only Mathlib objects and the public extension index type.
 -/
+
+@[expose] public section
 
 open scoped BigOperators TensorProduct
 

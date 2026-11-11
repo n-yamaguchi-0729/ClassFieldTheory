@@ -10,31 +10,36 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1SectionsOfRangeEqLSpaceOn
-import Nyll.AlgebraicCurves.Places.Restriction.PlacesOfUnionEqUnivSupEqTop
-import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
-import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
-import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.CechRiemannRochGenusReached
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.LinearEquivCechH0CechH1SectionsOfRangeEqLSpaceOn
+public import Nyll.AlgebraicCurves.Places.Restriction.PlacesOfUnionEqUnivSupEqTop
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
+public import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
+public import Nyll.AlgebraicCurves.Cohomology.IndexOfSpecialtyEqFinrankH1
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.CechRiemannRochGenusReached
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 Dimensions of sheaf cohomology from chartwise identifications with divisor-bounded function
 spaces.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -91,13 +96,13 @@ theorem finrank_H0_H1_sectionsOf_of_range_eq_lSpaceOn'
     (hrange : letI := (baseToFunctionField x).toAlgebra
       ∀ U : X.Opens, IsAffineOpen U → Nonempty U →
         Set.range (φ U) = (lSpaceOn (placesOf x U) D : Set X.functionField)) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     Module.Finite K (𝒱.sectionsOf x M).H0 ∧ Module.Finite K (𝒱.sectionsOf x M).H1 ∧
       Module.finrank K (𝒱.sectionsOf x M).H0 = ell D ∧
       Module.finrank K (𝒱.sectionsOf x M).H1 = indexOfSpecialty D ∧
       (Module.finrank K (𝒱.sectionsOf x M).H0 : ℤ) - Module.finrank K (𝒱.sectionsOf x M).H1
         = Divisor.degree D + 1 - genusFF K X.functionField := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have hcurve : IsCurveOver K X.functionField :=
     isCurveOver_of_isIntegral_of_smoothOfRelativeDimension_one x (RingEquiv.refl _) (fun _ => rfl)
   have : Algebra.EssFiniteType K X.functionField := essFiniteType_functionField x

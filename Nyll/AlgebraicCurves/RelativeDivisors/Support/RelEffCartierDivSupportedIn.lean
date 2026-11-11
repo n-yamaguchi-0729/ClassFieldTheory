@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Subfunctor.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.PullbackCarrier
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+module
+
+public import Mathlib.CategoryTheory.Subfunctor.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
 
 /-!
 Relative effective Cartier divisors supported in a fixed open.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits Opposite
 

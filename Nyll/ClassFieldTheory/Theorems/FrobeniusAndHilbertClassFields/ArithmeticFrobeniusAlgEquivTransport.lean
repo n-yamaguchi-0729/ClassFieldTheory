@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
-import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusIndependentOfPrime
-import Mathlib.NumberTheory.NumberField.Basic
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
+module
+
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
+public import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusIndependentOfPrime
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.RingTheory.DedekindDomain.Ideal.Lemmas
 
 /-!
 # Arithmetic Frobenius under transport of a prime
@@ -18,6 +20,8 @@ prime. At an unramified prime, the arithmetic Frobenius element is unchanged.
 The prime transport is Mathlib's equivalence of height-one spectra induced by
 the automorphism of the ring of integers.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

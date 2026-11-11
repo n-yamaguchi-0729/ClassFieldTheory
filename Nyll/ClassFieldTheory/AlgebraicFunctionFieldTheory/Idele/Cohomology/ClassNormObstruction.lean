@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.GlobalHilbert90
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.GlobalHilbert90
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
 
 /-!
 # The actual class norm obstruction
@@ -17,6 +19,8 @@ group. Idele Hilbert 90 proves the converse implication by adjusting an idele
 representative by a principal norm preimage. No Hasse norm principle or
 class-field axiom is assumed or asserted here.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceComparison
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceComparison
 
 /-!
 # Finite-place local--global Kummer transport
@@ -18,6 +20,8 @@ rebuild their instance towers.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -144,9 +148,7 @@ noncomputable def finitePlaceKummerLocalGlobalAlgEquiv
     letI : Algebra C E :=
       finitePlaceKummerLocalizedAlgebra K n hnK v b w
     S ≃ₐ[C] E := by
-  let C := finitePlaceKummerBaseCompletion K v
-  let S := finitePlaceKummerLocalExtension K n hnK v b
-  let E := finitePlaceKummerLocalizedCompletion K n hnK v b w
+  intro C S E
   let f := finitePlaceKummerPolynomial K n v b
   letI : Algebra C E :=
     finitePlaceKummerLocalizedAlgebra K n hnK v b w

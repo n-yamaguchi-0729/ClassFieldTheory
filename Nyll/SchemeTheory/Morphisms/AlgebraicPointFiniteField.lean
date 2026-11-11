@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.Integral
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.RingTheory.Algebraic.Integral
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.Integral
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.RingTheory.Algebraic.Integral
 
 /-!
 # An algebraic point is defined over a finite intermediate field
@@ -16,6 +18,8 @@ For a separated scheme locally of finite type, a specified point over an
 algebraic extension factors through an actual finite intermediate field.
 The factorization retains the original point and its structural morphism.
 -/
+
+@[expose] public section
 
 noncomputable section
 

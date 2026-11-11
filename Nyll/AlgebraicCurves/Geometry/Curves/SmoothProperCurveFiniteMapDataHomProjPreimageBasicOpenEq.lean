@@ -10,8 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+module
+
+public import Mathlib.Algebra.MvPolynomial.Eval
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
 
 /-!
 # The projective morphism associated with finite-map data
@@ -20,6 +23,8 @@ The two coordinate functions in finite-map data glue to a morphism to the projec
 line. Its chart preimages are the given affine opens and its projective coordinate
 sections pull back to the original functions.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -111,18 +116,18 @@ noncomputable def χ₀ (i : R →+* B) (f : B) : MvPolynomial (Fin 2) R →+* B
 noncomputable def χ₁ (i : R →+* B) (g : B) : MvPolynomial (Fin 2) R →+* B := MvPolynomial.eval₂Hom
     i ![g, 1]
 
-@[scoped simp] theorem χ₀_X_zero (i : R →+* B) (f : B) : χ₀ i f (MvPolynomial.X 0) = 1 := by simp
-    [χ₀]
-@[scoped simp] theorem χ₀_X_one (i : R →+* B) (f : B) : χ₀ i f (MvPolynomial.X 1) = f := by simp
-    [χ₀]
-@[scoped simp] theorem χ₁_X_zero (i : R →+* B) (g : B) : χ₁ i g (MvPolynomial.X 0) = g := by simp
-    [χ₁]
-@[scoped simp] theorem χ₁_X_one (i : R →+* B) (g : B) : χ₁ i g (MvPolynomial.X 1) = 1 := by simp
-    [χ₁]
-@[scoped simp] theorem χ₀_C (i : R →+* B) (f : B) (r : R) : χ₀ i f (MvPolynomial.C r) = i r := by
-    simp [χ₀]
-@[scoped simp] theorem χ₁_C (i : R →+* B) (g : B) (r : R) : χ₁ i g (MvPolynomial.C r) = i r := by
-    simp [χ₁]
+@[scoped simp] theorem χ₀_X_zero (i : R →+* B) (f : B) :
+    χ₀ i f (MvPolynomial.X 0) = 1 := MvPolynomial.eval₂_X i ![1, f] 0
+@[scoped simp] theorem χ₀_X_one (i : R →+* B) (f : B) :
+    χ₀ i f (MvPolynomial.X 1) = f := MvPolynomial.eval₂_X i ![1, f] 1
+@[scoped simp] theorem χ₁_X_zero (i : R →+* B) (g : B) :
+    χ₁ i g (MvPolynomial.X 0) = g := MvPolynomial.eval₂_X i ![g, 1] 0
+@[scoped simp] theorem χ₁_X_one (i : R →+* B) (g : B) :
+    χ₁ i g (MvPolynomial.X 1) = 1 := MvPolynomial.eval₂_X i ![g, 1] 1
+@[scoped simp] theorem χ₀_C (i : R →+* B) (f : B) (r : R) :
+    χ₀ i f (MvPolynomial.C r) = i r := MvPolynomial.eval₂_C i ![1, f] r
+@[scoped simp] theorem χ₁_C (i : R →+* B) (g : B) (r : R) :
+    χ₁ i g (MvPolynomial.C r) = i r := MvPolynomial.eval₂_C i ![g, 1] r
 
 theorem comp_χ₀ {B' : Type u} [CommRing B'] (ρ : B →+* B') (i : R →+* B) (f : B) :
     ρ.comp (χ₀ i f) = χ₀ (ρ.comp i) (ρ f) := by

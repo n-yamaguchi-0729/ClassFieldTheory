@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Sheaves.IdealHom
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.UniversalData
+module
+
+public import Nyll.SchemeTheory.Sheaves.IdealHom
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.UniversalData
 
 /-!
 # Cartier conditions and morphisms of ideal sheaves
 
 Defines local invertibility of ideals and compatibility of ideal morphisms with base change.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits TopologicalSpace Opposite
 

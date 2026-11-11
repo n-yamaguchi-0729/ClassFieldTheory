@@ -4,22 +4,33 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormula
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.Ideal
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.QuadraticReciprocity
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.PowerResidueTameFormula
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
-import Nyll.ValuedFieldTheory.Valuation.Completion.ExtensionInvariants
-import Nyll.ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
-import Nyll.ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.FiniteRadicalSupport
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormula
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.Ideal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.QuadraticReciprocity
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.PowerResidueTameFormula
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+public import Nyll.ValuedFieldTheory.Valuation.Completion.ExtensionInvariants
+public import Nyll.ClassFieldTheory.KummerTheory.Concrete.SimpleExtensionLocalBehavior
+public import Nyll.ClassFieldTheory.KummerTheory.Concrete.SUnitPreparation.FiniteRadicalSupport
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.ExponentialValuation
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Nonarchimedean
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.AbsoluteValues
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Basic
 
 /-!
 # Bad-place support and correction for power-residue reciprocity
@@ -31,6 +42,8 @@ unramified simple-Kummer criterion and the local norm kernel, and constructs
 the exponent-place and infinite-place correction in the common field-valued
 group of roots of unity.
 -/
+
+@[expose] public section
 
 open scoped BigOperators NumberField NumberTheorySymbols ValuativeRel WithZero
 open NumberField IsDedekindDomain
@@ -53,9 +66,9 @@ to equality in the relation's canonical value group. -/
 private theorem canonicalValuation_eq_of_valuation_eq
     {R Γ : Type*} [Ring R] [LinearOrderedCommGroupWithZero Γ]
     (v : Valuation R Γ) (x y : R) (hxy : v x = v y) :
-    letI : ValuativeRel R := ValuativeRel.ofValuation v
+    let : ValuativeRel R := ValuativeRel.ofValuation v
     ValuativeRel.valuation R x = ValuativeRel.valuation R y := by
-  let : ValuativeRel R := ValuativeRel.ofValuation v
+  intro sharedOwner1
   change
     ValuativeRel.ValueGroupWithZero.mk x 1 =
       ValuativeRel.ValueGroupWithZero.mk y 1
@@ -69,7 +82,7 @@ private theorem canonicalValuation_eq_of_valuation_eq
 /-- The bounded-natural-number form of nonarchimedeanness for a finite-place
 absolute value.  Naming this bridge keeps all completion residue constructions
 on one proof-irrelevant provider. -/
-private theorem finitePlaceAdicAbv_nonarchimedeanAbsoluteValue
+theorem finitePlaceAdicAbv_nonarchimedeanAbsoluteValue
     (v : HeightOneSpectrum (𝓞 K)) :
     LubinTate.Valuations.NonarchimedeanAbsoluteValue
       (HeightOneSpectrum.adicAbv K v) :=
@@ -169,16 +182,12 @@ completion. -/
 noncomputable def finitePlaceIntegralCompletionElement
     (v : HeightOneSpectrum (𝓞 K)) (x : 𝓞 K) :
     let C := (HeightOneSpectrum.adicAbv K v).Completion
-    letI : ValuativeRel C :=
+    let : ValuativeRel C :=
       finitePlaceLocalArtinCompletionValuativeRel v
-    letI : IsNonarchimedeanLocalField C :=
+    let : IsNonarchimedeanLocalField C :=
       finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
     𝒪[C] := by
-  let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C :=
-    finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
-    finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
+  intro C sharedOwner2 sharedOwner3
   exact ⟨algebraMap K C (x : K), by
     have hmem : algebraMap K C (x : K) ∈ 𝒪[C] ↔
         ‖algebraMap K C (x : K)‖ ≤ 1 :=
@@ -350,20 +359,15 @@ theorem finitePlaceHilbert_completionUnit_primeAvoidingIntegralFieldUnit
     (v : HeightOneSpectrum (𝓞 K))
     (x : 𝓞 K) (hx : x ∉ v.asIdeal) :
     let C := (HeightOneSpectrum.adicAbv K v).Completion
-    letI : ValuativeRel C :=
+    let : ValuativeRel C :=
       finitePlaceLocalArtinCompletionValuativeRel v
-    letI : IsNonarchimedeanLocalField C :=
+    let : IsNonarchimedeanLocalField C :=
       finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
     finitePlaceHilbert_completionUnit K v
         (primeAvoidingIntegralFieldUnit K v x hx) =
       integerUnitsToFieldUnits C
         (finitePlaceIntegralCompletionUnit K v x hx) := by
-  let C := (HeightOneSpectrum.adicAbv K v).Completion
-  let : ValuativeRel C :=
-    finitePlaceLocalArtinCompletionValuativeRel v
-  let : IsNonarchimedeanLocalField C :=
-    finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
-  dsimp only
+  intro C sharedOwner2 sharedOwner3
   apply Units.ext
   change
     algebraMap K C (x : K) =
@@ -504,7 +508,7 @@ theorem powerResidueExponentIdeal_ne_zero (n : ℕ+) :
     (Nat.cast_ne_zero.mpr n.ne_zero)
 
 omit [NumberField K] in
-private theorem ideal_span_singleton_ne_zero
+theorem ideal_span_singleton_ne_zero
     {x : 𝓞 K} (hx : x ≠ 0) : Ideal.span {x} ≠ 0 :=
   Submodule.span_singleton_eq_bot.mp.mt hx
 
@@ -649,15 +653,11 @@ private noncomputable def finitePlaceLocalTamePowerResidueSymbolResidueValue
     (hv : v ∉ powerResidueExponentFinitePlaces K n)
     (a : 𝓞 K) (ha : a ∉ v.asIdeal) :
     let C := (HeightOneSpectrum.adicAbv K v).Completion
-    letI : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
-    letI : IsNonarchimedeanLocalField C :=
+    let : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
+    let : IsNonarchimedeanLocalField C :=
       finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
     𝓀[C] := by
-  dsimp only
-  let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
-    finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
+  intro C reusedStructure2 reusedStructure3
   letI : Fintype 𝓀[C] := Fintype.ofFinite _
   have hnLocal : (n : ℕ) ∣ Fintype.card 𝓀[C] - 1 := by
     rw [← Nat.card_eq_fintype_card]
@@ -677,15 +677,11 @@ private noncomputable def finitePlacePrimeIdealPowerResidueFactorResidueValue
     (hcoprime : (Ideal.absNorm v.asIdeal).Coprime (n : ℕ))
     (a : 𝓞 K) (ha : a ∉ v.asIdeal) :
     let C := (HeightOneSpectrum.adicAbv K v).Completion
-    letI : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
-    letI : IsNonarchimedeanLocalField C :=
+    let : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
+    let : IsNonarchimedeanLocalField C :=
       finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
     𝓀[C] := by
-  dsimp only
-  let C := (HeightOneSpectrum.adicAbv K v).Completion
-  letI : ValuativeRel C := finitePlaceLocalArtinCompletionValuativeRel v
-  letI : IsNonarchimedeanLocalField C :=
-    finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
+  intro C reusedStructure2 reusedStructure3
   exact
     (((localNthRootsReduction C n
         (nthRootsSubgroupMap K C (n : ℕ)
@@ -2202,17 +2198,14 @@ theorem prod_rationalPrincipalIdealPrimeDivisors_eq_prod_primeFactors
     {M : Type*} [CommMonoid M]
     (b : ℕ) (hb : b ≠ 0)
     (f : HeightOneSpectrum (𝓞 ℚ) → M) :
-    letI : Fintype
+    let : Fintype
         (idealPrimeDivisors ℚ (rationalPrincipalIdeal b)) :=
       (idealPrimeDivisors_finite ℚ (rationalPrincipalIdeal b)
         (rationalPrincipalIdeal_ne_zero b hb)).fintype
     (∏ P : idealPrimeDivisors ℚ (rationalPrincipalIdeal b), f P.1) =
       ∏ p : b.primeFactors,
         f ((rationalPrincipalIdealPrimeDivisorsEquiv b hb).symm p).1 := by
-  let : Fintype
-      (idealPrimeDivisors ℚ (rationalPrincipalIdeal b)) :=
-    (idealPrimeDivisors_finite ℚ (rationalPrincipalIdeal b)
-      (rationalPrincipalIdeal_ne_zero b hb)).fintype
+  intro sharedOwner1
   exact
     Fintype.prod_equiv
       (rationalPrincipalIdealPrimeDivisorsEquiv b hb)
@@ -2228,17 +2221,14 @@ theorem prod_rationalPrincipalIdealPrimeDivisors_eq_prod_primeFactors_subtype
     {M : Type*} [CommMonoid M]
     (b : ℕ) (hb : b ≠ 0)
     (f : idealPrimeDivisors ℚ (rationalPrincipalIdeal b) → M) :
-    letI : Fintype
+    let : Fintype
         (idealPrimeDivisors ℚ (rationalPrincipalIdeal b)) :=
       (idealPrimeDivisors_finite ℚ (rationalPrincipalIdeal b)
         (rationalPrincipalIdeal_ne_zero b hb)).fintype
     (∏ P : idealPrimeDivisors ℚ (rationalPrincipalIdeal b), f P) =
       ∏ p : b.primeFactors,
         f ((rationalPrincipalIdealPrimeDivisorsEquiv b hb).symm p) := by
-  let : Fintype
-      (idealPrimeDivisors ℚ (rationalPrincipalIdeal b)) :=
-    (idealPrimeDivisors_finite ℚ (rationalPrincipalIdeal b)
-      (rationalPrincipalIdeal_ne_zero b hb)).fintype
+  intro sharedOwner1
   exact
     Fintype.prod_equiv
       (rationalPrincipalIdealPrimeDivisorsEquiv b hb)
@@ -2294,7 +2284,7 @@ theorem jacobiSym_eq_prod_primeFactors_factorization
       (Finset.prod_coe_sort b.primeFactors
         (fun p => f p ^ b.factorization p)).symm
 
-private theorem rationalQuadraticPrimitiveRoots_nonempty_pnat :
+theorem rationalQuadraticPrimitiveRoots_nonempty_pnat :
     (primitiveRoots (((2 : ℕ+) : ℕ)) ℚ).Nonempty := by
   change (primitiveRoots 2 ℚ).Nonempty
   exact rationalQuadraticPrimitiveRoots_nonempty

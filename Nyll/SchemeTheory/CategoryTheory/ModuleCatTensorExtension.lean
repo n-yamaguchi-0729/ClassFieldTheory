@@ -8,22 +8,26 @@ Algebra-tensor representation of scalar extension.
 The pinned ModuleCat implementation is used unchanged.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.CategoryTheory.NatIso
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.Algebra.Algebra.Defs
-import Mathlib.Algebra.Module.Defs
-import Mathlib.Algebra.Module.Equiv.Defs
-import Mathlib.Algebra.Module.Equiv.Basic
-import Mathlib.Algebra.Algebra.Basic
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.CategoryTheory.NatIso
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.Algebra.Algebra.Defs
+public import Mathlib.Algebra.Module.Defs
+public import Mathlib.Algebra.Module.Equiv.Defs
+public import Mathlib.Algebra.Module.Equiv.Basic
+public import Mathlib.Algebra.Algebra.Basic
 
 /-!
 # Scalar extension represented by algebra tensors
 
 Compares native scalar extension with algebra tensors using the given ring homomorphism.
 -/
+
+@[expose] public section
 
 universe u
 open CategoryTheory TensorProduct
@@ -52,9 +56,9 @@ the algebra-tensor representation. Both directions preserve the actual values. -
 noncomputable def extendScalarsAlgebraTensorEquiv
     {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S)
     (M : ModuleCat.{u} R) :
-    letI : Algebra R S := f.toAlgebra
+    let : Algebra R S := f.toAlgebra
     (extendScalars f).obj M ≃ₗ[S] S ⊗[R] M := by
-  let : Algebra R S := f.toAlgebra
+  intro scalarAlgebra
   exact
     { toFun := fun x => x
       invFun := fun x => x
@@ -102,10 +106,10 @@ the original raw LinearMap.baseChange operation. -/
 theorem algebraTensorExtension_map_tmul
     {R S : Type u} [CommRing R] [CommRing S] (f : R →+* S)
     {M N : ModuleCat.{u} R} (g : M ⟶ N) (s : S) (m : M) :
-    letI : Algebra R S := f.toAlgebra
+    let : Algebra R S := f.toAlgebra
     (algebraTensorExtension f).map g (show algebraTensorObj f M from s ⊗ₜ[R] m) =
       (show algebraTensorObj f N from s ⊗ₜ[R] g m) := by
-  let : Algebra R S := f.toAlgebra
+  intro scalarAlgebra
   change g.hom.baseChange S (s ⊗ₜ[R] m) = s ⊗ₜ[R] g m
   exact LinearMap.baseChange_tmul g.hom s m
 
@@ -258,10 +262,10 @@ theorem algebraTensor_realization_baseChange_compat
     (h0 : ∀ z : (extendScalars f).obj X0, J0 (extendScalarsAlgebraTensorEquiv f X0 z) = I0 z)
     (h1 : ∀ z : (extendScalars f).obj X1, J1 (extendScalarsAlgebraTensorEquiv f X1 z) = I1 z)
     (hI : ∀ z : (extendScalars f).obj X0, I1 (((extendScalars f).mapIso σ).hom z) = I0 z) :
-    letI : Algebra R U := f.toAlgebra
+    let : Algebra R U := f.toAlgebra
     ∀ z : U ⊗[R] X0,
       J1 (LinearEquiv.baseChange R U X0 X1 σ.toLinearEquiv z) = J0 z := by
-  let : Algebra R U := f.toAlgebra
+  intro scalarAlgebra
   let E0 := extendScalarsAlgebraTensorEquiv f X0
   let E1 := extendScalarsAlgebraTensorEquiv f X1
   intro z
@@ -283,25 +287,17 @@ theorem extendScalars_comparison_eq_cancel
     {R S T : Type u} [CommRing R] [CommRing S] [CommRing T]
     (f : R →+* S) (g : S →+* T) (h : R →+* T)
     (hcomp : g.comp f = h) (M : ModuleCat.{u} R) :
-    letI : Algebra R S := f.toAlgebra
-    letI : Algebra S T := g.toAlgebra
-    letI : Algebra R T := h.toAlgebra
-    letI : IsScalarTower R S T :=
+    let : Algebra R S := f.toAlgebra
+    let : Algebra S T := g.toAlgebra
+    let : Algebra R T := h.toAlgebra
+    let : IsScalarTower R S T :=
       IsScalarTower.of_algebraMap_eq fun r => (RingHom.congr_fun hcomp r).symm
     let c : extendScalars h ≅ extendScalars f ⋙ extendScalars g :=
       (eqToIso (congrArg (fun q : R →+* T => extendScalars.{u, u, u} q) hcomp)).symm ≪≫
         extendScalarsComp f g
     c.app M =
       (TensorProduct.AlgebraTensorModule.cancelBaseChange R S T T M).symm.toModuleIso := by
-  let : Algebra R S := f.toAlgebra
-  let : Algebra S T := g.toAlgebra
-  let : Algebra R T := h.toAlgebra
-  let : IsScalarTower R S T :=
-    IsScalarTower.of_algebraMap_eq fun r => (RingHom.congr_fun hcomp r).symm
-  let c : extendScalars h ≅ extendScalars f ⋙ extendScalars g :=
-    (eqToIso (congrArg (fun q : R →+* T => extendScalars.{u, u, u} q) hcomp)).symm ≪≫
-      extendScalarsComp f g
-  change c.app M = _
+  intro sourceAlgebra targetAlgebra compositeAlgebra scalarTower c
   have hcast : ∀ (a b : R →+* T) (w : a = b) (N : ModuleCat.{u} R) (n : N),
       (eqToIso (congrArg (fun q : R →+* T => extendScalars.{u, u, u} q) w)).inv.app N
         ((1 : T) ⊗ₜ[R,b] n) = (1 : T) ⊗ₜ[R,a] n := by
@@ -333,6 +329,7 @@ theorem extendScalars_square_tmul
     let xj : P := j ⊗ₜ[B,a] x
     let xq : Q := (extendRestrictScalarsAdj q).unit.app X x
     square.hom ((1 : D) ⊗ₜ[J,r] xj) = r j ⊗ₜ[C,s] xq := by
+  intro P Q c square xj xq
   let : Algebra B J := a.toAlgebra
   let : Algebra B C := q.toAlgebra
   let : Algebra J D := r.toAlgebra
@@ -341,15 +338,6 @@ theorem extendScalars_square_tmul
   have : IsScalarTower B J D := IsScalarTower.of_algebraMap_eq fun b => rfl
   have : IsScalarTower B C D := IsScalarTower.of_algebraMap_eq fun b =>
     RingHom.congr_fun hsquare b
-  let P : ModuleCat.{u} J := (extendScalars a).obj X
-  let Q : ModuleCat.{u} C := (extendScalars q).obj X
-  let c : extendScalars (r.comp a) ≅ extendScalars q ⋙ extendScalars s :=
-    (eqToIso (congrArg (fun t : B →+* D => extendScalars.{u, u, u} t) hsquare.symm)).symm ≪≫
-      extendScalarsComp q s
-  let square : (extendScalars r).obj P ≅ (extendScalars s).obj Q :=
-    (extendScalarsComp a r).symm.app X ≪≫ c.app X
-  let xj : P := j ⊗ₜ[B,a] x
-  let xq : Q := (extendRestrictScalarsAdj q).unit.app X x
   change square.hom ((1 : D) ⊗ₜ[J,r] xj) = r j ⊗ₜ[C,s] xq
   have hleft : (extendScalarsComp a r).app X =
       (TensorProduct.AlgebraTensorModule.cancelBaseChange B J D D X).symm.toModuleIso :=
@@ -385,9 +373,9 @@ theorem exists_clutching_of_commuting_squares
     (h0 : r0.comp t0 = s.comp q0) (h1 : r1.comp t1 = s.comp q1)
     (X0 : ModuleCat.{u} B0) (X1 : ModuleCat.{u} B1)
     (σ : (extendScalars q0).obj X0 ≅ (extendScalars q1).obj X1) :
-    letI : Algebra J0 D := r0.toAlgebra
-    letI : Algebra J1 D := r1.toAlgebra
-    letI : Algebra C D := s.toAlgebra
+    let : Algebra J0 D := r0.toAlgebra
+    let : Algebra J1 D := r1.toAlgebra
+    let : Algebra C D := s.toAlgebra
     let P0 : ModuleCat.{u} J0 := (extendScalars t0).obj X0
     let P1 : ModuleCat.{u} J1 := (extendScalars t1).obj X1
     let Q0 : ModuleCat.{u} C := (extendScalars q0).obj X0
@@ -404,13 +392,7 @@ theorem exists_clutching_of_commuting_squares
       ∀ z : D ⊗[J0] P0,
         kappa1 (sigmaD z) =
           LinearEquiv.baseChange C D Q0 Q1 σ.toLinearEquiv (kappa0 z) := by
-  let : Algebra J0 D := r0.toAlgebra
-  let : Algebra J1 D := r1.toAlgebra
-  let : Algebra C D := s.toAlgebra
-  let P0 : ModuleCat.{u} J0 := (extendScalars t0).obj X0
-  let P1 : ModuleCat.{u} J1 := (extendScalars t1).obj X1
-  let Q0 : ModuleCat.{u} C := (extendScalars q0).obj X0
-  let Q1 : ModuleCat.{u} C := (extendScalars q1).obj X1
+  intro sourceAlgebra targetAlgebra baseAlgebra P0 P1 Q0 Q1
   let c0 : extendScalars (r0.comp t0) ≅ extendScalars q0 ⋙ extendScalars s :=
     (eqToIso (congrArg (fun f : B0 →+* D => extendScalars.{u, u, u} f) h0.symm)).symm ≪≫
       extendScalarsComp q0 s
@@ -453,9 +435,9 @@ theorem exists_algebraTensor_clutching_of_commuting_squares
     (h0 : r0.comp t0 = s.comp q0) (h1 : r1.comp t1 = s.comp q1)
     (X0 : ModuleCat.{u} B0) (X1 : ModuleCat.{u} B1)
     (σ : (extendScalars q0).obj X0 ≅ (extendScalars q1).obj X1) :
-    letI : Algebra J0 D := r0.toAlgebra
-    letI : Algebra J1 D := r1.toAlgebra
-    letI : Algebra C D := s.toAlgebra
+    let : Algebra J0 D := r0.toAlgebra
+    let : Algebra J1 D := r1.toAlgebra
+    let : Algebra C D := s.toAlgebra
     let P0 : ModuleCat.{u} J0 := algebraTensorObj t0 X0
     let P1 : ModuleCat.{u} J1 := algebraTensorObj t1 X1
     let Q0 : ModuleCat.{u} C := (extendScalars q0).obj X0
@@ -472,13 +454,7 @@ theorem exists_algebraTensor_clutching_of_commuting_squares
       ∀ z : D ⊗[J0] P0,
         kappa1 (sigmaD z) =
           LinearEquiv.baseChange C D Q0 Q1 σ.toLinearEquiv (kappa0 z) := by
-  let : Algebra J0 D := r0.toAlgebra
-  let : Algebra J1 D := r1.toAlgebra
-  let : Algebra C D := s.toAlgebra
-  let P0 : ModuleCat.{u} J0 := algebraTensorObj t0 X0
-  let P1 : ModuleCat.{u} J1 := algebraTensorObj t1 X1
-  let Q0 : ModuleCat.{u} C := (extendScalars q0).obj X0
-  let Q1 : ModuleCat.{u} C := (extendScalars q1).obj X1
+  intro sourceAlgebra targetAlgebra baseAlgebra P0 P1 Q0 Q1
   obtain ⟨K0, K1, _, hK0, hK1, _⟩ :=
     exists_clutching_of_commuting_squares t0 t1 q0 q1 r0 r1 s h0 h1 X0 X1 σ
   let E0 : P0 ≃ₗ[J0] (extendScalars t0).obj X0 :=
@@ -559,14 +535,11 @@ theorem algebraTensor_presented_overlap_generator
     (hF : letI : Algebra C D := s.toAlgebra; letI : Algebra C U := t.toAlgebra;
       ∀ (d : D) (q : Q), F (d ⊗ₜ[C] q) = ψ d ⊗ₜ[C] q)
     (hI : ∀ (a : U) (x : X), I (algebraTensorTmul t Q a (η x)) = a • b x) :
-    letI : Algebra J D := r.toAlgebra
-    letI : Algebra C D := s.toAlgebra
-    letI : Algebra C U := t.toAlgebra
+    let : Algebra J D := r.toAlgebra
+    let : Algebra C D := s.toAlgebra
+    let : Algebra C U := t.toAlgebra
     ∀ (j : J) (x : X), I (F (κ ((1 : D) ⊗ₜ[J] g j x))) = ψ (r j) • b x := by
-  let : Algebra J D := r.toAlgebra
-  let : Algebra C D := s.toAlgebra
-  let : Algebra C U := t.toAlgebra
-  intro j x
+  intro sourceAlgebra overlapAlgebra targetAlgebra j x
   exact (congrArg (fun z : D ⊗[C] Q => I (F z)) (hκ j x)).trans
     ((congrArg I (hF (r j) (η x))).trans (hI (ψ (r j)) x))
 
@@ -674,12 +647,7 @@ theorem extendScalars_comparison_inv_unit
         ((extendRestrictScalarsAdj g).unit.app ((extendScalars f).obj M)
           ((extendRestrictScalarsAdj f).unit.app M m)) =
       (extendRestrictScalarsAdj h).unit.app M m := by
-  let c : extendScalars h ≅ extendScalars f ⋙ extendScalars g :=
-    (eqToIso (congrArg (fun q : R →+* T => extendScalars.{u, u, u} q) w)).symm ≪≫
-      extendScalarsComp f g
-  change c.inv.app M
-    ((extendRestrictScalarsAdj g).unit.app ((extendScalars f).obj M)
-      ((extendRestrictScalarsAdj f).unit.app M m)) = _
+  intro c
   have hunit := extendScalars_comparison_hom_unit f g h w M m
   change c.hom.app M ((extendRestrictScalarsAdj h).unit.app M m) = _ at hunit
   rw [← hunit]
@@ -726,9 +694,7 @@ theorem extendScalars_realization_unit
         ((extendRestrictScalarsAdj q).unit.app X x)) =
       (extendRestrictScalarsAdj v).unit.app M
         (e.hom ((extendRestrictScalarsAdj p).unit.app X x)) := by
-  let c : extendScalars (v.comp p) ≅ extendScalars q ⋙ extendScalars uC :=
-    (eqToIso (congrArg (fun t : B →+* U => extendScalars.{u, u, u} t) hcomm)).symm ≪≫
-      extendScalarsComp q uC
+  intro c sharedOwner1
   change (extendScalars v).map e.hom
     ((extendScalarsComp p v).hom.app X
       (c.inv.app X ((extendRestrictScalarsAdj uC).unit.app ((extendScalars q).obj X)
@@ -792,11 +758,7 @@ theorem exists_realization_of_commuting_square
         Xi (a ⊗ₜ[C,uC] (show (extendScalars q).obj X from
           (extendRestrictScalarsAdj q).unit.app X x)) =
         a • r (newI ((extendRestrictScalarsAdj p).unit.app X x)) := by
-  let c : extendScalars (v.comp p) ≅ extendScalars q ⋙ extendScalars uC :=
-    (eqToIso (congrArg (fun t : B →+* U => extendScalars.{u, u, u} t) hcomm)).symm ≪≫
-      extendScalarsComp q uC
-  let F : (extendScalars uC).obj ((extendScalars q).obj X) ≅ (extendScalars v).obj M :=
-    c.symm.app X ≪≫ (extendScalarsComp p v).app X ≪≫ (extendScalars v).mapIso e
+  intro c F
   let newI : (extendScalars p).obj X ≃ₗ[V] N := e.toLinearEquiv ≪≫ₗ I
   let Xi : (extendScalars uC).obj ((extendScalars q).obj X) ≃ₗ[U] O :=
     F.toLinearEquiv ≪≫ₗ J

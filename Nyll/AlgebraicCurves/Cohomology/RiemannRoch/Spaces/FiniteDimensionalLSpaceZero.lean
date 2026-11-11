@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 
 /-!
 # Finite Dimensional l Space zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

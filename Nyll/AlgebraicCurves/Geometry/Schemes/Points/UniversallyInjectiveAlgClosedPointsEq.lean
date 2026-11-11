@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyInjective
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.ResidueField
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.CategoryTheory.Limits.Shapes.Diagonal
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.RingTheory.LocalRing.Basic
-import Mathlib.RingTheory.Spectrum.Prime.Topology
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyInjective
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.ResidueField
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.CategoryTheory.Limits.Shapes.Diagonal
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.RingTheory.LocalRing.Basic
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
 
 /-!
 # Universally Injective of forall is Alg Closed points eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

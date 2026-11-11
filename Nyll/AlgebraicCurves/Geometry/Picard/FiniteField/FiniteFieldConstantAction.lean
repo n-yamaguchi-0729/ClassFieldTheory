@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldLang
-import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearTower
-import Nyll.SchemeTheory.Morphisms.FiniteExtensionPoint
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldLang
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearTower
+public import Nyll.SchemeTheory.Morphisms.FiniteExtensionPoint
+public import Nyll.GaloisCohomology.Cyclic.LangNormKernel
 
 /-!
 # Lang surjectivity for the canonical action on geometric Picard classes
@@ -15,6 +18,10 @@ Identify the constructed Picard Frobenius with the canonical action on the
 actual geometric function field. Passing to a finite constant field carrying
 a rational point removes the pointed-curve hypothesis.
 -/
+
+@[expose] public section
+
+universe u
 
 noncomputable section
 
@@ -27,9 +34,9 @@ attribute [local instance]
   AlgebraicCurve.SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
   AlgebraicCurve.SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupPic0
 
-variable {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω F : Type u} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [IsProper c] [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
     (M : CurveModel Ω F) (eC : M.C ≅ pullback c (specMap k Ω))
     (heC : eC.hom ≫ pullback.snd c (specMap k Ω) = M.toBase)

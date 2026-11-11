@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumLeftFactors
+module
+
+public import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumLeftFactors
 
 /-!
 # The global cyclotomic factor inside the common local target
@@ -13,6 +15,8 @@ The global conductor cyclotomic field embeds, after base change and enlargement
 of the order, into the common `p`-adic cyclotomic target used by the synchronized
 valued compositum construction.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitDecomposition
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.PositiveCharacteristicQuotient
-import Nyll.ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
-import Nyll.ValuedFieldTheory.LocalField.GroupTheory.QuotientPowers
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitDecomposition
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.PositiveCharacteristicQuotient
+public import Nyll.ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
+public import Nyll.ValuedFieldTheory.LocalField.GroupTheory.QuotientPowers
 
 /-!
 # Field-unit power indices with congruence conditions
@@ -17,6 +19,8 @@ of the valuation-ring units. The uniformizer factor then contributes n to
 the index after adjoining n-th powers. In characteristic p, the exact
 principal-unit Frobenius calculation supplies the other factor.
 -/
+
+@[expose] public section
 
 noncomputable section
 namespace LocalFieldTheory.DiscreteValuationField

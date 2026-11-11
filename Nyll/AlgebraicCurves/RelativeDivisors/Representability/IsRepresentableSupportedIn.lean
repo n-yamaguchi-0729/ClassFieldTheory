@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
-import Nyll.AlgebraicCurves.RelativeDivisors.Support.RelEffCartierDivSupportedIn
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDivRestrict
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalIsAffine
-import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalEmpty
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.RelEffCartierDivFunctor
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivSum
+public import Nyll.AlgebraicCurves.RelativeDivisors.Support.RelEffCartierDivSupportedIn
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDivRestrict
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalIsAffine
+public import Nyll.AlgebraicCurves.RelativeDivisors.Representability.IsUniversalEmpty
 
 /-!
 Representability of the presheaf of relative divisors supported in an open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

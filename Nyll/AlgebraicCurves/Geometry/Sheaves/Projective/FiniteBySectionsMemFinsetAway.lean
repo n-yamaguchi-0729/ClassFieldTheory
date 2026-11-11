@@ -10,20 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.SchemeTheory.Modules.OpenImmersionUnit
-import Nyll.SchemeTheory.Modules.Localization.IsLocalizationBasicOpen
-import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentationBaseChange
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.ProjPresentationLocallyQuasiFinite
-import Nyll.SchemeTheory.ProjectiveSpace.BaseChange
+module
+
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+public import Nyll.SchemeTheory.Modules.Localization.IsLocalizationBasicOpen
+public import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentationBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.ProjPresentationLocallyQuasiFinite
+public import Nyll.SchemeTheory.ProjectiveSpace.BaseChange
 
 /-!
 # Descent of finiteness by sections from principal open base changes
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

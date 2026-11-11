@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH1
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH0
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
-import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.Adjoin.Polynomial.Basic
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH1
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsFiniteH0
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+public import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.Adjoin.Polynomial.Basic
 
 /-!
 # Finite cohomology from finite-map data on a curve
@@ -25,6 +27,8 @@ import Mathlib.RingTheory.Adjoin.Polynomial.Basic
 Finite-map data on a smooth proper curve gives finite zeroth and first two-chart
 cohomology for a module that is locally trivial.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

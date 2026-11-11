@@ -35,20 +35,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Sites.Pretopology
-import Nyll.SchemeTheory.Modules.Frames.Frames
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Mathlib.Util.WithWeakNamespace
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+module
+
+public import Mathlib.AlgebraicGeometry.Sites.Pretopology
+public import Nyll.SchemeTheory.Modules.Frames.Frames
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
 
 /-!
 # Tensor products of local frames
 
 The presheaf tensor comparison carries tensor products of generators to frames.
 -/
+
+@[expose] public section
 
 section TensorFrames
 
@@ -96,8 +100,12 @@ namespace FrameTensor
 
 variable {X : Scheme.{u}}
 
-private local instance frameTensorPresheafModule (P : X.PresheafOfModules) (W : X.Opens) :
+/-- The native module structure on sections of a presheaf of modules. -/
+@[instance_reducible]
+def frameTensorPresheafModule (P : X.PresheafOfModules) (W : X.Opens) :
     Module Γ(X, W) (P.obj (op W)) := (P.obj (op W)).isModule
+
+attribute [local instance] frameTensorPresheafModule
 
 lemma bijective_smul_tmul {R : Type*} [CommRing R] {A B : Type*} [AddCommGroup A] [AddCommGroup B]
     [Module R A] [Module R B] (a : A) (b : B)

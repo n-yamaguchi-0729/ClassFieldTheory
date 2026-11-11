@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.AlgebraicGeometry.Pullbacks
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
 
 /-!
 # Automorphisms of the constant field on base-changed schemes
@@ -12,6 +14,8 @@ import Mathlib.AlgebraicGeometry.Pullbacks
 Coefficient automorphisms act on the actual pullback. Projection formulas and
 the composition law are proved by the pullback universal property.
 -/
+
+@[expose] public section
 
 noncomputable section
 

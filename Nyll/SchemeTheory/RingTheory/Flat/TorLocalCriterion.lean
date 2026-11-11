@@ -34,46 +34,50 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.HomologicalAlgebra.TorExactSequence
-import Lean.Elab.Tactic.Ext
-import Lean.Elab.Tactic.Omega
-import Mathlib.Algebra.Category.ModuleCat.Basic
-import Mathlib.Algebra.Category.ModuleCat.EpiMono
-import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
-import Mathlib.Algebra.Category.ModuleCat.Projective
-import Mathlib.Algebra.Homology.Additive
-import Mathlib.Algebra.Homology.HomologicalComplexAbelian
-import Mathlib.Algebra.Homology.HomologySequence
-import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
-import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
-import Mathlib.Algebra.Homology.ShortComplex.ShortExact
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.CategoryTheory.Abelian.LeftDerived
-import Mathlib.CategoryTheory.Abelian.Projective.Resolution
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
-import Mathlib.CategoryTheory.Monoidal.Preadditive
-import Mathlib.CategoryTheory.Monoidal.Tor
-import Mathlib.LinearAlgebra.TensorProduct.Pi
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.RingTheory.Filtration
-import Mathlib.RingTheory.FiniteLength
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.CategoryTheory
-import Mathlib.RingTheory.Flat.Tensor
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
-import Mathlib.RingTheory.LocalRing.RingHom.Basic
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.Tactic.CategoryTheory.Slice
-import Mathlib.Tactic.Simps.Basic
+module
+
+public import Nyll.SchemeTheory.HomologicalAlgebra.TorExactSequence
+public import Lean.Elab.Tactic.Ext
+public import Lean.Elab.Tactic.Omega
+public import Mathlib.Algebra.Category.ModuleCat.Basic
+public import Mathlib.Algebra.Category.ModuleCat.EpiMono
+public import Mathlib.Algebra.Category.ModuleCat.Monoidal.Closed
+public import Mathlib.Algebra.Category.ModuleCat.Projective
+public import Mathlib.Algebra.Homology.Additive
+public import Mathlib.Algebra.Homology.HomologicalComplexAbelian
+public import Mathlib.Algebra.Homology.HomologySequence
+public import Mathlib.Algebra.Homology.ShortComplex.HomologicalComplex
+public import Mathlib.Algebra.Homology.ShortComplex.ModuleCat
+public import Mathlib.Algebra.Homology.ShortComplex.ShortExact
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.CategoryTheory.Abelian.LeftDerived
+public import Mathlib.CategoryTheory.Abelian.Projective.Resolution
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+public import Mathlib.CategoryTheory.Monoidal.Preadditive
+public import Mathlib.CategoryTheory.Monoidal.Tor
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.RingTheory.Filtration
+public import Mathlib.RingTheory.FiniteLength
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.CategoryTheory
+public import Mathlib.RingTheory.Flat.Tensor
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Mathlib.RingTheory.LocalRing.RingHom.Basic
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.Tactic.CategoryTheory.Slice
+public import Mathlib.Tactic.Simps.Basic
 
 /-!
 # Module flat of is Local Hom of finite of is Zero tor one residue Field
 -/
+
+@[expose] public section
 
 section Module_flat_of_isLocalHom_of_finite_of_isZero_tor_one_residueField
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.RingTheory.Frobenius
+module
+
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.RingTheory.Frobenius
 
 /-!
 # Order of arithmetic Frobenius at an unramified prime
@@ -16,6 +18,8 @@ For a prime `w` of `L` above `v` of `K`, unramifiedness kills the inertia
 subgroup.  The arithmetic Frobenius therefore has order equal to the residue
 degree at `w`.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

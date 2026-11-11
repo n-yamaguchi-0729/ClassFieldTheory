@@ -4,18 +4,33 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
-import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
-import Mathlib.Algebra.Algebra.Equiv
-import Mathlib.FieldTheory.KrullTopology
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+module
+
+public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
+public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteReciprocityDataComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
+public import Mathlib.Algebra.Algebra.Equiv
+public import Mathlib.FieldTheory.KrullTopology
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionGroup
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
+public import Nyll.ValuedFieldTheory.Valuation.Completion.FiniteLocalization
 
 /-!
 # The finite-place ray Artin value diagram
@@ -27,6 +42,8 @@ copy of `L`. Arithmetic ray values are inverse to the geometric local Artin
 values under this transport.
 -/
 
+@[expose] public section
+
 open scoped NumberField TensorProduct
 open NumberField IsDedekindDomain
 
@@ -34,13 +51,15 @@ noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- At every finite place, including those in the modulus, the
 Frobenius-normalized ray Artin value equals the transported inverse of the
 independently constructed local Artin value. The transport is injective and
 has its standard action on the canonical copy of `L`; the local and ray
 kernels are the actual local tensor-norm subgroup. -/
 theorem exists_finitePlaceRayArtin_localValueDiagram
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -68,8 +87,8 @@ theorem exists_finitePlaceRayArtin_localValueDiagram
             σ (algebraMap L w.1.Completion y)) ∧
         ∀ x : (v.adicCompletion K)ˣ,
           D.artin (ι x) = (transport (localArtin x))⁻¹ := by
+  intro vK
   classical
-  let vK := NumberField.HeightOneSpectrum.adicAbv K v
   let hvK : vK.IsNontrivial := RayClass.adicAbv_isNontrivial v
   let w : ExtendingAbsoluteValue vK L :=
     _root_.chosenFinitePlaceExtension (L := L) v
@@ -109,34 +128,7 @@ theorem exists_finitePlaceRayArtin_localValueDiagram
           (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
             (IdeleGroup.finitePrimeIdele p))) =
           GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-            (K := K) (L := L) p := by
-    intro p hp
-    have hpD : p ∉ D.modulus.finitePart.support := hp
-    change D.artin (e.symm (QuotientGroup.mk' m.congruenceSubgroup
-      (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-        (IdeleGroup.finitePrimeIdele p)))) = _
-    rw [← GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele_prime
-      K D.modulus p hpD]
-    have hFrob :
-        D.artin (rayClassOfFinitePrime D.modulus p hpD) =
-          GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-            (K := K) (L := L) p := by
-      let w₀ := _root_.chosenFinitePlaceExtension (L := L) p
-      let w' := _root_.finitePlaceExtensionCentre (K := K) (L := L) p w₀
-      have hw : w'.asIdeal.LiesOver p.asIdeal :=
-        _root_.finitePlaceExtensionCentre_liesOver
-          (K := K) (L := L) p w₀
-      have hunram : Algebra.IsUnramifiedAt (𝓞 K) w'.asIdeal :=
-        (D.unramifiedOutsideModulus.1 p hpD) w'.asIdeal inferInstance hw
-      calc
-        D.artin (rayClassOfFinitePrime D.modulus p hpD) =
-            arithmeticFrobeniusAt (K := K) w' :=
-          D.artin_frobenius p hpD w' hw
-        _ = GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-              (K := K) (L := L) p :=
-          (GlobalClassFieldComparison.arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
-            (K := K) (L := L) p w' hw hunram).symm
-    simpa only [e, MulEquiv.symm_apply_apply] using hFrob
+            (K := K) (L := L) p := D.originalArtin_prime
   let ι : (v.adicCompletion K)ˣ →* RayClassGroup D.modulus :=
     e.symm.toMonoidHom.comp
       ((QuotientGroup.mk' m.congruenceSubgroup).comp

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.GeometricConstantPolynomial
-import Nyll.GaloisCohomology.FieldTheory.SimpleBaseChangeNorm
-import Mathlib.FieldTheory.PrimitiveElement
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.GeometricConstantPolynomial
+public import Nyll.GaloisCohomology.FieldTheory.SimpleBaseChangeNorm
+public import Mathlib.FieldTheory.PrimitiveElement
 
 /-!
 # Finite constant descent of actual norm equations
@@ -16,13 +18,17 @@ and minimal polynomial descend to a common finite constant extension. Preserving
 the minimal polynomial identifies the actual field norms at that finite stage.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open IntermediateField
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [IsSepClosed Ω]
     [Algebra k Ω] [IsScalarTower k K Ω]

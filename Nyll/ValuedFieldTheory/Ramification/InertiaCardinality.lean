@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Finite
-import Mathlib.Algebra.Group.Subgroup.Lattice
-import Mathlib.SetTheory.Cardinal.NatCard
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Finite
+public import Mathlib.Algebra.Group.Subgroup.Lattice
+public import Mathlib.SetTheory.Cardinal.NatCard
 
 /-!
 # The finite-group count in the global cyclotomic inertia argument
@@ -17,6 +19,8 @@ abelian, the cardinality of the subgroup that they generate is at most the
 product of their cardinalities.  This file isolates that elementary count
 from the arithmetic part of the proof.
 -/
+
+@[expose] public section
 
 noncomputable section
 

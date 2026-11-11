@@ -10,14 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
 
 /-!
-Function fields of curves over a base field.
-The curve condition records principal divisors, finite residues and rank-one differentials.
+A divisor-and-differential interface for function fields over a base field.
+The condition records principal divisors, finite residues and rank-one differentials.
+It does not itself require finite generation, transcendence degree one or separable generation.
+Those geometric conclusions require the hypotheses of the corresponding comparison theorems.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -27,7 +33,10 @@ namespace AlgebraicCurve
 
 variable (K F : Type*) [Field K] [Field F] [Algebra K F]
 
-/-- The field extension has principal divisors, finite residues and rank-one differentials. -/
+/-- The field extension has principal divisors, finite residues and rank-one differentials.
+This interface alone does not assert finite generation or transcendence degree one.
+For example, `IsCurveOver.trdeg_eq_one` separately requires a perfect base and essential
+finite type. -/
 class IsCurveOver : Prop extends HasPrincipalDivisors K F where
   /-- Every place has a residue field finite over the base field. -/
   finiteResidue : ∀ v : Place K F, Module.Finite K v.ResidueField

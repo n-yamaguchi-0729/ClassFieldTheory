@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.RingTheory.RingHom.LocallyStandardSmooth
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.RingTheory.Localization.Away.Basic
-import Mathlib.RingTheory.Etale.Basic
-import Mathlib.RingTheory.Smooth.Flat
-import Mathlib.RingTheory.Flat.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.RingTheory.RingHom.LocallyStandardSmooth
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Mathlib.RingTheory.Etale.Basic
+public import Mathlib.RingTheory.Smooth.Flat
+public import Mathlib.RingTheory.Flat.Basic
 
 /-!
 # Smooth schemes over a field are reduced
@@ -25,6 +27,8 @@ import Mathlib.RingTheory.Flat.Basic
 Reducedness of étale algebras and local standard-smooth presentations establish reducedness
 of smooth schemes over a field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

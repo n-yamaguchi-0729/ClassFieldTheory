@@ -10,9 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.FiniteStability
-import Mathlib.RingTheory.Localization.Submodule
-import Nyll.SchemeTheory.RingTheory.Flat.LocalCriterion
+module
+
+public import Mathlib.Algebra.Module.Submodule.LinearMap
+public import Mathlib.Data.Finsupp.Single
+public import Mathlib.LinearAlgebra.DirectSum.Finsupp
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.TensorProduct.Map
+public import Mathlib.LinearAlgebra.TensorProduct.Associator
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.FiniteStability
+public import Mathlib.RingTheory.Localization.Submodule
+public import Nyll.SchemeTheory.RingTheory.Flat.LocalCriterion
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -20,6 +29,8 @@ import Nyll.SchemeTheory.RingTheory.Flat.LocalCriterion
 Finite-subalgebra localization and tensor-kernel generation give finite algebraic models for flat
 modules.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -69,12 +80,12 @@ theorem baseChange_exact {N₁ N₂ N₃ : Type*} [AddCommGroup N₁] [AddCommGr
     {g : N₂ →ₗ[A] N₃} (hfg : Function.Exact f g) (hg : Function.Surjective g) :
     Function.Exact (f.baseChange D) (g.baseChange D) := by
   have := lTensor_exact D hfg hg
-  rwa [← LinearMap.baseChange_eq_ltensor, ← LinearMap.baseChange_eq_ltensor] at this
+  rwa [← LinearMap.baseChange_eq_lTensor, ← LinearMap.baseChange_eq_lTensor] at this
 
 theorem baseChange_surjective {N₁ N₂ : Type*} [AddCommGroup N₁] [AddCommGroup N₂]
     [Module A N₁] [Module A N₂] {f : N₁ →ₗ[A] N₂} (hf : Function.Surjective f) :
     Function.Surjective (f.baseChange D) := by
-  rw [LinearMap.baseChange_eq_ltensor]
+  rw [LinearMap.baseChange_eq_lTensor]
   exact LinearMap.lTensor_surjective D hf
 
 variable (D) in
@@ -96,8 +107,10 @@ theorem mem_span_of_mapRange_baseChange_eq_zero (J : Ideal A) (ι : Type*)
     induction x using TensorProduct.inductionOn with
     | tmul m z =>
       ext i
-      simp [e₁, e₂, TensorProduct.finsuppRight_apply_tmul_apply]
-    | add x y hx hy => simp [map_add, hx, hy]
+      simp only [e₁, e₂, LinearMap.baseChange_tmul,
+        TensorProduct.finsuppRight_apply_tmul_apply,
+        Finsupp.mapRange.linearMap_apply, Finsupp.mapRange_apply]
+    | add x y hx hy => simp only [map_add, hx, hy]
   have hcomp : ∀ i, e₁ w i ∈ torKer D J := by
     intro i
     have := congrArg e₂ hw
@@ -115,7 +128,7 @@ theorem mem_span_of_mapRange_baseChange_eq_zero (J : Ideal A) (ι : Type*)
       simp only [LinearMap.baseChange_tmul, e₁, TensorProduct.finsuppRight_apply_tmul_apply,
         Finsupp.lsingle_apply, Finsupp.single_apply]
       split_ifs <;> simp only [TensorProduct.tmul_zero]
-    | add x y hx hy => simp [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add, hx, hy, Finsupp.single_add]
   have hw_eq : w = (e₁ w).sum fun i t =>
       (Finsupp.lsingle i : J →ₗ[A] (ι →₀ J)).baseChange D t := by
     apply e₁.injective
@@ -158,9 +171,8 @@ theorem exists_generators_of_ker_baseChange (J : Ideal A) (S : Submonoid D)
     change f (ef.symm (u₀ l)) = v l
     rw [hef]
     rfl
-  have hcomm : v ∘ₗ L.subtype = f ∘ₗ u := by
-    ext l
-    simp [hu_apply]
+  have hcomm : v ∘ₗ L.subtype = f ∘ₗ u :=
+    LinearMap.ext fun l => (hu_apply l).symm
   have hu : Function.Surjective u := by
     intro n
     obtain ⟨x, hx⟩ := hv (f n)
@@ -180,13 +192,13 @@ theorem exists_generators_of_ker_baseChange (J : Ideal A) (S : Submonoid D)
     apply hf
     rw [LinearMap.comp_apply, hu_apply]
     have : v x = 0 := x.2
-    simp [this]
+    simp only [Submodule.coe_inclusion, this, LinearMap.zero_apply, map_zero]
   let e := FreeCover.equiv A N₂
   let mr : (N₂ →₀ J) →ₗ[A] (N₂ →₀ A) := Finsupp.mapRange.linearMap (Submodule.subtype J)
   let κ : (N₂ →₀ J) →ₗ[A] FreeCover A N₂ := e.symm.toLinearMap ∘ₗ mr
-  have hvκ : ∀ z, v (κ z) = Finsupp.linearCombination A (id : N₂ → N₂) (mr z) := by
+  have hvκ : ∀ z, v (κ z) = Finsupp.linearCombination A (_root_.id : N₂ → N₂) (mr z) := by
     intro z
-    change Finsupp.linearCombination A (id : N₂ → N₂) (e (e.symm (mr z))) = _
+    change Finsupp.linearCombination A (_root_.id : N₂ → N₂) (e (e.symm (mr z))) = _
     rw [LinearEquiv.apply_symm_apply]
   have hκv : ∀ z, v (κ z) ∈ LinearMap.range f := by
     intro z
@@ -209,7 +221,8 @@ theorem exists_generators_of_ker_baseChange (J : Ideal A) (S : Submonoid D)
     change e (e.symm (mr _)) = e ((a : A) • x)
     rw [LinearEquiv.apply_symm_apply, map_smul]
     ext n
-    simp [mr]
+    change (a : A) * (e x) n = (a : A) • (e x) n
+    exact (smul_eq_mul _ _).symm
   set K := LinearMap.range κ with hK
   have htorG : Module.IsTorsionBySet A (FreeCover A N₂ ⧸ K) J := by
     rintro x ⟨a, ha⟩
@@ -244,7 +257,9 @@ theorem exists_generators_of_ker_baseChange (J : Ideal A) (S : Submonoid D)
     rw [hu_apply]
     change v (κ (Finsupp.single n j)) = (j : A) • n
     rw [hvκ]
-    simp [mr]
+    rw [show mr (Finsupp.single n j) = Finsupp.single n (j : A) from
+      Finsupp.mapRange_single (hf := (Submodule.subtype J).map_zero)]
+    exact Finsupp.linearCombination_single A (v := (_root_.id : N₂ → N₂)) (j : A) n
   intro x hx
   obtain ⟨y₀, rfl⟩ := baseChange_surjective (D := D) hu x
   have hy₀ : (v.baseChange D) ((L.subtype.baseChange D) y₀) = 0 := by
@@ -272,9 +287,8 @@ theorem exists_generators_of_ker_baseChange (J : Ideal A) (S : Submonoid D)
   have h3 : (κ.baseChange D) w = 0 := by
     rw [hκκ', LinearMap.baseChange_comp, LinearMap.comp_apply, hw, map_smul, hy, smul_zero]
   have h3' : (mr.baseChange D) w = 0 := by
-    have hκe : mr = e.toLinearMap ∘ₗ κ := by
-      ext z
-      simp [κ]
+    have hκe : mr = e.toLinearMap ∘ₗ κ :=
+      LinearMap.ext fun z => (e.apply_symm_apply (mr z)).symm
     rw [hκe, LinearMap.baseChange_comp, LinearMap.comp_apply, h3, map_zero]
   have h4 := mem_span_of_mapRange_baseChange_eq_zero J N₂ w h3'
   refine ⟨s, hs, ?_⟩
@@ -356,12 +370,9 @@ theorem rTensor_ker_torsion [p₀.IsPrime] {Q₁ Q₂ : Type*} [AddCommGroup Q�
   let α₂ := (TensorProduct.assoc R₀ L₀ Q₂ B₀).symm
   have hnat : ∀ z, α₂ ((g.rTensor B₀).lTensor L₀ z) = (g.lTensor L₀).rTensor B₀ (α₁ z) := by
     intro z
-    induction z using TensorProduct.inductionOn with
-    | tmul a x =>
-      induction x using TensorProduct.inductionOn with
-      | tmul q b => simp [α₁, α₂]
-      | add x x' hx hx' => simp only [TensorProduct.tmul_add, map_add, hx, hx']
-    | add z z' hz hz' => simp only [map_add, hz, hz']
+    exact (LinearMap.congr_fun
+      (LinearMap.rTensor_lTensor_comp_assoc_symm
+        (R := R₀) (M := Q₁) (N := Q₂) (P := L₀) (Q := B₀) g) z).symm
   have hzero : (1 : L₀) ⊗ₜ[R₀] y = 0 := by
     apply α₁.injective
     apply hinj
@@ -382,7 +393,9 @@ def Φ (Q : Type*) [AddCommGroup Q] [Module A Q] [Module R₀ Q] [IsScalarTower 
 
 theorem Φ_tmul {Q : Type*} [AddCommGroup Q] [Module A Q] [Module R₀ Q] [IsScalarTower R₀ A Q]
     (a : A) (b : B₀) (q : Q) : Φ B₀ A Q ((a ⊗ₜ[R₀] b) ⊗ₜ[A] q) = (a • q) ⊗ₜ[R₀] b := by
-  simp [Φ, TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul]
+  change TensorProduct.AlgebraTensorModule.cancelBaseChange R₀ A A Q B₀
+    (q ⊗ₜ[A] (a ⊗ₜ[R₀] b)) = (a • q) ⊗ₜ[R₀] b
+  exact TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul R₀ A A q b a
 
 theorem rel_torsion [p₀.IsPrime] {Q₁ Q₂ : Type*} [AddCommGroup Q₁] [AddCommGroup Q₂]
     [Module A Q₁] [Module A Q₂] (g : Q₁ →ₗ[A] Q₂) (hg : Function.Injective g)
@@ -406,7 +419,9 @@ theorem rel_torsion [p₀.IsPrime] {Q₁ Q₂ : Type*} [AddCommGroup Q₁] [AddC
     induction z using TensorProduct.inductionOn with
     | tmul d q =>
       induction d using TensorProduct.inductionOn with
-      | tmul a b => simp [Φ_tmul, g']
+      | tmul a b =>
+        rw [LinearMap.baseChange_tmul, Φ_tmul, Φ_tmul, LinearMap.rTensor_tmul]
+        exact congrArg (fun z : Q₂ => z ⊗ₜ[R₀] b) (map_smul g a q).symm
       | add x x' hx hx' => simp only [TensorProduct.add_tmul, map_add, hx, hx']
     | add z z' hz hz' => simp only [map_add, hz, hz']
   have hy : g'.rTensor B₀ (Φ B₀ A Q₁ x) = 0 := by rw [← hnat, hx, map_zero]
@@ -459,7 +474,7 @@ theorem mem_J_map (h : A →ₐ[R₀] A') {a : A} (ha : a ∈ J p₀ A) : h a �
 def ιJ (h : A →ₐ[R₀] A') : ↥(J p₀ A) →ₗ[R₀] ↥(J p₀ A') where
   toFun j := ⟨h j, mem_J_map p₀ h j.2⟩
   map_add' j j' := Subtype.ext (map_add h (j : A) (j' : A))
-  map_smul' r j := Subtype.ext (by simp [Algebra.smul_def])
+  map_smul' r j := Subtype.ext (map_smul h r (j : A))
 
 @[scoped simp] theorem coe_ιJ (h : A →ₐ[R₀] A') (j : J p₀ A) : (ιJ p₀ h j : A') = h j := rfl
 
@@ -526,7 +541,9 @@ def ρ : (A ⊗[R₀] B₀) ⊗[A] ↥(J p₀ A) →ₗ[A ⊗[R₀] B₀] A ⊗[
 
 @[scoped simp] theorem ρ_tmul (d : A ⊗[R₀] B₀) (j : J p₀ A) : ρ B₀ p₀ A (d ⊗ₜ[A] j) = (j :
   A) • d := by
-  simp [ρ, TensorProduct.AlgebraTensorModule.rid_tmul]
+  change TensorProduct.AlgebraTensorModule.rid A (A ⊗[R₀] B₀) (A ⊗[R₀] B₀)
+    (d ⊗ₜ[A] (j : A)) = (j : A) • d
+  exact TensorProduct.AlgebraTensorModule.rid_tmul (A ⊗[R₀] B₀) (j : A) d
 
 theorem mem_T_iff (x : (A ⊗[R₀] B₀) ⊗[A] ↥(J p₀ A)) : x ∈ T B₀ p₀ A ↔ ρ B₀ p₀ A x = 0 := by
   simp only [T, torKer, LinearMap.mem_ker, ρ, LinearMap.comp_apply, LinearEquiv.coe_coe,
@@ -584,7 +601,7 @@ variable {N'}
 
 @[scoped simp] theorem Θ_tmul (d : A ⊗[R₀] B₀) (n : N') :
     Θ B₀ A A' N' (d ⊗ₜ[A] n) = δA B₀ A A' d ⊗ₜ[A'] n := by
-  simp [Θ]
+  rfl
 
 theorem Θ_smul (c : A ⊗[R₀] B₀) (y : (A ⊗[R₀] B₀) ⊗[A] N') :
     Θ B₀ A A' N' (c • y) = δA B₀ A A' c • Θ B₀ A A' N' y := by
@@ -1014,13 +1031,10 @@ theorem cancelBaseChange_lTensor_baseChange {A D M' : Type*} [CommRing A] [CommR
     (f : N →ₗ[A] N'') (z : M' ⊗[D] (D ⊗[A] N)) :
     TensorProduct.AlgebraTensorModule.cancelBaseChange A D M' M' N''
         ((f.baseChange D).lTensor M' z) =
-      f.lTensor M' (TensorProduct.AlgebraTensorModule.cancelBaseChange A D M' M' N z) := by
-  induction z using TensorProduct.inductionOn with
-  | tmul m y =>
-    induction y using TensorProduct.inductionOn with
-    | tmul d n => simp [TensorProduct.AlgebraTensorModule.cancelBaseChange_tmul]
-    | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, hx, hy]
-  | add x y hx hy => simp only [map_add, hx, hy]
+      f.lTensor M' (TensorProduct.AlgebraTensorModule.cancelBaseChange A D M' M' N z) :=
+  (LinearMap.congr_fun
+    (TensorProduct.AlgebraTensorModule.lTensor_comp_cancelBaseChange
+      A D M' (M := M') f) z).symm
 
 theorem lTensor_localization_injective {A D : Type*} [CommRing A] [CommRing D] [Algebra A D]
     (P : Ideal D) [P.IsPrime] {N N'' : Type*} [AddCommGroup N] [Module A N] [AddCommGroup N'']

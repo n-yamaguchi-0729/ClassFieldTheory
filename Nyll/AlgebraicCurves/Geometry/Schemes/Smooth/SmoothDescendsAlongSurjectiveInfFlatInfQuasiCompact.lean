@@ -11,13 +11,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.FlatDescent
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.RingTheory.Etale.Descent
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatDescent
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.RingTheory.Etale.Descent
 
 /-!
 # Smooth descends Along surjective inf flat inf quasi Compact
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

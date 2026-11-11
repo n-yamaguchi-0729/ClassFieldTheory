@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.Henselian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
-import Nyll.AlgebraicCurves.Places.Evaluation.Value
-import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegPos
+module
+
+public import Mathlib.RingTheory.Henselian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+public import Nyll.AlgebraicCurves.Places.Evaluation.Value
+public import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegPos
+public import Nyll.GaloisCohomology.Kummer.Concrete.RadicalExtension
 
 /-!
 # Ramification support of actual S-unit Kummer extensions
@@ -20,6 +23,8 @@ is a unit. The original S-unit root generators therefore make residue action
 faithful away from S. The decomposition-group order formula then gives
 ramification index one.
 -/
+
+@[expose] public section
 
 noncomputable section
 

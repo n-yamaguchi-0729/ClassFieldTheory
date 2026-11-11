@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
-import Mathlib.AlgebraicGeometry.Properties
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
+public import Mathlib.AlgebraicGeometry.Properties
 
 /-!
 # Relative effective divisors and universal families
 
 Defines finite flat divisors, their pullbacks, and the data of a universal divisor family.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
 
@@ -103,9 +107,10 @@ lemma isPullback_comapSubschemeMap (I : (pullback c csym).IdealSheafData) (φ : 
     IsPullback (comapSubschemeMap I φ hφ) (I.comap (mapOnProd c φ hφ)).subschemeι
       I.subschemeι (mapOnProd c φ hφ) := by
   refine (IsPullback.of_iso_pullback ⟨?_⟩ (I.comapIso (mapOnProd c φ hφ)) ?_ ?_).flip
-  · simp [comapSubschemeMap]
+  · simp only [comapSubschemeMap, Category.assoc, ← pullback.condition,
+      I.comapIso_hom_fst_assoc]
   · exact I.comapIso_hom_fst (mapOnProd c φ hφ)
-  · simp [comapSubschemeMap]
+  · rfl
 
 lemma isPullback_comap_snd (I : (pullback c csym).IdealSheafData) (φ : T ⟶ Csym)
     (hφ : φ ≫ csym = t) :

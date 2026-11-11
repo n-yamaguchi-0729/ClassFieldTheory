@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Scheme
+module
+
+public import Mathlib.AlgebraicGeometry.Scheme
 
 /-!
 Relative affine spectra and finite-subalgebra descent and equality-detection conditions.
 -/
+
+@[expose] public section
 
 universe w u
 

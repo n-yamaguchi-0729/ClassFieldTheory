@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.OpensProperToSpecPolynomial
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.OpensFinitePreimageSingletonToSpecPolynomial
-import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.ValuationRingStalkSmoothOfRelativeDimensionOne
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.OpensProperToSpecPolynomial
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.OpensFinitePreimageSingletonToSpecPolynomial
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.ValuationRingStalkSmoothOfRelativeDimensionOne
 
 /-!
 # IsAffineOpen of maximal domain
 
 The maximal domain of a nonconstant function on a proper smooth integral curve is an affine open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

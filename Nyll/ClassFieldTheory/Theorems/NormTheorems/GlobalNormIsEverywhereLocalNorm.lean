@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsEverywhereLocalNorm
-import Nyll.ClassFieldTheory.Theorems.NormTheorems.TensorNormBaseChange
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsEverywhereLocalNorm
+public import Nyll.ClassFieldTheory.Theorems.NormTheorems.TensorNormBaseChange
 
 /-!
 # Global norms are local norms everywhere
@@ -17,6 +19,8 @@ a unit `x` of `K`.  The conclusion says that if `x` lies in the
 global norm subgroup, then after scalar extension it is a determinant norm
 at every finite and every infinite completion of `K`.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

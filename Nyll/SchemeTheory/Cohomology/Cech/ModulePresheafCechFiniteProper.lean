@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteIntegral
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFinitePushforwardIff
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteUnitIsIntegral
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFinitePreimage
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
-import Mathlib.RingTheory.Noetherian.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteIntegral
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFinitePushforwardIff
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteUnitIsIntegral
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFinitePreimage
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
 
 /-!
 Cech finiteness of coherent, quasicoherent module presheaves over a proper scheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

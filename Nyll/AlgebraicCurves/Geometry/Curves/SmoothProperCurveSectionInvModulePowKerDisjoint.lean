@@ -10,53 +10,59 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Data.Fintype.Card
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocalSection
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.RelativeSectionTwist
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoUnitInvertibleFree
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.EulerCharacteristic.InvertibleIdealEulerCharSectionsOfTensorInvModuleEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
-import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMemFinset
-import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenSupEqTop
-import Nyll.AlgebraicCurves.Geometry.Curves.TwoAffineFibreRiemannRochGenus
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveSectionInvModulePowKerNotMemSupport
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
-import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.HomPullbackKerPowInvModuleIso
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.ZeroSchemeIdealCompEq
-import Nyll.AlgebraicCurves.Geometry.Curves.IdealTwistFibreCohomology
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.ModulesInvertibleSubsingletonH1SectionsOf
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.SubsingletonHSuccZeroModules
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteModules
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.EqSumSmulPullbackSectionSubsingletonHSucc
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleComapZeroSchemeIdeal
-import Nyll.SchemeTheory.Sheaves.IdealSheafComap
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
-import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.EquivModulesIso
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveSectionPullbackInvModulePowKerNotMemSupport
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealZeroSchemeIdealEqSpan
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.PullbackUnitIsoHomAppPullbackLocalSectionToUnitSection
+module
+
+public import Mathlib.Data.Fintype.Card
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteToOrderedAffineCoverIff
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocalSection
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.RelativeSectionTwist
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoUnitInvertibleFree
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.EulerCharacteristic.InvertibleIdealEulerCharSectionsOfTensorInvModuleEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomFiniteFinrankSubschemeIotaKerPow
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+public import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMemFinset
+public import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenSupEqTop
+public import Nyll.AlgebraicCurves.Geometry.Curves.TwoAffineFibreRiemannRochGenus
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveSectionInvModulePowKerNotMemSupport
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.PullbackSectionTwistIso
+public import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.HomPullbackKerPowInvModuleIso
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.ZeroSchemeIdealCompEq
+public import Nyll.AlgebraicCurves.Geometry.Curves.IdealTwistFibreCohomology
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.ModulesInvertibleSubsingletonH1SectionsOf
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.SubsingletonHSuccZeroModules
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.FiniteModules
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.EqSumSmulPullbackSectionSubsingletonHSucc
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleComapZeroSchemeIdeal
+public import Nyll.SchemeTheory.Sheaves.IdealSheafComap
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleCoeffIdealLeIdealZeroSchemeIdealEq
+public import Nyll.AlgebraicCurves.Cohomology.Cech.Comparison.EquivModulesIso
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveSectionPullbackInvModulePowKerNotMemSupport
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealZeroSchemeIdealEqSpan
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.PullbackUnitIsoHomAppPullbackLocalSectionToUnitSection
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-! Sections of an inverse ideal power disjoint from the marked section. -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -156,8 +162,7 @@ attribute [-instance]
   AlgebraicCurve.Place.kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-attribute [-instance] AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
+attribute [-instance]
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
@@ -304,22 +309,10 @@ open _root_.AlgebraicGeometry.Scheme
 
 local notation "K" => 𝒱.toOrderedAffineCover
 
-private def _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.idx0 (i : ULift.{u} (Fin 2)) :
-  (K).Idx 0 := ⟨fun _ => i, fun a b h => absurd h (by omega)⟩
-
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
-
-private def _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.idx01 : (K).Idx 1 :=
-  ⟨fun j => ⟨j⟩, fun a b h => by
-    change (⟨a⟩ : ULift.{u} (Fin 2)) < ⟨b⟩
-    exact h⟩
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 theorem idx0_val (i : ULift.{u} (Fin 2)) (j : Fin 1) : (𝒱.idx0 i).1 j = i := rfl
-
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.eq_idx0 (s : (K).Idx 0) : s =
-  𝒱.idx0 (s.1 0) :=
-  Subtype.ext (funext fun j => by fin_cases j; rfl)
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 
@@ -329,18 +322,6 @@ def idxZeroEquiv : (K).Idx 0 ≃ ULift.{u} (Fin 2) where
   invFun := 𝒱.idx0
   left_inv s := (𝒱.eq_idx0 s).symm
   right_inv _ := rfl
-
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.eq_idx01 (s : (K).Idx 1) : s =
-  𝒱.idx01 := by
-  apply Subtype.ext; funext j
-  have hs := s.2
-  have h01 : s.1 0 < s.1 1 := hs (by decide)
-  have hlt : (s.1 0).down < (s.1 1).down := h01
-  have h0 : (s.1 0).down = 0 := by omega
-  have h1 : (s.1 1).down = 1 := by omega
-  fin_cases j
-  · exact ULift.ext h0
-  · exact ULift.ext h1
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 scoped instance uniqueIdxOne : Unique ((K).Idx 1) where
@@ -359,33 +340,13 @@ private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.isEmpty_Idx_a
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inter_idx0 (i : ULift.{u} (Fin
-  2)) : (K).inter (𝒱.idx0 i) = (K).U i :=
-  le_antisymm (iInf_le _ 0) (le_iInf fun _ => le_rfl)
-
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inter_idx01 : (K).inter 𝒱.idx01
-  = 𝒱.U0 ⊓ 𝒱.U1 :=
-  le_antisymm (le_inf (iInf_le _ 0) (iInf_le _ 1))
-    (le_iInf fun j => by fin_cases j <;> [exact inf_le_left; exact inf_le_right])
-
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 end Scheme.TwoAffineOpenCover
 
 namespace OModulePresheaf
 open _root_.AlgebraicGeometry.OModulePresheaf
 open _root_.AlgebraicGeometry.OModulePresheaf hiding Hom prod pow ker zero
-
-private def _root_.AlgebraicGeometry.OModulePresheaf.resEq {U U' : X.Opens} (h : U = U') : F.obj U'
-  ≃ₗ[R] F.obj U where
-  toLinearMap := F.res h.le
-  invFun := F.res h.ge
-  left_inv x := by
-    change F.res h.ge (F.res h.le x) = x
-    exact (F.res_res _ _ _).trans (F.res_refl_apply _ x)
-  right_inv x := by
-    change F.res h.le (F.res h.ge x) = x
-    exact (F.res_res _ _ _).trans (F.res_refl_apply _ x)
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 theorem resEq_apply {U U' : X.Opens} (h : U = U') (x : F.obj U') : F.resEq h x = F.res h.le x := rfl
@@ -396,52 +357,16 @@ theorem res_resEq {U U' W : X.Opens} (h : U = U') (hW : W ≤ U) (x : F.obj U') 
 
 local notation "K" => 𝒱.toOrderedAffineCover
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.pick (p : F.obj 𝒱.U0 × F.obj 𝒱.U1) : ∀ i :
-  ULift.{u} (Fin 2), F.obj ((K).U i)
-  | ⟨⟨0, _⟩⟩ => p.1
-  | ⟨⟨1, _⟩⟩ => p.2
-
 open _root_.AlgebraicGeometry.OModulePresheaf
 theorem pick_zero (p : F.obj 𝒱.U0 × F.obj 𝒱.U1) : F.pick 𝒱 p ⟨0⟩ = p.1 := rfl
 theorem pick_one (p : F.obj 𝒱.U0 × F.obj 𝒱.U1) : F.pick 𝒱 p ⟨1⟩ = p.2 := rfl
 
-private theorem _root_.AlgebraicGeometry.OModulePresheaf.pick_add (p q : F.obj 𝒱.U0 × F.obj 𝒱.U1)
-  (i : ULift.{u} (Fin 2)) :
-    F.pick 𝒱 (p + q) i = F.pick 𝒱 p i + F.pick 𝒱 q i := by
-  rcases i with ⟨⟨_ | _ | n, hn⟩⟩
-  · rfl
-  · rfl
-  · omega
-
 open _root_.AlgebraicGeometry.OModulePresheaf
-private theorem _root_.AlgebraicGeometry.OModulePresheaf.pick_smul (r : R) (p : F.obj 𝒱.U0 × F.obj
-  𝒱.U1) (i : ULift.{u} (Fin 2)) :
-    F.pick 𝒱 (r • p) i = r • F.pick 𝒱 p i := by
-  rcases i with ⟨⟨_ | _ | n, hn⟩⟩
-  · rfl
-  · rfl
-  · omega
+open _root_.AlgebraicGeometry.OModulePresheaf
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.pickₗ (i : ULift.{u} (Fin 2)) : F.obj 𝒱.U0 ×
-  F.obj 𝒱.U1 →ₗ[R] F.obj ((K).U i) where
-  toFun p := F.pick 𝒱 p i
-  map_add' p q := F.pick_add 𝒱 p q i
-  map_smul' r p := F.pick_smul 𝒱 r p i
-
 open _root_.AlgebraicGeometry.OModulePresheaf
-
-private def _root_.AlgebraicGeometry.OModulePresheaf.cochainZeroTo : F.cochain K 0 →ₗ[R] F.obj 𝒱.U0
-  × F.obj 𝒱.U1 :=
-  ((F.resEq (𝒱.inter_idx0 ⟨0⟩)).symm.toLinearMap.comp (LinearMap.proj (𝒱.idx0 ⟨0⟩))).prod
-    ((F.resEq (𝒱.inter_idx0 ⟨1⟩)).symm.toLinearMap.comp (LinearMap.proj (𝒱.idx0 ⟨1⟩)))
-
-open _root_.AlgebraicGeometry.OModulePresheaf
-
-private def _root_.AlgebraicGeometry.OModulePresheaf.cochainZeroOf : F.obj 𝒱.U0 × F.obj 𝒱.U1 →ₗ[R]
-  F.cochain K 0 :=
-  LinearMap.pi fun s => (F.res ((K).inter_le s 0)).comp (F.pickₗ 𝒱 (s.1 0))
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 theorem cochainZeroTo_apply (f : F.cochain K 0) :
@@ -581,15 +506,7 @@ private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.face_idx01_on
   Subtype.ext (funext fun j => by fin_cases j; rfl)
 
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inter_le_inf (s : (K).Idx 1) :
-  (K).inter s ≤ 𝒱.U0 ⊓ 𝒱.U1 := by
-  rw [𝒱.eq_idx01 s, 𝒱.inter_idx01]
-
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
-private theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.inf_le_inter (s : (K).Idx 1) :
-  𝒱.U0 ⊓ 𝒱.U1 ≤ (K).inter s := by
-  rw [𝒱.eq_idx01 s, 𝒱.inter_idx01]
-
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 end Scheme.TwoAffineOpenCover
 
@@ -606,15 +523,7 @@ private theorem _root_.AlgebraicGeometry.OModulePresheaf.res_congr_idx {i : ℕ}
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 
-private def _root_.AlgebraicGeometry.OModulePresheaf.cochainOneTo : F.cochain K 1 →ₗ[R] F.obj (𝒱.U0
-  ⊓ 𝒱.U1) :=
-  (F.res (𝒱.inf_le_inter 𝒱.idx01)).comp (LinearMap.proj 𝒱.idx01)
-
 open _root_.AlgebraicGeometry.OModulePresheaf
-
-private def _root_.AlgebraicGeometry.OModulePresheaf.cochainOneOf : F.obj (𝒱.U0 ⊓ 𝒱.U1) →ₗ[R]
-  F.cochain K 1 :=
-  LinearMap.pi fun s => F.res (𝒱.inter_le_inf s)
 
 open _root_.AlgebraicGeometry.OModulePresheaf
 theorem cochainOneTo_apply (co : F.cochain K 1) :
@@ -1260,8 +1169,6 @@ attribute [-instance]
   AlgebraicCurve.Place.kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField
   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField

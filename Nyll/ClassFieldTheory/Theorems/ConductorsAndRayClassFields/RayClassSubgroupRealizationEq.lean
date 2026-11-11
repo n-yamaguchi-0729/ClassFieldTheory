@@ -15,12 +15,14 @@ actual intermediate field, not just up to abstract isomorphism.  This does
 not assert uniqueness of the embedding or of the Artin map.
 -/
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- Two realizations for the same modulus and subgroup have the same
 intermediate field in the chosen separable closure. -/
 theorem rayClassSubgroupRealizations_eq
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K) (H : Subgroup (RayClassGroup m))
     (R₁ R₂ : RayClassSubgroupRealization K m H) :
     R₁.extension.1 = R₂.extension.1 := by

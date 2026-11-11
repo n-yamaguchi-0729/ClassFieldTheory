@@ -4,15 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
-import Mathlib.RingTheory.Unramified.Locus
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+public import Mathlib.RingTheory.Unramified.Locus
 
 /-!
 # Unramifiedness outside the support of a ray modulus
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Narrow finite conductors of cyclic class-norm subgroups
@@ -19,9 +22,13 @@ residual norm-subgroup image order and the extension degree.
 
 
 
+@[expose] public section
+
 open scoped NumberField
 
 noncomputable section
+
+universe u v
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
@@ -29,7 +36,7 @@ namespace GlobalClassFields
 open NumberField
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -54,9 +61,10 @@ theorem
                     (K := K) (L := L)))))
             ((_root_.ideleClassNorm K L).range)) *
         Module.finrank K L := by
+  let : IsAbelianGalois K L := IsAbelianGalois.of_isCyclic K L
   simpa only [
     ← Subgroup.index_eq_card,
-    ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L] using
+    Reciprocity.ideleClassNorm_index_eq_finrank_abelian K L] using
       narrowFiniteConductorRayClassGroup_card_eq_normSubgroupImage_card_mul_normQuotient_card
         (K := K) (L := L)
 
@@ -70,9 +78,10 @@ theorem cyclicExtensionDegree_dvd_narrowFiniteConductorRayClassGroup_card :
           (RayClass.Modulus.narrowOfFinite
             (ideleClassNormNarrowFiniteConductor
               (K := K) (L := L)))) := by
+  let : IsAbelianGalois K L := IsAbelianGalois.of_isCyclic K L
   simpa only [
     ← Subgroup.index_eq_card,
-    ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L] using
+    Reciprocity.ideleClassNorm_index_eq_finrank_abelian K L] using
       ideleClassNormQuotient_card_dvd_narrowFiniteConductorRayClassGroup_card
         (K := K) (L := L)
 

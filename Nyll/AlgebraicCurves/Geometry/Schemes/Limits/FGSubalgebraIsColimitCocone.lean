@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.Ring.Colimits
-import Mathlib.Algebra.Category.Ring.FilteredColimits
-import Mathlib.CategoryTheory.Limits.Types.Filtered
-import Nyll.SchemeTheory.Descent.FGSubalgebra
+module
+
+public import Mathlib.Algebra.Category.Ring.Colimits
+public import Mathlib.Algebra.Category.Ring.FilteredColimits
+public import Mathlib.CategoryTheory.Limits.Types.Filtered
+public import Nyll.SchemeTheory.Descent.FGSubalgebra
 
 /-!
 # An algebra as a colimit of finitely generated subalgebras
@@ -21,6 +23,8 @@ import Nyll.SchemeTheory.Descent.FGSubalgebra
 The natural cocone of finitely generated subalgebras presents the original algebra as its
 colimit in the category of commutative rings.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

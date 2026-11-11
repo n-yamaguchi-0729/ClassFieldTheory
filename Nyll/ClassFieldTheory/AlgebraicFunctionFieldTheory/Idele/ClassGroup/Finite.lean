@@ -4,17 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Module.Submodule.Lattice
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.FieldTheory.Perfect
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Mathlib.Tactic.Linarith
-import Lean.Elab.Tactic.Omega
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
-import Nyll.AlgebraicCurves.Divisors.Degree.CardEffectiveDivisorsMulEqSum
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+module
+
+public import Mathlib.Algebra.Module.Submodule.Lattice
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.Tactic.Linarith
+public import Lean.Elab.Tactic.Omega
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
+public import Nyll.AlgebraicCurves.Divisors.Degree.CardEffectiveDivisorsMulEqSum
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Finiteness of the degree-zero divisor class group
@@ -27,6 +29,8 @@ is positive. No place of degree one is required.
 The Riemann--Roch genus bound and finiteness of effective divisors are the existing curve
 suppliers. The quotient is the existing `AlgebraicCurve.Pic0`, not a new class-group type.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurve
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Cyclic.LangNormKernel
-import Mathlib.Algebra.Group.Subgroup.Ker
+module
+
+public import Nyll.GaloisCohomology.Cyclic.LangNormKernel
+public import Mathlib.Algebra.Group.Subgroup.Ker
 
 /-!
 # Norms between periodic subgroups
@@ -14,6 +16,8 @@ For a single automorphism, the length-n cyclic sum maps its period-n subgroup
 to its fixed subgroup. The coboundary on the period-n subgroup has norm zero.
 These maps do not require the automorphism to have finite order on the ambient group.
 -/
+
+@[expose] public section
 
 namespace CyclicAction
 

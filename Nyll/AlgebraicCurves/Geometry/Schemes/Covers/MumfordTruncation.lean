@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.Algebra.Module.Projective
+module
+
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.Algebra.Module.Projective
 
 /-!
 # Kernel-coproduct truncations of two-term complexes
@@ -21,6 +23,8 @@ import Mathlib.Algebra.Module.Projective
 The kernel of a coproduct map gives a two-term truncation. When its cokernel is finite,
 a chosen free presentation and projective lift produce the Mumford truncation maps.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,15 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.RingTheory.Etale.Field
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.RingTheory.Kaehler.Polynomial
-import Mathlib.LinearAlgebra.TensorProduct.Basis
-import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
+module
+
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Mathlib.RingTheory.Etale.Field
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.RingTheory.Kaehler.Polynomial
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
+public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -26,6 +28,8 @@ import Mathlib.RingTheory.SimpleRing.Principal
 Singleton bases for polynomial and rational-function differentials and their separable field
 extensions.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

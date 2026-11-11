@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.RingHom.QuasiFinite
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.AlgebraicCurves.Geometry.Projective.ProjSpaceAlgHomAwayApplyRatioEq
+module
+
+public import Mathlib.RingTheory.RingHom.QuasiFinite
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.SchemeTheory.ProjectiveSpace.AwayRatio
 
 /-!
 # Local quasi-finiteness of projective presentations
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -101,7 +105,6 @@ section Chart
 variable {R : Type u} [CommRing R] {X : Scheme.{u}} (f : X ⟶ Spec (.of R)) {N : ℕ}
 
 local notation "𝒜" => MvPolynomial.homogeneousSubmodule (Fin (N + 1)) R
-local notation "ℙ" => Proj (MvPolynomial.homogeneousSubmodule (Fin (N + 1)) R)
 
 /-- The base-ring action on sections induced by the structure morphism. -/
 def algR (V : X.Opens) : R →+* Γ(X, V) :=
@@ -216,7 +219,6 @@ section Main
 variable {R : Type u} [CommRing R] {X : Scheme.{u}} {f : X ⟶ Spec (.of R)} {M : X.Modules} {N N' :
     ℕ}
   (𝔓 : M.ProjPresentation f N) (𝔔 : M.ProjPresentation f N')
-
 
 theorem quasiFinite_chartRing (i : Fin (N + 1)) (j : Fin (N' + 1)) (V : X.Opens) (hV : IsAffineOpen
     V)

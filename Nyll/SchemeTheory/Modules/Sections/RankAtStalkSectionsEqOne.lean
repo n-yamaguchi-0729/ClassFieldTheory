@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
-import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
+module
+
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+public import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
 /-!
 # Rank one of sections of a locally trivial module
 
 The affine section module of a locally trivial module sheaf has rank one at each stalk,
 using the localized module on a trivializing basic open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -231,9 +235,7 @@ variable {X : Scheme.{u}} (M : X.Modules) (U : X.affineOpens) (f : Γ(X, U.1))
 theorem ψ_add {W : X.Opens} (hWV : W ≤ V) (m m' : Γ(M, W)) :
     ψ M V e hWV (m + m') = ψ M V e hWV m + ψ M V e hWV m' := by
   simp only [ψ, rM, rO, eApp, map_add]
-  first
-    | rfl
-    | erw [AddMonoidHom.map_add, RingHom.map_add]
+  erw [AddMonoidHom.map_add, RingHom.map_add]
 
 /-- The linear map from affine module sections to coordinate sections on a trivializing basic open.
 -/

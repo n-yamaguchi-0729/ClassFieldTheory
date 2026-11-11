@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.FieldTheory.IsSepClosed
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.FieldTheory.IsSepClosed
 
 /-!
 # Finite abelian local extensions
 -/
+
+@[expose] public section
 
 noncomputable section
 

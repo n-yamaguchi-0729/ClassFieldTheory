@@ -16,10 +16,12 @@ with the public real lower group at `s`.
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- The upper group at the Herbrand image of a real lower index is exactly
 the corresponding real lower group of the canonical valuation ring. -/
 theorem upperRamificationGroup_herbrandFunction
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]

@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.CyclicUnitsH2
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ClassHerbrand
+module
+
+public import
+  Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.LiftedCyclicUnitsH2
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.ClassHerbrand
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 
 /-!
 # Hasse norms and the class-field index at cyclic stages
@@ -15,6 +19,10 @@ for every finite cyclic stage. The concrete norm obstruction and Herbrand
 quotient then give Tate H⁻¹ vanishing and the exact idele-class norm index.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open AlgebraicCurve
@@ -23,7 +31,7 @@ namespace FunctionField
 
 open ClassFieldTower.Cohomology
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
@@ -38,11 +46,11 @@ theorem principalNormSubgroup_eq_fieldNormSubgroup_cyclicStage
   apply le_antisymm
   · intro a ha
     obtain ⟨g, hg⟩ := IsCyclic.exists_generator (α := Gal(L/K))
-    have hlocal := (IdeleGroup.baseUnitH2Class_locally_zero_iff_principal_norm
+    have hlocal := (IdeleGroup.liftedBaseUnitH2Class_locally_zero_iff_principal_norm
       (k := k) g hg a).mpr ha
-    have hzero := cyclicUnitsH2_eq_zero_of_forall_completion k K Ω L
-      (finiteCyclicBaseUnitH2Class K L g hg a) hlocal
-    obtain ⟨x, hx⟩ := (finiteCyclicBaseUnitH2Class_eq_zero_iff_norm K L g hg a).mp hzero
+    have hzero := liftedCyclicUnitsH2_eq_zero_of_forall_completion k K Ω L
+      (liftedCyclicBaseUnitH2Class K L g hg a) hlocal
+    obtain ⟨x, hx⟩ := (liftedCyclicBaseUnitH2Class_eq_zero_iff_norm K L g hg a).mp hzero
     have hxne : x ≠ 0 := by
       intro h
       rw [h, Algebra.norm_zero] at hx

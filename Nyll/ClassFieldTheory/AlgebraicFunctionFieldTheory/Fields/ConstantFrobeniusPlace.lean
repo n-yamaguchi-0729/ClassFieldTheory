@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionResidue
+module
+
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionResidue
 
 /-!
 # Constant Frobenius powers fixing actual places
@@ -19,6 +21,8 @@ cyclic, so the `d`th power of every automorphism fixes that place. This applies
 in particular to the arithmetic Frobenius constructed in the actual constant
 extension.
 -/
+
+@[expose] public section
 
 noncomputable section
 

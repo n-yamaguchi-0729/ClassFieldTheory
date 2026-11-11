@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeleHerbrand
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedNormQuotient
-import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Index
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeleHerbrand
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedNormQuotient
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandLowDegree.Index
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 
 /-!
 # The actual idele-class Herbrand quotient and first norm inequality
@@ -17,7 +20,11 @@ The S-unit and S-idele computations cancel their common orbit factor, giving
 `[L : K]`. No Hasse norm principle or upper norm-index bound is assumed.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField.IdeleGroup
 
@@ -55,7 +62,7 @@ namespace FunctionField.IdeleClassGroup
 open AlgebraicCurve CyclicCohomology IdeleGroup
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]

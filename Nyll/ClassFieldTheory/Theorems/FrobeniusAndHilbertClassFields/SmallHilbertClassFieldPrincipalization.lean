@@ -19,11 +19,13 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- Every integral ideal becomes principal in a small Hilbert class field. -/
 theorem ideals_becomePrincipalInSmallHilbertClassField
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (E : FiniteAbelianExtension K) (hE : IsSmallHilbertClassField E) :
     ∀ I : Ideal (𝓞 K),
       (I.map (algebraMap (𝓞 K) (𝓞 E))).IsPrincipal := by

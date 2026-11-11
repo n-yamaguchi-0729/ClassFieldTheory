@@ -4,15 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebraNormSubgroup
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.CanonicalKummerNorm
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.MathlibInterface
-import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
-import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.NumberTheory.LocalField.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebraNormSubgroup
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.CanonicalKummerNorm
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
+public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Nyll.GaloisCohomology.Kummer.Concrete.RootCharacters
 
 /-!
 # Chosen Kummer radical: norm index and power-class degree
@@ -22,14 +25,18 @@ reader-facing Hilbert-symbol theorems state these results without exposing this
 particular choice of a radical in their types.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace ClassFieldTheory.LocalClassFieldTheory.Kummer
 
+universe u
+
 /-- The unit-norm image of a possibly reducible Kummer algebra has index
 equal to the degree of the chosen simple radical field, not necessarily `n`. -/
 theorem kummerAlgebraNormSubgroup_index_eq_chosenRadicalDegree
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (a : Kˣ) :
@@ -63,17 +70,19 @@ theorem kummerAlgebraNormSubgroup_index_eq_chosenRadicalDegree
       exact hy
   change (kummerAlgebraNormSubgroup K n a).index = Module.finrank K E
   rw [hnorm]
-  exact LocalCFT.fieldNormSubgroup_index_eq_finrank K E
+  let e := Classical.choose
+    (_root_.LocalClassFieldTheory.Universe.quotientEquiv_existsUnique K E).exists
+  rw [Subgroup.index_eq_card]
+  exact (Nat.card_congr e.toEquiv).trans (IsGalois.card_aut_eq_finrank K E)
 
 private theorem chosenRoot_pow_mem_base_iff_powerClass_pow_eq_one
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (a : Kˣ) (m : ℕ) :
     let E := KummerTheory.chosenSimpleKummerExtension K n hnK a
     let β := KummerTheory.chosenSimpleKummerRootUnit K n hnK a
     ((β ^ m : Eˣ) : E) ∈ Set.range (algebraMap K E) ↔
       (powerClass K n a) ^ m = 1 := by
-  let E := KummerTheory.chosenSimpleKummerExtension K n hnK a
-  let β : Eˣ := KummerTheory.chosenSimpleKummerRootUnit K n hnK a
+  intro E β
   let ι : Kˣ →* Eˣ := Units.map (algebraMap K E).toMonoidHom
   have hβ : β ^ (n : ℕ) = ι a :=
     KummerTheory.chosenSimpleKummerRootUnit_pow K n hnK a
@@ -133,7 +142,7 @@ private theorem chosenRoot_pow_mem_base_iff_powerClass_pow_eq_one
 /-- A chosen simple Kummer extension has degree equal to the order of its
 defining power class. This includes the reducible case `a = 1`. -/
 theorem chosenSimpleKummerExtension_finrank_eq_powerClassOrder
-    (K : Type) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (K : Type u) [Field K] (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (a : Kˣ) :
     Module.finrank K (KummerTheory.chosenSimpleKummerExtension K n hnK a) =
       orderOf (powerClass K n a) := by

@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingSymbol
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsKummerNorm
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairingSymbol
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsKummerNorm
 
 /-!
 # The norm-residue criterion
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory.HilbertPairing
 

@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldRestriction
-import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionTransport
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldRestriction
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionTransport
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
 
 /-!
 # Restriction in compatible fixed-field presentations
@@ -15,13 +18,17 @@ The actual Galois restriction theorem transports through compatible field
 isomorphisms and gives restriction compatibility on the original fields.
 -/
 
+@[expose] public section
+
+universe u v w x y
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K L M Ω : Type)
+variable (k : Type u) (K : Type v) (L : Type w) (M : Type x) (Ω : Type y)
     [Field k] [Finite k] [Field K] [Field L] [Field M] [Field Ω]
     [Algebra k K] [Algebra k L] [Algebra k M] [Algebra K L] [Algebra K M]
     [Algebra L M] [IsScalarTower k K L] [IsScalarTower k K M] [IsScalarTower K L M]

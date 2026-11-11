@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.CharP.Subring
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Nyll.AlgebraicCurves.Places.Ramification.FiniteRamification
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.ArtinSchreierPolynomial
+module
+
+public import Mathlib.Algebra.CharP.Subring
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Nyll.AlgebraicCurves.Places.Ramification.FiniteRamification
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.ArtinSchreierPolynomial
 
 /-!
 # Artin–Schreier extensions are unramified away from the parameter's poles
@@ -18,6 +20,8 @@ constant derivative `-1` makes the minimal-polynomial derivative a unit in
 the integral closure. The existing different criterion then gives
 ramification index one at every place above it.
 -/
+
+@[expose] public section
 
 noncomputable section
 

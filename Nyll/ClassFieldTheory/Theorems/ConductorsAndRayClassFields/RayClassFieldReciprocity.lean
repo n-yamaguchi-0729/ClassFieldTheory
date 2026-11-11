@@ -19,11 +19,13 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- A ray class field realization exists for every modulus. -/
 theorem rayClassField_reciprocity
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K) :
     Nonempty (RayClassFieldRealization K m) := by
   obtain ⟨R⟩ := rayClassSubgroup_existence K m ⊥

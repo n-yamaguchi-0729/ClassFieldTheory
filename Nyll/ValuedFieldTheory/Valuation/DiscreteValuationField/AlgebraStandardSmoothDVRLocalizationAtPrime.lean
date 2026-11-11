@@ -10,12 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.RingHom.StandardSmooth
-import Mathlib.RingTheory.Unramified.LocalRing
-import Mathlib.Tactic.ByContra
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.RingHom.StandardSmooth
+public import Mathlib.RingTheory.Unramified.LocalRing
+public import Mathlib.Tactic.ByContra
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring.RingNF
 
 /-!
 # Algebra IsStandardSmoothOfRelativeDimension isDiscreteValuationRing localization atPrime
@@ -23,6 +25,8 @@ import Mathlib.Tactic.Ring.RingNF
 Localizing a standard smooth algebra of relative dimension one at the specified prime produces a
 discrete valuation ring.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -138,7 +142,8 @@ theorem atom_main
   have hne : maximalIdeal L ≠ ⊥ := by
     rw [hmaxL, Ne, Ideal.span_singleton_eq_bot]
     intro h0
-    have : (algebraMap P L π) • (1 : L) = (algebraMap P L π) • (0 : L) := by simp [h0]
+    have : (algebraMap P L π) • (1 : L) = (algebraMap P L π) • (0 : L) := by
+      simp only [h0, zero_smul]
     exact one_ne_zero (hreg this)
   have hnf : ¬ IsField L := fun hF => hne ((IsLocalRing.isField_iff_maximalIdeal_eq).mp hF)
   have hdom : IsDomain L := isDomain_of_maximalIdeal_eq_span hreg hmaxL

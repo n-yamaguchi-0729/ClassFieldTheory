@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
 
 /-!
 # Equivariance of idele inclusion
@@ -15,6 +17,8 @@ actual places and on their completions. Equality of the completed maps follows
 from equality on the dense original field. Thus inclusion of ideles, and its
 quotient on idele classes, intertwines simultaneous automorphisms of both fields.
 -/
+
+@[expose] public section
 
 noncomputable section
 

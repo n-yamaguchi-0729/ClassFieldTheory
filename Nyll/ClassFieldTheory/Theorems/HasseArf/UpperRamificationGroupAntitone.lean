@@ -13,10 +13,12 @@ import Nyll.ClassFieldTheory.Theorems.HasseArf.RealLowerRamificationGroupCanonic
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- The public canonical upper ramification filtration decreases with its
 real upper index. -/
 theorem upperRamificationGroup_antitone
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]

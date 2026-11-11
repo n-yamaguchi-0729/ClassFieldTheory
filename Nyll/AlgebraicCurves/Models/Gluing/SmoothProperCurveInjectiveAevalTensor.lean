@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Curves.IsDomainTensorSections
-import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVRStalkSection
-import Mathlib.AlgebraicGeometry.Scheme
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Curves.IsDomainTensorSections
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVRStalkSection
+public import Mathlib.AlgebraicGeometry.Scheme
 
 /-!
 # Coordinate maps from two-chart pole data
@@ -25,6 +27,8 @@ import Mathlib.AlgebraicGeometry.Scheme
 For a proper smooth geometrically integral curve with two-chart pole data, the base-changed
 coordinate is transcendental whenever the tensor product of sections is nontrivial.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -113,9 +117,9 @@ private theorem compat_appLE :
       exact (Category.assoc _ _ _).symm
 
 theorem compat (r : R) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     iK c U K (algebraMap R K r) = iU c U K (algebraMap R Γ(C, U) r) := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   have key : CommRingCat.ofHom (algebraMap R K) ≫ (Scheme.ΓSpecIso (CommRingCat.of K)).inv ≫
         (σ c K).appLE ⊤ (UK c U K) le_top =
       ((Scheme.ΓSpecIso (CommRingCat.of R)).inv ≫ c.appLE ⊤ U le_top) ≫ (π c K).app U := by
@@ -141,11 +145,10 @@ noncomputable def Φ :
   exact (Algebra.TensorProduct.lift iKₐ iUₐ (fun _ _ => Commute.all _ _)).toRingHom
 
 theorem Φ_tmul (k : K) (a : Γ(C, U)) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     Φ c U K (k ⊗ₜ[R] a) = iK c U K k * iU c U K a := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   simp [Φ, Algebra.TensorProduct.lift_tmul]
-  try rfl
 
 theorem Φ_one_tmul (a : Γ(C, U)) :
     letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
@@ -232,11 +235,11 @@ theorem main
     (K : Type u) [Field K] [Algebra R K]
     (hne : letI := Scheme.TwoAffineOpenCover.algebraOfHom c U;
       Nontrivial (K ⊗[R] Γ(C, U))) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     Function.Injective
       (Polynomial.aeval ((1 : K) ⊗ₜ[R] f) :
         Polynomial K →ₐ[K] K ⊗[R] Γ(C, U)) := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   have := hne
   have : IsDomain (K ⊗[R] Γ(C, U)) :=
     AlgebraicGeometry.isDomain_tensorProduct_sections_of_geometricallyIntegral c U hU K hne

@@ -10,29 +10,34 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
-import Nyll.AlgebraicCurves.Differentials.Residues.Construction
-import Nyll.AlgebraicCurves.Differentials.Residues.TateCommFinite
-import Nyll.AlgebraicCurves.Differentials.Residues.TateTraceCompatSeparable
-import Nyll.AlgebraicCurves.Differentials.Residues.TateAgreement
-import Nyll.AlgebraicCurves.Differentials.Residues.TateChainRule
+module
+
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Places.Restriction.ComapAlgebraMapNeTop
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateTrace
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateCommFinite
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateTraceCompatSeparable
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateAgreement
+public import Nyll.AlgebraicCurves.Differentials.Residues.TateChainRule
 
 /-!
 Compare residues, traces and completions.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -304,22 +309,6 @@ private theorem algebraMap_ne_zero {f : F} (hf : f ≠ 0) : algebraMap F F' f �
 
 variable (w : Place K F')
 
-private theorem _root_.AlgebraicCurve.Place.comap_algebraMap_ne_top [Algebra.IsIntegral F F'] :
-    w.toValuationSubring.comap (algebraMap F F') ≠ ⊤ := by
-  intro htop
-  apply w.ne_top'
-  have hF : ∀ f : F, algebraMap F F' f ∈ w.toValuationSubring := fun f =>
-    ValuationSubring.mem_comap.mp (htop ▸ ValuationSubring.mem_top f)
-  refine SetLike.ext fun x => ⟨fun _ => ValuationSubring.mem_top x, fun _ => ?_⟩
-  let : Algebra F w.toValuationSubring :=
-    ((algebraMap F F').codRestrict w.toValuationSubring.toSubring hF).toAlgebra
-  let : IsScalarTower F w.toValuationSubring F' :=
-    IsScalarTower.of_algebraMap_eq fun f => rfl
-  have hx : _root_.IsIntegral w.toValuationSubring x :=
-    (Algebra.IsIntegral.isIntegral (R := F) x).tower_top
-  obtain ⟨y, hy⟩ := IsIntegrallyClosed.isIntegral_iff.mp hx
-  exact hy ▸ y.2
-
 open _root_.AlgebraicCurve.Place
 variable {w} in
 theorem mem_comap_iff_ord_nonneg {f : F} (hf : f ≠ 0) :
@@ -371,53 +360,9 @@ private theorem _root_.AlgebraicCurve.Place.exists_ord_algebraMap_pos [Algebra.I
 open _root_.AlgebraicCurve.Place
 variable [Algebra.IsIntegral F F']
 
-private theorem ramificationIndex_set_nonempty :
-    {n : ℕ | 0 < n ∧ ∃ f : F, f ≠ 0 ∧ w.ord (algebraMap F F' f) = n}.Nonempty := by
-  obtain ⟨f, hf0, hf⟩ := w.exists_ord_algebraMap_pos (F := F)
-  exact ⟨(w.ord (algebraMap F F' f)).toNat, by omega, f, hf0, by omega⟩
-
 theorem isPrincipalIdealRing_comap :
-    IsPrincipalIdealRing (w.toValuationSubring.comap (algebraMap F F')) := by
-  obtain ⟨g, hg0, hge⟩ := w.exists_ord_eq_ramificationIndex (F := F)
-  have hepos : 0 < ramificationIndex (F := F) w := w.ramificationIndex_pos (F := F)
-  have hgmem : g ∈ w.toValuationSubring.comap (algebraMap F F') :=
-    (mem_comap_iff_ord_nonneg hg0).mpr (by omega)
-  refine (IsDiscreteValuationRing.ofHasUnitMulPowIrreducibleFactorization
-    ⟨⟨g, hgmem⟩, irreducible_mk_comap w hg0 hgmem hge, ?_⟩).toIsPrincipalIdealRing
-  rintro ⟨f, hmem⟩ hx
-  have hf : f ≠ 0 := by simpa [Subtype.ext_iff] using hx
-  obtain ⟨c, hc⟩ := w.ramificationIndex_dvd_ord (F := F) hf
-  have hnonneg : 0 ≤ w.ord (algebraMap F F' f) := (mem_comap_iff_ord_nonneg hf).mp hmem
-  have hcnonneg : 0 ≤ c := by
-    by_contra hneg
-    have hcle : c ≤ -1 := by omega
-    have : (ramificationIndex (F := F) w : ℤ) * c ≤ (ramificationIndex (F := F) w : ℤ) * -1 :=
-      mul_le_mul_of_nonneg_left hcle (by omega)
-    omega
-  set n : ℕ := c.toNat with hn
-  have hcn : (n : ℤ) = c := Int.toNat_of_nonneg hcnonneg
-  refine ⟨n, ?_⟩
-  have hgn : g ^ n ≠ 0 := pow_ne_zero _ hg0
-  have hdiv0 : f / g ^ n ≠ 0 := div_ne_zero hf hgn
-  have hu0 : w.ord (algebraMap F F' (f / g ^ n)) = 0 := by
-    have hkey : algebraMap F F' (f / g ^ n)
-        = algebraMap F F' f * (algebraMap F F' g) ^ (-(n : ℤ)) := by
-      rw [div_eq_mul_inv, map_mul, map_inv₀, map_pow, ← zpow_natCast (algebraMap F F' g) n,
-        ← _root_.zpow_neg]
-    rw [hkey, w.ord_mul (algebraMap_ne_zero hf) (zpow_ne_zero _ (algebraMap_ne_zero hg0)),
-      w.ord_zpow, hge, hc, ← hcn]
-    ring
-  have humem : f / g ^ n ∈ w.toValuationSubring.comap (algebraMap F F') :=
-    (mem_comap_iff_ord_nonneg hdiv0).mpr (le_of_eq hu0.symm)
-  have hu : IsUnit (⟨f / g ^ n, humem⟩ : w.toValuationSubring.comap (algebraMap F F')) :=
-    (isUnit_mk_comap_iff hdiv0 humem).mpr hu0
-  refine ⟨hu.unit, ?_⟩
-  refine Subtype.ext ?_
-  have hcoe : ((hu.unit : w.toValuationSubring.comap (algebraMap F F')) : F) = f / g ^ n := by
-    rw [IsUnit.unit_spec]
-  push_cast
-  rw [hcoe, mul_comm, div_mul_cancel₀]
-  exact hgn
+    IsPrincipalIdealRing (w.toValuationSubring.comap (algebraMap F F')) :=
+  _root_.AlgebraicCurve.Place.isPrincipalIdealRing_comap (F := F) w
 
 section RestrictDef
 

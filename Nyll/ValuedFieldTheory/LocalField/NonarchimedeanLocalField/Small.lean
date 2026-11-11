@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.Core
-import Mathlib.Logic.Small.Basic
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.Core
+public import Mathlib.Logic.Small.Basic
 
 /-!
 # The carrier of a nonarchimedean local field is universe-small
@@ -15,6 +17,8 @@ The integer ring injects into the sequence of its finite quotients by powers
 of the maximal ideal.  Its fraction field is therefore also small enough to
 be represented in `Type 0`.  No countability of the field itself is asserted.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
-import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
+public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 
 /-!
 # Positive global units are local squares at real places
@@ -15,6 +17,8 @@ infinite-place Hilbert-symbol comparison.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField

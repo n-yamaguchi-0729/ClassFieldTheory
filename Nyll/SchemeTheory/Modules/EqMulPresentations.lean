@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Tactic.Ring.RingNF
 /-!
 # Uniqueness of presentations in the function field
 
 Two compatible injective function-field presentations of the same module differ
 by multiplication by a single nonzero rational function on an integral scheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

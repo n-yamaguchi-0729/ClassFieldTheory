@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.Pic0Congr
-import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.Pic0Congr
+public import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 
 /-!
 # Picard norms under an actual field isomorphism
@@ -15,6 +17,8 @@ Transport actual divisors along the induced equivalence of places. Restriction
 and residue degrees are unchanged over the fixed original field, so the actual
 pushforward and its Picard norm image are unchanged.
 -/
+
+@[expose] public section
 
 noncomputable section
 

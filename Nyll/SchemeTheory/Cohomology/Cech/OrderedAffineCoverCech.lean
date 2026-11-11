@@ -10,11 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.LinearAlgebra.Pi
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.LinearAlgebra.Pi
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Cech cochains for an ordered affine cover
@@ -24,6 +27,8 @@ For a presheaf of modules over the structure sheaf, this file constructs cochain
 the alternating restriction differential, and defines the associated cohomology modules
 and finiteness, coherence, quasicoherence, and support properties.
 -/
+
+@[expose] public section
 
 noncomputable section
 

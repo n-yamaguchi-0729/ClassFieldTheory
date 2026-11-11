@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataHomProjPreimageBasicOpenEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.IsAffineOpenMemIsAffineHomProj
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataHomProjPreimageBasicOpenEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.IsAffineOpenMemIsAffineHomProj
 
 /-!
 # Affine neighbourhoods from finite-map data
@@ -22,6 +24,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.IsAffineOpenMemIsAffineHomPr
 Finite-map data on a smooth proper curve gives an affine open containing prescribed
 finitely many points over a fixed affine open of the base.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

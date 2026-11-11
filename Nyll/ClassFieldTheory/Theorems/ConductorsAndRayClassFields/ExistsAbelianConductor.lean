@@ -16,12 +16,14 @@ class field contains that extension. The older theorem name
 its conclusion is an existence statement, so this name reflects its type.
 -/
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- A finite abelian extension of number fields has a conductor. -/
 theorem exists_abelianConductor
-    (K : Type) [Field K] [NumberField K]
-    (L : Type) [Field L] [NumberField L]
+    (K : Type u) [Field K] [NumberField K]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [IsAbelianGalois K L] :
     ∃ c : RayClassModulus K, IsAbelianConductor K L c :=
   embedsInRayClassField_iff_conductor_le K L

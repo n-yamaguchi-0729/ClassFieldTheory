@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantClosure
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantFrobenius
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantClosure
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantFrobenius
 
 /-!
 # Finite constant coordinates detect the absolute degree
@@ -14,6 +16,8 @@ Equality of profinite degrees is equivalent to equality of restrictions
 on all actual finite constant extensions. Integer degrees are therefore
 characterized by the corresponding powers of arithmetic Frobenius.
 -/
+
+@[expose] public section
 
 noncomputable section
 

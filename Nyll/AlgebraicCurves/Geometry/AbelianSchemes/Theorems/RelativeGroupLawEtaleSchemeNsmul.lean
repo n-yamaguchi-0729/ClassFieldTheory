@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Smooth.StandardSmooth
-import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
-import Mathlib.RingTheory.RingHom.StandardSmooth
-import Mathlib.RingTheory.RingHom.Etale
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.Kernel
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawFormallyUnramifiedSchemeNsmulIsUnit
+module
+
+public import Mathlib.RingTheory.Smooth.StandardSmooth
+public import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+public import Mathlib.RingTheory.RingHom.StandardSmooth
+public import Mathlib.RingTheory.RingHom.Etale
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Kernel
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawFormallyUnramifiedSchemeNsmulIsUnit
 
 /-!
 # Etaleness from smoothness of equal relative dimension
@@ -25,6 +27,8 @@ import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawFor
 Formal unramifiedness and smoothness of the two structure maps imply etaleness.
 This criterion applies to multiplication maps of a smooth relative group law.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

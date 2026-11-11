@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristicDominatingExtension
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.EqualCharacteristicStandardCompositum
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedFixedFieldComparison
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
-import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristicDominatingExtension
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.EqualCharacteristicStandardCompositum
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedFixedFieldComparison
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
 
 /-!
 # Filtered local reciprocity in equal characteristic
@@ -21,6 +24,8 @@ inside the fixed separable closure lets filtered reciprocity descend by
 restriction.  A base-linear equivalence from the original extension to that
 field range then transports both the Artin and upper filtrations back.
 -/
+
+@[expose] public section
 
 noncomputable section
 

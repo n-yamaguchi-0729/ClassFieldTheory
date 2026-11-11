@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.ModuleFreeCokerKerBaseChange
+module
+
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.ModuleFreeCokerKerBaseChange
 
 /-!
 # Module ker base Change field of subsingleton H1 of projective
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -182,7 +186,7 @@ theorem main
       rw [LinearEquiv.apply_symm_apply, he1, hnat d1, LinearEquiv.apply_symm_apply]
   have hexκ : Function.Exact (e0.baseChange κ) (e1.baseChange κ) := by
     apply Module.FaithfullyFlat.lTensor_reflects_exact κ K
-    simpa only [LinearMap.baseChange_eq_ltensor] using hexK'
+    simpa only [LinearMap.baseChange_eq_lTensor] using hexK'
   have hκ : LinearMap.ker (e1.baseChange κ) ≤ LinearMap.range (e0.baseChange κ) :=
     (LinearMap.exact_iff.mp hexκ).le
   obtain ⟨-, hbc⟩ := Module.free_coker_and_ker_baseChange_of_ker_le_range_residueField Rp e0 e1 hee
@@ -191,11 +195,11 @@ theorem main
   have hinj : Function.Injective ((LinearMap.ker d0).subtype.baseChange Rp) := by
     have := Module.Flat.lTensor_preserves_injective_linearMap (M := Rp) (LinearMap.ker d0).subtype
       (Submodule.injective_subtype _)
-    simpa only [LinearMap.baseChange_eq_ltensor] using this
+    simpa only [LinearMap.baseChange_eq_lTensor] using this
   have hrange : LinearMap.range ((LinearMap.ker d0).subtype.baseChange Rp) = LinearMap.ker e0 := by
     have hex : Function.Exact ((LinearMap.ker d0).subtype.baseChange Rp) (d0.baseChange Rp) := by
       have := Module.Flat.lTensor_exact Rp (LinearMap.exact_subtype_ker_map d0)
-      simpa only [LinearMap.baseChange_eq_ltensor] using this
+      simpa only [LinearMap.baseChange_eq_lTensor] using this
     rw [he0]
     exact (LinearMap.exact_iff.mp hex).symm
   let G : (Rp ⊗[R] LinearMap.ker d0) ≃ₗ[Rp] LinearMap.ker e0 :=

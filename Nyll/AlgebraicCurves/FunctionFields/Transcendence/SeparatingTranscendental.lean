@@ -10,12 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.FunctionFields.FrobeniusSubfield
-import Nyll.SchemeTheory.FunctionFields.AlgebraIsSeparableFinrankFieldRangeFrobeniusEq
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Extensions.FiniteSimpleExtensions
+public import Nyll.SchemeTheory.FunctionFields.FrobeniusSubfield
+public import Nyll.SchemeTheory.FunctionFields.AlgebraIsSeparableFinrankFieldRangeFrobeniusEq
 
 /-!
 # Exists separating transcendental of perfect Field
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -35,7 +40,12 @@ theorem isTranscendenceBasis_of_transcendental {x : F} (hx : Transcendental K x)
   refine hind.isTranscendenceBasis_iff_isAlgebraic.mpr ?_
   have hr : Set.range (fun _ : Fin 1 => x) = ({x} : Set F) := by
     ext y
-    simp [eq_comm]
+    constructor
+    · rintro ⟨_, rfl⟩
+      exact Set.mem_singleton x
+    · intro hy
+      rcases Set.mem_singleton_iff.mp hy with rfl
+      exact ⟨0, rfl⟩
   rw [hr, ← IntermediateField.isAlgebraic_adjoin_iff_top]
   have := hfd
   exact Algebra.IsAlgebraic.of_finite K⟮x⟯ F
@@ -56,47 +66,12 @@ theorem isAlgebraic_adjoin_of_transcendental {x : F} (hx : Transcendental K x)
   have h := hbasis.isAlgebraic_field
   rwa [Subtype.range_coe] at h
 
-theorem finiteDimensional_adjoin_of_transcendental {x : F} (hx : Transcendental K x)
+theorem finiteDimensional_adjoin_of_transcendental {x : F} (_hx : Transcendental K x)
     (hfd : FiniteDimensional K⟮x⟯ F) {t : F} (ht : Transcendental K t) :
     FiniteDimensional K⟮t⟯ F := by
-  classical
-  have := hfd
-  have halg : Algebra.IsAlgebraic K⟮t⟯ F := isAlgebraic_adjoin_of_transcendental hx hfd ht
-  obtain ⟨s, hs⟩ := Module.finite_def.mp hfd
-  set E : IntermediateField K⟮t⟯ F :=
-    IntermediateField.adjoin K⟮t⟯ (insert x (↑s : Set F)) with hE
-  have hxE : x ∈ E := IntermediateField.subset_adjoin _ _ (Set.mem_insert _ _)
-  have hrange : ∀ r : K⟮x⟯, (r : F) ∈ E := by
-    intro r
-    have hle : K⟮x⟯ ≤ E.restrictScalars K :=
-      IntermediateField.adjoin_simple_le_iff.mpr
-        ((IntermediateField.mem_restrictScalars K).mpr hxE)
-    exact (IntermediateField.mem_restrictScalars K).mp (hle r.2)
-  have hmem : ∀ y : F, y ∈ E := by
-    intro y
-    have hy : y ∈ Submodule.span K⟮x⟯ (↑s : Set F) := by
-      rw [hs]; exact Submodule.mem_top
-    refine Submodule.span_induction (fun z hz => ?_) ?_ (fun z w _ _ hz hw => ?_)
-      (fun r z _ hz => ?_) hy
-    · exact IntermediateField.subset_adjoin _ _ (Set.mem_insert_of_mem _ hz)
-    · exact zero_mem E
-    · exact add_mem hz hw
-    · rw [Algebra.smul_def]
-      exact mul_mem (hrange r) hz
-  have htop : E = ⊤ := by
-    rw [eq_top_iff]
-    intro y _
-    exact hmem y
-  have : Finite ↥(insert x (↑s : Set F)) :=
-    Set.Finite.to_subtype ((s.finite_toSet).insert x)
-  have hfdE : FiniteDimensional K⟮t⟯ ↥E := by
-    rw [hE]
-    exact IntermediateField.finiteDimensional_adjoin
-      (fun z _ => (halg.isAlgebraic z).isIntegral)
-  rw [htop] at hfdE
-  have := hfdE
-  exact LinearEquiv.finiteDimensional
-    (IntermediateField.topEquiv (F := K⟮t⟯) (E := F)).toLinearEquiv
+  clear _hx
+  let : FiniteDimensional K⟮x⟯ F := hfd
+  exact _root_.AlgebraicCurve.finiteDimensional_adjoin_of_transcendental x ht
 
 theorem transcendental_of_not_mem_fieldRange_frobenius [PerfectField K] (p : ℕ)
     [Fact p.Prime] [CharP K p] [CharP F p] {t : F} (ht : t ∉ (frobenius F p).fieldRange) :

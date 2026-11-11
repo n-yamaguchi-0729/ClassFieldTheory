@@ -4,16 +4,22 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
-import Nyll.ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
-import Nyll.ClassFieldTheory.HasseArf
-import Mathlib.NumberTheory.LocalField.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.InverseHerbrandFunction
+public import Nyll.ClassFieldTheory.HasseArf
+public import Mathlib.NumberTheory.LocalField.Basic
 
 /-! # The inverse Herbrand function is a left inverse -/
+
+@[expose] public section
 
 noncomputable section
 
 namespace ClassFieldTheory
+
+universe u v
 
 open LocalFieldTheory
 open RamificationTheory.LocalField
@@ -21,7 +27,7 @@ open RamificationTheory.HilbertRamification.Higher
 
 /-- The inverse public Herbrand function recovers every real lower index. -/
 theorem inverseHerbrandFunction_herbrandFunction
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -38,7 +44,7 @@ theorem inverseHerbrandFunction_herbrandFunction
         herbrandFunctionOfUniqueExtension
           (base := (localCompleteDVF K).toDVF)
           (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-          (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L) := by
+          (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{u, v, 0} K L) := by
     funext t
     exact HasseArf.canonicalHerbrandFunction_eq_localHerbrandFunction K L t
   unfold inverseHerbrandFunction
@@ -46,14 +52,14 @@ theorem inverseHerbrandFunction_herbrandFunction
   change inverseHerbrandFunctionOfUniqueExtension
     (base := (localCompleteDVF K).toDVF)
     (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-    (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L)
+    (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{u, v, 0} K L)
     (herbrandFunctionOfUniqueExtension
       (base := (localCompleteDVF K).toDVF)
       (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-      (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L) s) = s
+      (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{u, v, 0} K L) s) = s
   exact inverseHerbrandFunctionOfUniqueExtension_eta
     (base := (localCompleteDVF K).toDVF)
     (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-    (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L) s
+    (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{u, v, 0} K L) s
 
 end ClassFieldTheory

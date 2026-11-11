@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.FieldTheory.PeriodicGalois
+module
+
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicGalois
 
 /-!
 # The actual periodic automorphism over the original fixed field
@@ -12,6 +14,8 @@ import Nyll.GaloisCohomology.FieldTheory.PeriodicGalois
 Restriction preserves the original fixed field pointwise. It therefore gives
 an algebra automorphism, with the same order as the restricted ring automorphism.
 -/
+
+@[expose] public section
 
 noncomputable section
 

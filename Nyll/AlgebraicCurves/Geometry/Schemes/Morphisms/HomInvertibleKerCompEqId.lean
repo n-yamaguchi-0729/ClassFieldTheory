@@ -10,23 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Batteries.Tactic.Init
-import Mathlib.RingTheory.Unramified.Finite
-import Mathlib.RingTheory.RingHom.StandardSmooth
-import Mathlib.RingTheory.Polynomial.Quotient
-import Mathlib.RingTheory.MvPolynomial.Localization
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.Tactic.TermCongr
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Set
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
+module
+
+public import Batteries.Tactic.Init
+public import Mathlib.RingTheory.Unramified.Finite
+public import Mathlib.RingTheory.RingHom.StandardSmooth
+public import Mathlib.RingTheory.Polynomial.Quotient
+public import Mathlib.RingTheory.MvPolynomial.Localization
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.Tactic.TermCongr
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Set
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
 
 /-!
 Invertibility of the ideal of a section of a smooth curve and its affine retraction
 calculations.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

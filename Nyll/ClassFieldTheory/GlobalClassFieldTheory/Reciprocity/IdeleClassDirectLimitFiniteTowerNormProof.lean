@@ -5,6 +5,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormStatement
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
 
 /-!
 # Proof of ordinary norm comparison in finite towers of rational fixed fields
@@ -24,6 +26,8 @@ open ClassFormation
 open LocalClassFieldTheory
 open CyclicCohomology
 open FiniteTowerNormCore
+
+attribute [local instance] rationalIdeleClassDirectLimitSMul
 
 section RationalFiniteTower
 
@@ -335,6 +339,11 @@ private theorem rationalFiniteTower_representativeAction
             ((AlgEquiv.restrictNormalHom U₀ sigma.1).toAlgHom.comp
               (rationalFiniteTowerUpperInclusion K L hLK))
             (rationalFiniteTowerRationalRelativeClass K L hLK c))) := by
+  let finiteLevelSMul :
+      (E : FiniteGaloisIntermediateField ℚ (SeparableClosure ℚ)) →
+        SMul (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)
+          (RelativeIdeleGroup.ClassGroup ℚ E) :=
+    fun E => (rationalAbsoluteGaloisIdeleClassAction E).toSMul
   let dℚ := rationalFiniteTowerRationalRelativeClass K L hLK c
   let tau := AlgEquiv.restrictNormalHom U₀ sigma.1
   let jEU := rationalFiniteTowerUpperInclusion K L hLK
@@ -352,7 +361,11 @@ private theorem rationalFiniteTower_representativeAction
     sigma.1 •
         (⟦⟨U₀, RelativeIdeleGroup.classEmbedding jEU dℚ⟩⟧ :
           rationalIdeleClassDirectLimit) = _
-  rw [DirectLimit.smul_def]
+  rw [DirectLimit.smul_def
+    (R := SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)
+    (G := fun E : FiniteGaloisIntermediateField ℚ (SeparableClosure ℚ) =>
+      RelativeIdeleGroup.ClassGroup ℚ E)
+    (f := fun _ _ h => rationalRelativeIdeleClassTransition h)]
   apply congrArg
     (fun z : RelativeIdeleGroup.ClassGroup ℚ U₀ =>
       (⟦⟨U₀, z⟩⟧ : rationalIdeleClassDirectLimit))

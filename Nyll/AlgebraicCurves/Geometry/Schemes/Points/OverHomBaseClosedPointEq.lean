@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
 
 /-!
 # Rational points corresponding to closed points
@@ -18,6 +20,8 @@ import Mathlib.AlgebraicGeometry.AlgClosed.Basic
 Over an algebraically closed field, a closed point of a scheme locally of finite type
 is the image of the closed point under a morphism over the field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativePresentation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NormCompatibility
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativePresentation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NormCompatibility
 
 /-!
 # Native norm reciprocity on actual finite fixed fields
@@ -16,6 +18,10 @@ its degree-one intrinsic presentation. The proved ambient norm formula then
 identifies this value with scalar restriction of the upper ambient symbol.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
@@ -24,7 +30,7 @@ open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
 /-- A finite normal abstract field is a finite Galois extension of the intrinsic base. -/
 private def intrinsicGaloisSubextensionOfFiniteField
-    (K : Type) [Field K]
+    (K : Type v) [Field K]
     (H : FiniteAbstractField Gal(SeparableClosure K/K)) [H.field.toSubgroup.Normal] :
     FiniteGaloisSubextension (intrinsicFiniteAbstractBase K).field := by
   have hB : (intrinsicFiniteAbstractBase K).field = baseField Gal(SeparableClosure K/K) :=
@@ -36,7 +42,7 @@ private def intrinsicGaloisSubextensionOfFiniteField
     (congrArg (fun V : ClosedSubgroup Gal(SeparableClosure K/K) =>
       Finite (V.toSubgroup ⧸ H.field.toSubgroup.subgroupOf V.toSubgroup)) hB).mpr H.finite⟩
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [AlgebraicCurve.HasPrincipalDivisors k K]
     [Algebra k (SeparableClosure K)] [Algebra (RatFunc k) (SeparableClosure K)]

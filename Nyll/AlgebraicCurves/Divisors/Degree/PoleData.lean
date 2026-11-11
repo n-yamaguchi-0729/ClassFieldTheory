@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
 
 /-!
 # Algebra, divisors, and base change
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
 Pole-divisor bounds, coordinate towers, and independent bounded function families for function
 fields.
 -/
+
+@[expose] public section
 
 noncomputable section
 

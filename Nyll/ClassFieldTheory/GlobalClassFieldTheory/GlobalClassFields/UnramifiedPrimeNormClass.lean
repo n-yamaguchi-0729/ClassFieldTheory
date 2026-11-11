@@ -8,6 +8,7 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorF
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FinitePlaceArtinQuotient
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ProductFormula
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
 
 /-!
 # Prime norm classes at unramified finite places
@@ -28,20 +29,22 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField IsDedekindDomain
 
 private theorem unramifiedPrimeNormClassGroupIsMulCommutative
-    (F : Type) [Field F] [NumberField F] :
+    (F : Type*) [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   IsMulCommutative.of_comm (fun a b => mul_comm a b)
 
 attribute [local instance] unramifiedPrimeNormClassGroupIsMulCommutative
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
 

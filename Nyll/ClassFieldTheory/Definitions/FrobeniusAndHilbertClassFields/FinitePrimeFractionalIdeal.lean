@@ -4,15 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-import Mathlib.RingTheory.DedekindDomain.Factorization
+module
+
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Mathlib.RingTheory.DedekindDomain.Factorization
 
 /-!
 # Fractional ideal represented by a finite prime
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

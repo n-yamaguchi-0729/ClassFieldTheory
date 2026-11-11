@@ -10,26 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.CategoryTheory.Comma.Over.Pullback
-import Mathlib.CategoryTheory.Sites.IsSheafFor
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleDescentFiniteFaithfullyFlat
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoPullbackFiniteFaithfullyFlat
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.RigidifiedAlgebraicEquivalenceDescent
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.CategoryTheory.Comma.Over.Pullback
+public import Mathlib.CategoryTheory.Sites.IsSheafFor
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleDescentFiniteFaithfullyFlat
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoPullbackFiniteFaithfullyFlat
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.RigidifiedAlgebraicEquivalenceDescent
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
 /-!
 # Faithfully flat descent for algebraically trivial Picard classes
 
 Prove the singleton sheaf condition by descending line bundles and their isomorphisms.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

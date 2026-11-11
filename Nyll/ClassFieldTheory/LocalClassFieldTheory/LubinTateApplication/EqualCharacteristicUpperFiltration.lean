@@ -137,8 +137,8 @@ private theorem mem_span_X_pow_iff_coeff_zero
   exact PowerSeries.X_pow_dvd_iff
 
 theorem equalCharacteristicLubinTateArtinHigherUnitImage_eq_upper
-    {K₀ : Type} [Field K₀]
-    (F : LocalField.{0, v} K₀)
+    {K₀ : Type u} [Field K₀]
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1) :
     (equalCharacteristicLubinTateHigherUnitSubgroup F (k - 1)).map

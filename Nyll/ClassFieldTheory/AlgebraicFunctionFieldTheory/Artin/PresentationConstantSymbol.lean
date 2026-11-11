@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldConstantSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormalizedDegreeOne
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldConstantSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormalizedDegreeOne
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
 
 /-!
 # Frobenius values after a concrete fixed-field presentation
@@ -15,13 +18,18 @@ The arithmetic Frobenius formula survives the degree-one change of the
 base field used to define native finite reciprocity.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K L Ω : Type) [Field k] [Finite k] [Field K] [Field L] [Field Ω]
+variable (k : Type u) (K : Type v) (L : Type w) (Ω : Type x)
+    [Field k] [Finite k] [Field K] [Field L] [Field Ω]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]

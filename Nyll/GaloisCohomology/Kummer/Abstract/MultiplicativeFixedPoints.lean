@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Kummer.Abstract.KummerDelta
-import Mathlib.GroupTheory.GroupAction.Defs
+module
+
+public import Nyll.GaloisCohomology.Kummer.Abstract.KummerDelta
+public import Mathlib.GroupTheory.GroupAction.Defs
 
 /-!
 # Multiplicative fixed points and additive fixed coefficients
@@ -15,9 +17,13 @@ representation have the same elements and action, with their group laws
 related by the standard additive type tag.
 -/
 
+@[expose] public section
+
 namespace KummerTheory
 
-variable (G M : Type) [Group G] [TopologicalSpace G]
+universe u v
+
+variable (G : Type u) (M : Type v) [Group G] [TopologicalSpace G]
     [CommGroup M] [MulDistribMulAction G M]
 
 /-- Fixed points commute with writing a multiplicative module additively. -/

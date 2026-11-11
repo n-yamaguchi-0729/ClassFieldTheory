@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
-import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumValuedEmbedding
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+public import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumValuedEmbedding
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
 
 /-!
 # Embedding the localized global compositum in the common cyclotomic target
@@ -15,6 +18,8 @@ It therefore extends to completions.  Compatibility on the completed base
 identifies the restriction to the chosen localization as a genuine
 `ℚ_p`-algebra embedding into the same common cyclotomic target.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -71,14 +76,11 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
   let _ : Field vK.Completion := inferInstance
   let _ : Field wM.1.Completion := inferInstance
   let hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) wM.1
-  let _ : Algebra ℚ wM.1.Completion := hK
   let _ : SMul ℚ wM.1.Completion := hK.toSMul
   let _ := AbsoluteValue.completionAlgebra vK wM.1 wM.2
   let E := AbsoluteValue.algebraicLocalization vK wM.1 wM.2
   let hE : Field E := inferInstance
-  let _ : Field E := hE
   let hBaseE : Algebra vK.Completion E := inferInstance
-  let _ : Algebra vK.Completion E := hBaseE
   let e := padicAbsoluteValueCompletionRingEquiv p.1
   let _ : Algebra ℚ_[p.1] E :=
     @transportedAlgebraAlongRingEquiv vK.Completion ℚ_[p.1] E _ _

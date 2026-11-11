@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.AffineScheme
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.AffineScheme
 
 /-!
 # Basic-open localization from a finite cover
@@ -19,6 +21,8 @@ import Mathlib.AlgebraicGeometry.AffineScheme
 Glue compatible local numerators and bound the powers that annihilate restriction
 kernels to obtain localization on an affine open from a finite basic-open cover.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

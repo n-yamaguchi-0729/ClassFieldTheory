@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceCharacterComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteIdeleArtin
+public import Mathlib.Algebra.FiniteSupport.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 
 /-!
 # Finite support of finite-place Hilbert symbols
@@ -18,6 +23,8 @@ is needed here.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -65,7 +72,7 @@ theorem finitePlaceHilbertSymbol_hasFiniteMulSupport
             (chosenFinitePlaceArtinMonoidHom (K := K) (L := L) v
               (IdeleGroup.finiteComponent v
                 (IdeleGroup.principalIdele K a)))) :=
-    hArtin.fun_comp chi.map_one
+    Function.HasFiniteMulSupport.fun_comp hArtin chi.map_one
   convert hRoot using 1
   funext v
   have hcomponent :

@@ -11,8 +11,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 
 /-!
 # Flat sections on affine opens
@@ -20,6 +22,8 @@ import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 For a flat scheme over an affine base, the sections on an affine open are flat over the
 base ring with the algebra structure induced by the scheme morphism.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -32,9 +36,9 @@ open CategoryTheory AlgebraicGeometry
 theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.flat_sections_of_flat
     {R : Type u} [CommRing R] {X : Scheme.{u}} (c : X ⟶ Spec (CommRingCat.of R)) [Flat c]
     (U : X.Opens) (hU : IsAffineOpen U) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     Module.Flat R Γ(X, U) := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   have h1 : (c.appLE ⊤ U le_top).hom.Flat :=
     HasRingHomProperty.appLE @Flat c inferInstance ⟨⊤, isAffineOpen_top _⟩ ⟨U, hU⟩ le_top
   have hb : ((Scheme.ΓSpecIso (CommRingCat.of R)).inv.hom).Flat :=

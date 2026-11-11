@@ -4,8 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
-import Nyll.ClassFieldTheory.KroneckerWeber.RationalRayClassFieldCyclotomic
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+public import Nyll.ClassFieldTheory.KroneckerWeber.RationalRayClassFieldCyclotomic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+public import Nyll.GaloisCohomology.Kummer.Concrete.Cyclotomic.RationalCyclotomicField
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
 /-!
 # Arithmetic reciprocity for rational cyclotomic ray class fields
@@ -16,6 +23,8 @@ prime `q` acts on roots of unity by the direct power `q`.  The finite
 Galois/ray-class comparison is retained as a `ContinuousMulEquiv` with
 the native quotient and finite Krull topologies.
 -/
+
+@[expose] public section
 
 open scoped IsMulCommutative NumberField Cyclotomic
 

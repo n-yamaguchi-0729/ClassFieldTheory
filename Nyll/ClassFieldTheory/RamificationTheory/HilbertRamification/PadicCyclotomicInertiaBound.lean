@@ -4,10 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.InertiaRamificationCard
-import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicRamificationIndexBound
-import Nyll.ValuedFieldTheory.Ramification.RamificationIndexComparison
+module
+
+public import Nyll.ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.InertiaRamificationCard
+public import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.PadicCyclotomicRamificationIndexBound
+public import Nyll.ValuedFieldTheory.Ramification.RamificationIndexComparison
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
 
 /-!
 # Canonical p-adic inertia bounds
@@ -16,6 +22,8 @@ This file identifies the inertia cardinality of the canonical valuation on a
 finite Galois extension of `ℚ_p` with the intrinsic value-group ramification
 index, then applies the prime-power cyclotomic ramification bound.
 -/
+
+@[expose] public section
 
 noncomputable section
 

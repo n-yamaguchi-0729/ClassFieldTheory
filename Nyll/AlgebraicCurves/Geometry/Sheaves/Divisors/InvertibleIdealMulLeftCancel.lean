@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+module
+
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
 
 /-!
 # Cancellation by an invertible ideal sheaf
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
 Multiplication by an invertible ideal sheaf can be cancelled from equality of ideal-sheaf
 products, using local non-zero-divisor generators.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

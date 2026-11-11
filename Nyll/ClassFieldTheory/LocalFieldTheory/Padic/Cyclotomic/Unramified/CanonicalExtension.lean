@@ -4,25 +4,33 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.Unramified.ArithmeticFrobenius
-import Nyll.ValuedFieldTheory.LocalField.Unramified.RamificationIndexTower
-import Nyll.ValuedFieldTheory.LocalField.Unramified.Definitions
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.FiniteNormExtension
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.Core
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormula
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaAbsoluteValue
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaCoefficients
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaExtension
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaIntegralClosure
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueExtensionCoefficients
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueValuationSubring
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.ExponentialValuation
-import Nyll.ValuedFieldTheory.Valuation.Henselian.Complete
-import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
-import Mathlib.Analysis.Normed.Unbundled.RingSeminorm
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.Unramified.ArithmeticFrobenius
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.RamificationIndexTower
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.Definitions
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteIntegralClosure
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.FiniteNormExtension
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.Core
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormula
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaAbsoluteValue
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaCoefficients
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaExtension
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.NormFormulaIntegralClosure
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueExtensionCoefficients
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.UniqueValuationSubring
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.ExponentialValuation
+public import Nyll.ValuedFieldTheory.Valuation.Henselian.Complete
+public import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+public import Mathlib.Analysis.Normed.Unbundled.RingSeminorm
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.SpectralExtension
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.AbsoluteValues
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Complete
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
+public import Nyll.ValuedFieldTheory.Valuation.Henselian.Core
 
 /-!
 # The canonical valuation on the unramified extension of `ℚ_p`
@@ -33,6 +41,8 @@ valuation.  This file identifies that presentation, for
 field theory files.  It also specializes the least-exponent degree formula
 to roots of unity of order `p ^ f - 1`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -505,11 +515,20 @@ theorem padicFiniteExtensionExponentialValuation_algHom
       padicFiniteExtensionExponentialValuation p E x := by
   by_cases hx : x = 0
   · subst x
-    simp [padicFiniteExtensionExponentialValuation,
-      absoluteValueExponentialValuation]
-  · have hix : i x ≠ 0 := by simpa using i.injective.ne hx
-    simp [padicFiniteExtensionExponentialValuation,
-      absoluteValueExponentialValuation, hx, hix,
+    rw [map_zero]
+    exact (((padicFiniteExtensionExponentialValuation p D).eq_top_iff 0).2 rfl).trans
+      (((padicFiniteExtensionExponentialValuation p E).eq_top_iff 0).2 rfl).symm
+  · have hix : i x ≠ 0 := by
+      intro h
+      exact hx (i.injective (h.trans (map_zero i).symm))
+    change absoluteValueExponentialValuation
+        (padicFiniteExtensionAbsoluteValue p D)
+        (padicFiniteExtensionAbsoluteValue_nonarchimedean p D) (i x) =
+      absoluteValueExponentialValuation
+        (padicFiniteExtensionAbsoluteValue p E)
+        (padicFiniteExtensionAbsoluteValue_nonarchimedean p E) x
+    rw [absoluteValueExponentialValuation_apply_ne_zero _ _ hix,
+      absoluteValueExponentialValuation_apply_ne_zero _ _ hx,
       padicFiniteExtensionAbsoluteValue_algHom p i]
 
 /-- Ramification index is monotone under an embedding of finite extensions
@@ -557,7 +576,7 @@ theorem padicCyclotomicUnramified_padicFiniteExtensionValuationSubring_eq_integr
 
 /-- An integral-closure valuation ring is equal, as a subring of the field,
 to the usual `integralClosure` subring. -/
-private theorem padicCyclotomicUnramified_valuationSubring_eq_integralClosure
+theorem padicCyclotomicUnramified_valuationSubring_eq_integralClosure
     {K L : Type*} [Field K] [Field L] [Algebra K L]
     (V : ValuationSubring K) (W : ValuationSubring L)
     [IsIntegralClosure W V L] :

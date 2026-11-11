@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+module
+
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Place exists forall ord eq finset
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 Weak approximation constructs a nonzero function with prescribed integer orders at a finite set of
 places.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

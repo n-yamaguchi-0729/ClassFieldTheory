@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
-import Mathlib.NumberTheory.NumberField.AdeleRing
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+public import Mathlib.NumberTheory.NumberField.AdeleRing
 
 /-!
 # Comparison with Mathlib's idèle class group
@@ -15,6 +17,8 @@ already multiplicatively equivalent. The principal subgroups correspond,
 so the equivalence descends to idèle classes. The one-place map comparison
 needed for the public local--global reciprocity theorem is recorded below.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

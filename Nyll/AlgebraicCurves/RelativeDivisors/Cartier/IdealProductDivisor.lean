@@ -10,26 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Mathlib.Algebra.Module.LocalizedModule.Exact
-import Mathlib.Algebra.Module.LocalizedModule.Submodule
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.Flat.EquationalCriterion
-import Mathlib.RingTheory.Ideal.Colon
-import Mathlib.RingTheory.Ideal.Maps
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqKerGraphOverMul
-import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.RankLocalization
-import Nyll.SchemeTheory.RingTheory.FinitePresentation.ModuleFinitePresentation
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Mathlib.Algebra.Module.LocalizedModule.Exact
+public import Mathlib.Algebra.Module.LocalizedModule.Submodule
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.Flat.EquationalCriterion
+public import Mathlib.RingTheory.Ideal.Colon
+public import Mathlib.RingTheory.Ideal.Maps
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqKerGraphOverMul
+public import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.RankLocalization
+public import Nyll.SchemeTheory.RingTheory.FinitePresentation.ModuleFinitePresentation
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
 
 /-!
 # Factoring a relative divisor ideal
 
 Factors the defining ideal of a relative divisor as a product after a suitable base change.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -668,25 +672,6 @@ theorem finite_kerπI : Module.Finite Rᵤ (RingHom.ker (πI D E U).toRingHom) :
 
 
 section localizedChart
-
-noncomputable local instance residualBasicOpenAlgebra (h : Aᵤ) : Algebra
-    Γ(E.I.subscheme,
-      (Scheme.IdealSheafData.inclusion (mul_le_snd D.I E.I) ≫
-        ((D.I * E.I).subschemeι ≫ pullback.snd c t)) ⁻¹ᵁ U.1)
-    Γ(E.I.subscheme,
-      E.I.subscheme.basicOpen
-        (algebraMap Γ((D.I * E.I).subscheme, ((D.I * E.I).subschemeι ≫ pullback.snd c t) ⁻¹ᵁ U.1)
-          Γ(E.I.subscheme,
-            (Scheme.IdealSheafData.inclusion (mul_le_snd D.I E.I) ≫
-              ((D.I * E.I).subschemeι ≫ pullback.snd c t)) ⁻¹ᵁ U.1) h)) :=
-  ((E.I.subscheme.presheaf.map (homOfLE
-    (E.I.subscheme.basicOpen_le _)).op).hom).toAlgebra
-
-noncomputable local instance divisorBasicOpenAlgebra (h : Aᵤ) : Algebra Γ((D.I * E.I).subscheme,
-  ((D.I * E.I).subschemeι ≫ pullback.snd c t) ⁻¹ᵁ U.1)
-    Γ((D.I * E.I).subscheme, (D.I * E.I).subscheme.basicOpen h) :=
-  (((D.I * E.I).subscheme.presheaf.map (homOfLE
-    ((D.I * E.I).subscheme.basicOpen_le h)).op).hom).toAlgebra
 
 noncomputable local instance residualBasicOpenAlgebraOverDivisor (h : Aᵤ) : Algebra Γ((D.I *
   E.I).subscheme, ((D.I * E.I).subschemeι ≫ pullback.snd c t) ⁻¹ᵁ U.1)

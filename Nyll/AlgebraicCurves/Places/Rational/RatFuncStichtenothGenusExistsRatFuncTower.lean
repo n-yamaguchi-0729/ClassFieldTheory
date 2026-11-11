@@ -10,25 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.MulMemLSpaceAdd
-import Nyll.AlgebraicCurves.Divisors.Degree.PoleData
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.FunctionFields.Rational.TranscendenceTowerPoleDivisorApply
-import Nyll.AlgebraicCurves.FunctionFields.Rational.TranscendenceTowerDegreePoleDivisorEqFinrank
-import Nyll.AlgebraicCurves.FunctionFields.LinearAlgebra.LinearIndependentPowMul
-import Nyll.AlgebraicCurves.FunctionFields.LinearAlgebra.LinearIndependentPowTranscendental
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.MulMemLSpaceAdd
+public import Nyll.AlgebraicCurves.Divisors.Degree.PoleData
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.Rational.TranscendenceTowerPoleDivisorApply
+public import Nyll.AlgebraicCurves.FunctionFields.Rational.TranscendenceTowerDegreePoleDivisorEqFinrank
+public import Nyll.AlgebraicCurves.FunctionFields.LinearAlgebra.LinearIndependentPowMul
+public import Nyll.AlgebraicCurves.FunctionFields.LinearAlgebra.LinearIndependentPowTranscendental
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Ring.RingNF
 
 /-! Integral bases and pole divisors give existence of the genus
 for a finite rational-function tower. -/
+
+@[expose] public section
 
 namespace AlgebraicCurves.Places.Rational.Proofs.RationalFieldStichtenothRatFunc
 
@@ -285,7 +289,8 @@ theorem xF_ne_zero : T.xF ≠ 0 :=
 
 open _root_.AlgebraicCurve.TranscendenceTower
 omit [FiniteDimensional E F] in
-private theorem _root_.AlgebraicCurve.TranscendenceTower.poleDivisor_nonneg : 0 ≤ T.poleDivisor
+/-- The pole divisor of the tower coordinate is effective. -/
+theorem _root_.AlgebraicCurve.TranscendenceTower.poleDivisor_nonneg : 0 ≤ T.poleDivisor
   := by
   classical
   intro w
@@ -295,7 +300,8 @@ private theorem _root_.AlgebraicCurve.TranscendenceTower.poleDivisor_nonneg : 0 
 
 open _root_.AlgebraicCurve.TranscendenceTower
 omit [FiniteDimensional E F] in
-private theorem _root_.AlgebraicCurve.TranscendenceTower.xF_mem_lSpace_poleDivisor : T.xF ∈ LSpace
+/-- The tower coordinate belongs to the Riemann–Roch space of its pole divisor. -/
+theorem _root_.AlgebraicCurve.TranscendenceTower.xF_mem_lSpace_poleDivisor : T.xF ∈ LSpace
   T.poleDivisor := by
   classical
   rw [mem_lSpace_iff_ord]
@@ -332,7 +338,8 @@ private theorem
 
 open _root_.AlgebraicCurve.TranscendenceTower
 omit [FiniteDimensional E F] in
-private theorem
+/-- A finite family regular away from the tower place has a common pole-divisor bound. -/
+theorem
   _root_.AlgebraicCurve.TranscendenceTower.exists_forall_mem_lSpace_nsmul_poleDivisor {n : ℕ} (u :
   Fin n → F)
     (hreg : ∀ i, ∀ w : Place K F, w.restrict E ≠ T.v → 0 ≤ w.ord (u i)) :

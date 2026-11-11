@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnshrinkFiniteAbelianFields
-import Nyll.ClassFieldTheory.Algebra.FiniteAbelianIntermediateFieldAlgEquiv
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnshrinkFiniteAbelianFields
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbelianIntermediateFieldAlgEquiv
+public import Nyll.ClassFieldTheory.Algebra.IntermediateFieldAlgEquivOrderIso
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
 
 /-!
 # Finite abelian fields in the chosen small-base separable closure
@@ -14,6 +18,8 @@ The base equivalence and the equivalence between the two chosen separable
 closures together transport finite abelian intermediate fields, preserving
 their inclusion order.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -27,10 +33,10 @@ variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
 /-- The underlying intermediate-field order equivalence, before imposing
 finite-dimensional and abelian Galois conditions. -/
 def shrinkChosenIntermediateFieldOrderIso :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Small.{0} K := nonarchimedeanLocalField_small K
     IntermediateField K (SeparableClosure K) ≃o
       IntermediateField (Shrink.{0} K) (SeparableClosure (Shrink.{0} K)) := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
+  intro sharedOwner1
   let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
     shrinkSeparableClosureAlgebra K
   exact (shrinkIntermediateFieldOrderIso K).trans
@@ -41,9 +47,9 @@ def shrinkChosenIntermediateFieldOrderIso :
 to the chosen closure of `Shrink K`. -/
 def shrinkChosenFiniteAbelianField
     (E : ClassFieldTheory.FiniteAbelianLocalExtension K) :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Small.{0} K := nonarchimedeanLocalField_small K
     ClassFieldTheory.FiniteAbelianLocalExtension (Shrink.{0} K) := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
+  intro sharedOwner1
   let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
     shrinkSeparableClosureAlgebra K
   let M := shrinkIntermediateField K E.1
@@ -58,10 +64,10 @@ def shrinkChosenFiniteAbelianField
 
 /-- Undo the chosen-closure and small-base transports. -/
 def unshrinkChosenFiniteAbelianField :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Small.{0} K := nonarchimedeanLocalField_small K
     ClassFieldTheory.FiniteAbelianLocalExtension (Shrink.{0} K) →
       ClassFieldTheory.FiniteAbelianLocalExtension K := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
+  intro sharedOwner1
   let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
     shrinkSeparableClosureAlgebra K
   intro F
@@ -80,10 +86,10 @@ def unshrinkChosenFiniteAbelianField :
 /-- The finite abelian fields in both chosen separable closures are
 order-isomorphic. -/
 def shrinkChosenFiniteAbelianOrderIso :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Small.{0} K := nonarchimedeanLocalField_small K
     ClassFieldTheory.FiniteAbelianLocalExtension K ≃o
       ClassFieldTheory.FiniteAbelianLocalExtension (Shrink.{0} K) := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
+  intro sharedOwner1
   exact {
     toEquiv := {
       toFun := shrinkChosenFiniteAbelianField K

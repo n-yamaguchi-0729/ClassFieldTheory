@@ -10,34 +10,38 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Places.Restriction.PlaceEquivOrdEqEllMapDomainEq
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDivisorRangeEqLSpaceOn
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.UnitRangeEqLSpaceOnZero
-import Nyll.AlgebraicCurves.Cohomology.FinrankH0H1SectionsOfRangeEqLSpaceOn
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.EllAddEqOrd
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.PrincipalSubSub
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.PrincipalSubSingle
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Places.Restriction.PlaceEquivOrdEqEllMapDomainEq
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleDivisorRangeEqLSpaceOn
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.UnitRangeEqLSpaceOnZero
+public import Nyll.AlgebraicCurves.Cohomology.FinrankH0H1SectionsOfRangeEqLSpaceOn
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.EllAddEqOrd
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.PrincipalSubSub
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.PrincipalSubSingle
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleInvModule
 
 /-!
 # Curve Model exists divisor Class Map
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -238,9 +242,9 @@ theorem IsPresentation.isPrincipal_sub_of_iso {L L' : X.Modules} (e : L ≅ L')
     {φ : ∀ U : X.Opens, Γ(L, U) →+ (X.functionField : Type u)}
     {φ' : ∀ U : X.Opens, Γ(L', U) →+ (X.functionField : Type u)}
     (h : IsPresentation x L D φ) (h' : IsPresentation x L' D' φ') :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     Divisor.IsPrincipal (D - D') := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   obtain ⟨φ₀, h₀⟩ := exists_isPresentation_unit x
   have hL' : Scheme.Modules.IsInvertible L' := isInvertible_of_iso e hL
   have key := IsPresentation.isPrincipal_tensor x hL' (Scheme.Modules.isInvertible_unit X) h' h₀
@@ -253,9 +257,9 @@ theorem IsPresentation.isPrincipal_of_unit
       Divisor K X.functionField}
     {φ : ∀ U : X.Opens, Γ((𝟙_ X.Modules : X.Modules), U) →+ (X.functionField : Type u)}
     (h : IsPresentation x (𝟙_ X.Modules) D φ) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     Divisor.IsPrincipal D := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   obtain ⟨φ₀, h₀⟩ := exists_isPresentation_unit x
   have h1 : Scheme.Modules.IsInvertible (𝟙_ X.Modules) := Scheme.Modules.isInvertible_unit X
   have key := IsPresentation.isPrincipal_tensor x h1 h1 h h₀ (h₀.of_iso (λ_ (𝟙_ X.Modules)))

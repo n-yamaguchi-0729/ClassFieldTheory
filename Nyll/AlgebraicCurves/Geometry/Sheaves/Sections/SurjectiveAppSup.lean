@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Exactness
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.SurjectiveAppShortExact
+module
+
+public import Nyll.SchemeTheory.Modules.Exactness
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.SurjectiveAppShortExact
 
 /-!
 # Scheme Modules surjective app sup of short Exact of locally Trivial
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

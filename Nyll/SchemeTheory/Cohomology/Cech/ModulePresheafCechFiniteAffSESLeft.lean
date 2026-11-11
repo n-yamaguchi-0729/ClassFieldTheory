@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.RingTheory.Noetherian.Basic
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.ModuleFiniteKerLeRange
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafAffSESConnectingHom
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.ModuleFiniteKerLeRange
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafAffSESConnectingHom
 
 /-!
 Cech finiteness of the left term of an affine short exact sequence from the other two terms.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

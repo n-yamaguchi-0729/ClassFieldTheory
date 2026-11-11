@@ -4,40 +4,45 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Mathlib.FieldTheory.AlgebraicClosure
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendentalPerfectField
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ProductFormula
-import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
+module
+
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Mathlib.FieldTheory.AlgebraicClosure
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendentalPerfectField
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Places.Restriction.OrderRigidity
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ProductFormula
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # The full constant field as the regular functions without poles
 
-A function integral at every place generates a subalgebra that embeds in any one finite
-residue field. The product formula proves injectivity: a nonzero element of the kernel
-would have positive order at that place and no poles anywhere. The subalgebra is therefore
-finite, and its generator is algebraic over the finite base field.
+A function integral at every place generates a subalgebra that embeds linearly in any one
+finite-dimensional residue field. The product formula proves injectivity: a nonzero element
+of the kernel would have positive order at that place and no poles anywhere. The subalgebra
+is finite-dimensional, so its generator is algebraic over the base field.
 
 Applying this to the existing equivalence of places under integral constant extension proves
 `ConstantsAreBase` for the actual relative algebraic closure `algebraicClosure k K`.
 -/
 
+@[expose] public section
+
 namespace FunctionField
 
 open AlgebraicCurve
 
-private theorem isAlgebraic_of_forall_mem {k K : Type*} [Field k] [Finite k]
+private theorem isAlgebraic_of_forall_mem {k K : Type*} [Field k]
     [Field K] [Algebra k K] [HasPrincipalDivisors k K]
     (P : Place k K) [Module.Finite k P.ResidueField] {f : K}
     (hf : ∀ v : Place k K, f ∈ v.toValuationSubring) : IsAlgebraic k f := by
@@ -55,7 +60,13 @@ private theorem isAlgebraic_of_forall_mem {k K : Type*} [Field k] [Finite k]
       exact v.toValuationSubring.mul_mem x y hx hy
   let incl : A →+* P.toValuationSubring :=
     A.val.toRingHom.codRestrict P.toValuationSubring.toSubring (hA P)
-  let residue : A →+* P.ResidueField := (IsLocalRing.residue P.toValuationSubring).comp incl
+  let residue : A →ₐ[k] P.ResidueField :=
+    { (IsLocalRing.residue P.toValuationSubring).comp incl with
+      commutes' a := by
+        change IsLocalRing.residue P.toValuationSubring
+          (algebraMap k P.toValuationSubring a) = algebraMap k P.ResidueField a
+        rw [IsScalarTower.algebraMap_apply k P.toValuationSubring P.ResidueField,
+          IsLocalRing.ResidueField.algebraMap_eq] }
   have hinj : Function.Injective residue := by
     refine (injective_iff_map_eq_zero residue).2 ?_
     intro x hx
@@ -68,13 +79,12 @@ private theorem isAlgebraic_of_forall_mem {k K : Type*} [Field k] [Finite k]
       rw [← WithZero.exp_log (P.adicValuation_ne_zero hxK), hlog, WithZero.exp_zero]
     have hunit : IsUnit (incl x) := (P.adicValuation_coe_eq_one_iff (incl x)).mp hval
     exact ((IsLocalRing.residue_ne_zero_iff_isUnit (incl x)).2 hunit) hx
-  have : Finite P.ResidueField := Module.finite_of_finite k
-  have : Finite A := Finite.of_injective residue hinj
+  have : Module.Finite k A := Module.Finite.of_injective residue.toLinearMap hinj
   have halg : IsAlgebraic k (⟨f, Algebra.subset_adjoin (Set.mem_singleton f)⟩ : A) :=
-    IsAlgebraic.of_finite k _
+    Algebra.IsAlgebraic.isAlgebraic _
   exact halg.algHom A.val
 
-variable (k K : Type*) [Field k] [Finite k] [Field K]
+variable (k K : Type*) [Field k] [PerfectField k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K]
 
@@ -97,13 +107,12 @@ theorem constantsAreBase_fullConstants : ConstantsAreBase (algebraicClosure k K)
   · rintro f ⟨c, rfl⟩
     exact algebraMap_mem_lSpace_zero c
 
+omit [PerfectField k] in
 /-- The actual original parameter stays transcendental and finite over the full constants. -/
 theorem exists_transcendental_finite_fullConstants :
     ∃ t : K, Transcendental (algebraicClosure k K) t ∧
       FiniteDimensional (IntermediateField.adjoin (algebraicClosure k K) ({t} : Set K)) K := by
   let C := algebraicClosure k K
-  have : Algebra.EssFiniteType k K := essFiniteType k K
-  have : Finite C := FieldTheory.finite_algebraicClosure_of_finite_base k K
   let t : K := algebraMap (RatFunc k) K (RatFunc.X : RatFunc k)
   have ht : Transcendental k t :=
     (transcendental_algebraMap_iff (R := k) (S := RatFunc k) (A := K)
@@ -120,12 +129,23 @@ theorem exists_transcendental_finite_fullConstants :
   have hBK : FiniteDimensional B K := Module.Finite.of_restrictScalars_finite A B K
   exact ⟨t, htC, hBK⟩
 
-/-- Enlarging the finite base to its full algebraic constant field preserves the curve API. -/
+/-- Enlarging a perfect base to its full algebraic constant field preserves the curve API. -/
 theorem isCurveOver_fullConstants : IsCurveOver (algebraicClosure k K) K := by
-  have : Algebra.EssFiniteType k K := essFiniteType k K
-  have : Finite (algebraicClosure k K) :=
-    FieldTheory.finite_algebraicClosure_of_finite_base k K
+  have : PerfectField (algebraicClosure k K) := Algebra.IsAlgebraic.perfectField k
   obtain ⟨t, ht, hfin⟩ := exists_transcendental_finite_fullConstants k K
   exact AlgebraicCurve.isCurveOver_of_transcendental_of_perfectField ht hfin
+
+/-- Every field endomorphism of a global function field which fixes all
+normalized place orders is the identity, including on the full constant field. -/
+theorem ringHom_eq_id_of_forall_ord_eq
+    (σ : K →+* K) (hord : ∀ (v : Place k K) (x : K), v.ord (σ x) = v.ord x) :
+    σ = RingHom.id K := by
+  obtain ⟨t, ht, _⟩ := exists_transcendental_finite_fullConstants k K
+  have hnonconstant : t ∉ (algebraMap (algebraicClosure k K) K).range := by
+    rintro ⟨a, ha⟩
+    exact ht (ha ▸ isAlgebraic_algebraMap a)
+  exact AlgebraicCurve.ringHom_eq_id_of_forall_ord_eq
+    (constantsAreBase_fullConstants k K) t hnonconstant σ
+    (fun v x => hord (v.forgetConstants (K := k)) x)
 
 end FunctionField

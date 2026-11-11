@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Compatibility
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Compatibility
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+public import Nyll.GaloisCohomology.Kummer.Abstract.KummerDelta
 
 /-!
 # Zero-class transport to norm membership
@@ -16,6 +19,8 @@ the shared fixed-field instance providers.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -67,56 +72,28 @@ rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_finiteNormReprese
       rationalFiniteNormTransferCanonicalFiniteNormClassZero
         K H L hHK hLH c) :
     RationalFiniteNormTransferCanonicalFiniteNormRepresentativeQuotientZeroData
+      (hKfinite := hKfinite) (hKHfinite := hKHfinite)
+      (hHLfinite := hHLfinite)
       K H L hHK hLH hLHnormal c := by
   refine ⟨?_⟩
   let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
-  change
-    (0 : FiniteNormQuotient rationalIdeleClassRepresentation H L hLH) =
-      finiteNormClass rationalIdeleClassRepresentation H L hLH
-        (fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
-          (rationalAbstractFixedFieldIdeleClassEquivFixed K
-            (Additive.ofMul c))) at hincludeCanonical
-  let e :=
-    rationalFiniteNormQuotientEquivIdeleClassNormQuotient
-      (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal
-  let q :=
-    rationalFiniteNormTransferQuotientMap
-      (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal
   let b : KummerTheory.ambientFixedAddSubgroup
       rationalIdeleClassRepresentation H :=
     fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
       (rationalAbstractFixedFieldIdeleClassEquivFixed K
         (Additive.ofMul c))
-  let finiteNormRepresentative :
-      rationalFiniteNormTransferBaseIdeleClass
-        (hKfinite := hHfinite) H :=
-    Additive.toMul
-      ((rationalAbstractFixedFieldIdeleClassEquivFixed H).symm b)
-  change
-    rationalFiniteNormTransferQuotientMap
+  have htransport :=
+    rationalFiniteNormTransferFiniteNormClass_spec
+      (hKfinite := hHfinite) (hfinite := hHLfinite)
+      H L hLH hLHnormal b
+  unfold rationalFiniteNormTransferCanonicalFiniteNormClassZero at hincludeCanonical
+  exact htransport.symm.trans
+    (congrArg
+      (rationalFiniteNormQuotientEquivIdeleClassNormQuotient
         (hKfinite := hHfinite) (hfinite := hHLfinite)
-        H L hLH hLHnormal finiteNormRepresentative =
-      rationalFiniteNormQuotientEquivIdeleClassNormQuotient
-        (hKfinite := hHfinite) (hfinite := hHLfinite)
-        H L hLH hLHnormal 0
-  have htransport :
-      e
-          (finiteNormClass rationalIdeleClassRepresentation H L hLH b) =
-        q finiteNormRepresentative := by
-    simpa only [e, q, b, finiteNormRepresentative] using
-      (rationalFiniteNormTransferFiniteNormClass_spec
-        (hKfinite := hHfinite) (hfinite := hHLfinite)
-        H L hLH hLHnormal b)
-  calc
-    q finiteNormRepresentative =
-        e (finiteNormClass rationalIdeleClassRepresentation H L hLH b) :=
-      htransport.symm
-    _ = e 0 := by
-      apply congrArg e
-      simpa only [b] using hincludeCanonical.symm
+        H L hLH hLHnormal)
+      hincludeCanonical.symm)
 
 /-- Internal evaluation of the quotient equivalence at zero. -/
 private noncomputable def

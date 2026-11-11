@@ -5,6 +5,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Ideal and ray consequences of norm limitation
@@ -20,18 +21,20 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
 private theorem normLimitationIdeleClassIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 attribute [local instance] normLimitationIdeleClassIsMulCommutative
 
 variable
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]

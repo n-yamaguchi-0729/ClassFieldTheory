@@ -17,11 +17,13 @@ Authors: Joël Riou, Christian Merten
 https://github.com/leanprover-community/mathlib4/blob/065356127b1dc0016f66b7283ce0ce2c4055aa55/Mathlib/CategoryTheory/Sites/Descent/DescentDataPrime.lean
 -/
 
-import Mathlib.CategoryTheory.Sites.Descent.DescentData
-import Mathlib.CategoryTheory.Sites.Descent.DescentDataPrime
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.ChosenPullback
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.Functor.FullyFaithful
+module
+
+public import Mathlib.CategoryTheory.Sites.Descent.DescentData
+public import Mathlib.CategoryTheory.Sites.Descent.DescentDataPrime
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.ChosenPullback
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.Functor.FullyFaithful
 
 /-!
 # Comparison and overlap transport for descent data
@@ -34,6 +36,8 @@ from Mathlib's existing `NatIso.ofComponents` / `DescentData.isoMk` construction
 The chosen-overlap isomorphism is constructed using `DescentData'.isoMk` and
 `descentDataEquivalence`, with the pseudofunctor kept abstract.
 -/
+
+@[expose] public section
 
 universe t t' v v' u u'
 
@@ -283,10 +287,8 @@ theorem chosen_canonical_overlap_hom
   rfl
 
 
-/-- The canonical transition pulled through an actual base-change square agrees
-with the two canonical legs. The intermediate descent data and its actual κ
-commutativity are constructed here, while the pseudofunctor stays abstract. -/
-theorem canonical_pullback_leg_relation
+/-- The equality between the canonical overlap transition and its two base-change legs. -/
+def CanonicalPullbackLegRelation
     {C : Type u} [Category.{v} C]
     (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v', u'})
     {ι : Type t} {S S' : C} {X X' : ι → C}
@@ -299,8 +301,7 @@ theorem canonical_pullback_leg_relation
     (r₁ : V ⟶ X' i) (r₂ : V ⟶ X' j)
     (e₁ : a₁ ≫ f i = d) (e₂ : a₂ ≫ f j = d)
     (G₁ : r₁ ≫ f' i = m) (G₂ : r₂ ≫ f' j = m)
-    (E₁ : s ≫ a₁ = r₁ ≫ p' i) (E₂ : s ≫ a₂ = r₂ ≫ p' j)
-    (hq : s ≫ d = m ≫ p) :
+    (E₁ : s ≫ a₁ = r₁ ≫ p' i) (E₂ : s ≫ a₂ = r₂ ≫ p' j) : Prop :=
     let N :
         (F.map a₁.op.toLoc ≫ F.map s.op.toLoc).toFunctor.obj
             ((F.map (f i).op.toLoc).toFunctor.obj M) ⟶
@@ -328,7 +329,29 @@ theorem canonical_pullback_leg_relation
       m.op.toLoc (by rw [← G₂]; rfl))).symm.app
         ((F.map p.op.toLoc).toFunctor.obj M)
     N ≫ (C₂ ≪≫ (F.map r₂.op.toLoc).toFunctor.mapIso K₂ ≪≫ T₂).hom =
-      (C₁ ≪≫ (F.map r₁.op.toLoc).toFunctor.mapIso K₁ ≪≫ T₁).hom := by
+      (C₁ ≪≫ (F.map r₁.op.toLoc).toFunctor.mapIso K₁ ≪≫ T₁).hom
+
+/-- The canonical transition pulled through an actual base-change square agrees
+with the two canonical legs. The intermediate descent data and its actual κ
+commutativity are constructed here, while the pseudofunctor stays abstract. -/
+theorem canonical_pullback_leg_relation
+    {C : Type u} [Category.{v} C]
+    (F : Pseudofunctor (LocallyDiscrete Cᵒᵖ) Cat.{v', u'})
+    {ι : Type t} {S S' : C} {X X' : ι → C}
+    (f : ∀ i, X i ⟶ S) (f' : ∀ i, X' i ⟶ S')
+    (p : S' ⟶ S) (p' : ∀ i, X' i ⟶ X i)
+    (w : ∀ i, p' i ≫ f i = f' i ≫ p)
+    (M : F.obj (.mk (op S)))
+    {Y V : C} (d : Y ⟶ S) (m : V ⟶ S') (s : V ⟶ Y)
+    (i j : ι) (a₁ : Y ⟶ X i) (a₂ : Y ⟶ X j)
+    (r₁ : V ⟶ X' i) (r₂ : V ⟶ X' j)
+    (e₁ : a₁ ≫ f i = d) (e₂ : a₂ ≫ f j = d)
+    (G₁ : r₁ ≫ f' i = m) (G₂ : r₂ ≫ f' j = m)
+    (E₁ : s ≫ a₁ = r₁ ≫ p' i) (E₂ : s ≫ a₂ = r₂ ≫ p' j)
+    (hq : s ≫ d = m ≫ p) :
+    CanonicalPullbackLegRelation F f f' p p' w M d m s i j a₁ a₂ r₁ r₂
+      e₁ e₂ G₁ G₂ E₁ E₂ := by
+  unfold CanonicalPullbackLegRelation
   intro N C₁ C₂ K₁ K₂ T₁ T₂
   let D : F.DescentData f := (F.toDescentData f).obj M
   let P : F.DescentData f' :=

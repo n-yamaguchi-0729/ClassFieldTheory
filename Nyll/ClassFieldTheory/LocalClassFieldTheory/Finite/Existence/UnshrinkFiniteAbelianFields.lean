@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFiniteAbelianFields
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFiniteAbelianFields
+public import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
 
 /-!
 # Returning finite abelian intermediate fields from the small base
@@ -12,6 +15,8 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFinite
 The converse to the small-base transport: an intermediate field over
 `Shrink K` in the original separable closure remains finite abelian over `K`.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -24,32 +29,26 @@ variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
 
 /-- The same underlying field after undoing the small base change. -/
 def unshrinkIntermediateFieldRingEquiv :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
-    letI : Algebra (Shrink.{0} K) (SeparableClosure K) :=
+    let : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
       shrinkSeparableClosureAlgebra K
     (F : IntermediateField (Shrink.{0} K) (SeparableClosure K)) →
       F ≃+* unshrinkIntermediateField K F := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
-  let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
-    shrinkSeparableClosureAlgebra K
-  intro F
+  intro sharedOwner1 sharedOwner2 F
   exact RingEquiv.refl F
 
 /-- The inverse intermediate-field equivalence commutes with the base-field
 embeddings. -/
 theorem unshrinkIntermediateFieldRingEquiv_commutes :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
-    letI : Algebra (Shrink.{0} K) (SeparableClosure K) :=
+    let : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
       shrinkSeparableClosureAlgebra K
     ∀ F : IntermediateField (Shrink.{0} K) (SeparableClosure K),
       (algebraMap K (unshrinkIntermediateField K F)).comp
           (Shrink.ringEquiv K).toRingHom =
         (unshrinkIntermediateFieldRingEquiv K F).toRingHom.comp
           (algebraMap (Shrink.{0} K) F) := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
-  let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
-    shrinkSeparableClosureAlgebra K
-  intro F
+  intro sharedOwner1 sharedOwner2 F
   ext x
   have hbase :
       algebraMap K (SeparableClosure K) (Shrink.ringEquiv K x) =
@@ -70,16 +69,13 @@ theorem unshrinkIntermediateFieldRingEquiv_commutes :
 
 /-- Finite-dimensionality is preserved when returning to `K`. -/
 theorem unshrinkIntermediateField_finiteDimensional :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
-    letI : Algebra (Shrink.{0} K) (SeparableClosure K) :=
+    let : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
       shrinkSeparableClosureAlgebra K
     ∀ F : IntermediateField (Shrink.{0} K) (SeparableClosure K),
       FiniteDimensional (Shrink.{0} K) F →
         FiniteDimensional K (unshrinkIntermediateField K F) := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
-  let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
-    shrinkSeparableClosureAlgebra K
-  intro F hF
+  intro sharedOwner1 sharedOwner2 F hF
   let : FiniteDimensional (Shrink.{0} K) F := hF
   exact Module.Finite.of_equiv_equiv
     (Shrink.ringEquiv K) (unshrinkIntermediateFieldRingEquiv K F)
@@ -87,16 +83,13 @@ theorem unshrinkIntermediateField_finiteDimensional :
 
 /-- The abelian Galois property is preserved when returning to `K`. -/
 theorem unshrinkIntermediateField_isAbelianGalois :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
-    letI : Algebra (Shrink.{0} K) (SeparableClosure K) :=
+    let : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
       shrinkSeparableClosureAlgebra K
     ∀ F : IntermediateField (Shrink.{0} K) (SeparableClosure K),
       IsAbelianGalois (Shrink.{0} K) F →
         IsAbelianGalois K (unshrinkIntermediateField K F) := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
-  let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
-    shrinkSeparableClosureAlgebra K
-  intro F hF
+  intro sharedOwner1 sharedOwner2 F hF
   let : IsAbelianGalois (Shrink.{0} K) F := hF
   exact ClassFieldTheory.isAbelianGalois_of_equiv_equiv
     (Shrink.ringEquiv K) (unshrinkIntermediateFieldRingEquiv K F)

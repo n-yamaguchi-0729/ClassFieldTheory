@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.LinearAlgebra.Isomorphisms
-import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
+module
+
+public import Mathlib.LinearAlgebra.Isomorphisms
+public import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
 
 /-!
 The bounded spectral sequence and its filtration for a double complex.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

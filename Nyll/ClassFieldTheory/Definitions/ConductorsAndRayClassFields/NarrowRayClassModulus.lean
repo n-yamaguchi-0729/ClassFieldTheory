@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 
 /-!
 # The narrow class-group modulus
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

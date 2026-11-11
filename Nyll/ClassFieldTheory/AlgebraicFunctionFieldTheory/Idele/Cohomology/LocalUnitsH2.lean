@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalCriterion
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalCriterion
 
 /-!
 # Locally zero cyclic unit H² classes and principal idele norms
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLo
 The completed cohomology criterion is equivalent to actual local norm equations.
 Integral local solutions then assemble into an actual idele norm.
 -/
+
+@[expose] public section
 
 noncomputable section
 

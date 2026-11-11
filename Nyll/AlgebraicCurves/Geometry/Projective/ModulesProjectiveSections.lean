@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Flat.Localization
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
-import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
-import Nyll.SchemeTheory.RingTheory.FinitePresentation.ModuleFinitePresentation
+module
+
+public import Mathlib.RingTheory.Flat.Localization
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+public import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
+public import Nyll.SchemeTheory.RingTheory.FinitePresentation.ModuleFinitePresentation
 
 /-!
 Projectivity of sections of locally trivial scheme modules on affine open subsets.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -228,10 +232,10 @@ variable {X : Scheme.{u}} (M : X.Modules) (U : X.affineOpens) (f : Γ(X, U.1))
 
 theorem ψ_add {W : X.Opens} (hWV : W ≤ V) (m m' : Γ(M, W)) :
     ψ M V e hWV (m + m') = ψ M V e hWV m + ψ M V e hWV m' := by
-  simp only [ψ, rM, rO, eApp, map_add]
-  first
-    | rfl
-    | erw [AddMonoidHom.map_add, RingHom.map_add]
+  exact map_add
+    ((X.presheaf.map (homOfLE (le_hat V hWV)).op).hom.toAddMonoidHom.comp
+      ((e.hom.app (V.ι ⁻¹ᵁ W)).hom.comp
+        (M.presheaf.map (homOfLE (hat_le V hWV)).op).hom)) m m'
 
 /-- The linear map to basic open sections obtained by restriction and local trivialization. -/
 noncomputable def gψ : Γ(M, U.1) →ₗ[Γ(X, U.1)] Γ(X, X.basicOpen f) where

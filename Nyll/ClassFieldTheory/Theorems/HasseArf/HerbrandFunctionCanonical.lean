@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
-import Nyll.ClassFieldTheory.HasseArf
-import Mathlib.NumberTheory.LocalField.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunction
+public import Nyll.ClassFieldTheory.HasseArf
+public import Mathlib.NumberTheory.LocalField.Basic
 
 /-!
 # Strict growth of the public Herbrand function
@@ -17,9 +19,13 @@ growth is consequently available without exposing that filtration in the
 public theorem statement.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace ClassFieldTheory
+
+universe u v
 
 open LocalFieldTheory
 open RamificationTheory.LocalField
@@ -29,7 +35,7 @@ open RamificationTheory.HilbertRamification.Higher
 Herbrand function built from the canonical lower groups is strictly
 increasing on the real line. -/
 theorem herbrandFunction_canonical_strictMono
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
@@ -46,6 +52,6 @@ theorem herbrandFunction_canonical_strictMono
     (herbrandFunctionOfUniqueExtension_strictMono
       (base := (localCompleteDVF K).toDVF)
       (target := (chosenLocalExtensionCompleteDVF K L).toDVF)
-      (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{0} K L)) hst
+      (chosenLocalExtensionCompleteDVF_hasUniqueDVFValuationExtension.{u, v, 0} K L)) hst
 
 end ClassFieldTheory

@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
 
 /-!
 Dimensions of Riemann--Roch spaces under translation by the divisor of a nonzero function.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

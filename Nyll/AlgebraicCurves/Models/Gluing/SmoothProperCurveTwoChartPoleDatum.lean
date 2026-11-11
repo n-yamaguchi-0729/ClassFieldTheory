@@ -10,14 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveTwoChart
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFreeFinrankQuotientSpan
-import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveTranscendentalApp
-import Nyll.AlgebraicCurves.Models.Gluing.OpensIsAffineOpenFiniteAevalTwoChartRight
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveTwoChart
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFreeFinrankQuotientSpan
+public import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveTranscendentalApp
+public import Nyll.AlgebraicCurves.Models.Gluing.OpensIsAffineOpenFiniteAevalTwoChartRight
 
 /-!
 # SmoothProperCurve exists twoChartPoleDatum of section invModule
@@ -25,6 +27,8 @@ import Nyll.AlgebraicCurves.Models.Gluing.OpensIsAffineOpenFiniteAevalTwoChartRi
 A section of an invertible module produces two-chart pole data and a chart frame compatible with
 the section.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

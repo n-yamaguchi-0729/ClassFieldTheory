@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
 
 /-!
 # Inclusion through arbitrary finite intermediate fields
@@ -12,6 +14,8 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Finit
 The direct-limit inclusion respects actual idele-class base change between
 finite intermediate fields. Both maps are compared in the same normal closure.
 -/
+
+@[expose] public section
 
 noncomputable section
 

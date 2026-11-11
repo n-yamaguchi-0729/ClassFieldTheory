@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.FunctionPeriod
-import Nyll.GaloisCohomology.FieldTheory.PeriodicHilbert90
-import Nyll.GaloisCohomology.Cyclic.MultiplicativeLangNorm
-import Mathlib.Tactic.Abel
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.FunctionPeriod
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicHilbert90
+public import Nyll.GaloisCohomology.Cyclic.MultiplicativeLangNorm
+public import Mathlib.Tactic.Abel
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusUnits
 
 /-!
 # Fixed geometric divisors representing Frobenius-invariant classes
@@ -16,6 +19,10 @@ Finite periods of the actual divisor and rational function give a cyclic norm
 obstruction in the constants. Multiplicative Lang removes that obstruction;
 Hilbert 90 in the actual periodic subfield then supplies the principal correction.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -28,9 +35,9 @@ attribute [local instance]
   SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
   SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupDivisor
 
-variable {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F : Type v} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    (M : CurveModel Ω F) {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    (M : CurveModel Ω F) {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [LocallyOfFiniteType c] [IsSeparated c]
     (e : M.C ≅ pullback c (specMap k Ω))
     (he : e.hom ≫ pullback.snd c (specMap k Ω) = M.toBase)

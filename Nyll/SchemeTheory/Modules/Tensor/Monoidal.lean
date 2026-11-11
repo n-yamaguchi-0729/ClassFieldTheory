@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Localization.Monoidal.Braided
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+module
+
+public import Mathlib.CategoryTheory.Localization.Monoidal.Braided
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
 
 /-!
 # Tensor products and internal Hom of module sheaves
@@ -22,6 +24,8 @@ Module sheafification transfers the tensor product and its unit from module pres
 module sheaves. The reflective adjunction supplies the monoidal closed structure. The file
 also defines the resulting tensor, dual, and sheafification operations for schemes.
 -/
+
+@[expose] public section
 
 universe u
 

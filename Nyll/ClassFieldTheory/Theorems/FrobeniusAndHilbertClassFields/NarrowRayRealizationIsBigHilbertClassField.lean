@@ -22,6 +22,8 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 open NumberField IsDedekindDomain
@@ -29,7 +31,7 @@ open NumberField IsDedekindDomain
 /-- Every realization of the narrow ray class group is a big Hilbert class
 field, including its maximality property. -/
 theorem narrowRayRealization_isBigHilbertClassField
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (R : RayClassFieldRealization K (narrowRayClassModulus K)) :
     IsBigHilbertClassField R.extension := by
   obtain ⟨E, hE⟩ := exists_bigHilbertClassField K

@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
-import Nyll.AlgebraicCurves.Places.Ramification.RamificationStabilizerOrder
-import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+public import Nyll.AlgebraicCurves.Places.Ramification.RamificationStabilizerOrder
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 /-!
 # The actual completed Galois group
@@ -18,6 +20,8 @@ of the completed extension. Its faithful completed action therefore exhausts
 the completed automorphism group. This proves that the completed extension is
 Galois and identifies its whole Galois group with the actual decomposition group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

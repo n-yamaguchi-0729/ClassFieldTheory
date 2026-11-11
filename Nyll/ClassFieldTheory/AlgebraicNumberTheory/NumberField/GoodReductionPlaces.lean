@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.DegreeOnePrimes
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.DegreeOnePrimes
 
 /-!
 # Finite-place avoidance for arithmetic models
@@ -12,6 +14,8 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.DegreeOnePrimes
 The existing degree-one-prime theorem avoids finite sets of places by
 excluding the absolute norms of their contractions to the rational integers.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

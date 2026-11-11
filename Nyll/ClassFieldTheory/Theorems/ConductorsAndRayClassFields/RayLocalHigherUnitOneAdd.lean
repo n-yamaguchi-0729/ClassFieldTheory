@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
-import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayLocalHigherUnitMembership
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.RingTheory.LocalRing.Basic
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.Tactic.Ring
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
+public import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayLocalHigherUnitMembership
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.RingTheory.LocalRing.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.Tactic.Ring
 
 /-!
 # Positive-depth higher units as `1 + 𝔪ᵛⁿ`
@@ -18,6 +20,8 @@ At positive depth, every element of `1 + 𝔪ᵛⁿ` is automatically a unit in
 the local integer ring. Consequently no integral-unit witness is needed in
 the membership criterion below.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

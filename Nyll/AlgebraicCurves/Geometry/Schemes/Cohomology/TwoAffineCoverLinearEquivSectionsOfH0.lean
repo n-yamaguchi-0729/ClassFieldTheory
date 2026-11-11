@@ -10,7 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Global sections and zeroth cohomology of two affine charts
@@ -18,6 +21,8 @@ import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
 Global sections of a module identify linearly with zeroth cohomology of the
 two-chart section complex, by restriction to the two opens.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

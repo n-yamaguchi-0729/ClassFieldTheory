@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 
 /-!
 # Characteristic-independent dominating standard extensions
@@ -16,6 +18,8 @@ by a compositum of a canonical unramified factor and a canonical standard
 Lubin--Tate factor.  Reverse inclusion of norm subgroups supplies the
 embedding.
 -/
+
+@[expose] public section
 
 noncomputable section
 

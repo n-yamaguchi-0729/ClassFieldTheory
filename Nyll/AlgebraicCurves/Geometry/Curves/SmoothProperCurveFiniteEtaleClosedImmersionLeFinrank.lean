@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.RingTheory.Etale.EtaleLocalResidueSeparation
-import Nyll.SchemeTheory.RingTheory.Polynomial.PolynomialIsUnitAevalSubMemMaximalIdealImpEq
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveClosedImmersionLevelSet
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.RingTheory.Etale.EtaleLocalResidueSeparation
+public import Nyll.SchemeTheory.RingTheory.Polynomial.PolynomialIsUnitAevalSubMemMaximalIdealImpEq
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveClosedImmersionLevelSet
 
 /-!
 # Smooth Proper Curve exists finite etale is Closed Immersion le finrank of finite Map Data
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

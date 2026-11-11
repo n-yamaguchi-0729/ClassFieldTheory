@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
-import Nyll.ClassFieldTheory.KroneckerWeber.Setup
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.CompositumUnramified
+module
+
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Ideal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
+public import Nyll.ClassFieldTheory.KroneckerWeber.Setup
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.CompositumUnramified
 
 /-!
 # Ramification support of the auxiliary compositum
@@ -25,6 +27,8 @@ to inertia automorphisms of both factors.  Since the factors generate the
 compositum, triviality of both restrictions implies triviality of the
 original inertia automorphism.
 -/
+
+@[expose] public section
 
 noncomputable section
 

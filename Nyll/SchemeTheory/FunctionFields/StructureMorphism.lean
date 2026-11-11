@@ -17,10 +17,14 @@ https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536
 Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Stalk
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Stalk
 
 /-! # Structural maps of function fields of integral schemes -/
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory AlgebraicGeometry TopologicalSpace

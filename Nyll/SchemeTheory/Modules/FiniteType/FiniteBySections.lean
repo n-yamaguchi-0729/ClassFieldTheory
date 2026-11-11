@@ -34,17 +34,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.SchemeTheory.Modules.Tensor.TensorFrames
-import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.SchemeTheory.Modules.Tensor.TensorFrames
+public import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
 
 /-!
 # Scheme Modules Finite By Sections of iso
 -/
+
+@[expose] public section
 
 section FiniteBySections_of_iso
 

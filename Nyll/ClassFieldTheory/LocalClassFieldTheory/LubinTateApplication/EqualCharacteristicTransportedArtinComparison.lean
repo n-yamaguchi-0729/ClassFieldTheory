@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction
-import Nyll.GaloisCohomology.GroupTheory.RestrictionKernel
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.TransportedNormSubgroupExact
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedUpperRestriction
+public import Nyll.GaloisCohomology.GroupTheory.RestrictionKernel
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.TransportedNormSubgroupExact
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
 
 /-!
 # Local Artin comparison on transported Lubin--Tate levels
@@ -19,7 +22,11 @@ Lubin--Tate level.  The transported upper-ramification calculation identifies
 the same kernel, giving integral filtered reciprocity over the target field.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped LaurentSeries ValuativeRel
 
@@ -34,7 +41,7 @@ open LocalFieldTheory.DiscreteValuationField
 open LocalFieldTheory.IsNonarchimedeanLocalField
 open LubinTate.EqualCharacteristic
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- In a tower of transported levels `m + 1 ≤ n + 1`, the target-field
@@ -48,13 +55,13 @@ theorem
     {m n : ℕ} (hmn : m ≤ n) :
     let F := equalCharacteristicTargetLocalField K
     let B := F.residueField⸨X⸩
-    letI : CharP K F.residueCharacteristic :=
+    let : CharP K F.residueCharacteristic :=
       equalCharacteristicTargetResidueCharacteristicCharP K p
     let E := equalCharacteristicLubinTateLevelField F m
     let L := equalCharacteristicLubinTateLevelField F n
-    letI : Algebra B E :=
+    let : Algebra B E :=
       equalCharacteristicLubinTateLevelAlgebra F m
-    letI : Algebra B L :=
+    let : Algebra B L :=
       equalCharacteristicLubinTateLevelAlgebra F n
     letI : CharP K p := hKp
     letI : Algebra K E :=
@@ -76,19 +83,10 @@ theorem
       equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
         K p ϖ hϖ n
     (LocalFieldTheory.fieldPrincipalUnits K (m + 1)).map
-        (abelianLocalArtinMonoidHom K L) =
+        (Universe.abelianLocalArtinMonoidHom K L) =
       (equalCharacteristicTransportedLubinTateRestrictNormalHom
         K p ϖ hϖ hmn).ker := by
-  let F := equalCharacteristicTargetLocalField K
-  let B := F.residueField⸨X⸩
-  let : CharP K F.residueCharacteristic :=
-    equalCharacteristicTargetResidueCharacteristicCharP K p
-  let E := equalCharacteristicLubinTateLevelField F m
-  let L := equalCharacteristicLubinTateLevelField F n
-  let : Algebra B E :=
-    equalCharacteristicLubinTateLevelAlgebra F m
-  let : Algebra B L :=
-    equalCharacteristicLubinTateLevelAlgebra F n
+  intro F B sharedOwner3 E L sharedOwner6 sharedOwner7
   let hEL : E ≤ L :=
     equalCharacteristicLubinTateLevelField_mono F hmn
   let : CharP K p := hKp
@@ -120,21 +118,21 @@ theorem
       intro x
       apply L.val.injective
       rfl)
-  let φ := abelianLocalArtinMonoidHom K L
+  let φ := Universe.abelianLocalArtinMonoidHom K L
   let ψ :=
     equalCharacteristicTransportedLubinTateRestrictNormalHom
       K p ϖ hϖ hmn
   have hrestrict :
-      ψ.comp φ = abelianLocalArtinMonoidHom K E := by
+      ψ.comp φ = Universe.abelianLocalArtinMonoidHom K E := by
     change
       (AlgEquiv.restrictNormalHom E).comp
-          (abelianLocalArtinMonoidHom K L) =
-        abelianLocalArtinMonoidHom K E
-    exact abelianLocalArtinMonoidHom_restrict_tower K E L
+          (Universe.abelianLocalArtinMonoidHom K L) =
+        Universe.abelianLocalArtinMonoidHom K E
+    exact Universe.abelianLocalArtinMonoidHom_restrict_tower K E L
   have hker :
       (ψ.comp φ).ker =
         Subgroup.zpowers ϖ ⊔ LocalFieldTheory.fieldPrincipalUnits K (m + 1) := by
-    rw [hrestrict, abelianLocalArtinMonoidHom_ker]
+    rw [hrestrict, Universe.abelianLocalArtinMonoidHom_ker]
     change
       equalCharacteristicTransportedLubinTateNormSubgroup
           K p ϖ hϖ m =
@@ -143,7 +141,7 @@ theorem
       equalCharacteristicTransportedLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup
         K p ϖ hϖ m
   have hZ : Subgroup.zpowers ϖ ≤ φ.ker := by
-    rw [abelianLocalArtinMonoidHom_ker]
+    rw [Universe.abelianLocalArtinMonoidHom_ker]
     change
       Subgroup.zpowers ϖ ≤
         equalCharacteristicTransportedLubinTateNormSubgroup
@@ -153,7 +151,7 @@ theorem
     simp [LocalFieldTheory.uniformizerPrincipalSubgroup]
   exact Subgroup.map_eq_ker_of_comp_ker_eq_sup_of_left_le_ker
     φ ψ (Subgroup.zpowers ϖ) (LocalFieldTheory.fieldPrincipalUnits K (m + 1))
-    (abelianLocalArtinMonoidHom_surjective K L) hker hZ
+    (Universe.abelianLocalArtinMonoidHom_surjective K L) hker hZ
 
 /-- Integral filtered local reciprocity for a transported
 equal-characteristic Lubin--Tate level. -/
@@ -181,7 +179,7 @@ theorem
       equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
         K p ϖ hϖ n
     (LocalFieldTheory.fieldPrincipalUnits K k).map
-        (abelianLocalArtinMonoidHom K L) =
+        (Universe.abelianLocalArtinMonoidHom K L) =
       localUpperRamificationGroup K L (k : ℝ) := by
   let m := k - 1
   have hmn : m ≤ n := by

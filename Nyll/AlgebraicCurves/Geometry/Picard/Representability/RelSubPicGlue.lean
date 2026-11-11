@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
-import Nyll.SchemeTheory.LocalGeometry.LocalRepresentabilityULift
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
+public import Nyll.SchemeTheory.CategoryTheory.OverTotalPresheaf
+public import Nyll.SchemeTheory.LocalGeometry.LocalRepresentabilityULift
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf
 /-!
 # Gluing relative sub-Picard representations
 
@@ -22,6 +24,8 @@ Representations of the sub-Picard presheaf determine relative Picard designation
 zero sections. A locally surjective family of representable open charts glues to a
 designation representing the presheaf through its total sheaf.
 -/
+
+@[expose] public section
 
 universe w v u
 

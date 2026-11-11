@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
-import Nyll.AlgebraicCurves.Places.Basic
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # RROpens exists finset subset ell sub sum single eq zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -52,14 +56,6 @@ private theorem degree_eq_sum_support (D : Divisor K F) :
 section WithPack
 
 variable {Kc : Divisor K F} {g : ℕ}
-
-private theorem ell_canonical_eq
-    (hRR : ∀ D : Divisor K F, (ell D : ℤ) - ell (Kc - D) = Divisor.degree D + 1 - g)
-    (hC : ConstantsAreBase K F) : ell Kc = g := by
-  have h := hRR 0
-  rw [sub_zero, ell_zero_eq_one_of_constantsAreBase hC, map_zero] at h
-  push_cast at h
-  omega
 
 private theorem degree_add_one_sub_le_ell
     (hRR : ∀ D : Divisor K F, (ell D : ℤ) - ell (Kc - D) = Divisor.degree D + 1 - g)
@@ -161,13 +157,6 @@ private theorem infinite_place_of_pole [IsCurveOver K F] [Infinite K] {x : F}
       (IsUnit.mk0 _ (sub_ne_zero.mpr hne)).map _
     exact (IsLocalRing.mem_maximalIdeal _).mp hdiff hunit
   exact Infinite.of_injective z hzinj
-
-private theorem infinite_place [IsAlgClosed K] [IsCurveOver K F] (P : Place K F) :
-    Infinite (Place K F) := by
-  obtain ⟨π, hπ⟩ := IsDiscreteValuationRing.exists_irreducible P.toValuationSubring
-  have hordx : P.ord ((π : F)⁻¹) < 0 := by
-    rw [P.ord_inv, P.ord_coe_irreducible hπ]; decide
-  exact infinite_place_of_pole P hordx
 
 section WithPack
 

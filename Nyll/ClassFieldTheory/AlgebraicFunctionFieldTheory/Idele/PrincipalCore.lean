@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Ker
-import Mathlib.Algebra.Group.Units.Hom
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.NumberTheory.FunctionField
-import Mathlib.Order.Filter.Cofinite
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.Algebra.Group.Units.Hom
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.NumberTheory.FunctionField
+public import Mathlib.Order.Filter.Cofinite
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
 
 /-!
 # Principal ideles and the function-field idele class group
@@ -23,6 +25,8 @@ recover the principal divisor and its degree zero. Injectivity uses an actual pl
 constructed from a separating parameter over the perfect constant field; the chosen
 rational-function-field presentation need not itself be separable.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,19 +4,22 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Data.Finsupp.Defs
-import Mathlib.Tactic.Choose
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
-import Mathlib.Topology.Constructions
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Topology
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Data.Finsupp.Defs
+public import Mathlib.Tactic.Choose
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Mathlib.Topology.Constructions
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Topology
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Ray congruence subgroups inside arbitrary open subgroups
@@ -30,6 +33,8 @@ then proves containment of the associated ray congruence subgroup.
 This avoids an extra proof of the principal-unit neighborhood theorem. The same
 construction applies to the inverse image of an open idele-class subgroup.
 -/
+
+@[expose] public section
 
 noncomputable section
 

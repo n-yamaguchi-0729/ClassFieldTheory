@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.AlgebraicGeometry.AlgClosed.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawEtaleEndKerStrEndAeval
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawEtaleSchemeNsmul
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawSmoothOfRelativeDimension
+module
+
+public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyOpen
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawEtaleEndKerStrEndAeval
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawEtaleSchemeNsmul
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawSmoothOfRelativeDimension
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 
 /-!
 # Lang maps on smooth proper connected commutative groups
@@ -22,6 +25,8 @@ This supplies the geometric step of Lang's argument. The hypothesis is an explic
 condition on the stalk maps of the actual scheme morphism; identifying it for a
 Frobenius morphism and identifying geometric points with a Picard group are separate steps.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantBaseChangeTower
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantSemilinear
-import Nyll.GaloisCohomology.Cyclic.GeneratorSum
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantBaseChangeTower
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantSemilinear
+public import Nyll.GaloisCohomology.Cyclic.GeneratorSum
 
 /-!
 # Actual norms after geometric base change
@@ -15,6 +17,8 @@ import Nyll.GaloisCohomology.Cyclic.GeneratorSum
 Compose actual Picard pullbacks in a tower and express the pullback of a norm
 as a cyclic Frobenius sum whenever an actual Galois generator extends geometrically.
 -/
+
+@[expose] public section
 
 noncomputable section
 

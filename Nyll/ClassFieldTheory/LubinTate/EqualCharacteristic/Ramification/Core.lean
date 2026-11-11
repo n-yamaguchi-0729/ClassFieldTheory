@@ -4,11 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.LowerGroups
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.GaloisAction
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.DisplacementValuation
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.LowerGroups
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.GaloisAction
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.DisplacementValuation
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.RamificationQuotients
+public import Nyll.ValuedFieldTheory.Ramification.Herbrand.Function
 
 /-!
 # Herbrand function and upper ramification groups of Lubin--Tate levels
@@ -19,6 +23,8 @@ equal-characteristic Lubin--Tate level.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -38,7 +44,7 @@ variable {K : Type u} [Field K]
 
 section ChosenRamificationTarget
 
-variable {K₀ : Type} [Field K₀]
+variable {K₀ : Type u} [Field K₀]
 
 attribute [local instance]
   equalCharacteristicLubinTateLevelField_finiteDimensional_forLowerGroups
@@ -46,7 +52,7 @@ attribute [local instance]
 
 private theorem
     equalCharacteristicLubinTateUnitParameterToGal_mem_lowerRamificationGroup_zero
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (a : equalCharacteristicLubinTateUnitParameter F n) :
     equalCharacteristicLubinTateUnitParameterToGal F n a ∈
@@ -71,7 +77,7 @@ private theorem
 
 private noncomputable def
     equalCharacteristicLubinTateUnitParameterEquivLowerRamificationGroupZero
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     equalCharacteristicLubinTateUnitParameter F n ≃
@@ -91,7 +97,7 @@ private noncomputable def
         sigma.1
 
 private theorem equalCharacteristicLubinTateRealLowerRamificationGroup_zero_natCard
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     Nat.card (equalCharacteristicLubinTateRealLowerRamificationGroup F n 0) =
@@ -108,7 +114,7 @@ private theorem equalCharacteristicLubinTateRealLowerRamificationGroup_zero_natC
 
 private noncomputable def
     equalCharacteristicLubinTateLowerRamificationFiltration
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration
@@ -121,7 +127,7 @@ private noncomputable def
       F n)
 
 private theorem equalCharacteristicLubinTateHerbrandSlope_eq_of_pow_interval
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k i : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1)
     (hlow : Nat.card F.residueField ^ (k - 1) ≤ i + 1)
@@ -157,7 +163,7 @@ private theorem equalCharacteristicLubinTateHerbrandSlope_eq_of_pow_interval
 open _root_.RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration
   (herbrandSlope herbrandValueNat_zero) in
 private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hkn : k ≤ n + 1) :
     RamificationTheory.DiscreteValuationField.AntitoneNormalSubgroupFiltration.herbrandValueNat
@@ -221,7 +227,7 @@ private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
       have hproduct :
           b * q ^ (n + 1 - (k + 1)) = (q - 1) * q ^ n := by
         rw [hb, hexponent, hpowSplit]
-        simp [Nat.mul_assoc]
+        exact Nat.mul_assoc _ _ _
       have hdenpos : 0 < (q - 1) * q ^ n :=
         Nat.mul_pos (Nat.sub_pos_of_lt hqone) (Nat.pow_pos hqpos)
       have htail :
@@ -260,7 +266,7 @@ private theorem equalCharacteristicLubinTateHerbrandValueNat_pow_sub_one
 /-- The Herbrand function of the chosen equal-characteristic Lubin--Tate
 level and its chosen complete discrete valuation. -/
 noncomputable def equalCharacteristicLubinTateHerbrandFunction
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (s : ℝ) : ℝ :=
   herbrandFunctionOfUniqueExtension
@@ -273,7 +279,7 @@ noncomputable def equalCharacteristicLubinTateHerbrandFunction
 /-- The lower endpoints `q^k - 1` map to the integral upper endpoints `k`.
 This also includes the harmless endpoint `k = 0`. -/
 theorem equalCharacteristicLubinTateHerbrandFunction_pow_sub_one
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hkn : k ≤ n + 1) :
     equalCharacteristicLubinTateHerbrandFunction F n
@@ -293,7 +299,7 @@ theorem equalCharacteristicLubinTateHerbrandFunction_pow_sub_one
 /-- The actual real upper ramification group of the chosen
 equal-characteristic Lubin--Tate level valuation. -/
 noncomputable def equalCharacteristicLubinTateRealUpperRamificationGroup
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (s : ℝ) :
     Subgroup Gal((equalCharacteristicLubinTateLevelField F n) /
@@ -309,7 +315,7 @@ noncomputable def equalCharacteristicLubinTateRealUpperRamificationGroup
 actual lower group at `q^k - 1`. -/
 theorem
     equalCharacteristicLubinTateRealUpperRamificationGroup_nat_eq_lower_pow_sub_one
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hkn : k ≤ n + 1) :
     equalCharacteristicLubinTateRealUpperRamificationGroup F n (k : ℝ) =
@@ -343,7 +349,7 @@ theorem
 /-- For `1 ≤ k ≤ n + 1`, the integral upper group has order
 `q^(n + 1 - k)`. -/
 theorem equalCharacteristicLubinTateRealUpperRamificationGroup_natCard
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1) :
     Nat.card
@@ -360,7 +366,7 @@ theorem equalCharacteristicLubinTateRealUpperRamificationGroup_natCard
 vanishing of the first `k` visible coefficients. -/
 theorem
     mem_equalCharacteristicLubinTateRealUpperRamificationGroup_nat_iff_coeff_zero
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hkn : k ≤ n + 1)
     (a : equalCharacteristicLubinTateUnitParameter F n) :

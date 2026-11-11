@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.OrderOfElement
+module
+
+public import Mathlib.GroupTheory.OrderOfElement
 
 /-!
 # Rigidity from a cyclic quotient and subgroup data
@@ -14,6 +16,8 @@ subgroups together with its action on a sufficiently large cyclic quotient.
 The group-theoretic statement below isolates the part of uniqueness of a
 coherent local Artin family that does not involve fields or valuations.
 -/
+
+@[expose] public section
 
 namespace LocalClassFieldTheory
 

@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneConstantExtension
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
-import Nyll.AlgebraicCurves.Places.ConstantExtension.ForgetConstantsRestrictEq
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
-import Nyll.AlgebraicCurves.Places.Residue.ResidueFieldEqCompositum
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.RamificationIndexForgetConstantsEqOneConstantExtension
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDeg
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.ForgetConstantsRestrictEq
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveSeparatingTranscendental
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
+public import Nyll.AlgebraicCurves.Places.Residue.ResidueFieldEqCompositum
 
 /-!
 # Place sum deg fiber Constants eq deg of is Curve Over
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

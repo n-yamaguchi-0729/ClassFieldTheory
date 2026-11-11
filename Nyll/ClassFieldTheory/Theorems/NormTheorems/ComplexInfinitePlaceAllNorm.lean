@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 
 /-!
 # Norms at a complex infinite place

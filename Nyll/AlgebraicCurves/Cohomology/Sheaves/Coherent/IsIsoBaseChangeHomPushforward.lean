@@ -10,27 +10,31 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.RelativeSectionTwist
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeIsomorphism
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.IsoBaseChangeHomTwoAffineCover
-import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.RelativeSectionTwist
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeIsomorphism
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.IsoBaseChangeHomTwoAffineCover
+public import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1SectionsOf
 
 /-!
 # Is Iso base Change Hom pushforward of forall fibre
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -63,9 +67,9 @@ theorem isPullback_baseChangeSnd {C T T' : Scheme.{u}} (c : C ⟶ Spec (CommRing
 
 theorem fromSpec_comp_eq_specMap {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) (W : T.Opens)
     (hW : IsAffineOpen W) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom t W
+    let := Scheme.TwoAffineOpenCover.algebraOfHom t W
     hW.fromSpec ≫ t = Scheme.TwoAffineOpenCover.specMap R Γ(T, W) := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom t W
+  intro sharedOwner1
   have h := IsAffineOpen.SpecMap_appLE_fromSpec t (isAffineOpen_top _) hW (le_top (a := W))
   rw [IsAffineOpen.fromSpec_top, Scheme.isoSpec_Spec_inv, ← Spec.map_comp] at h
   change _ = Spec.map (CommRingCat.ofHom ((Scheme.ΓSpecIso (.of R)).inv ≫ t.appLE ⊤ W le_top).hom)

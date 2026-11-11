@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
-import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
+module
+
+public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
 
 /-!
 # Divisibility of simple Kummer extensions
@@ -15,14 +17,18 @@ the `(n/m)`-th power of an `n`-th root by a base-field root of unity. Thus
 the chosen simple extensions form an actual tower in the separable closure.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace LocalClassFieldTheory.Kummer
 
+universe u
+
 /-- A simple `m`-Kummer extension is contained in the corresponding
 `n`-Kummer extension when `m ∣ n`. -/
 theorem chosenSimpleKummerExtension_le_of_dvd
-    (K : Type) [Field K]
+    (K : Type u) [Field K]
     (m n : ℕ+) (hmK : ((m : ℕ) : K) ≠ 0)
     (hnK : ((n : ℕ) : K) ≠ 0)
     (hmuM : (primitiveRoots (m : ℕ) K).Nonempty)

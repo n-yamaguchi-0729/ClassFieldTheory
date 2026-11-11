@@ -9,6 +9,10 @@ import Nyll.ClassFieldTheory.Definitions.FunctionField.RayClass
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.HilbertClassField
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.Classification
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+import Nyll.AlgebraicCurves.Places.Basic
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SplitRayQuotient
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
 
 /-!
 # Hilbert norm groups, complete splitting and maximality
@@ -20,11 +24,13 @@ set have residue degree one. These properties characterize its subfields.
 
 noncomputable section
 
+universe u v
+
 open scoped AlgebraicCurve.Place
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
 
 /-- The actual Hilbert norm subgroup is the zero-ray subgroup enlarged

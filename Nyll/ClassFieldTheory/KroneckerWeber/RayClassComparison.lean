@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
-import Mathlib.NumberTheory.Cyclotomic.Gal
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
+public import Mathlib.NumberTheory.Cyclotomic.Gal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # The rational ray-class/cyclotomic comparison
@@ -17,6 +20,8 @@ file composes the two independently constructed equivalences and verifies
 the degree/index equality showing that the ray class
 field is `ℚ(μ_m)`.
 -/
+
+@[expose] public section
 
 open scoped NumberField Cyclotomic
 

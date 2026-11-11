@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.Core
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
 
 /-!
 # Real-index steps for equal-characteristic Lubin--Tate levels
@@ -18,6 +20,8 @@ the real upper filtration is constant on the natural-ceiling steps.
 
 
 
+@[expose] public section
+
 noncomputable section
 
 open scoped LaurentSeries
@@ -28,15 +32,15 @@ open LubinTate.EqualCharacteristic
 open LocalFieldTheory.DiscreteValuationField
 open RamificationTheory.HilbertRamification.Higher
 
-universe v
+universe u v
 
-variable {K₀ : Type} [Field K₀]
+variable {K₀ : Type u} [Field K₀]
 
 /-- Finite-dimensionality for explicit levels while forming the real-index
 Herbrand functions in this module. -/
 noncomputable local instance
     equalCharacteristicLubinTateLevelField_finiteDimensional_forRealIndexSteps
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     FiniteDimensional F.residueField⸨X⸩
@@ -47,7 +51,7 @@ noncomputable local instance
 functions in this module. -/
 noncomputable local instance
     equalCharacteristicLubinTateLevelField_isGalois_forRealIndexSteps
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsGalois F.residueField⸨X⸩
@@ -58,7 +62,7 @@ noncomputable local instance
 Lubin--Tate lower group is the group at the natural-number ceiling. -/
 theorem
     equalCharacteristicLubinTateRealLowerRamificationGroup_eq_natCeil
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (s : ℝ) (hs : 0 ≤ s) :
     equalCharacteristicLubinTateRealLowerRamificationGroup F n s =
@@ -93,7 +97,7 @@ theorem
 /-- The inverse Herbrand function attached to the chosen complete-DVF
 structure on an equal-characteristic Lubin--Tate level. -/
 noncomputable def equalCharacteristicLubinTateInverseHerbrandFunction
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (t : ℝ) : ℝ :=
   inverseHerbrandFunctionOfUniqueExtension
@@ -107,7 +111,7 @@ noncomputable def equalCharacteristicLubinTateInverseHerbrandFunction
 inverse Herbrand function returns the lower endpoint `q^k - 1`. -/
 theorem
     equalCharacteristicLubinTateInverseHerbrandFunction_nat_eq_pow_sub_one
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hkn : k ≤ n + 1) :
     equalCharacteristicLubinTateInverseHerbrandFunction F n (k : ℝ) =
@@ -129,7 +133,7 @@ theorem
 at the right endpoint `q^k - 1`. -/
 theorem
     equalCharacteristicLubinTateRealLowerRamificationGroup_nat_eq_pow_sub_one_of_pow_interval
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k r : ℕ) (hk : 1 ≤ k)
     (hlow : Nat.card F.residueField ^ (k - 1) ≤ r)
@@ -157,7 +161,7 @@ theorem
 filtration is the natural-ceiling step extension of its integral values. -/
 theorem
     equalCharacteristicLubinTateRealUpperRamificationGroup_eq_natCeil
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (t : ℝ)
     (hk : 1 ≤ ⌈t⌉₊) (hkn : ⌈t⌉₊ ≤ n + 1) :

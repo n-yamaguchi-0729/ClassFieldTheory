@@ -10,20 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.IEqZeroSchemeIdealNeZero
-import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIsoInvModuleZeroSchemeIdeal
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.EulerCharacteristic.RelativeDivisorEulerCharTensorLineBundleEq
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.IEqZeroSchemeIdealNeZero
+public import Nyll.AlgebraicCurves.RelativeDivisors.LineBundles.InvertibleI
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIsoInvModuleZeroSchemeIdeal
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.EulerCharacteristic.RelativeDivisorEulerCharTensorLineBundleEq
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Recover an effective relative Cartier divisor and its defining section from the Euler
 characteristic of an invertible sheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
 
 /-!
 # Injectivity of the affine-cover augmentation
@@ -20,6 +22,8 @@ import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
 The augmentation from sections on an open into the degree-zero Cech cochains of its
 ordered affine cover is injective.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

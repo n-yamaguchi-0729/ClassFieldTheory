@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTowerOrder
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTowerOrder
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Exhaustion of the actual maximal constant extension
@@ -14,6 +17,8 @@ Every algebraic constant belongs to the constructed finite field of its degree.
 Consequently the actual maximal constant extension is the supremum of the finite
 constant stages, and the kernel of arithmetic degree fixes all those stages.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,11 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.LowerRamificationGroup
 
 /-!
 # Lower ramification jumps
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

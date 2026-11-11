@@ -13,9 +13,11 @@ import Nyll.ClassFieldTheory.Theorems.HasseArf.UpperRamificationGroupAntitone
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- The right-limit upper group lies in the group at the limiting index. -/
 theorem upperRamificationGroupAfter_le
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]

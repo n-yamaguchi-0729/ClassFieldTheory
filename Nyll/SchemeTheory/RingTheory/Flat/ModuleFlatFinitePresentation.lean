@@ -10,15 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Algebra.Equiv
-import Mathlib.RingTheory.TensorProduct.Quotient
-import Mathlib.RingTheory.Extension.Presentation.Basic
-import Mathlib.RingTheory.Extension.Presentation.Core
-import Mathlib.RingTheory.Ideal.Quotient.Noetherian
-import Mathlib.RingTheory.RingHom.Flat
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
-import Nyll.SchemeTheory.RingTheory.Flat.FibralCriterion
-import Nyll.SchemeTheory.RingTheory.Flat.FiniteSubalgebraLocalization
+module
+
+public import Mathlib.Algebra.Algebra.Equiv
+public import Mathlib.RingTheory.TensorProduct.Quotient
+public import Mathlib.RingTheory.Extension.Presentation.Basic
+public import Mathlib.RingTheory.Extension.Presentation.Core
+public import Mathlib.RingTheory.Ideal.Quotient.Noetherian
+public import Mathlib.RingTheory.RingHom.Flat
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+public import Nyll.SchemeTheory.RingTheory.Flat.FibralCriterion
+public import Nyll.SchemeTheory.RingTheory.Flat.FiniteSubalgebraLocalization
 
 /-!
 # Algebra, divisors, and base change
@@ -26,6 +28,8 @@ import Nyll.SchemeTheory.RingTheory.Flat.FiniteSubalgebraLocalization
 Fibre localization comparisons reduce finite-presentation flatness to flatness of residue-field
 tensor fibres.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

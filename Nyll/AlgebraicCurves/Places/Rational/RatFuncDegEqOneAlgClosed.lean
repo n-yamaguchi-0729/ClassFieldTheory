@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Rational.Classification
-import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
+module
+
+public import Nyll.AlgebraicCurves.Places.Rational.Classification
+public import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
 
 /-!
 # Degree one over an algebraically closed constant field
 -/
+
+@[expose] public section
 
 open Polynomial AlgebraicCurve AlgebraicCurve.RationalFunctionField
 

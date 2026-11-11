@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Rational.Classification
+module
+
+public import Nyll.AlgebraicCurves.Places.Rational.Classification
 
 /-!
 # RationalFunctionField exists forall ne ofHeightOneSpectrum
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Places.Rational.Classification
 A rational function field has a place outside the places arising from polynomial height-one
 primes.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurve.RationalFunctionField
 

@@ -10,9 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-! Local frames for scheme modules and their restrictions. -/
+
+@[expose] public section
 
 universe u
 

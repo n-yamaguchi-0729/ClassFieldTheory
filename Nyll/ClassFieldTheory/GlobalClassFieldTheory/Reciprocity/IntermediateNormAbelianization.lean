@@ -19,11 +19,13 @@ image.  No normality of the intermediate extension over the base is assumed.
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
 variable
-    {K N : Type}
+    {K : Type u} {N : Type v}
     [Field K] [NumberField K]
     [Field N] [NumberField N]
     [Algebra K N] [IsGalois K N]

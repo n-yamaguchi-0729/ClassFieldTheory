@@ -10,13 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Places.Basic
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
-import Mathlib.RingTheory.RamificationInertia.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.Algebra.Polynomial.Lifts
-import Nyll.SchemeTheory.FunctionFields.Valuations.PurelyInseparable
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+public import Mathlib.RingTheory.RamificationInertia.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Nyll.SchemeTheory.FunctionFields.Valuations.PurelyInseparable
 
 /-!
 # OverDVR
@@ -24,6 +26,8 @@ import Nyll.SchemeTheory.FunctionFields.Valuations.PurelyInseparable
 Places above a discrete valuation ring correspond to height-one primes of its integral closure,
 with finite fibres over a base place.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -91,7 +95,8 @@ variable {K F : Type*} [Field K] [Field F] [Algebra K F]
 variable {R : Type*} [CommRing R] [IsDedekindDomain R] [Algebra R F] [IsFractionRing R F]
 variable (w : Place K F)
 
-private def chartHom (hw : ∀ r : R, algebraMap R F r ∈ w.toValuationSubring) :
+/-- Restrict the chart coefficient map to the valuation subring. -/
+def chartHom (hw : ∀ r : R, algebraMap R F r ∈ w.toValuationSubring) :
     R →+* w.toValuationSubring :=
   (algebraMap R F).codRestrict w.toValuationSubring.toSubring hw
 

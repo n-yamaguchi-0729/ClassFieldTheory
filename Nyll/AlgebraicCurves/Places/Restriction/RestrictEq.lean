@@ -11,15 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.ValuedFieldTheory.Valuation.Subring.Discrete.DVRAlgebraMapMemFinite
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.ChevalleyExtension
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.ValuedFieldTheory.Valuation.Subring.Discrete.DVRAlgebraMapMemFinite
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.ChevalleyExtension
 
 /-!
 # Place exists restrict eq
 
 Places extend through algebraic field extensions with the prescribed restriction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

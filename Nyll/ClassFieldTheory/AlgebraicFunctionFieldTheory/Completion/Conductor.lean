@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseConductor
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
 
 /-!
 # Local conductor and actual ramification at a function-field place
@@ -17,6 +20,10 @@ place has ramification index one. The canonical completion preserves the
 ramification index, so no local-global Artin comparison is needed here.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open scoped AlgebraicCurve.Place ValuativeRel
@@ -25,7 +32,7 @@ namespace FunctionField
 
 open AlgebraicCurve
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -59,7 +66,7 @@ theorem localConductorExponent_eq_zero_iff_ramificationIndex_eq_one (w : Place k
   have hfinite : Module.Finite 𝒪[(w.restrict K).adicCompletion] 𝒪[w.adicCompletion] :=
     Module.IsNoetherian.finite _ _
   have hunramified :=
-    LocalClassFieldTheory.isUnramifiedValuedExtension_iff_localConductorExponent_eq_zero
+    LocalClassFieldTheory.Universe.isUnramifiedValuedExtension_iff_localConductorExponent_eq_zero
       (w.restrict K).adicCompletion w.adicCompletion
   constructor
   · intro hzero

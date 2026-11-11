@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.Tactic.CategoryTheory.Reassoc
-import Mathlib.Tactic.Ring.RingNF
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.Tactic.CategoryTheory.Reassoc
+public import Mathlib.Tactic.Ring.RingNF
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
 
 /-!
 # Scheme Modules exists proj Presentation of i Sup eq top
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -697,7 +701,6 @@ theorem appLE_awayToSection_of_fac {A τ : Type u} [CommRing A] [SetLike τ A] [
         (Proj.basicOpenIsoSpec 𝒜 g g_deg hm).hom := by
       rw [Proj.basicOpenIsoSpec_hom]; rfl
     rw [Spec.map_comp, reassoc_of% h2]
-    try simp only [Category.assoc]
     rw [e, Iso.inv_hom_id, Category.comp_id]
   have : IsIso V.toSpecΓ := by rw [← hV.isoSpec_hom]; infer_instance
   rw [cancel_epi] at h3

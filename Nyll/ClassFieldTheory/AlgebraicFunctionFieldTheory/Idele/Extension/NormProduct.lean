@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Approximation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
-import Mathlib.Topology.Algebra.Valued.NormedValued
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Approximation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
+public import Mathlib.Topology.Algebra.Valued.NormedValued
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
 
 /-!
 # The Galois product formula on all-place ideles
@@ -20,6 +23,8 @@ Galois conjugates. Continuity therefore gives the identity for arbitrary complet
 components. Applying it at every place proves the all-place idele formula and its
 descent to idele classes.
 -/
+
+@[expose] public section
 
 noncomputable section
 

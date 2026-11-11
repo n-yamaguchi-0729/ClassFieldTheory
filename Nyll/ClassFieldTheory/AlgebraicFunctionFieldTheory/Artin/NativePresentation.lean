@@ -4,13 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.GaloisPresentationValue
-import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationIndependence
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
+module
+
+public import Nyll.ClassFieldTheory.Algebra.GaloisPresentationValue
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationIndependence
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityCanonical
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.Algebra.NormalEmbeddingRange
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
+public import Nyll.GaloisCohomology.Cyclic.NormKernelVanishing
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
 
 /-!
 # Native reciprocity under an actual separable-closure presentation
@@ -19,6 +26,10 @@ An actual isomorphism with a finite fixed field determines its closed fixing
 subgroup. Normality identifies that subgroup with the canonical realization,
 so native reciprocity can be evaluated using the given fixed-field presentation.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -29,7 +40,7 @@ open ClassFormation LocalClassFieldTheory CyclicCohomology
 /-- The fixed-field presentation and the given embedding induce the same
 finite Galois quotient action. -/
 theorem presentedGaloisQuotientOfEmbedding
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type v) (L : Type w) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (i : L →ₐ[K] SeparableClosure K) :
     let Ω := SeparableClosure K
@@ -66,7 +77,7 @@ theorem presentedGaloisQuotientOfEmbedding
 
 
 private theorem finiteGaloisAbstractExtension_eq_of_fixedFieldEquiv
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type v) (L : Type w) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (T : FiniteGaloisSubextension (intrinsicFiniteAbstractBase K).field)
     (eE : L ≃ₐ[K] abstractFixedField K (SeparableClosure K) T.field) :
@@ -99,7 +110,7 @@ private theorem finiteGaloisAbstractExtension_eq_of_fixedFieldEquiv
     rfl
   exact hext T (finiteGaloisAbstractExtension K L) ht
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]
@@ -154,7 +165,7 @@ theorem finiteArtin_eq_fixedFieldPresentation
 
 /-- On an actual intrinsic fixed field, presentation transport is just scalar restriction. -/
 theorem finiteArtin_eq_intrinsicFixedField_restrict
-    (k K : Type) [Field k] [Finite k] [Field K]
+    (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [AlgebraicCurve.HasPrincipalDivisors k K] :
     let _ : CommSemiring (SeparableClosure K) :=

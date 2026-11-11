@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Mathlib.Tactic.Abel
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Mathlib.Tactic.Abel
 
 /-!
 # Invariant divisor classes from Picard Lang surjectivity
@@ -14,6 +16,8 @@ A surjective Lang operator on the actual degree-zero Picard group adjusts any
 divisor by a degree-zero divisor so that its class is fixed. The resulting
 invariance is expressed by an actual principal divisor.
 -/
+
+@[expose] public section
 
 noncomputable section
 

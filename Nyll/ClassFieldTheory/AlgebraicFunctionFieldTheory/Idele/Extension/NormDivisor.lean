@@ -4,19 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.GroupWithZero.WithZero
-import Mathlib.RingTheory.Norm.Defs
-import Mathlib.Tactic.Ring
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.FiniteIntegerModule
+module
+
+public import Mathlib.Algebra.GroupWithZero.WithZero
+public import Mathlib.RingTheory.Norm.Defs
+public import Mathlib.Tactic.Ring
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.FiniteIntegerModule
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Divisors and degrees of all-place idele norms
@@ -26,6 +30,8 @@ ramification of the completion map, and the proved completed degree formula `ef`
 It identifies the divisor of an idele norm with divisor pushforward and therefore
 preserves degree relative to the same constant field.
 -/
+
+@[expose] public section
 
 open scoped AlgebraicCurve.Place WithZero
 

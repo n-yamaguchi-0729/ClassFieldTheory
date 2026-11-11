@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFamily
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFamily
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
 /-!
 # Finite-place factors of a global Hilbert pairing family
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

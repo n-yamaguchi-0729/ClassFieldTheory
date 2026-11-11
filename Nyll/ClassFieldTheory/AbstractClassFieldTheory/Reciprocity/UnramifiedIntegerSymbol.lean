@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.MaximalUnramifiedReciprocity
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.MaximalUnramifiedReciprocity
 
 /-!
 # Integer valuations and finite unramified Frobenius powers
@@ -13,15 +15,19 @@ At an integral valuation value, abstract unramified reciprocity is the
 corresponding integer power of arithmetic Frobenius.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace ClassFormation
 
 open CyclicCohomology KummerTheory
 
-variable {G : IntegralRepGroupType} [Group G] [TopologicalSpace G]
+variable {G : Type u} [Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
-    (D : DegreeData G) (A : Rep ℤ G) (v : ValuationData D A)
+    (D : DegreeData G) (A : Rep.{v} ℤ G) (v : ValuationData D A)
     (hcf : SatisfiesClassFieldAxiom A)
 
 /-- The finite unramified norm-residue symbol at integer valuation `z` is Frobenius to `z`. -/

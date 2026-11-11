@@ -11,15 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySectionsFinite
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.FiniteBySectionsFinite
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySectionsFinite
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.FiniteBySectionsFinite
 
 /-!
 # Scheme Modules Finite By Sections of finite By Sections unit
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

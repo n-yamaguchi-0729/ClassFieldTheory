@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.ValuationTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ProductFormula
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+module
+
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.ValuationTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ProductFormula
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 
 /-!
 # Discreteness and closedness of principal ideles
@@ -22,6 +25,8 @@ open neighbourhood isolating the identity in the principal subgroup.
 
 The argument works over every perfect constant field and includes all places.
 -/
+
+@[expose] public section
 
 open scoped WithZero
 

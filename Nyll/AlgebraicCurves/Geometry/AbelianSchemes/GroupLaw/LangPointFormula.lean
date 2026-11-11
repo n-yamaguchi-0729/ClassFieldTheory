@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangMap
+module
+
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangMap
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 
 /-!
 # The Lang map on actual points
@@ -12,6 +15,8 @@ import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangMap
 Polynomial evaluation at `X - 1` is the pointwise quotient of the image by the
 original point. These formulas connect the geometric Lang map to coboundaries.
 -/
+
+@[expose] public section
 
 noncomputable section
 

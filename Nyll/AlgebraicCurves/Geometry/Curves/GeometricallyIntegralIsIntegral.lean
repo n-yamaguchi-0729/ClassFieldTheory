@@ -11,7 +11,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
 
 /-!
 # Integrality over an integral base
@@ -19,6 +21,8 @@ import Mathlib.AlgebraicGeometry.Geometrically.Integral
 A flat, universally open, geometrically integral morphism has an integral total scheme
 when its base is integral.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalRange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalRange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
 
 /-!
 # Actual idele norms and local norms
@@ -15,6 +17,8 @@ places and nonintegral components, unramified integral norm surjectivity gives
 integral solutions. Conjugacy supplies the converse at every upper place.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 open AlgebraicCurve
@@ -22,7 +26,7 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField.IdeleGroup
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]

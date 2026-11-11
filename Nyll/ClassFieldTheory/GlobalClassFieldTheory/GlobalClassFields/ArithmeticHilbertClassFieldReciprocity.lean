@@ -4,12 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.Transport
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.BigActual
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallActual
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.BigOriginal
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallOriginal
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.Transport
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.BigActual
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallActual
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.BigOriginal
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldReciprocity.SmallOriginal
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
 
 /-!
 # Arithmetic reciprocity for the actual Hilbert class fields
@@ -25,6 +30,10 @@ factor remains a `ContinuousMulEquiv`.
 
 
 
+@[expose] public section
+
+universe u
+
 open scoped NumberField
 
 noncomputable section
@@ -35,13 +44,13 @@ namespace GlobalClassFields
 open NumberField
 open Reciprocity
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 /-- Fix the commutative idèle-class instance path shared by the norm quotient
 and its transported literal quotient throughout this module. -/
 local instance
     arithmeticHilbertClassFieldIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
@@ -49,7 +58,7 @@ local instance
 quotients sends a norm-residue symbol to its represented quotient class. -/
 private theorem
     arithmeticReciprocity_quotientTransport_globalNormResidue
-    {F E : Type} [Field F] [NumberField F]
+    {F : Type*} {E : Type*} [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E]
     [FiniteDimensional F E] [IsAbelianGalois F E]
     (H : Subgroup (IdeleClassGroup F))
@@ -85,9 +94,9 @@ private theorem
 
 /-- Postcomposing transported arithmetic reciprocity with any quotient
 equivalence preserves the represented quotient class formula. -/
-private theorem
+theorem
     arithmeticReciprocity_quotientTransport_trans_globalNormResidue
-    {F E A : Type} [Field F] [NumberField F]
+    {F : Type*} {E : Type*} {A : Type*} [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E]
     [FiniteDimensional F E] [IsAbelianGalois F E]
     [Group A]
@@ -112,8 +121,9 @@ private theorem
         (arithmeticReciprocity_quotientTransport_globalNormResidue
           H h c)
 
-private noncomputable def arithmeticBigHilbertClassFieldReciprocityData
-    (K : Type) [Field K] [NumberField K] :
+/-- Arithmetic big-Hilbert reciprocity with its represented-class evaluation law. -/
+noncomputable def arithmeticBigHilbertClassFieldReciprocityData
+    (K : Type u) [Field K] [NumberField K] :
     { e : Gal((bigHilbertClassField K) / K) ≃*
         RayClass.NarrowClassGroup K //
       ∀ c : IdeleClassGroup K,
@@ -137,8 +147,9 @@ private noncomputable def arithmeticBigHilbertClassFieldReciprocityData
       (bigHilbertClassFieldQuotientEquivNarrowClassGroup
         (K := K))⟩
 
-private noncomputable def arithmeticSmallHilbertClassFieldReciprocityData
-    (K : Type) [Field K] [NumberField K] :
+/-- Arithmetic small-Hilbert reciprocity with its represented-class evaluation law. -/
+noncomputable def arithmeticSmallHilbertClassFieldReciprocityData
+    (K : Type u) [Field K] [NumberField K] :
     { e : Gal((smallHilbertClassField K) / K) ≃*
         ClassGroup (𝓞 K) //
       ∀ c : IdeleClassGroup K,

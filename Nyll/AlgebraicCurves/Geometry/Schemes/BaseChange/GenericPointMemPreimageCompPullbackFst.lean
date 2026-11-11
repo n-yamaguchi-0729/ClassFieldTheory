@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Properties
-import Mathlib.AlgebraicGeometry.PullbackCarrier
-import Mathlib.Topology.Sober
-import Mathlib.RingTheory.Ideal.Prime
-import Mathlib.RingTheory.Ideal.Maps
+module
+
+public import Mathlib.AlgebraicGeometry.Properties
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Mathlib.Topology.Sober
+public import Mathlib.RingTheory.Ideal.Prime
+public import Mathlib.RingTheory.Ideal.Maps
 
 /-!
 # generic Point mem preimage comp pullback fst of injective algebra Map
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

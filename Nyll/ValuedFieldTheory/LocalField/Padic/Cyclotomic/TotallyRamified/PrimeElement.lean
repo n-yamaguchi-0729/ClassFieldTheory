@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.IntegralClosure
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.IntegralClosure
 
 /-!
 # A prime element for the totally ramified cyclotomic extension
 
 This file proves directly from its norm that `1 - ζ` is prime in the explicit DVR `ℤ_[p][ζ]`.
 -/
+
+@[expose] public section
 
 noncomputable section
 

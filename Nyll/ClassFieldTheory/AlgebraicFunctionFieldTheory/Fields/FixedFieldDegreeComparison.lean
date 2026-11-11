@@ -4,16 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.SeparableDegree
-import Mathlib.Topology.Algebra.Group.ClosedSubgroup
-import Mathlib.Topology.Algebra.Group.OpenMapping
-import Mathlib.Topology.Algebra.Group.SubmonoidClosure
-import Mathlib.Topology.Baire.LocallyCompactRegular
-import Mathlib.Topology.Compactness.SigmaCompact
-import Mathlib.Topology.DenseEmbedding
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FixedFieldFrobenius
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
-import Nyll.GaloisCohomology.ProfiniteIntegers.ProfiniteIntegerCore
+module
+
+public import Mathlib.FieldTheory.SeparableDegree
+public import Mathlib.Topology.Algebra.Group.ClosedSubgroup
+public import Mathlib.Topology.Algebra.Group.OpenMapping
+public import Mathlib.Topology.Algebra.Group.SubmonoidClosure
+public import Mathlib.Topology.Baire.LocallyCompactRegular
+public import Mathlib.Topology.Compactness.SigmaCompact
+public import Mathlib.Topology.DenseEmbedding
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FixedFieldFrobenius
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
+public import Nyll.GaloisCohomology.ProfiniteIntegers.ProfiniteIntegerCore
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Intrinsic and ambient constant degrees of finite fixed fields
@@ -27,6 +30,10 @@ The function-field presentation of the fixed field is shared with the caller.
 No degree comparison or Frobenius compatibility is an input.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
@@ -34,7 +41,7 @@ namespace FunctionField
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 open scoped Topology
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra k (SeparableClosure K)]
     [IsScalarTower k K (SeparableClosure K)]

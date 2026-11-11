@@ -4,17 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimePowerRayBound
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierBoundedExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormIndex
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+module
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimePowerRayBound
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierBoundedExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormIndex
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierBoundedClasses
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.FiniteDimensionalLSpaceZero
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierBoundedClasses
+
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.FiniteDimensionalLSpaceZero
+public import Nyll.AlgebraicCurves.Divisors.Modulus.Modulus
 
 /-!
 # Actual norm cofinality for characteristic-p ray-power subgroups
@@ -25,11 +28,15 @@ degree lower bound and the independently computed S-idele jet index force
 the norm image into the prescribed ray-power subgroup.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 open AlgebraicCurve
 namespace FunctionField
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K]
 

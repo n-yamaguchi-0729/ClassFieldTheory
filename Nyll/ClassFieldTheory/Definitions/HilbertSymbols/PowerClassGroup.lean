@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Field.Basic
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Mathlib.Algebra.Field.Basic
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Multiplicative power-class groups
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

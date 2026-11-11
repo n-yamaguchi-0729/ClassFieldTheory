@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModulePresentationFiniteH
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModulePresentationKerIsFG
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleFiniteCohomologyPiFD
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModulePresentationFiniteH
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModulePresentationKerIsFG
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModuleFiniteCohomologyPiFD
 
 /-!
 Finite Cech cohomology of a finitely generated graded module over a noetherian ring.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

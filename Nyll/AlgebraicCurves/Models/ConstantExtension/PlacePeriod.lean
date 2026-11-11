@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearAction
-import Nyll.SchemeTheory.Morphisms.FiniteFieldPointPeriod
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearAction
+public import Nyll.SchemeTheory.Morphisms.FiniteFieldPointPeriod
 
 /-!
 # Frobenius periods of actual geometric places
@@ -14,6 +16,10 @@ The specified place corresponds to a geometric point of the curve model.
 Its projection to the original curve has a finite field of definition, which
 gives a positive period for the canonical semilinear action on the place.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -25,9 +31,9 @@ open AlgebraicCurve.CurveModel.GalPtSol
 
 namespace AlgebraicCurve.CurveModel
 
-variable {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F : Type v} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F]
-    (M : CurveModel Ω F) {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    (M : CurveModel Ω F) {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [LocallyOfFiniteType c] [IsSeparated c]
     (e : M.C ≅ pullback c (specMap k Ω))
     (he : e.hom ≫ pullback.snd c (specMap k Ω) = M.toBase)

@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.Classification
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
-import Mathlib.Topology.Algebra.OpenSubgroup
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.Classification
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
 
 /-!
 # Actual function-field class fields
@@ -17,20 +21,24 @@ ordinary open subgroups. The classification is the proved actual norm
 correspondence, and its inverse selects the unique actual class field.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace ClassFieldTheory.FunctionField
 
 /-- Finite abelian intermediate fields of the chosen separable closure,
 ordered by field inclusion. The existing field-only definition is reused. -/
-abbrev FiniteAbelianExtension (K : Type) [Field K] :=
+abbrev FiniteAbelianExtension (K : Type v) [Field K] :=
   ClassFieldTheory.FiniteAbelianLocalExtension K
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
 
 /-- Ordinary open finite-index subgroups of the actual idele-class group. -/
-abbrev OpenFiniteIndexSubgroup : Type :=
+abbrev OpenFiniteIndexSubgroup : Type v :=
   let _ : AlgebraicCurve.HasPrincipalDivisors k K :=
     (_root_.FunctionField.isCurveOver k K).toHasPrincipalDivisors
   {H : OpenSubgroup (_root_.FunctionField.IdeleClassGroup k K) // H.toSubgroup.FiniteIndex}

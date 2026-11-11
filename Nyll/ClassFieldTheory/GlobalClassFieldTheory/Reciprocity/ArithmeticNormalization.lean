@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidueAbelianization
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtinCompatibility
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.TopologicalGlobalNormResidueAbelianization
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 
 /-!
 # Arithmetic normalization of global reciprocity
@@ -27,21 +31,22 @@ unbundled equality.
 
 
 
+@[expose] public section
+
 open scoped IsMulCommutative NumberField
 open NumberField IsDedekindDomain
 open IdeleGroup
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
-private theorem arithmeticNormIdeleClassIsMulCommutative
-    (K : Type) [Field K] [NumberField K] :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-attribute [local instance] arithmeticNormIdeleClassIsMulCommutative
+attribute [local instance]
+  globalNormResidueIdeleClassCommGroup
+  globalNormResidueIdeleClassIsMulCommutative
 
 /-- Inversion as a topological multiplicative automorphism of a
 commutative topological group. -/
@@ -56,7 +61,7 @@ def commutativeGroupInversionContinuousMulEquiv
 section FiniteGalois
 
 variable
-    (K L : Type) [Field K] [NumberField K]
+    (K : Type u) (L : Type v) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
 
@@ -197,7 +202,7 @@ end FiniteGalois
 section FiniteAbelian
 
 variable
-    (K L : Type) [Field K] [NumberField K]
+    (K : Type u) (L : Type v) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
 
@@ -369,6 +374,13 @@ theorem arithmeticChosenInfinitePlaceArtinMonoidHom_apply
         (K := K) (L := L) v x)⁻¹ := by
   rfl
 
+section InfiniteCompatibility
+
+variable
+    (K : Type u) (L : Type v) [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+
 /-- Infinite-place local-global compatibility in arithmetic
 normalization. -/
 theorem
@@ -389,6 +401,8 @@ theorem
       (DFunLike.congr_fun
         (globalNormResidueMonoidHom_comp_infinitePlaceIdeleClass
           (K := K) (L := L) v) x)
+
+end InfiniteCompatibility
 
 /-- The idèle-level global Artin product in arithmetic normalization. -/
 noncomputable def arithmeticGlobalArtinMonoidHom :
@@ -463,6 +477,7 @@ theorem
       (DFunLike.congr_fun
         (globalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
           (K := K) (L := L)) a)
+
 
 end FiniteAbelian
 

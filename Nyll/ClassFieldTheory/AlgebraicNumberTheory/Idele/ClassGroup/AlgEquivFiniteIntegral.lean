@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquivTopology
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquivTopology
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.AdicCompletionComparison
 
 /-!
 # Integral finite completions under a number-field equivalence
@@ -14,6 +16,8 @@ The finite-completion map associated with a field equivalence preserves
 the local valuation subring. This is the restricted-product compatibility
 needed for continuity of adelic transport.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

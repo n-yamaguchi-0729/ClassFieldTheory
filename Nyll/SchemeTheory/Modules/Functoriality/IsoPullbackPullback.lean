@@ -10,10 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
 /-! A Cartesian square identifies the iterated pullbacks of schemes and their modules. -/
+
+@[expose] public section
 
 universe u
 

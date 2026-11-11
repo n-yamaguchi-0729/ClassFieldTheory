@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Hom.Defs
-import Mathlib.FieldTheory.Galois.Infinite
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Ring
-import Nyll.GaloisCohomology.ArtinSchreier.CharacterClasses
-import Nyll.GaloisCohomology.ArtinSchreier.FiniteRestrictionKernel
+module
+
+public import Mathlib.Algebra.Group.Hom.Defs
+public import Mathlib.FieldTheory.Galois.Infinite
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Ring
+public import Nyll.GaloisCohomology.ArtinSchreier.CharacterClasses
+public import Nyll.GaloisCohomology.ArtinSchreier.FiniteRestrictionKernel
 
 /-!
 # Relative Artin--Schreier classes and Galois characters
@@ -27,6 +29,8 @@ For a finite extension this identifies the finite restriction kernel with
 its cyclic character group. The construction also works for an infinite
 Galois extension when the characters are continuous.
 -/
+
+@[expose] public section
 
 noncomputable section
 

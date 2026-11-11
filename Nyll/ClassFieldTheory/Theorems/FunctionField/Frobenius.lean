@@ -4,15 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.OrderOfElement
-import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
-import Nyll.ClassFieldTheory.Definitions.FunctionField.Frobenius
-import Nyll.ClassFieldTheory.Definitions.FunctionField.FiniteArtin
-import Nyll.ClassFieldTheory.Definitions.FunctionField.LocalArtin
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+module
+
+public import Mathlib.GroupTheory.OrderOfElement
+public import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
+public import Nyll.ClassFieldTheory.Definitions.FunctionField.Frobenius
+public import Nyll.ClassFieldTheory.Definitions.FunctionField.FiniteArtin
+public import Nyll.ClassFieldTheory.Definitions.FunctionField.LocalArtin
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobenius
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
 
 /-!
 # Unramified Frobenius and local norm criteria
@@ -22,13 +26,17 @@ decomposition group. Equality with the global Artin map on a one-place
 idele remains a separate local-global comparison.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped AlgebraicCurve.Place
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]

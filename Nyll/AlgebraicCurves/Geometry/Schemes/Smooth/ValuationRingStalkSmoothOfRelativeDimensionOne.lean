@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.Unramified.LocalRing
-import Mathlib.Tactic.Algebraize
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.RingTheory.Unramified.LocalRing
+public import Mathlib.Tactic.Algebraize
 
 /-!
 # Valuation stalks of integral smooth curves
@@ -21,6 +23,8 @@ import Mathlib.Tactic.Algebraize
 The stalks of an integral scheme smooth of relative dimension one over a field are
 valuation rings, as shown using local standard-smooth presentations.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

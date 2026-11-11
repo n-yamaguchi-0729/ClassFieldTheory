@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.DisplacementValuation
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RamificationNumber
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.DisplacementValuation
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RamificationNumber
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
 
 /-!
 # Lower ramification groups of equal-characteristic Lubin--Tate levels
@@ -18,6 +20,8 @@ their exact cardinalities.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -37,13 +41,13 @@ variable {K : Type u} [Field K]
 
 section ChosenRamificationTarget
 
-variable {K₀ : Type} [Field K₀]
+variable {K₀ : Type u} [Field K₀]
 
 /-- The actual real lower ramification group of the explicit
 equal-characteristic Lubin--Tate level, formed from the chosen
 integral-closure valuation. -/
 noncomputable def equalCharacteristicLubinTateRealLowerRamificationGroup
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (s : ℝ) :
     Subgroup Gal((equalCharacteristicLubinTateLevelField F n) /
@@ -59,7 +63,7 @@ noncomputable def equalCharacteristicLubinTateRealLowerRamificationGroup
 ramification groups. -/
 noncomputable local instance
     equalCharacteristicLubinTateLevelField_finiteDimensional_forLowerGroups
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     FiniteDimensional F.residueField⸨X⸩
@@ -70,7 +74,7 @@ noncomputable local instance
 ramification groups. -/
 noncomputable local instance
     equalCharacteristicLubinTateLevelField_isGalois_forLowerGroups
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     IsGalois F.residueField⸨X⸩
@@ -82,7 +86,7 @@ ramification group is detected by the displacement of its primitive
 uniformizer alone. -/
 theorem
     mem_equalCharacteristicLubinTateRealLowerRamificationGroup_nat_iff_primitivePoint
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n i : ℕ)
     (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩)) :
@@ -150,7 +154,7 @@ then it belongs to the natural lower group `G_i` exactly when
 `i + 1 ≤ q^k`. -/
 theorem
     mem_equalCharacteristicLubinTateRealLowerRamificationGroup_nat_iff_parameterPower_of_ne_one
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n i : ℕ)
     (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
@@ -200,7 +204,7 @@ theorem equalCharacteristicLubinTateUnitParameterEquivGal_apply
 natural lower group is the parameter-power inequality, with the identity case
 included explicitly and no side hypotheses. -/
 theorem mem_equalCharacteristicLubinTateRealLowerRamificationGroup_nat_iff_parameterPower
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n i : ℕ)
     (a : equalCharacteristicLubinTateUnitParameter F n) :
@@ -265,7 +269,7 @@ private theorem equalCharacteristicLubinTateOneUnitParameterSeries
 
 @[simp]
 private theorem equalCharacteristicLubinTateOneUnitParameterToGal
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     equalCharacteristicLubinTateUnitParameterToGal F n
@@ -293,7 +297,7 @@ private theorem equalCharacteristicLubinTateOneUnitParameterToGal
   simp [a, equalCharacteristicLubinTateOneUnitParameterSeries]
 
 private theorem equalCharacteristicLubinTateUnitParameterToGal_eq_one_iff
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
     (a : equalCharacteristicLubinTateUnitParameter F n) :
@@ -327,7 +331,7 @@ private theorem equalCharacteristicLubinTateUnitParameterSeries_sub_one_eq_zero_
 /-- At the lower endpoint `q^k - 1`, membership is equivalent to vanishing of
 the first `k` coefficients of the visible difference from the identity. -/
 theorem mem_equalCharacteristicLubinTateRealLowerRamificationGroup_pow_sub_one_iff_coeff_zero
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ)
     (a : equalCharacteristicLubinTateUnitParameter F n) :
@@ -571,7 +575,7 @@ private theorem equalCharacteristicLubinTateUnitParameterVanishesBefore_natCard
 
 private noncomputable def
     equalCharacteristicLubinTateRealLowerRamificationGroupEquivVanishesBefore
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1) :
     equalCharacteristicLubinTateRealLowerRamificationGroup F n
@@ -619,7 +623,7 @@ private noncomputable def
 /-- For `1 ≤ k ≤ n + 1`, the lower group at `q^k - 1` has order
 `q^(n + 1 - k)`. -/
 theorem equalCharacteristicLubinTateRealLowerRamificationGroup_natCard_pow_sub_one
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1) :
     Nat.card
@@ -636,7 +640,7 @@ theorem equalCharacteristicLubinTateRealLowerRamificationGroup_natCard_pow_sub_o
 controlled by the same first-`k` coefficient condition. -/
 theorem
   mem_equalCharacteristicLubinTateRealLowerRamificationGroup_nat_iff_coeff_zero_of_pow_interval
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k r : ℕ) (hk : 1 ≤ k)
     (hlow : Nat.card F.residueField ^ (k - 1) ≤ r)
@@ -716,7 +720,7 @@ theorem
 
 /-- The lower-group order is constant on `q^(k-1) ≤ r < q^k`. -/
 theorem equalCharacteristicLubinTateRealLowerRamificationGroup_natCard_of_pow_interval
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n k r : ℕ) (hk : 1 ≤ k) (hkn : k ≤ n + 1)
     (hlow : Nat.card F.residueField ^ (k - 1) ≤ r)

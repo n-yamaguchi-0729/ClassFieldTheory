@@ -10,27 +10,31 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Comma.Over.Basic
-import Mathlib.CategoryTheory.Comma.Over.Pullback
-import Mathlib.CategoryTheory.EffectiveEpi.Basic
-import Mathlib.CategoryTheory.Functor.Basic
-import Mathlib.CategoryTheory.Iso
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
-import Mathlib.CategoryTheory.Opposites
-import Mathlib.CategoryTheory.Sites.IsSheafFor
-import Mathlib.CategoryTheory.Sites.Sieves.Presieve
-import Mathlib.CategoryTheory.Types.Basic
-import Mathlib.CategoryTheory.Yoneda
-import Mathlib.Logic.Equiv.Defs
-import Mathlib.Tactic.CategoryTheory.Reassoc
-import Mathlib.Tactic.Set
+module
+
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.CategoryTheory.Comma.Over.Basic
+public import Mathlib.CategoryTheory.Comma.Over.Pullback
+public import Mathlib.CategoryTheory.EffectiveEpi.Basic
+public import Mathlib.CategoryTheory.Functor.Basic
+public import Mathlib.CategoryTheory.Iso
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
+public import Mathlib.CategoryTheory.Opposites
+public import Mathlib.CategoryTheory.Sites.IsSheafFor
+public import Mathlib.CategoryTheory.Sites.Sieves.Presieve
+public import Mathlib.CategoryTheory.Types.Basic
+public import Mathlib.CategoryTheory.Yoneda
+public import Mathlib.Logic.Equiv.Defs
+public import Mathlib.Tactic.CategoryTheory.Reassoc
+public import Mathlib.Tactic.Set
 
 /-!
 # Descent Action
 -/
+
+@[expose] public section
 
 universe u
 

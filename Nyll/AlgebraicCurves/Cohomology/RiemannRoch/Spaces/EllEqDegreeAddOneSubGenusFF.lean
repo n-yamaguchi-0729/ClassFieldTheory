@@ -10,29 +10,33 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
-import Nyll.AlgebraicCurves.Differentials.Local.LocalGeometry
-import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.FunctionFieldRiemannRochAlgClosedCurve
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseAlgClosed
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteDimensionalLSpaceZero
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncPlaceRatFuncTower
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExistsRatFuncTower
-import Nyll.AlgebraicCurves.Cohomology.WeilDualityAdelicFunctionFieldRiemannRoch
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.GenusEqGenusFF
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.DegreeCanonicalDivisorEq
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
+public import Nyll.AlgebraicCurves.Differentials.Local.LocalGeometry
+public import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.FunctionFieldRiemannRochAlgClosedCurve
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseAlgClosed
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncFiniteDimensionalLSpaceZero
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncPlaceRatFuncTower
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncStichtenothGenusExistsRatFuncTower
+public import Nyll.AlgebraicCurves.Cohomology.WeilDualityAdelicFunctionFieldRiemannRoch
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.GenusEqGenusFF
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.DegreeCanonicalDivisorEq
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.SectionBounds
 
 /-!
 # Ell eq degree add one sub genus FF of is Alg Closed of is Separable
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -65,8 +69,6 @@ attribute [-instance]
   kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
   AlgebraicCurve.instHasCanonicalLocalResidueK
-  instAlgebra_restrictResidueField
-  instIsScalarTower_restrictResidueField
 attribute [-instance] AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
@@ -236,8 +238,7 @@ attribute [-instance]
   kw_ffgc_isScalarTower_integersCompletionCompletion
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance] AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

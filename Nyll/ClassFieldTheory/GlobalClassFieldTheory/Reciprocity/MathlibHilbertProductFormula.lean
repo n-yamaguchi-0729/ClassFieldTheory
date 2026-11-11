@@ -4,9 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalInfinitePlaceHilbertSymbol
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormula
-import Mathlib.Algebra.BigOperators.Finprod
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalInfinitePlaceHilbertSymbol
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertProductFormula
+public import Mathlib.Algebra.BigOperators.Finprod
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.Core
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceFiniteSupport
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.InfinitePlace
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
 
 /-!
 # Mathlib-facing Hilbert product formula
@@ -16,6 +22,8 @@ roots of unity to Mathlib's `rootsOfUnity`.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 

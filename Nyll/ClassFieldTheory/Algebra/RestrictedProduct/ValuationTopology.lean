@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
-import Mathlib.Topology.Algebra.Group.Units
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
-import Mathlib.Topology.Instances.Int
+module
+
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+public import Mathlib.Topology.Algebra.Group.Units
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
+public import Mathlib.Topology.Instances.Int
 
 /-!
 # Continuity of valuation vectors
@@ -19,6 +21,8 @@ the valuation-vector map is continuous when its finitely supported target is dis
 The topology of that target is supplied explicitly, without installing a topology on
 all finitely supported functions.
 -/
+
+@[expose] public section
 
 open scoped RestrictedProduct WithZero
 

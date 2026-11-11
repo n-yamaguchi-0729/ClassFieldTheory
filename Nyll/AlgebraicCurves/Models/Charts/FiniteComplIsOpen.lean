@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
+module
+
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiCompact
 
 /-!
 # Finite compl of isOpen
 
 The complement of an open subset of a curve is finite when the open contains the generic point.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

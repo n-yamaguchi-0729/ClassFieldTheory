@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.EverywhereUnramifiedTower
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsEverywhereUnramified
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsUnramifiedAtFinitePlaces
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.EverywhereUnramifiedTower
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsEverywhereUnramified
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsUnramifiedAtFinitePlaces
 
 /-!
 # Finite-place unramifiedness comparison
@@ -19,6 +21,10 @@ every prime above a nonzero base prime is itself nonzero.
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField
 open NumberField IsDedekindDomain
 
@@ -27,7 +33,7 @@ namespace ClassFieldTheory
 /-- A number-field equivalence over `K` restricts to an equivalence of
 integer rings over the integer ring of `K`. -/
 noncomputable def ringOfIntegersEquivOfAlgEquiv
-    (K L E : Type)
+    (K : Type u) (L : Type v) (E : Type w)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [Field E] [NumberField E] [Algebra K E]
@@ -45,7 +51,7 @@ noncomputable def ringOfIntegersEquivOfAlgEquiv
 unramifiedness of the entire integer-ring extension; the zero prime is
 automatically unramified in characteristic zero. -/
 theorem isUnramifiedAtFinitePlaces_iff_formallyUnramified
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] :
     _root_.IsUnramifiedAtFinitePlaces K L ↔
@@ -63,7 +69,7 @@ theorem isUnramifiedAtFinitePlaces_iff_formallyUnramified
 /-- The base-prime and extension-prime formulations of finite-place
 unramifiedness agree. -/
 theorem isUnramifiedAtFinitePlaces_iff_original
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] :
     ClassFieldTheory.IsUnramifiedAtFinitePlaces K L ↔
@@ -82,7 +88,7 @@ theorem isUnramifiedAtFinitePlaces_iff_original
 /-- Finite-place unramifiedness is invariant under a number-field
 equivalence over the base. -/
 theorem isUnramifiedAtFinitePlaces_iff_of_algEquiv
-    (K L E : Type)
+    (K : Type u) (L : Type v) (E : Type w)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [Field E] [NumberField E] [Algebra K E]
@@ -99,7 +105,7 @@ theorem isUnramifiedAtFinitePlaces_iff_of_algEquiv
 /-- Unramifiedness at infinite places is also invariant under a
 number-field equivalence over the base. -/
 theorem isUnramifiedAtInfinitePlaces_iff_of_algEquiv
-    (K L E : Type)
+    (K : Type u) (L : Type v) (E : Type w)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [Field E] [NumberField E] [Algebra K E]
@@ -131,7 +137,7 @@ theorem isUnramifiedAtInfinitePlaces_iff_of_algEquiv
 /-- The public conjunction and the implementation's bundled predicate for
 unramifiedness at all places agree. -/
 theorem isEverywhereUnramified_iff_original
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L] :
     ClassFieldTheory.IsEverywhereUnramified K L ↔
@@ -146,7 +152,7 @@ theorem isEverywhereUnramified_iff_original
 /-- Everywhere-unramifiedness is invariant under a number-field
 equivalence over the base. -/
 theorem isEverywhereUnramified_iff_of_algEquiv
-    (K L E : Type)
+    (K : Type u) (L : Type v) (E : Type w)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [Field E] [NumberField E] [Algebra K E]

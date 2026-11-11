@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MathlibFieldClassification
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
-import Nyll.GaloisCohomology.ArtinSchreier.CharacterClasses
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MathlibFieldClassification
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+public import Nyll.GaloisCohomology.ArtinSchreier.CharacterClasses
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
 
 /-!
 # Realizing local prime cyclic characters by Artin–Schreier generators
@@ -17,6 +21,8 @@ character kernel as norm group. Local reciprocity transports the character
 to its faithful Galois character. Additive Hilbert 90 then supplies an actual
 Artin–Schreier generator with the prescribed root differences.
 -/
+
+@[expose] public section
 
 noncomputable section
 

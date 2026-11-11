@@ -22,32 +22,36 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Mathlib.RingTheory.Spectrum.Prime.Noetherian
-import Mathlib.RingTheory.IsTensorProduct
-import Mathlib.RingTheory.Localization.BaseChange
-import Mathlib.LinearAlgebra.TensorProduct.Pi
-import Mathlib.RingTheory.Artinian.Module
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.Algebra.Module.Projective
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
-import Mathlib.RingTheory.Localization.Away.Basic
-import Mathlib.RingTheory.Localization.Ideal
-import Mathlib.RingTheory.Localization.Submodule
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.Topology.LocallyConstant.Basic
+module
+
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
+public import Mathlib.RingTheory.IsTensorProduct
+public import Mathlib.RingTheory.Localization.BaseChange
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+public import Mathlib.RingTheory.Artinian.Module
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Mathlib.RingTheory.Localization.Ideal
+public import Mathlib.RingTheory.Localization.Submodule
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.Topology.LocallyConstant.Basic
 
 /-!
 # Stalk ranks preserved by local equivalences
 
 Compares ranks at stalks using module equivalences after localization.
 -/
+
+@[expose] public section
 
 section Module_rankAtStalk_eq_of_forall_localizedModule_equiv
 
@@ -94,7 +98,7 @@ noncomputable def tensorLocalizedModuleEquiv (hT : ∀ s : S, IsUnit (algebraMap
     have hg : ⇑((LocalizedModule.mkLinearMap S X).baseChange T) =
         ⇑(IsLocalizedModule.linearEquiv S LinearMap.id g) := by
       funext y
-      rw [LinearMap.baseChange_eq_ltensor, hg']
+      rw [LinearMap.baseChange_eq_lTensor, hg']
       exact (IsLocalizedModule.linearEquiv_apply S LinearMap.id g y).symm
     rw [hg]
     exact LinearEquiv.bijective _)

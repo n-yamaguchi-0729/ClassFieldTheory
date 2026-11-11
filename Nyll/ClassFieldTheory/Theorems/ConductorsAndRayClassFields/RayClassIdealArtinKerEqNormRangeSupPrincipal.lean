@@ -20,12 +20,14 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- Before passing to ray classes, the Artin kernel is the product of the
 genuine ideal-norm subgroup and the principal ray-ideal subgroup. -/
 theorem rayClassIdealArtinKer_eq_normRange_sup_principal
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]

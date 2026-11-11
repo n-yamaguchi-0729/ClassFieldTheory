@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
-import Mathlib.FieldTheory.Galois.Basic
+module
+
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
+public import Mathlib.FieldTheory.Galois.Basic
 
 /-!
 # Galois extensions inside periodic subfields
@@ -14,6 +16,8 @@ The fixed field of an automorphism embeds canonically into every periodic
 subfield. Restriction gives an actual finite cyclic action; its fixed field
 is the original fixed field, and its order is the extension degree.
 -/
+
+@[expose] public section
 
 noncomputable section
 

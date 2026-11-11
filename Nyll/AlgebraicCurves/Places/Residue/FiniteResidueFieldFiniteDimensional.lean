@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Mathlib.Data.Fintype.EquivFin
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Mathlib.Data.Fintype.EquivFin
 
 /-!
 # Place finite residueField of finiteDimensional
@@ -19,6 +21,8 @@ import Mathlib.Data.Fintype.EquivFin
 A finite-dimensional field extension induces a finite extension of residue fields at a place, by
 lifting linearly independent residue classes.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

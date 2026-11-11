@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.LocalSections.RROpensFinsetSubsetEllSubSumSingleEqZero
-import Nyll.AlgebraicCurves.Places.ValuationRings.SubAlgebraMapMemMaximalIdeal
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.LocalSections.RROpensFinsetSubsetEllSubSumSingleEqZero
+public import Nyll.AlgebraicCurves.Places.ValuationRings.SubAlgebraMapMemMaximalIdeal
 
 /-!
 # RROpens exists degree eq sub one and ell eq zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

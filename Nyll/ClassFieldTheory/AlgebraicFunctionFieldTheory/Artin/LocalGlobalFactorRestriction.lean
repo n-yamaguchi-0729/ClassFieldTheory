@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRestriction
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalGlobalFactor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRestriction
 
 /-!
 # Restriction of the one-place Artin factor
@@ -17,6 +19,10 @@ actual local preimage; the already proved local and global restriction
 laws then identify their values.
 -/
 
+@[expose] public section
+
+universe u v w s
+
 noncomputable section
 
 open AlgebraicCurve
@@ -25,7 +31,8 @@ open AlgebraicCurves.Places.Proofs.Place_sum_ramificationIndex_mul_inertiaDeg_ex
 
 namespace FunctionField
 
-variable {k K L M : Type} [Field k] [Finite k] [Field K] [Field L] [Field M]
+variable {k : Type u} {K : Type v} {L : Type w} {M : Type s}
+    [Field k] [Finite k] [Field K] [Field L] [Field M]
     [Algebra k K] [Algebra k L] [Algebra k M]
     [Algebra K L] [Algebra K M] [Algebra L M]
     [IsScalarTower k K L] [IsScalarTower k K M] [IsScalarTower k L M]

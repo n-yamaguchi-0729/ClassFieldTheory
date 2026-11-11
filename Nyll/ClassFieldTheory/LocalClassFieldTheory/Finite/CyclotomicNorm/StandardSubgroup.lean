@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
-import Nyll.ValuedFieldTheory.LocalField.Padic.PrincipalUnits
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardSubgroupIntersection
+public import Nyll.ValuedFieldTheory.LocalField.Padic.PrincipalUnits
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
 
 /-!
 # Standard p-adic norm-subgroup intersections
@@ -14,6 +17,8 @@ The p-adic prime element used by the cyclotomic norm calculation has
 normalized valuation `-1`.  This file records the corresponding orientation
 of the standard unramified/principal-unit intersection lemma.
 -/
+
+@[expose] public section
 
 noncomputable section
 

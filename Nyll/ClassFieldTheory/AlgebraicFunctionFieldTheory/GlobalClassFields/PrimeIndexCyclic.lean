@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimeIndexClassField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormIndex
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimeIndexClassField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormIndex
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 
 /-!
 # Actual cyclic class fields of prime degree
@@ -15,10 +17,12 @@ The norm-index formula computes the degree of the already constructed
 prime-index class field. Its Galois group has prime order and is cyclic.
 -/
 
+@[expose] public section
+
 noncomputable section
 namespace FunctionField
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k K : Type*) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 

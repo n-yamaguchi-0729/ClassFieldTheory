@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
-import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
+public import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Divisor presentations of invertible modules
@@ -27,6 +31,8 @@ An invertible module on a smooth integral curve has a compatible presentation in
 the function field whose affine images are Riemann-Roch spaces. Local generators
 recover the valuation of the representing divisor.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -432,10 +438,10 @@ theorem adicValuation_alg_le_one (W : X.Opens) (y : X) (hyW : y ∈ W) (hy : IsC
     (hv : letI := (baseToFunctionField x).toAlgebra
       (algebraMap (X.presheaf.stalk y) X.functionField).range = v.toValuationSubring.toSubring)
     (a : Γ(X, W)) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     haveI : Nonempty W := ⟨⟨y, hyW⟩⟩
     v.adicValuation (alg W a) ≤ 1 := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have : Nonempty W := ⟨⟨y, hyW⟩⟩
   obtain ⟨W', hW'aff, hyW', hW'W⟩ :=
     (Opens.isBasis_iff_nbhd.mp X.isBasis_affineOpens) hyW
@@ -474,11 +480,11 @@ theorem adicValuation_φ_le_of_isGeneratorAt (U U' : X.Opens) (s : Γ(M, U)) (s'
     (v : letI := (baseToFunctionField x).toAlgebra; Place K X.functionField)
     (hv : letI := (baseToFunctionField x).toAlgebra
       (algebraMap (X.presheaf.stalk y) X.functionField).range = v.toValuationSubring.toSubring) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     haveI : Nonempty U := ⟨⟨y, hyU⟩⟩
     haveI : Nonempty U' := ⟨⟨y, hyU'⟩⟩
     v.adicValuation (φ M V₀ e₀ U s) ≤ v.adicValuation (φ M V₀ e₀ U' s') := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have : Nonempty U := ⟨⟨y, hyU⟩⟩
   have : Nonempty U' := ⟨⟨y, hyU'⟩⟩
   have : Nonempty (U ⊓ U' : X.Opens) := ⟨⟨y, hyU, hyU'⟩⟩
@@ -530,10 +536,10 @@ theorem exp_dAt_eq [IsSeparated x]
     (v : letI := (baseToFunctionField x).toAlgebra; Place K X.functionField)
     (hv : letI := (baseToFunctionField x).toAlgebra
       (algebraMap (X.presheaf.stalk y) X.functionField).range = v.toValuationSubring.toSubring) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     haveI : Nonempty U := ⟨⟨y, hyU⟩⟩
     exp (dAt M x V₀ e₀ v) = v.adicValuation (φ M V₀ e₀ U s) := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have : Nonempty U := ⟨⟨y, hyU⟩⟩
   obtain ⟨V, e, hyV⟩ := htriv y
   have h : ∃ (y : X) (T : Triv M), y ∈ T.V ∧ IsClosed ({y} : Set X) ∧
@@ -633,10 +639,9 @@ variable {K : Type u} [Field K] (x : X ⟶ Spec (CommRingCat.of K)) [IsIntegral 
       V.toScheme.ringCatSheaf), x ∈ V)
 
 theorem φ_mem_lSpaceOn (U : X.Opens) [Nonempty U] (m : Γ(M, U)) :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     φ M V₀ e₀ U m ∈ lSpaceOn (placesOf x U) (divisor M x V₀ e₀ htriv) := by
-  let := (baseToFunctionField x).toAlgebra
-  intro v hv
+  intro sharedOwner1 v hv
   obtain ⟨y, hyU, hy, hvy⟩ := hv
   obtain ⟨V, e, hyV⟩ := htriv y
   have : Nonempty (U ⊓ V : X.Opens) := ⟨⟨y, hyU, hyV⟩⟩
@@ -713,10 +718,10 @@ theorem exists_φ_eq (U : X.Opens) (hU : IsAffineOpen U) [hne : Nonempty U] (f :
     ((congrArg (φ M V₀ e₀ (W y₀)) hm0).trans (hml y₀))
 
 theorem range_φ_eq (U : X.Opens) (hU : IsAffineOpen U) [Nonempty U] :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     Set.range (φ M V₀ e₀ U) = (lSpaceOn (placesOf x U) (divisor M x V₀ e₀ htriv) : Set
         X.functionField) := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   ext f
   constructor
   · rintro ⟨m, rfl⟩
@@ -743,7 +748,7 @@ theorem AlgebraicGeometry.Scheme.Modules.IsInvertible.exists_divisor_range_eq_lS
     {K : Type u} [Field K] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of K))
     [IsIntegral X] [IsSeparated x] [QuasiCompact x] [SmoothOfRelativeDimension 1 x]
     (M : X.Modules) (hM : Scheme.Modules.IsInvertible M) :
-    letI := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
     ∃ (D : AlgebraicCurve.Divisor K X.functionField) (φ : ∀ U : X.Opens, Γ(M, U) →+ (X.functionField
         : Type u)),
       (∀ (U V : X.Opens) (h : V ≤ U), Nonempty V →
@@ -761,8 +766,8 @@ theorem AlgebraicGeometry.Scheme.Modules.IsInvertible.exists_divisor_range_eq_lS
             (algebraMap (X.presheaf.stalk y) X.functionField).range = v.toValuationSubring.toSubring
                 →
             WithZero.exp (D v) = v.adicValuation (φ U s)) := by
+  intro sharedOwner1
   classical
-  let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
   have htriv : ∀ z : X, ∃ (V : X.Opens) (_ : M.restrict V.ι ≅ SheafOfModules.unit
       V.toScheme.ringCatSheaf), z ∈ V := by
     intro z

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilbertClassField
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilbertClassField
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 
 /-!
 # Hilbert class fields without real places
@@ -15,6 +17,8 @@ import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 When the base has no real places, no extension can ramify at an infinite
 place. Thus the small and big Hilbert class field conditions agree.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

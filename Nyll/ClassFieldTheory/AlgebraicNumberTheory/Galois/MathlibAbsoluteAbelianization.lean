@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.TopologicalAbelianizationCongr
-import Mathlib.FieldTheory.AbsoluteGaloisGroup
-import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.TopologicalAbelianizationCongr
+public import Mathlib.FieldTheory.AbsoluteGaloisGroup
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
 
 /-!
 # Comparison with Mathlib's absolute Galois abelianization
@@ -16,6 +18,8 @@ Mathlib's absolute Galois group with the separable-closure model. The induced
 map on topological abelianizations is a homeomorphism of groups, not merely
 an abstract group isomorphism.
 -/
+
+@[expose] public section
 
 noncomputable section
 

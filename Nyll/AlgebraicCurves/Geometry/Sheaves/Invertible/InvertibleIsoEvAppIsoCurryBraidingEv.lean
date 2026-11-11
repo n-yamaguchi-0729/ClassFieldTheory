@@ -11,12 +11,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.CategoryTheory.MonoidalClosedIsoEvAppIsoCurryBraidingEv
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.CategoryTheory.MonoidalClosedIsoEvAppIsoCurryBraidingEv
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
 
 /-!
 # Evaluation isomorphisms for invertible scheme modules
@@ -24,6 +26,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
 An invertible module has invertible internal-Hom evaluation maps and an invertible map
 obtained by currying the evaluation after the braiding.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

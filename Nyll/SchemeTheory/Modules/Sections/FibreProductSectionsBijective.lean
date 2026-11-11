@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 /-!
 # Compatible sections of a fibre product of module sheaves
 
 Sections of a pullback are identified with pairs whose images in the common target agree.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

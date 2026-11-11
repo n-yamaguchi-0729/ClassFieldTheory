@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AlgebraStandardSmoothDVRLocalizationAtPrime
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AlgebraStandardSmoothDVRLocalizationAtPrime
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
 
 /-!
 # Closed points of an integral smooth curve
@@ -20,6 +22,8 @@ import Nyll.AlgebraicCurves.Models.Construction.Basic
 On an integral curve smooth of relative dimension one over a field, every point other than
 the generic point has a closed singleton.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

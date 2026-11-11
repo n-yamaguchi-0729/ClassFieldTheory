@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainNaturality
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainNaturality
 
 /-!
 # Actual Galois restriction between fixed fields
@@ -15,13 +17,18 @@ of automorphisms of the actual fixed fields. The comparison is proved on
 ambient automorphism representatives.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (K Ω : Type) [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
+variable (K : Type u) (Ω : Type v)
+    [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
 
 /-- Restriction of an actual fixed-field automorphism preserves its ambient representative. -/
 theorem abstractFixedField_restrictNormal_quotient_mk

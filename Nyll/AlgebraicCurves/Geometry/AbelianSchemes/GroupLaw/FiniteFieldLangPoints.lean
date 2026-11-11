@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.FiniteFieldLang
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangPointFormula
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.AlgebraicPoints
+module
+
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.FiniteFieldLang
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangPointFormula
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.AlgebraicPoints
+public import Nyll.SchemeTheory.Morphisms.FrobeniusBaseChangePoints
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 
 /-!
 # Frobenius coboundaries on actual algebraic points
@@ -15,13 +19,17 @@ Lang surjectivity is expressed in the existing group of algebra-valued points,
 with its existing action of automorphisms of the constant field.
 -/
 
+@[expose] public section
+
+universe u
+
 noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra
 
 namespace GoodReductionJacobian.RelativeGroupLaw
 
-private theorem mul_inv_change_base {R : Type} [CommRing R] {A T : Scheme.{0}}
+private theorem mul_inv_change_base {R : Type u} [CommRing R] {A T : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (L : RelativeGroupLaw R f)
     {t t' : T ⟶ Spec (CommRingCat.of R)} (h : t = t') (x y : SchemeHomOver t f) :
     (L.mul t x (L.inv t y)).val =
@@ -30,9 +38,9 @@ private theorem mul_inv_change_base {R : Type} [CommRing R] {A T : Scheme.{0}}
   subst t'
   rfl
 
-variable (k Ω : Type) [Field k] [Fintype k] [Field Ω] [Algebra k Ω]
+variable (k Ω : Type u) [Field k] [Fintype k] [Field Ω] [Algebra k Ω]
     [Algebra.IsAlgebraic k Ω] [IsAlgClosed Ω]
-    (X : Scheme.{0}) [X.Over (Spec (CommRingCat.of k))]
+    (X : Scheme.{u}) [X.Over (Spec (CommRingCat.of k))]
     (L : RelativeGroupLaw k (X ↘ Spec (CommRingCat.of k))) (hc : L.IsCommutative)
 
 local notation "b" => Spec.map (CommRingCat.ofHom (algebraMap k Ω))
@@ -73,11 +81,7 @@ theorem finiteFieldGeometricPoint_frobenius
   change (x.val ≫ Scheme.constantBaseChangeFrobenius k Ω X) ≫ pullback.fst f b =
     Spec.map (CommRingCat.ofHom (FiniteField.frobeniusAlgHom k Ω).toRingHom) ≫
       (x.val ≫ pullback.fst f b)
-  rw [Category.assoc, Scheme.constantBaseChangeFrobenius_fst, ← Category.assoc]
-  have hn := Scheme.finiteFieldFrobenius_naturality (Spec (CommRingCat.of Ω)) k X
-    (x.val ≫ pullback.fst f b)
-  rw [Scheme.finiteFieldFrobenius_spec] at hn
-  exact hn.symm
+  exact Scheme.constantBaseChangeFrobenius_point_fst k Ω X x.val
 
 omit [Fintype k] [Algebra.IsAlgebraic k Ω] [IsAlgClosed Ω] in
 /-- Evaluation of any Lang map agrees with subtraction in the original algebraic point group. -/

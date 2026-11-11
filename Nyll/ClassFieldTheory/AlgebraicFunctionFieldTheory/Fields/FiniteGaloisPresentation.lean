@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.NormalEmbeddingRange
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+module
+
+public import Nyll.ClassFieldTheory.Algebra.NormalEmbeddingRange
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SeparableClosureEmbedding
 
 /-!
 # Compatible presentations in the separable closure
@@ -16,13 +19,17 @@ independent of its embedding. Compatible embeddings give compatible
 isomorphisms with these fixed fields.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (K : Type) [Field K]
+variable (K : Type u) [Field K]
 
 /-- The base fixed field in the separable closure is the original base field. -/
 def finiteGaloisBaseFixedFieldEquiv :
@@ -30,7 +37,7 @@ def finiteGaloisBaseFixedFieldEquiv :
   (IntermediateField.botEquiv K (SeparableClosure K)).symm.trans
     (IntermediateField.equivOfEq (InfiniteGalois.fixedField_fixingSubgroup ⊥).symm)
 
-variable (L : Type) [Field L] [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
+variable (L : Type v) [Field L] [Algebra K L] [FiniteDimensional K L] [IsGalois K L]
 
 /-- The chosen embedding identifies the extension with the field fixed by its
 own concrete fixing subgroup. -/
@@ -55,7 +62,7 @@ theorem finiteGaloisFixedFieldEquivOfEmbedding_val
     (i : L →ₐ[K] SeparableClosure K) (x : L) :
     (finiteGaloisFixedFieldEquivOfEmbedding K L i x : SeparableClosure K) = i x := rfl
 
-variable (M : Type) [Field M] [Algebra K M] [Algebra L M] [IsScalarTower K L M]
+variable (M : Type w) [Field M] [Algebra K M] [Algebra L M] [IsScalarTower K L M]
     [FiniteDimensional K M] [IsGalois K M]
 
 /-- A tower of finite Galois fields gives the reversed inclusion of their fixing subgroups. -/

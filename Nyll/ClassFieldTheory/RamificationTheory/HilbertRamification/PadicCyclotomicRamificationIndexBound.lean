@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Compositum
-import Nyll.ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CyclotomicDegreeBound
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Compositum
+public import Nyll.ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CyclotomicDegreeBound
 
 /-!
 # A p-primary ramification bound for p-adic cyclotomic fields
@@ -15,6 +17,8 @@ A cyclotomic field of order `r * p ^ n`, with `r` prime to `p`, splits into
 an unramified prime-to-`p` branch and a `p`-power branch. This file records
 that only the latter contributes to the local ramification index.
 -/
+
+@[expose] public section
 
 noncomputable section
 

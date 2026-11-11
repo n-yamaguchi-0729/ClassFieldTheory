@@ -10,27 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.RingTheory.Flat.Product
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.Algebra.Algebra.Tower
-import Mathlib.RingTheory.TensorProduct.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverToH0Bijective
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechTwoTermComplexKerMapBaseChangeBijective
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechProjectiveKer
-import Mathlib.RingTheory.LocalProperties.Exactness
-import Mathlib.RingTheory.Localization.BaseChange
-import Mathlib.Algebra.Module.LocalizedModule.Basic
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.FiniteDimensional.Basic
-import Mathlib.RingTheory.OrzechProperty
-import Mathlib.LinearAlgebra.TensorProduct.Prod
-import Mathlib.RingTheory.Nilpotent.Defs
-import Mathlib.LinearAlgebra.Dimension.Finrank
+module
+
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverToH0Bijective
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBaseChangeIsosStructureSheaf
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechTwoTermComplexKerMapBaseChangeBijective
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechProjectiveKer
+public import Mathlib.RingTheory.LocalProperties.Exactness
+public import Mathlib.RingTheory.Localization.BaseChange
+public import Mathlib.Algebra.Module.LocalizedModule.Basic
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+public import Mathlib.RingTheory.OrzechProperty
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Mathlib.RingTheory.Nilpotent.Defs
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Sections after base change over a reduced base
@@ -39,6 +42,8 @@ Rank-one fibres and finite cohomology identify the base ring with global
 sections after base change. Localizations compare the algebra map with the
 corresponding scalar-extended Cech kernel.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -66,9 +71,9 @@ namespace PushforwardStructureSheaf
 variable {R : Type u} [CommRing R] {X : Scheme.{u}} (c : X ⟶ Spec (.of R))
 
 theorem specMap_algebraMap_eq' (U : X.Opens) (hU : IsAffineOpen U) :
-    letI := algebraOfHom c U
+    let := algebraOfHom c U
     Spec.map (CommRingCat.ofHom (algebraMap R Γ(X, U))) = hU.fromSpec ≫ c := by
-  let := algebraOfHom c U
+  intro sharedOwner1
   have halg : (algebraMap R Γ(X, U)) = ((Scheme.ΓSpecIso (.of R)).inv ≫ c.appLE ⊤ U le_top).hom :=
       rfl
   rw [halg, CommRingCat.ofHom_hom, Spec.map_comp, ← Scheme.isoSpec_Spec_inv, ←
@@ -164,10 +169,10 @@ theorem bijective_algebraMap_sections_baseChange_of_isReduced'
     (hH0 : ∀ (K : Type u) [Field K] [Algebra R K],
       Module.finrank K (LinearMap.ker ((𝒱.structureSheafSections c).cechDiff.baseChange K)) = 1)
     (A : Type u) [CommRing A] [Algebra R A] :
-    letI := algebraOfHom (Limits.pullback.snd c (specMap R A)) ⊤
+    let := algebraOfHom (Limits.pullback.snd c (specMap R A)) ⊤
     Function.Bijective (algebraMap A Γ(Limits.pullback c (specMap R A), ⊤)) := by
+  intro instA
   classical
-  let instA := algebraOfHom (Limits.pullback.snd c (specMap R A)) ⊤
   set S := 𝒱.structureSheafSections c with hS
   have : Module.Flat R (𝒱.cover c).A0 := flat_sections c 𝒱.U0 𝒱.isAffineOpen_U0
   have : Module.Flat R (𝒱.cover c).A1 := flat_sections c 𝒱.U1 𝒱.isAffineOpen_U1

@@ -10,22 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.Equalizer
-import Nyll.SchemeTheory.RingTheory.Flat.Product
-import Nyll.SchemeTheory.RingTheory.Flat.Kernel
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Prod
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.Algebra.Module.Projective
-import Mathlib.Algebra.Module.FinitePresentation
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.Equalizer
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
+public import Nyll.SchemeTheory.RingTheory.Flat.Kernel
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
 
 /-!
 Finite free two-term models for Cech kernels and their base changes.
 A lifted presentation of the cokernel yields a model inducing bijections on all kernels.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -160,16 +165,16 @@ variable [Module.Flat R C1]
 
 theorem subtype_baseChange_injective :
     Function.Injective ((K0 d).subtype.baseChange A) := by
-  rw [LinearMap.baseChange_eq_ltensor]
+  rw [LinearMap.baseChange_eq_lTensor]
   exact LinearMap.lTensor_injective_of_exact_of_flat (d.coprod (lift d))
     (surjective_coprod d) _ (K0 d).subtype_injective (LinearMap.exact_subtype_ker_map _) A
 omit [Module.Flat R C1] in
 theorem mem_range_subtype_baseChange (w : A ⊗[R] (C0 × (Fin (rank d) → R))) :
     ((d.coprod (lift d)).baseChange A) w = 0 ↔ ∃ z, ((K0 d).subtype.baseChange A) z = w := by
   have heqι : ⇑((K0 d).subtype.baseChange A) = ⇑((K0 d).subtype.lTensor A) :=
-    LinearMap.baseChange_eq_ltensor _
+    LinearMap.baseChange_eq_lTensor _
   have heqc : ⇑((d.coprod (lift d)).baseChange A) = ⇑((d.coprod (lift d)).lTensor A) :=
-    LinearMap.baseChange_eq_ltensor _
+    LinearMap.baseChange_eq_lTensor _
   rw [heqc]
   simp only [heqι]
   exact lTensor_exact A (LinearMap.exact_subtype_ker_map _) (surjective_coprod d) w

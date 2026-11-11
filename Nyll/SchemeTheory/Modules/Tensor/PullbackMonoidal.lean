@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Localization.Monoidal.Functor
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PresheafPullbackMonoidal
+module
+
+public import Mathlib.CategoryTheory.Localization.Monoidal.Functor
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PresheafPullbackMonoidal
 
 /-!
 # Tensor compatibility of module pullback on schemes
@@ -23,6 +25,8 @@ Pullback on module presheaves descends through module sheafification to a monoid
 on module sheaves. Its tensor and unit comparison isomorphisms identify pullbacks of tensor
 products and structure modules with the corresponding tensor products and structure modules.
 -/
+
+@[expose] public section
 
 universe u
 

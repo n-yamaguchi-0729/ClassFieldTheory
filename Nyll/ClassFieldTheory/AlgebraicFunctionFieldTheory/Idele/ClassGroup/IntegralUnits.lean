@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
-import Mathlib.Topology.Algebra.Group.Quotient
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # The divisor class group as a quotient of the idele class group
@@ -15,6 +18,8 @@ The kernel is exactly the image of the everywhere-integral ideles. Over a finite
 constant field this kernel is compact. The quotient is the existing full Picard
 group; the degree direction is retained.
 -/
+
+@[expose] public section
 
 noncomputable section
 

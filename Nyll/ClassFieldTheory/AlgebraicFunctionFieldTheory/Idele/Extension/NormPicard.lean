@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Norm.PicardNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
 
 /-!
 # Compatibility of actual idele and Picard norms
@@ -13,6 +17,8 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDi
 Passing from an idele class to its divisor class commutes with the norm.
 Both norms are computed from the existing inertia-weighted divisor pushforward.
 -/
+
+@[expose] public section
 
 noncomputable section
 

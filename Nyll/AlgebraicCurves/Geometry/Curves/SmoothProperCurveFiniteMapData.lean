@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Mathlib.RingTheory.Etale.Basic
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Mathlib.RingTheory.Etale.Basic
 
 /-!
 # Finite coordinate maps on a pointed relative curve
@@ -21,6 +23,8 @@ Two affine charts cover the curve, with reciprocal coordinates on their intersec
 The coordinate maps are finite, and their level sets have the specified common free rank.
 The associated affine cover and the generic étaleness condition are constructed from this data.
 -/
+
+@[expose] public section
 
 noncomputable section
 

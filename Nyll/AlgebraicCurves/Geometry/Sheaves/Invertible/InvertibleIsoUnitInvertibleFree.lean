@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
-import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.FinrankBaseChangeSectionsEqOne
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.InvertibleModules
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
+public import Nyll.SchemeTheory.Modules.Sections.FiniteSectionsLocallyTrivial
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.FinrankBaseChangeSectionsEqOne
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.InvertibleModules
 
 /-!
 # Scheme Modules Is Invertible nonempty iso unit of forall invertible free
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

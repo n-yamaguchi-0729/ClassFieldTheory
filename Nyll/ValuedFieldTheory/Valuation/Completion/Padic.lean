@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
-import Mathlib.NumberTheory.Ostrowski
-import Mathlib.NumberTheory.Padics.PadicNumbers
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
+public import Mathlib.NumberTheory.Ostrowski
+public import Mathlib.NumberTheory.Padics.PadicNumbers
 
 /-!
 # The `p`-adic completion used in the global cyclotomic argument
@@ -17,6 +19,8 @@ over mathlib's concrete field `ℚ_[p]`.  For the rational `p`-adic absolute
 value these are canonically isomorphic.  This file packages that comparison
 without adding any hypothesis to the global theorem.
 -/
+
+@[expose] public section
 
 noncomputable section
 

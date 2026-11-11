@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.LinearAlgebra.Finsupp.Supported
-import Mathlib.RingTheory.Finiteness.Finsupp
-import Mathlib.RingTheory.Noetherian.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
+module
+
+public import Mathlib.LinearAlgebra.Finsupp.Supported
+public import Mathlib.RingTheory.Finiteness.Finsupp
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
 
 /-!
 # Finite generation of the full Picard group
@@ -17,6 +19,8 @@ The degree-zero subgroup is finite and the degree image is a subgroup of the int
 Consequently the full Picard group is finitely generated, even when the base field is
 smaller than the full field of constants.
 -/
+
+@[expose] public section
 
 noncomputable section
 

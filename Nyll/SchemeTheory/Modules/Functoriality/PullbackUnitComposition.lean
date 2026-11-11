@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-!
 # Units and composition of pullback functors
@@ -18,6 +20,8 @@ import Mathlib.AlgebraicGeometry.Modules.Sheaf
 The unit for a composite scheme morphism agrees with the successive units
 after the canonical pullback composition comparison.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

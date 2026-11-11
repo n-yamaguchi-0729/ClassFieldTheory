@@ -4,7 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+public import Nyll.GaloisCohomology.Kummer.Abstract.KummerDelta
 
 /-!
 # Rational abstract extension transport to ordinary idele classes
@@ -13,6 +18,8 @@ Compatibility of abstract extension with ordinary idele classes.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -26,6 +33,10 @@ section RationalIdeleExtension
 
 open Reciprocity
 open LocalClassFieldTheory
+
+attribute [local instance]
+  rationalAbstractFixedFieldFiniteDimensional rationalIdeleClassDirectLimitSMul
+  rationalAbstractTowerClassGroupCommGroup
 
 /-- The abstract extension representation, followed by the actual
 relative-to-ordinary comparison over the intermediate fixed field, is
@@ -49,25 +60,25 @@ theorem rationalAbstractExtensionIdeleClassEquiv_to_ordinary
       K L hLK hnormal).V) :
     let F := abstractFixedField ℚ (SeparableClosure ℚ) K
     let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-    letI := hnormal
-    letI : FiniteDimensional ℚ F :=
+    let _ : (extensionSubgroup K L hLK).Normal := hnormal
+    let _ : FiniteDimensional ℚ F :=
       abstractFixedField_finiteDimensional
         ℚ (SeparableClosure ℚ) K hKfinite
-    letI : FiniteDimensional F E :=
+    let _ : FiniteDimensional F E :=
       abstractRelativeFixedField_finiteDimensional
         ℚ (SeparableClosure ℚ) K L hLK hKfinite hfinite
-    letI : IsScalarTower ℚ F E :=
+    let _ : IsScalarTower ℚ F E :=
       IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-    letI : FiniteDimensional ℚ E :=
+    let _ : FiniteDimensional ℚ E :=
       FiniteDimensional.trans ℚ F E
-    letI : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
+    let _ : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
       change FiniteDimensional ℚ
         (abstractFixedField ℚ (SeparableClosure ℚ) L)
       change FiniteDimensional ℚ E
       infer_instance
-    letI : NumberField F :=
+    let _ : NumberField F :=
       NumberField.of_module_finite ℚ F
-    letI : NumberField E :=
+    let _ : NumberField E :=
       NumberField.of_module_finite ℚ E
     (MulEquiv.toAdditive
       (_root_.relativeIdeleClassBaseChangeMulEquiv
@@ -79,28 +90,8 @@ theorem rationalAbstractExtensionIdeleClassEquiv_to_ordinary
         (extensionFixedRepresentationEquiv
           rationalIdeleClassRepresentation
           K L hLK hnormal x) := by
-  let F := abstractFixedField ℚ (SeparableClosure ℚ) K
-  let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  let := hnormal
-  let : FiniteDimensional ℚ F :=
-    abstractFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K hKfinite
-  let : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K L hLK hKfinite hfinite
-  let : IsScalarTower ℚ F E :=
-    IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  let : FiniteDimensional ℚ E :=
-    FiniteDimensional.trans ℚ F E
-  let : FiniteDimensional ℚ (E.restrictScalars ℚ) := by
-    change FiniteDimensional ℚ
-      (abstractFixedField ℚ (SeparableClosure ℚ) L)
-    change FiniteDimensional ℚ E
-    infer_instance
-  let : NumberField F :=
-    NumberField.of_module_finite ℚ F
-  let : NumberField E :=
-    NumberField.of_module_finite ℚ E
+  intro F E hnormalInstance hFfinite hFEfinite htower hEfinite
+    hRestrictFinite hFnumberField hEnumberField
   let eAmbient :=
     extensionFixedRepresentationEquiv
       rationalIdeleClassRepresentation K L hLK hnormal

@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Mathlib.Topology.Algebra.InfiniteSum.Basic
-import Mathlib.Topology.Algebra.InfiniteSum.Constructions
-import Mathlib.Topology.Algebra.RestrictedProduct.Basic
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+module
+
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Mathlib.Topology.Algebra.InfiniteSum.Basic
+public import Mathlib.Topology.Algebra.InfiniteSum.Constructions
+public import Mathlib.Topology.Algebra.RestrictedProduct.Basic
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Continuous idele homomorphisms are determined at one place
@@ -20,6 +23,8 @@ its restricted-product topology. All partial products lie in one principal
 chart, where convergence is coordinatewise. Thus equality on every local
 inclusion determines any continuous homomorphism into a Hausdorff group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

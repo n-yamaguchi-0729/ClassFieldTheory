@@ -10,39 +10,43 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Descent.ModuleIsDirectLimitLinearEquiv
-import Mathlib.Algebra.Colimit.DirectLimit
-import Mathlib.Algebra.Colimit.Module
-import Mathlib.Algebra.Module.Equiv.Basic
-import Mathlib.Algebra.Module.LinearMap.Defs
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.Data.Finset.Order
-import Mathlib.Order.Directed
-import Mathlib.LinearAlgebra.Finsupp.LinearCombination
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Defs
-import Mathlib.LinearAlgebra.TensorProduct.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Map
-import Mathlib.LinearAlgebra.TensorProduct.DirectLimit
-import Mathlib.LinearAlgebra.TensorProduct.Pi
-import Mathlib.LinearAlgebra.TensorProduct.Quotient
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.Ext
+module
+
+public import Nyll.SchemeTheory.Descent.ModuleIsDirectLimitLinearEquiv
+public import Mathlib.Algebra.Colimit.DirectLimit
+public import Mathlib.Algebra.Colimit.Module
+public import Mathlib.Algebra.Module.Equiv.Basic
+public import Mathlib.Algebra.Module.LinearMap.Defs
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.Data.Finset.Order
+public import Mathlib.Order.Directed
+public import Mathlib.LinearAlgebra.Finsupp.LinearCombination
+public import Mathlib.LinearAlgebra.Pi
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+public import Mathlib.LinearAlgebra.TensorProduct.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Map
+public import Mathlib.LinearAlgebra.TensorProduct.DirectLimit
+public import Mathlib.LinearAlgebra.TensorProduct.Pi
+public import Mathlib.LinearAlgebra.TensorProduct.Quotient
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.Ext
 
 /-!
 # Compatible descent of linear equivalences
 
 Descends a linear equivalence of finitely presented modules to a compatible finite stage.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

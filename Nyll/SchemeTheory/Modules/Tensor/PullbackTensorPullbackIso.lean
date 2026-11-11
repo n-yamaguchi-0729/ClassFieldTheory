@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PresheafPullbackMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+module
+
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PresheafPullbackMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
 /-!
 # Tensoring with a module trivial on an open
 
 Over the inverse image of an open where a module is trivial, tensoring with its pullback
 preserves the restricted pullback of the other module up to isomorphism.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

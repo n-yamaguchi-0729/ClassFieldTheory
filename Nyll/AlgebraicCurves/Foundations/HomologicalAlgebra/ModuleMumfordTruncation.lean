@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFlatK0
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFiniteK0
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveKerMapBaseChange
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFlatK0
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordFiniteK0
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveKerMapBaseChange
 
 /-!
 # Module exists mumford Truncation of flat complex
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -48,7 +52,7 @@ variable [Module.Finite R (C2 ⧸ LinearMap.range d1)]
 
 theorem subtype_baseChange_injective [Module.Flat R C2] (A : Type u) [CommRing A] [Algebra R A] :
     Function.Injective ((K0 d1).subtype.baseChange A) := by
-  rw [LinearMap.baseChange_eq_ltensor]
+  rw [LinearMap.baseChange_eq_lTensor]
   exact LinearMap.lTensor_injective_of_exact_of_flat (d1.coprod (lift d1))
     (surjective_coprod d1) _ (K0 d1).subtype_injective (LinearMap.exact_subtype_ker_map _) A
 
@@ -297,9 +301,9 @@ theorem mem_range_subtype_baseChange (A : Type u) [CommRing A] [Algebra R A]
     (w : A ⊗[R] (C0 × (Fin (rank δ) → R))) :
     ((δ.coprod (lift δ)).baseChange A) w = 0 ↔ ∃ z, ((K0 δ).subtype.baseChange A) z = w := by
   have heqι : ⇑((K0 δ).subtype.baseChange A) = ⇑((K0 δ).subtype.lTensor A) :=
-    LinearMap.baseChange_eq_ltensor _
+    LinearMap.baseChange_eq_lTensor _
   have heqc : ⇑((δ.coprod (lift δ)).baseChange A) = ⇑((δ.coprod (lift δ)).lTensor A) :=
-    LinearMap.baseChange_eq_ltensor _
+    LinearMap.baseChange_eq_lTensor _
   rw [heqc]
   simp only [heqι]
   exact lTensor_exact A (LinearMap.exact_subtype_ker_map _) (surjective_coprod δ) w

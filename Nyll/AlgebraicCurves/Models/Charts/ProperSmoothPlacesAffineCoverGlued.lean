@@ -10,93 +10,97 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Construction
-import Nyll.AlgebraicCurves.Models.Charts.ChartAlgebra
-import Nyll.AlgebraicCurves.Models.Construction.Smoothness
-import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMemFinsetField
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.Algebra.Tower
-import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
-import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Eval.Coeff
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Gluing
-import Mathlib.AlgebraicGeometry.Morphisms.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
-import Mathlib.AlgebraicGeometry.Morphisms.RingHomProperties
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.AlgebraicGeometry.StructureSheaf
-import Mathlib.AlgebraicGeometry.ValuativeCriterion
-import Mathlib.CategoryTheory.Limits.HasLimits
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Cospan
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.Set.Finite.Lattice
-import Mathlib.Data.Set.Insert
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
-import Mathlib.FieldTheory.Perfect
-import Mathlib.FieldTheory.Separable
-import Mathlib.LinearAlgebra.Dimension.Basic
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.RingTheory.Algebraic.Integral
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.Basic
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
-import Mathlib.RingTheory.EssentialFiniteness
-import Mathlib.RingTheory.Etale.Field
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.RingTheory.Etale.Locus
-import Mathlib.RingTheory.FinitePresentation
-import Mathlib.RingTheory.FiniteType
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.Ideal.Basic
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Ideal.Prime
-import Mathlib.RingTheory.Ideal.Quotient.Basic
-import Mathlib.RingTheory.Ideal.Quotient.Defs
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.Ideal.Span
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.Jacobson.Ring
-import Mathlib.RingTheory.Kaehler.Basic
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Localization.Basic
-import Mathlib.RingTheory.Localization.Defs
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Localization.LocalizationLocalization
-import Mathlib.RingTheory.Localization.Submodule
-import Mathlib.RingTheory.RingHom.Locally
-import Mathlib.RingTheory.RingHom.StandardSmooth
-import Mathlib.RingTheory.Smooth.Basic
-import Mathlib.RingTheory.Smooth.Fiber
-import Mathlib.RingTheory.Smooth.Field
-import Mathlib.RingTheory.Smooth.Locus
-import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
-import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.Unramified.LocalRing
-import Mathlib.RingTheory.Unramified.Locus
-import Mathlib.RingTheory.Valuation.Basic
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.Tactic.Ring.RingNF
-import Mathlib.Topology.JacobsonSpace
-import Mathlib.Topology.Sober
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Construction
+public import Nyll.AlgebraicCurves.Models.Charts.ChartAlgebra
+public import Nyll.AlgebraicCurves.Models.Construction.Smoothness
+public import Nyll.AlgebraicCurves.Models.Charts.IsAffineOpenMemFinsetField
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
+public import Mathlib.Algebra.GroupWithZero.NonZeroDivisors
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Eval.Coeff
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Gluing
+public import Mathlib.AlgebraicGeometry.Morphisms.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiSeparated
+public import Mathlib.AlgebraicGeometry.Morphisms.RingHomProperties
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.AlgebraicGeometry.StructureSheaf
+public import Mathlib.AlgebraicGeometry.ValuativeCriterion
+public import Mathlib.CategoryTheory.Limits.HasLimits
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Cospan
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Set.Finite.Lattice
+public import Mathlib.Data.Set.Insert
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.LinearAlgebra.Dimension.Basic
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.RingTheory.Algebraic.Integral
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.Basic
+public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+public import Mathlib.RingTheory.EssentialFiniteness
+public import Mathlib.RingTheory.Etale.Field
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.RingTheory.Etale.Locus
+public import Mathlib.RingTheory.FinitePresentation
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.Ideal.Basic
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Ideal.Prime
+public import Mathlib.RingTheory.Ideal.Quotient.Basic
+public import Mathlib.RingTheory.Ideal.Quotient.Defs
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.Ideal.Span
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Jacobson.Ring
+public import Mathlib.RingTheory.Kaehler.Basic
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Localization.Basic
+public import Mathlib.RingTheory.Localization.Defs
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Localization.LocalizationLocalization
+public import Mathlib.RingTheory.Localization.Submodule
+public import Mathlib.RingTheory.RingHom.Locally
+public import Mathlib.RingTheory.RingHom.StandardSmooth
+public import Mathlib.RingTheory.Smooth.Basic
+public import Mathlib.RingTheory.Smooth.Fiber
+public import Mathlib.RingTheory.Smooth.Field
+public import Mathlib.RingTheory.Smooth.Locus
+public import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+public import Mathlib.RingTheory.Smooth.StandardSmoothOfFree
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.Unramified.LocalRing
+public import Mathlib.RingTheory.Unramified.Locus
+public import Mathlib.RingTheory.Valuation.Basic
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.Tactic.Ring.RingNF
+public import Mathlib.Topology.JacobsonSpace
+public import Mathlib.Topology.Sober
 
 /-!
 # Curve Model is Proper smooth places affine Cover glued
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -105,11 +109,6 @@ namespace AlgebraicCurves.Models.Proofs.CurveModel_isProper_smooth_places_affine
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry IntermediateField AlgebraicCurve
   IsLocalRing
 open AlgebraicCurve.CurveModel
-
-local instance locallyOfFiniteType_isZariskiLocalAtSource :
-    IsZariskiLocalAtSource (@LocallyOfFiniteType) :=
-  AlgebraicGeometry.HasRingHomProperty.instIsZariskiLocalAtSource
-    (Q := RingHom.FiniteType)
 
 noncomputable section
 
@@ -164,6 +163,9 @@ variable (K : Type u) [Field K] {L : Type u} [Field L] [Algebra K L] (t : L) [Fa
 
 private theorem locallyOfFiniteType_gluedToBase_of_isSeparable [FiniteDimensional K⟮t⟯ L]
     [Algebra.IsSeparable K⟮t⟯ L] : LocallyOfFiniteType (gluedToBase K t) := by
+  have : IsZariskiLocalAtSource (@LocallyOfFiniteType.{u}) :=
+    HasRingHomProperty.instIsZariskiLocalAtSource
+      (P := @LocallyOfFiniteType.{u}) (Q := RingHom.FiniteType)
   have h₀' : LocallyOfFiniteType (ι₀ K t ≫ gluedToBase K t) := by
     rw [ι₀_gluedToBase, HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)]
     exact RingHom.finiteType_algebraMap.mpr inferInstance
@@ -669,6 +671,9 @@ variable [FiniteDimensional ↥K⟮t⟯ L] [Algebra.IsSeparable ↥K⟮t⟯ L]
 
 private scoped instance locallyOfFiniteType_gluedToBase' : LocallyOfFiniteType
   (CurveModel.gluedToBase K t) := by
+  have : IsZariskiLocalAtSource (@LocallyOfFiniteType.{u}) :=
+    HasRingHomProperty.instIsZariskiLocalAtSource
+      (P := @LocallyOfFiniteType.{u}) (Q := RingHom.FiniteType)
   have h₀' : LocallyOfFiniteType (CurveModel.ι₀ K t ≫ CurveModel.gluedToBase K t) := by
     rw [CurveModel.ι₀_gluedToBase, HasRingHomProperty.Spec_iff (P := @LocallyOfFiniteType)]
     exact RingHom.finiteType_algebraMap.mpr inferInstance
@@ -919,17 +924,6 @@ private theorem range_stalk_eq_gluedPlaceOfPoint' (ht : Transcendental K t) (x :
       exact ⟨a, b, (by simpa [primeOfιInf'] using hb), rfl⟩
     · rintro ⟨a, b, hb, rfl⟩
       exact ⟨a, b, (by simpa [primeOfιInf'] using hb), rfl⟩
-
-private theorem exists_placeOfPoint_glued (ht : Transcendental K t) :
-    ∃ P : closedPoints (CurveModel.glued K t) → Place K L, Function.Bijective P ∧
-      ∀ x : closedPoints (CurveModel.glued K t),
-        (((CurveModel.gluedFunctionFieldEquiv K t).symm :
-              (CurveModel.glued K t).functionField ≃+* L).toRingHom.comp
-            (algebraMap ((CurveModel.glued K t).presheaf.stalk x.1)
-              (CurveModel.glued K t).functionField)).range =
-          (P x).toValuationSubring.toSubring :=
-  ⟨gluedPlaceOfPoint' K t ht, gluedPlaceOfPoint'_bijective K t ht,
-    range_stalk_eq_gluedPlaceOfPoint' K t ht⟩
 
 end PlaceDictionary
 

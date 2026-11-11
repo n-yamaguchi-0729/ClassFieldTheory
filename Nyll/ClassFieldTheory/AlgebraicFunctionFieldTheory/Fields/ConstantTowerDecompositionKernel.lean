@@ -4,18 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Action.Defs
-import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantDecompositionGenerator
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFieldExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFrobeniusPlace
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteConstantsInClosure
-import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
+module
+
+public import Mathlib.Algebra.Group.Action.Defs
+public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantDecompositionGenerator
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFieldExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFrobeniusPlace
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteConstantsInClosure
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Lifting constant Frobenius powers to decomposition automorphisms
@@ -26,6 +28,8 @@ chosen upper place. The lift is the corresponding power of the actual
 full-constant Frobenius. The change of exponent is the residue-degree formula
 under extension of constants.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.Taylor.UniquePDigitsTranscendental
-import Nyll.AlgebraicCurves.Places.Orders.TranscendentalOrdNeZero
-import Nyll.AlgebraicCurves.FunctionFields.Extensions.FiniteSimpleExtensions
-import Nyll.SchemeTheory.FunctionFields.FrobeniusSubfield
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.Taylor.UniquePDigitsTranscendental
+public import Nyll.AlgebraicCurves.Places.Orders.TranscendentalOrdNeZero
+public import Nyll.AlgebraicCurves.FunctionFields.Extensions.FiniteSimpleExtensions
+public import Nyll.SchemeTheory.FunctionFields.FrobeniusSubfield
 
 /-!
 # Detecting prime powers in one completion
@@ -19,6 +21,8 @@ in the completion because its order is one. Comparing its p-digit
 coefficients shows that an element which becomes a pth power was already
 a pth power in the function field.
 -/
+
+@[expose] public section
 
 noncomputable section
 open AlgebraicCurve

@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Tactic.Positivity.Finset
-import Mathlib.Algebra.MvPolynomial.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Abel
-import Lean.Elab.Tactic.NormCast
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+module
+
+public import Mathlib.Tactic.Positivity.Finset
+public import Mathlib.Algebra.MvPolynomial.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Abel
+public import Lean.Elab.Tactic.NormCast
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
 
 /-!
 Cech sections and cohomology of graded modules for projective space.
 Fraction sections, presentations and maps supply the coordinate-chart complexes.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -113,7 +117,7 @@ theorem GradedModule.monMul_single (j : Fin (n + 1)) (k : ℕ) :
     Finset.noncommProd_congr (Finset.insert_erase (mem_univ j)).symm (fun _ _ => rfl) _
   erw [hkey, Finset.noncommProd_insert_of_notMem _ _ _ _ (Finset.notMem_erase j _),
     GradedModule.noncommProd_one D _ _ _
-      (fun i hi => by simp [Pi.single_eq_of_ne (Finset.ne_of_mem_erase hi)]),
+      (fun i hi => by simp only [Pi.single_eq_of_ne (Finset.ne_of_mem_erase hi), pow_zero]),
     mul_one, Pi.single_eq_same]
 
 theorem GradedModule.xMul_pow_mem_grade (j : Fin (n + 1)) (k : ℕ) (d : ℤ) :

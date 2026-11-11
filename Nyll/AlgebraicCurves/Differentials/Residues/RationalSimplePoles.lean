@@ -10,32 +10,34 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Residues.Construction
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.Places.Rational.Differentials
-import Nyll.AlgebraicCurves.Differentials.Local.LocalGeometry
-import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
-import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
-import Nyll.AlgebraicCurves.Places.Rational.FiniteOrder
-import Nyll.AlgebraicCurves.Places.Rational.Classification
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Basic
-import Mathlib.Algebra.BigOperators.Field
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
-import Mathlib.RingTheory.Trace.Basic
-import Mathlib.FieldTheory.Minpoly.MinpolyDiv
-import Mathlib.RingTheory.Trace.Quotient
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.Push
-import Mathlib.RingTheory.EssentialFiniteness
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.NormNum
-import Lean.Elab.Tactic.Omega
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.Places.Rational.Differentials
+public import Nyll.AlgebraicCurves.Differentials.Local.LocalGeometry
+public import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
+public import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
+public import Nyll.AlgebraicCurves.Places.Rational.FiniteOrder
+public import Nyll.AlgebraicCurves.Places.Rational.Classification
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Mathlib.Algebra.BigOperators.Field
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Mathlib.FieldTheory.Minpoly.IsIntegrallyClosed
+public import Mathlib.RingTheory.Trace.Basic
+public import Mathlib.FieldTheory.Minpoly.MinpolyDiv
+public import Mathlib.RingTheory.Trace.Quotient
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.Push
+public import Mathlib.RingTheory.EssentialFiniteness
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.NormNum
+public import Lean.Elab.Tactic.Omega
 
 /-!
 # Simple-pole residues on the rational function field
@@ -43,6 +45,8 @@ import Lean.Elab.Tactic.Omega
 The finite-place Euler trace and the coefficient at infinity give cancellation for a simple
 principal part. Local residues, places, and differential integrality use the shared constructions.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurves.Differentials.Residues.Proofs.RationalSimplePoles
 namespace AlgebraicCurve.RationalFunctionField

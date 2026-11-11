@@ -24,6 +24,8 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 open NumberField IsDedekindDomain
@@ -31,7 +33,7 @@ open NumberField IsDedekindDomain
 /-- The ordinary class group acts through the Frobenius-normalized Artin
 isomorphism on a small Hilbert class field. -/
 theorem smallHilbertClassField_artinEquiv
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (E : FiniteAbelianExtension K) (hE : IsSmallHilbertClassField E) :
     ∃ artin : RayClassGroup (ordinaryRayClassModulus K) ≃*
         (E ≃ₐ[K] E),

@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Mathlib.CategoryTheory.Sites.LocallyBijective
-import Mathlib.Tactic.DefEqTransformations
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Mathlib.CategoryTheory.Sites.LocallyBijective
+public import Mathlib.Tactic.DefEqTransformations
 
 /-!
 # Locally surjective maps between invertible module sheaves
@@ -20,6 +22,8 @@ import Mathlib.Tactic.DefEqTransformations
 A locally surjective morphism between invertible module sheaves is an isomorphism,
 using unit-module maps under local trivializations and a covering criterion.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

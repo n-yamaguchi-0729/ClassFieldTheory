@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebraNormSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
-import Mathlib.NumberTheory.LocalField.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebraNormSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Small
 
 /-!
 # The reducible Kummer algebra at one
@@ -15,6 +19,8 @@ Even when its rank is `n`, the algebra `K[X]/(Xⁿ-1)` has surjective norm
 under the local Kummer hypotheses. This is the simplest instance showing
 that norm index and algebra rank are different invariants.
 -/
+
+@[expose] public section
 
 noncomputable section
 

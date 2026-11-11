@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.TensorProduct.Basic
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
 
 /-!
 # Base change of sections on two affine charts
@@ -22,6 +24,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseCha
 A locally trivial module has scalar-extension equivalences for sections on the two
 affine charts and their overlap, compatible with restrictions and adjunction units.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

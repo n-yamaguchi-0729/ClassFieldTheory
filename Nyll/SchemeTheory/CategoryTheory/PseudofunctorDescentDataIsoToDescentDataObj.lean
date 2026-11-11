@@ -10,33 +10,37 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Bicategory.Functor.Cat
-import Mathlib.CategoryTheory.Bicategory.Functor.Pseudofunctor
-import Mathlib.CategoryTheory.Bicategory.LocallyDiscrete
-import Mathlib.CategoryTheory.Bicategory.Strict.Pseudofunctor
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Category.Cat
-import Mathlib.CategoryTheory.Equivalence
-import Mathlib.CategoryTheory.EssentialImage
-import Mathlib.CategoryTheory.Functor.Basic
-import Mathlib.CategoryTheory.Functor.FullyFaithful
-import Mathlib.CategoryTheory.Iso
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
-import Mathlib.CategoryTheory.NatIso
-import Mathlib.CategoryTheory.Opposites
-import Mathlib.CategoryTheory.Sites.Descent.DescentData
-import Mathlib.CategoryTheory.Sites.Descent.IsPrestack
-import Mathlib.CategoryTheory.Sites.Sieves.Presieve
-import Mathlib.Logic.Equiv.Defs
-import Mathlib.Tactic.CategoryTheory.Reassoc
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.DefEqTransformations
-import Mathlib.Tactic.Simps.Basic
+module
+
+public import Mathlib.CategoryTheory.Bicategory.Functor.Cat
+public import Mathlib.CategoryTheory.Bicategory.Functor.Pseudofunctor
+public import Mathlib.CategoryTheory.Bicategory.LocallyDiscrete
+public import Mathlib.CategoryTheory.Bicategory.Strict.Pseudofunctor
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.CategoryTheory.Category.Cat
+public import Mathlib.CategoryTheory.Equivalence
+public import Mathlib.CategoryTheory.EssentialImage
+public import Mathlib.CategoryTheory.Functor.Basic
+public import Mathlib.CategoryTheory.Functor.FullyFaithful
+public import Mathlib.CategoryTheory.Iso
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
+public import Mathlib.CategoryTheory.NatIso
+public import Mathlib.CategoryTheory.Opposites
+public import Mathlib.CategoryTheory.Sites.Descent.DescentData
+public import Mathlib.CategoryTheory.Sites.Descent.IsPrestack
+public import Mathlib.CategoryTheory.Sites.Sieves.Presieve
+public import Mathlib.Logic.Equiv.Defs
+public import Mathlib.Tactic.CategoryTheory.Reassoc
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.DefEqTransformations
+public import Mathlib.Tactic.Simps.Basic
 
 /-!
 # Category Theory Pseudofunctor Descent Data exists iso to Descent Data obj of is Stack For
 of forall exists iso pull Functor obj
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -280,8 +284,6 @@ lemma theta_hom_hom_comp {Y₀' Y₀ : C} (g : Y₀' ⟶ Y₀) (q₀ : Y₀ ⟶ 
     gfj.op.toLoc (pullback.snd f q₀' ≫ g).op.toLoc (pullback.snd f q₀' ≫ gfj).op.toLoc
     (op_toLoc_comp _ _ hgfj) rfl (op_toLoc_comp _ _ rfl) (L i)
   rw [reassoc_of% h5]
-  try simp only [Category.assoc]
-  try rfl
 
 lemma theta_inv_hom_comp {Y₀' Y₀ : C} (g : Y₀' ⟶ Y₀) (q₀ : Y₀ ⟶ S) (q₀' : Y₀' ⟶ S) (hq : g ≫ q₀ =
   q₀')
@@ -564,7 +566,6 @@ lemma gluedHom_eq_of_fac ⦃W : C⦄ (w : W ⟶ X) ⦃i₁ i₂ : ι⦄ (k₁ : 
     (op_toLoc_comp _ _ (restrMap_snd f (u i₂) (w ≫ f) _ h₂)) (op_toLoc_comp _ _ hσ₂)
     (op_toLoc_comp _ _ (by rw [sectionOf_snd_assoc])) (L i₂)
   rw [b4]
-  try simp only [Category.assoc]
   have cD : (F.map (sectionOf (f := f) w).op.toLoc).toFunctor.map ((F.mapComp' (pullback.snd f (u
     i₂)).op.toLoc
       (restrMap f (u i₂) (w ≫ f) (k₂ ≫ pullback.snd f (u i₂)) h₂).op.toLoc
@@ -821,10 +822,7 @@ theorem psiLoc_comm ⦃W : C⦄ (w : W ⟶ X) ⦃i₁ i₂ : ι⦄ (k₁ : W ⟶
     eh₂
   erw [me₁, me₂]
   simp only [Category.assoc]
-  try dsimp only [gluedData_obj] at F1' ⊢
-  first
-    | erw [reassoc_of% F1']
-    | erw [F1']
+  erw [F1']
   have Na₁ := F.mapComp'₀₁₃_inv_app (u i₁).op.toLoc (pullback.snd f (u i₁)).op.toLoc k₁.op.toLoc
     (pullback.snd f (u i₁) ≫ u i₁).op.toLoc (k₁ ≫ pullback.snd f (u i₁)).op.toLoc (w ≫ f).op.toLoc
     (op_toLoc_comp _ _ rfl) rfl (op_toLoc_comp _ _ h₁) L₀

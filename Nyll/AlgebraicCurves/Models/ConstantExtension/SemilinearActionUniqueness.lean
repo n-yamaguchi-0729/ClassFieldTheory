@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseChangeSemilinearAction
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseChangeSemilinearAction
 
 /-!
 # Uniqueness of the actual semilinear action
@@ -13,6 +15,10 @@ The action on germs determines the function-field automorphism. Together with
 the pullback projections, this identifies the semilinear automorphism attached
 to a specified automorphism of the constant field.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -38,7 +44,7 @@ theorem SemilinearAut.toRingAut_injective {K F : Type*} [Field K] [Field F] [Alg
 
 namespace CurveModel
 
-variable {K F : Type} [Field K] [Field F] [Algebra K F] (M : CurveModel K F)
+variable {K : Type u} {F : Type v} [Field K] [Field F] [Algebra K F] (M : CurveModel K F)
 
 /-- The formulas on actual germs uniquely determine the semilinear automorphism. -/
 theorem semilinearAut_eq_of_germ_action (θ : M.C ≅ M.C) (g h : SemilinearAut K F)
@@ -69,9 +75,9 @@ theorem semilinearAut_eq_of_germ_action (θ : M.C ≅ M.C) (g h : SemilinearAut 
     ((hg U t).trans ((hh U t).symm.trans (congrArg (h • ·) hz)))
 
 /-- The two projections uniquely specify the automorphism of the actual base-changed curve. -/
-theorem baseChange_iso_eq {k Ω : Type} [Field k] [Field Ω] [Algebra k Ω]
-    {F : Type} [Field F] [Algebra Ω F] (M : CurveModel Ω F)
-    {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+theorem baseChange_iso_eq {k Ω : Type u} [Field k] [Field Ω] [Algebra k Ω]
+    {F : Type v} [Field F] [Algebra Ω F] (M : CurveModel Ω F)
+    {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     (e : M.C ≅ pullback c (AlgebraicGeometry.SmoothProperCurve.specMap k Ω))
     (he : e.hom ≫ pullback.snd c (AlgebraicGeometry.SmoothProperCurve.specMap k Ω) = M.toBase)
     (θ ψ : M.C ≅ M.C)

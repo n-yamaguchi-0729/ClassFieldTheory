@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-!
 # Pullback-pushforward units on the image of an open immersion
 
 The unit is bijective on sections over opens contained in the image of the immersion.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -39,7 +43,7 @@ theorem _root_.AlgebraicGeometry.Scheme.Modules.bijective_unit_app_of_le_opensRa
       Subsingleton.elim _ _
   have hiso1 : IsIso (N.presheaf.map (homOfLE (j.image_preimage_le V)).op) := by
     rw [h2]
-    exact ⟨N.presheaf.map (eqToHom (congrArg op heq)), by simp [eqToHom_map], by simp [eqToHom_map]⟩
+    exact Functor.map_isIso N.presheaf (eqToHom (congrArg op heq.symm))
   have hiso2 : IsIso ((((restrictAdjunction j).leftAdjointUniq (pullbackPushforwardAdjunction
       j)).hom.app N).app
       (j ⁻¹ᵁ V)) := inferInstance

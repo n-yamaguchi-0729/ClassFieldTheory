@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardAction
-import Nyll.AlgebraicCurves.Divisors.Norm.PushforwardNormFormulaSeparable
-import Nyll.AlgebraicCurves.Divisors.Norm.SumGaloisSmulEqPullbackPushforward
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardAction
+public import Nyll.AlgebraicCurves.Divisors.Norm.PushforwardNormFormulaSeparable
+public import Nyll.AlgebraicCurves.Divisors.Norm.SumGaloisSmulEqPullbackPushforward
 
 /-!
 # The actual norm on full Picard groups
@@ -15,6 +17,8 @@ Divisor pushforward descends to Picard groups by the proved field-norm formula
 for principal divisors. Its pullback in a Galois extension is the sum of the
 actual conjugate classes.
 -/
+
+@[expose] public section
 
 noncomputable section
 

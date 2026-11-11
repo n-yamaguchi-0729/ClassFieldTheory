@@ -10,22 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.ValuativeCriterion
-import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.AlgClosed.Basic
-import Mathlib.AlgebraicGeometry.Limits
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Charts.ChartAlgebra
-import Nyll.AlgebraicCurves.Models.Construction.Smoothness
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.ValuativeCriterion
+public import Mathlib.Algebra.GCDMonoid.IntegrallyClosed
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.AlgClosed.Basic
+public import Mathlib.AlgebraicGeometry.Limits
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Charts.ChartAlgebra
+public import Nyll.AlgebraicCurves.Models.Construction.Smoothness
 
 /-!
 # Construction
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -42,13 +46,15 @@ variable (K : Type u) [Field K] {L : Type u} [Field L] [Algebra K L] (t : L)
 
 /-- The point of an affine scheme viewed through its underlying prime spectrum.
 This reducible bridge keeps type-sensitive stalk expressions stable across mathlib API changes. -/
-private abbrev specPoint {R : Type u} [CommRing R]
+abbrev specPoint {R : Type u} [CommRing R]
     (p : Spec (CommRingCat.of R)) : PrimeSpectrum R := p
 
-private abbrev schemePoint {R : Type u} [CommRing R]
+/-- A prime ideal viewed as a point of the associated affine scheme. -/
+abbrev schemePoint {R : Type u} [CommRing R]
     (p : PrimeSpectrum R) : Spec (CommRingCat.of R) := p
 
-private abbrev topPoint {R : Type u} [CommRing R]
+/-- A prime ideal viewed as a point of the topological prime spectrum. -/
+abbrev topPoint {R : Type u} [CommRing R]
     (p : PrimeSpectrum R) : (PrimeSpectrum.Top R) := p
 
 section Charts
@@ -90,9 +96,9 @@ theorem isUnit_inclInf_tInvChart (ht : t ≠ 0) : IsUnit (inclInf K t (tInvChart
   exact inv_mul_cancel₀ ht
 
 theorem isLocalization_away_incl₀ (ht : t ≠ 0) :
-    letI := (incl₀ K t).toRingHom.toAlgebra
+    let := (incl₀ K t).toRingHom.toAlgebra
     IsLocalization.Away (tChart K t) (chartRing K ({t, t⁻¹} : Set L)) := by
-  let := (incl₀ K t).toRingHom.toAlgebra
+  intro sharedOwner1
   refine (isLocalization_iff _ _).mpr ⟨?_, ?_, ?_⟩
   · rintro ⟨_, n, rfl⟩
     rw [RingHom.algebraMap_toAlgebra, map_pow]
@@ -112,9 +118,9 @@ theorem isLocalization_away_incl₀ (ht : t ≠ 0) :
     rw [chartIncl_injective K _ h]
 
 theorem isLocalization_away_inclInf (ht : t ≠ 0) :
-    letI := (inclInf K t).toRingHom.toAlgebra
+    let := (inclInf K t).toRingHom.toAlgebra
     IsLocalization.Away (tInvChart K t) (chartRing K ({t, t⁻¹} : Set L)) := by
-  let := (inclInf K t).toRingHom.toAlgebra
+  intro sharedOwner1
   refine (isLocalization_iff _ _).mpr ⟨?_, ?_, ?_⟩
   · rintro ⟨_, n, rfl⟩
     rw [RingHom.algebraMap_toAlgebra, map_pow]

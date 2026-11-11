@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantPicardNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtensionPicard
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtensionSurjective
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantPicardNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtensionPicard
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtensionSurjective
 
 /-!
 # Actual constant-extension norm kernel and reciprocity quotient
@@ -16,13 +18,17 @@ identify the actual norm subgroup with the kernel of the Frobenius character.
 Its quotient is the actual Galois group and has exactly the extension degree.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField.IdeleClassGroup
 
 open AlgebraicCurve
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]

@@ -10,26 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.NatInt
-import Mathlib.Algebra.Module.Projective
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.LinearAlgebra.Contraction
-import Mathlib.LinearAlgebra.Dual.Defs
-import Mathlib.LinearAlgebra.Dual.BaseChange
-import Mathlib.LinearAlgebra.TensorProduct.Defs
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.RingTheory.Finiteness.Descent
-import Mathlib.RingTheory.Flat.Equalizer
-import Mathlib.RingTheory.Flat.EquationalCriterion
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Mathlib.Algebra.Module.NatInt
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.LinearAlgebra.Contraction
+public import Mathlib.LinearAlgebra.Dual.Defs
+public import Mathlib.LinearAlgebra.Dual.BaseChange
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.RingTheory.Finiteness.Descent
+public import Mathlib.RingTheory.Flat.Equalizer
+public import Mathlib.RingTheory.Flat.EquationalCriterion
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.RingTheory.TensorProduct.Basic
 
 /-!
 # Module Invertible of invertible tensor Product of faithfully Flat
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -59,12 +63,14 @@ variable {M} in
 theorem dualBC_natural (u : M →ₗ[R] N) (z : S ⊗[R] Module.Dual R N) :
     dualBC S M (u.dualMap.lTensor S z) = (dualBC S N z) ∘ₗ u.baseChange S := by
   induction z using TensorProduct.inductionOn with
-  | add x y hx hy => simp [hx, hy, LinearMap.add_comp]
+  | add x y hx hy => simp only [map_add, hx, hy, LinearMap.add_comp]
   | tmul s f =>
     simp only [LinearMap.lTensor_tmul, dualBC_tmul]
     apply TensorProduct.AlgebraTensorModule.ext
     intro a m
-    simp [LinearMap.smul_comp]
+    simp only [LinearMap.smul_apply, Module.Dual.baseChange_apply_tmul, LinearMap.dualMap_apply,
+      smul_eq_mul, Algebra.mul_smul_comm, LinearMap.smul_comp, LinearMap.coe_comp,
+      Function.comp_apply, LinearMap.baseChange_tmul]
 
 theorem dualBC_bijective_of_free [Module.Free R M] [Module.Finite R M] :
     Function.Bijective (dualBC (R := R) S M) := by
@@ -77,14 +83,14 @@ theorem dualBC_bijective_of_free [Module.Free R M] [Module.Finite R M] :
   have heq : ⇑(dualBC (R := R) S M) = ⇑hd.equiv := by
     funext z
     induction z using TensorProduct.inductionOn with
-    | add x y hx hy => simp [hx, hy]
+    | add x y hx hy => simp only [map_add, hx, hy]
     | tmul s f =>
       rw [dualBC_tmul, IsBaseChange.equiv_tmul]
       congr 1
       apply TensorProduct.AlgebraTensorModule.ext
       intro a m
       rw [IsBaseChange.toDual_apply]
-      simp [hsymm]
+      simp only [Module.Dual.baseChange_apply_tmul, Module.Dual.congr_apply_apply, hsymm]
   rw [heq]
   exact hd.equiv.bijective
 
@@ -137,7 +143,7 @@ theorem finitePresentation_of_faithfullyFlat [Module.FinitePresentation S (S ⊗
     funext z
     induction z using TensorProduct.inductionOn with
     | add x y hx hy => simp only [map_add, hx, hy]
-    | tmul a m => simp [F]
+    | tmul a m => simp only [AlgebraTensorModule.lTensor_tmul, LinearMap.lTensor_tmul, F]
   have hF : Function.Surjective F := by
     rw [hFf]
     exact LinearMap.lTensor_surjective S hf

@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+module
+
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Basic
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
 /-!
 # Infinite-place Hilbert factors
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField

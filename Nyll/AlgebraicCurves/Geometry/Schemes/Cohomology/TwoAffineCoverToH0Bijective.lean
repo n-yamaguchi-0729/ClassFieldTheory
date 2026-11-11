@@ -10,12 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 Global sections identify with degree-zero Cech cohomology for a two-affine open cover.
 The sheaf condition supplies a ring equivalence with the equalizer of chart restrictions.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -43,7 +48,8 @@ namespace SheafCondition
 
 variable (X : Scheme.{u}) (U V : X.Opens)
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.SheafCondition.eqLocus
+/-- The ring of pairs of sections agreeing on the intersection of the two opens. -/
+abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.SheafCondition.eqLocus
     : Subring (Γ(X, U) × Γ(X, V)) :=
   RingHom.eqLocus
     ((X.presheaf.map (homOfLE inf_le_left : U ⊓ V ⟶ U).op).hom.comp (RingHom.fst Γ(X, U) Γ(X, V)))

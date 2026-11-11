@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.Basic
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
 
 /-!
 # Place ord eq neg log of valuationSubring eq
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Places.Rational.Basic
 An identification of valuation subrings expresses the order of a place as the negative logarithm
 of the corresponding discrete valuation.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

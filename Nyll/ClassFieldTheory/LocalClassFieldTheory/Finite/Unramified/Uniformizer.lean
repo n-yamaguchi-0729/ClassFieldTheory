@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.IdealQuotients
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
 /-!
 # Actual unramified norm quotient uniformizer
@@ -17,6 +20,8 @@ uniformizer side of the local reciprocity construction, kept below
 `NormSubgroup` to avoid importing the chosen-uniformizer layer into the generic
 valuation quotient API.
 -/
+
+@[expose] public section
 
 noncomputable section
 

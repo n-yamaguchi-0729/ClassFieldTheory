@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.OrbitBlocks
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.OrbitBlocks
 
 /-!
 # Galois actions on the actual completed orbit blocks
@@ -13,6 +15,8 @@ The finite fiber and restricted-product actions come from the actual action on
 ideles. Their concrete comparisons with induced modules preserve that action
 and identify integral fiber blocks with pointwise integral induced functions.
 -/
+
+@[expose] public section
 
 noncomputable section
 

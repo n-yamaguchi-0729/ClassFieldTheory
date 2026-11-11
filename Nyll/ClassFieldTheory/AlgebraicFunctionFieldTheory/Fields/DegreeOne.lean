@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
-import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldDegreeOne
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldDegreeOne
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Degree-one divisors over the actual full constants
@@ -15,11 +18,15 @@ the finite base. The original rational parameter supplies the required finite
 function-field presentation over those full constants.
 -/
 
+@[expose] public section
+
+universe u v
+
 namespace FunctionField
 
 open AlgebraicCurve
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K]
 

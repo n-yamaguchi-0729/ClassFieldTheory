@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumValuationInertiaBound
-import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.PadicValuationInertia
-import Nyll.ClassFieldTheory.KroneckerWeber.UnramifiedCompositumSupport
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.DegreeFromChosenPrimes
+module
+
+public import Nyll.ClassFieldTheory.KroneckerWeber.GlobalCompositumValuationInertiaBound
+public import Nyll.ClassFieldTheory.RamificationTheory.HilbertRamification.Dedekind.PadicValuationInertia
+public import Nyll.ClassFieldTheory.KroneckerWeber.UnramifiedCompositumSupport
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.DegreeFromChosenPrimes
 
 /-!
 # Global Kronecker--Weber
@@ -18,6 +20,8 @@ Outside that support the auxiliary compositum is unramified.  The finite
 inertia groups therefore generate its full abelian Galois group, and their
 product bounds its degree by the degree of the conductor cyclotomic field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

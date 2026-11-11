@@ -11,18 +11,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Valuation.Integers
-import Mathlib.RingTheory.Valuation.ValuationSubring
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
-import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.Analysis.Normed.Ring.Lemmas
-import Mathlib.NumberTheory.RamificationInertia.Inertia
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.Topology.Path
-import Mathlib.Algebra.Group.Int.TypeTags
-import Mathlib.RingTheory.Valuation.Discrete.RankOne
+module
+
+public import Mathlib.RingTheory.Valuation.Integers
+public import Mathlib.RingTheory.Valuation.ValuationSubring
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
+public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.Analysis.Normed.Ring.Lemmas
+public import Mathlib.NumberTheory.RamificationInertia.Inertia
+public import Mathlib.RingTheory.Valuation.Discrete.Basic
+public import Mathlib.Topology.Path
+public import Mathlib.Algebra.Group.Int.TypeTags
+public import Mathlib.RingTheory.Valuation.Discrete.RankOne
 
 /-!
 # AdicCompletion
@@ -30,6 +32,8 @@ import Mathlib.RingTheory.Valuation.Discrete.RankOne
 Adic completions of a Dedekind-domain fraction field retain the discrete valuation, integral
 subring, and residue field at the chosen height-one prime.
 -/
+
+@[expose] public section
 
 section
 
@@ -74,10 +78,6 @@ section
 
 variable {F : Type*} [Field F]
 
-private lemma ValuationSubring.subtype_inj {R : ValuationSubring F} {x y : R} :
-    R.subtype x = R.subtype y ↔ x = y :=
-  R.subtype_injective.eq_iff
-
 private theorem ValuationSubring.valued_eq_one_of_isUnit {K : Type*} [Field K] {Γ₀ : Type*}
     [LinearOrderedCommGroupWithZero Γ₀] [hv : Valued K Γ₀] (x : hv.v.valuationSubring)
     (hx : IsUnit x) : Valued.v x.val = 1 := by
@@ -92,11 +92,6 @@ private theorem ValuationSubring.isUnit_of_valued_eq_one {K : Type*} [Field K] {
     [LinearOrderedCommGroupWithZero Γ₀] [hv : Valued K Γ₀] (x : hv.v.valuationSubring)
     (hx : Valued.v x.val = 1) : IsUnit x := by
   exact (Valuation.valuationSubring.integers hv.v).isUnit_of_one' hx
-
-private theorem ValuationSubring.isUnit_iff_valued_eq_one {K : Type*} [Field K] {Γ₀ : Type*}
-    [LinearOrderedCommGroupWithZero Γ₀] [hv : Valued K Γ₀] (x : hv.v.valuationSubring) :
-    IsUnit x ↔ Valued.v x.val = 1 :=
-  ⟨valued_eq_one_of_isUnit x, isUnit_of_valued_eq_one x⟩
 
 end
 
@@ -211,7 +206,7 @@ lemma exists_adicValued_sub_lt_of_adicValued_le_one {x : (WithVal (v.valuation K
   obtain ⟨a, hval⟩ := exists_adicValued_mul_sub_le v hγ hγv.le hge
   use a
   rw [← eq_div_iff_mul_eq hdz] at hnd
-  rw [adicCompletion.valuedAdicCompletion_def, ← adicCompletion.equiv_apply, map_sub,
+  rw [adicCompletion.valuedAdicCompletion_apply, ← adicCompletion.equiv_apply, map_sub,
     adicCompletion.equiv_apply, adicCompletion.equiv_apply,
     adicCompletion.toCompletion_ofCompletion, adicCompletion.toCompletion_ofCompletion,
     ← UniformSpace.Completion.coe_sub, Valued.extensionValuation_apply_coe, hnd, sub_div' hdz,
@@ -252,7 +247,7 @@ theorem closureAlgebraMapIntegers_eq_integers :
     rintro k ⟨x, hx, rfl⟩
     unfold f at hx
     rw [Set.mem_preimage, SetLike.mem_coe, mem_adicCompletionIntegers,
-        adicCompletion.valued_ofCompletion, Valued.valuedCompletion_apply] at hx
+        adicCompletion.valued_ofCompletion_apply, Valued.valuedCompletion_apply] at hx
     rw [mem_closure_iff_nhds_zero]
     intro U hU
     rw [Valued.mem_nhds] at hU
@@ -464,7 +459,8 @@ theorem uniformizer_not_isUnit {π : v.adicCompletionIntegers K}
 theorem eq_pow_uniformizer_mul_unit {x : v.adicCompletionIntegers K} (hx : x ≠ 0)
     {π : v.adicCompletionIntegers K} (hπ : Valued.v π.1 = Multiplicative.ofAdd (-1 : ℤ)) :
     ∃ (n : ℕ) (u : (v.adicCompletionIntegers K)ˣ), x = π ^ n * u := by
-  have hx' : Valued.v x.1 ≠ 0 := by simp [hx]
+  have hx' : Valued.v x.1 ≠ 0 :=
+    (Valuation.ne_zero_iff _).2 (fun h => hx (Subtype.ext h))
   let m := - Multiplicative.toAdd (WithZero.unzero hx')
   have hm₀ : 0 ≤ m := by
     simp_rw [m, Right.nonneg_neg_iff, ← toAdd_one, Multiplicative.toAdd_le]

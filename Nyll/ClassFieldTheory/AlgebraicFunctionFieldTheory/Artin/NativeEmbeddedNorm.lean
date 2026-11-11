@@ -3,13 +3,15 @@ Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
-import Mathlib.FieldTheory.Galois.Abelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.EmbeddedFixedFieldTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativeFixedFieldNormCompatibility
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
-import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.EmbeddedFixedFieldTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativeFixedFieldNormCompatibility
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
 
 /-!
 # Norm reciprocity for actual finite intermediate fields
@@ -18,6 +20,10 @@ The fixed-field representation transfers the proved native norm formula to
 the original embedded tower, with its actual inclusion and scalar action.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 open ClassFormation LocalClassFieldTheory CyclicCohomology RamificationTheory
 open scoped IsMulCommutative
@@ -25,7 +31,7 @@ open scoped IsMulCommutative
 namespace FunctionField
 
 private theorem fixedFieldQuotient_isMulCommutative
-    (K : Type) [Field K]
+    (K : Type v) [Field K]
     (H : FiniteAbstractField Gal(SeparableClosure K/K))
     (T : FiniteGaloisSubextension H.field)
     [IsAbelianGalois K (abstractFixedField K (SeparableClosure K) T.field)] :
@@ -46,7 +52,7 @@ private theorem fixedFieldQuotient_isMulCommutative
   apply eG.injective
   rw [map_mul, map_mul, mul_comm]
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [AlgebraicCurve.HasPrincipalDivisors k K]
     [Algebra k (SeparableClosure K)] [Algebra (RatFunc k) (SeparableClosure K)]

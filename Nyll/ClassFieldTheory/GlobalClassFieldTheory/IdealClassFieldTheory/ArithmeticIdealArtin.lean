@@ -9,6 +9,9 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.Arithmetic
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # The ideal Artin map in arithmetic Frobenius normalization
@@ -24,6 +27,8 @@ norm kernel, and induces the canonical ideal class-field isomorphism.
 
 open scoped NumberField
 
+universe u v
+
 noncomputable section
 
 namespace GlobalClassFieldTheory
@@ -32,7 +37,7 @@ namespace IdealClassFieldTheory
 open NumberField IsDedekindDomain
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -210,12 +215,15 @@ theorem
       GlobalClassFields.arithmeticFinitePlacePrimeArtin
         (K := K) (L := L) v := by
   rw [← GlobalClassFields.primeToIdealMap_finitePrimeIdele m v hv]
-  exact
-    arithmeticIdealArtinGaloisMap_primeToIdealMap_eq_globalArtin
-      (K := K) (L := L) m hm
-      ⟨IdeleGroup.finitePrimeIdele v,
-        GlobalClassFields.finitePrimeIdele_mem_idelePrimeToModulusSubgroup
-            m v hv⟩
+  rw [arithmeticIdealArtinGaloisMap_apply,
+    GlobalClassFields.idealArtinMap_primeToIdealMap]
+  change Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
+      (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.finitePrimeIdele v)) = _
+  rw [GlobalClassFields.arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin]
+  exact DFunLike.congr_fun
+    (Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass K L v)
+    (FiniteIdeleGroup.chosenLocalOrderSection v 1)
 
 /-- Direct local form: a prime ideal outside the modulus maps to the
 arithmetic chosen local Artin value of normalized order one. -/

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Cyclic.Herbrand.Product
-import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandFiniteness
+module
+
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.Product
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.HerbrandFiniteness
 
 /-!
 # Products with only finitely many nontrivial Tate factors
@@ -14,6 +16,8 @@ Low-degree Tate cohomology commutes with arbitrary products. If all but finitely
 many factors vanish, restriction to the exceptional set computes both finite
 Tate groups and the Herbrand quotient. This applies to products of local units.
 -/
+
+@[expose] public section
 
 noncomputable section
 

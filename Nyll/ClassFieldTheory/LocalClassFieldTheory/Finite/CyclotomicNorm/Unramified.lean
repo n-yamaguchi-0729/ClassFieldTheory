@@ -4,19 +4,25 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
-import Nyll.ValuedFieldTheory.LocalField.Padic.PrincipalUnits
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Basic
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Trace
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Lift
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.ResidueNorm
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Uniformizer
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Cohomology
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
-import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
+module
+
+public import Nyll.ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
+public import Nyll.ValuedFieldTheory.LocalField.Padic.PrincipalUnits
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Basic
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Trace
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Lift
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.ResidueNorm
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Uniformizer
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Cohomology
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
+public import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueExtension
 
 /-!
 # The unramified cyclotomic norm subgroup over `ℚ_p`
@@ -28,7 +34,11 @@ unramified extension of degree `f`; the result below expresses its norm
 subgroup in the spectral-norm presentation used by local class field theory.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u
 
 namespace LocalClassFieldTheory
 
@@ -47,7 +57,7 @@ extended valuation on the finite separable extension transports
 ramification index one between the two presentations. -/
 theorem normSubgroup_eq_unramifiedNormSubgroup_padic_prime_pow_sub_one
     (p f : ℕ) [Fact p.Prime] (hf : 0 < f)
-    (L : Type) [Field L] [Algebra ℚ_[p] L]
+    (L : Type u) [Field L] [Algebra ℚ_[p] L]
     [FiniteDimensional ℚ_[p] L] [IsGalois ℚ_[p] L]
     [IsNonarchimedeanLocalField ℚ_[p]]
     {ζ : L} (hζ : IsPrimitiveRoot ζ (p ^ f - 1))

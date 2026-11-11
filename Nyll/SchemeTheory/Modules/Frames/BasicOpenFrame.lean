@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyClosed
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.Topology.Bases
-import Mathlib.Topology.Closure
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyClosed
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.Topology.Bases
+public import Mathlib.Topology.Closure
 /-!
 # Local frames on a common basic open subset
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

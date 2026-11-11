@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.ArtinSchreier.RestrictionKernelCharacterEquiv
-import Mathlib.Algebra.Module.ZMod
-import Mathlib.LinearAlgebra.Dual.Lemmas
-import Mathlib.FieldTheory.Finiteness
-import Mathlib.FieldTheory.Galois.Abelian
+module
+
+public import Nyll.GaloisCohomology.ArtinSchreier.RestrictionKernelCharacterEquiv
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.LinearAlgebra.Dual.Lemmas
+public import Mathlib.FieldTheory.Finiteness
+public import Mathlib.FieldTheory.Galois.Abelian
 
 /-!
 # Degree bounds from actual split Artin–Schreier classes
@@ -18,6 +20,8 @@ injectively to prime cyclic characters. In an elementary abelian extension,
 finite-dimensional linear duality counts those characters by the actual
 extension degree.
 -/
+
+@[expose] public section
 
 noncomputable section
 namespace ArtinSchreierTheory

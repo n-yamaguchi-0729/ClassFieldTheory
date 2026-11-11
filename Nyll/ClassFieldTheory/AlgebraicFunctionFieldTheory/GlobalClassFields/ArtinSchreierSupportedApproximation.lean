@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Tactic.Ring
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.StrongApproximation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierUnramified
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.GaloisCohomology.ArtinSchreier.FiniteExtension
-import Nyll.ValuedFieldTheory.Valuation.Henselian.ArtinSchreier
-import Nyll.ValuedFieldTheory.Valuation.ValuedAdicComplete
+module
+
+public import Mathlib.Tactic.Ring
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.StrongApproximation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierUnramified
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.GaloisCohomology.ArtinSchreier.FiniteExtension
+public import Nyll.ValuedFieldTheory.Valuation.Henselian.ArtinSchreier
+public import Nyll.ValuedFieldTheory.Valuation.ValuedAdicComplete
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Complete
 
 /-!
 # Artin–Schreier approximation with controlled ramification support
@@ -21,6 +24,8 @@ Adjoining a root constructs an actual finite cyclic extension inside the fixed
 overfield. Its ramification is confined to that same specified finite set.
 No condition is imposed at the one auxiliary place.
 -/
+
+@[expose] public section
 
 open scoped WithZero
 noncomputable section

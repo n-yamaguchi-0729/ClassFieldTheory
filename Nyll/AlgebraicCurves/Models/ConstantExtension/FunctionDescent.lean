@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardDescent
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
-import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardDescent
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusUnits
 
 /-!
 # The actual fixed field of geometric Frobenius
@@ -15,6 +18,10 @@ Descend the principal divisor of a fixed function. Descent of principality gives
 an original rational function with the same geometric divisor; their ratio is
 a fixed constant and therefore belongs to the original finite field.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -27,7 +34,7 @@ attribute [local instance]
   SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
   SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupDivisor
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]

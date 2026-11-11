@@ -10,15 +10,19 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
 
 /-!
 # ConstantsAreBase of deg eq one
 
 A place of degree one identifies the constant field with the base field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

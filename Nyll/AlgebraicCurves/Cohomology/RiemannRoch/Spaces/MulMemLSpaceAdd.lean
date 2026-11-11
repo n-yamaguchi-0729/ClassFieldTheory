@@ -10,9 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
 
 /-! Multiplication adds the divisor bounds of Riemann--Roch spaces. -/
+
+@[expose] public section
 
 namespace AlgebraicCurve
 

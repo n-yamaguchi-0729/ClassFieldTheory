@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.SchemeTheory.RingTheory.Dimension.IdealHeightAddKrullDimensionQuotientEqKrullDimension
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Mathlib.RingTheory.Ideal.MinimalPrime.Basic
-import Mathlib.Tactic.NormNum
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+module
+
+public import Nyll.SchemeTheory.RingTheory.Dimension.IdealHeightAddKrullDimensionQuotientEqKrullDimension
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+public import Mathlib.RingTheory.Ideal.MinimalPrime.Basic
+public import Mathlib.Tactic.NormNum
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
 
 /-!
 # A nontrivial common zero with fewer equations than variables
@@ -23,6 +25,8 @@ https://stacks.math.columbia.edu/tag/03RB
 The proof reuses the existing maximal-ideal dimension theorem, together
 with the Nullstellensatz and Krull's height theorem.
 -/
+
+@[expose] public section
 
 section MvPolynomial_exists_ne_zero_common_zero_of_card_lt
 

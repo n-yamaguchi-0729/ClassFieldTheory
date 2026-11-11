@@ -4,17 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.GroupTheory.Augmentation
-import Nyll.GaloisCohomology.GroupTheory.Transfer.RelativeAugmentation
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.GroupTheory.Transfer
-import Mathlib.GroupTheory.Torsion
-import Mathlib.GroupTheory.FreeGroup.GeneratorEquiv
-import Mathlib.LinearAlgebra.Dimension.Localization
-import Mathlib.LinearAlgebra.Dimension.Torsion.Finite
-import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
-import Mathlib.LinearAlgebra.FreeModule.PID
-import Mathlib.LinearAlgebra.Matrix.Adjugate
+module
+
+public import Mathlib.Algebra.MonoidAlgebra.Defs
+public import Mathlib.Algebra.MonoidAlgebra.MapDomain
+public import Nyll.GaloisCohomology.GroupTheory.Augmentation
+public import Nyll.GaloisCohomology.GroupTheory.Transfer.RelativeAugmentation
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.GroupTheory.Transfer
+public import Mathlib.GroupTheory.Torsion
+public import Mathlib.GroupTheory.FreeGroup.GeneratorEquiv
+public import Mathlib.LinearAlgebra.Dimension.Localization
+public import Mathlib.LinearAlgebra.Dimension.Torsion.Finite
+public import Mathlib.LinearAlgebra.FreeModule.Finite.CardQuotient
+public import Mathlib.LinearAlgebra.FreeModule.PID
+public import Mathlib.LinearAlgebra.Matrix.Adjugate
 
 /-!
 # Witt's transfer theorem
@@ -28,6 +32,8 @@ presentation relations are assumed as extra input.
 -/
 
 
+
+@[expose] public section
 
 open scoped BigOperators Pointwise
 
@@ -78,8 +84,8 @@ def groupRingDelta (g : G) : IntegralGroupRing G :=
 
 @[simp]
 theorem groupRingDelta_one :
-    groupRingDelta (1 : G) = 0 := by
-  simp [groupRingDelta]
+    groupRingDelta (1 : G) = 0 :=
+  sub_self (MonoidAlgebra.single (1 : G) (1 : ℤ))
 
 theorem groupRingDelta_mul (g h : G) :
     groupRingDelta (g * h) =
@@ -118,7 +124,9 @@ theorem groupRingDelta_inv (g : G) :
   have hs :
       x * y =
         (1 : IntegralGroupRing G) := by
-    simp [x, y, ← MonoidAlgebra.one_def]
+    change MonoidAlgebra.single g 1 * MonoidAlgebra.single g⁻¹ 1 =
+      MonoidAlgebra.single (1 : G) (1 : ℤ)
+    rw [MonoidAlgebra.single_mul_single, mul_inv_cancel, one_mul]
   calc
     groupRingDelta g⁻¹ = y - 1 := rfl
     _ = y - x * y := by rw [hs]
@@ -135,7 +143,9 @@ theorem groupRingDelta_inv_left (g : G) :
   let y : IntegralGroupRing G :=
     MonoidAlgebra.single g⁻¹ 1
   have hyx : y * x = (1 : IntegralGroupRing G) := by
-    simp [x, y, ← MonoidAlgebra.one_def]
+    change MonoidAlgebra.single g⁻¹ 1 * MonoidAlgebra.single g 1 =
+      MonoidAlgebra.single (1 : G) (1 : ℤ)
+    rw [MonoidAlgebra.single_mul_single, inv_mul_cancel, one_mul]
   calc
     groupRingDelta g⁻¹ = y - 1 := rfl
     _ = y - y * x := by rw [hyx]
@@ -146,7 +156,7 @@ theorem groupRingDelta_inv_left (g : G) :
 @[simp]
 theorem augmentation_groupRingDelta (g : G) :
     augmentation G (groupRingDelta g) = 0 := by
-  simp [groupRingDelta]
+  rw [groupRingDelta, map_sub, augmentation_single, augmentation_single, sub_self]
 
 /-- The exponent-sum vector of a free word. -/
 def wordExponent {X : Type*} (w : FreeGroup X) : X →₀ ℤ :=
@@ -216,7 +226,7 @@ theorem exists_rightFoxExpansion
       · rw [Finset.sum_eq_single x]
         · rw [Pi.single_eq_same, mul_one]
         · intro y _ hy
-          simp [Pi.single_eq_of_ne hy]
+          rw [Pi.single_eq_of_ne hy, mul_zero]
         · intro hx
           exact (hx (Finset.mem_univ x)).elim
       · intro i
@@ -237,7 +247,7 @@ theorem exists_rightFoxExpansion
             groupRingDelta_inv
               (φ (FreeGroup.of x))
         · intro y _ hy
-          simp [Pi.single_eq_of_ne hy]
+          rw [Pi.single_eq_of_ne hy, mul_zero]
         · intro hx
           exact (hx (Finset.mem_univ x)).elim
       · intro i
@@ -438,15 +448,15 @@ theorem abelianizationRingMap_single
     (g : G) (n : ℤ) :
     abelianizationRingMap
         (MonoidAlgebra.single g n) =
-      MonoidAlgebra.single (Abelianization.of g) n := by
-  simp [abelianizationRingMap]
+      MonoidAlgebra.single (Abelianization.of g) n :=
+  MonoidAlgebra.mapDomain_single (f := Abelianization.of) (a := g) (r := n)
 
 @[simp]
 theorem abelianizationRingMap_groupRingDelta
     (g : G) :
     abelianizationRingMap (groupRingDelta g) =
       groupRingDelta (Abelianization.of g) := by
-  simp [groupRingDelta]
+  simp only [groupRingDelta, map_sub, abelianizationRingMap_single, map_one]
 
 @[simp]
 theorem augmentation_abelianizationRingMap
@@ -456,11 +466,11 @@ theorem augmentation_abelianizationRingMap
       augmentation G x := by
   induction x using MonoidAlgebra.induction_on with
   | of g =>
-      simp [MonoidAlgebra.of]
+      simp only [MonoidAlgebra.of_apply, abelianizationRingMap_single, augmentation_single]
   | add x y hx hy =>
-      simp [hx, hy]
+      simp only [map_add, hx, hy]
   | smul n x hx =>
-      simp [hx]
+      simp only [map_zsmul, hx]
 
 /-- An additive section of the group-ring abelianization map, obtained
 by choosing the quotient representative of every abelianization class. -/
@@ -478,8 +488,8 @@ theorem abelianizationRingSection_single
     (a : Abelianization G) (n : ℤ) :
     abelianizationRingSection
         (MonoidAlgebra.single a n) =
-      MonoidAlgebra.single a.out n := by
-  simp [abelianizationRingSection]
+      MonoidAlgebra.single a.out n :=
+  MonoidAlgebra.mapDomain_single (f := fun a : Abelianization G => a.out) (a := a) (r := n)
 
 @[simp]
 theorem abelianizationRingMap_section
@@ -494,7 +504,7 @@ theorem abelianizationRingMap_section
       congr 1
       exact Quotient.out_eq a
   | add x y hx hy =>
-      simp [hx, hy]
+      simp only [map_add, hx, hy]
   | smul n x hx =>
       simp only [map_zsmul, hx]
 
@@ -529,7 +539,7 @@ theorem ideal_mul_mem_mixed_of_abelianizationRingMap_eq_zero
               (r⁻¹ * g)).mp
           change Abelianization.of (r⁻¹ * g) = 1
           rw [map_mul, map_inv, hrq]
-          simp [q]
+          exact inv_mul_cancel (Abelianization.of g)
         let h : commutator G := ⟨r⁻¹ * g, hh⟩
         have hfactor :
             (MonoidAlgebra.of ℤ G g -
@@ -560,7 +570,7 @@ theorem ideal_mul_mem_mixed_of_abelianizationRingMap_eq_zero
             embeddedDelta_mem_embeddedSubgroupIdeal
                 (commutator G) h, rfl⟩
         rw [mem_ideal_iff, map_mul]
-        simp [(mem_ideal_iff G x).mp hx]
+        rw [(mem_ideal_iff G x).mp hx, zero_mul]
     | add a b ha hb =>
         convert
           (mixedAugmentationProduct
@@ -765,7 +775,7 @@ theorem foxAdjugate_relation (k : X) :
     Finset.mul_sum]
   rw [Finset.sum_comm]
   simp_rw [← mul_assoc, ← Finset.sum_mul]
-  simp [foxExpansion_relation]
+  simp only [foxExpansion_relation, zero_mul, Finset.sum_const_zero]
 
 theorem generator_mul_foxDeterminantLift_mem_mixed
     (k : X) :
@@ -819,7 +829,7 @@ theorem generator_mul_foxDeterminantLift_mem_mixed
     rw [Finset.sum_eq_single k]
     · rw [ite_eq_left rfl]
     · intro i _ hik
-      simp [hik]
+      rw [ite_eq_right hik, mul_zero]
     · intro hk
       exact (hk (Finset.mem_univ k)).elim
   have heq :

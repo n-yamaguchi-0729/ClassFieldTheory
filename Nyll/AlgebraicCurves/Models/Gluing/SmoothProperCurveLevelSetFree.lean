@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveFlatAeval
-import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveFinrankLevelSetField
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.AlgebraLevelSetFiniteFreeFinrank
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveFlatAeval
+public import Nyll.AlgebraicCurves.Models.Gluing.SmoothProperCurveFinrankLevelSetField
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.AlgebraLevelSetFiniteFreeFinrank
 
 /-!
 # Smooth Proper Curve level Set free of two Chart Pole Datum
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

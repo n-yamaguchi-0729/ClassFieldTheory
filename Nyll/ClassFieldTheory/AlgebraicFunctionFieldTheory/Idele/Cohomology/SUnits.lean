@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.TypeTags.Hom
-import Mathlib.GroupTheory.Index
-import Mathlib.RingTheory.Noetherian.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardZero
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Divisors.Principal.PrincipalHom
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
+module
+
+public import Mathlib.Algebra.Group.TypeTags.Hom
+public import Mathlib.GroupTheory.Index
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.PicardZero
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Divisors.Principal.PrincipalHom
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.ConstantExtension
 
 /-!
 # S-units and their divisor lattice
@@ -26,6 +28,8 @@ These are the S-unit lattice ingredients for a Herbrand-quotient calculation.
 They do not assert a cyclic norm-index bound or vanishing of the idele-class
 Tate group in degree minus one.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -208,7 +212,8 @@ def stabilizerHom {G : Type*} [Group G] (S : Finset (Place k K))
     G →* stabilizer k K S :=
   ρ.codRestrict (stabilizer k K S) hS
 
-private theorem map_mem_units (S : Finset (Place k K)) (g : stabilizer k K S)
+/-- The stabilizer of the support preserves the original S-unit subgroup. -/
+theorem map_mem_units (S : Finset (Place k K)) (g : stabilizer k K S)
     (x : units k K S) :
     Units.map (SemilinearAut.toRingAut g.val).toMonoidHom (x : Kˣ) ∈ units k K S := by
   intro v hv
@@ -231,7 +236,8 @@ instance unitsMulDistribMulAction (S : Finset (Place k K)) :
   smul_one _ := Subtype.ext (Units.ext (map_one _))
   smul_mul _ _ _ := Subtype.ext (Units.ext (map_mul _ _ _))
 
-private theorem smul_mem_lattice (S : Finset (Place k K)) (g : stabilizer k K S)
+/-- The support stabilizer preserves the degree-zero divisor lattice. -/
+theorem smul_mem_lattice (S : Finset (Place k K)) (g : stabilizer k K S)
     (D : divisorLattice k K S) :
     g.val • (D : Divisor k K) ∈ divisorLattice k K S := by
   refine ⟨(SemilinearAut.degree_smul g.val D).trans D.2.1, fun v hv => ?_⟩

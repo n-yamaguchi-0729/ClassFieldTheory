@@ -4,14 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
-import Mathlib.FieldTheory.Galois.GaloisClosure
-import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
-import Nyll.ClassFieldTheory.KroneckerWeber.LocalCyclotomicEmbedding
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.NumberTheory.NumberField.Cyclotomic.Basic
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.FiniteRamifiedPrimes
+public import Nyll.ClassFieldTheory.KroneckerWeber.LocalCyclotomicEmbedding
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
 
 /-!
 # Setup for the global Kronecker--Weber theorem
@@ -23,6 +26,8 @@ field and a cyclotomic field.  The remaining arithmetic step is to choose the
 cyclotomic order from the local data and prove that the compositum has no
 larger degree than the cyclotomic subfield.
 -/
+
+@[expose] public section
 
 noncomputable section
 

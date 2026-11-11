@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Ideal.BigOperators
-import Mathlib.RingTheory.Idempotents
-import Mathlib.RingTheory.Spectrum.Prime.Noetherian
-import Mathlib.Tactic.Choose
+module
+
+public import Mathlib.RingTheory.Ideal.BigOperators
+public import Mathlib.RingTheory.Idempotents
+public import Mathlib.RingTheory.Spectrum.Prime.Noetherian
+public import Mathlib.Tactic.Choose
 
 /-!
 # Is Noetherian Ring exists complete Orthogonal Idempotents forall connected Space prime
 Spectrum
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

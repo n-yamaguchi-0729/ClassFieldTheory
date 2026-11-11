@@ -18,13 +18,15 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- For one modulus, a larger ray-class subgroup gives a smaller class
 field inside the fixed separable closure.  This holds for any choices of
 Frobenius-normalized realizations. -/
 theorem rayClassSubgroupField_antitone
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (m : RayClassModulus K)
     {H J : Subgroup (RayClassGroup m)} (hHJ : H ≤ J)
     (RH : RayClassSubgroupRealization K m H)

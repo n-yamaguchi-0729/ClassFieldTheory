@@ -246,7 +246,8 @@ private theorem abstractProfiniteCompletionModelMapMonoidHom_continuous
   simp only [representative, Set.mem_smul_set_iff_inv_smul_mem]
   change (Quotient.out i)⁻¹ * e x ∈ H.toOpenNormalSubgroup.toSubgroup ↔
     representative⁻¹ * x ∈ K
-  simp [K, representative]
+  simp only [OpenSubgroup.mem_toSubgroup, MulEquiv.toMonoidHom_eq_coe, Subgroup.mem_comap,
+    MonoidHom.coe_ofClass, map_mul, map_inv, MulEquiv.apply_symm_apply, K, representative]
 
 /-- If every finite-index normal subgroup is open, the abstract completion map
 is continuous for the original topology. -/
@@ -314,9 +315,9 @@ def topologicalProfiniteCompletion_compare_abstract
             (topologicalProfiniteCompletionMap G) := by
         apply topologicalProfiniteCompletionLift_unique
         ext g
-        simp [backward, forward,
-          topologicalProfiniteCompletionToAbstract_map,
-          abstractProfiniteCompletionToTopological_map]
+        simp only [ContinuousMonoidHom.comp_toFun, topologicalProfiniteCompletionToAbstract_map,
+          abstractProfiniteCompletionToTopological_map, MulEquiv.apply_symm_apply, backward,
+          forward]
       _ = ContinuousMonoidHom.id _ := by
         symm
         apply topologicalProfiniteCompletionLift_unique
@@ -329,9 +330,9 @@ def topologicalProfiniteCompletion_compare_abstract
             (abstractProfiniteCompletionClass G) := by
         apply abstractProfiniteCompletionLift_unique
         ext g
-        simp [backward, forward,
-          topologicalProfiniteCompletionToAbstract_map,
-          abstractProfiniteCompletionToTopological_map]
+        simp only [ContinuousMonoidHom.comp_toFun, abstractProfiniteCompletionToTopological_map,
+          topologicalProfiniteCompletionToAbstract_map, MulEquiv.symm_apply_apply, forward,
+          backward]
       _ = ContinuousMonoidHom.id _ := by
         symm
         apply abstractProfiniteCompletionLift_unique

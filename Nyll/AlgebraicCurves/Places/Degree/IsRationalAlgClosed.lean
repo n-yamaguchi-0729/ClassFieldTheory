@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Mathlib.Algebra.BigOperators.Field
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegEqOneAlgClosed
-import Nyll.AlgebraicCurves.Places.Basic
+module
+
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Mathlib.Algebra.BigOperators.Field
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncDegEqOneAlgClosed
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Place is Rational of is Alg Closed
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

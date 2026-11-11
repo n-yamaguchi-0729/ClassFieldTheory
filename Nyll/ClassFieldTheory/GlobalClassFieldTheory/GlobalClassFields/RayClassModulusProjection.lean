@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
-import Mathlib.Data.Finsupp.Order
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+public import Mathlib.Data.Finsupp.Order
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Projection between ray class groups
@@ -17,6 +20,8 @@ to a smaller one. The public ray-class groups use the comparison equivalence
 to transport this map.
 -/
 
+@[expose] public section
+
 open scoped NumberField
 
 noncomputable section
@@ -25,7 +30,7 @@ namespace ClassFieldTheory
 
 open NumberField IsDedekindDomain
 
-variable (K : Type) [Field K] [NumberField K]
+variable (K : Type*) [Field K] [NumberField K]
 
 local instance ideleClassIsMulCommutative :
     IsMulCommutative (IdeleClassGroup K) :=

@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Finset.Image
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+module
+
+public import Mathlib.Data.Finset.Image
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Norm on function-field idele classes
@@ -18,6 +21,8 @@ The completed norm product is the actual global field norm on diagonal elements.
 Consequently the all-place idele norm carries principal ideles to principal ideles
 and induces a homomorphism of idele class groups.
 -/
+
+@[expose] public section
 
 open scoped AlgebraicCurve.Place
 

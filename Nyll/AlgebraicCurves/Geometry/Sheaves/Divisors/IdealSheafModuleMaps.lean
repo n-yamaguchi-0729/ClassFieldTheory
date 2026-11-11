@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
 
 /-!
 # Maps between ideal modules under inverse image
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
 The subscheme pullback map induces an ideal-module morphism and its adjoint
 pullback comparison.
 -/
+
+@[expose] public section
 
 universe u
 

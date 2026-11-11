@@ -4,17 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Analysis.Normed.Field.ProperSpace
-import Mathlib.Topology.Algebra.Group.Units
-import Mathlib.Topology.Algebra.RestrictedProduct.Basic
-import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
-import Mathlib.Topology.Algebra.Valued.LocallyCompact
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Compact
+module
+
+public import Mathlib.Analysis.Normed.Field.ProperSpace
+public import Mathlib.Topology.Algebra.Group.Units
+public import Mathlib.Topology.Algebra.RestrictedProduct.Basic
+public import Mathlib.Topology.Algebra.RestrictedProduct.TopologicalSpace
+public import Mathlib.Topology.Algebra.Valued.LocallyCompact
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Compact
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Compact integral units over all places
@@ -24,6 +27,8 @@ continuously in the idele group with exactly the everywhere-integral ideles as i
 This proves compactness of the integral subgroup for the restricted-product topology,
 as well as local compactness of the full idele group.
 -/
+
+@[expose] public section
 
 open scoped RestrictedProduct Valued WithZero
 

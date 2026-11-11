@@ -22,9 +22,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Comma.Over.Basic
-import Mathlib.CategoryTheory.Sites.Canonical
-import Mathlib.CategoryTheory.Sites.Over
+module
+
+public import Mathlib.CategoryTheory.Comma.Over.Basic
+public import Mathlib.CategoryTheory.Sites.Canonical
+public import Mathlib.CategoryTheory.Sites.Over
 
 /-!
 # Total presheaves over a slice category
@@ -33,6 +35,8 @@ A presheaf on the slice over S determines a presheaf on the original category by
 its values over all arrows to S. Fibrewise transport relates their representations, and the
 total presheaf is a sheaf when the slice presheaf is a sheaf for the induced topology.
 -/
+
+@[expose] public section
 
 section OverTotalPresheafImplementation
 
@@ -80,7 +84,11 @@ lemma map_op_map_op_apply_eq {A B B' D : Over S} (k : A ⟶ B) (k' : B ⟶ B') (
   exact map_op_apply_eq_of_left_eq _ _ h x
 
 lemma OverTotal.ext' {T : C} {a b : G.OverTotal T} (h₁ : a.1 = b.1)
-    (h₂ : G.map (Over.homMk (𝟙 T) (by simp [h₁]) : Over.mk b.1 ⟶ Over.mk a.1).op a.2 = b.2) :
+    (h₂ : G.map
+      (Over.homMk (𝟙 T) (by
+        change (𝟙 T) ≫ a.1 = b.1
+        exact (id_comp a.1).trans h₁) :
+        Over.mk b.1 ⟶ Over.mk a.1).op a.2 = b.2) :
     a = b := by
   obtain ⟨t, x⟩ := a
   obtain ⟨t', y⟩ := b

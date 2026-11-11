@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
-import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
 
 /-!
 # Continuous finite abelian function-field reciprocity
@@ -17,13 +19,20 @@ Its actual norm kernel is open for the usual idele-class topology, proving
 continuity for the Krull topology on the Galois group.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
 open scoped IsMulCommutative
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+section FiniteSymbols
+
+variable (k : Type u) (K : Type v) (L : Type w)
+    [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -65,6 +74,17 @@ def abelianFiniteNormQuotientEquiv :
       Gal(L/K) :=
   (finiteNormQuotientEquiv k K L).trans (Abelianization.equivOfComm (H := Gal(L/K))).symm
 
+end FiniteSymbols
+
+section Continuity
+
+variable (k : Type u) (K : Type v) (L : Type w)
+    [Field k] [Finite k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [AlgebraicCurve.HasPrincipalDivisors k K] [AlgebraicCurve.HasPrincipalDivisors k L]
+
 variable [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]
 
 /-- Reciprocity is continuous for the usual idele-class and Krull topologies. -/
@@ -72,5 +92,7 @@ theorem continuous_abelianFiniteArtin : Continuous (abelianFiniteArtin k K L) :=
   apply ProCGroups.MonoidHom.continuous_of_isOpen_ker_to_discrete
   rw [abelianFiniteArtin_ker]
   exact IdeleClassGroup.isOpen_norm_range
+
+end Continuity
 
 end FunctionField

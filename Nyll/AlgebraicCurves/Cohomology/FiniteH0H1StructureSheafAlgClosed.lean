@@ -10,26 +10,31 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.FiniteH0H1StructureSheafSmoothProperCurve
-import Nyll.AlgebraicCurves.Places.Restriction.PlacesOfUnionEqUnivSupEqTop
-import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
-import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.FiniteH0H1StructureSheafSmoothProperCurve
+public import Nyll.AlgebraicCurves.Places.Restriction.PlacesOfUnionEqUnivSupEqTop
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Affine.NotIsAffineProper
+public import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.StichtenothGenusExists
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 Finiteness and dimensions of structure-sheaf cohomology over an algebraically closed field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -75,13 +80,13 @@ theorem ne_top_of_isAffineOpen' {C : Scheme.{u}} (hC : ¬ IsAffine C) {U : C.Ope
 theorem finite_H0_H1_structureSheaf_of_isAlgClosed' {K : Type u} [Field K] [IsAlgClosed K] {C :
     Scheme.{u}} (𝒱 : C.TwoAffineOpenCover)
     (c : C ⟶ Spec (CommRingCat.of K)) [IsIntegral C] [IsProper c] [SmoothOfRelativeDimension 1 c] :
-    letI := (AlgebraicCurve.baseToFunctionField c).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField c).toAlgebra
     Module.Finite K (𝒱.structureSheafSections c).H0 ∧ Module.Finite K (𝒱.structureSheafSections
       c).H1 ∧
       Module.finrank K (𝒱.structureSheafSections c).H0 = 1 ∧
       Module.finrank K (𝒱.structureSheafSections c).H1 = AlgebraicCurve.genusFF K C.functionField
         := by
-  let := (AlgebraicCurve.baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   have hcurve : IsCurveOver K C.functionField :=
     isCurveOver_of_isIntegral_of_smoothOfRelativeDimension_one c (RingEquiv.refl _) (fun _ => rfl)
   have : Algebra.EssFiniteType K C.functionField := essFiniteType_functionField c

@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
+module
+
+public import Nyll.AlgebraicCurves.Models.Charts.FiniteComplIsOpen
 
 /-!
 # Exists isAffineOpen sup eq top
 
 A proper smooth integral curve admits a cover by two affine open subsets.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

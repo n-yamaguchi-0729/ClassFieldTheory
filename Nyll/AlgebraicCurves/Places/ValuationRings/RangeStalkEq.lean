@@ -10,9 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVRStalkIsClosed
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVRStalkIsClosed
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Exists place range stalk eq
@@ -20,6 +24,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVR
 A closed-point local ring of a smooth integral curve determines a place with the same image in the
 function field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

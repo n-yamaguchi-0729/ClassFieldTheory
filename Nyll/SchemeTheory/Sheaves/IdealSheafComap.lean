@@ -70,21 +70,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.Algebra.Algebra.Hom
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.RingTheory.RingHom.Flat
-import Mathlib.RingTheory.LocalProperties.Basic
-import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
-import Mathlib.Algebra.Category.Ring.Constructions
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.RingTheory.IsTensorProduct
-import Mathlib.AlgebraicGeometry.Cover.Open
-import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
-import Mathlib.AlgebraicGeometry.PullbackCarrier
+module
+
+public import Nyll.SchemeTheory.RingTheory.PushoutKernel
+
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.Algebra.Algebra.Hom
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.RingTheory.RingHom.Flat
+public import Mathlib.RingTheory.LocalProperties.Basic
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Algebra
+public import Mathlib.Algebra.Category.Ring.Constructions
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.RingTheory.IsTensorProduct
+public import Mathlib.AlgebraicGeometry.Cover.Open
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
 
 /-!
 # Affine ideals of an inverse image
@@ -92,6 +96,8 @@ import Mathlib.AlgebraicGeometry.PullbackCarrier
 The inverse image of an ideal sheaf is computed on affine opens by extension
 of the original ideal along the induced homomorphism on sections.
 -/
+
+@[expose] public section
 
 section IdealSheafData_ideal_comap_of_le
 
@@ -116,36 +122,7 @@ theorem ker_algebraMap_eq_map_ker
     [IsScalarTower R B P] [IsScalarTower R C P] [Algebra.IsPushout R B C P]
     (hC : Function.Surjective (algebraMap R C)) :
     RingHom.ker (algebraMap B P) = (RingHom.ker (algebraMap R C)).map (algebraMap R B) := by
-  let e : B ⊗[R] C ≃ₐ[B] P := Algebra.IsPushout.equiv R B C P
-  have h1 : algebraMap B P = e.toRingEquiv.toRingHom.comp
-      (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := B) (B := C)).toRingHom := by
-    ext b
-    simp [e]
-  rw [h1, RingHom.ker_comp_of_injective _ e.toRingEquiv.injective]
-  let g : R →ₐ[R] C := Algebra.ofId R C
-  have h2 : (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := B) (B := C)).toRingHom =
-      (Algebra.TensorProduct.map (AlgHom.id R B) g).toRingHom.comp
-        (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := B) (B := R)).toRingHom := by
-    ext b
-    simp [g]
-  have h3 : RingHom.ker (Algebra.TensorProduct.map (AlgHom.id R B) g).toRingHom =
-      (RingHom.ker (algebraMap R C)).map
-        (Algebra.TensorProduct.includeRight (R := R) (A := B) (B := R)).toRingHom := by
-    have := Algebra.TensorProduct.lTensor_ker (A := B) g hC
-    simp only [AlgHom.ker_coe, AlgHom.coe_ideal_map, g, Algebra.toRingHom_ofId] at this
-    exact this
-  rw [h2, ← RingHom.comap_ker, h3]
-  let r : B ⊗[R] R ≃ₐ[R] B := Algebra.TensorProduct.rid R R B
-  have h4 : (Algebra.TensorProduct.includeLeft (R := R) (S := R) (A := B) (B := R)).toRingHom =
-      (r.toRingEquiv.symm : B →+* B ⊗[R] R) := by
-    ext b
-    apply r.toRingEquiv.injective
-    simp [r]
-  have h5 : (algebraMap R B) = (r.toRingEquiv : B ⊗[R] R →+* B).comp
-      (Algebra.TensorProduct.includeRight (R := R) (A := B) (B := R)).toRingHom := by
-    ext x
-    simp [r, Algebra.smul_def]
-  rw [h4, h5, ← Ideal.map_map, Ideal.comap_coe, Ideal.map_coe, Ideal.comap_symm]
+  exact _root_.Algebra.IsPushout.ker_algebraMap_eq_map_ker R B C P hC
 
 end Algebra.IsPushout
 
@@ -157,12 +134,7 @@ theorem ker_eq_map_ker_of_isPushout {R B C P : CommRingCat.{u}} {f : R ⟶ B} {g
     {inl : B ⟶ P} {inr : C ⟶ P} (h : IsPushout f g inl inr)
     (hg : Function.Surjective g.hom) :
     RingHom.ker inl.hom = (RingHom.ker g.hom).map f.hom := by
-  algebraize [f.hom, g.hom, inl.hom, inr.hom, inl.hom.comp f.hom]
-  have hw : inl.hom.comp f.hom = inr.hom.comp g.hom := by
-    simpa only [CommRingCat.hom_comp] using congr(($(h.w)).hom)
-  have : IsScalarTower R C P := .of_algebraMap_eq' hw
-  have : Algebra.IsPushout R B C P := CommRingCat.isPushout_iff_isPushout.mp h
-  exact Algebra.IsPushout.ker_algebraMap_eq_map_ker R B C P hg
+  exact _root_.CommRingCat.ker_eq_map_ker_of_isPushout h hg
 
 end CommRingCat
 
@@ -220,6 +192,23 @@ theorem ideal_comap_of_isAffineHom (I : X.IdealSheafData) (f : Y ⟶ X) [IsAffin
     (I.comap f).ideal ⟨f ⁻¹ᵁ U, U.2.preimage f⟩ = (I.ideal U).map (f.app U).hom := by
   rw [Scheme.Hom.app_eq_appLE]
   exact ideal_comap_of_le I f U ⟨f ⁻¹ᵁ U, U.2.preimage f⟩ le_rfl
+
+/-- On affine schemes, inverse image extends the ideal along the map on global sections. -/
+theorem _root_.AlgebraicGeometry.Scheme.IdealSheafData.ideal_comap_top
+    [IsAffine X] [IsAffine Y] (I : X.IdealSheafData) (f : Y ⟶ X) :
+    (I.comap f).ideal ⟨⊤, isAffineOpen_top Y⟩ =
+      (I.ideal ⟨⊤, isAffineOpen_top X⟩).map f.appTop.hom :=
+  open _root_.AlgebraicCurves.Geometry.Sheaves.Proofs in
+  open Scheme_IdealSheafData_ideal_comap_of_le.AlgebraicGeometry.Scheme.IdealSheafData in
+  ComapLocal.ideal_comap_top I f
+
+/-- On the inverse image of an affine open, an affine morphism extends its defining ideal. -/
+theorem _root_.AlgebraicGeometry.Scheme.IdealSheafData.ideal_comap_of_isAffineHom
+    (I : X.IdealSheafData) (f : Y ⟶ X) [IsAffineHom f] (U : X.affineOpens) :
+    (I.comap f).ideal ⟨f ⁻¹ᵁ U, U.2.preimage f⟩ = (I.ideal U).map (f.app U).hom :=
+  open _root_.AlgebraicCurves.Geometry.Sheaves.Proofs in
+  open Scheme_IdealSheafData_ideal_comap_of_le.AlgebraicGeometry.Scheme.IdealSheafData in
+  ComapLocal.ideal_comap_of_isAffineHom I f U
 
 end AlgebraicGeometry.Scheme.IdealSheafData.ComapLocal
 

@@ -5,6 +5,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationStatement
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
 
 /-!
 # Proof core for ideal norm limitation
@@ -17,11 +19,13 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
 variable
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]

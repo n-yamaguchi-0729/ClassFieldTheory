@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.CategoryTheory.Filtered.Basic
-import Mathlib.RingTheory.Adjoin.FG
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.CategoryTheory.Filtered.Basic
+public import Mathlib.RingTheory.Adjoin.FG
 
 /-!
 Finitely generated subalgebras, their inclusion diagram and its affine inverse-limit
 construction.
 -/
+
+@[expose] public section
 
 universe u
 

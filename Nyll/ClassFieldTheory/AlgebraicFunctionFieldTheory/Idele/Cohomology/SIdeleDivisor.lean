@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeleAction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitHerbrandFormula
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeleAction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitHerbrandFormula
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
 
 /-!
 # The valuation exact sequence of S-ideles
@@ -15,6 +17,8 @@ The actual S-ideles map onto the integer permutation lattice on `S`, with kernel
 the everywhere-integral ideles. This is the second exact sequence needed for the
 S-unit computation of the idele-class Herbrand quotient.
 -/
+
+@[expose] public section
 
 noncomputable section
 

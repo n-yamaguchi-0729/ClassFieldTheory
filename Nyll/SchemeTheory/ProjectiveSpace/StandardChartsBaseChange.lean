@@ -10,7 +10,9 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
 
 /-!
 # Coordinate opens under projective-space base change
@@ -18,6 +20,8 @@ import Nyll.SchemeTheory.ProjectiveSpace.Basic
 The inverse image of a coordinate basic open under the base-change map of projective
 spaces is the corresponding coordinate basic open over the new ring.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

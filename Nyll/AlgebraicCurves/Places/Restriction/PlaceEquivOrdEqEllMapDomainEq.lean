@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
 
 /-!
 # Exists placeEquiv ord eq and ell mapDomain eq
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
 A base-field algebra equivalence transports places, preserves orders and residue degrees, and
 identifies the corresponding Riemann spaces.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

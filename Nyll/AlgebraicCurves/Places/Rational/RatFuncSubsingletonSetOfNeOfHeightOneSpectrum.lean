@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Rational.Classification
+module
+
+public import Nyll.AlgebraicCurves.Places.Rational.Classification
 
 /-!
 # RationalFunctionField subsingleton setOf forall ne ofHeightOneSpectrum
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Places.Rational.Classification
 The places of a rational function field outside the polynomial height-one spectrum form a
 subsingleton.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurve.RationalFunctionField
 

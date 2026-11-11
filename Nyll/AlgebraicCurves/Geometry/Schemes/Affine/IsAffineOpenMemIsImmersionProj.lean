@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.Immersion
+module
 
-import Nyll.SchemeTheory.RingTheory.Polynomial.HomogeneousIdealHomogeneousPosMemNotMem
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.Immersion
+
+public import Nyll.SchemeTheory.RingTheory.Polynomial.HomogeneousIdealHomogeneousPosMemNotMem
 
 /-!
 # exists is Affine Open forall mem of is Immersion proj
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

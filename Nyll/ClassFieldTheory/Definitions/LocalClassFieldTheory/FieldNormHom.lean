@@ -4,11 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.Norm.Basic
+module
+
+public import Mathlib.RingTheory.Norm.Basic
 
 /-!
 # The field norm on multiplicative groups
 -/
+
+@[expose] public section
 
 noncomputable section
 

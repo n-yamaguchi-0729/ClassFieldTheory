@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionRestriction
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionRestriction
 
 /-!
 # Restriction of the actual decomposition action on residue fields
@@ -14,6 +16,8 @@ Reduction commutes with restriction along the original valuation rings.
 Only the lower extension is assumed Galois; the common upper field may
 be an arbitrary finite extension of the base.
 -/
+
+@[expose] public section
 
 noncomputable section
 open AlgebraicCurve

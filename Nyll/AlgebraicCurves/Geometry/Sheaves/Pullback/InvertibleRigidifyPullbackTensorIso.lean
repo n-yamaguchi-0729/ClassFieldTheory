@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Invertible.Rigidify
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
+module
+
+public import Nyll.SchemeTheory.Modules.Invertible.Rigidify
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
 
 /-!
 # Rigidification removes a tensor factor from the base
@@ -22,6 +24,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDualTensor
 Rigidifying the tensor product of an invertible module with a module pulled back from
 the base yields a module isomorphic to the rigidification of the original module.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

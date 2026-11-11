@@ -22,6 +22,8 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 open NumberField IsDedekindDomain
@@ -29,7 +31,7 @@ open NumberField IsDedekindDomain
 /-- A finite prime splits completely in a small Hilbert class field exactly
 when its fractional ideal is principal. -/
 theorem finitePrime_splitsCompletelyInSmallHilbertClassField_iff_principal
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (E : FiniteAbelianExtension K) (hE : IsSmallHilbertClassField E)
     (v : HeightOneSpectrum (𝓞 K)) :
     FinitePrimeSplitsCompletely K E v ↔

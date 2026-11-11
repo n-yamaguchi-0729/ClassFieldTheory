@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Mathlib.Topology.Algebra.RestrictedProduct.Units
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Mathlib.Topology.Algebra.RestrictedProduct.Units
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Adeles over all places
@@ -14,6 +17,8 @@ These adeles use the completed fields at every place, including infinity. The
 idele group already constructed from local units is identified with their units
 by Mathlib's restricted-product equivalence.
 -/
+
+@[expose] public section
 
 open scoped RestrictedProduct
 

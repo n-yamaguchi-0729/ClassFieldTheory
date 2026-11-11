@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
 
 /-!
 # Abelian Galois extensions under equivalent field presentations
@@ -14,6 +16,8 @@ Galois automorphisms and preserve the abelian Galois property. These results
 use only Mathlib's algebra and Galois APIs; they do not depend on local class
 field theory or ramification.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -107,9 +111,13 @@ noncomputable def galEquiv_of_equiv_equiv
     right_inv := ?_ }
   · intro σ
     ext x
-    simp [forward, backward, AlgEquiv.ofRingEquiv_apply]
+    simp only [AlgEquiv.ofRingEquiv_apply, RingEquiv.coe_trans, RingEquiv.coe_mk,
+      AlgEquiv.toEquiv_eq_coe, AlgEquiv.ofRingEquiv_toEquiv, EquivLike.coe_coe, Equiv.coe_fn_mk,
+      Function.comp_apply, RingEquiv.apply_symm_apply, backward, forward]
   · intro τ
     ext x
-    simp [forward, backward, AlgEquiv.ofRingEquiv_apply]
+    simp only [AlgEquiv.ofRingEquiv_apply, RingEquiv.coe_trans, RingEquiv.coe_mk,
+      AlgEquiv.toEquiv_eq_coe, AlgEquiv.ofRingEquiv_toEquiv, EquivLike.coe_coe, Equiv.coe_fn_mk,
+      Function.comp_apply, RingEquiv.symm_apply_apply, forward, backward]
 
 end ClassFieldTheory

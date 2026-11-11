@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Descent.AlgebraDescentCofaces
-import Nyll.SchemeTheory.RingTheory.Descent.InvertibleModule
-import Mathlib.LinearAlgebra.TensorProduct.Defs
+module
+
+public import Nyll.SchemeTheory.Descent.AlgebraDescentCofaces
+public import Nyll.SchemeTheory.RingTheory.Descent.InvertibleModule
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
 
 /-!
 # Effective descent of modules along a faithfully flat algebra
@@ -20,6 +22,8 @@ import Mathlib.LinearAlgebra.TensorProduct.Defs
 The equalizer of the descent maps is the descended submodule. Tensor calculations
 identify its base change and verify the descent square.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -527,7 +531,6 @@ theorem u₃_push₁₃ (e : E₂ (A := A) N) :
     · intro b₁ b₂ n
       rw [push_tmul, c₁₃_tmul]
       erw [u₃_tmul]
-      try rfl
     · intro x y hx hy n
       rw [show ((x + y : B ⊗[A] B) ⊗ₜ[B] n : X₂ A B ⊗[B] N) =
         (x ⊗ₜ[B] n : X₂ A B ⊗[B] N) + (y ⊗ₜ[B] n : X₂ A B ⊗[B] N) from TensorProduct.add_tmul _ _ n]
@@ -547,7 +550,6 @@ theorem u₃_push₂₃ (e : E₂ (A := A) N) :
     · intro b₁ b₂ n
       rw [push_tmul, c₂₃_tmul]
       erw [u₃_tmul]
-      try rfl
     · intro x y hx hy n
       rw [show ((x + y : B ⊗[A] B) ⊗ₜ[B] n : X₂ A B ⊗[B] N) =
         (x ⊗ₜ[B] n : X₂ A B ⊗[B] N) + (y ⊗ₜ[B] n : X₂ A B ⊗[B] N) from TensorProduct.add_tmul _ _ n]
@@ -688,7 +690,6 @@ theorem u₂_i₁_smul (b : B) (e : E₂ (A := A) (B := B) N) :
               ((i₁ A B).hom b) (b₁ ⊗ₜ[A] b₂) n,
         i₁_apply, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
       erw [u₂_tmul]
-      try rfl
     · intro x y hx hy n
       rw [show ((x + y : B ⊗[A] B) ⊗ₜ[B] n : X₂ A B ⊗[B] N) =
           (x ⊗ₜ[B] n : X₂ A B ⊗[B] N) + (y ⊗ₜ[B] n : X₂ A B ⊗[B] N) from TensorProduct.add_tmul _ _

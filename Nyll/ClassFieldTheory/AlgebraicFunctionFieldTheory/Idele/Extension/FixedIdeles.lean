@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormProduct
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
-import Mathlib.RingTheory.Trace.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormProduct
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
+public import Mathlib.RingTheory.Trace.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
 
 /-!
 # Descent of fixed all-place ideles
@@ -17,6 +20,8 @@ preimage in every base completion for a fixed idele. Positive ramification indic
 reflect the local integral-unit condition, proving the restricted-product condition
 for the descended components.
 -/
+
+@[expose] public section
 
 noncomputable section
 

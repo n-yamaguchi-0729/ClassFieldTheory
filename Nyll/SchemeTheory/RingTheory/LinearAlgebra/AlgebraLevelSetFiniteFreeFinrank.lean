@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.RingTheory.RingHom.Flat
+module
+
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.RingTheory.RingHom.Flat
 
 /-!
 # Algebra, divisors, and base change
@@ -19,6 +21,8 @@ import Mathlib.RingTheory.RingHom.Flat
 Coordinate level sets of a flat polynomial algebra are finite and free with the prescribed
 finrank.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

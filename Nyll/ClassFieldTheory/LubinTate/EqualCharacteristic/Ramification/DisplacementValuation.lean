@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PolynomialRootProximity
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationKrasner
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.Ramification.PrimitivePoint
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PolynomialRootProximity
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationKrasner
 
 /-!
 # Valuation of primitive-point displacement
@@ -17,6 +19,8 @@ the corresponding unit parameter.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -36,7 +40,7 @@ variable {K : Type u} [Field K]
 
 section ChosenRamificationTarget
 
-variable {K₀ : Type} [Field K₀]
+variable {K₀ : Type u} [Field K₀]
 
 section PrimitivePointDisplacementValuation
 
@@ -45,7 +49,7 @@ attribute [local instance]
   equalCharacteristicLubinTateLevelField_isGalois_forDisplacementValuation
 
 private noncomputable def equalCharacteristicLubinTateCoefficientInteger
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (c : F.residueField) :
     (equalCharacteristicLubinTateLevelCompleteDVF F n).valuationSubring :=
@@ -57,15 +61,15 @@ private noncomputable def equalCharacteristicLubinTateCoefficientInteger
 
 @[simp]
 private theorem equalCharacteristicLubinTateCoefficientInteger_zero
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     equalCharacteristicLubinTateCoefficientInteger F n 0 = 0 := by
-  simp [equalCharacteristicLubinTateCoefficientInteger]
+  simp only [equalCharacteristicLubinTateCoefficientInteger, map_zero]
 
 @[simp]
 private theorem equalCharacteristicLubinTateCoefficientInteger_coe
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (c : F.residueField) :
     (equalCharacteristicLubinTateCoefficientInteger F n c).val =
@@ -75,7 +79,7 @@ private theorem equalCharacteristicLubinTateCoefficientInteger_coe
   rfl
 
 private noncomputable def equalCharacteristicLubinTatePiEndInteger
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
     (x :
@@ -89,7 +93,7 @@ private noncomputable def equalCharacteristicLubinTatePiEndInteger
 
 @[simp]
 private theorem equalCharacteristicLubinTatePiEndInteger_coe
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
     (x :
@@ -106,7 +110,7 @@ private theorem equalCharacteristicLubinTatePiEndInteger_coe
     equalCharacteristicLubinTateBaseUniformizerInteger_coe]
 
 private noncomputable def equalCharacteristicLubinTatePiIterateInteger
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) :
     ℕ →
@@ -117,7 +121,7 @@ private noncomputable def equalCharacteristicLubinTatePiIterateInteger
         (equalCharacteristicLubinTatePiIterateInteger F n i)
 
 private theorem equalCharacteristicLubinTateAmbientPiIterate_succ_left
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n i : ℕ) (x : equalCharacteristicLubinTateLevelField F n) :
     equalCharacteristicLubinTateAmbientPiIterate F
@@ -152,7 +156,7 @@ private theorem equalCharacteristicLubinTateAmbientPiIterate_succ_left
 
 @[simp]
 private theorem equalCharacteristicLubinTatePiIterateInteger_coe
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n i : ℕ) :
     (equalCharacteristicLubinTatePiIterateInteger F n i).val =
@@ -170,7 +174,7 @@ private theorem equalCharacteristicLubinTatePiIterateInteger_coe
         equalCharacteristicLubinTateAmbientPiIterate_succ_left]
 
 private theorem equalCharacteristicLubinTateCoefficientInteger_isUnit
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) {c : F.residueField} (hc : c ≠ 0) :
     IsUnit (equalCharacteristicLubinTateCoefficientInteger F n c) := by
@@ -184,7 +188,7 @@ private theorem equalCharacteristicLubinTateCoefficientInteger_isUnit
       hC
 
 private theorem equalCharacteristicLubinTateCoefficientInteger_addVal
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) {c : F.residueField} (hc : c ≠ 0) :
     IsDiscreteValuationRing.addVal
@@ -194,7 +198,7 @@ private theorem equalCharacteristicLubinTateCoefficientInteger_addVal
     (equalCharacteristicLubinTateCoefficientInteger_isUnit F n hc)
 
 private theorem equalCharacteristicLubinTatePiIterateInteger_addVal
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n i : ℕ) (hi : i ≤ n) :
     IsDiscreteValuationRing.addVal
@@ -274,7 +278,7 @@ private theorem equalCharacteristicLubinTatePiIterateInteger_addVal
       exact henatlt.le
 
 private noncomputable def equalCharacteristicLubinTateBracketInteger
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (u : F.residueField⟦X⟧) :
     (equalCharacteristicLubinTateLevelCompleteDVF F n).valuationSubring :=
@@ -285,7 +289,7 @@ private noncomputable def equalCharacteristicLubinTateBracketInteger
 
 @[simp]
 private theorem equalCharacteristicLubinTateBracketInteger_coe
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (u : F.residueField⟦X⟧) :
     (equalCharacteristicLubinTateBracketInteger F n u).val =
@@ -354,7 +358,7 @@ private theorem natCast_lt_addVal_finsetSum_of_forall_lt
       exact hmin.trans_le IsDiscreteValuationRing.addVal_add
 
 private theorem equalCharacteristicLubinTateBracketInteger_addVal_eq_order
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (u : F.residueField⟦X⟧)
     (hu : u ≠ 0) (hk : u.order.toNat ≤ n) :
@@ -444,7 +448,7 @@ private theorem equalCharacteristicLubinTateBracketInteger_addVal_eq_order
 /-- The first nonzero coefficient of a nontrivial visible parameter occurs
 at an index at most `n`. -/
 theorem equalCharacteristicLubinTateUnitParameterSeries_sub_one_order_toNat_le
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (a : equalCharacteristicLubinTateUnitParameter F n)
     (hu : equalCharacteristicLubinTateUnitParameterSeries F n a - 1 ≠ 0) :
@@ -462,7 +466,7 @@ theorem equalCharacteristicLubinTateUnitParameterSeries_sub_one_order_toNat_le
   simp [u, equalCharacteristicLubinTateUnitParameterSeries, hk0, hklarge]
 
 private theorem equalCharacteristicLubinTateBracketInteger_coe_eq_aeval
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ) (u : F.residueField⟦X⟧) :
     (equalCharacteristicLubinTateBracketInteger F n u).val =
@@ -485,7 +489,7 @@ private theorem equalCharacteristicLubinTateBracketInteger_coe_eq_aeval
 
 private theorem
     equalCharacteristicLubinTatePrimitivePointInteger_displacement_eq_bracketInteger
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
     (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
@@ -510,7 +514,7 @@ private theorem
 
 private theorem
     equalCharacteristicLubinTatePrimitivePointInteger_displacement_addVal
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
     (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
@@ -544,7 +548,7 @@ private theorem
 difference from the identity parameter. -/
 theorem
     equalCharacteristicLubinTateUnitParameterSeries_sub_one_ne_zero_of_sigma_ne_one
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
     (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))
@@ -598,7 +602,7 @@ parameter differs from `1`, then its displacement of the primitive
 uniformizer has normalized additive valuation exactly `q^k`. -/
 theorem
     equalCharacteristicLubinTatePrimitivePointInteger_displacement_addVal_of_ne_one
-    (F : LocalField.{0, v} K₀)
+    (F : LocalField.{u, v} K₀)
     [CharP K₀ F.residueCharacteristic]
     (n : ℕ)
     (sigma : Gal((equalCharacteristicLubinTateLevelField F n)/F.residueField⸨X⸩))

@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
-import Mathlib.Algebra.Module.FinitePresentation
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.RingTheory.Localization.Free
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Mathlib.RingTheory.TensorProduct.Finite
+module
+
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
+public import Mathlib.Algebra.Module.FinitePresentation
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.RingTheory.Localization.Free
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Mathlib.RingTheory.TensorProduct.Finite
 /-!
 # Local freeness of the sheaf associated to a module
 
 Local finite free descriptions of a module over an affine ring give local
 trivializations of its associated module sheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

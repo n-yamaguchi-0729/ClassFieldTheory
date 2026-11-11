@@ -10,11 +10,15 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
 
 /-!
 # Place inertia Deg Along comp
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

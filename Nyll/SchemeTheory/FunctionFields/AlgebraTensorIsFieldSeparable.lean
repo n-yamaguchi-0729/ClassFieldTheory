@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Adjoin.PowerBasis
-import Mathlib.FieldTheory.LinearDisjoint
-import Mathlib.RingTheory.Polynomial.GaussLemma
-import Mathlib.Tactic.Choose
+module
+
+public import Mathlib.RingTheory.Adjoin.PowerBasis
+public import Mathlib.FieldTheory.LinearDisjoint
+public import Mathlib.RingTheory.Polynomial.GaussLemma
+public import Mathlib.Tactic.Choose
 
 /-!
 # Algebra Tensor Product is Field of is Separable of forall is Algebraic mem range
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

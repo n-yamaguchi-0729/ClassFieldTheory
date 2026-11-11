@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.CharP.Algebra
-import Mathlib.FieldTheory.Galois.Infinite
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Mathlib.GroupTheory.Coset.Card
-import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
-import Nyll.GaloisCohomology.ArtinSchreier.RootCharacter
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.ArtinSchreierPolynomial
+module
+
+public import Mathlib.Algebra.CharP.Algebra
+public import Mathlib.FieldTheory.Galois.Infinite
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+public import Mathlib.GroupTheory.Coset.Card
+public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+public import Nyll.GaloisCohomology.ArtinSchreier.RootCharacter
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.ArtinSchreierPolynomial
 
 /-!
 # The finite cyclic extension of an arbitrary Artin–Schreier parameter
@@ -21,6 +23,8 @@ splitting field. Its Galois group embeds into the additive prime field by
 the existing root-difference character. No irreducibility or degree assumption
 is needed, so parameters supplied by approximation can be used directly.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Unramified.Definitions
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.Definitions
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
 
 /-!
 # Value-group invariants of finite unramified extensions
@@ -16,6 +19,8 @@ and the fundamental inequality of the fundamental inequality.  The actual quotie
 value groups is finite; degree equality then forces its cardinality to be one,
 and hence the source and target value subgroups coincide.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -185,21 +190,16 @@ theorem residueExtension_finiteDimensional_of_finiteDimensional
     let V := LubinTate.Valuations.exponentialValuationSubring v
     let W := LubinTate.Valuations.exponentialValuationSubring w
     let i := unramifiedValuationRingValuationRingMap v w hExt
-    letI : IsLocalHom i :=
+    let : IsLocalHom i :=
       unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
-    letI : Algebra V W := i.toAlgebra
+    let : Algebra V W := i.toAlgebra
     letI : Algebra (IsLocalRing.ResidueField V)
         (IsLocalRing.ResidueField W) :=
       (IsLocalRing.ResidueField.map i).toAlgebra
     FiniteDimensional (IsLocalRing.ResidueField V)
       (IsLocalRing.ResidueField W) := by
+  intro V W i sharedOwner4 sharedOwner5
   classical
-  let V := LubinTate.Valuations.exponentialValuationSubring v
-  let W := LubinTate.Valuations.exponentialValuationSubring w
-  let i := unramifiedValuationRingValuationRingMap v w hExt
-  let : IsLocalHom i :=
-    unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
-  let : Algebra V W := i.toAlgebra
   let k := IsLocalRing.ResidueField V
   let ell := IsLocalRing.ResidueField W
   let : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra

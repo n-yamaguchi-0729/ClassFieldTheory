@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+module
+
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
 /-!
 # Local bases of finite locally free module sheaves
 
 Local trivializations yield compatible bases of section modules on smaller opens
 contained in a neighborhood of each point.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -155,7 +159,8 @@ lemma isSheaf_piPowPresheaf :
     Presheaf.IsSheaf (Opens.grothendieckTopology X) (piPowPresheaf X n).presheaf :=
   Sheaf.isSheaf_of_isLimit _ (piPowCone X n) (isLimitPiPowCone X n)
 
-private noncomputable def _root_.AlgebraicGeometry.Scheme.Modules.piPow : X.Modules where
+/-- The sheaf of finite tuples of ring sections, shared by local trivializations. -/
+noncomputable def _root_.AlgebraicGeometry.Scheme.Modules.piPow : X.Modules where
   val := piPowPresheaf X n
   isSheaf := isSheaf_piPowPresheaf X n
 
@@ -385,7 +390,8 @@ private theorem _root_.AlgebraicGeometry.Scheme.Modules.IsLocallyFreeOfRank.exis
   have hXN : ∀ (a : Γ(X, V.ι ''ᵁ W')) (m : Γ(M, V.ι ''ᵁ W')), a • m = @HSMul.hSMul A N N _ a m := by
     intro a m
     change _ = (((V.ι.appIso W').inv a : Γ(X, V.ι ''ᵁ W')) • m : Γ(M, V.ι ''ᵁ W'))
-    (simp [Scheme.Opens.ι_appIso]; rfl)
+    rw [Scheme.Opens.ι_appIso]
+    rfl
   let v : Fin n → Γ(M, W) := fun i => M.presheaf.map (homOfLE hW).op (M.presheaf.map (homOfLE
       hV.ge).op (e₀ i))
   have hρv : ∀ i, ρ (v i) = (b' i : Γ(M, V.ι ''ᵁ W')) := fun i => (key i).trans (hb' i).symm

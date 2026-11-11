@@ -10,13 +10,17 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Mathlib.CategoryTheory.Monoidal.Braided.Basic
+module
+
+public import Mathlib.CategoryTheory.Monoidal.Braided.Basic
 
 /-!
 # Isomorphisms detected by tensoring with an invertible object
 
 Cancels a tensor factor equipped with a tensor inverse in a braided monoidal category.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

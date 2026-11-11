@@ -10,11 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.QuotientBaseChangeFiniteLocallyFree
+module
+
+public import Nyll.SchemeTheory.Descent.FiniteLocallyFreeQuotientBaseChange
+public import Nyll.SchemeTheory.Descent.QuotientOverlapCocycle
 
 /-!
 # Scheme exists quotient of forall exists quotient restrict
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -341,7 +346,8 @@ lemma inv_overlap (x y : X) :
   change (s ⁻¹ᵁ W x).ι ⁻¹ᵁ (s ⁻¹ᵁ W y) = (s ⁻¹ᵁ W x).ι ⁻¹ᵁ (t ⁻¹ᵁ W y)
   rw [hinv y]
 
-private noncomputable def _root_.AlgebraicGeometry.Scheme.QuotGlue.V (x y : X) : (Yloc s t W hinv
+/-- The overlap open in a local quotient obtained from the neighbouring invariant chart. -/
+noncomputable def _root_.AlgebraicGeometry.Scheme.QuotGlue.V (x y : X) : (Yloc s t W hinv
   loc x).Opens :=
   imageOpens (p := ploc s t W hinv loc x) ((W x).ι ⁻¹ᵁ W y)
 
@@ -540,111 +546,14 @@ lemma core_cocycle (x y z : X) :
         (V s t W hinv loc x z)).hom ≫
       ((V s t W hinv loc x z).ι ⁻¹ᵁ (V s t W hinv loc x y)).ι ≫
         (φ loc x z).hom ≫ (V s t W hinv loc z x).ι := by
-  set O : (V s t W hinv loc x y : Scheme.{u}).Opens :=
-    (V s t W hinv loc x y).ι ⁻¹ᵁ (V s t W hinv loc x z) with hO
-  rw [← cancel_epi (pV loc x y ∣_ O)]
-  have hQ : (pV loc x y ∣_ O) ≫ O.ι = (pV loc x y ⁻¹ᵁ O).ι ≫ pV loc x y := morphismRestrict_ι _ _
-  have hmem : ∀ u : ↑(pV loc x y ⁻¹ᵁ O),
-      ((pV loc x y ⁻¹ᵁ O).ι ≫ (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x y).ι) u ∈
-        ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x z := by
-    intro u
-    have h1 : (pV loc x y ⁻¹ᵁ O).ι u ∈ ((pV loc x y ⁻¹ᵁ O : (_ : Scheme.{u}).Opens) : Set _) :=
-      (Scheme.Opens.range_ι _).le ⟨u, rfl⟩
-    have h2 : (((pV loc x y ⁻¹ᵁ O).ι ≫ pV loc x y ≫ (V s t W hinv loc x y).ι) u) ∈
-        V s t W hinv loc x z := h1
-    rw [morphismRestrict_ι] at h2
-    exact h2
-  have hmemW : ∀ u : ↑(pV loc x y ⁻¹ᵁ O),
-      ((pV loc x y ⁻¹ᵁ O).ι ≫ (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x y).ι ≫ (W x).ι) u ∈
-        W z := by
-    intro u
-    have := hmem u
-    rw [preimage_V] at this
-    exact this
-  let lam₁ : (pV loc x y ⁻¹ᵁ O : Scheme.{u}) ⟶ (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x z) :=
-    IsOpenImmersion.lift (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x z).ι
-      ((pV loc x y ⁻¹ᵁ O).ι ≫ (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x y).ι) (by
-        rintro _ ⟨u, rfl⟩
-        rw [Scheme.Opens.range_ι]
-        exact hmem u)
-  have hlam₁ : lam₁ ≫ (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x z).ι =
-      (pV loc x y ⁻¹ᵁ O).ι ≫ (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x y).ι :=
-    IsOpenImmersion.lift_fac _ _ _
-  let kap : (pV loc x y ⁻¹ᵁ O : Scheme.{u}) ⟶ (W z : Scheme.{u}) :=
-    IsOpenImmersion.lift (W z).ι
-      ((pV loc x y ⁻¹ᵁ O).ι ≫ (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x y).ι ≫ (W x).ι) (by
-        rintro _ ⟨u, rfl⟩
-        rw [Scheme.Opens.range_ι]
-        exact hmemW u)
-  have hkap : kap ≫ (W z).ι =
-      (pV loc x y ⁻¹ᵁ O).ι ≫ (ploc s t W hinv loc x ⁻¹ᵁ V s t W hinv loc x y).ι ≫ (W x).ι :=
-    IsOpenImmersion.lift_fac _ _ _
-  let lam₂ : (pV loc x y ⁻¹ᵁ O : Scheme.{u}) ⟶ (ploc s t W hinv loc y ⁻¹ᵁ V s t W hinv loc y z) :=
-    IsOpenImmersion.lift (ploc s t W hinv loc y ⁻¹ᵁ V s t W hinv loc y z).ι
-      ((pV loc x y ⁻¹ᵁ O).ι ≫ (eX loc x y).hom ≫
-        (ploc s t W hinv loc y ⁻¹ᵁ V s t W hinv loc y x).ι) (by
-        rintro _ ⟨u, rfl⟩
-        rw [Scheme.Opens.range_ι]
-        change _ ∈ ploc s t W hinv loc y ⁻¹ᵁ V s t W hinv loc y z
-        rw [preimage_V]
-        change (((pV loc x y ⁻¹ᵁ O).ι ≫ (eX loc x y).hom ≫ Scheme.Opens.ι _ ≫ (W y).ι) u) ∈ W z
-        rw [eX_hom_ι]
-        exact hmemW u)
-  have hlam₂ : lam₂ ≫ (ploc s t W hinv loc y ⁻¹ᵁ V s t W hinv loc y z).ι =
-      (pV loc x y ⁻¹ᵁ O).ι ≫ (eX loc x y).hom ≫
-        (ploc s t W hinv loc y ⁻¹ᵁ V s t W hinv loc y x).ι :=
-    IsOpenImmersion.lift_fac _ _ _
-  have σx : ((Yloc s t W hinv loc x).restrictRestrictComm (V s t W hinv loc x y)
-      (V s t W hinv loc x z)).hom ≫ ((V s t W hinv loc x z).ι ⁻¹ᵁ V s t W hinv loc x y).ι ≫
-        (V s t W hinv loc x z).ι = O.ι ≫ (V s t W hinv loc x y).ι :=
-    IsOpenImmersion.isoOfRangeEq_hom_fac _ _ _
-  have σy : ((Yloc s t W hinv loc y).restrictRestrictComm (V s t W hinv loc y x)
-      (V s t W hinv loc y z)).hom ≫ ((V s t W hinv loc y z).ι ⁻¹ᵁ V s t W hinv loc y x).ι ≫
-        (V s t W hinv loc y z).ι =
-      ((V s t W hinv loc y x).ι ⁻¹ᵁ V s t W hinv loc y z).ι ≫ (V s t W hinv loc y x).ι :=
-    IsOpenImmersion.isoOfRangeEq_hom_fac _ _ _
-  have R1 : (pV loc x y ∣_ O) ≫ ((Yloc s t W hinv loc x).restrictRestrictComm (V s t W hinv loc x y)
-      (V s t W hinv loc x z)).hom ≫ ((V s t W hinv loc x z).ι ⁻¹ᵁ V s t W hinv loc x y).ι =
-      lam₁ ≫ pV loc x z := by
-    rw [← cancel_mono (V s t W hinv loc x z).ι]
-    simp only [Category.assoc]
-    rw [σx, reassoc_of% hQ, morphismRestrict_ι (ploc s t W hinv loc x) (V s t W hinv loc x y),
-      morphismRestrict_ι (ploc s t W hinv loc x) (V s t W hinv loc x z), reassoc_of% hlam₁]
-  have R3 : lam₁ ≫ (eX loc x z).hom ≫ (ploc s t W hinv loc z ⁻¹ᵁ V s t W hinv loc z x).ι = kap := by
-    rw [← cancel_mono (W z).ι]
-    simp only [Category.assoc]
-    rw [eX_hom_ι, reassoc_of% hlam₁, hkap]
-  have R : (pV loc x y ∣_ O) ≫ ((Yloc s t W hinv loc x).restrictRestrictComm (V s t W hinv loc x y)
-      (V s t W hinv loc x z)).hom ≫ ((V s t W hinv loc x z).ι ⁻¹ᵁ V s t W hinv loc x y).ι ≫
-        (φ loc x z).hom ≫ (V s t W hinv loc z x).ι = kap ≫ ploc s t W hinv loc z := by
-    rw [reassoc_of% R1, pV_φ_hom_assoc,
-      morphismRestrict_ι (ploc s t W hinv loc z) (V s t W hinv loc z x), reassoc_of% R3]
-  have L1 : (pV loc x y ∣_ O) ≫
-      (φ loc x y).hom.resLE ((V s t W hinv loc y x).ι ⁻¹ᵁ (V s t W hinv loc y z)) O
-        (core_t_inter loc x y z) ≫
-      ((Yloc s t W hinv loc y).restrictRestrictComm (V s t W hinv loc y x)
-          (V s t W hinv loc y z)).hom ≫ ((V s t W hinv loc y z).ι ⁻¹ᵁ V s t W hinv loc y x).ι =
-      lam₂ ≫ pV loc y z := by
-    rw [← cancel_mono (V s t W hinv loc y z).ι]
-    simp only [Category.assoc]
-    rw [σy, Scheme.Hom.resLE_comp_ι_assoc, reassoc_of% hQ, pV_φ_hom_assoc,
-      morphismRestrict_ι (ploc s t W hinv loc y) (V s t W hinv loc y x),
-      morphismRestrict_ι (ploc s t W hinv loc y) (V s t W hinv loc y z), reassoc_of% hlam₂]
-  have L3 : lam₂ ≫ (eX loc y z).hom ≫ (ploc s t W hinv loc z ⁻¹ᵁ V s t W hinv loc z y).ι = kap := by
-    rw [← cancel_mono (W z).ι]
-    simp only [Category.assoc]
-    rw [eX_hom_ι, reassoc_of% hlam₂, eX_hom_ι, hkap]
-  have L : (pV loc x y ∣_ O) ≫
-      (φ loc x y).hom.resLE ((V s t W hinv loc y x).ι ⁻¹ᵁ (V s t W hinv loc y z)) O
-        (core_t_inter loc x y z) ≫
-      ((Yloc s t W hinv loc y).restrictRestrictComm (V s t W hinv loc y x)
-          (V s t W hinv loc y z)).hom ≫ ((V s t W hinv loc y z).ι ⁻¹ᵁ V s t W hinv loc y x).ι ≫
-        (φ loc y z).hom ≫ (V s t W hinv loc z y).ι = kap ≫ ploc s t W hinv loc z := by
-    rw [reassoc_of% L1, pV_φ_hom_assoc,
-      morphismRestrict_ι (ploc s t W hinv loc z) (V s t W hinv loc z y), reassoc_of% L3]
-  rw [L, R]
+  exact _root_.AlgebraicGeometry.Scheme.QuotGlue.overlap_cocycle W
+    (Yloc s t W hinv loc) (ploc s t W hinv loc) (V s t W hinv loc)
+    (eX loc) (φ loc) (preimage_V s t W hinv loc)
+    (eX_hom_ι loc) (pV_φ_hom loc) (epi_pV_restrict loc)
+    (core_t_inter loc) x y z
 
-private noncomputable def _root_.AlgebraicGeometry.Scheme.QuotGlue.core :
+/-- The gluing data for the chosen local quotients and their overlap identifications. -/
+noncomputable def _root_.AlgebraicGeometry.Scheme.QuotGlue.core :
   Scheme.GlueData.MkCore.{u} where
   U := Yloc s t W hinv loc
   V := V s t W hinv loc
@@ -878,8 +787,8 @@ lemma isPullback_pglued : IsPullback s t (pglued hxW loc) (pglued hxW loc) := by
   · erw [Iso.refl_hom, Category.comp_id]
     exact hsq.isoPullback_hom_snd.symm
   · erw [Iso.refl_hom, Category.comp_id, tW_ι, ← Category.assoc, hsq.isoPullback_hom_fst]
-  · erw [Iso.refl_hom, Iso.refl_hom, Category.comp_id]; try erw [Category.id_comp]
-  · erw [Iso.refl_hom, Iso.refl_hom, Category.comp_id]; try erw [Category.id_comp]
+  · erw [Iso.refl_hom, Iso.refl_hom, Category.comp_id]
+  · erw [Iso.refl_hom, Iso.refl_hom, Category.comp_id]
 include hxW loc in
 theorem main :
     ∃ (Y : Scheme.{u}) (p : X ⟶ Y) (w : s ≫ p = t ≫ p),

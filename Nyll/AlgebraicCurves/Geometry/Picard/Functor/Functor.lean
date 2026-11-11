@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Invertible.Invertible
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Nyll.SchemeTheory.Modules.Invertible.Invertible
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-!
 # The relative Picard presheaf
@@ -22,6 +24,8 @@ This file defines invertible sheaves of modules and line bundles rigidified alon
 Isomorphism classes of rigidified line bundles form a presheaf under base change, with the unit
 bundle as its distinguished class.
 -/
+
+@[expose] public section
 
 universe u
 
@@ -81,7 +85,9 @@ theorem rigSection_baseChangeSnd {C T T' : Scheme.{u}} (c : C ⟶ Spec (CommRing
   · simp only [Category.assoc, pullback.lift_snd, pullback.lift_snd_assoc,
       Category.comp_id, Category.id_comp]
 
-/-- An invertible module on a base changed family, trivialized along its chosen section. -/
+/-- An invertible module on a base changed family whose restriction along the chosen section
+admits a trivialization. The field records existence, so this historical name does not include
+a chosen trivialization. The setoid below compares the underlying line bundles. -/
 structure RigidifiedLineBundle {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))
     (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c)
     {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) : Type (u + 1) where
@@ -98,7 +104,7 @@ namespace RigidifiedLineBundle
 variable {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat.of R)}
   {ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c}
 
-/-- The unit line bundle with its canonical rigidification. -/
+/-- The unit line bundle admits its canonical trivialization along the section. -/
 def unit {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) : RigidifiedLineBundle c ε t where
   L := SheafOfModules.unit (pullback c t).ringCatSheaf
   isInvertible := Scheme.Modules.isInvertible_unit _
@@ -107,7 +113,7 @@ def unit {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) : RigidifiedLineBu
 instance {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) :
     Inhabited (RigidifiedLineBundle c ε t) := ⟨unit t⟩
 
-/-- Pullback of a rigidified line bundle along a morphism over the base. -/
+/-- Pull back a line bundle and its trivializability witness along a morphism over the base. -/
 def pullbackAlong {T T' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
     {t' : T' ⟶ Spec (CommRingCat.of R)} (M : RigidifiedLineBundle c ε t)
     (ψ : SchemeHomOver t' t) : RigidifiedLineBundle c ε t' where
@@ -130,7 +136,8 @@ theorem pullbackAlong_congr {T T' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of 
     Nonempty ((M.pullbackAlong ψ).L ≅ (M'.pullbackAlong ψ).L) :=
   ⟨(Scheme.Modules.pullback (baseChangeSnd c ψ)).mapIso h.some⟩
 
-/-- Isomorphism classes of rigidified line bundles, using the underlying module isomorphism. -/
+/-- Classes of line bundles trivializable along the section, identified by isomorphisms of their
+underlying modules. No chosen trivialization is part of an object or required to be preserved. -/
 def Classes (c : C ⟶ Spec (CommRingCat.of R)) (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c)
     {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) : Type (u + 1) :=
   Quotient (RigidifiedLineBundle.setoid (c := c) (ε := ε) t)
@@ -143,7 +150,7 @@ def classesMap {T T' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
 
 end RigidifiedLineBundle
 
-/-- The presheaf of rigidified line bundle classes on schemes over the affine base. -/
+/-- The presheaf of line bundle classes trivializable along the chosen section. -/
 def relPicardPresheaf {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))
     (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c) :
     (Over (Spec (CommRingCat.of R)))ᵒᵖ ⥤ Type (u + 1) where

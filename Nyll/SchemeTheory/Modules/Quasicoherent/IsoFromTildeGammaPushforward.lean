@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildeLocalization
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
 /-!
 # Global sections and pushforward of locally trivial modules
 
 For a scheme with a two-affine-open cover, the pushforward of a locally trivial
 module is the sheaf associated to its module of global sections on the affine base.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegPos
-import Nyll.AlgebraicCurves.Places.Residue.ResidueFieldEqCompositum
-import Nyll.GaloisCohomology.FieldTheory.FiniteCompositumDegree
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegPos
+public import Nyll.AlgebraicCurves.Places.Residue.ResidueFieldEqCompositum
+public import Nyll.GaloisCohomology.FieldTheory.FiniteCompositumDegree
 
 /-!
 # Residue degrees in finite constant extensions
@@ -17,6 +19,8 @@ constants and the original residue field. Over finite constants its degree is
 therefore the least common multiple of their degrees. The residue extension
 degree is the constant degree divided by its gcd with the degree of the place.
 -/
+
+@[expose] public section
 
 noncomputable section
 

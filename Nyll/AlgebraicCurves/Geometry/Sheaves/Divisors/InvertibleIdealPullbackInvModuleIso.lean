@@ -11,16 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModuleMaps
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealIsoPullbackModuleComparison
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
-import Nyll.SchemeTheory.CategoryTheory.MonoidalCategoryIsoTensorIsoTensorUnit
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModuleMaps
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealIsoPullbackModuleComparison
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.InvertiblePullbackDual
+public import Nyll.SchemeTheory.CategoryTheory.MonoidalCategoryIsoTensorIsoTensorUnit
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
 
 /-!
 # Pullback of inverse ideal modules
@@ -28,6 +30,8 @@ import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
 When an ideal sheaf and its inverse image are invertible, their inverse modules
 are identified by pullback.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.RingTheory.LocalProperties.Submodule
-import Mathlib.RingTheory.Localization.Away.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.RingTheory.LocalProperties.Submodule
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
 
 /-!
 # Positive-degree exactness of affine-cover Cech cochains
@@ -22,6 +24,8 @@ import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
 For a separated structure morphism and an affine open, the positive-degree Cech
 complex of an ordered affine cover of the open is exact.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

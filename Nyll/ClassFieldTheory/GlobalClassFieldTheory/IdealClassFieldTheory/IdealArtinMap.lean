@@ -4,9 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 
 /-!
 # The ideal-theoretic Artin map
@@ -24,6 +34,10 @@ group.
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField BigOperators NumberField.LiesOver
 
 noncomputable section
@@ -33,7 +47,7 @@ namespace IdealClassFieldTheory
 
 open NumberField
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 local instance
     idealArtinMap_ideleClassGroupIsMulCommutative :
@@ -254,7 +268,7 @@ theorem principalRayIdealSubgroup_le_idealArtinKernel
 section NormDefinedFiniteKernel
 
 variable
-    {L : Type} [Field L] [NumberField L] [Algebra K L]
+    {L : Type v} [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]
 
 omit [FiniteDimensional K L] in
@@ -670,7 +684,7 @@ end NormDefinedFiniteKernel
 section NormDefinedKernel
 
 variable
-    {L : Type} [Field L] [NumberField L] [Algebra K L]
+    {L : Type v} [Field L] [NumberField L] [Algebra K L]
     [IsGalois K L]
 
 omit [IsGalois K L] in
@@ -718,7 +732,7 @@ theorem idealArtin_exact
 section ActualGaloisArtin
 
 variable
-    {L : Type} [Field L] [NumberField L] [Algebra K L]
+    {L : Type v} [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
 
 /-- The ideal-theoretic Artin map with its actual Galois-group target.

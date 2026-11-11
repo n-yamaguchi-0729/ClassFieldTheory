@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
+module
+
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
 
 /-!
 # EssFiniteType functionField
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Models.Construction.Basic
 The function field of an integral scheme locally of finite type over a field is essentially of
 finite type over that field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

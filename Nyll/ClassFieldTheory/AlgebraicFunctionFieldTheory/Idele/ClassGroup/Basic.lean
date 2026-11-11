@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Divisor classes and the degree of an idele class
@@ -14,6 +18,8 @@ The divisor-class map is constructed from the actual all-place divisor map.
 Its descent and that of degree use the proved comparison with principal divisors.
 No finiteness is asserted for the full divisor or idele class group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

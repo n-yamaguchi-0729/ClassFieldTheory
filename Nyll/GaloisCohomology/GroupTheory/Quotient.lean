@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Equiv.Defs
-import Mathlib.GroupTheory.Abelianization.Defs
-import Mathlib.Logic.Equiv.Defs
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Mathlib.Algebra.Group.Equiv.Defs
+public import Mathlib.GroupTheory.Abelianization.Defs
+public import Mathlib.Logic.Equiv.Defs
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Quotients represented by a supporting subgroup
@@ -17,6 +19,8 @@ second subgroup has a representative in the first.  This is the precise
 group-theoretic comparison used when a sufficiently large group of
 supported ideles represents the full idele class group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

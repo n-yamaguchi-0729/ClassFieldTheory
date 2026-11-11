@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.AffineQuotientFiniteLocallyFreeEquivalenceRelation
-import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.InvariantIsAffineOpenFiniteLocallyFreeEquivalenceRelation
-import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.QuotientQuotientRestrict
+module
+
+public import Nyll.SchemeTheory.Descent.AffineFiniteLocallyFreeQuotient
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.InvariantIsAffineOpenFiniteLocallyFreeEquivalenceRelation
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.QuotientQuotientRestrict
 
 /-!
 # Scheme exists quotient of finite Locally Free equivalence Relation
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

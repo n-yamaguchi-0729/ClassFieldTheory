@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Mathlib.AlgebraicGeometry.ResidueField
-import Mathlib.RingTheory.Artinian.Module
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Mathlib.AlgebraicGeometry.ResidueField
+public import Mathlib.RingTheory.Artinian.Module
 
 /-!
 # Ranks of composites of finite flat morphisms
@@ -20,6 +22,8 @@ import Mathlib.RingTheory.Artinian.Module
 When the first finite flat morphism has constant rank, the rank of its composite with
 a second finite flat morphism is the product of that constant and the second rank.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

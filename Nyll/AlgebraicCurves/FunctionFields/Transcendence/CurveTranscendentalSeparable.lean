@@ -10,12 +10,16 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
 
 /-!
 # Is Curve Over of transcendental of is Separable
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

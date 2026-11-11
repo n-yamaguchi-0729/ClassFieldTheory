@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.SchemeTheory.Morphisms.ChowDatum
-import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
-import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.AlgebraicGeometry.Birational.RationalMap
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.SchemeTheory.Morphisms.ChowDatum
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Functorial
+public import Mathlib.AlgebraicGeometry.Morphisms.SchemeTheoreticallyDominant
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.AlgebraicGeometry.Birational.RationalMap
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.RingTheory.TensorProduct.Basic
 
 /-! Segre embeddings and projective Chow data for proper schemes. -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -238,7 +242,8 @@ def prodCover :
     (ProjSpace.affineOpenCover R n).openCover (ProjSpace.affineOpenCover R p).openCover _ _
 
 -- Keep the chart inclusion at its native pullback source, independent of cover-index reduction.
-private def chartInclusion (i : Fin (n + 1)) (j : Fin (p + 1)) :
+/-- The inclusion of a pair of projective affine charts into the product. -/
+def chartInclusion (i : Fin (n + 1)) (j : Fin (p + 1)) :
     pullback
         (Proj.awayι 𝒜ˣ (X i) (ProjSpace.X_mem_one R n i) one_pos ≫ ProjSpace.π R n)
         (Proj.awayι 𝒜ʸ (X j) (ProjSpace.X_mem_one R p j) one_pos ≫ ProjSpace.π R p)
@@ -248,10 +253,13 @@ private def chartInclusion (i : Fin (n + 1)) (j : Fin (p + 1)) :
     (Proj.awayι 𝒜ʸ (X j) (ProjSpace.X_mem_one R p j) one_pos)
     (𝟙 _) (Category.comp_id _) (Category.comp_id _)
 
-private instance chartInclusion_isOpenImmersion (i : Fin (n + 1)) (j : Fin (p + 1)) :
+/-- Each product-chart inclusion is an open immersion. -/
+theorem chartInclusion_isOpenImmersion (i : Fin (n + 1)) (j : Fin (p + 1)) :
     IsOpenImmersion (chartInclusion R n p i j) := by
   unfold chartInclusion
   infer_instance
+
+attribute [local instance] chartInclusion_isOpenImmersion
 
 /-- Identify a product chart with the spectrum of its tensor-product coordinate ring. -/
 def chartIso (i : Fin (n + 1)) (j : Fin (p + 1)) :
@@ -861,11 +869,13 @@ theorem chartMap_compat (ij kl : Fin (n + 1) × Fin (p + 1)) :
         hright)
   exact hleft'.trans hright'.symm
 
-private def coverChartMap (ij : (prodCover R n p).I₀) :
+/-- The local Segre morphism indexed by the product affine cover. -/
+def coverChartMap (ij : (prodCover R n p).I₀) :
     (prodCover R n p).X ij ⟶ Proj 𝒜ᶻ :=
   chartMap R n p ij.1 ij.2
 
-private theorem coverChartMap_compat (ij kl : (prodCover R n p).I₀) :
+/-- The local Segre morphisms agree on overlaps of product charts. -/
+theorem coverChartMap_compat (ij kl : (prodCover R n p).I₀) :
     pullback.fst ((prodCover R n p).f ij) ((prodCover R n p).f kl) ≫
         coverChartMap R n p ij =
       pullback.snd _ _ ≫ coverChartMap R n p kl :=
@@ -1064,7 +1074,8 @@ def segreAux0 : SegreDatum R (Fin.elim0 : Fin 0 → ℕ) where
     change _ = 𝟙 (Spec (.of R))
     exact segreAux0_section R
 
-private def segreStep {m : ℕ} (e : Fin (m + 1) → ℕ)
+/-- The product morphism adjoining one factor to the existing Segre morphism. -/
+def segreStep {m : ℕ} (e : Fin (m + 1) → ℕ)
     (ih : SegreDatum R (e ∘ Fin.succ)) :
     ProjSpace.prodOver R e ⟶ pullback (ProjSpace.π R (e 0)) (ProjSpace.π R ih.Nd) :=
   pullback.map (ProjSpace.π R (e 0)) (ProjSpace.prodOverπ R (e ∘ Fin.succ))

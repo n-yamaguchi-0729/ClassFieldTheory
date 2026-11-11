@@ -10,9 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Unit-module and structure-sheaf Čech groups
@@ -20,6 +23,8 @@ import Mathlib.Util.WithWeakNamespace
 For a two-affine-open cover, sections of the unit module and structure-sheaf sections give
 canonically equivalent zeroth and first Čech groups.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

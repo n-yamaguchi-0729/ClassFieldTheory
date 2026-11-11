@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
 
 /-!
 # The abstract class-field correspondence
@@ -16,18 +18,21 @@ the defining norm-subgroup equality and the two lattice formulas are
 consequences rather than extra assumptions.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace ClassFormation
 
 open CyclicCohomology KummerTheory
 
--- Mathlib's `Rep ℤ G` currently fixes the acting group to universe zero.
-variable {G : IntegralRepGroupType} [Group G] [TopologicalSpace G]
+variable {G : Type u} [Group G] [TopologicalSpace G]
 
 namespace FiniteAbelianSubextension
 
-variable {D : DegreeData G} {A : Rep ℤ G}
+variable {D : DegreeData G} {A : Rep.{v} ℤ G}
 
 /-- The class field belonging to a norm-open subgroup. -/
 noncomputable def classField

@@ -13,16 +13,20 @@ Nyll/AlgebraicCurves/Places/Place_sum_deg_fiberConstants_eq_deg_of_isCurveOver.l
 with the Anthropic FLT provenance recorded in that source retained.
 -/
 
-import Mathlib.Data.Int.ConditionallyCompleteOrder
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+module
+
+public import Mathlib.Order.Int.ConditionallyCompleteOrder
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
 
 /-!
 # Constant Extension
 -/
+
+@[expose] public section
 
 noncomputable section
 

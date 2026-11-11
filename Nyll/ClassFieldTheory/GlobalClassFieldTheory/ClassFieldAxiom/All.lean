@@ -16,6 +16,8 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitKummerP
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SUnitLocalPowerMap
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.SupportedIdelePowerLocalUnitQuotient
 
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.LocalNormTransport
+
 /-!
 # The global class-field axiom and its arithmetic consequences
 

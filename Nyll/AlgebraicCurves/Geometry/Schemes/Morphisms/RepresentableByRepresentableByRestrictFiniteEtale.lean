@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Descent.DescentAction
-import Nyll.AlgebraicCurves.Geometry.Descent.DescentActionEffectiveFiniteEtale
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Descent.DescentAction
+public import Nyll.AlgebraicCurves.Geometry.Descent.DescentActionEffectiveFiniteEtale
 
 /-!
 # exists representable By of representable By restrict finite Etale
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

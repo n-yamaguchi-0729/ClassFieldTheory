@@ -4,14 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.UnramifiedNormSubgroup
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
 
 /-!
 # Uniqueness from an unramified norm kernel and a uniformizer value
@@ -25,17 +30,21 @@ This is the unramified generator step, not uniqueness of finite local Artin
 maps for ramified extensions.
 -/
 
+@[expose] public section
+
 open scoped ValuativeRel
 open LocalFieldTheory.IsNonarchimedeanLocalField
 
 noncomputable section
+
+universe u v
 
 namespace ClassFieldTheory
 
 /-- For an unramified extension, two norm-kernel homomorphisms that agree on
 one inverse uniformizer agree on all field units. -/
 theorem finiteAbelianLocalReciprocity_unramified_hom_ext
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     [Field L] [ValuativeRel L] [TopologicalSpace L]

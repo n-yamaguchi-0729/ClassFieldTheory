@@ -20,6 +20,8 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 open NumberField IsDedekindDomain
@@ -27,7 +29,7 @@ open NumberField IsDedekindDomain
 /-- A big Hilbert class field realizes the narrow ray class group, with
 the same extension and arithmetic Frobenius normalization. -/
 theorem bigHilbertClassField_hasNarrowRayRealization
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (E : FiniteAbelianExtension K) (hE : IsBigHilbertClassField E) :
     ∃ R : RayClassFieldRealization K (narrowRayClassModulus K),
       R.extension = E := by

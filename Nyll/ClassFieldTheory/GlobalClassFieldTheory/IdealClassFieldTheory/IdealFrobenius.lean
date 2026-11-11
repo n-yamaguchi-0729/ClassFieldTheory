@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinQuotient
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # Ideal Frobenius classes and the decomposition law
@@ -18,6 +21,10 @@ The general unramified Galois identity `r * f = n` belongs to
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField
 
 noncomputable section
@@ -27,7 +34,7 @@ namespace IdealClassFieldTheory
 
 open NumberField IsDedekindDomain
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 attribute [local instance]
   ideleClassSubgroupNormal idealArtinKernelNormal

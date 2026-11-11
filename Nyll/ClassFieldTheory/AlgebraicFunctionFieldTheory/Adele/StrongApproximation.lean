@@ -13,15 +13,17 @@ Upstream per-file ATTRIBUTION:
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.RiemannRoch
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.FiniteDimensionalLSpaceZero
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.AdicValuationSubLeRiemannGenus
-import Mathlib.Tactic.Choose
-import Mathlib.Topology.Algebra.Valued.ValuationTopology
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.RiemannRoch
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.FiniteDimensionalLSpaceZero
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.AdicValuationSubLeRiemannGenus
+public import Mathlib.Tactic.Choose
+public import Mathlib.Topology.Algebra.Valued.ValuationTopology
 
 /-!
 # Strong approximation for completed function-field adeles
@@ -35,6 +37,8 @@ Neither a genus witness nor separability of the chosen rational presentation is 
 Perfectness supplies a separating parameter, and the existing index-of-specialty theorem
 supplies the genus witness. The base field need not be the full field of constants.
 -/
+
+@[expose] public section
 
 noncomputable section
 

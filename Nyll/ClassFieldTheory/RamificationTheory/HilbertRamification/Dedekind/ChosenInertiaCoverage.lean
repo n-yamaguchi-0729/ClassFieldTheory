@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import Mathlib.NumberTheory.NumberField.Ideal.Basic
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Conjugation
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.NumberFieldPrimes
+module
+
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+public import Mathlib.NumberTheory.NumberField.Ideal.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.RationalPrime
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Conjugation
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.NumberFieldPrimes
 
 /-!
 # Global cyclotomic inertia argument: coverage by finitely many chosen inertia groups
@@ -19,6 +21,8 @@ trivial in an abelian group.  Consequently, if the extension is unramified
 outside a finite set `S`, one chosen prime above each member of `S` supplies
 all nontrivial inertia groups.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -43,7 +47,7 @@ theorem inertiaGroup_eq_of_liesOver_of_commGroup
     exists_smul_eq_of_isGaloisGroup (A := A) (B := B) p P Q G
   ext τ
   rw [mem_inertiaGroup_smul_iff]
-  simp [mul_comm]
+  simp only [inv_mul_cancel_comm]
 
 variable {G M : Type*}
 variable [CommGroup G]

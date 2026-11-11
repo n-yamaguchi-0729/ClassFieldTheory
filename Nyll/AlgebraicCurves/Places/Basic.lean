@@ -36,16 +36,18 @@ Place_ord_smul_of_ne_zero
 Place_mem_of_ord_nonneg
 -/
 
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.Valuation.Discrete.Basic
-import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.Data.Finsupp.SMul
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Ring.Subring.Pointwise
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.RingTheory.Bezout
+module
+
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.Valuation.Discrete.Basic
+public import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.Data.Finsupp.SMul
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Ring.Subring.Pointwise
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.RingTheory.Bezout
 
 /-!
 # Places and their normalized valuations
@@ -53,6 +55,8 @@ import Mathlib.RingTheory.Bezout
 A place, its residue field and normalized order, the action of field automorphisms, and
 the place associated with a height-one prime. Divisor and Picard constructions build on this API.
 -/
+
+@[expose] public section
 
 section
 

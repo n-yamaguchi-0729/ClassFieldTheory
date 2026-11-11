@@ -8,9 +8,13 @@ import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayArtin
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealModulusProjection
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassIdealModulusProjectionPrime
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
+import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassGroupHomExtFinitePrime
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 
 /-!
 # Naturality of ray Artin maps under reduction of the modulus
@@ -26,15 +30,17 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v w z
+
 namespace ClassFieldTheory
 
 private local instance rayClassGroupCommGroup
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     (m : RayClassModulus K) : CommGroup (RayClassGroup m) :=
   { (inferInstance : Group (RayClassGroup m)) with mul_comm := mul_comm' }
 
 private theorem rayArtin_prime_eq_arithmeticPrimeArtin
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     {m : RayClassModulus K} (R : RayClassFieldRealization K m)
     (v : HeightOneSpectrum (𝓞 K))
     (hv : v ∉ m.finitePart.support) :
@@ -57,7 +63,7 @@ private theorem rayArtin_prime_eq_arithmeticPrimeArtin
         (K := K) (L := R.extension) v w hw hunram).symm
 
 private theorem arithmeticPrimeArtin_restrict_tower
-    {K E L : Type}
+    {K : Type u} {E : Type v} {L : Type w}
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Field L] [NumberField L]
@@ -81,65 +87,21 @@ private theorem arithmeticPrimeArtin_restrict_tower
         (IdeleGroup.finitePrimeIdele v))
 
 private theorem rayClassGroup_hom_ext_of_prime
-    {K : Type} [Field K] [NumberField K]
-    {G : Type} [CommGroup G]
+    {K : Type u} [Field K] [NumberField K]
+    {G : Type z} [Monoid G]
     (n : RayClassModulus K)
     (f g : RayClassGroup n →* G)
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (hv : v ∉ n.finitePart.support),
         f (rayClassOfFinitePrime n v hv) =
           g (rayClassOfFinitePrime n v hv)) :
-    f = g := by
-  let n' := GlobalClassFieldComparison.rayClassModulusToOriginal K n
-  let e := GlobalClassFieldComparison.rayClassGroupEquivOriginal K n
-  let ι : RayClass.primeToModulusIdeals n' →* RayClassGroup n :=
-    e.symm.toMonoidHom.comp
-      (QuotientGroup.mk' (RayClass.principalRayIdealSubgroup n'))
-  have hιprime (v : HeightOneSpectrum (𝓞 K))
-      (hv : v ∉ n.finitePart.support) :
-      ι (RayClass.primeToModulusIdeal n' v hv) =
-        rayClassOfFinitePrime n v hv := by
-    apply e.injective
-    calc
-      e (ι (RayClass.primeToModulusIdeal n' v hv)) =
-          QuotientGroup.mk' (RayClass.principalRayIdealSubgroup n')
-            (RayClass.primeToModulusIdeal n' v hv) := by
-        change e (e.symm
-          (QuotientGroup.mk' (RayClass.principalRayIdealSubgroup n')
-            (RayClass.primeToModulusIdeal n' v hv))) = _
-        exact e.apply_symm_apply _
-      _ = e (rayClassOfFinitePrime n v hv) :=
-        (GlobalClassFieldComparison.rayClassGroupEquivOriginal_prime
-          K n v hv).symm
-  have hι : Function.Surjective ι := by
-    intro q
-    obtain ⟨I, hI⟩ :=
-      QuotientGroup.mk'_surjective
-        (RayClass.principalRayIdealSubgroup n') (e q)
-    refine ⟨I, ?_⟩
-    apply e.injective
-    change e (e.symm
-      (QuotientGroup.mk' (RayClass.principalRayIdealSubgroup n') I)) = e q
-    rw [e.apply_symm_apply]
-    exact hI
-  have hcomp : f.comp ι = g.comp ι := by
-    refine RayClass.primeToModulusIdeals_hom_ext
-      (G := G) n' (f.comp ι) (g.comp ι) ?_
-    intro v hv
-    change f (ι (RayClass.primeToModulusIdeal n' v hv)) =
-      g (ι (RayClass.primeToModulusIdeal n' v hv))
-    rw [hιprime v hv]
-    exact hprime v hv
-  apply MonoidHom.ext
-  intro q
-  obtain ⟨I, rfl⟩ := hι q
-  exact congrArg
-    (fun h : RayClass.primeToModulusIdeals n' →* G => h I) hcomp
+    f = g :=
+  rayClassGroup_hom_ext_finitePrime K n f g hprime
 
 /-- Artin reciprocity commutes with reduction of the modulus along any
 embedding of the corresponding ray class field realizations. -/
 theorem rayArtin_modulusProjection
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     {m n : RayClassModulus K} (hmn : m ≤ n)
     (Rm : RayClassFieldRealization K m)
     (Rn : RayClassFieldRealization K n)
@@ -175,5 +137,35 @@ theorem rayArtin_modulusProjection
     Rm.rayArtin (rayClassIdealModulusProjection K hmn x) at hx
   have hy := congrArg (fun σ : Rm.extension ≃ₐ[K] Rm.extension => f (σ y)) hx
   exact (AlgEquiv.restrictNormal_commutes (Rn.rayArtin x) Rm.extension y).symm.trans hy
+
+/-- The identity modulus and identity field embedding preserve the same
+Artin value. -/
+theorem rayArtin_modulusProjection_refl
+    {K : Type u} [Field K] [NumberField K]
+    {m : RayClassModulus K} (R : RayClassFieldRealization K m)
+    (x : RayClassGroup m) (y : R.extension) :
+    R.rayArtin x (AlgHom.id K R.extension y) =
+      AlgHom.id K R.extension
+        (R.rayArtin (rayClassIdealModulusProjection K (le_refl m) x) y) :=
+  rayArtin_modulusProjection (le_refl m) R R (AlgHom.id K R.extension) x y
+
+/-- Successive field embeddings intertwine the Artin action with the two
+actual modulus projections. -/
+theorem rayArtin_modulusProjection_comp
+    {K : Type u} [Field K] [NumberField K]
+    {m n p : RayClassModulus K} (hmn : m ≤ n) (hnp : n ≤ p)
+    (Rm : RayClassFieldRealization K m)
+    (Rn : RayClassFieldRealization K n)
+    (Rp : RayClassFieldRealization K p)
+    (f : Rm.extension →ₐ[K] Rn.extension)
+    (g : Rn.extension →ₐ[K] Rp.extension)
+    (x : RayClassGroup p) (y : Rm.extension) :
+    Rp.rayArtin x ((g.comp f) y) =
+      (g.comp f) (Rm.rayArtin
+        (rayClassIdealModulusProjection K hmn
+          (rayClassIdealModulusProjection K hnp x)) y) := by
+  change Rp.rayArtin x (g (f y)) = g (f (Rm.rayArtin _ y))
+  rw [rayArtin_modulusProjection hnp Rn Rp g,
+    rayArtin_modulusProjection hmn Rm Rn f]
 
 end ClassFieldTheory

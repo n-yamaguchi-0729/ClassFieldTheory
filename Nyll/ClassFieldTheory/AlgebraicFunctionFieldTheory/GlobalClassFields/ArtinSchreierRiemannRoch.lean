@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierBoundedClasses
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.RiemannRoch
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.FiniteDimensionalLSpaceZero
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusReachedAtEq
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierBoundedClasses
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.RiemannRoch
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.FiniteDimensionalLSpaceZero
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusReachedAtEq
 
 /-!
 # Large bounded Artin–Schreier parameter spaces
@@ -18,6 +20,8 @@ An actual effective divisor bound is supplied by Riemann–Roch. Beyond this
 bound the number of AS classes depends only on the difference of degrees.
 Neither a genus witness nor the full constant field is an extra input.
 -/
+
+@[expose] public section
 
 noncomputable section
 open AlgebraicCurve

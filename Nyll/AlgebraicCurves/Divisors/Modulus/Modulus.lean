@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Mathlib.Data.Finsupp.Order
-import Mathlib.RingTheory.Ideal.Operations
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Mathlib.Data.Finsupp.Order
+public import Mathlib.RingTheory.Ideal.Operations
 
 /-!
 # Function-field moduli and local congruence
@@ -21,6 +23,8 @@ The mathematical convention is Serre, *Algebraic Groups and Class Fields*,
 Chapter V, §1, no. 1–2. The places and valuation orders are supplied by
 `Divisors.ClassGroup`; no uniformizer is chosen in the definition.
 -/
+
+@[expose] public section
 
 noncomputable section
 

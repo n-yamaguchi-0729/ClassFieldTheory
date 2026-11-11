@@ -4,14 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.IntegerRingComparison
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.RamificationIndex
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelian
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.IntegerRingComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.RamificationIndex
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseConductorTame
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Mathlib.RingTheory.Ideal.Quotient.HasFiniteQuotients.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianLocalConductorComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.Algebra
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
 
 /-!
 # Tame finite conductor exponents
@@ -21,18 +30,23 @@ finite place is at most one exactly when the residue characteristic does not
 divide the ideal-theoretic ramification index at any place above it.
 -/
 
+@[expose] public section
+
 open scoped NumberField ValuativeRel
 open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
+open LocalClassFieldTheory.Universe in
 /-- At any prime above `v`, the finite conductor exponent is at most one
 exactly when the residue characteristic is prime to the ramification index.
 The criterion is independent of the chosen prime above `v`. -/
 theorem IsAbelianConductor.finiteExponent_le_one_iff_residueChar_not_dvd_ramificationIdx
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -83,7 +97,7 @@ theorem IsAbelianConductor.finiteExponent_le_one_iff_residueChar_not_dvd_ramific
           ValuationTheory.DiscreteValuationField.ValuedExtension.ramificationIndex
             base target := by
     exact
-      LocalClassFieldTheory.localConductorExponent_le_one_iff_residueChar_not_dvd_ramificationIndex
+      localConductorExponent_le_one_iff_residueChar_not_dvd_ramificationIndex
         C E p
   let H :=
     GlobalClassFieldTheory.GlobalClassFields.ideleClassNormConductorialSubgroup

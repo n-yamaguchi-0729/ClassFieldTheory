@@ -4,16 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
-import Mathlib.FieldTheory.SeparableDegree
-import Mathlib.RingTheory.Norm.Transitivity
-import Mathlib.Topology.DenseEmbedding
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+module
+
+public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
+public import Mathlib.FieldTheory.SeparableDegree
+public import Mathlib.RingTheory.Norm.Transitivity
+public import Mathlib.Topology.DenseEmbedding
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Transitivity of all-place idele norms
@@ -23,6 +26,8 @@ original dense subfield. Field-norm transitivity then applies locally. The finit
 fiber above a base place is the disjoint union of the fibers above its intermediate
 places, so the local identities multiply to the idele norm tower law.
 -/
+
+@[expose] public section
 
 open scoped AlgebraicCurve.Place
 

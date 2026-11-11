@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySections
-import Nyll.SchemeTheory.ProjectiveSpace.BaseChange
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentationBaseChange
+module
+
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySections
+public import Nyll.SchemeTheory.ProjectiveSpace.BaseChange
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentationBaseChange
 /-!
 # Scheme Modules Proj Presentation exists finite By Sections pullback of quasi Finite At
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

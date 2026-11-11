@@ -10,11 +10,15 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
 
 /-!
 # jacobson Space of locally Of Finite Type
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

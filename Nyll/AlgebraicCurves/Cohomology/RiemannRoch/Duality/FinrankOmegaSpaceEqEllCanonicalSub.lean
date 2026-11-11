@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.IndexOfSpecialtyEqEllSub
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.WeilDifferentialRankOne
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.Weil
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.IndexOfSpecialtyEqEllSub
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.WeilDifferentialRankOne
 
 /-! The dimension of Weil differentials is the dimension of the canonical space of sections. -/
+
+@[expose] public section
 
 open AlgebraicCurve KaehlerDifferential
 open AlgebraicCurves.Cohomology.RiemannRoch.Proofs.WeilDifferentialRankOne

@@ -4,20 +4,27 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.NumberTheory.Cyclotomic.Basic
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.LocalClassFieldAxiom
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormSubgroupFunctoriality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.StandardSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.Unramified
-import Nyll.GaloisCohomology.Kummer.Concrete.CyclotomicField
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
+module
+
+public import Mathlib.Algebra.Algebra.Shrink
+public import Mathlib.Algebra.Field.Shrink
+public import Mathlib.RingTheory.Finiteness.Small
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.LocalClassFieldAxiom
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormSubgroupFunctoriality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.StandardSubgroup
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.Unramified
+public import Nyll.GaloisCohomology.Kummer.Concrete.CyclotomicField
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
 
 /-!
 # Local cyclotomic embeddings for the global construction
@@ -25,6 +32,10 @@ import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.PadicLocalization
 This module proves local Kronecker--Weber through norm-subgroup order reversal,
 then applies it to localizations of finite abelian extensions of `ℚ`.
 -/
+
+@[expose] public section
+
+universe u
 
 noncomputable section
 
@@ -42,7 +53,7 @@ cyclotomic extension.  Order reversal then embeds `L` into that extension.
 The extra norm condition is exactly what excludes the nontrivial unramified
 part; the general construction also adjoins roots of
 unity of order `p ^ f - 1`. -/
-theorem exists_pPowerCyclotomicEmbedding_of_padicPrime_mem_normSubgroup
+private theorem exists_pPowerCyclotomicEmbedding_of_padicPrime_mem_normSubgroup_native
     (p : ℕ) [Fact p.Prime]
     (L : Type) [Field L] [Algebra ℚ_[p] L]
     [FiniteDimensional ℚ_[p] L] [IsAbelianGalois ℚ_[p] L]
@@ -96,7 +107,7 @@ cyclotomic theorem realizes `⟨p ^ f⟩ U¹` by the extension of order
 `p ^ n`-cyclotomic extension.  Their
 composite sits in the cyclotomic field of order `(p ^ f - 1) * p ^ n`, and
 the norm-subgroup order reversal gives the required embedding. -/
-theorem exists_structuredLocalCyclotomicEmbedding
+private theorem exists_structuredLocalCyclotomicEmbedding_native
     (p : ℕ) [Fact p.Prime]
     (L : Type) [Field L] [Algebra ℚ_[p] L]
     [FiniteDimensional ℚ_[p] L] [IsAbelianGalois ℚ_[p] L] :
@@ -190,11 +201,60 @@ theorem exists_structuredLocalCyclotomicEmbedding
   exact ⟨f, n, hf, hn, ζD, hζD, hgenD,
     nonempty_algHom_of_normSubgroup_le ℚ_[p] L D hnormD_L⟩
 
+/-- The ramified local Kronecker--Weber embedding for an extension in any
+universe. The norm condition is transported by the actual small-model
+algebra equivalence, and the cyclotomic target remains unchanged. -/
+theorem exists_pPowerCyclotomicEmbedding_of_padicPrime_mem_normSubgroup
+    (p : ℕ) [Fact p.Prime]
+    (L : Type u) [Field L] [Algebra ℚ_[p] L]
+    [FiniteDimensional ℚ_[p] L] [IsAbelianGalois ℚ_[p] L]
+    (hpNorm : padicPrimeUnit p ∈ localNormSubgroup ℚ_[p] L) :
+    ∃ n : ℕ, 1 ≤ n ∧
+      ∃ ζ : CyclotomicField (p ^ n) ℚ_[p],
+        IsPrimitiveRoot ζ (p ^ n) ∧
+          Algebra.adjoin ℚ_[p] ({ζ} : Set _) = ⊤ ∧
+          Nonempty (L →ₐ[ℚ_[p]] CyclotomicField (p ^ n) ℚ_[p]) := by
+  let : Small.{0} L := Module.Finite.small ℚ_[p] L
+  let S := Shrink.{0} L
+  let e : S ≃ₐ[ℚ_[p]] L := Shrink.algEquiv ℚ_[p] L
+  let : FiniteDimensional ℚ_[p] S :=
+    FiniteDimensional.of_injective e.toLinearMap e.injective
+  let : IsAbelianGalois ℚ_[p] S := IsAbelianGalois.of_algHom e.toAlgHom
+  have hpNormS : padicPrimeUnit p ∈ localNormSubgroup ℚ_[p] S := by
+    rw [← LocalFieldTheory.normSubgroup_algEquiv ℚ_[p] S L e]
+    exact hpNorm
+  obtain ⟨n, hn, ζ, hζ, hgen, ⟨i⟩⟩ :=
+    exists_pPowerCyclotomicEmbedding_of_padicPrime_mem_normSubgroup_native p S hpNormS
+  exact ⟨n, hn, ζ, hζ, hgen, ⟨i.comp e.symm.toAlgHom⟩⟩
+
+/-- The structured local cyclotomic embedding for an arbitrary finite
+abelian extension, transported back from its actual small model. -/
+theorem exists_structuredLocalCyclotomicEmbedding
+    (p : ℕ) [Fact p.Prime]
+    (L : Type u) [Field L] [Algebra ℚ_[p] L]
+    [FiniteDimensional ℚ_[p] L] [IsAbelianGalois ℚ_[p] L] :
+    ∃ f n : ℕ, 0 < f ∧ 1 ≤ n ∧
+      ∃ ζ : CyclotomicField ((p ^ f - 1) * p ^ n) ℚ_[p],
+        IsPrimitiveRoot ζ ((p ^ f - 1) * p ^ n) ∧
+          Algebra.adjoin ℚ_[p] ({ζ} : Set _) = ⊤ ∧
+          Nonempty
+            (L →ₐ[ℚ_[p]]
+              CyclotomicField ((p ^ f - 1) * p ^ n) ℚ_[p]) := by
+  let : Small.{0} L := Module.Finite.small ℚ_[p] L
+  let S := Shrink.{0} L
+  let e : S ≃ₐ[ℚ_[p]] L := Shrink.algEquiv ℚ_[p] L
+  let : FiniteDimensional ℚ_[p] S :=
+    FiniteDimensional.of_injective e.toLinearMap e.injective
+  let : IsAbelianGalois ℚ_[p] S := IsAbelianGalois.of_algHom e.toAlgHom
+  obtain ⟨f, n, hf, hn, ζ, hζ, hgen, ⟨i⟩⟩ :=
+    exists_structuredLocalCyclotomicEmbedding_native p S
+  exact ⟨f, n, hf, hn, ζ, hζ, hgen, ⟨i.comp e.symm.toAlgHom⟩⟩
+
 /-- Local Kronecker--Weber: every finite abelian
 extension of `ℚ_p` embeds in a cyclotomic extension. -/
 theorem exists_localCyclotomicEmbedding
     (p : ℕ) [Fact p.Prime]
-    (L : Type) [Field L] [Algebra ℚ_[p] L]
+    (L : Type u) [Field L] [Algebra ℚ_[p] L]
     [FiniteDimensional ℚ_[p] L] [IsAbelianGalois ℚ_[p] L] :
     ∃ m : ℕ, 0 < m ∧
       ∃ ζ : CyclotomicField m ℚ_[p],
@@ -222,7 +282,7 @@ open AlgebraicNumberTheory.Valuations
 open HilbertRamification
 
 variable (p : ℕ) [Fact p.Prime]
-variable (L : Type) [Field L] [Algebra ℚ L]
+variable (L : Type u) [Field L] [Algebra ℚ L]
   [FiniteDimensional ℚ L] [IsAbelianGalois ℚ L]
 
 /-- The type of actual embeddings of the localization at `w`
@@ -231,7 +291,7 @@ embedding as a genuine theorem input while keeping all transported algebra
 instances internal. -/
 noncomputable def globalPadicLocalizationCyclotomicAlgHom
     (w : AbsoluteValueExtension (Rat.AbsoluteValue.padic p) L)
-    (m : ℕ) : Type := by
+    (m : ℕ) : Type u := by
   let vK := Rat.AbsoluteValue.padic p
   letI hK := AbsoluteValue.extensionCompletionAlgebra (K := ℚ) w.1
   letI : SMul ℚ w.1.Completion := hK.toSMul

@@ -10,20 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.Sets
-import Mathlib.Data.Fintype.Pi
-import Mathlib.LinearAlgebra.Finsupp.Defs
-import Mathlib.LinearAlgebra.Pi
-import Mathlib.LinearAlgebra.Quotient.Defs
-import Mathlib.Order.Fin.Basic
-import Mathlib.Tactic.Ext
-import Mathlib.Tactic.SplitIfs
-import Lean.Elab.Tactic.Omega
+module
+
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.Sets
+public import Mathlib.Data.Fintype.Pi
+public import Mathlib.LinearAlgebra.Finsupp.Defs
+public import Mathlib.LinearAlgebra.Pi
+public import Mathlib.LinearAlgebra.Quotient.Defs
+public import Mathlib.Order.Fin.Basic
+public import Mathlib.Tactic.Ext
+public import Mathlib.Tactic.SplitIfs
+public import Lean.Elab.Tactic.Omega
 
 /-!
 Monomial sections and Cech cohomology of twists on projective space.
 -/
+
+@[expose] public section
 
 noncomputable section
 

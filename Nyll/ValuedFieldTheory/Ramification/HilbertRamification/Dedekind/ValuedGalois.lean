@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Core
-import Mathlib.NumberTheory.RamificationInertia.Galois
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Core
+public import Mathlib.NumberTheory.RamificationInertia.Galois
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.Basic
 
 /-!
 # Inertia cardinality for finite valued extensions
@@ -15,6 +17,8 @@ The ideal-theoretic inertia group has cardinality equal to the canonical
 ramification index of a finite separable extension of complete discrete
 valuation fields.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -11,19 +11,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncPlaceRatFuncTower
-import Nyll.AlgebraicCurves.Places.Degree.IsRationalAlgClosed
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncPlaceRatFuncTower
+public import Nyll.AlgebraicCurves.Places.Degree.IsRationalAlgClosed
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseIsRational
 
 /-!
 # Constants Are Base of is Alg Closed
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

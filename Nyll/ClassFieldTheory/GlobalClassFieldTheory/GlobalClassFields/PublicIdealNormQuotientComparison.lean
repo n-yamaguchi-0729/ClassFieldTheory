@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNorm
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # Comparing source and public ideal-norm subgroups
@@ -21,10 +22,12 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
 private theorem publicIdealNormDomain_eq_source'
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]
@@ -62,7 +65,7 @@ private theorem publicIdealNormDomain_eq_source'
 /-- The preimage of the public ideal-norm image under the ray quotient is
 exactly the original norm subgroup, including principal ray ideals. -/
 theorem publicIdealNormImage_comap_rayQuotient
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]

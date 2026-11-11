@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Valuation
 
 /-!
 # The integer value group inside the profinite integers
@@ -13,6 +15,8 @@ For the actual image of the integers in `ZHat`, inclusion followed by
 reduction induces the required canonical isomorphism modulo every positive
 integer. The proof uses integer representatives and ordinary divisibility.
 -/
+
+@[expose] public section
 
 namespace ClassFormation
 

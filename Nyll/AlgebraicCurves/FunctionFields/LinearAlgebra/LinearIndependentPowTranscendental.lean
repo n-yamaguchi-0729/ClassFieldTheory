@@ -10,10 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Polynomial.Basis
-import Mathlib.RingTheory.Algebraic.Basic
+module
+
+public import Mathlib.Algebra.Polynomial.Basis
+public import Mathlib.RingTheory.Algebraic.Basic
 
 /-! # Linear independence of powers of a transcendental element -/
+
+@[expose] public section
 
 open scoped Polynomial
 

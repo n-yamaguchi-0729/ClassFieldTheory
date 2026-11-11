@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # The actual constant tower is ordered by divisibility
@@ -13,6 +16,8 @@ The finite fields inside the separably closed ambient field form the usual
 divisibility tower. Adjoining them to the original function field preserves
 these inclusions, and the proved degree formula detects every inclusion.
 -/
+
+@[expose] public section
 
 noncomputable section
 

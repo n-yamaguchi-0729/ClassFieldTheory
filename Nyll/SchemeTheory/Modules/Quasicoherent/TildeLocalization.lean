@@ -35,16 +35,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Sheaves.IsIsoOnBasis
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Mathlib.Tactic.Ext
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+module
+
+public import Nyll.SchemeTheory.Sheaves.IsIsoOnBasis
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Mathlib.Tactic.Ext
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
 
 /-!
 # Affine modules detected by localization of sections
 
 Characterizes the global-sections comparison by localization on basic open sets.
 -/
+
+@[expose] public section
 
 section isIso_fromTildeGamma_iff_isLocalizedModule
 

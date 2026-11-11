@@ -8,6 +8,7 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantCycloto
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerUnramified
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.GaloisNormLimitation
+import Nyll.GaloisCohomology.Kummer.Concrete.RadicalExtension
 
 /-!
 # Actual constant and S-unit Kummer extensions
@@ -24,7 +25,7 @@ namespace FunctionField
 
 open AlgebraicCurve
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k K Ω : Type*) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [IsSepClosure K Ω]

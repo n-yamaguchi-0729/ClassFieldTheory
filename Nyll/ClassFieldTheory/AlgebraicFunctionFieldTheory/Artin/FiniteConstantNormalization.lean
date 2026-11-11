@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationConstantSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddingIndependence
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantPresentedFrobenius
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantAbstractExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentationConstantSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddingIndependence
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantPresentedFrobenius
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantAbstractExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
 
 /-!
 # Native Artin reciprocity on finite constant extensions
@@ -19,6 +21,10 @@ The native Artin map on the degree-n full-constant extension sends an
 idele class to arithmetic Frobenius raised to its normalized degree.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
@@ -26,7 +32,7 @@ namespace FunctionField
 open ClassFormation LocalClassFieldTheory
 open scoped IsMulCommutative
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 

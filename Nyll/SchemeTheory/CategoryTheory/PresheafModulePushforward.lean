@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.ModuleCat.Presheaf.Pushforward
-import Mathlib.CategoryTheory.Adjunction.Basic
+module
+
+public import Mathlib.Algebra.Category.ModuleCat.Presheaf.Pushforward
+public import Mathlib.CategoryTheory.Adjunction.Basic
 
 /-!
 # Pushforward transformations and adjunctions for module presheaves
@@ -19,6 +21,8 @@ import Mathlib.CategoryTheory.Adjunction.Basic
 Constructs transformations and adjunctions from the corresponding indexing functors
 and compatible morphisms of ring presheaves.
 -/
+
+@[expose] public section
 
 universe v v₁ v₂ u₁ u₂ u
 

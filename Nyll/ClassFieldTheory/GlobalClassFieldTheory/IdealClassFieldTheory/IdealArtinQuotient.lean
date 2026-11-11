@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # The ideal Artin quotient
@@ -16,6 +19,10 @@ has kernel `H_m`.  The first isomorphism theorem therefore identifies
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField
 
 noncomputable section
@@ -25,7 +32,7 @@ namespace IdealClassFieldTheory
 
 open NumberField
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 -- Reuse the normality witness embedded in the imported ideal-Artin definitions.
 -- Choosing a different generic witness here makes quotient equivalences compare
@@ -88,7 +95,7 @@ theorem idealClassQuotient_mk_eq_one_iff
 section ActualGaloisQuotient
 
 variable
-    {L : Type} [Field L] [NumberField L] [Algebra K L]
+    {L : Type v} [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
 
 /-- The ideal class-field isomorphism with the actual Galois group:

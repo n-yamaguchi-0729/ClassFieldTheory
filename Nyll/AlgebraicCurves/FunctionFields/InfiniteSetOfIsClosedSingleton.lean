@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AlgebraStandardSmoothDVRLocalizationAtPrime
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AlgebraStandardSmoothDVRLocalizationAtPrime
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
 
 /-!
 # Infinite setOf isClosed singleton
 
 An integral curve locally of finite type over a field has infinitely many closed points.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

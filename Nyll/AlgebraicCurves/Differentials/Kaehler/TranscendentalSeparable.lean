@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+module
+
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
 
 /-!
 Find a separable transcendental coordinate when the differential module has rank one.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,14 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayRowsExact
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayDVCompBiAug
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayRowsExact
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayDVCompBiAug
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
 
 /-!
 Identification of Leray total cohomology with cohomology on the preimage cover.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

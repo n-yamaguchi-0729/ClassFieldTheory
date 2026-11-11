@@ -11,16 +11,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.EqGenusFFEllSubEllEq
-import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.EqGenusFFEllSubEllEq
+public import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
 
 /-!
 # CurveModel eq genusFF of forall ell sub ell eq
@@ -28,6 +30,8 @@ import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
 Equality of the Riemann-space dimension differences identifies the curve-model genus with the
 function-field genus.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

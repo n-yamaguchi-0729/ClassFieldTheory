@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.FunctionDescent
-import Nyll.GaloisCohomology.FieldTheory.PeriodicGalois
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.FunctionDescent
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicGalois
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusPeriodicField
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
 
 /-!
 # Actual finite Galois extensions from geometric Frobenius periods
@@ -14,6 +18,10 @@ The original function field is the fixed field proved by divisor descent.
 Its canonical embedding into the period-n field gives a finite Galois
 extension of degree n, using the exact order detected on finite constants.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -24,7 +32,7 @@ namespace AlgebraicCurve.CurveModel
 
 attribute [local instance] SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]

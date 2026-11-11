@@ -4,16 +4,25 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.StandardCompositum
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardDominatingExtension
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
-import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
-import Nyll.ValuedFieldTheory.Ramification.LocalField.FirstRamificationComparison
-import Nyll.ValuedFieldTheory.Ramification.LocalField.InertiaCard
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.FiniteInertiaStructure
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.StandardCompositum
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardDominatingExtension
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.BaseChange
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Unramified
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.FirstRamificationComparison
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.InertiaCard
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.FiniteInertiaStructure
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.IntermediateFieldRestriction
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RamificationCharacterization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.RealLowerGroups
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
 
 /-!
 # Filtered reciprocity for arbitrary finite abelian local extensions
@@ -23,6 +32,8 @@ abelian compositum.  Passing to its field range inside the fixed separable
 closure permits descent by restriction, and the resulting algebra
 equivalence transports both filtrations back to the original extension.
 -/
+
+@[expose] public section
 
 noncomputable section
 

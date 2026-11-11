@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Cover
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Cover
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
 
 /-!
 # Proj Twist Datum
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -190,11 +194,10 @@ theorem restrictFun_refl {W : X.Opens} (x : Γ(X, W)) : restrictFun (le_refl W) 
   rfl
 
 theorem restrictFun_algebraMap (π : X ⟶ Spec (.of A)) {U U' : X.Opens} (h : U ≤ U') (r : A) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom π U
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom π U'
+    let := Scheme.TwoAffineOpenCover.algebraOfHom π U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom π U'
     restrictFun h (algebraMap A (Γ(X, U') : Type u) r) = algebraMap A (Γ(X, U) : Type u) r := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom π U
-  let := Scheme.TwoAffineOpenCover.algebraOfHom π U'
+  intro sharedOwner1 sharedOwner2
   exact (Scheme.TwoAffineOpenCover.restrictAlgHom π h).commutes r
 
 theorem restrictFun_algebraMap' (π : X ⟶ Spec (.of A)) {U U' : X.Opens} (h : U ≤ U') (r : A) :

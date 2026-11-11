@@ -10,23 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ChartSections
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.RingTheory.Etale.EtaleSplitting
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.CanonicalDivisorGenusRiemannRoch
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.LocalSections.RROpensInjectiveEllSubSumSingleEqOne
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveCurveModelIsoPullback
-import Nyll.AlgebraicCurves.Geometry.Curves.FiniteMapFibreRiemannRochGenus
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteEtaleClosedImmersionLeFinrank
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveSectionsInjective
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.ChartSections
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.RingTheory.Etale.EtaleSplitting
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.CanonicalDivisorGenusRiemannRoch
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.LocalSections.RROpensInjectiveEllSubSumSingleEqOne
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveCurveModelIsoPullback
+public import Nyll.AlgebraicCurves.Geometry.Curves.FiniteMapFibreRiemannRochGenus
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteEtaleClosedImmersionLeFinrank
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveSectionsInjective
 
 /-!
 # Finite etale chart sections from finite-map data
@@ -34,6 +36,8 @@ import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveSectionsInjective
 Split the finite etale algebra after a faithfully flat extension to obtain distinct
 sections. Riemann--Roch then selects the sections required by the chart criterion.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -54,8 +58,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom
@@ -249,8 +253,8 @@ open _root_.IsDedekindDomain.HeightOneSpectrum in
 attribute [-instance]
   instLiesOverSubtypeAdicCompletionMemValuationSubringAdicCompletionIntegersCompletionIdealAsIdeal
 attribute [-instance]
-  AlgebraicCurve.instHasCanonicalLocalResidueK AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+  AlgebraicCurve.instHasCanonicalLocalResidueK
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

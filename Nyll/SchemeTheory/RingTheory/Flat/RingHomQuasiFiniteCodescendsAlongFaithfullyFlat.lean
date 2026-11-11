@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Finiteness.Descent
-import Mathlib.RingTheory.RingHom.QuasiFinite
+module
+
+public import Mathlib.RingTheory.Finiteness.Descent
+public import Mathlib.RingTheory.RingHom.QuasiFinite
 
 /-!
 # Ring Hom Quasi Finite codescends Along faithfully Flat
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

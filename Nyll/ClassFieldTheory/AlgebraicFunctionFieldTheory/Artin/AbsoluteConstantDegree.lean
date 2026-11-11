@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteConstantNormalization
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantDegreeCoordinates
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteConstantNormalization
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantDegreeCoordinates
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
 
 /-!
 # The constant degree of absolute Artin reciprocity
@@ -17,13 +19,17 @@ abelianization. Applied to the absolute Artin symbol, it is the integer
 normalized idele-class degree embedded in the profinite integers.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
 
 /-- The actual arithmetic constant degree on the absolute topological abelianization. -/

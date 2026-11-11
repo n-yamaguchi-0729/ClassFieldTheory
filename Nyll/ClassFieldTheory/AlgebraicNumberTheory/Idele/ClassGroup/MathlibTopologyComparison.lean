@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibComparison
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FiniteMathlibTopologyComparison
-import Mathlib.Topology.Algebra.Group.Quotient
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FiniteMathlibTopologyComparison
+public import Mathlib.Topology.Algebra.Group.Quotient
 
 /-!
 # Continuity of the comparison with Mathlib's idèle class group
@@ -15,6 +17,8 @@ The algebraic equivalence from the restricted-product idèle class group to
 Mathlib's adele-unit quotient is continuous. This is the quotient descent of
 the continuous map on idèles.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain

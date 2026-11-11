@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+module
+
+public import Mathlib.NumberTheory.NumberField.Completion.LiesOverInstances
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 
 /-!
 # The norm criterion at a real place that becomes complex
@@ -17,17 +21,23 @@ not incorrectly replace the tensor norm by a separate condition at every
 factor of the tensor product.
 -/
 
+@[expose] public section
+
 open scoped NumberField TensorProduct
 open NumberField
+
+open scoped NumberField.LiesOver
 
 noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- At a real place that becomes complex in a finite Galois extension,
 being a norm from the archimedean tensor algebra is equivalent to positivity. -/
 theorem isNormAtInfinitePlace_iff_positive_of_real_complex
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -50,7 +60,9 @@ theorem isNormAtInfinitePlace_iff_positive_of_real_complex
     rw [infiniteTensorNormSubgroup_eq_localNormSubgroup
       (K := K) (L := L) v w hw] at hnorm
     obtain ⟨z, hz⟩ := hnorm
-    have hpos :=
+    have hpos :
+        0 < InfinitePlace.Completion.ringEquivRealOfIsReal hv
+          (LocalFieldTheory.normUnits v.Completion w.Completion z : v.Completion) :=
       GlobalClassFieldTheory.Reciprocity.infinitePlace_normUnits_real_complex_pos
         (K := K) (K' := L) v w hw hv hc z
     rw [hz, InfinitePlace.Completion.ringEquivRealOfIsReal_apply] at hpos

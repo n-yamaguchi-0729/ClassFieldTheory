@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
-import Nyll.AlgebraicCurves.Differentials.Local.LocalGeometry
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.FunctionFields.Rational.InstIsCurveOverRatFunc
+public import Nyll.AlgebraicCurves.Differentials.Local.LocalGeometry
 
 /-!
 # Integral differential coefficients on the rational function field
@@ -16,6 +18,8 @@ The general theorem for a smooth function field supplies the integral coefficien
 The rational function field's finite-type presentation is constructed here, so residue
 computations do not repeat polynomial differentiation and valuation arguments.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurve.RationalFunctionField
 

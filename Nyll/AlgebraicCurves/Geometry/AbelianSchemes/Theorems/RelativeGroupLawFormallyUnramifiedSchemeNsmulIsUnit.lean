@@ -10,12 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.Kernel
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawFormallyUnramifiedSchemeNsmulSqZero
+module
+
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Kernel
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.RelativeGroupLawFormallyUnramifiedSchemeNsmulSqZero
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 
 /-!
 # Relative Group Law formally Unramified scheme Nsmul of is Unit of is Local Ring
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -105,13 +110,15 @@ open _root_.GoodReductionJacobian.RelativeGroupLaw
 variable {R : Type u} [CommRing R]
 variable {A : Scheme.{u}} {f : A ⟶ Spec (CommRingCat.of R)}
 
-private def _root_.GoodReductionJacobian.RelativeGroupLaw.squareZeroUnitSection
+/-- The identity section of the relative group law. -/
+def _root_.GoodReductionJacobian.RelativeGroupLaw.squareZeroUnitSection
     (G : RelativeGroupLaw R f) : Spec (CommRingCat.of R) ⟶ A :=
   (G.one (𝟙 (Spec (CommRingCat.of R)))).1
 
 open _root_.GoodReductionJacobian.RelativeGroupLaw
 
-private theorem _root_.GoodReductionJacobian.RelativeGroupLaw.squareZeroUnitSection_comp (G :
+/-- The identity section is a section of the structure morphism. -/
+theorem _root_.GoodReductionJacobian.RelativeGroupLaw.squareZeroUnitSection_comp (G :
   RelativeGroupLaw R f) :
     G.squareZeroUnitSection ≫ f = 𝟙 (Spec (CommRingCat.of R)) :=
   (G.one (𝟙 (Spec (CommRingCat.of R)))).2
@@ -186,7 +193,8 @@ theorem map_eq_zero_of_mem_augmentationIdeal_sq (hkerφ : RingHom.ker φ ^ 2 = �
 
 theorem sub_algebraMap_augmentation_mem_kernel (x : B) :
     x - algebraMap R B (ε₀ x) ∈ RingHom.ker ε₀ := by
-  simp [RingHom.mem_ker, map_sub, AlgHom.commutes]
+  rw [RingHom.mem_ker, map_sub, AlgHom.commutes, Algebra.algebraMap_self,
+    RingHom.id_apply, sub_self]
 
 theorem eq_augmentationLift_of_vanishes_on_augmentationIdeal (kR : B →ₐ[R] R')
     (h0 : ∀ a ∈ RingHom.ker ε₀, kR a = 0) : kR = augmentationLift ε₀ := by
@@ -213,7 +221,8 @@ abbrev squareZeroProductFirstPoint : SchemeHomOver (squareZeroProductStructure (
 abbrev squareZeroProductSecondPoint : SchemeHomOver (squareZeroProductStructure (f := f)) f :=
   ⟨Limits.pullback.snd f f, Limits.pullback.condition.symm⟩
 
-private def _root_.GoodReductionJacobian.RelativeGroupLaw.squareZeroSchemeMul
+/-- The scheme multiplication induced by the relative group law. -/
+def _root_.GoodReductionJacobian.RelativeGroupLaw.squareZeroSchemeMul
     (G : RelativeGroupLaw R f) : Limits.pullback f f ⟶ A :=
   (G.mul squareZeroProductStructure squareZeroProductFirstPoint squareZeroProductSecondPoint).1
 
@@ -799,6 +808,16 @@ theorem
 
 end RelativeGroupLaw_formallyUnramified_schemeNsmul_of_isUnit_of_isLocalRing
 end AlgebraicCurves.Geometry.AbelianSchemes.Theorems.Proofs
+
+namespace GoodReductionJacobian
+
+-- The local-ring reduction theorem is the common public square-zero API.
+open _root_.AlgebraicCurves.Geometry.AbelianSchemes.Theorems.Proofs in
+export
+  RelativeGroupLaw_formallyUnramified_schemeNsmul_of_isUnit_of_isLocalRing.GoodReductionJacobian
+  (RelativeGroupLaw.eq_one_of_sqZero_of_nsmul_eq_one_of_isUnit_of_isLocalRing)
+
+end GoodReductionJacobian
 
 namespace GoodReductionJacobian.RelativeGroupLaw
 

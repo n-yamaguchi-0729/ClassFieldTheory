@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.EisensteinRelation
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.EisensteinRelation
 
 /-!
 # Translation of the integral ring in the totally ramified cyclotomic extension
 
 This file records that translating `ζ` by one preserves the explicit integral closure.
 -/
+
+@[expose] public section
 
 noncomputable section
 

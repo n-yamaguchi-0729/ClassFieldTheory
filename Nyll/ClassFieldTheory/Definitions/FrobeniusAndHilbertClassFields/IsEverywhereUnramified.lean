@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsUnramifiedAtFinitePlaces
-import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
+module
+
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsUnramifiedAtFinitePlaces
+public import Mathlib.NumberTheory.NumberField.InfinitePlace.Ramification
 
 /-!
 # Unramifiedness at every place
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

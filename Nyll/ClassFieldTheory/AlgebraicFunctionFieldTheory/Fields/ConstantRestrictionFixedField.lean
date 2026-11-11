@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-import Mathlib.GroupTheory.Index
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
+public import Mathlib.GroupTheory.Index
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ResidueAlgebraicClosureDegree
 
 /-!
 # Fixed constants and the image of absolute constant restriction
@@ -14,6 +17,8 @@ The fixed field of the restriction image is the actual algebraic constant
 field of the original fixed field. Consequently its degree equals the index
 of that image, with no normality assumption on the subgroup.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,21 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.FiniteAbelian.Basic
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.RayPowerQuotient
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Degree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Topology
+module
+
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.RayPowerQuotient
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Degree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Topology
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 
 /-!
 # Finite ray quotients with prescribed splitting places
@@ -29,6 +32,10 @@ order-one local element gives a class of positive degree. The finite
 degree-zero ray kernel then makes the quotient torsion, and finite generation
 makes it finite. No degree-one place or existence of a class field is assumed.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -65,7 +72,7 @@ private theorem finiteIndex_of_finite_degreeKernel
         mul_ne_zero hd (Int.natCast_ne_zero.mpr Nat.card_pos.ne'), heq⟩
   exact Subgroup.finiteIndex_of_finite_quotient
 
-variable {k K : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 
 -- Match the canonical quotient dictionary used by the existing ray-power theorem.

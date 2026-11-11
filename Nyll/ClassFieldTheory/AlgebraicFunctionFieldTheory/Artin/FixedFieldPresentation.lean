@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormIsomorphism
-import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormIsomorphism
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
 
 /-!
 # Reciprocity under a fixed-field presentation
@@ -16,13 +18,18 @@ relative Galois groups. The actual norm tower identities prove compatibility
 of these presentation changes with reciprocity's norm kernel.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K L Ω : Type) [Field k] [Finite k] [Field K] [Field L] [Field Ω]
+variable (k : Type u) (K : Type v) (L : Type w) (Ω : Type x)
+    [Field k] [Finite k] [Field K] [Field L] [Field Ω]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]

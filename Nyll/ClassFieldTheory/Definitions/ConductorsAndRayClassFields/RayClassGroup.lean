@@ -4,15 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassPrimeToIdeals
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassPrimeToIdeals
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Ideal-theoretic ray class groups
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

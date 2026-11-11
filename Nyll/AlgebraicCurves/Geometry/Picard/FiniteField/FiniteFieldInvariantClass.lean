@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldConstantAction
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.LangFixedClass
-import Nyll.AlgebraicCurves.Models.Points.RationalPointExistence
-import Nyll.AlgebraicCurves.Models.ConstantExtension.FixedDivisor
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldConstantAction
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.LangFixedClass
+public import Nyll.AlgebraicCurves.Models.Points.RationalPointExistence
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.FixedDivisor
 
 /-!
 # A Frobenius-invariant geometric divisor class of degree one
@@ -17,6 +19,10 @@ the actual constant-field Frobenius. Periodic Hilbert 90 then gives an exactly
 fixed divisor of degree one. No rational point on the original curve is required.
 Identification with divisors over the finite field is a separate step.
 -/
+
+@[expose] public section
+
+universe u
 
 noncomputable section
 
@@ -31,9 +37,9 @@ attribute [local instance]
 
 /-- The actual geometric Picard group has a degree-one class fixed by arithmetic Frobenius. -/
 theorem exists_constantFrobenius_fixed_degree_one_class
-    {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+    {k Ω F : Type u} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [IsProper c] [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
     (M : CurveModel Ω F) (eC : M.C ≅ pullback c (specMap k Ω))
     (heC : eC.hom ≫ pullback.snd c (specMap k Ω) = M.toBase) :
@@ -52,9 +58,9 @@ theorem exists_constantFrobenius_fixed_degree_one_class
 
 /-- Arithmetic Frobenius fixes an actual geometric divisor of degree one. -/
 theorem exists_constantFrobenius_fixed_degree_one_divisor
-    {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+    {k Ω F : Type u} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [IsProper c] [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
     (M : CurveModel Ω F) (eC : M.C ≅ pullback c (specMap k Ω))
     (heC : eC.hom ≫ pullback.snd c (specMap k Ω) = M.toBase) :

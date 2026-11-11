@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardNorm
-import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldPicardQuotient
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardNorm
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldPicardQuotient
+public import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldPicardNorm
+public import Nyll.GaloisCohomology.Cyclic.PeriodicNorm
 
 /-!
 # The actual Picard norm quotient for finite constant extensions
@@ -13,6 +17,10 @@ import Nyll.AlgebraicCurves.Geometry.Picard.FiniteField.FiniteFieldPicardQuotien
 Transport the proved geometric norm quotient through the actual arithmetic
 Picard comparisons, using the proved equality of actual and periodic norms.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -23,21 +31,20 @@ namespace AlgebraicCurve.CurveModel
 
 attribute [local instance] SemilinearAut.instMulSemiringActionSubtypeProdRingAutMemSubgroup
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω F : Type u} {F₀ : Type v} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [IsCurveOver k F₀] [Algebra.EssFiniteType k F₀]
     [Field F] [Algebra Ω F] [IsCurveOver Ω F]
     (M₀ : CurveModel k F₀) [GeometricallyIntegral M₀.toBase] (M : CurveModel Ω F)
     (e : M.C ≅ pullback M₀.toBase (specMap k Ω))
     (he : e.hom ≫ pullback.snd M₀.toBase (specMap k Ω) = M.toBase)
-    (E : Type) [Field E] [Fintype E] [Algebra k E] [Algebra E Ω]
+    (E : Type u) [Field E] [Fintype E] [Algebra k E] [Algebra E Ω]
     [IsScalarTower k E Ω] [Algebra.IsAlgebraic E Ω]
 
 local notation "CE" => pullback M₀.toBase (specMap k E)
 local notation "cE" => pullback.snd M₀.toBase (specMap k E)
 local notation "φ" => M.constantSemilinearAction M₀.toBase e he
   (FiniteField.frobeniusAlgEquivOfAlgebraic k Ω)
-local notation "σ" => SemilinearAut.toRingAut φ
 local notation "d" => Module.finrank k E
 
 /-- The actual arithmetic norm corresponds to the geometric periodic norm. -/
@@ -72,6 +79,24 @@ def constantPicardNormQuotientEquiv :
   exact (QuotientAddGroup.congr _ _ b hr).trans
     (JacobianVarieties.Picard.constantFrobenius_picardNormQuotientEquiv M₀.toBase M e he d
       (Module.finrank_pos (R := k) (M := E)).ne')
+
+/-- Descent to the arithmetic Picard group preserves the degree normalization
+of the actual norm quotient. -/
+@[simp]
+theorem constantPicardNormQuotientEquiv_mk (x : Pic k F₀) :
+    let _ : Algebra E (CE).functionField := (baseToFunctionField cE).toAlgebra
+    M₀.constantPicardNormQuotientEquiv M e he E (QuotientAddGroup.mk x) =
+      (H1Gm.degree k F₀ x : ZMod d) := by
+  intro algE
+  change JacobianVarieties.Picard.constantFrobenius_picardNormQuotientEquiv
+      M₀.toBase M e he d (Module.finrank_pos (R := k) (M := E)).ne'
+      (QuotientAddGroup.mk
+        (M₀.constantPicardFixedEquiv M e he
+          (M₀.constantsAreBase_of_constantModel M e he) x)) = _
+  rw [JacobianVarieties.Picard.constantFrobenius_picardNormQuotientEquiv_mk]
+  exact congrArg (fun z : ℤ => (z : ZMod d))
+    (M₀.degree_constantPicardBaseChange M e he
+      (M₀.constantsAreBase_of_constantModel M e he) x)
 
 /-- The actual Picard norm index is the degree of the finite constant extension. -/
 theorem natCard_constantPicardNormQuotient :

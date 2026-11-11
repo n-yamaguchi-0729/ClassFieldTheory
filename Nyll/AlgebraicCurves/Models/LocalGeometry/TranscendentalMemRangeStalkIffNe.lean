@@ -10,18 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
-import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
-import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
-import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
-import Nyll.AlgebraicCurves.Places.NotMemNeMem
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+public import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+public import Nyll.AlgebraicCurves.FunctionFields.Constants.ConstantsAreBaseDegEqOne
+public import Nyll.AlgebraicCurves.Places.NotMemNeMem
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Exists transcendental mem range stalk iff ne
@@ -29,6 +32,8 @@ import Nyll.AlgebraicCurves.Places.NotMemNeMem
 Distinct points of a proper smooth integral curve are separated by a transcendental function in
 one local ring and outside the other.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

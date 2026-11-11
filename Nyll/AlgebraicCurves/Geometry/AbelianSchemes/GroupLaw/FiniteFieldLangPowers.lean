@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.FiniteFieldLangNorm
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangIterate
+module
+
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.FiniteFieldLangNorm
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.LangIterate
+public import Nyll.GaloisCohomology.Cyclic.LangNormKernel
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 
 /-!
 # Lang surjectivity and norms for powers of Frobenius
@@ -14,15 +18,19 @@ All positive powers of the actual finite-field Frobenius have surjective Lang
 operators. This gives norm preimages fixed by the prescribed Frobenius power.
 -/
 
+@[expose] public section
+
+universe u
+
 noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry NeronModelInfra
 
 namespace GoodReductionJacobian.RelativeGroupLaw
 
-variable (k Ω : Type) [Field k] [Fintype k] [Field Ω] [Algebra k Ω]
+variable (k Ω : Type u) [Field k] [Fintype k] [Field Ω] [Algebra k Ω]
     [Algebra.IsAlgebraic k Ω] [IsAlgClosed Ω]
-    (X : Scheme.{0}) [X.Over (Spec (CommRingCat.of k))]
+    (X : Scheme.{u}) [X.Over (Spec (CommRingCat.of k))]
     (L : RelativeGroupLaw k (X ↘ Spec (CommRingCat.of k))) (hc : L.IsCommutative)
 
 local notation "b" => Spec.map (CommRingCat.ofHom (algebraMap k Ω))

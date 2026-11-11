@@ -10,8 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Invertible.Invertible
-import Nyll.SchemeTheory.Modules.Frames.Frames
+module
+
+public import Nyll.SchemeTheory.Modules.Frames.FrameBridge
+public import Nyll.SchemeTheory.Modules.Invertible.Invertible
+public import Nyll.SchemeTheory.Modules.Frames.Frames
 
 /-!
 # Frames obtained from a pullback trivialization
@@ -19,6 +22,8 @@ import Nyll.SchemeTheory.Modules.Frames.Frames
 A trivialization on an open subscheme gives compatible local generators and a section
 that is a frame on that open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -49,13 +54,14 @@ variable {C : Type u} [Category.{u} C] {R : Cᵒᵖ ⥤ CommRingCat.{u}}
   (F : PresheafOfModules.{u} (R ⋙ forget₂ CommRingCat RingCat))
 
 /-- Compatible generators trivializing the presheaf on objects reached from `X₀`. -/
-structure TrivializationBelow (X₀ : Cᵒᵖ) where
-  /-- The generator associated to an arrow from `X₀`. -/
-  gen : ∀ {Y : Cᵒᵖ} (_ : X₀ ⟶ Y), F.obj Y
-  /-- The generators are preserved by the presheaf restriction maps. -/
-  compat : ∀ {Y Z : Cᵒᵖ} (f : X₀ ⟶ Y) (g : Y ⟶ Z), F.map g (gen f) = gen (f ≫ g)
-  /-- Scalar multiplication by each generator is bijective. -/
-  bij : ∀ {Y : Cᵒᵖ} (f : X₀ ⟶ Y), Function.Bijective (fun a : R.obj Y => a • gen f)
+abbrev TrivializationBelow (X₀ : Cᵒᵖ) :=
+  _root_.PresheafOfModules.FrameBridge.TrivializationBelow F X₀
+
+namespace TrivializationBelow
+
+export _root_.PresheafOfModules.FrameBridge.TrivializationBelow (mk gen compat bij)
+
+end TrivializationBelow
 
 end FrameBridge
 
@@ -73,7 +79,7 @@ open _root_.AlgebraicGeometry
 
 namespace FrameBridge
 
-open TopologicalSpace Opposite PresheafOfModules.FrameBridge
+open TopologicalSpace Opposite _root_.PresheafOfModules.FrameBridge
 
 variable {X : Scheme.{u}}
 
@@ -84,29 +90,23 @@ noncomputable def restrictRingCatSheafHom : (U : Scheme.{u}).ringCatSheaf ⟶
     (U.ι.opensFunctor.sheafPushforwardContinuous RingCat.{u}
       (Opens.grothendieckTopology (U : Scheme.{u})) (Opens.grothendieckTopology X)).obj
         X.ringCatSheaf :=
-  ⟨𝟙 _⟩
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictRingCatSheafHom U
 
 /-- Restriction expressed as pushforward along the inclusion of the open indexing categories. -/
 noncomputable def restrictFunctor' : X.Modules ⥤ (U : Scheme.{u}).Modules :=
-  SheafOfModules.pushforward (restrictRingCatSheafHom U)
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor' U
 
-lemma restrictFunctor'_eq : restrictFunctor' U = Modules.restrictFunctor U.ι := by
-  dsimp only [restrictFunctor', Modules.restrictFunctor, restrictRingCatSheafHom]
-  congr 2
-  ext V : 2
-  change 𝟙 _ = (forget₂ CommRingCat RingCat).map (U.ι.appIso V.unop).inv
-  rw [Scheme.Opens.ι_appIso]
-  rfl
+lemma restrictFunctor'_eq : restrictFunctor' U = Modules.restrictFunctor U.ι :=
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor'_eq U
 
 /-- The canonical comparison between the restriction functor and pullback to the open. -/
 noncomputable def restrictFunctor'IsoPullback : restrictFunctor' U ≅ Modules.pullback U.ι :=
-  eqToIso (restrictFunctor'_eq U) ≪≫ restrictFunctorIsoPullback U.ι
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor'IsoPullback U
 
 variable {U} (L : X.Modules)
 
-lemma image_preimage_of_le {V : X.Opens} (h : V ≤ U) : U.ι ''ᵁ (U.ι ⁻¹ᵁ V) = V := by
-  rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι]
-  exact inf_eq_right.mpr h
+lemma image_preimage_of_le {V : X.Opens} (h : V ≤ U) : U.ι ''ᵁ (U.ι ⁻¹ᵁ V) = V :=
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.image_preimage_of_le (U := U) h
 
 section
 
@@ -114,71 +114,42 @@ variable (e : (restrictFunctor' U).obj L ≅ SheafOfModules.unit (U : Scheme.{u}
 
 /-- The generator obtained by transporting one through the inverse trivialization. -/
 noncomputable def gen₀ (W : (U : Scheme.{u}).Opens) : L.val.obj (op (U.ι ''ᵁ W)) :=
-  (e.inv.val.app (op W)).hom (1 : Γ(U, W))
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.gen₀ L e W
 
 lemma gen₀_spec (W : (U : Scheme.{u}).Opens) (b : Γ(X, U.ι ''ᵁ W)) :
-    (e.inv.val.app (op W)).hom b = b • (show Γ(L, U.ι ''ᵁ W) from gen₀ L e W) := by
-  have h := (e.inv.val.app (op W)).hom.map_smul b (1 : Γ(U, W))
-  have hunit : (show Γ(U, W) from b) • (1 : Γ(U, W)) = b :=
-    (smul_eq_mul (show Γ(U, W) from b) (1 : Γ(U, W))).trans (mul_one _)
-  exact (congrArg (e.inv.val.app (op W)).hom hunit).symm.trans h
+    (e.inv.val.app (op W)).hom b = b • (show Γ(L, U.ι ''ᵁ W) from gen₀ L e W) :=
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.gen₀_spec L e W b
 
 lemma gen₀_bijective (W : (U : Scheme.{u}).Opens) :
-    Function.Bijective (fun b : Γ(X, U.ι ''ᵁ W) => b • (show Γ(L, U.ι ''ᵁ W) from gen₀ L e W)) := by
-  have h : Function.Bijective ((e.inv.val.app (op W)).hom) := by
-    refine Function.bijective_iff_has_inverse.2 ⟨(e.hom.val.app (op W)).hom, fun b => ?_, fun m =>
-        ?_⟩
-    · exact congr($(e.inv_hom_id).val.app (op W) |>.hom b)
-    · exact congr($(e.hom_inv_id).val.app (op W) |>.hom m)
-  exact (funext (gen₀_spec L e W) ▸ h :)
+    Function.Bijective (fun b : Γ(X, U.ι ''ᵁ W) => b • (show Γ(L, U.ι ''ᵁ W) from gen₀ L e W)) :=
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.gen₀_bijective L e W
 
 lemma gen₀_map {W W' : (U : Scheme.{u}).Opens} (i : W' ⟶ W) :
-    L.val.map (U.ι.opensFunctor.map i).op (gen₀ L e W) = gen₀ L e W' := by
-  have := PresheafOfModules.naturality_apply e.inv.val i.op (1 : Γ(U, W))
-  rw [show ((SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf).val.map i.op) (1 : Γ(U, W)) =
-    (1 : Γ(U, W')) from ((U : Scheme.{u}).presheaf.map i.op).hom.map_one] at this
-  exact this.symm
+    L.val.map (U.ι.opensFunctor.map i).op (gen₀ L e W) = gen₀ L e W' :=
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.gen₀_map L e i
 
 omit e in
 lemma bijective_smul_map_eqToHom {A B : X.Opens} (q : A = B) (t : L.val.obj (op A))
     (h : Function.Bijective (fun b : Γ(X, A) => b • (show Γ(L, A) from t))) :
     Function.Bijective (fun a : Γ(X, B) =>
-      a • (show Γ(L, B) from L.val.map (eqToHom q.symm : B ⟶ A).op t)) := by
-  subst q
-  have e1 : L.val.map (eqToHom (rfl : A = A) : A ⟶ A).op t = t := by
-    rw [eqToHom_refl, op_id]
-    change (L.val.presheaf.map (𝟙 (op A))) t = t
-    rw [L.val.presheaf.map_id]
-    rfl
-  simpa only [e1] using h
+      a • (show Γ(L, B) from L.val.map (eqToHom q.symm : B ⟶ A).op t)) :=
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.bijective_smul_map_eqToHom L q t h
 
 /-- The compatible generators on opens contained in the trivializing open `U`. -/
-noncomputable def trivializationBelow : TrivializationBelow L.val (op U) where
-  gen {Y} f := L.val.map (eqToHom (image_preimage_of_le (U := U) f.unop.le).symm :
-      Y.unop ⟶ U.ι ''ᵁ (U.ι ⁻¹ᵁ Y.unop)).op (gen₀ L e (U.ι ⁻¹ᵁ Y.unop))
-  compat {Y Z} f g := by
-    have hle : U.ι ⁻¹ᵁ Z.unop ≤ U.ι ⁻¹ᵁ Y.unop := fun x hx => g.unop.le hx
-    dsimp only
-    rw [← gen₀_map L e (homOfLE hle)]
-    erw [← PresheafOfModules.map_comp_apply, ← PresheafOfModules.map_comp_apply]
-    exact congrFun (congrArg
-      (fun φ : (op (U.ι ''ᵁ (U.ι ⁻¹ᵁ Y.unop)) ⟶ Z) =>
-        ((L.val.map φ).hom : L.val.obj (op (U.ι ''ᵁ (U.ι ⁻¹ᵁ Y.unop))) → L.val.obj Z))
-      (Subsingleton.elim _ _)) _
-  bij {Y} f := bijective_smul_map_eqToHom L (image_preimage_of_le (U := U) f.unop.le) _
-    (gen₀_bijective L e _)
+noncomputable def trivializationBelow : TrivializationBelow L.val (op U) :=
+  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.trivializationBelow L e
 
 end
 
 end FrameBridge
 
-open FrameBridge in
 theorem exists_isFrameOn_of_pullback_iso_unit {X : Scheme.{u}} {M : X.Modules} (U : X.Opens)
     (eU : (Modules.pullback U.ι).obj M ≅ SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf) :
     ∃ s : Γ(M, U), IsFrameOn s U := by
-  let e : (restrictFunctor' U).obj M ≅ SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf :=
-    (restrictFunctor'IsoPullback U).app M ≪≫ eU
-  let D := trivializationBelow M e
+  let e : (_root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor' U).obj M ≅
+      SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf :=
+    (_root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor'IsoPullback U).app M ≪≫ eU
+  let D := _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.trivializationBelow M e
   refine ⟨D.gen (𝟙 (Opposite.op U)), ?_⟩
   intro W hWU _
   have hc : M.presheaf.map (homOfLE hWU).op (D.gen (𝟙 (Opposite.op U))) = D.gen (homOfLE hWU).op :=

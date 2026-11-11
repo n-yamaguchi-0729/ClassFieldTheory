@@ -26,8 +26,10 @@ namespace GlobalClassFields
 
 open NumberField IsDedekindDomain
 
+universe u v
+
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]

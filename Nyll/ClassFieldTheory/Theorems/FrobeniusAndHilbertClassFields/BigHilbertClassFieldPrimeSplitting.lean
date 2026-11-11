@@ -23,12 +23,14 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- A finite prime splits completely in the big Hilbert class field exactly
 when its narrow ray class is trivial. -/
 theorem finitePrime_splitsCompletelyInBigHilbertClassField_iff
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (E : FiniteAbelianExtension K) (hE : IsBigHilbertClassField E)
     (v : HeightOneSpectrum (𝓞 K)) :
     FinitePrimeSplitsCompletely K E v ↔

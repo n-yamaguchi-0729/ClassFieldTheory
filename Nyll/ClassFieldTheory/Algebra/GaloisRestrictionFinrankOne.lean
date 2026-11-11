@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+module
+
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
 
 /-!
 # Galois groups after a degree-one change of the base
@@ -14,6 +16,8 @@ Restriction of scalars is an isomorphism when the intermediate base field
 has degree one. Every automorphism over the smaller base fixes the larger
 base because each of its elements is an actual scalar.
 -/
+
+@[expose] public section
 
 noncomputable section
 

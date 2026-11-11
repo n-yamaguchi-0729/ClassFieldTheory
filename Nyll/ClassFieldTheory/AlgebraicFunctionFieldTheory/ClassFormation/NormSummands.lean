@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.ExtensionRepresentation
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.NormComparison
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.ExtensionRepresentation
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.NormComparison
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
 
 /-!
 # Actual Galois products of abstract norm values
@@ -14,7 +17,11 @@ The actual fixed-field action comparison reindexes each abstract norm sum
 by the relative Galois group.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField
 
@@ -22,7 +29,7 @@ open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 open IdeleClassGroup.FiniteExtensionLimit
 open scoped BigOperators
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [FunctionField k K]
     [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]

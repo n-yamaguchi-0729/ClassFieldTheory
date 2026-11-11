@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
-import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocityUnramifiedHomExt
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedResidueUniqueness
-import Mathlib.NumberTheory.LocalField.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
-import Mathlib.RingTheory.Valuation.Extension
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocityUnramifiedHomExt
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Mathlib.RingTheory.Valuation.Extension
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
 
 /-!
 # Uniqueness of normalized families on unramified members
@@ -19,16 +22,20 @@ Frobenius residue normalization agree on every unramified valued member. This
 does not assert uniqueness on ramified members of the families.
 -/
 
+@[expose] public section
+
 open scoped ValuativeRel
 
 noncomputable section
+
+universe u
 
 namespace ClassFieldTheory
 
 /-- The norm-kernel and arithmetic Frobenius conditions determine the value of
 two local reciprocity families at an unramified member. -/
 theorem finiteAbelianLocalReciprocity_unramified_family_ext
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (f g : (E : FiniteAbelianLocalExtension K) →
       Kˣ →ₜ* (E.1 ≃ₐ[K] E.1))
@@ -77,15 +84,15 @@ theorem finiteAbelianLocalReciprocity_unramified_family_ext
       K E.1 := ⟨hUnram⟩
   have hfϖ :
       f E ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) =
-        LocalClassFieldTheory.abelianLocalArtinMap K E.1
+        LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1
           ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) :=
-    (finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow_iff
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMap_inverseUniformizer_residue_pow_iff
       K E.1 π hπ _).mp (hfrob E hUnram π hπ)
   have hgϖ :
       g E ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) =
-        LocalClassFieldTheory.abelianLocalArtinMap K E.1
+        LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1
           ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) :=
-    (finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow_iff
+    (LocalClassFieldTheory.Universe.abelianLocalArtinMap_inverseUniformizer_residue_pow_iff
       K E.1 π hπ _).mp (hgrob E hUnram π hπ)
   have hfker' := hfker E
   have hgker' := hgker E

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
-import Nyll.ClassFieldTheory.Algebra.LocalField.PrincipalUnitTopology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
-import Mathlib.Topology.Algebra.Group.Quotient
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.Algebra.LocalField.PrincipalUnitTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Topology
+public import Mathlib.Topology.Algebra.Group.Quotient
 
 /-!
 # Topology of all-place ray congruence subgroups
@@ -16,6 +18,8 @@ Only the finitely many places in the modulus support impose conditions beyond
 integral units. This gives compact open congruence subgroups and open ray subgroups
 of the actual idele class group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

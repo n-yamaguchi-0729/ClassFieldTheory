@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormIndex
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.HigherUnitLevelEquiv
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardNormIndex
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardSubgroupIndex
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.HigherUnitLevelEquiv
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
 
 /-!
 # The norm subgroup of a standard Lubin--Tate level
@@ -20,7 +23,11 @@ nonzero indices are equal, so the containment is an equality.
 
 
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped ValuativeRel
 
@@ -32,7 +39,7 @@ open LocalFieldTheory.DiscreteValuationField
 open LocalFieldTheory.DiscreteValuationField.CompleteDVF
 open LocalFieldTheory.IsNonarchimedeanLocalField
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- The topology-first inclusion of packaged valuation-ring units agrees

@@ -37,13 +37,15 @@ Place_deg_eq_one_iff_surjective_algebraMap_residueField
 Place_isRational_iff_deg_eq_one
 -/
 
-import Mathlib.Data.Int.ConditionallyCompleteOrder
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Basic
-import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
+module
+
+public import Mathlib.Order.Int.ConditionallyCompleteOrder
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
 
 /-!
 # Evaluation
@@ -51,6 +53,8 @@ import Mathlib.LinearAlgebra.Dimension.FreeAndStrongRankCondition
 Residues at rational places define evaluation of functions and products along divisors, together
 with the Weil reciprocity condition.
 -/
+
+@[expose] public section
 
 section
 

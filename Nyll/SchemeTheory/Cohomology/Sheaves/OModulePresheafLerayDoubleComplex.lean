@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
-import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
+public import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
 
 /-!
 The double-complex structure, augmentations and total cohomology of the Leray bicomplex.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -76,7 +80,8 @@ theorem d_d (i : ℕ) : F.d K (i + 1) ∘ₗ F.d K i = 0 := by
     rintro ⟨a', b'⟩ hab'
     have hlt : (b' : ℕ) < (a' : ℕ) := by
       simpa [S, Finset.compl_filter, Finset.mem_filter, not_le] using hab'
-    have ha'0 : a' ≠ 0 := fun h => by simp [h] at hlt
+    have ha'0 : a' ≠ 0 := fun h =>
+      Nat.not_lt_zero _ (hlt.trans_le (congrArg Fin.val h).le)
     refine ⟨(Fin.castSucc b', a'.pred ha'0), ?_, ?_⟩
     · simp only [S, Finset.mem_filter, Finset.mem_univ, true_and, Fin.val_castSucc,
         Fin.val_pred]; omega

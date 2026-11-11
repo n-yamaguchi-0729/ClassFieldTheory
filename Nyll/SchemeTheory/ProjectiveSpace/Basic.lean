@@ -10,11 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
-import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
-import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
-import Mathlib.RingTheory.MvPolynomial.Ideal
+module
+
+public import Mathlib.Algebra.MvPolynomial.Division
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Proper
+public import Mathlib.AlgebraicGeometry.ProjectiveSpectrum.Functor
+public import Mathlib.AlgebraicGeometry.Morphisms.ClosedImmersion
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
+public import Mathlib.RingTheory.MvPolynomial.Ideal
 
 /-!
 # Projective space and its standard charts
@@ -23,6 +26,8 @@ Projective space is constructed from graded polynomial rings together with its s
 affine charts, maps and fibre products. Chow data records the resulting projective
 compactification constructions.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,21 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 Equivalences between geometric structure-sheaf cohomology and the two-chart function-field Cech
 model.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -97,9 +102,9 @@ open CategoryTheory AlgebraicGeometry Opposite TopologicalSpace
 variable {K : Type u} [Field K] {C : Scheme.{u}} (c : C ⟶ Spec (.of K)) [IsIntegral C]
 
 theorem placesOf_inf [IsSeparated c] [SmoothOfRelativeDimension 1 c] (U V : C.Opens) :
-    letI := (baseToFunctionField c).toAlgebra
+    let := (baseToFunctionField c).toAlgebra
     placesOf c (U ⊓ V) = placesOf c U ∩ placesOf c V := by
-  let := (baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   apply Set.Subset.antisymm
   · exact fun v hv => ⟨placesOf_mono c inf_le_left hv, placesOf_mono c inf_le_right hv⟩
   · rintro v ⟨⟨x, hxU, hx, hvx⟩, ⟨y, hyV, -, hvy⟩⟩
@@ -127,7 +132,6 @@ theorem germToFunctionField_map [IrreducibleSpace C] {U V : C.Opens} [Nonempty U
       = (C.germToFunctionField U).hom s := by
   rw [← CategoryTheory.ConcreteCategory.comp_apply]
   erw [TopCat.Presheaf.germ_res]
-  try rfl
 
 /-- The linear germ map from sections on an open set to the function field. -/
 noncomputable def germLinear (U : C.Opens) [Nonempty U] :
@@ -149,10 +153,10 @@ theorem germLinear_apply (U : C.Opens) [Nonempty U] (s : Γ(C, U)) :
 theorem range_germ_eq_lSpaceOn (U : C.Opens) [Nonempty U]
     (hsec : letI := (baseToFunctionField c).toAlgebra
       (C.germToFunctionField U).hom.range = ⨅ v ∈ placesOf c U, v.toValuationSubring.toSubring) :
-    letI := (baseToFunctionField c).toAlgebra
+    let := (baseToFunctionField c).toAlgebra
     Set.range (germLinear c U) = (lSpaceOn (placesOf c U) (0 : Divisor K C.functionField) : Set
       C.functionField) := by
-  let := (baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   ext f
   have h1 : f ∈ Set.range (germLinear c U) ↔ f ∈ (C.germToFunctionField U).hom.range := by
     simp only [Set.mem_range, RingHom.mem_range, germLinear_apply]
@@ -193,12 +197,12 @@ theorem coe_germEquiv_apply (U : C.Opens) [Nonempty U]
 
 theorem nonempty_linearEquiv_cechH0_and_cechH1' [IsSeparated c] [SmoothOfRelativeDimension 1 c]
     (𝒱 : C.TwoAffineOpenCover) (h0 : Nonempty 𝒱.U0) (h1 : Nonempty 𝒱.U1) :
-    letI := (baseToFunctionField c).toAlgebra
+    let := (baseToFunctionField c).toAlgebra
     Nonempty ((𝒱.structureSheafSections c).H0
         ≃ₗ[K] ↥(cechH0 (placesOf c 𝒱.U0) (placesOf c 𝒱.U1) (0 : Divisor K C.functionField))) ∧
       Nonempty ((𝒱.structureSheafSections c).H1
         ≃ₗ[K] cechH1 (placesOf c 𝒱.U0) (placesOf c 𝒱.U1) (0 : Divisor K C.functionField)) := by
-  let := (baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   have := h0
   have := h1
   have h01' : ((𝒱.U0 ⊓ 𝒱.U1 : C.Opens) : Set C).Nonempty :=

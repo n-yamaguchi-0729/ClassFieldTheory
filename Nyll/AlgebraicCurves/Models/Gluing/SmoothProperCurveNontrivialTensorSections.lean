@@ -10,12 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVRStalkSection
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVRStalkSection
 
 /-!
 # SmoothProperCurve nontrivial tensor sections of twoChartPoleDatum
@@ -23,6 +25,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothOfRelativeDimensionDVR
 Two-chart pole data ensures that the coordinate-ring tensor product with each field fibre is
 nontrivial.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -153,9 +157,9 @@ theorem nontrivial_tensor_fields {R : Type u} [CommRing R] (𝔭 : Ideal R) [�
 theorem eval_algebraMap_eq_zero_iff
     {R : Type u} [CommRing R] {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))
     {U : C.Opens} (u : C) (hu : u ∈ U) (r : R) :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     (C.evaluation U u hu).hom (algebraMap R Γ(C, U) r) = 0 ↔ r ∈ (c.base u).asIdeal := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   rw [Scheme.TwoAffineOpenCover.algebraMap_algebraOfHom]
   erw [Scheme.evaluation_eq_zero_iff_notMem_basicOpen, Scheme.basicOpen_appLE,
     basicOpen_eq_of_affine]
@@ -181,9 +185,9 @@ theorem main
     (_hfg : (C.presheaf.map (homOfLE (inf_le_left : U ⊓ V ≤ U)).op).hom f *
       (C.presheaf.map (homOfLE (inf_le_right : U ⊓ V ≤ V)).op).hom g = 1)
     (K : Type u) [Field K] [Algebra R K] :
-    letI := Scheme.TwoAffineOpenCover.algebraOfHom c U
+    let := Scheme.TwoAffineOpenCover.algebraOfHom c U
     Nontrivial (K ⊗[R] Γ(C, U)) := by
-  let := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   have : (RingHom.ker (algebraMap R K)).IsPrime := RingHom.ker_isPrime _
   let y : Spec (CommRingCat.of R) := ⟨RingHom.ker (algebraMap R K), RingHom.ker_isPrime _⟩
   obtain ⟨u, hcu, hur⟩ := exists_mem_fibre_not_mem_range c ε y
@@ -195,7 +199,9 @@ theorem main
   have hF : ∀ r : R, algebraMap R (C.residueField u) r = 0 ↔ r ∈ RingHom.ker (algebraMap R K) := by
     intro r
     change ev (algebraMap R Γ(C, U) r) = 0 ↔ _
-    rw [eval_algebraMap_eq_zero_iff c u hu r, hcu]
+    have heval : ev (algebraMap R Γ(C, U) r) = 0 ↔ r ∈ (c.base u).asIdeal :=
+      eval_algebraMap_eq_zero_iff c u hu r
+    rw [heval, hcu]
   have hK : ∀ r : R, algebraMap R K r = 0 ↔ r ∈ RingHom.ker (algebraMap R K) := fun r => Iff.rfl
   have := nontrivial_tensor_fields (RingHom.ker (algebraMap R K)) K (C.residueField u) hK hF
   exact (Algebra.TensorProduct.map (AlgHom.id K K) evₐ).toRingHom.domain_nontrivial

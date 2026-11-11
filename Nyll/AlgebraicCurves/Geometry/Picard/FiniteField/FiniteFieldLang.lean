@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Existence
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicPointsEquivariance
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.AbelJacobiPicardRepresentability
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.FiniteFieldLangPowers
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Existence
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicPointsEquivariance
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.AbelJacobiPicardRepresentability
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.FiniteFieldLangPowers
 
 /-!
 # Lang surjectivity on the actual geometric Picard group
@@ -17,6 +19,10 @@ Abel--Jacobi map. The proved equivariant comparison with actual divisor classes
 transports Lang surjectivity to the genuine semilinear Frobenius on its geometric
 function field. A Picard representation or a Lang hypothesis is not an input.
 -/
+
+@[expose] public section
+
+universe u
 
 noncomputable section
 
@@ -32,9 +38,9 @@ attribute [local instance]
 
 /-- Actual geometric Picard classes satisfy Lang surjectivity for every positive Frobenius power. -/
 theorem exists_pic0_frobenius_lang
-    {k Ω F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+    {k Ω F : Type u} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
-    {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     [IsProper c] [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
     (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of k))) c)
     (M : CurveModel Ω F) (eC : M.C ≅ pullback c (specMap k Ω))

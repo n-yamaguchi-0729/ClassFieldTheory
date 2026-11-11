@@ -10,25 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Quasicoherent.IsoFromTildeGammaPushforward
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveKer
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
-import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.SchemeHomOverBaseChange
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
-import Nyll.SchemeTheory.Modules.Quasicoherent.IsoBaseChangeSectionsIsoFromTildeGamma
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeIsomorphism
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Quasicoherent.IsoFromTildeGammaPushforward
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveKer
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
+public import Nyll.SchemeTheory.BaseChange.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
+public import Nyll.SchemeTheory.Modules.Quasicoherent.IsoBaseChangeSectionsIsoFromTildeGamma
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeIsomorphism
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Base change for affine pushforward
 
 The comparison is an isomorphism for locally trivial modules along an affine morphism.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

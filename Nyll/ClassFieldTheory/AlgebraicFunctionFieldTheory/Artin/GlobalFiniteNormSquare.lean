@@ -4,17 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GlobalDecomposition
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobeniusRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.OnePlaceDetermination
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteNormProperties
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.OnePlaceNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalConductor
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GlobalDecomposition
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.UnramifiedFrobeniusRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.OnePlaceDetermination
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteNormProperties
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.OnePlaceNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalConductor
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
 
 /-!
 # Global norm reciprocity in arbitrary finite squares
@@ -25,6 +27,10 @@ Weak approximation then determines the continuous class maps everywhere.
 
 -/
 
+@[expose] public section
+
+universe u v w x y
+
 noncomputable section
 open AlgebraicCurve
 open scoped AlgebraicCurve.Place IsMulCommutative
@@ -33,7 +39,8 @@ open AlgebraicCurves.Places.Proofs.Place_sum_ramificationIndex_mul_inertiaDeg_ex
 namespace FunctionField
 
 private theorem abelianFiniteArtin_placeIdele_eq_frobenius_of_restrict_eq
-    {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+    {k : Type u} {K : Type v} {L : Type x}
+    [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]
@@ -49,7 +56,8 @@ private theorem abelianFiniteArtin_placeIdele_eq_frobenius_of_restrict_eq
   exact abelianFiniteArtin_placeIdele_eq_unramifiedFrobenius_zpow z he x
 
 private theorem finiteClassNorm_placeIdele
-    {k K F : Type} [Field k] [Finite k] [Field K] [Field F]
+    {k : Type u} {K : Type v} {F : Type w}
+    [Field k] [Finite k] [Field K] [Field F]
     [Algebra k K] [Algebra k F] [Algebra K F] [IsScalarTower k K F]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K F] [HasPrincipalDivisors k K] [HasPrincipalDivisors k F]
@@ -67,7 +75,8 @@ private theorem finiteClassNorm_placeIdele
       (congrArg (QuotientGroup.mk : IdeleGroup k K → IdeleClassGroup k K)
         (IdeleGroup.norm_placeIdele w x))
 
-variable {k K F L M : Type} [Field k] [Finite k]
+variable {k : Type u} {K : Type v} {F : Type w} {L : Type x} {M : Type y}
+    [Field k] [Finite k]
     [Field K] [Field F] [Field L] [Field M]
     [Algebra k K] [Algebra k F] [Algebra k L] [Algebra k M]
     [Algebra K F] [Algebra K L] [Algebra K M] [Algebra F M] [Algebra L M]

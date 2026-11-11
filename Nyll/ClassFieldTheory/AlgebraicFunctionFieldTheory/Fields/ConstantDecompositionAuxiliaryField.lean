@@ -4,25 +4,28 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Lattice
-import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
-import Nyll.ClassFieldTheory.Algebra.CyclicOrderCorrection
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGaloisRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGaloisTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFieldExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteConstantsInClosure
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantTowerDecompositionKernel
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Lattice
+public import Mathlib.Algebra.Group.Subgroup.ZPowers.Basic
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.ClassFieldTheory.Algebra.CyclicOrderCorrection
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGaloisRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGaloisTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFieldExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteConstantsInClosure
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantTowerDecompositionKernel
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Constant corrections of decomposition automorphisms
@@ -35,6 +38,8 @@ comes from the exact image of the actual decomposition group on constants.
 Taking the corrected cyclic fixed field then produces a concrete auxiliary
 base over which adjoining these constants recovers the entire compositum.
 -/
+
+@[expose] public section
 
 noncomputable section
 

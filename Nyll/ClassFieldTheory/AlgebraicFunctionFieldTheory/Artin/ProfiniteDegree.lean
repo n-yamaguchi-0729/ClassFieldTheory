@@ -18,12 +18,14 @@ after the reciprocity isomorphism. The finite-coordinate formulas remain
 the canonical extensions of the actual finite Artin maps.
 -/
 
+universe u v
+
 noncomputable section
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 

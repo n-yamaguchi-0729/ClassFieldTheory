@@ -10,10 +10,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.Evaluation.Evaluation
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
 
 /-!
 # ConstantsAreBase of exists isRational
@@ -21,6 +23,8 @@ import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
 A rational place of nonzero degree identifies the constant field with the base field, using the
 degree of principal divisors.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

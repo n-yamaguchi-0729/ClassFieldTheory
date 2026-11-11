@@ -10,13 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.Classification
-import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncHasPrincipalDivisors
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.Classification
+public import Nyll.AlgebraicCurves.Places.Rational.InfinityArithmetic
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncHasPrincipalDivisors
 
 /-!
 # InstIsCurveOverRatFunc
@@ -24,6 +26,8 @@ import Nyll.AlgebraicCurves.Places.Rational.RatFuncHasPrincipalDivisors
 Rational function fields have finite residue fields at their places and a free module of Kähler
 differentials of rank one.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

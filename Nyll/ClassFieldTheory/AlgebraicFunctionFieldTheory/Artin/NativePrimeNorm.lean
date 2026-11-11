@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FinitePrimeNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativePresentation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FinitePrimeNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativePresentation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
 
 /-!
 # Native prime-norm values under actual fixed-field presentations
@@ -18,6 +20,10 @@ The concrete norm formula is evaluated in the native finite Artin map using
 the actual fixed-field presentation. The Galois value uses scalar restriction
 directly, so its computation does not reconstruct the degree-one equivalence.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -33,7 +39,7 @@ attribute [local instance]
   intrinsicFrobeniusAuxiliaryModule
   intrinsicFrobeniusAuxiliaryConstantAlgebra
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]

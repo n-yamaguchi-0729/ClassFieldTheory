@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimePowerJetIndex
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierRiemannRoch
-import Nyll.AlgebraicCurves.Divisors.Modulus.Modulus
-import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
+module
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimePowerJetIndex
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.ArtinSchreierRiemannRoch
+public import Nyll.AlgebraicCurves.Divisors.Modulus.Modulus
+public import Nyll.AlgebraicCurves.Divisors.Degree.DegreeArithmetic
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeles
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SIdeles
 
 /-!
 # A common bound for ray p-quotients and Artin–Schreier parameters
@@ -21,13 +23,17 @@ Riemann–Roch bound are enlarged together. Thus a prescribed modulus admits
 a larger modulus for which both independent cardinality computations agree.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 open AlgebraicCurve
 open scoped BigOperators
 
 namespace FunctionField
 
-variable {k K : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
 
 /-- The divisor degree difference is the weighted count of the local p-unit layers. -/
 theorem degree_prime_mul_sub_toDivisor (p : ℕ) (hp : 1 ≤ p)

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteFree
-import Mathlib.RingTheory.Etale.StandardEtale
-import Mathlib.RingTheory.Localization.Away.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteFree
+public import Mathlib.RingTheory.Etale.StandardEtale
+public import Mathlib.RingTheory.Localization.Away.Basic
 
 /-!
 # Finite étaleness of a Kummer algebra
@@ -16,6 +18,8 @@ The quotient by `X ^ n - a` is finite étale when the exponent is invertible in
 the base field.  This includes reducible polynomials: the algebra need not be
 a field.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 
@@ -52,7 +56,8 @@ theorem kummerAlgebra_finiteEtale
           algebraMap K (AdjoinRoot f) (n : K) *
             AdjoinRoot.root f ^ ((n : ℕ) - 1) := by
       dsimp [f]
-      simp [Polynomial.derivative_X_pow]
+      simp only [derivative_sub, derivative_X_pow, map_natCast, derivative_C, sub_zero,
+        AdjoinRoot.aeval_eq, map_mul, map_pow, AdjoinRoot.mk_X]
     have hDerivative : IsUnit (aeval (AdjoinRoot.root f) f.derivative) := by
       rw [hDerivativeFormula]
       exact (hn.map (algebraMap K (AdjoinRoot f))).mul

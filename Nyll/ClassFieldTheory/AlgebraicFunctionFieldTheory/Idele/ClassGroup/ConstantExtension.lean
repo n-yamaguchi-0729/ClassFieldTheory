@@ -4,18 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Finsupp.Basic
-import Mathlib.Data.Finsupp.Ext
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.RingTheory.EssentialFiniteness
-import Mathlib.Tactic.Ring
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Finite
-import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
+module
+
+public import Mathlib.Data.Finsupp.Basic
+public import Mathlib.Data.Finsupp.Ext
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.RingTheory.EssentialFiniteness
+public import Mathlib.Tactic.Ring
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantReindex
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Constants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FullConstants
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Finite
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Divisor classes under enlargement of the constant field
@@ -29,6 +31,8 @@ For the full constant field `algebraicClosure k K`, the established regular-func
 and curve structure supply Riemann--Roch finiteness. The equivalence then gives finiteness of
 `Pic0 k K` for every function field over a finite base, without an extra constants hypothesis.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitCongruencePowerIndex
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitCongruencePowerIndex
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
 
 /-!
 # Intrinsic local prime-power congruence index
@@ -14,6 +16,8 @@ import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSu
 The complete-DVF count is expressed in the canonical local principal-unit
 filtration used by ray class groups and local reciprocity.
 -/
+
+@[expose] public section
 
 noncomputable section
 namespace LocalFieldTheory

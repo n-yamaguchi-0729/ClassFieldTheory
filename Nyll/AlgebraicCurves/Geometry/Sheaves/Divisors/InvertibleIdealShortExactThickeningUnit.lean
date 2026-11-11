@@ -10,25 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.Abelian.DiagramLemmas.KernelCokernelComp
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
-import Nyll.SchemeTheory.Modules.Functoriality.ProjectionMorphism
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocalSection
-import Nyll.SchemeTheory.Modules.LocalMorphisms
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataMonoWhiskerLeftModuleIota
-import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackMapProjectionMorphismIff
-import Nyll.SchemeTheory.Modules.Tensor.PullbackTensorUnitObjIsoHomAppPullbackLocalSectionUnitSection
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealTensorIsoMulModule
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.LocallyFreeOneIffInvertible
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Mathlib.CategoryTheory.Abelian.DiagramLemmas.KernelCokernelComp
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
+public import Nyll.SchemeTheory.Modules.Functoriality.ProjectionMorphism
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocalSection
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataMonoWhiskerLeftModuleIota
+public import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackMapProjectionMorphismIff
+public import Nyll.SchemeTheory.Modules.Tensor.PullbackTensorUnitObjIsoHomAppPullbackLocalSectionUnitSection
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealTensorIsoMulModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Invertible.RankOne
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleModule
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealPow
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # Short exact sequences of ideal thickenings
@@ -37,6 +39,8 @@ The unit map for a closed subscheme and tensoring by locally free module sheaves
 short exact sequences. Cokernels for successive powers of an invertible ideal yield
 the exact sequence of thickened restrictions.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

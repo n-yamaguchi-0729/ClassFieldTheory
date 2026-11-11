@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusTower
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+module
+
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusTower
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
 
 /-!
 # Frobenius periods and multiplicative Lang primitives in algebraic constants
@@ -15,6 +17,8 @@ A single algebraic constant lies in an actual finite subextension.
 Over an algebraic closure, the multiplicative Lang equation for every positive
 Frobenius power reduces to taking a nonzero root of a positive power.
 -/
+
+@[expose] public section
 
 noncomputable section
 

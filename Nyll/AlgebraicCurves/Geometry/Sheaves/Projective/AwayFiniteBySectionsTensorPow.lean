@@ -10,32 +10,36 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySections
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.InvertibleTensorPow
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.EqSumSmulPullbackSectionSubsingletonHSucc
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.BasicOpenFrameFramePullback
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjPresentationFiniteBySectionsPullback
-import Nyll.SchemeTheory.Modules.Frames.FrameLinearCombination
-import Nyll.SchemeTheory.Modules.Frames.FrameLocality
-import Nyll.SchemeTheory.Modules.Frames.PullbackFrame
-import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentationIso
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentationBaseChange
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.ProjPresentationLocallyQuasiFinite
-import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.HomQuasiFiniteAtPullback
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.FiniteBySectionsFiniteBySectionsUnit
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.SchemeTheory.Modules.FiniteType.FiniteBySections
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.InvertibleTensorPow
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.EqSumSmulPullbackSectionSubsingletonHSucc
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.BasicOpenFrameFramePullback
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjPresentationFiniteBySectionsPullback
+public import Nyll.SchemeTheory.Modules.Frames.FrameLinearCombination
+public import Nyll.SchemeTheory.Modules.Frames.FrameLocality
+public import Nyll.SchemeTheory.Modules.Frames.PullbackFrame
+public import Nyll.SchemeTheory.Modules.Frames.ProjectivePresentationFromFrames
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentationIso
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentationBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.ProjPresentationLocallyQuasiFinite
+public import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.HomQuasiFiniteAtPullback
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.FiniteBySectionsFiniteBySectionsUnit
 
 /-!
 # Scheme Modules exists away finite By Sections tensor Pow of forall geometric Fibre
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

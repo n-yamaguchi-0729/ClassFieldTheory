@@ -10,17 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Lean.Elab.Tactic.NormCast
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.FieldTheory.SeparablyGenerated
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.Etale.Field
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.RegularLocalRing.Defs
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.RingTheory.TensorProduct.Basic
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Differentials.Local.Order
+module
+
+public import Lean.Elab.Tactic.NormCast
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.FieldTheory.SeparablyGenerated
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.Etale.Field
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.RegularLocalRing.Defs
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
 
 /-!
 # IsCurveOver exists separating transcendental
@@ -28,6 +30,8 @@ import Nyll.AlgebraicCurves.Differentials.Local.Order
 A curve function field over a perfect field admits a separating transcendental element, with bases
 of differentials transported through the generated intermediate field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

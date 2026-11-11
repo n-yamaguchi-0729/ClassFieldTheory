@@ -18,13 +18,15 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 /-- For `m ≤ n`, every realization of the ray class field of `m` is a
 subfield of every realization of the ray class field of `n` in the fixed
 separable closure. -/
 theorem rayClassFieldRealization_mono_modulus
-    {K : Type} [Field K] [NumberField K]
+    {K : Type u} [Field K] [NumberField K]
     {m n : RayClassModulus K} (hmn : m ≤ n)
     (Rm : RayClassFieldRealization K m)
     (Rn : RayClassFieldRealization K n) :

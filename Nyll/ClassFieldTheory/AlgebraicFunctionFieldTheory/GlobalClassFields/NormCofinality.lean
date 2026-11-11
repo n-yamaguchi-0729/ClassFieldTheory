@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimeIndexTransport
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormRefinementTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormIndex
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.TameNormCofinality
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.PrimeIndexTransport
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormRefinementTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormIndex
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.TameNormCofinality
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormAlgEquiv
+public import Mathlib.FieldTheory.IsSepClosed
 
 /-!
 # Actual norm cofinality for every ordinary open finite-index subgroup
@@ -20,19 +24,25 @@ The inductively constructed relative extension is brought back to the
 original base by the shared normal-closure abelian refinement.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 open AlgebraicCurve
 
 namespace FunctionField
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+section SameUniverse
+
+variable (k : Type u) (K Ω : Type v) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [HasPrincipalDivisors k K] [IsSepClosure K Ω]
 
 /-- Every finite-index open subgroup for the ordinary idele-class topology
 contains an actual finite abelian norm subgroup in the supplied closure. -/
-theorem exists_finiteAbelian_norm_le_of_open
+private theorem exists_finiteAbelian_norm_le_of_open_sameUniverse
     (H : Subgroup (IdeleClassGroup k K)) [H.FiniteIndex]
     (hH : IsOpen (H : Set (IdeleClassGroup k K))) :
     ∃ A : FiniteGaloisIntermediateField K Ω, IsAbelianGalois K A ∧
@@ -78,5 +88,40 @@ theorem exists_finiteAbelian_norm_le_of_open
     apply exists_finiteAbelian_norm_le_of_relative k K Ω L.toIntermediateField H E
     intro hEprincipal
     exact hEnorm
+
+end SameUniverse
+
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
+    [Algebra k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
+    [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
+    [HasPrincipalDivisors k K] [IsSepClosure K Ω]
+
+/-- Every finite-index open subgroup for the ordinary idele-class topology
+contains an actual finite abelian norm subgroup in the supplied closure. -/
+theorem exists_finiteAbelian_norm_le_of_open
+    (H : Subgroup (IdeleClassGroup k K)) [H.FiniteIndex]
+    (hH : IsOpen (H : Set (IdeleClassGroup k K))) :
+    ∃ A : FiniteGaloisIntermediateField K Ω, IsAbelianGalois K A ∧
+      (have _ : HasPrincipalDivisors k A :=
+        (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K A).toHasPrincipalDivisors
+      (IdeleClassGroup.norm (k := k) (K := K) (L := A)).range ≤ H) := by
+  let akSep : Algebra k (SeparableClosure K) :=
+    ((algebraMap K (SeparableClosure K)).comp (algebraMap k K)).toAlgebra
+  have hkKSep : IsScalarTower k K (SeparableClosure K) :=
+    IsScalarTower.of_algebraMap_eq (fun _ => rfl)
+  obtain ⟨E, hEabelian, hEnorm⟩ :=
+    exists_finiteAbelian_norm_le_of_open_sameUniverse k K (SeparableClosure K) H hH
+  have hEprincipal : HasPrincipalDivisors k E :=
+    (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K E).toHasPrincipalDivisors
+  let φ : SeparableClosure K ≃ₐ[K] Ω := IsSepClosure.equiv K (SeparableClosure K) Ω
+  let F : IntermediateField K Ω := E.toIntermediateField.map φ.toAlgHom
+  let ψ : E ≃ₐ[K] F := E.toIntermediateField.equivMap φ.toAlgHom
+  have hFfinite : FiniteDimensional K F := ψ.toLinearEquiv.finiteDimensional
+  have hFabelian : IsAbelianGalois K F := IsAbelianGalois.of_algHom ψ.symm.toAlgHom
+  let A : FiniteGaloisIntermediateField K Ω := { toIntermediateField := F }
+  refine ⟨A, hFabelian, ?_⟩
+  intro hFprincipal
+  have hnorm := IdeleClassGroup.norm_range_eq_of_algEquiv (k := k) (K := K) ψ
+  exact hnorm.symm.le.trans hEnorm
 
 end FunctionField

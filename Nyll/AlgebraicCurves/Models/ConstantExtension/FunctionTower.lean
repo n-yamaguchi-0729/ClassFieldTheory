@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.PeriodicExtension
-import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseTower
-import Nyll.AlgebraicCurves.Models.ConstantExtension.ModelConstants
-import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.PeriodicExtension
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseTower
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.ModelConstants
+public import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+public import Nyll.GaloisCohomology.FieldTheory.PeriodicSubfield
 
 /-!
 # The actual finite base change and its Frobenius-periodic function field
@@ -19,6 +22,10 @@ then gives a finite Galois extension of the original function field, of precisel
 the constant-field degree.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
@@ -26,13 +33,13 @@ open AlgebraicGeometry.SmoothProperCurve
 
 namespace AlgebraicCurve.CurveModel
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
     (M₀ : CurveModel k F₀) [GeometricallyIntegral M₀.toBase] (M : CurveModel Ω F)
     (e : M.C ≅ pullback M₀.toBase (specMap k Ω))
     (he : e.hom ≫ pullback.snd M₀.toBase (specMap k Ω) = M.toBase)
-    (E : Type) [Field E] [Fintype E] [Algebra k E] [algEΩ : Algebra E Ω]
+    (E : Type u) [Field E] [Fintype E] [Algebra k E] [algEΩ : Algebra E Ω]
     [towerEΩ : IsScalarTower k E Ω] [hAlgEΩ : Algebra.IsAlgebraic E Ω]
 
 local notation "CE" => pullback M₀.toBase (specMap k E)

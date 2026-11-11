@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertFamilyAlgEquiv
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteHilbertFactorNaturality
-import Mathlib.Algebra.BigOperators.Finprod
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertFamilyAlgEquiv
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfiniteHilbertFactorNaturality
+public import Mathlib.Algebra.BigOperators.Finprod
 
 /-!
 # Transport of the Hilbert product formula
@@ -15,6 +17,8 @@ The product formula is invariant under a number-field equivalence. The
 finite product is reindexed by the induced equivalence of finite places,
 and the ordinary infinite product by the equivalence of infinite places.
 -/
+
+@[expose] public section
 
 open scoped BigOperators NumberField
 open NumberField IsDedekindDomain

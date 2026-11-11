@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.Core
-import Nyll.ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
-import Nyll.ValuedFieldTheory.LocalField.GroupTheory.QuotientPowers
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
-import Mathlib.Data.ENat.Monoid
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PrincipalUnits.Core
+public import Nyll.ValuedFieldTheory.LocalField.GroupTheory.PowerIndex
+public import Nyll.ValuedFieldTheory.LocalField.GroupTheory.QuotientPowers
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+public import Mathlib.Data.ENat.Monoid
 
 /-!
 # Prime-power classes modulo higher principal units
@@ -18,6 +20,8 @@ In characteristic p, Frobenius detects the exact principal-unit level:
 quotient `Oˣ/U^(pn)` is the actual subgroup `U^n/U^(pn)`. Counting its
 successive residue-field layers computes the p-power quotient.
 -/
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

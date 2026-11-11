@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Basic
 /-!
 # Morphisms of ideal-sheaf data
 
 Compatible linear maps on ideals over affine opens admit module operations,
 composition, and ideal-sheaf ranges.
 -/
+
+@[expose] public section
 
 open CategoryTheory TopologicalSpace Opposite
 

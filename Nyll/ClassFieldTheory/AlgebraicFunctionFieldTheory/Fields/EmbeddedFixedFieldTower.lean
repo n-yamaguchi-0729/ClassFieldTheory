@@ -3,9 +3,11 @@ Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
-import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
 
 /-!
 # Representing an actual finite Galois tower by its fixing subgroups
@@ -14,6 +16,10 @@ The fields, inclusions, finiteness and normality are supplied by the given
 intermediate fields and the existing infinite Galois correspondence.
 -/
 
+@[expose] public section
+
+universe u
+
 noncomputable section
 
 open ClassFormation LocalClassFieldTheory CyclicCohomology RamificationTheory
@@ -21,7 +27,7 @@ open ClassFormation LocalClassFieldTheory CyclicCohomology RamificationTheory
 namespace FunctionField
 
 /-- Actual finite Galois intermediate fields are represented by a finite closed-subgroup tower. -/
-theorem exists_embeddedFixedFieldTower (K : Type) [Field K]
+theorem exists_embeddedFixedFieldTower (K : Type u) [Field K]
     (F E : IntermediateField K (SeparableClosure K))
     [FiniteDimensional K F] [FiniteDimensional K E]
     [IsGalois K F] [IsGalois K E] (hFE : F ≤ E) :

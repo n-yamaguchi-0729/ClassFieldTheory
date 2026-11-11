@@ -10,21 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.RingTheory.Flat.Product
-import Mathlib.Algebra.Category.Grp.Basic
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Quasicoherent.IsoFromTildeGammaPushforward
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveKer
-import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
-import Nyll.SchemeTheory.Modules.Quasicoherent.IsoBaseChangeSectionsIsoFromTildeGamma
-import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeIsomorphism
+module
+
+public import Nyll.SchemeTheory.RingTheory.Flat.Product
+public import Mathlib.Algebra.Category.Grp.Basic
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeHom
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Quasicoherent.IsoFromTildeGammaPushforward
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveKer
+public import Nyll.AlgebraicCurves.Geometry.Projective.ModulesProjectiveSections
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFlatSections
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOfH0
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Pullback.LinearEquivSectionsBaseChange
+public import Nyll.SchemeTheory.Modules.Quasicoherent.IsoBaseChangeSectionsIsoFromTildeGamma
+public import Nyll.SchemeTheory.Modules.Functoriality.BaseChangeIsomorphism
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Base change from a two-affine-open cover
@@ -33,6 +36,8 @@ The Cech complex of an invertible module compares sections before and after base
 Flatness, finite cohomology, and vanishing of fibre H1 identify the canonical base-change
 morphism with an isomorphism on global sections.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

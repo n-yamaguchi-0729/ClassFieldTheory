@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
 
 /-!
 # Field generators remain generators after completion
@@ -13,6 +15,8 @@ import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
 The existing decomposition-group equivalence detects every automorphism of
 the completed extension on the image of a global field generator.
 -/
+
+@[expose] public section
 
 noncomputable section
 open AlgebraicCurve

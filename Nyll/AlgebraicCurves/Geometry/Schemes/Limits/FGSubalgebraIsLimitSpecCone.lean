@@ -10,8 +10,10 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.SchemeTheory.Descent.FGSubalgebra
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraIsColimitCocone
+module
+
+public import Nyll.SchemeTheory.Descent.FGSubalgebra
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraIsColimitCocone
 
 /-!
 # Spectra of finitely generated subalgebras form an inverse limit
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraIsColimitCocone
 Applying the spectrum functor to the colimit presentation by finitely generated subalgebras
 gives the canonical limit cone with the spectrum of the original algebra as its vertex.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

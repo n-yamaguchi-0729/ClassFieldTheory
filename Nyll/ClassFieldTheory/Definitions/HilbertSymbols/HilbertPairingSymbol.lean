@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
 
 /-!
 # Evaluation of a Hilbert pairing on representatives
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory.HilbertPairing
 

@@ -4,9 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
-import Nyll.ValuedFieldTheory.Valuation.Henselian.AlgebraicExtensionUniqueness
-import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+public import Nyll.ValuedFieldTheory.Valuation.Henselian.AlgebraicExtensionUniqueness
+public import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv
+public import Mathlib.RingTheory.RamificationInertia.Ramification
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Basic
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Complete
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
 
 /-!
 # Ramification index and finite-place completion
@@ -18,10 +26,14 @@ its valuation in the completed target is the global ramification index, and
 its image generates the completed base maximal ideal.
 -/
 
+@[expose] public section
+
 open scoped NumberField NNReal ValuativeRel
 open NumberField IsDedekindDomain
 
 noncomputable section
+
+universe u v
 
 open AlgebraicNumberTheory.Valuations
 open LocalClassFieldTheory
@@ -29,7 +41,7 @@ open LocalFieldTheory
 open LocalFieldTheory.IsNonarchimedeanLocalField
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -99,6 +111,8 @@ theorem chosenFinitePlace_completed_ramificationIdx'_eq_centre
         HeightOneSpectrum.valuedAdicCompletion_eq_valuation'
           W (algebraMap K L (πData.integer : K))
       _ = (v.valuation K (πData.integer : K)) ^ eGlobal := by
+        dsimp only [eGlobal]
+        rw [Ideal.ramificationIdx'_eq_ramificationIdx v.asIdeal W.asIdeal v.ne_bot]
         symm
         exact HeightOneSpectrum.valuation_liesOver
           L v W (πData.integer : K)

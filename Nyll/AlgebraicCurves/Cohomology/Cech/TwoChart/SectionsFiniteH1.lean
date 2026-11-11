@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Mathlib.RingTheory.Adjoin.Polynomial.Basic
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.RingTheory.Adjoin.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Mathlib.RingTheory.Adjoin.Polynomial.Basic
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.RingTheory.Adjoin.Basic
 
 /-!
 Finiteness of first Cech cohomology from finite sections on a chart.
 Localization conditions reduce the quotient to finitely many translated generators.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

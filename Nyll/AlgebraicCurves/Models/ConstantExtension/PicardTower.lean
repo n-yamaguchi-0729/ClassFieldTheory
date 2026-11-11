@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardDescent
-import Nyll.AlgebraicCurves.Models.ConstantExtension.ModelConstants
-import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearTower
-import Nyll.AlgebraicCurves.Models.Construction.OfSmoothProperCurve
-import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.PicardDescent
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.ModelConstants
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearTower
+public import Nyll.AlgebraicCurves.Models.Construction.OfSmoothProperCurve
+public import Nyll.AlgebraicCurves.Models.Construction.CurveIsIntegral
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.EssFiniteTypeFunctionField
 
 /-!
 # Arithmetic Picard groups over finite constant extensions
@@ -18,6 +20,10 @@ Construct the curve model on the actual finite base change. Its constants are
 full by geometric descent, and its Picard group identifies with the periodic
 geometric Picard classes for the corresponding power of the original Frobenius.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -29,13 +35,13 @@ namespace AlgebraicCurve.CurveModel
 attribute [local instance]
   SemilinearAut.instDistribMulActionSubtypeProdRingAutMemSubgroupDivisor
 
-variable {k Ω F₀ F : Type} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
+variable {k Ω : Type u} {F₀ : Type v} {F : Type w} [Field k] [Fintype k] [Field Ω] [IsAlgClosed Ω]
     [Algebra k Ω] [Algebra.IsAlgebraic k Ω]
     [Field F₀] [Algebra k F₀] [Field F] [Algebra Ω F] [IsCurveOver Ω F]
     (M₀ : CurveModel k F₀) [GeometricallyIntegral M₀.toBase] (M : CurveModel Ω F)
     (e : M.C ≅ pullback M₀.toBase (specMap k Ω))
     (he : e.hom ≫ pullback.snd M₀.toBase (specMap k Ω) = M.toBase)
-    (E : Type) [Field E] [Fintype E] [Algebra k E] [Algebra E Ω]
+    (E : Type u) [Field E] [Fintype E] [Algebra k E] [Algebra E Ω]
     [IsScalarTower k E Ω] [Algebra.IsAlgebraic E Ω]
 
 local notation "CE" => pullback M₀.toBase (specMap k E)

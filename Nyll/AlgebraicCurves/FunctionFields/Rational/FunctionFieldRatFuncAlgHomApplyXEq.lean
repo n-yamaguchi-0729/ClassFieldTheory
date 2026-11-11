@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.FieldTheory.RatFunc.Basic
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.FieldTheory.Minpoly.Basic
-import Mathlib.RingTheory.Algebraic.Basic
+module
+
+public import Mathlib.FieldTheory.RatFunc.Basic
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.FieldTheory.Minpoly.Basic
+public import Mathlib.RingTheory.Algebraic.Basic
 
 /-!
 # FunctionField exists ratFuncAlgHom apply X eq
@@ -22,6 +24,8 @@ import Mathlib.RingTheory.Algebraic.Basic
 A function outside the image of an algebraically closed base field defines an embedding of the
 rational function field that sends its variable to that function.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

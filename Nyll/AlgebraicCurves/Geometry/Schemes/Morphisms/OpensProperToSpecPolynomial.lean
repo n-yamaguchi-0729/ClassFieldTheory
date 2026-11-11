@@ -10,17 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Category.Ring.Basic
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.AlgebraicGeometry.FunctionField
-import Mathlib.AlgebraicGeometry.Stalk
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.AlgebraicGeometry.GammaSpecAdjunction
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.ValuativeCriterion
-import Mathlib.RingTheory.Valuation.ValuationRing
-import Mathlib.Tactic.Ext
+module
+
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.AlgebraicGeometry.FunctionField
+public import Mathlib.AlgebraicGeometry.Stalk
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.AlgebraicGeometry.GammaSpecAdjunction
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.ValuativeCriterion
+public import Mathlib.RingTheory.Valuation.ValuationRing
+public import Mathlib.Tactic.Ext
 
 /-!
 # Properness of a polynomial map from a maximal open
@@ -29,6 +31,8 @@ For an integral proper curve, the maximal open on which a function is regular
 maps properly to the polynomial spectrum. The valuative criterion extends
 points through stalks and compares their specializations.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
 
 /-!
 # The decomposition group on the actual completion
@@ -17,6 +19,8 @@ Their action is faithful because the original field embeds in its completion.
 This supplies the concrete decomposition-group action needed by local Hilbert 90.
 No identification with the whole completed Galois group is assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

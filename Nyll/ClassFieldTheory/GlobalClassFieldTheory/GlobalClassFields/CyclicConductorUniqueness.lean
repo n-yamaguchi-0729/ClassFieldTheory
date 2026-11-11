@@ -5,6 +5,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicRayClassMaximality
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
 /-!
 # Uniqueness of maximal cyclic norm subgroups at a narrow finite conductor
@@ -20,20 +21,22 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v w
+
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
 
 private theorem cyclicConductorUniquenessIdeleClassIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 attribute [local instance] cyclicConductorUniquenessIdeleClassIsMulCommutative
 
 variable
-    {K L M : Type}
+    {K : Type u} {L : Type v} {M : Type w}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [Field M] [NumberField M] [Algebra K M]

@@ -10,8 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 # Sections of a module sheaf on two affine charts
@@ -20,6 +23,8 @@ A morphism to an affine base supplies the base-ring action on module sections.
 Restriction is linear for this action, and evaluation on two affine opens and their
 overlap gives the corresponding two-chart Cech section datum.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -38,25 +43,28 @@ variable {R : Type u} [CommRing R] {X : Scheme.{u}}
   Module.compHom Γ(M, U) (algebraMap R Γ(X, U))
 
 theorem isScalarTower_sections (c : X ⟶ Spec (.of R)) (M : X.Modules) (U : X.Opens) :
-    letI := algebraOfHom c U; letI := moduleSectionsOfHom c M U
-    IsScalarTower R Γ(X, U) Γ(M, U) :=
-  letI := algebraOfHom c U; letI := moduleSectionsOfHom c M U
-  IsScalarTower.of_algebraMap_smul fun _ _ => rfl
+    let : Algebra R Γ(X, U) := algebraOfHom c U
+    let : Module R Γ(M, U) := moduleSectionsOfHom c M U
+    IsScalarTower R Γ(X, U) Γ(M, U) := by
+  intro sharedAlgebra sharedModule
+  exact IsScalarTower.of_algebraMap_smul fun _ _ => rfl
 
 /-- Restriction of module sections, linear over the base ring through `c`. -/
 def restrictSections (c : X ⟶ Spec (.of R)) (M : X.Modules) {U V : X.Opens} (h : V ≤ U) :
-    letI := moduleSectionsOfHom c M U; letI := moduleSectionsOfHom c M V
-    Γ(M, U) →ₗ[R] Γ(M, V) :=
+    let : Module R Γ(M, U) := moduleSectionsOfHom c M U
+    let : Module R Γ(M, V) := moduleSectionsOfHom c M V
+    Γ(M, U) →ₗ[R] Γ(M, V) := by
   letI := algebraOfHom c U; letI := algebraOfHom c V
-  letI := moduleSectionsOfHom c M U; letI := moduleSectionsOfHom c M V
-  { toFun := fun x => M.presheaf.map (homOfLE h).op x
-    map_add' := fun x y => map_add _ x y
-    map_smul' := fun r x => by
-      change M.presheaf.map (homOfLE h).op ((algebraMap R Γ(X, U) r) • x)
-        = (algebraMap R Γ(X, V) r) • M.presheaf.map (homOfLE h).op x
-      rw [Scheme.Modules.map_smul]
-      congr 1
-      exact (restrictAlgHom c h).commutes r }
+  intro sourceModule targetModule
+  exact
+    { toFun := fun x => M.presheaf.map (homOfLE h).op x
+      map_add' := fun x y => map_add _ x y
+      map_smul' := fun r x => by
+        change M.presheaf.map (homOfLE h).op ((algebraMap R Γ(X, U) r) • x)
+          = (algebraMap R Γ(X, V) r) • M.presheaf.map (homOfLE h).op x
+        rw [Scheme.Modules.map_smul]
+        congr 1
+        exact (restrictAlgHom c h).commutes r }
 
 theorem restrictSections_apply (c : X ⟶ Spec (.of R)) (M : X.Modules) {U V : X.Opens}
     (h : V ≤ U) (x : Γ(M, U)) :

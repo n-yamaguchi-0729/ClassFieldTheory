@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsRayCongruent
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
-import Mathlib.Data.Finsupp.Order
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsRayCongruent
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
+public import Mathlib.Data.Finsupp.Order
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Projection between ideal-theoretic ray class groups
@@ -16,6 +18,8 @@ Enlarging a modulus strengthens its finite congruences and real positivity
 conditions. The induced inclusions of prime-to-modulus ideals and ray-principal
 ideals give the canonical quotient map from the larger modulus to the smaller.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -88,14 +92,16 @@ private theorem rayCongruent_of_le
   · intro v hv
     exact hx.2 v (hmn.2 hv)
 
-private theorem rayPrimeToIdeals_antitone
+/-- Enlarging the modulus shrinks the subgroup of ideals prime to it. -/
+theorem rayPrimeToIdeals_antitone
     {K : Type u} [Field K] [NumberField K]
     {m n : RayClassModulus K} (hmn : m ≤ n) :
     rayClassPrimeToIdeals n ≤ rayClassPrimeToIdeals m := by
   intro I hI v hv
   exact hI v (Finsupp.support_mono hmn.1 hv)
 
-private theorem rayPrincipalIdeals_antitone
+/-- Enlarging the modulus shrinks the ray principal ideal subgroup. -/
+theorem rayPrincipalIdeals_antitone
     {K : Type u} [Field K] [NumberField K]
     {m n : RayClassModulus K} (hmn : m ≤ n) :
     rayPrincipalIdealSubgroup n ≤ rayPrincipalIdealSubgroup m := by
@@ -123,5 +129,28 @@ def rayClassIdealModulusProjection
   change (I : NumberFieldFractionalIdealGroup K) ∈
     rayPrincipalIdealSubgroup m
   exact rayPrincipalIdeals_antitone hmn hI'
+
+/-- Reduction along the identity modulus is the identity on the original
+ideal-theoretic ray class group. -/
+theorem rayClassIdealModulusProjection_refl
+    (K : Type u) [Field K] [NumberField K] (m : RayClassModulus K) :
+    rayClassIdealModulusProjection K (le_refl m) = MonoidHom.id (RayClassGroup m) := by
+  apply MonoidHom.ext
+  intro x
+  obtain ⟨I, rfl⟩ := QuotientGroup.mk'_surjective
+    (rayPrincipalIdealSubgroupInPrimeTo m) x
+  rfl
+
+/-- Successive reductions retain the same original ideal representative. -/
+theorem rayClassIdealModulusProjection_trans
+    (K : Type u) [Field K] [NumberField K]
+    {m n p : RayClassModulus K} (hmn : m ≤ n) (hnp : n ≤ p) :
+    (rayClassIdealModulusProjection K hmn).comp (rayClassIdealModulusProjection K hnp) =
+      rayClassIdealModulusProjection K (hmn.trans hnp) := by
+  apply MonoidHom.ext
+  intro x
+  obtain ⟨I, rfl⟩ := QuotientGroup.mk'_surjective
+    (rayPrincipalIdealSubgroupInPrimeTo p) x
+  rfl
 
 end ClassFieldTheory

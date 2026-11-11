@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
-import Nyll.ValuedFieldTheory.LocalField.Unramified.BasicInvariants
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.BasicInvariants
 
 /-!
 # Ramification index in valued-field towers
@@ -13,16 +15,18 @@ import Nyll.ValuedFieldTheory.LocalField.Unramified.BasicInvariants
 The generic tower and embedding-monotonicity lemmas extracted from the tame adapter.
 -/
 
+@[expose] public section
+
 noncomputable section
 
-universe u
+universe u v w
 
 namespace AlgebraicNumberTheory
 namespace Valuations
 
 section RamificationIndexTower
 
-variable {K M L : Type u} [Field K] [Field M] [Field L]
+variable {K : Type u} {M : Type v} {L : Type w} [Field K] [Field M] [Field L]
 variable [Algebra K M] [Algebra M L]
 
 /-- The actual value-group ramification index is multiplicative in exact
@@ -92,7 +96,7 @@ theorem exponentialRamificationIndex_le_in_tower
 extensions.  The embedding supplies the relative algebra and scalar-tower
 structures used by `exponentialRamificationIndex_le_in_tower`. -/
 theorem exponentialRamificationIndex_le_of_algHom
-    {K E D : Type} [Field K] [Field E] [Field D]
+    {K : Type u} {E : Type v} {D : Type w} [Field K] [Field E] [Field D]
     [Algebra K E] [Algebra K D]
     [FiniteDimensional K E] [FiniteDimensional K D]
     (i : E →ₐ[K] D)

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 
 /-!
 # Completed unit H² over a specified base place
@@ -14,6 +16,10 @@ The base place can be identified by a supplied restriction equality. This uses
 the existing completion map over that equality and permits compatible scalar
 towers when several intermediate fields occur.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -24,7 +30,9 @@ namespace FunctionField.IdeleGroup
 
 open ClassFieldTower.Cohomology
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+section FiniteGalois
+
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
 
@@ -39,6 +47,14 @@ theorem completionFiniteGaloisOver [HasPrincipalDivisors k K] [HasPrincipalDivis
   have hg : IsGalois (w.restrict K).adicCompletion w.adicCompletion := inferInstance
   subst v
   exact ⟨hf, hg⟩
+
+end FiniteGalois
+
+section NativeCohomology
+
+variable {k K L : Type} [Field k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [FiniteDimensional K L] [IsGalois K L]
 
 /-- The actual unit localization map with the base place identified by its restriction. -/
 def completionUnitsH2MapOver (v : Place k K) (w : Place k L) (hw : w.restrict K = v) :
@@ -71,5 +87,7 @@ theorem completionUnitsH2MapOver_eq_inflation_restriction
         finiteGaloisTowerUnitsH2Restriction K v.adicCompletion w.adicCompletion := by
   subst v
   rfl
+
+end NativeCohomology
 
 end FunctionField.IdeleGroup

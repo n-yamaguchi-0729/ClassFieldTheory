@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Tilde
-import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Tilde
+public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
 /-!
 Base change of module sections on affine schemes when the canonical tilde-to-module comparison
 is an isomorphism.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

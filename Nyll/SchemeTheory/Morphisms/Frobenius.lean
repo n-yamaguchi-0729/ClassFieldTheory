@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.Algebra.Group.Commute.Units
-import Mathlib.RingTheory.Ideal.Operations
+module
+
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.Algebra.Group.Commute.Units
+public import Mathlib.RingTheory.Ideal.Operations
 
 /-!
 # Frobenius of schemes over finite fields
@@ -17,6 +19,8 @@ homomorphism on each ring of sections. The germ formula identifies its stalk
 map with the same power map and proves that it is local. The construction
 also covers the zero ring of sections on the empty open.
 -/
+
+@[expose] public section
 
 noncomputable section
 

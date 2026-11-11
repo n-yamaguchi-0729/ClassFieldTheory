@@ -10,73 +10,77 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Algebra.Defs
-import Mathlib.Algebra.Category.Ring.Basic
-import Mathlib.Algebra.Group.Units.Basic
-import Mathlib.Algebra.Group.Units.Defs
-import Mathlib.Algebra.GroupWithZero.Units.Basic
-import Mathlib.Algebra.Module.Equiv.Basic
-import Mathlib.Algebra.Module.LinearMap.Defs
-import Mathlib.Algebra.Module.Projective
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
-import Mathlib.AlgebraicGeometry.Morphisms.Finite
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Morphisms.Integral
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
-import Mathlib.AlgebraicGeometry.Morphisms.RingHomProperties
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyClosed
-import Mathlib.AlgebraicGeometry.Morphisms.UniversallyInjective
-import Mathlib.AlgebraicGeometry.OpenImmersion
-import Mathlib.AlgebraicGeometry.PullbackCarrier
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.CategoryTheory.Category.Basic
-import Mathlib.CategoryTheory.Category.Preorder
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
-import Mathlib.Data.Finset.Defs
-import Mathlib.Data.Fintype.Defs
-import Mathlib.Data.Set.Basic
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.Set.Lattice.Bounded
-import Mathlib.LinearAlgebra.Charpoly.BaseChange
-import Mathlib.LinearAlgebra.Determinant
-import Mathlib.LinearAlgebra.FreeModule.Basic
-import Mathlib.LinearAlgebra.StdBasis
-import Mathlib.LinearAlgebra.TensorProduct.Basis
-import Mathlib.LinearAlgebra.TensorProduct.Defs
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.Logic.Equiv.Defs
-import Mathlib.RingTheory.FinitePresentation
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
-import Mathlib.RingTheory.Flat.EquationalCriterion
-import Mathlib.RingTheory.Ideal.Lattice
-import Mathlib.RingTheory.Ideal.Maximal
-import Mathlib.RingTheory.Ideal.Nonunits
-import Mathlib.RingTheory.Ideal.Operations
-import Mathlib.RingTheory.LocalRing.ResidueField.Defs
-import Mathlib.RingTheory.LocalRing.ResidueField.Fiber
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
-import Mathlib.RingTheory.RingHom.Flat
-import Mathlib.RingTheory.Spectrum.Prime.Basic
-import Mathlib.RingTheory.Spectrum.Prime.Defs
-import Mathlib.RingTheory.Spectrum.Prime.RingHom
-import Mathlib.RingTheory.Spectrum.Prime.Topology
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Set
-import Mathlib.Topology.Basic
-import Mathlib.Topology.Closure
-import Mathlib.Topology.Continuous
-import Mathlib.Topology.Sets.Opens
+module
+
+public import Mathlib.Algebra.Algebra.Defs
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Mathlib.Algebra.Group.Units.Basic
+public import Mathlib.Algebra.Group.Units.Defs
+public import Mathlib.Algebra.GroupWithZero.Units.Basic
+public import Mathlib.Algebra.Module.Equiv.Basic
+public import Mathlib.Algebra.Module.LinearMap.Defs
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
+public import Mathlib.AlgebraicGeometry.Morphisms.Finite
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Morphisms.Integral
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+public import Mathlib.AlgebraicGeometry.Morphisms.RingHomProperties
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyClosed
+public import Mathlib.AlgebraicGeometry.Morphisms.UniversallyInjective
+public import Mathlib.AlgebraicGeometry.OpenImmersion
+public import Mathlib.AlgebraicGeometry.PullbackCarrier
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.CategoryTheory.Category.Basic
+public import Mathlib.CategoryTheory.Category.Preorder
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.HasPullback
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Data.Fintype.Defs
+public import Mathlib.Data.Set.Basic
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.Set.Lattice.Bounded
+public import Mathlib.LinearAlgebra.Charpoly.BaseChange
+public import Mathlib.LinearAlgebra.Determinant
+public import Mathlib.LinearAlgebra.FreeModule.Basic
+public import Mathlib.LinearAlgebra.StdBasis
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
+public import Mathlib.LinearAlgebra.TensorProduct.Defs
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.Logic.Equiv.Defs
+public import Mathlib.RingTheory.FinitePresentation
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+public import Mathlib.RingTheory.Flat.EquationalCriterion
+public import Mathlib.RingTheory.Ideal.Lattice
+public import Mathlib.RingTheory.Ideal.Maximal
+public import Mathlib.RingTheory.Ideal.Nonunits
+public import Mathlib.RingTheory.Ideal.Operations
+public import Mathlib.RingTheory.LocalRing.ResidueField.Defs
+public import Mathlib.RingTheory.LocalRing.ResidueField.Fiber
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+public import Mathlib.RingTheory.RingHom.Flat
+public import Mathlib.RingTheory.Spectrum.Prime.Basic
+public import Mathlib.RingTheory.Spectrum.Prime.Defs
+public import Mathlib.RingTheory.Spectrum.Prime.RingHom
+public import Mathlib.RingTheory.Spectrum.Prime.Topology
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Set
+public import Mathlib.Topology.Basic
+public import Mathlib.Topology.Closure
+public import Mathlib.Topology.Continuous
+public import Mathlib.Topology.Sets.Opens
 
 /-!
 # Scheme exists invariant is Affine Open of finite Locally Free equivalence Relation
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

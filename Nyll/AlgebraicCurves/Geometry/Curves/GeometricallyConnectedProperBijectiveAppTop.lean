@@ -10,33 +10,37 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Connected
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Pullbacks
-import Mathlib.Algebra.Category.Ring.Constructions
-import Mathlib.FieldTheory.AlgebraicClosure
-import Mathlib.FieldTheory.PurelyInseparable.Basic
-import Mathlib.FieldTheory.Minpoly.Basic
-import Mathlib.FieldTheory.Separable
-import Mathlib.RingTheory.Idempotents
-import Mathlib.RingTheory.Artinian.Ring
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Noetherian.Nilpotent
-import Mathlib.RingTheory.TensorProduct.Nontrivial
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.Tactic.Ring
-import Mathlib.Tactic.Convert
-import Mathlib.Tactic.Push
-import Nyll.AlgebraicCurves.Geometry.Schemes.Points.IsPreconnectedPreimageClosedPoint
-import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.IsPushoutAppTopPullbackFstAppTopPullbackSnd
-import Nyll.AlgebraicCurves.Geometry.Schemes.Sections.FiniteAppTopProper
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Connected
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Pullbacks
+public import Mathlib.Algebra.Category.Ring.Constructions
+public import Mathlib.FieldTheory.AlgebraicClosure
+public import Mathlib.FieldTheory.PurelyInseparable.Basic
+public import Mathlib.FieldTheory.Minpoly.Basic
+public import Mathlib.FieldTheory.Separable
+public import Mathlib.RingTheory.Idempotents
+public import Mathlib.RingTheory.Artinian.Ring
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Noetherian.Nilpotent
+public import Mathlib.RingTheory.TensorProduct.Nontrivial
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.Tactic.Ring
+public import Mathlib.Tactic.Convert
+public import Mathlib.Tactic.Push
+public import Nyll.SchemeTheory.Fibers.ClosedPointConnected
+public import Nyll.SchemeTheory.BaseChange.AffineGlobalSections
+public import Nyll.SchemeTheory.Morphisms.ProperGlobalSectionsFinite
 
 /-!
 # Geometrically connected proper schemes from bijective global sections
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -179,7 +183,8 @@ theorem trivialIdem_of_ker_nil (f : R →+* S)
     obtain ⟨n, hn⟩ := hker e h0
     rw [← he.pow_succ_eq n, pow_succ, hn, zero_mul]
   · right
-    have h1' : (1 - e) ∈ RingHom.ker f := by simp [RingHom.mem_ker, map_sub, h1]
+    have h1' : (1 - e) ∈ RingHom.ker f := by
+      rw [RingHom.mem_ker, map_sub, map_one, h1, sub_self]
     obtain ⟨n, hn⟩ := hker _ h1'
     have := (he.one_sub).pow_succ_eq n
     rw [pow_succ, hn, zero_mul] at this

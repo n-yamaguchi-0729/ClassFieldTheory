@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
-import Mathlib.Algebra.Algebra.Tower
-import Mathlib.Algebra.GroupWithZero.Action.End
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
+public import Mathlib.Algebra.Algebra.Tower
+public import Mathlib.Algebra.GroupWithZero.Action.End
 
 /-!
 # The extension Galois action on function-field ideles
@@ -15,6 +17,8 @@ Restricting scalars and then using the completed semilinear action gives the
 canonical action of the extension automorphism group. The action uses the
 existing places, completed field maps, and principal-idele quotient.
 -/
+
+@[expose] public section
 
 noncomputable section
 

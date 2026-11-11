@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
-import Nyll.AlgebraicCurves.Cohomology.Cech.ProjectiveSpace.GradedModuleHomSecMapBijective
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechGradedModule
+public import Nyll.AlgebraicCurves.Cohomology.Cech.ProjectiveSpace.GradedModuleHomSecMapBijective
 
 /-!
 # Proj Space Cech Graded Module Hom cochain Map bijective of saturated
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

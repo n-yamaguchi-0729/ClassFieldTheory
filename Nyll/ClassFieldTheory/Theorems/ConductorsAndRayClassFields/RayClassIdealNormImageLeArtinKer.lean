@@ -20,12 +20,14 @@ open scoped NumberField
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- For finite abelian reciprocity data, the image of genuine ideal norms
 in the ray class group lies in the normalized Artin kernel. -/
 theorem rayClassIdealNormImage_le_artinKer
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]

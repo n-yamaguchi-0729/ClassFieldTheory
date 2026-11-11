@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.Tactic.Ring.RingNF
 
 /-!
 Double complexes, their two spectral-sequence pages and bounded convergence data.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -10,13 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Mathlib.LinearAlgebra.TensorProduct.Prod
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
 /-!
 Scalar-extension equivalences of affine-chart rings and the induced two-chart Cech kernel and
 cokernel maps.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -47,20 +52,20 @@ variable (A : Type u) [CommRing A] [Algebra R A]
 /-- The scalar extension of the scheme along the affine base map. -/
 abbrev XA : Scheme.{u} := Limits.pullback c (specMap R A)
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.AffineBaseChange.fst : XA c A
+/-- The base-change projection to the original scheme. -/
+abbrev fst : XA c A
     ⟶ X := Limits.pullback.fst c (specMap R A)
-open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.AffineBaseChange
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.AffineBaseChange.snd : XA c A
+/-- The base-change projection to the spectrum of the new coefficient algebra. -/
+abbrev snd : XA c A
     ⟶ Spec (.of A) := Limits.pullback.snd c (specMap R A)
 
-open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.AffineBaseChange
 variable (U : X.Opens) (hU : IsAffineOpen U)
 
 theorem specMap_algebraMap_eq :
-    letI := algebraOfHom c U
+    let := algebraOfHom c U
     Spec.map (CommRingCat.ofHom (algebraMap R Γ(X, U))) = hU.fromSpec ≫ c := by
-  let := algebraOfHom c U
+  intro sharedOwner1
   have halg : (algebraMap R Γ(X, U)) = ((Scheme.ΓSpecIso (.of R)).inv ≫ c.appLE ⊤ U le_top).hom
     := rfl
   rw [halg, CommRingCat.ofHom_hom, Spec.map_comp, ← Scheme.isoSpec_Spec_inv, ←
@@ -103,24 +108,24 @@ theorem sigma_apply (x : letI := algebraOfHom c U; Γ(X, U) ⊗[R] A) :
   rfl
 
 theorem iso_hom_comp_sndLeg :
-    letI := algebraOfHom c U
+    let := algebraOfHom c U
     ((fst c A) ⁻¹ᵁ U).ι ≫ snd c A
       = (pullbackAffineOpenIsoSpecTensor c A U hU).hom
         ≫ Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.includeRight : A →ₐ[R] Γ(X, U) ⊗[R]
           A)) := by
-  let := algebraOfHom c U
+  intro sharedOwner1
   rw [pullbackAffineOpenIsoSpecTensor, ← pullbackSpecIso_inv_snd R Γ(X, U) A]
   simp only [Iso.trans_hom, Iso.symm_hom, asIso_hom, Category.assoc, Iso.hom_inv_id_assoc,
     pullback.lift_snd, Category.comp_id, pullbackRightPullbackFstIso_hom_snd,
     pullbackSymmetry_hom_comp_snd_assoc, pullbackRestrictIsoRestrict_inv_fst_assoc]
 
 theorem iso_hom_comp_fstLeg :
-    letI := algebraOfHom c U
+    let := algebraOfHom c U
     (pullbackAffineOpenIsoSpecTensor c A U hU).hom
         ≫ Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.includeLeftRingHom : Γ(X, U) →+*
           Γ(X, U) ⊗[R] A))
       = ((fst c A) ∣_ U) ≫ hU.isoSpec.hom := by
-  let := algebraOfHom c U
+  intro sharedOwner1
   rw [pullbackAffineOpenIsoSpecTensor, ← pullbackSpecIso_inv_fst R Γ(X, U) A]
   simp only [Iso.trans_hom, Iso.symm_hom, asIso_hom, Category.assoc, Iso.hom_inv_id_assoc,
     pullback.lift_fst, pullbackRightPullbackFstIso_hom_fst_assoc,
@@ -148,9 +153,9 @@ theorem topIso_morphismRestrict_appTop_topIso {Y Z : Scheme.{u}} (g : Y ⟶ Z) (
   exact (Scheme.Hom.app_eq_appLE g).symm
 
 theorem sigma_tmul_one (s : Γ(X, U)) :
-    letI := algebraOfHom c U
+    let := algebraOfHom c U
     sigma c A U hU (s ⊗ₜ[R] (1 : A)) = ((fst c A).app U).hom s := by
-  let := algebraOfHom c U
+  intro sharedOwner1
   rw [sigma_apply]
   have hiL : s ⊗ₜ[R] (1 : A)
       = (CommRingCat.ofHom (Algebra.TensorProduct.includeLeftRingHom : Γ(X, U) →+* Γ(X, U) ⊗[R]
@@ -165,11 +170,11 @@ theorem sigma_tmul_one (s : Γ(X, U)) :
   rw [hΓ, Category.id_comp, Category.assoc, topIso_morphismRestrict_appTop_topIso]
 
 theorem sigma_one_tmul (a : A) :
-    letI := algebraOfHom c U
+    let := algebraOfHom c U
     sigma c A U hU ((1 : Γ(X, U)) ⊗ₜ[R] a)
       = ((XA c A).presheaf.map (homOfLE (le_top : (fst c A) ⁻¹ᵁ U ≤ ⊤)).op).hom
           (((Scheme.ΓSpecIso (.of A)).inv ≫ (snd c A).appTop).hom a) := by
-  let := algebraOfHom c U
+  intro sharedOwner1
   rw [sigma_apply]
   have hiR : (1 : Γ(X, U)) ⊗ₜ[R] a
       = (CommRingCat.ofHom (R := A) (S := Γ(X, U) ⊗[R] A)
@@ -248,14 +253,14 @@ variable (A : Type u) [CommRing A] [Algebra R A]
 /-- The scalar extension of the scheme along the affine base map. -/
 abbrev XA : Scheme.{u} := Limits.pullback c (specMap R A)
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.CechBaseChange.fst : XA c A ⟶
+/-- The base-change projection to the original scheme. -/
+abbrev fst : XA c A ⟶
     X := Limits.pullback.fst c (specMap R A)
-open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.CechBaseChange
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.CechBaseChange.snd : XA c A ⟶
+/-- The base-change projection to the spectrum of the new coefficient algebra. -/
+abbrev snd : XA c A ⟶
     Spec (.of A) := Limits.pullback.snd c (specMap R A)
 
-open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.CechBaseChange
 
 theorem restrict_compat {U V : X.Opens} (hVU : V ≤ U)
     (eU : letI := algebraOfHom c U; letI := algebraOfHom (snd c A) ((fst c A) ⁻¹ᵁ U)

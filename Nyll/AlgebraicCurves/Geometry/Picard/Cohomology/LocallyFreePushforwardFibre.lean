@@ -10,24 +10,28 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
-import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardFibreFiniteType
-import Nyll.SchemeTheory.Modules.Functoriality.LocallyFreePushforwardPullback
-import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
+public import Nyll.AlgebraicCurves.Geometry.Picard.Cohomology.LocallyFreePushforwardFibreFiniteType
+public import Nyll.SchemeTheory.Modules.Functoriality.LocallyFreePushforwardPullback
+public import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverPullbackSndSpecMapAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverFiniteTypeAlgebraOfHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivSectionsOf
 
 /-!
 # Relative Picard varieties and fibre cohomology
 
 Deduce local freeness of a pushforward line bundle from its fibre cohomology.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

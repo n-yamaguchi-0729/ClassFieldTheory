@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Construction.Construction
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Models.Charts.ProperSmoothPlacesAffineCoverGlued
+module
 
-import Mathlib.Algebra.Field.Shrink
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Construction.Construction
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Models.Charts.ProperSmoothPlacesAffineCoverGlued
+
+public import Mathlib.Algebra.Field.Shrink
 
 /-!
 # Curve Model nonempty of perfect Field
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

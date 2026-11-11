@@ -4,16 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelian
-import Nyll.ValuedFieldTheory.Ramification.Filtration
-import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
+module
+
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFiltered
+public import Nyll.ValuedFieldTheory.Ramification.Filtration
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
 
 /-!
 # Higher units and ramification under the function-field local symbol
@@ -24,6 +26,10 @@ the existing higher units onto the existing upper ramification groups.
 The same actual local norm kernel gives the minimal conductor cutoff.
 -/
 
+@[expose] public section
+
+universe u v w
+
 open scoped AlgebraicCurve.Place
 
 noncomputable section
@@ -32,7 +38,9 @@ namespace FunctionField
 
 open AlgebraicCurve
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+section UniverseFiltered
+
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -55,7 +63,7 @@ theorem localDecompositionArtin_higherUnits_completion (w : Place k L) (n : ℕ)
       ((RayClass.localHigherUnitGroup (w.restrict K) n).map
         (localDecompositionArtin (K := K) w).toMonoidHom).map
           (IdeleGroup.decompositionCompletionEquiv (K := K) w).toMonoidHom =
-        LocalClassFieldTheory.artinPrincipalUnitGroup
+        LocalClassFieldTheory.Universe.artinPrincipalUnitGroup
           (w.restrict K).adicCompletion w.adicCompletion n := by
     rw [Subgroup.map_map]
     apply Subgroup.ext
@@ -63,18 +71,28 @@ theorem localDecompositionArtin_higherUnits_completion (w : Place k L) (n : ℕ)
     constructor
     · rintro ⟨x, hx, hσ⟩
       refine ⟨x⁻¹, (RayClass.localHigherUnitGroup (w.restrict K) n).inv_mem hx, ?_⟩
-      exact (localDecompositionArtin_completion (K := K) w x).symm.trans hσ
+      exact (localDecompositionArtin_completion_universe (K := K) w x).symm.trans hσ
     · rintro ⟨x, hx, hσ⟩
       refine ⟨x⁻¹, (RayClass.localHigherUnitGroup (w.restrict K) n).inv_mem hx, ?_⟩
       change IdeleGroup.decompositionCompletionEquiv (K := K) w
         (localDecompositionArtin (K := K) w x⁻¹) = σ
-      rw [localDecompositionArtin_completion, inv_inv]
+      rw [localDecompositionArtin_completion_universe, inv_inv]
       exact hσ
   rw [hmap]
-  have hfiltered := LocalClassFieldTheory.finiteAbelian_filteredLocalReciprocity
+  have hfiltered := LocalClassFieldTheory.Universe.finiteAbelian_filteredLocalReciprocity
     (w.restrict K).adicCompletion w.adicCompletion (n : ℝ) (Nat.cast_nonneg n)
-  simpa only [LocalClassFieldTheory.artinPrincipalUnitStepGroup,
+  simpa only [LocalClassFieldTheory.Universe.artinPrincipalUnitStepGroup,
     RamificationTheory.natCeilStepFiltration, Nat.ceil_natCast] using hfiltered
+
+end UniverseFiltered
+
+section UniverseConductor
+
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
 
 /-- The conductor exponent of the actual completed extension is the least
 depth on which the function-field local Artin symbol is trivial. -/
@@ -94,5 +112,7 @@ theorem localConductorExponent_le_iff_localArtin (w : Place k L) (n : ℕ) :
     exact (localArtin_eq_one_iff (K := K) w x).mpr (h hx)
   · intro h x hx
     exact (localArtin_eq_one_iff (K := K) w x).mp (h x hx)
+
+end UniverseConductor
 
 end FunctionField

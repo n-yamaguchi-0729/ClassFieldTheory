@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseEmbedding
-import Nyll.AlgebraicCurves.Models.Points.AlgEquivPointPlaceCompHomEqAlgAutSmulPointPlace
-import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearTower
-import Nyll.AlgebraicCurves.Models.Construction.OfSmoothProperCurve
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.BaseEmbedding
+public import Nyll.AlgebraicCurves.Models.Points.AlgEquivPointPlaceCompHomEqAlgAutSmulPointPlace
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearTower
+public import Nyll.AlgebraicCurves.Models.Construction.OfSmoothProperCurve
 
 /-!
 # Actual function-field embeddings in constant towers
@@ -16,6 +18,10 @@ The embeddings coming from the two curve projections compose to the embedding
 from the direct geometric base change. This follows from the actual pullback
 square and functoriality on generic stalks.
 -/
+
+@[expose] public section
+
+universe u v
 
 noncomputable section
 
@@ -29,12 +35,12 @@ open AlgebraicCurve.CurveModel.ModelIndepSol
 
 namespace AlgebraicCurve.CurveModel
 
-variable {k Ω F : Type} [Field k] [Field Ω] [Algebra k Ω] [Field F] [Algebra Ω F]
-    (M : CurveModel Ω F) {C : Scheme} [IsIntegral C]
+variable {k Ω : Type u} {F : Type v} [Field k] [Field Ω] [Algebra k Ω] [Field F] [Algebra Ω F]
+    (M : CurveModel Ω F) {C : Scheme.{u}} [IsIntegral C]
     (c : C ⟶ Spec (CommRingCat.of k)) [IsProper c]
     [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
     (e : M.C ≅ pullback c (specMap k Ω))
-    (E : Type) [Field E] [Algebra k E] [Algebra E Ω] [IsScalarTower k E Ω]
+    (E : Type u) [Field E] [Algebra k E] [Algebra E Ω] [IsScalarTower k E Ω]
 
 local notation "CE" => pullback c (specMap k E)
 local notation "cE" => pullback.snd c (specMap k E)

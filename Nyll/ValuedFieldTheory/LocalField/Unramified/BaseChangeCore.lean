@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Unramified.HenselReduction
-import Nyll.ValuedFieldTheory.LocalField.Unramified.Separable
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.HenselReduction
+public import Nyll.ValuedFieldTheory.LocalField.Unramified.Separable
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
+public import Nyll.ValuedFieldTheory.Valuation.Henselian.Core
 
 /-!
 # the unramified base-change theorem: primitive Hensel base-change core
@@ -16,6 +20,8 @@ a finite unramified extension.  The proof takes the actual integral minimal
 polynomial, proves its reduction irreducible by Hensel's lemma, and compares
 the resulting residue subfield degree with the fundamental inequality.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -48,29 +54,22 @@ private theorem primitive_separable_integral_model_core
     let V := LubinTate.Valuations.exponentialValuationSubring v
     let W := LubinTate.Valuations.exponentialValuationSubring w
     let i := unramifiedValuationRingValuationRingMap v w hExt
-    letI : IsLocalHom i :=
+    let : IsLocalHom i :=
       unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
-    letI : Algebra V W := i.toAlgebra
-    letI : Algebra (IsLocalRing.ResidueField V)
+    let : Algebra V W := i.toAlgebra
+    let : Algebra (IsLocalRing.ResidueField V)
         (IsLocalRing.ResidueField W) :=
       (IsLocalRing.ResidueField.map i).toAlgebra
     FiniteUnramifiedExtension v w hExt ∧
       IntermediateField.adjoin (IsLocalRing.ResidueField V)
           ({IsLocalRing.residue W a} :
             Set (IsLocalRing.ResidueField W)) = ⊤ := by
+  intro V W i localHom algVW residueAlgebra
   classical
   let Vv := LubinTate.Valuations.exponentialValuationSubringAsValuationSubring v
   let Wv := LubinTate.Valuations.exponentialValuationSubringAsValuationSubring w
-  let V := LubinTate.Valuations.exponentialValuationSubring v
-  let W := LubinTate.Valuations.exponentialValuationSubring w
-  let i := unramifiedValuationRingValuationRingMap v w hExt
-  let : IsLocalHom i :=
-    unramifiedValuationRingValuationRingMap_isLocalHom v w hExt
-  let algVW : Algebra V W := i.toAlgebra
-  let : Algebra V W := algVW
   let algVL : Algebra V L :=
     ((algebraMap K L).comp V.subtype).toAlgebra
-  let : Algebra V L := algVL
   let : SMul V L := algVL.toSMul
   let : SMul V W := algVW.toSMul
   let : Module V L := algVL.toModule
@@ -81,7 +80,6 @@ private theorem primitive_separable_integral_model_core
     (R := V) (S := W) (A := L) (by intro; rfl)
   let k := IsLocalRing.ResidueField V
   let ell := IsLocalRing.ResidueField W
-  let : Algebra k ell := (IsLocalRing.ResidueField.map i).toAlgebra
   let : IsFractionRing V K := by
     change IsFractionRing Vv K
     have hfr : IsFractionRing Vv.valuation.valuationSubring K :=

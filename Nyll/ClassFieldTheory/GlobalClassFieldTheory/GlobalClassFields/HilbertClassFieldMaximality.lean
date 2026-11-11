@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
 
 /-!
 # Maximality criteria for Hilbert class fields
@@ -18,6 +23,10 @@ extension has the canonical Hilbert reciprocity quotient.
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField
 
 noncomputable section
@@ -27,15 +36,16 @@ namespace GlobalClassFields
 
 open NumberField
 
-private theorem hilbertClassFieldMaximalityIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+/-- Canonical idele-class commutativity supplies normality for Hilbert norm quotients. -/
+theorem hilbertClassFieldMaximalityIdeleClassGroupIsMulCommutative
+    {F : Type*} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 attribute [local instance] hilbertClassFieldMaximalityIdeleClassGroupIsMulCommutative
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -58,11 +68,6 @@ private instance bigHilbertNormQuotient_finite :
     (RayClass.NarrowClassGroup K)
     (bigHilbertClassFieldQuotientEquivNarrowClassGroup
       (K := K)).symm.toEquiv
-
-private instance bigHilbertNormSubgroup_finiteIndex :
-    (bigHilbertClassFieldNormSubgroup
-      (K := K)).FiniteIndex :=
-  Subgroup.finiteIndex_of_finite_quotient
 
 /-- A cyclic extension unramified at all finite places has the big
 Hilbert norm subgroup exactly when its degree is the order of the
@@ -376,7 +381,7 @@ def maximalEverywhereUnramifiedCyclicNormQuotientEquivClassGroup
 class number determine the same idèle-class norm subgroup.  This is
 uniqueness of the big Hilbert class field at the norm-subgroup level. -/
 theorem maximalFiniteUnramifiedCyclicNormRanges_eq
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M] [Algebra K M]
     [FiniteDimensional K M] [IsGalois K M]
     [IsCyclic (M ≃ₐ[K] M)]
@@ -409,7 +414,7 @@ ordinary class number determine the same idèle-class norm subgroup.
 This is uniqueness of the small Hilbert class field at the
 norm-subgroup level. -/
 theorem maximalEverywhereUnramifiedCyclicNormRanges_eq
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M] [Algebra K M]
     [FiniteDimensional K M] [IsGalois K M]
     [IsCyclic (M ≃ₐ[K] M)]
@@ -444,7 +449,7 @@ class number has no proper nested finite-unramified cyclic
 overextension over the same base field. -/
 theorem
     maximalFiniteUnramifiedCyclicExtension_relativeDegree_eq_one
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M]
     [Algebra L M] [Algebra K M] [IsScalarTower K L M]
     [FiniteDimensional L M] [FiniteDimensional K M]
@@ -481,7 +486,7 @@ ordinary class number has no proper nested everywhere-unramified cyclic
 overextension over the same base field. -/
 theorem
     maximalEverywhereUnramifiedCyclicExtension_relativeDegree_eq_one
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M]
     [Algebra L M] [Algebra K M] [IsScalarTower K L M]
     [FiniteDimensional L M] [FiniteDimensional K M]
@@ -518,7 +523,7 @@ omit [IsCyclic (L ≃ₐ[K] L)] in
 must ramify at some finite place of the base field. -/
 theorem
     properCyclicOverextension_of_maximalFiniteUnramifiedExtension_has_ramifiedFinitePlace
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M]
     [Algebra L M] [Algebra K M] [IsScalarTower K L M]
     [FiniteDimensional L M] [FiniteDimensional K M]
@@ -543,7 +548,7 @@ place and lies above an ordinary-class-degree extension must ramify at
 some finite place of the base field. -/
 theorem
     properCyclicOverextension_of_maximalEverywhereUnramifiedExtension_has_ramifiedFinitePlace
-    {M : Type}
+    {M : Type w}
     [Field M] [NumberField M]
     [Algebra L M] [Algebra K M] [IsScalarTower K L M]
     [FiniteDimensional L M] [FiniteDimensional K M]

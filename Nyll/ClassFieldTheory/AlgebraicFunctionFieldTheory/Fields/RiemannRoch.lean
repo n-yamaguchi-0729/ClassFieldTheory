@@ -13,10 +13,12 @@ Upstream per-file ATTRIBUTION:
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Rational.SeparatingRationalPresentation
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusBoundedIndexFinite
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncIndexOfSpecialtyFinite
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Rational.SeparatingRationalPresentation
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusBoundedIndexFinite
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncIndexOfSpecialtyFinite
 
 /-!
 # Riemann–Roch bounds independent of the chosen rational presentation
@@ -25,6 +27,8 @@ The shared genus witness used by strong approximation also controls
 bounded Artin–Schreier parameter spaces. Perfectness supplies a separating
 presentation internally.
 -/
+
+@[expose] public section
 
 open AlgebraicCurve
 

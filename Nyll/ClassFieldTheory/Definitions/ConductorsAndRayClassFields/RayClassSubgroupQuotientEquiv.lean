@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # The quotient induced by a ray-class Artin map
@@ -13,6 +15,8 @@ import Mathlib.GroupTheory.QuotientGroup.Basic
 The prescribed subgroup is identified with the Artin kernel before applying
 the first isomorphism theorem.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

@@ -10,15 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsoSectionsOfLinearEquiv
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageSectionsOfBaseChangeEquiv
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseChangeIsosStructureSheaf
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsoSectionsOfLinearEquiv
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageSectionsOfBaseChangeEquiv
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseChangeIsosStructureSheaf
 
 /-!
 # Descending a line-bundle comparison across quotient charts
@@ -26,6 +28,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseC
 Compatible quotient-ring and section comparisons on a two-affine-open cover identify the
 pullback of a lifted invertible module with the original module after base change.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -101,10 +105,10 @@ theorem chartQuotEquiv_exists (hJI : J = I.map (algebraMap B A))
     (eS : (B ⧸ I) ⊗[B] ML ≃ₗ[B ⧸ I] V)
     (heSs : ∀ (s : A) (m : ML), eS ((1 : B ⧸ I) ⊗ₜ[B] (s • m)) = φ (Ideal.Quotient.mk J s) • eS
         ((1 : B ⧸ I) ⊗ₜ[B] m)) :
-    letI := Module.compHom V φ.toRingHom
+    let := Module.compHom V φ.toRingHom
     ∃ cq : (A ⧸ J) ⊗[A] ML ≃ₗ[A ⧸ J] V, ∀ m : ML, cq ((1 : A ⧸ J) ⊗ₜ[A] m) = eS ((1 : B ⧸ I)
         ⊗ₜ[B] m) := by
-  let := Module.compHom V φ.toRingHom
+  intro sharedOwner1
   let instAV : Module A V := Module.compHom V (φ.toRingHom.comp (Ideal.Quotient.mk J : A →+* A ⧸ J))
   have : IsScalarTower A (A ⧸ J) V := IsScalarTower.of_algebraMap_smul (fun _ _ => rfl)
   let u : ML →ₗ[A] V :=
@@ -252,13 +256,13 @@ theorem nonempty_iso_pullback_baseChangeSnd_of_sectionsOf_lift_appLE_of_overlap_
               (RelPicard.LFP.stageHom R (IsScalarTower.toAlgHom R B (B ⧸ I)))).ge).hom a)
       (P0' : Type u) [AddCommGroup P0'] [Module A0B P0']
       (P1' : Type u) [AddCommGroup P1'] [Module A1B P1'],
-      letI : Module (A0B ⧸ J0) P0 := Module.compHom P0 φ0.toRingHom
-      letI : Module (A1B ⧸ J1) P1 := Module.compHom P1 φ1.toRingHom
+      let : Module (A0B ⧸ J0) P0 := Module.compHom P0 φ0.toRingHom
+      let : Module (A1B ⧸ J1) P1 := Module.compHom P1 φ1.toRingHom
       ∀ (iso0 : (A0B ⧸ J0) ⊗[A0B] P0' ≃ₗ[A0B ⧸ J0] P0)
         (iso1 : (A1B ⧸ J1) ⊗[A1B] P1' ≃ₗ[A1B ⧸ J1] P1),
-      letI : Algebra A0B A01B := (𝒱B.cover cB).ρ0.toRingHom.toAlgebra
-      letI : Algebra A1B A01B := (𝒱B.cover cB).ρ1.toRingHom.toAlgebra
-      letI : Module (A01B ⧸ J01) (𝒱BI.sectionsOf cBI M).M01 := Module.compHom _ φ01.toRingHom
+      let : Algebra A0B A01B := (𝒱B.cover cB).ρ0.toRingHom.toAlgebra
+      let : Algebra A1B A01B := (𝒱B.cover cB).ρ1.toRingHom.toAlgebra
+      let : Module (A01B ⧸ J01) (𝒱BI.sectionsOf cBI M).M01 := Module.compHom _ φ01.toRingHom
       ∀ (σ' : A01B ⊗[A0B] P0' ≃ₗ[A01B] A01B ⊗[A1B] P1')
         (iso01 : (A01B ⧸ J01) ⊗[A01B] (A01B ⊗[A0B] P0') ≃ₗ[A01B ⧸ J01] (𝒱BI.sectionsOf cBI M).M01)
         (_ : ∀ (p : P0'), iso01 ((1 : A01B ⧸ J01) ⊗ₜ[A01B] ((1 : A01B) ⊗ₜ[A0B] p)) =
@@ -274,12 +278,8 @@ theorem nonempty_iso_pullback_baseChangeSnd_of_sectionsOf_lift_appLE_of_overlap_
         (_ : ∀ m, σ' (e01' ((𝒱B.sectionsOf cB L').r1 m)) = (1 : A01B) ⊗ₜ[A1B] e1' m),
         Nonempty ((Scheme.Modules.pullback (baseChangeSnd c ι)).obj L' ≅ M) := by
   intro 𝒱B cB 𝒱BI cBI σst A0B A1B A01B P0 P1 φ0 φ1 φ01 hφρ0 hφρ1 hψ0 hψ1 hψ01
-    P0' _ _ P1' _ _ iso0 iso1 σ' iso01 hiso01_r0 hiso01_r1 L' hL' e0' e1' e01' he0' hσ'
-  let : Algebra A0B A01B := (𝒱B.cover cB).ρ0.toRingHom.toAlgebra
-  let : Algebra A1B A01B := (𝒱B.cover cB).ρ1.toRingHom.toAlgebra
-  let : Module (A0B ⧸ J0) P0 := Module.compHom P0 φ0.toRingHom
-  let : Module (A1B ⧸ J1) P1 := Module.compHom P1 φ1.toRingHom
-  let : Module (A01B ⧸ J01) (𝒱BI.sectionsOf cBI M).M01 := Module.compHom _ φ01.toRingHom
+    P0' _ _ P1' _ _ quotientModule0 quotientModule1 iso0 iso1 overlapAlgebra0
+    overlapAlgebra1 quotientModule01 σ' iso01 hiso01_r0 hiso01_r1 L' hL' e0' e1' e01' he0' hσ'
   have hιeq : ι = RelPicard.LFP.stageHom R (IsScalarTower.toAlgHom R B (B ⧸ I)) :=
     Subtype.ext (hι.trans (by rfl))
   rw [hιeq]

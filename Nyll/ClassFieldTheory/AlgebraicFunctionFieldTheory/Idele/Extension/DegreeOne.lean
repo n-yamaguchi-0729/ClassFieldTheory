@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedIdeles
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTopology
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedIdeles
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTopology
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
 
 /-!
 # Idele classes under a degree-one field extension
@@ -14,6 +17,8 @@ The actual base-change map is an isomorphism when the field degree is one.
 Its inverse is the actual norm. This compares a field with its embedded image
 without choosing unrelated identifications of completed factors.
 -/
+
+@[expose] public section
 
 noncomputable section
 

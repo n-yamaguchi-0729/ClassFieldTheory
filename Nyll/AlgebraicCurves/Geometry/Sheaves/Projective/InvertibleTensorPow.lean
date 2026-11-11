@@ -10,14 +10,21 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
 
 /-!
 # Scheme Modules Is Invertible tensor Pow
+
+The existing `Scheme.Modules.IsInvertible.tensorPow` theorem is provided by the
+publicly imported tensor-product owner.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -48,16 +55,6 @@ universe u
 open _root_.CategoryTheory
 open _root_.CategoryTheory.MonoidalCategory
 open _root_.AlgebraicGeometry
-
-theorem _root_.AlgebraicGeometry.Scheme.Modules.IsInvertible.tensorPow {X : Scheme.{u}} {L :
-  X.Modules}
-    (hL : Scheme.Modules.IsInvertible L) (n : ℕ) : Scheme.Modules.IsInvertible (L.tensorPow n) := by
-  induction n with
-  | zero =>
-    simpa only [Scheme.Modules.tensorPow_zero, Scheme.Modules.tensorUnit_eq] using
-      Scheme.Modules.isInvertible_unit X
-  | succ n ih =>
-    simpa only [Scheme.Modules.tensorPow_succ] using ih.tensor hL
 
 end AlgebraicCurves.Geometry.Sheaves.Proofs.Scheme_Modules_IsInvertible_tensorPow
 end ProofImplementation

@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.ZMod.QuotientGroup
-import Mathlib.GroupTheory.Archimedean
-import Mathlib.GroupTheory.FiniteIndexNormalSubgroup
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
-import Nyll.GaloisCohomology.ProfiniteIntegers.ProfiniteIntegerCore
+module
+
+public import Mathlib.Data.ZMod.QuotientGroup
+public import Mathlib.GroupTheory.Archimedean
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup
+public import Mathlib.GroupTheory.FiniteIndexNormalSubgroup
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Completion
+public import Nyll.GaloisCohomology.ProfiniteIntegers.ProfiniteIntegerCore
 
 /-!
 # Finite quotient reductions of profinite integers
@@ -19,6 +22,8 @@ additive quotient of `ℤ`.  The construction first identifies such a subgroup
 with the multiples of its index, then uses the existing reduction to `ZMod`
 and Mathlib's `ZMod.lift`.
 -/
+
+@[expose] public section
 
 namespace ClassFormation
 
@@ -30,9 +35,9 @@ private theorem finiteIndexNormalAddSubgroup_eq_zmultiples_index
     (H : FiniteIndexNormalAddSubgroup ℤ) :
     H.toAddSubgroup =
       AddSubgroup.zmultiples (H.toAddSubgroup.index : ℤ) := by
-  obtain ⟨d, hd⟩ := Int.subgroup_cyclic H.toAddSubgroup
-  have hH : H.toAddSubgroup = AddSubgroup.zmultiples d :=
-    hd.trans (AddSubgroup.zmultiples_eq_closure d).symm
+  obtain ⟨d, hd⟩ :=
+    H.toAddSubgroup.isAddCyclic_iff_exists_zmultiples_eq_top.mp inferInstance
+  have hH : H.toAddSubgroup = AddSubgroup.zmultiples d := hd.symm
   have hindex : H.toAddSubgroup.index = d.natAbs := by
     rw [hH, Int.index_zmultiples]
   calc
@@ -42,12 +47,14 @@ private theorem finiteIndexNormalAddSubgroup_eq_zmultiples_index
     _ = AddSubgroup.zmultiples (H.toAddSubgroup.index : ℤ) := by
       rw [hindex]
 
-private theorem finiteIndexNormalAddSubgroup_index_pos
+/-- A finite-index subgroup of the integers has positive index. -/
+theorem finiteIndexNormalAddSubgroup_index_pos
     (H : FiniteIndexNormalAddSubgroup ℤ) :
     0 < H.toAddSubgroup.index :=
   Nat.pos_of_ne_zero H.isFiniteIndex'.index_ne_zero
 
-private theorem finiteIndexNormalAddSubgroup_index_mem
+/-- The integer equal to a finite-index subgroup's index belongs to that subgroup. -/
+theorem finiteIndexNormalAddSubgroup_index_mem
     (H : FiniteIndexNormalAddSubgroup ℤ) :
     (H.toAddSubgroup.index : ℤ) ∈ H.toAddSubgroup := by
   let n := H.toAddSubgroup.index
@@ -56,7 +63,8 @@ private theorem finiteIndexNormalAddSubgroup_index_mem
     simpa only [n] using finiteIndexNormalAddSubgroup_eq_zmultiples_index H
   rw [hH, Int.mem_zmultiples_iff]
 
-private noncomputable def zHatFiniteIndexQuotientReduction
+/-- Reduction from residues modulo the index to the corresponding integer quotient. -/
+noncomputable def zHatFiniteIndexQuotientReduction
     (H : FiniteIndexNormalAddSubgroup ℤ) :
     ZMod H.toAddSubgroup.index →+ ℤ ⧸ H.toAddSubgroup :=
   ZMod.lift H.toAddSubgroup.index
@@ -222,7 +230,8 @@ private theorem zHatFiniteIndexQuotientReduction_injective
   rw [ZMod.intCast_eq_intCast_iff_dvd_sub]
   simpa only [neg_sub] using dvd_neg.mpr hmem
 
-private theorem zHatToIntegerProfiniteCompletion_injective :
+/-- The finite-quotient comparison with the integer profinite completion is injective. -/
+theorem zHatToIntegerProfiniteCompletion_injective :
     Function.Injective
       (fun z : ZHat => zHatToIntegerProfiniteCompletion z) := by
   intro x y hxy
@@ -283,7 +292,8 @@ private theorem zHatToIntegerProfiniteCompletion_injective :
     hindex ▸ hreductionAll
   exact hreductionAtN hn
 
-private theorem zHatToIntegerProfiniteCompletion_surjective :
+/-- The finite-quotient comparison with the integer profinite completion is surjective. -/
+theorem zHatToIntegerProfiniteCompletion_surjective :
     Function.Surjective
       (fun z : ZHat => zHatToIntegerProfiniteCompletion z) := by
   have hsubset :

@@ -10,22 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.SquareZeroProjectiveModules
-import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverInvertibleSectionsOfEquiv
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIdealPullbackCoverRingEquivQuotientAppLE
-import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverSectionsOfInvertibleProjectiveFiniteFinrank
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivOverlapQuotientBaseChange
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsoPullbackBaseChangeSnd
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
-import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoUnitPullbackRigSection
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.SquareZeroProjectiveModules
+public import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverInvertibleSectionsOfEquiv
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIdealPullbackCoverRingEquivQuotientAppLE
+public import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverSectionsOfInvertibleProjectiveFiniteFinrank
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverLinearEquivOverlapQuotientBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsoPullbackBaseChangeSnd
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
+public import Nyll.AlgebraicCurves.Geometry.Picard.Rigidification.RigidifiedBundleIsoUnitPullbackRigSection
 
 /-!
 Lift rigidified line bundles across a square-zero extension using a two-affine open cover.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

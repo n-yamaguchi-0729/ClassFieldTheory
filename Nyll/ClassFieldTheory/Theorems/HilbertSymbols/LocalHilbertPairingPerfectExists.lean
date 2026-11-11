@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.HilbertPairingPerfect
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.LocalHilbertPairingExists
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.PowerClassGroupFinite
-import Mathlib.NumberTheory.LocalField.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.HilbertPairingPerfect
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.MathlibHilbertPairing
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.PowerClassGroupFinite
+public import Mathlib.NumberTheory.LocalField.Basic
 
 /-!
 # A perfect local Hilbert pairing
@@ -18,9 +20,22 @@ roots of unity are present, the Hilbert pairing identifies power classes
 with all `μₙ`-valued characters of the power-class group.
 -/
 
+@[expose] public section
+
 namespace ClassFieldTheory
 
 universe u
+
+/-- The named pairing defined by the specified local Artin maps identifies
+power classes with the full group of roots-of-unity-valued characters. -/
+theorem localHilbertPairing_bijective
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    [IsNonarchimedeanLocalField K]
+    (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty) :
+    Function.Bijective (localHilbertPairing K n hnK hmu) := by
+  let : Finite (PowerClassGroup K n) := powerClassGroup_finite K n hnK
+  exact (localHilbertPairing_isLocalHilbertPairing K n hnK hmu).2.2.1.bijective hmu
 
 /-- There is a local Hilbert pairing whose adjoint map to the full
 `μₙ`-valued character group is bijective. -/
@@ -30,11 +45,9 @@ theorem exists_perfectLocalHilbertPairing
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) :
     ∃ B : HilbertPairing K n,
-      B.IsLocalHilbertPairing ∧ Function.Bijective B := by
-  let : Finite (PowerClassGroup K n) :=
-    powerClassGroup_finite K n hnK
-  obtain ⟨B, hB⟩ := exists_localHilbertPairing K n hnK hmu
-  refine ⟨B, hB, ?_⟩
-  exact hB.2.2.1.bijective hmu
+      B.IsLocalHilbertPairing ∧ Function.Bijective B :=
+  ⟨localHilbertPairing K n hnK hmu,
+    localHilbertPairing_isLocalHilbertPairing K n hnK hmu,
+    localHilbertPairing_bijective K n hnK hmu⟩
 
 end ClassFieldTheory

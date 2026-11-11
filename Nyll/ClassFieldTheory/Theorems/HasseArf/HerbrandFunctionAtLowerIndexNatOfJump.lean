@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
-import Nyll.ClassFieldTheory.Definitions.HasseArf.IsLowerRamificationJump
-import Nyll.ClassFieldTheory.Theorems.HasseArf.HasseArf
-import Mathlib.NumberTheory.LocalField.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.HerbrandFunctionAtLowerIndex
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.IsLowerRamificationJump
+public import Nyll.ClassFieldTheory.Theorems.HasseArf.HasseArf
+public import Mathlib.NumberTheory.LocalField.Basic
 
 /-!
 # Natural Herbrand values at lower ramification jumps
@@ -16,6 +18,8 @@ The finite-sum Herbrand value is nonnegative at every integral lower index.
 For a finite Abelian extension of nonarchimedean local fields, Hasse--Arf
 therefore makes the value at each lower jump a natural number.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.Tactic.CategoryTheory.Reassoc
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.Tactic.CategoryTheory.Reassoc
 /-!
 Compare pullback composition isomorphisms along pasted commutative squares on sheaves of
 modules.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -81,7 +85,7 @@ noncomputable def τ (f : X₀ ⟶ X₁) (g : X₁ ⟶ X₂) (m : X₀ ⟶ X₂)
 theorem τ_hom_app (f : X₀ ⟶ X₁) (g : X₁ ⟶ X₂) (m : X₀ ⟶ X₂) (e : f ≫ g = m) (M : X₂.Modules) :
     (τ f g m e).hom.app M = (pullbackComp f g).hom.app M ≫ eqToHom (by rw [e]) := by
   subst e
-  simp [τ, pullbackCongr]
+  rfl
 
 theorem τ_paste_app (f : X₀ ⟶ X₁) (g : X₁ ⟶ X₂) (h : X₂ ⟶ X₃) (fg : X₀ ⟶ X₂) (gh : X₁ ⟶ X₃) (m :
     X₀ ⟶ X₃)
@@ -96,7 +100,7 @@ theorem τ_paste_app (f : X₀ ⟶ X₁) (g : X₁ ⟶ X₂) (h : X₂ ⟶ X₃)
 theorem τ_inv_app (f : X₀ ⟶ X₁) (g : X₁ ⟶ X₂) (m : X₀ ⟶ X₂) (e : f ≫ g = m) (M : X₂.Modules) :
     (τ f g m e).inv.app M = eqToHom (by rw [e]) ≫ (pullbackComp f g).inv.app M := by
   subst e
-  simp [τ, pullbackCongr]
+  rfl
 
 /-- The isomorphism between the two iterated pullback functors in the commutative square `e`. -/
 noncomputable def sqIso {W X Y Z : Scheme.{u}} {f : W ⟶ X} {g : X ⟶ Z} {h : W ⟶ Y} {k : Y ⟶ Z}
@@ -107,7 +111,12 @@ noncomputable def sqIso {W X Y Z : Scheme.{u}} {f : W ⟶ X} {g : X ⟶ Z} {h : 
 theorem sqIso_hom_app {W X Y Z : Scheme.{u}} {f : W ⟶ X} {g : X ⟶ Z} {h : W ⟶ Y} {k : Y ⟶ Z}
     (e : f ≫ g = h ≫ k) (M : Z.Modules) :
     (sqIso e).hom.app M = (τ f g (h ≫ k) e).hom.app M ≫ (τ h k (h ≫ k) rfl).inv.app M := by
-  simp [sqIso, τ, pullbackCongr]
+  rw [τ_inv_app, eqToHom_refl, Category.id_comp]
+  change (pullbackComp f g).hom.app M ≫
+      (pullbackCongr e).hom.app M ≫ (pullbackComp h k).inv.app M =
+    ((pullbackComp f g).hom.app M ≫ (pullbackCongr e).hom.app M) ≫
+      (pullbackComp h k).inv.app M
+  exact (Category.assoc _ _ _).symm
 
 theorem map_sqIso_hom_app {W X Y Z V : Scheme.{u}} {f : W ⟶ X} {g : X ⟶ Z} {h : W ⟶ Y} {k : Y ⟶ Z}
     (e : f ≫ g = h ≫ k) (M : Z.Modules) (G : W.Modules ⥤ V.Modules) :

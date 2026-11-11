@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
 
 /-!
 # Abelian Galois groups at the actual completions
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
 The completed Galois group is the actual decomposition subgroup. In an
 abelian global extension this makes the completed extension abelian as well.
 -/
+
+@[expose] public section
 
 noncomputable section
 

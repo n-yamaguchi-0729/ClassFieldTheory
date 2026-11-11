@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
+module
+
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.ValuationSubring
 
 /-!
 # Ramification inside the decomposition group
@@ -14,6 +16,8 @@ ramification group inside inertia has a canonical image in the
 decomposition group.
 
 -/
+
+@[expose] public section
 
 noncomputable section
 

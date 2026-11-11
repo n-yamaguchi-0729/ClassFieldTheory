@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Geometry.Schemes.FunctionFields.IsAffineOpenRangeAlgebraMapFunctionFieldEqIInf
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
-import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Geometry.Schemes.FunctionFields.IsAffineOpenRangeAlgebraMapFunctionFieldEqIInf
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+public import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Range algebraMap functionField eq iInf of isAffineOpen
@@ -22,6 +26,8 @@ import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
 The image of the coordinate ring of an affine curve open is the intersection of its local
 valuation subrings in the function field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -35,14 +41,14 @@ theorem _root_.AlgebraicCurve.range_algebraMap_functionField_eq_iInf_of_isAffine
     {K : Type u} [Field K] {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of K))
     [IsIntegral C] [SmoothOfRelativeDimension 1 c]
     (U : C.Opens) (hU : IsAffineOpen U) [Nonempty U] :
-    letI := (AlgebraicCurve.baseToFunctionField c).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField c).toAlgebra
     (algebraMap Γ(C, U) C.functionField).range =
       ⨅ (v : AlgebraicCurve.Place K C.functionField)
         (_ : ∃ x : C, x ∈ U ∧ IsClosed ({x} : Set C) ∧
           (algebraMap (C.presheaf.stalk x) C.functionField).range =
             v.toValuationSubring.toSubring),
         v.toValuationSubring.toSubring := by
-  let := (AlgebraicCurve.baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   rw [hU.range_algebraMap_functionField_eq_iInf]
   apply le_antisymm
   · refine le_iInf₂ fun v hv => ?_

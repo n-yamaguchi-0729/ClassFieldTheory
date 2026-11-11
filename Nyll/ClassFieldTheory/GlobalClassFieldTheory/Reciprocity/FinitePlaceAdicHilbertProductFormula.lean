@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicHilbertComparison
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicHilbertComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceFiniteSupport
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteDualSeparation
 
 /-!
 # A coherent Hilbert pairing family in a small number field
@@ -13,6 +17,8 @@ The finite-place family already constructed from the local norm-residue
 pairing satisfies the local laws. Its finite factors agree with the factors
 of the global Hilbert product formula.
 -/
+
+@[expose] public section
 
 open scoped BigOperators NumberField
 open NumberField IsDedekindDomain
@@ -34,7 +40,7 @@ theorem finitePlaceAdicHilbertPairingFamily_productFormula
             globalInfinitePlaceHilbertSymbol F n v a b) *
           ∏ᶠ v : HeightOneSpectrum (𝓞 F),
             GlobalHilbertPairingFamily.finiteFactor F B hmu v a b = 1 := by
-  let B := finitePlaceAdicHilbertPairingFamily F n hmu
+  intro B
   have hnF : ((n : ℕ) : F) ≠ 0 := Nat.cast_ne_zero.mpr n.ne_zero
   refine ⟨finitePlaceAdicHilbertPairingFamily_isLocallyHilbert F n hmu, ?_, ?_⟩
   · intro a b

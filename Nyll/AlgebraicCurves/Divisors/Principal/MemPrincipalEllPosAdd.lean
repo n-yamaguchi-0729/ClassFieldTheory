@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
 
 /-!
 # Divisor mem principal of forall ell pos add
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -170,14 +174,6 @@ private theorem degree_eq_sum_support (D : Divisor K F) :
 section WithPack
 
 variable {Kc : Divisor K F} {g : ℕ}
-
-private theorem ell_canonical_eq
-    (hRR : ∀ D : Divisor K F, (ell D : ℤ) - ell (Kc - D) = Divisor.degree D + 1 - g)
-    (hC : ConstantsAreBase K F) : ell Kc = g := by
-  have h := hRR 0
-  rw [sub_zero, ell_zero_eq_one_of_constantsAreBase hC, map_zero] at h
-  push_cast at h
-  omega
 
 private theorem degree_add_one_sub_le_ell
     (hRR : ∀ D : Divisor K F, (ell D : ℤ) - ell (Kc - D) = Divisor.degree D + 1 - g)

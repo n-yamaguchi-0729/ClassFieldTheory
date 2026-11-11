@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.Norm.Basic
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
+module
+
+public import Mathlib.RingTheory.Norm.Basic
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 /-!
 # The polynomial defining a field norm in basis coordinates
@@ -14,6 +16,8 @@ The determinant of the actual multiplication matrix gives a homogeneous polynomi
 of degree equal to the extension dimension. Its evaluation is the actual algebra norm.
 This construction is shared input for norm equations and the cohomology of function fields.
 -/
+
+@[expose] public section
 
 noncomputable section
 

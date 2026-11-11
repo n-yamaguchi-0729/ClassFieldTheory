@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 
 /-!
 # Frobenius generation of ray class groups
@@ -16,6 +21,8 @@ fractional ideals and the idelic-to-ideal ray-class equivalence.
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -31,7 +38,7 @@ normalized prime idèle classes away from its modulus. -/
 theorem rayClassGroup_hom_ext_finitePrime
     {K : Type u} [Field K] [NumberField K]
     (m : RayClass.Modulus K)
-    {G : Type v} [CommGroup G]
+    {G : Type v} [Monoid G]
     (f g : RayClass.RayClassGroup m →* G)
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (_ : v ∉ m.finitePart.support),

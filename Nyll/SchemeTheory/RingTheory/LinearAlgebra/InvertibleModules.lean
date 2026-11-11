@@ -23,21 +23,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.LinearAlgebra.Dual.BaseChange
-import Mathlib.RingTheory.PicardGroup
-import Mathlib.Tactic.Conv
-import Mathlib.Tactic.Ext
-import Mathlib.Tactic.Ring.RingNF
-import Mathlib.Tactic.SimpRw
-import Mathlib.Tactic.TermCongr
-import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
-import Mathlib.LinearAlgebra.Dimension.Constructions
+module
+
+public import Mathlib.LinearAlgebra.Dual.BaseChange
+public import Mathlib.RingTheory.PicardGroup
+public import Mathlib.Tactic.Conv
+public import Mathlib.Tactic.Ext
+public import Mathlib.Tactic.Ring.RingNF
+public import Mathlib.Tactic.SimpRw
+public import Mathlib.Tactic.TermCongr
+public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
+public import Mathlib.LinearAlgebra.Dimension.Constructions
 
 /-!
 # Invertibility of projective modules of rank one
 
 Shows that a finite projective module with one-dimensional fibers is invertible.
 -/
+
+@[expose] public section
 
 section Module_Invertible_of_projective_of_forall_finrank_eq_one
 

@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Differentials.Residues.Basic
 Residue functionals of nonzero Kähler differentials, their canonical-divisor bounds, and the
 associated residue pairing.
 -/
+
+@[expose] public section
 
 noncomputable section
 

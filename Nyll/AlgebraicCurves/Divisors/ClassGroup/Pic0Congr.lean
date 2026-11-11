@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Rational.Basic
+module
+
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
 
 /-!
 # Pic0 Congr
 -/
+
+@[expose] public section
 
 noncomputable section
 

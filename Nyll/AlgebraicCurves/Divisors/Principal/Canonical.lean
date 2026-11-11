@@ -10,14 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Differentials.Local.Order
+module
+
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
 
 /-!
 # Differentials, residues, and divisor correspondences
 
-Canonical divisors, their divisor classes, and the genus obtained from the order of a nonzero
-differential.
+Canonical divisors, their divisor classes, and a natural-valued expression obtained from
+the degree of a nonzero differential divisor. Identifying that expression with a geometric
+genus requires separate constant-field normalization and geometric hypotheses.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -51,8 +56,10 @@ def canonicalClass (K F : Type*) [Field K] [Field F] [Algebra K F]
   if h : ∃ ω : Ω[F⁄K], ω ≠ 0 then QuotientAddGroup.mk (canonicalDivisorOf h.choose_spec)
   else 0
 
-/-- The natural-number genus computed from the degree of a canonical divisor, or zero when
-all differentials vanish. -/
+/-- The natural-number value `(deg_K canonical + 2).toNat / 2`, or zero when all
+differentials vanish. Divisor degrees here are measured over `K`. Without the appropriate
+constant-field normalization, this definition does not assert equality with geometric genus
+or with the `K`-dimension of first coherent cohomology. -/
 def genus (K F : Type*) [Field K] [Field F] [Algebra K F]
     [HasCanonicalDivisor (K := K) (F := F)] : ℕ :=
   letI := Classical.propDecidable

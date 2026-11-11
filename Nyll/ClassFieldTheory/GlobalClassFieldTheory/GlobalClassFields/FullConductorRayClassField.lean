@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorInfinitePart
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorInfinitePart
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
 
 /-!
 # Full conductors and ray class field containment
@@ -18,6 +20,10 @@ minimality theorem for the full conductor.
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField
 
 noncomputable section
@@ -27,12 +33,12 @@ namespace GlobalClassFields
 
 open NumberField
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 /-- A finite abelian extension embeds in the selected ray class field
 exactly when the modulus is at least its full conductor. -/
 theorem nonempty_algHom_to_rayClassField_iff_fullConductor_le
-    (L : Type) [Field L] [NumberField L]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [FiniteDimensional K L]
     [IsAbelianGalois K L]
     (m : RayClass.Modulus K) :

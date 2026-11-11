@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Normal.Basic
+module
+
+public import Mathlib.FieldTheory.Normal.Basic
 
 /-!
 # Equality of normal field realizations
@@ -13,6 +15,8 @@ All embeddings of a normal extension into the same ambient field have the
 same field range. This separates independence of the embedded subfield
 from independence of its chosen parameterization.
 -/
+
+@[expose] public section
 
 noncomputable section
 

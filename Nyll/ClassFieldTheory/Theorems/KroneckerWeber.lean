@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.Cyclotomic.Basic
-import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
-import Nyll.ClassFieldTheory.KroneckerWeber.Core
+module
+
+public import Mathlib.NumberTheory.Cyclotomic.Basic
+public import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
+public import Nyll.ClassFieldTheory.KroneckerWeber.Core
 
 /-!
 # Kronecker--Weber theorem
@@ -18,6 +20,8 @@ integer `n` and a `ℚ`-algebra embedding of `L` into `ℚ(ζₙ)`.  The positiv
 condition excludes the degenerate order-zero cyclotomic construction.
 -/
 
+@[expose] public section
+
 namespace ClassFieldTheory
 
 universe u
@@ -27,20 +31,7 @@ cyclotomic field of positive order. -/
 theorem kroneckerWeber
     (L : Type u) [Field L] [NumberField L] [IsAbelianGalois ℚ L] :
     ∃ n : ℕ, 0 < n ∧
-      Nonempty (L →ₐ[ℚ] CyclotomicField n ℚ) := by
-  let : Small.{0} L := numberField_small L
-  let S := Shrink.{0} L
-  let : NumberField S := numberField_shrink L
-  let e : S ≃ₐ[ℚ] L := (Shrink.ringEquiv L).toRatAlgEquiv
-  let : IsAbelianGalois ℚ S := by
-    apply isAbelianGalois_of_equiv_equiv
-      (f := RingEquiv.refl ℚ) (g := e.symm.toRingEquiv)
-    apply RingHom.ext
-    intro x
-    change algebraMap ℚ S x = e.symm (algebraMap ℚ L x)
-    exact (e.symm.commutes x).symm
-  obtain ⟨n, hn, ⟨i⟩⟩ :=
-    KroneckerWeber.exists_cyclotomicEmbedding S
-  exact ⟨n, hn, ⟨i.comp e.symm.toAlgHom⟩⟩
+      Nonempty (L →ₐ[ℚ] CyclotomicField n ℚ) :=
+  KroneckerWeber.exists_cyclotomicEmbedding L
 
 end ClassFieldTheory

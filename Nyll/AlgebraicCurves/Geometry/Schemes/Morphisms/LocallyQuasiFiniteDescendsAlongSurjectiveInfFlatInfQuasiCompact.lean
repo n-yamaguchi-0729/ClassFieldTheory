@@ -11,15 +11,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Descent
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
+module
 
-import Nyll.SchemeTheory.RingTheory.Flat.RingHomQuasiFiniteCodescendsAlongFaithfullyFlat
+public import Mathlib.AlgebraicGeometry.Morphisms.Descent
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+
+public import Nyll.SchemeTheory.RingTheory.Flat.RingHomQuasiFiniteCodescendsAlongFaithfullyFlat
 
 /-!
 # Locally Quasi Finite descends Along surjective inf flat inf quasi Compact
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

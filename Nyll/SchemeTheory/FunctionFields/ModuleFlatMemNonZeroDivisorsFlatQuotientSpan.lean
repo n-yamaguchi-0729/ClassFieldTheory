@@ -10,27 +10,29 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.LocalRing.Module
-import Mathlib.RingTheory.LocalRing.RingHom.Basic
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
-import Mathlib.RingTheory.LocalRing.ResidueField.Fiber
-import Mathlib.RingTheory.Filtration
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.RingTheory.Flat.Localization
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Localization.AtPrime.Basic
-import Mathlib.RingTheory.Localization.BaseChange
-import Mathlib.RingTheory.Localization.Ideal
-import Mathlib.RingTheory.LocalProperties.Basic
-import Mathlib.RingTheory.TensorProduct.Quotient
-import Mathlib.LinearAlgebra.TensorProduct.Quotient
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Algebra.Algebra.Bilinear
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.TensorProduct.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
+module
+
+public import Mathlib.RingTheory.LocalRing.Module
+public import Mathlib.RingTheory.LocalRing.RingHom.Basic
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+public import Mathlib.RingTheory.LocalRing.ResidueField.Fiber
+public import Mathlib.RingTheory.Filtration
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.RingTheory.Flat.Localization
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Localization.AtPrime.Basic
+public import Mathlib.RingTheory.Localization.BaseChange
+public import Mathlib.RingTheory.Localization.Ideal
+public import Mathlib.RingTheory.LocalProperties.Basic
+public import Mathlib.RingTheory.TensorProduct.Quotient
+public import Mathlib.LinearAlgebra.TensorProduct.Quotient
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Algebra.Algebra.Bilinear
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.TensorProduct.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
 
 /-!
 # Algebra, divisors, and base change
@@ -38,6 +40,8 @@ import Mathlib.FieldTheory.IsAlgClosed.Basic
 Flatness over algebraically closed residue fibres gives non-zero-divisor and quotient flatness
 criteria.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,17 +10,44 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.Order.Ring.IsNonarchimedean
-import Mathlib.Algebra.Order.Ring.Abs
-import Mathlib.RingTheory.Henselian
-import Mathlib.RingTheory.SimpleRing.Principal
-import Mathlib.Topology.Algebra.Module.FiniteDimension
-import Mathlib.Topology.Algebra.Valued.NormedValued
-import Mathlib.Topology.UniformSpace.Uniformizable
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
-import Nyll.AlgebraicCurves.Places.Basic
+/-
+Additional provenance for `ModularCurve.KwF4gRRTate.clearPole`, moved from
+Nyll/AlgebraicCurves/Differentials/Residues/TateAgreement.lean.
+The complete source notice for that declaration is retained below.
+-/
+
+/-
+Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
+Released under Apache 2.0 license as described in the file LICENSE.
+Adapted Anthropic FLT source (pinned comparison revision):
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicCurve_tateAgreement.lean
+Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
+Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
+
+Earlier source notices recorded for the cited upstream material:
+Copyright (c) 2025 Salvatore Mercuri. All rights reserved.
+Authors: Salvatore Mercuri, Kevin Buzzard
+https://github.com/ImperialCollegeLondon/FLT/blob/a7dbce8494c29858093974a612a72b6454fc5cba/FLT/Mathlib/RingTheory/LocalRing/MaximalIdeal/Basic.lean
+
+Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
+AI assistance in local adaptation and maintenance: OpenAI Codex.
+-/
+
+module
+
+public import Mathlib.RingTheory.DiscreteValuationRing.Basic
+public import Mathlib.RingTheory.Localization.FractionRing
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.Order.Ring.IsNonarchimedean
+public import Mathlib.Algebra.Order.Ring.Abs
+public import Mathlib.RingTheory.Henselian
+public import Mathlib.RingTheory.SimpleRing.Principal
+public import Mathlib.Topology.Algebra.Module.FiniteDimension
+public import Mathlib.Topology.Algebra.Valued.NormedValued
+public import Mathlib.Topology.UniformSpace.Uniformizable
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Completion
@@ -28,6 +55,8 @@ import Nyll.AlgebraicCurves.Places.Basic
 Completions at places carry the induced maps of finite extensions, their integral valuation
 subrings, completed traces, and constant-field maps.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -169,7 +198,7 @@ theorem valued_adicCompletionComap (x : (W.restrict F).adicCompletion) :
           (IsDedekindDomain.HeightOneSpectrum.adicCompletion.continuous_ofCompletion F _)).pow _)
   | ih a =>
     rw [adicCompletionComap_coe]
-    simp only [IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_ofCompletion,
+    simp only [IsDedekindDomain.HeightOneSpectrum.adicCompletion.valued_ofCompletion_apply,
       Valued.valuedCompletion_apply]
     exact valued_withValMapAlgebraMap F W a
 
@@ -466,6 +495,32 @@ namespace ModularCurve.KwF4gRRTate
 section PoleWindowShift
 
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] (u : Place K L)
+
+/-- A power of the given uniformizer clears the pole of any completion element. -/
+theorem clearPole (πh : u.adicCompletionIntegers) (hπh : Irreducible πh)
+    (fh : u.adicCompletion) :
+    ∃ M : ℕ, (πh : u.adicCompletion)^M * fh ∈ u.adicCompletionIntegers := by
+  obtain ⟨a, b, hb, hfh⟩ := IsFractionRing.div_surjective
+    (A := u.adicCompletionIntegers) (K := u.adicCompletion) fh
+  have hb0 : b ≠ 0 := nonZeroDivisors.ne_zero hb
+  obtain ⟨M, ub, hbeq⟩ := IsDiscreteValuationRing.eq_unit_mul_pow_irreducible hb0 hπh
+  refine ⟨M, ?_⟩
+  have hcoe : ∀ x : u.adicCompletionIntegers,
+      (x : u.adicCompletion) = algebraMap _ u.adicCompletion x := fun _ => rfl
+  have hbK0 : (b : u.adicCompletion) ≠ 0 := by
+    rw [hcoe]; exact (map_ne_zero_iff _ (IsFractionRing.injective _ _)).mpr hb0
+  have hbfh : (b : u.adicCompletion) * fh = (a : u.adicCompletion) := by
+    rw [← hfh, hcoe b, hcoe a, mul_div_cancel₀ _ (hcoe b ▸ hbK0)]
+  have hπheq : ((ub⁻¹ : u.adicCompletionIntegersˣ) : u.adicCompletionIntegers) * b = πh ^ M := by
+    rw [hbeq, ← mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, one_mul]
+  have hπheqK : ((((ub⁻¹ : u.adicCompletionIntegersˣ) : u.adicCompletionIntegers)
+        : u.adicCompletion)) * (b : u.adicCompletion)
+      = (πh : u.adicCompletion)^M := by
+    have := congrArg (algebraMap u.adicCompletionIntegers u.adicCompletion) hπheq
+    simp only [map_mul, map_pow] at this
+    exact this
+  rw [← hπheqK, mul_assoc, hbfh]
+  exact mul_mem (Subtype.coe_prop _) a.2
 
 theorem algebraMap_K_mem_adicCompletionIntegers (c : K) :
     algebraMap K u.adicCompletion c ∈ u.adicCompletionIntegers := by

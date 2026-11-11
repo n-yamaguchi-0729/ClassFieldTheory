@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.ValuedGalois
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
+module
+
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.ValuedGalois
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.CompleteDVF
 
 /-!
 # Inertia cardinality and the ramification index
@@ -14,6 +16,8 @@ For a finite Galois extension of complete discrete valuation fields, the
 decomposition-side inertia subgroup has cardinality equal to the canonical
 ramification index.
 -/
+
+@[expose] public section
 
 noncomputable section
 

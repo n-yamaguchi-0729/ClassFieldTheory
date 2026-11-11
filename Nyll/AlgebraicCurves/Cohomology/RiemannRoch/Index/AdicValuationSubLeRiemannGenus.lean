@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusReachedAtEq
-import Nyll.AlgebraicCurves.Geometry.OneLeDeg
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.EllAddEqOrd
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Index.RiemannGenusReachedAtEq
+public import Nyll.AlgebraicCurves.Geometry.OneLeDeg
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.EllAddEqOrd
 
 /-!
 Approximation with a prescribed valuation bound from a place where the Riemann genus is reached.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

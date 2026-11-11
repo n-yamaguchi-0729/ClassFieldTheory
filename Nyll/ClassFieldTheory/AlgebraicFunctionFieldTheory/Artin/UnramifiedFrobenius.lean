@@ -4,16 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalResidueNormalization
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
-import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
+module
+
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalResidueNormalization
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
+public import Nyll.AlgebraicCurves.Places.Ramification.CardFiberOverMulRamificationIndexMulInertiaDeg
 
 /-!
 # Arithmetic Frobenius in the actual decomposition group
@@ -25,6 +27,10 @@ the Frobenius order is the residue degree and local norms are detected by
 divisibility of the local order.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open AlgebraicCurve
@@ -32,14 +38,15 @@ open scoped AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
 
-private theorem exists_arithmeticDecompositionFrobenius
+/-- An unramified decomposition group contains arithmetic residue Frobenius. -/
+theorem exists_arithmeticDecompositionFrobenius
     (w : Place k L) (he : w.ramificationIndex K = 1) :
     ∃ σ : IdeleGroup.decompositionGroup (K := K) w,
       ∀ y : w.ResidueField, IdeleGroup.decompositionResidueAut (K := K) w σ y =

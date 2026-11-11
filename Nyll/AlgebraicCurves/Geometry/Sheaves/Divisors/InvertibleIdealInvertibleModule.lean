@@ -10,19 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.SchemeTheory.Modules.PresheafInternalHom
-import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.SchemeTheory.Modules.PresheafInternalHom
+public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.Modules.Invertible.Invertible
 
 /-!
 # Invertible ideals and invertible module sheaves
 
 Constructs local module trivializations from non-zero-divisor generators of an invertible ideal.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -51,26 +56,27 @@ open _root_.AlgebraicGeometry
 
 variable {X : Scheme.{u}} (I : X.IdealSheafData)
 
-private def _root_.AlgebraicGeometry.Scheme.IdealSheafData.sectionsIdeal (U : X.Opens) : Ideal
+/-- The section ideal of the original closed immersion. -/
+def sectionsIdeal (U : X.Opens) : Ideal
   Γ(X, U) :=
   RingHom.ker (I.subschemeι.app U).hom
 
 open _root_.AlgebraicGeometry.Scheme.IdealSheafData
-private lemma _root_.AlgebraicGeometry.Scheme.IdealSheafData.mem_sectionsIdeal_iff {U : X.Opens}
+lemma mem_sectionsIdeal_iff {U : X.Opens}
   (s : Γ(X, U)) :
-    s ∈ I.sectionsIdeal U ↔ I.subschemeι.app U s = 0 := RingHom.mem_ker
+    s ∈ sectionsIdeal I U ↔ I.subschemeι.app U s = 0 := RingHom.mem_ker
 
 open _root_.AlgebraicGeometry.Scheme.IdealSheafData
 
-private lemma _root_.AlgebraicGeometry.Scheme.IdealSheafData.sectionsIdeal_eq_ideal (U :
-  X.affineOpens) : I.sectionsIdeal U = I.ideal U :=
+lemma sectionsIdeal_eq_ideal (U :
+  X.affineOpens) : sectionsIdeal I U = I.ideal U :=
   I.ker_subschemeι_app U
 
 open _root_.AlgebraicGeometry.Scheme.IdealSheafData
 
-private lemma _root_.AlgebraicGeometry.Scheme.IdealSheafData.map_mem_sectionsIdeal {U V :
+lemma map_mem_sectionsIdeal {U V :
   X.Opens} (i : V ⟶ U) {s : Γ(X, U)}
-    (hs : s ∈ I.sectionsIdeal U) : X.presheaf.map i.op s ∈ I.sectionsIdeal V := by
+    (hs : s ∈ sectionsIdeal I U) : X.presheaf.map i.op s ∈ sectionsIdeal I V := by
   rw [mem_sectionsIdeal_iff] at hs ⊢
   have := ConcreteCategory.congr_hom (I.subschemeι.naturality i.op) s
   simp only [CommRingCat.comp_apply] at this
@@ -80,9 +86,9 @@ open _root_.AlgebraicGeometry.Scheme.IdealSheafData
 
 /-- The presheaf of additive groups of sections in the ideal sheaf. -/
 def sectionsPresheaf : (X.Opens)ᵒᵖ ⥤ Ab.{u} where
-  obj U := AddCommGrpCat.of (I.sectionsIdeal U.unop)
+  obj U := AddCommGrpCat.of (sectionsIdeal I U.unop)
   map {U V} i := AddCommGrpCat.ofHom
-    { toFun := fun s => ⟨X.presheaf.map i s.1, I.map_mem_sectionsIdeal i.unop s.2⟩
+    { toFun := fun s => ⟨X.presheaf.map i s.1, map_mem_sectionsIdeal I i.unop s.2⟩
       map_zero' := Subtype.ext (by
         change X.presheaf.map i (0 : Γ(X, U.unop)) = 0
         exact map_zero _)
@@ -102,7 +108,7 @@ def sectionsPresheaf : (X.Opens)ᵒᵖ ⥤ Ab.{u} where
 
 scoped instance (U : (X.Opens)ᵒᵖ) : Module ((X.ringCatSheaf.obj).obj U) ((sectionsPresheaf
   I).obj U) :=
-  inferInstanceAs (Module Γ(X, U.unop) (I.sectionsIdeal U.unop))
+  inferInstanceAs (Module Γ(X, U.unop) (sectionsIdeal I U.unop))
 
 lemma sectionsPresheaf_map_apply_coe {U V : (X.Opens)ᵒᵖ} (i : U ⟶ V)
     (s : (sectionsPresheaf I).obj U) :
@@ -123,8 +129,8 @@ def toPresheafOfModules : X.PresheafOfModules :=
 
 /-- Ideal sections viewed as a subfunctor of the underlying structure presheaf. -/
 def sectionsSubfunctor : Subfunctor (X.presheaf ⋙ CategoryTheory.forget CommRingCat) where
-  obj U := {s | s ∈ I.sectionsIdeal U.unop}
-  map {_U _V} i _s hs := I.map_mem_sectionsIdeal i.unop hs
+  obj U := {s | s ∈ sectionsIdeal I U.unop}
+  map {_U _V} i _s hs := map_mem_sectionsIdeal I i.unop hs
 
 /-- The identification of ideal-section groups with the corresponding subfunctor. -/
 def sectionsIso : sectionsPresheaf I ⋙ CategoryTheory.forget Ab ≅ (sectionsSubfunctor
@@ -137,11 +143,11 @@ def sectionsIso : sectionsPresheaf I ⋙ CategoryTheory.forget Ab ≅ (sectionsS
 
 lemma mem_sectionsIdeal_of_locally {U : X.Opens} (s : Γ(X, U))
     (h : ∀ x ∈ U, ∃ (V : X.Opens) (_ : V ≤ U), x ∈ V ∧
-      X.presheaf.map (homOfLE ‹V ≤ U›).op s ∈ I.sectionsIdeal V) :
-    s ∈ I.sectionsIdeal U := by
+      X.presheaf.map (homOfLE ‹V ≤ U›).op s ∈ sectionsIdeal I V) :
+    s ∈ sectionsIdeal I U := by
   rw [mem_sectionsIdeal_iff]
   let ι : Type u := {V : X.Opens // ∃ (_ : V ≤ U), X.presheaf.map (homOfLE ‹V ≤ U›).op s ∈
-    I.sectionsIdeal V}
+    sectionsIdeal I V}
   let W : ι → I.subscheme.Opens := fun V => I.subschemeι ⁻¹ᵁ V.1
   have hcover : I.subschemeι ⁻¹ᵁ U ≤ iSup W := by
     intro z hz
@@ -176,7 +182,8 @@ lemma isSheaf_toPresheafOfModules :
   obtain ⟨V, i, hi, hxV⟩ := hs x hx
   exact ⟨V, i.le, hxV, hi⟩
 
-private def _root_.AlgebraicGeometry.Scheme.IdealSheafData.toModule : SheafOfModules
+/-- The ideal-section model as a sheaf of modules. -/
+def toModule : SheafOfModules
   X.ringCatSheaf where
   val := toPresheafOfModules I
   isSheaf := isSheaf_toPresheafOfModules I
@@ -184,9 +191,10 @@ private def _root_.AlgebraicGeometry.Scheme.IdealSheafData.toModule : SheafOfMod
 open _root_.AlgebraicGeometry.Scheme.IdealSheafData
 
 lemma toModule_sections (U : X.Opens) :
-    ((toModule I).val.obj (op U) : Type u) = I.sectionsIdeal U := rfl
+    ((toModule I).val.obj (op U) : Type u) = sectionsIdeal I U := rfl
 
-private def _root_.AlgebraicGeometry.Scheme.IdealSheafData.toModuleι : toModule I ⟶
+/-- The original inclusion of ideal sections into the structure sheaf. -/
+def toModuleι : toModule I ⟶
   SheafOfModules.unit X.ringCatSheaf :=
   ⟨{ app := fun U => ModuleCat.ofHom
       { toFun := fun s => s.1
@@ -202,30 +210,30 @@ scoped instance (U : (X.Opens)ᵒᵖ) : Mono ((toModuleι I).val.app U) :=
   (ModuleCat.mono_iff_injective _).2 (fun s t h => by apply Subtype.ext; exact h)
 
 lemma toModuleι_comp_unitToPushforwardUnit :
-    (I.toModuleι : (I.toModule : SheafOfModules X.ringCatSheaf) ⟶
+    ((toModuleι I) : ((toModule I) : SheafOfModules X.ringCatSheaf) ⟶
         SheafOfModules.unit X.ringCatSheaf) ≫ I.subschemeι.unitToPushforwardUnit = 0 := by
   apply SheafOfModules.hom_ext
   apply PresheafOfModules.hom_ext
   intro U
   ext s
-  change (I.subschemeι.unitToPushforwardUnit).val.app U ((I.toModuleι).val.app U s) = 0
+  change (I.subschemeι.unitToPushforwardUnit).val.app U (((toModuleι I)).val.app U s) = 0
   erw [SheafOfModules.unitToPushforwardObjUnit_val_app_apply]
-  exact (I.mem_sectionsIdeal_iff s.1).1 s.2
+  exact (mem_sectionsIdeal_iff I s.1).1 s.2
 
 /-- The universal kernel fork for inclusion of the ideal-section module. -/
 def isLimitKernelFork : IsLimit (KernelFork.ofι
-    (I.toModuleι : (I.toModule : SheafOfModules X.ringCatSheaf) ⟶ SheafOfModules.unit
+    ((toModuleι I) : ((toModule I) : SheafOfModules X.ringCatSheaf) ⟶ SheafOfModules.unit
       X.ringCatSheaf)
     (toModuleι_comp_unitToPushforwardUnit I)) :=
   KernelFork.IsLimit.ofι _ _
     (fun {M} φ hφ => ⟨{
       app := fun U => ModuleCat.ofHom
         { toFun := fun m => (⟨φ.val.app U m, by
-            refine (I.mem_sectionsIdeal_iff (U := U.unop) (φ.val.app U m)).mpr ?_
+            refine (mem_sectionsIdeal_iff I (U := U.unop) (φ.val.app U m)).mpr ?_
             have h := congr_arg (fun k : M ⟶ _ => k.val.app U m) hφ
             change (I.subschemeι.unitToPushforwardUnit).val.app U (φ.val.app U m) = 0 at h
             erw [SheafOfModules.unitToPushforwardObjUnit_val_app_apply] at h
-            exact h⟩ : I.sectionsIdeal U.unop)
+            exact h⟩ : sectionsIdeal I U.unop)
           map_add' := fun m m' => Subtype.ext (by
             change φ.val.app U (m + m') = φ.val.app U m + φ.val.app U m'
             exact map_add _ _ _)
@@ -241,11 +249,11 @@ def isLimitKernelFork : IsLimit (KernelFork.ofι
     (fun {M} φ hφ m hm => by
       apply SheafOfModules.hom_ext; apply PresheafOfModules.hom_ext; intro U; ext x
       apply Subtype.ext
-      change ((m ≫ I.toModuleι).val.app U) x = φ.val.app U x
+      change ((m ≫ (toModuleι I)).val.app U) x = φ.val.app U x
       rw [hm])
 
 /-- The comparison between the kernel ideal module and its ideal-section model. -/
-def moduleIsoToModule : (I.module : SheafOfModules X.ringCatSheaf) ≅ I.toModule :=
+def moduleIsoToModule : (I.module : SheafOfModules X.ringCatSheaf) ≅ (toModule I) :=
   IsLimit.conePointUniqueUpToIso (kernelIsKernel _) (isLimitKernelFork I)
 
 section restrict
@@ -312,15 +320,15 @@ lemma gOn_res {W W' : X.Opens} (h : W ≤ (B : X.Opens)) (i : W' ⟶ W) :
   rfl
 
 include hIg in
-lemma gOn_mem (W : X.Opens) (h : W ≤ (B : X.Opens)) : gOn B g W h ∈ I.sectionsIdeal W := by
-  apply I.map_mem_sectionsIdeal
+lemma gOn_mem (W : X.Opens) (h : W ≤ (B : X.Opens)) : gOn B g W h ∈ sectionsIdeal I W := by
+  apply map_mem_sectionsIdeal I
   rw [sectionsIdeal_eq_ideal, hIg]
   exact Ideal.subset_span rfl
 
 include hIg in
 lemma sectionsIdeal_eq_span (W : X.Opens) (hW : IsAffineOpen W) (h : W ≤ (B : X.Opens)) :
-    I.sectionsIdeal W = Ideal.span {gOn B g W h} := by
-  rw [I.sectionsIdeal_eq_ideal ⟨W, hW⟩, ← I.map_ideal (U := ⟨W, hW⟩) (V := B) h, hIg,
+    sectionsIdeal I W = Ideal.span {gOn B g W h} := by
+  rw [sectionsIdeal_eq_ideal I ⟨W, hW⟩, ← I.map_ideal (U := ⟨W, hW⟩) (V := B) h, hIg,
     Ideal.map_span, Set.image_singleton]
   rfl
 
@@ -334,15 +342,15 @@ lemma gOn_mem_nonZeroDivisors (h' : Γ(X, B)) (W : X.Opens) (e : W = X.basicOpen
 
 /-- Multiplication by the local generator, as a morphism to the ideal-section module. -/
 def mulGen : SheafOfModules.unit ((B : X.Opens) : Scheme.{u}).ringCatSheaf ⟶
-    (restrictFunctor' (B : X.Opens)).obj I.toModule :=
+    (restrictFunctor' (B : X.Opens)).obj (toModule I) :=
   ⟨{ app := fun W => by
       let K : ModuleCat (((B : X.Opens) : Scheme.{u}).ringCatSheaf.obj.obj W) :=
         (SheafOfModules.unit ((B : X.Opens) : Scheme.{u}).ringCatSheaf).val.obj W
       let N : ModuleCat (((B : X.Opens) : Scheme.{u}).ringCatSheaf.obj.obj W) :=
-        (((restrictFunctor' (B : X.Opens)).obj I.toModule).val.obj W)
+        (((restrictFunctor' (B : X.Opens)).obj (toModule I)).val.obj W)
       exact (ModuleCat.homEquiv (M := K) (N := N)).symm
         { toFun := fun a => (⟨secX (B : X.Opens) W.unop a * gOn B g _ (image_le _ W.unop),
-            Ideal.mul_mem_left _ _ (gOn_mem I B g hIg _ _)⟩ : I.sectionsIdeal _)
+            Ideal.mul_mem_left _ _ (gOn_mem I B g hIg _ _)⟩ : sectionsIdeal I _)
           map_add' := fun a b => Subtype.ext
             (add_mul (secX (B : X.Opens) W.unop a) (secX (B : X.Opens) W.unop b) _)
           map_smul' := fun r a => Subtype.ext
@@ -386,7 +394,7 @@ lemma isIso_mulGen : IsIso (mulGen I B g hIg) := by
     obtain ⟨h', W'', i, hyW'', hW''⟩ := refine W y hy
     refine ⟨W'', i, ?_, hyW''⟩
     have haff : IsAffineOpen ((B : X.Opens).ι ''ᵁ W'') := hW'' ▸ (X.affineBasicOpen h').2
-    have ht' := I.map_mem_sectionsIdeal ((B : X.Opens).ι.opensFunctor.map i) ht
+    have ht' := map_mem_sectionsIdeal I ((B : X.Opens).ι.opensFunctor.map i) ht
     rw [sectionsIdeal_eq_span I B g hIg _ haff (image_le _ _), Ideal.mem_span_singleton'] at ht'
     obtain ⟨a, ha⟩ := ht'
     exact ⟨a, Subtype.ext ha⟩
@@ -423,7 +431,7 @@ with_weak_namespace AlgebraicGeometry.Scheme.IdealSheafData
 theorem _root_.AlgebraicGeometry.Scheme.IdealSheafData.IsInvertible.isInvertible_module {X :
   AlgebraicGeometry.Scheme.{u}} {I : X.IdealSheafData} (hI : I.IsInvertible) :
     AlgebraicGeometry.Scheme.Modules.IsInvertible I.module := by
-  have h1 : Scheme.Modules.IsInvertible I.toModule := by
+  have h1 : Scheme.Modules.IsInvertible (toModule I) := by
     refine ⟨fun x => ?_⟩
     obtain ⟨U, f, hxf, g, hg, hIg⟩ := hI x
     have := isIso_mulGen I (X.affineBasicOpen f) g hg hIg

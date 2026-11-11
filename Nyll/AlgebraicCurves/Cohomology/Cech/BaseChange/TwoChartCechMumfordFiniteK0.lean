@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
-import Mathlib.RingTheory.Noetherian.Basic
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Mathlib.RingTheory.Noetherian.Basic
 
 /-!
 Finiteness of the enlarged kernel used in the finite-presentation construction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

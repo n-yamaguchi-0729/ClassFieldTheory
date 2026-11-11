@@ -4,10 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
-import Mathlib.NumberTheory.LocalField.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.HilbertPairing
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPairing
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.MathlibHilbertPairing
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Small
 
 /-!
 # Existence of the local Hilbert pairing
@@ -23,9 +28,12 @@ implementation of local reciprocity in its statement. Its proof imports the
 implementation layer. The witness satisfies the
 Steinberg relation, skew-symmetry, nondegeneracy in both variables, and the
 Kummer norm-residue vanishing criterion.  Multiplicativity is already part
-of the type `HilbertPairing K n`.  These properties still leave the harmless
-choice of a normalization of the values in `μₙ` explicit.
+of the type `HilbertPairing K n`.
+The witness is the named pairing built from the specified general local Artin map;
+its value normalization is recorded in `LocalHilbertPairingArtinNormalization`.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 
@@ -40,26 +48,8 @@ theorem exists_localHilbertPairing
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) :
     ∃ B : HilbertPairing K n,
-      HilbertPairing.IsLocalHilbertPairing B := by
-  let : Small.{0} K := LocalFieldTheory.nonarchimedeanLocalField_small K
-  let S := Shrink.{0} K
-  let : ValuativeRel S := LocalFieldTheory.shrinkLocalFieldValuativeRel K
-  let : IsNonarchimedeanLocalField S :=
-    LocalFieldTheory.shrinkLocalField_isNonarchimedeanLocalField K
-  let e : S ≃+* K := Shrink.ringEquiv K
-  have hnS : ((n : ℕ) : S) ≠ 0 := by
-    intro hz
-    apply hnK
-    have hzK := congrArg e hz
-    simpa [e] using hzK
-  have hmuS : (primitiveRoots (n : ℕ) S).Nonempty := by
-    obtain ⟨ζ, hζ⟩ := hmu
-    refine ⟨e.symm ζ, ?_⟩
-    exact (mem_primitiveRoots n.pos).2
-      (((mem_primitiveRoots n.pos).1 hζ).map_of_injective e.symm.injective)
-  let B : HilbertPairing S n := localHilbertPairing S n hnS hmuS
-  exact ⟨hilbertPairingOfRingEquiv e n hmuS B,
-    hilbertPairingOfRingEquiv_isLocalHilbertPairing e n hmuS B
-      (localHilbertPairing_isLocalHilbertPairing S n hnS hmuS)⟩
+      HilbertPairing.IsLocalHilbertPairing B :=
+  ⟨localHilbertPairing K n hnK hmu,
+    localHilbertPairing_isLocalHilbertPairing K n hnK hmu⟩
 
 end ClassFieldTheory

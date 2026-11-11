@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AlgebraStandardSmoothDVRLocalizationAtPrime
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AlgebraStandardSmoothDVRLocalizationAtPrime
 
 /-!
 # Discrete valuation stalks at closed points of smooth curves
@@ -20,6 +22,8 @@ import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AlgebraStandardSm
 An integral scheme smooth of relative dimension one over a field has a discrete valuation
 ring as its stalk at every closed point.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

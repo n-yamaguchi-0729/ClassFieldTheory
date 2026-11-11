@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
-import Nyll.AlgebraicCurves.RelativeDivisors.Support.RelEffCartierDivSupportedIn
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+public import Nyll.AlgebraicCurves.RelativeDivisors.Support.RelEffCartierDivSupportedIn
 
 /-!
 Restriction of relative effective Cartier divisors to opens.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits
 

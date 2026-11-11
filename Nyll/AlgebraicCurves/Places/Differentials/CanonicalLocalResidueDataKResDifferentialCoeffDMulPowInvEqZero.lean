@@ -10,19 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.AlgebraicCurves.Differentials.Residues.Construction
+public import Nyll.AlgebraicCurves.Places.Orders.OrderOfSum
 
 /-!
 # Place Canonical Local Residue Data K res differential Coeff D mul pow inv eq zero of
 surjective algebra Map
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -60,31 +65,8 @@ theorem mem_iff_ord_nonneg {f : F} (hf : f ≠ 0) :
 
 private theorem _root_.AlgebraicCurve.Place.ord_add_eq_min {f g : F} (hf : f ≠ 0) (hg : g ≠ 0) (h
   : v.ord f ≠ v.ord g) :
-    v.ord (f + g) = min (v.ord f) (v.ord g) := by
-  have hval : v.adicValuation f ≠ v.adicValuation g := by
-    intro hcon
-    exact h (by simp only [ord, hcon])
-  have h1 : v.adicValuation (f + g) = max (v.adicValuation f) (v.adicValuation g) :=
-    Valuation.map_add_of_distinct_val _ hval
-  have hfg : f + g ≠ 0 := by
-    intro hcon
-    rw [hcon, _root_.map_zero] at h1
-    rcases max_cases (v.adicValuation f) (v.adicValuation g) with ⟨hmax, -⟩ | ⟨hmax, -⟩ <;>
-      rw [hmax] at h1
-    · exact v.adicValuation_ne_zero hf h1.symm
-    · exact v.adicValuation_ne_zero hg h1.symm
-  rcases max_cases (v.adicValuation f) (v.adicValuation g) with ⟨hmax, hle⟩ | ⟨hmax, hlt⟩ <;>
-    rw [hmax] at h1
-  · have hlog := (WithZero.log_le_log (v.adicValuation_ne_zero hg)
-      (v.adicValuation_ne_zero hf)).mpr hle
-    have h2 : v.ord (f + g) = v.ord f := by simp only [ord, h1]
-    simp only [ord] at hlog h2 ⊢
-    omega
-  · have hlog := (WithZero.log_le_log (v.adicValuation_ne_zero hf)
-      (v.adicValuation_ne_zero hg)).mpr hlt.le
-    have h2 : v.ord (f + g) = v.ord g := by simp only [ord, h1]
-    simp only [ord] at hlog h2 ⊢
-    omega
+    v.ord (f + g) = min (v.ord f) (v.ord g) :=
+  _root_.AlgebraicCurve.Place.ord_add_eq_min_of_ne v hf hg h
 
 open _root_.AlgebraicCurve.Place
 end Place
@@ -1262,8 +1244,7 @@ end PublicStatement
 end ProofImplementation
 
 attribute [-instance] AlgebraicCurve.instHasCanonicalLocalResidueK
-  AlgebraicCurve.Place.instAlgebra_restrictResidueField
-  AlgebraicCurve.Place.instIsScalarTower_restrictResidueField AlgebraicCurve.instHasLocalResidue
+   AlgebraicCurve.instHasLocalResidue
   AlgebraicCurve.HasSeparableResidue.of_perfectField_of_isCurveOver
   AlgebraicCurve.HasSeparableResidue.of_perfectField
   AlgebraicCurve.Place.instIsLocalHom_restrictSubringHom

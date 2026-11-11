@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.DenseEmbedding
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Approximation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.OnePlaceDetermination
+module
+
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.DenseEmbedding
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Approximation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.OnePlaceDetermination
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Idele class characters are determined away from finitely many places
@@ -17,6 +20,8 @@ Weak approximation makes principal units dense in any finite product of local
 multiplicative groups. A continuous character trivial outside this finite set
 therefore vanishes everywhere once it vanishes on principal ideles.
 -/
+
+@[expose] public section
 
 noncomputable section
 

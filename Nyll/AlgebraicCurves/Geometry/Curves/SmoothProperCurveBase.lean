@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
-import Mathlib.AlgebraicGeometry.Fiber
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
+public import Mathlib.AlgebraicGeometry.Fiber
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 
 /-!
 Scalar extensions of smooth proper curves, their sections and their basic fibre properties.
 -/
+
+@[expose] public section
 
 noncomputable section
 

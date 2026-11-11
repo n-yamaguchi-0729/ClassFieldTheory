@@ -10,11 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfBaseChangeEquiv
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBaseChangeEq
+module
+
+public import Mathlib.RingTheory.Flat.FaithfullyFlat.Basic
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverSectionsOfBaseChangeEquiv
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBaseChangeEq
 
 /-!
 # Ranks and vanishing of two-chart cohomology after a field extension
@@ -22,6 +25,8 @@ import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechFinrankKerBas
 The base-change equivalences of sections on two affine charts and their overlap
 identify zeroth-cohomology rank and the vanishing of first cohomology across a field extension.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -119,7 +124,7 @@ theorem main
   have step2 : LinearMap.range (d.baseChange k') = ⊤ ↔
       Subsingleton ((k' ⊗[k] P01) ⧸ LinearMap.range (d.lTensor k')) := by
     rw [Submodule.Quotient.subsingleton_iff, LinearMap.range_eq_top, LinearMap.range_eq_top,
-      LinearMap.baseChange_eq_ltensor]
+      LinearMap.baseChange_eq_lTensor]
   have hex : Function.Exact (d.lTensor k') ((LinearMap.range d).mkQ.lTensor k') :=
     lTensor_exact k' (LinearMap.exact_map_mkQ_range d) (Submodule.mkQ_surjective _)
   have hsurj : Function.Surjective ((LinearMap.range d).mkQ.lTensor k') :=

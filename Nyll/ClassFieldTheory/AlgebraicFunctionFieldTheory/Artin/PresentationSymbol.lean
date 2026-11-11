@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldPresentation
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldPresentation
+public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
 
 /-!
 # Values of reciprocity under a fixed-field presentation
@@ -13,13 +16,18 @@ The transported norm-quotient isomorphism evaluates on an idele class by
 base change, the actual fixed-field Artin map, and Galois transport.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory
 
-variable (k K L Ω : Type) [Field k] [Finite k] [Field K] [Field L] [Field Ω]
+variable (k : Type u) (K : Type v) (L : Type w) (Ω : Type x)
+    [Field k] [Finite k] [Field K] [Field L] [Field Ω]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]
@@ -33,12 +41,12 @@ theorem normQuotientEquivOfFixedFieldPresentation_mk
     (H : FiniteAbstractField Gal(Ω/K)) (T : FiniteGaloisSubextension H.field)
     (eF : K ≃ₐ[K] abstractFixedField K Ω H.field)
     (eE : L ≃ₐ[K] abstractFixedField K Ω T.field) :
-    let hKFfinite : FiniteDimensional K (abstractFixedField K Ω H.field) :=
+    let _ : FiniteDimensional K (abstractFixedField K Ω H.field) :=
       abstractFixedField_finiteDimensional K Ω H.field H.finite
     let _ : IsGalois K (abstractFixedField K Ω H.field) := IsGalois.of_algEquiv eF
-    let aFE : Algebra (abstractFixedField K Ω H.field) (abstractFixedField K Ω T.field) :=
+    let _ : Algebra (abstractFixedField K Ω H.field) (abstractFixedField K Ω T.field) :=
       (IntermediateField.inclusion (abstractFixedField_le K Ω T.below)).toRingHom.toAlgebra
-    let hKFE : IsScalarTower K (abstractFixedField K Ω H.field)
+    let _ : IsScalarTower K (abstractFixedField K Ω H.field)
         (abstractFixedField K Ω T.field) :=
       IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
     let hFdegree : Module.finrank K (abstractFixedField K Ω H.field) = 1 := by

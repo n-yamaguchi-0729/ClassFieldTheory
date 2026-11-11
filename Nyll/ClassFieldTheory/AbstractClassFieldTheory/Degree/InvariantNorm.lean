@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Norm
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Norm
 
 /-!
 # Invariant homomorphisms on relative norms
@@ -13,16 +15,20 @@ A Galois-invariant additive homomorphism sends the actual relative norm
 to multiplication by the number of relative cosets. Normality is unnecessary.
 -/
 
+@[expose] public section
+
+universe u v
+
 namespace ClassFormation
 
 open KummerTheory CyclicCohomology
 open scoped BigOperators
 
-variable {G : IntegralRepGroupType} [Group G] [TopologicalSpace G]
+variable {G : Type u} [Group G] [TopologicalSpace G]
     {B : Type*} [AddCommMonoid B]
 
 /-- Invariant additive values turn the actual relative norm sum into its index multiple. -/
-theorem invariantHom_relativeNorm (A : Rep ℤ G) (f : A.V →+ B)
+theorem invariantHom_relativeNorm (A : Rep.{v} ℤ G) (f : A.V →+ B)
     (hf : ∀ (g : G) (x : A.V), f (A.ρ g x) = f x)
     (H J : ClosedSubgroup G) (hJH : J.toSubgroup ≤ H.toSubgroup)
     [Finite (H.toSubgroup ⧸ extensionSubgroup H J hJH)]

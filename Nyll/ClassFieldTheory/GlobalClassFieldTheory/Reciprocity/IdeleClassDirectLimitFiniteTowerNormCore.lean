@@ -6,6 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtensionNorm
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldRelativeNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.BaseChange
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.EmbeddingNorm
 
 /-!
 # Core comparisons for finite-tower idèle-class norms
@@ -26,10 +31,10 @@ open ClassFormation
 open LocalClassFieldTheory
 open CyclicCohomology
 
-universe u
+universe u v w x y
 
 private theorem finiteTowerIdeleIsMulCommutative
-    {K M L : Type u}
+    {K : Type u} {M : Type v} {L : Type w}
     [Field K] [NumberField K] [Field M] [Field L]
     [Algebra K M] [Algebra M L] :
     IsMulCommutative (TowerRelativeIdeleGroup K M L) :=
@@ -40,7 +45,7 @@ attribute [local instance] finiteTowerIdeleIsMulCommutative
 /-- Algebra homomorphisms into an ambient field are equivalent to algebra
 homomorphisms into the normal closure inside that field. -/
 noncomputable def normalClosureAlgHomEquiv
-    {F E L : Type u}
+    {F : Type u} {E : Type v} {L : Type w}
     [Field F] [Field E] [Field L]
     [Algebra F E] [Algebra F L] :
     (E →ₐ[F] L) ≃
@@ -49,7 +54,7 @@ noncomputable def normalClosureAlgHomEquiv
 
 /-- Lift an algebra homomorphism to the normal closure in its codomain. -/
 noncomputable def normalClosureLiftAlgHom
-    {F E L : Type u}
+    {F : Type u} {E : Type v} {L : Type w}
     [Field F] [Field E] [Field L]
     [Algebra F E] [Algebra F L]
     (f : E →ₐ[F] L) :
@@ -59,7 +64,7 @@ noncomputable def normalClosureLiftAlgHom
 /-- Promote a ring homomorphism compatible with the scalar maps to an
 algebra homomorphism. -/
 def algHomOfCompatibleRingHom
-    {R S A : Type u}
+    {R : Type u} {S : Type v} {A : Type w}
     [CommSemiring R] [CommSemiring S] [Semiring A]
     [Algebra R S] [Algebra R A]
     (f : S →+* A)
@@ -69,7 +74,7 @@ def algHomOfCompatibleRingHom
   commutes' := h
 
 private theorem relativeAdeleEmbedding_toAlgHom_unflatten
-    {K M L : Type u}
+    {K : Type u} {M : Type v} {L : Type w}
     [Field K] [NumberField K]
     [Field M] [NumberField M]
     [Field L] [NumberField L]
@@ -102,7 +107,7 @@ private theorem relativeAdeleEmbedding_toAlgHom_unflatten
   rfl
 
 private theorem relativeIdeleEmbedding_toAlgHom_unflatten
-    {K M L : Type u}
+    {K : Type u} {M : Type v} {L : Type w}
     [Field K] [NumberField K]
     [Field M] [NumberField M]
     [Field L] [NumberField L]
@@ -110,7 +115,7 @@ private theorem relativeIdeleEmbedding_toAlgHom_unflatten
     [IsScalarTower K M L]
     [FiniteDimensional K M] [FiniteDimensional M L]
     (a : RelativeIdeleGroup K M) :
-    letI : Algebra M (RelativeAdeleRing K M) :=
+    let : Algebra M (RelativeAdeleRing K M) :=
       relativeAdeleRingIntermediateAlgebra K M
     (towerRelativeIdeleEquiv K M L).symm
         (RelativeIdeleGroup.ideleEmbedding
@@ -124,15 +129,14 @@ private theorem relativeIdeleEmbedding_toAlgHom_unflatten
           (relativeAdeleRingIntermediateAlgebra K M)
           (smulCommClass_self M (RelativeAdeleRing K M))).toRingHom a :
         TowerRelativeIdeleGroup K M L) := by
-  let _ : Algebra M (RelativeAdeleRing K M) :=
-    relativeAdeleRingIntermediateAlgebra K M
+  intro sharedOwner1
   apply Units.ext
   exact relativeAdeleEmbedding_toAlgHom_unflatten
     (K := K) (M := M) (L := L) (a : RelativeAdeleRing K M)
 
 private theorem
     relativeIdeleClassEmbedding_toAlgHom_towerBaseChange
-    {K M L : Type u}
+    {K : Type u} {M : Type v} {L : Type w}
     [Field K] [NumberField K]
     [Field M] [NumberField M]
     [Field L] [NumberField L]
@@ -172,7 +176,7 @@ private theorem
 
 theorem
     relativeIdeleClassBaseChange_classEmbedding_toAlgHom
-    {K M L : Type u}
+    {K : Type u} {M : Type v} {L : Type w}
     [Field K] [NumberField K]
     [Field M] [NumberField M]
     [Field L] [NumberField L]
@@ -212,7 +216,7 @@ theorem
       relativeIdeleClassBaseChangeMulEquiv_classInclusion _
 
 theorem classEmbedding_smul_eq_classEmbedding_comp
-    {K E U : Type u}
+    {K : Type u} {E : Type v} {U : Type w}
     [Field K] [NumberField K]
     [Field E] [Field U]
     [Algebra K E] [Algebra K U]
@@ -252,7 +256,7 @@ theorem classEmbedding_smul_eq_classEmbedding_comp
       simp only [map_add, hx, hy]
 
 private theorem classEmbedding_changeBase
-    {k F E U : Type u}
+    {k : Type u} {F : Type v} {E : Type w} {U : Type x}
     [Field k] [NumberField k]
     [Field F] [NumberField F]
     [Field E] [NumberField E]
@@ -350,7 +354,7 @@ private theorem classEmbedding_changeBase
       classEmbedding_smul_eq_classEmbedding_comp jF σ dF
 
 theorem relativeIdeleClassBaseChange_classEmbedding_changeBase
-    {k F E U : Type u}
+    {k : Type u} {F : Type v} {E : Type w} {U : Type x}
     [Field k] [NumberField k]
     [Field F] [NumberField F]
     [Field E] [NumberField E]
@@ -385,7 +389,7 @@ theorem relativeIdeleClassBaseChange_classEmbedding_changeBase
         (K := k) (L := E)).symm c))).symm
 
 private theorem classEmbedding_comp
-    {K E N U : Type u}
+    {K : Type u} {E : Type v} {N : Type w} {U : Type x}
     [Field K] [NumberField K]
     [Field E] [Field N] [Field U]
     [Algebra K E] [Algebra K N] [Algebra K U]
@@ -426,7 +430,7 @@ private theorem classEmbedding_comp
       simp only [map_add, hx, hy]
 
 theorem relativeIdeleClassBaseChange_prod_embeddings
-    {F E N U Q : Type u}
+    {F : Type u} {E : Type v} {N : Type w} {U : Type x} {Q : Type y}
     [Field F] [NumberField F]
     [Field E] [Field N]
     [Field U] [NumberField U]
@@ -486,13 +490,15 @@ theorem
   let d : RelativeIdeleGroup.ClassGroup ℚ E :=
     (_root_.relativeIdeleClassBaseChangeMulEquiv
       (K := ℚ) (L := E)).symm c
+  let extendedClass : RelativeIdeleGroup.ClassGroup ℚ U :=
+    (RelativeIdeleGroup.classEmbedding (K := ℚ) (L := E) (M := U) (IntermediateField.inclusion
+    hEU) d)
   calc
     rationalIntermediateIdeleClassToDirectLimit E c =
         rationalIntermediateIdeleClassToDirectLimit U
           (_root_.relativeIdeleClassBaseChangeMulEquiv
             (K := ℚ) (L := U)
-            (RelativeIdeleGroup.classEmbedding (K := ℚ) (L := E) (M := U)
-              (IntermediateField.inclusion hEU) d)) := by
+            extendedClass) := by
       rw [show c = _root_.relativeIdeleClassBaseChangeMulEquiv
           (K := ℚ) (L := E) d by
         exact ((_root_.relativeIdeleClassBaseChangeMulEquiv
@@ -500,11 +506,9 @@ theorem
       exact (rationalIntermediateIdeleClassToDirectLimit_extension
         hEU d).symm
     _ = rationalRelativeIdeleClassToDirectLimit U
-        (RelativeIdeleGroup.classEmbedding (K := ℚ) (L := E) (M := U)
-          (IntermediateField.inclusion hEU) d) :=
+        extendedClass :=
       rationalFiniteGaloisIdeleClassToDirectLimit_baseChange
-        U (RelativeIdeleGroup.classEmbedding (K := ℚ) (L := E) (M := U)
-          (IntermediateField.inclusion hEU) d)
+        U extendedClass
 
 end FiniteTowerNormCore
 end Reciprocity

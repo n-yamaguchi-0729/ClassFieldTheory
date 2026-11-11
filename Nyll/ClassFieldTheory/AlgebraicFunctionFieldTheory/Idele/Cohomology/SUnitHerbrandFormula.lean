@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitHerbrand
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnitHerbrand
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.GaloisCohomology.Cyclic.Herbrand.UniverseFiniteness
 
 /-!
 # The numerical Herbrand quotient of S-units
@@ -14,7 +18,11 @@ lattice by the degree-zero lattice with a trivial infinite cyclic group. This co
 the Herbrand quotient using orbit stabilizers, without assuming a degree-one place.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 namespace FunctionField.SUnits
 
@@ -134,7 +142,7 @@ namespace FunctionField.SUnits
 open AlgebraicCurve CyclicCohomology
 open CyclicCohomology.ProfiniteCohomology.Herbrand
 
-variable {k K G : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} {G : Type w} [Field k] [Field K] [Algebra k K]
     [IsCurveOver k K] [Group G] [Fintype G]
 
 /-- The degree-zero divisor lattice has the permutation stabilizer product divided by `|G|`. -/
@@ -162,7 +170,7 @@ theorem lattice_herbrandQuotient (S : Finset (Place k K)) (hS : S.Nonempty)
       permutationFunctionHerbrandHMinusOneFinite σ hgen⟩
   have hC : HerbrandQuotientDefined G (Multiplicative ℤ) σ :=
     ⟨trivialIntHerbrandH0Finite, trivialIntHerbrandHMinusOneFinite σ⟩
-  have hL := herbrandQuotientDefined_left_of_middle_right
+  have hL := Universe.herbrandQuotientDefined_left_of_middle_right
     (latticeCoordinates S) (coordinateDegree S hS)
     (latticeCoordinates_equivariant S ρ) (coordinateDegree_equivariant S hS ρ)
     (coordinateDegree_exact S hS) (latticeCoordinates_injective S)
@@ -173,7 +181,7 @@ theorem lattice_herbrandQuotient (S : Finset (Place k K)) (hS : S.Nonempty)
   have : Finite (HerbrandHMinusOne G (S → Multiplicative ℤ) σ) := hB.2
   have : Finite (HerbrandH0 G (Multiplicative ℤ)) := hC.1
   have : Finite (HerbrandHMinusOne G (Multiplicative ℤ) σ) := hC.2
-  have hmul := herbrandQuotient_multiplicative_of_shortExact
+  have hmul := Universe.herbrandQuotient_multiplicative_of_shortExact
     (latticeCoordinates S) (coordinateDegree S hS)
     (latticeCoordinates_equivariant S ρ) (coordinateDegree_equivariant S hS ρ)
     (coordinateDegree_exact S hS) (latticeCoordinates_injective S)

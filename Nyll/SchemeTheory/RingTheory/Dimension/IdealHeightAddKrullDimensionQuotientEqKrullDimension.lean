@@ -10,22 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.NoetherNormalization
-import Mathlib.RingTheory.KrullDimension.Field
-import Mathlib.RingTheory.KrullDimension.Polynomial
-import Mathlib.RingTheory.KrullDimension.Regular
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
-import Mathlib.RingTheory.Ideal.UFD
-import Mathlib.RingTheory.Ideal.Quotient.Operations
-import Mathlib.RingTheory.IntegralClosure.GoingDown
-import Mathlib.RingTheory.Jacobson.Ring
-import Mathlib.RingTheory.Polynomial.UniqueFactorization
-import Mathlib.RingTheory.FiniteType
-import Mathlib.Tactic.NormNum
+module
+
+public import Mathlib.RingTheory.NoetherNormalization
+public import Mathlib.RingTheory.KrullDimension.Field
+public import Mathlib.RingTheory.KrullDimension.Polynomial
+public import Mathlib.RingTheory.KrullDimension.Regular
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+public import Mathlib.RingTheory.Ideal.UFD
+public import Mathlib.RingTheory.Ideal.Quotient.Operations
+public import Mathlib.RingTheory.IntegralClosure.GoingDown
+public import Mathlib.RingTheory.Jacobson.Ring
+public import Mathlib.RingTheory.Polynomial.UniqueFactorization
+public import Mathlib.RingTheory.Polynomial.RationalRoot
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.Tactic.NormNum
 
 /-!
 # Ideal height add ring Krull Dim quotient eq ring Krull Dim of finite Type
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

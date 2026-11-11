@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Mathlib.FieldTheory.Galois.Basic
-import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexEqRestrictEq
-import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegEqRestrictEq
-import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegFiberOver
+module
+
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Mathlib.FieldTheory.Galois.Basic
+public import Nyll.AlgebraicCurves.Places.Ramification.RamificationIndexEqRestrictEq
+public import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegEqRestrictEq
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegFiberOver
 
 /-!
 # Place card fiber Over mul ramification Index mul inertia Deg
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

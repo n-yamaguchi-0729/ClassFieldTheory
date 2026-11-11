@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 
 /-!
 # The full conductor as a minimal modulus
@@ -20,13 +21,15 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- A finite abelian extension has a conductor characterized by containment
 in ray class fields. -/
 theorem embedsInRayClassField_iff_conductor_le
-    (K : Type) [Field K] [NumberField K]
-    (L : Type) [Field L] [NumberField L]
+    (K : Type u) [Field K] [NumberField K]
+    (L : Type v) [Field L] [NumberField L]
     [Algebra K L] [IsAbelianGalois K L] :
     ∃ c : RayClassModulus K, IsAbelianConductor K L c := by
   let H := GlobalClassFieldTheory.GlobalClassFields.ideleClassNormConductorialSubgroup

@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.FunctionFields.IsAffineOpenRangeAlgebraMapFunctionFieldEqIInf
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.FunctionFields.IsAffineOpenRangeAlgebraMapFunctionFieldEqIInf
 
 /-!
 # Sections as an intersection of stalks in the function field
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.FunctionFields.IsAffineOpenRangeAlg
 For a nonempty open of an integral scheme, the image of its section ring in the
 function field equals the intersection of the images of the stalks at its points.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

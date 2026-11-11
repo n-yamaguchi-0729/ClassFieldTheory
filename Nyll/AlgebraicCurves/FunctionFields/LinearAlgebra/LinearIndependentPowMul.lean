@@ -10,9 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.AlgebraTower
+module
+
+public import Mathlib.RingTheory.AlgebraTower
 
 /-! # Linear independence of powers times a basis in a field tower -/
+
+@[expose] public section
 
 namespace AlgebraicCurve
 

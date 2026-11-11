@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
 
 /-!
 # Local one-element bases of invertible module sheaves
@@ -18,6 +20,8 @@ import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
 An invertible module has a local generator whose restrictions form one-element
 bases of the section modules on smaller opens.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

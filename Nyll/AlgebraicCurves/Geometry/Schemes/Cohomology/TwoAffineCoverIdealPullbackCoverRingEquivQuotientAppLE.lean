@@ -10,13 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseChangeIsosStructureSheaf
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseChangeIsosStructureSheaf
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
 
 /-!
 # Chart quotients for square-zero base change
@@ -24,6 +26,8 @@ import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
 After square-zero base change, the two affine chart rings and their overlap are
 quotients of the corresponding chart rings, compatibly with restriction maps.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Places.Basic
-import Mathlib.LinearAlgebra.Dimension.Finite
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finite
 
 /-!
 # Positive degree of a place
@@ -20,6 +22,8 @@ import Mathlib.LinearAlgebra.Dimension.Finite
 The residue field at a place is a nonzero finite-dimensional vector space over
 the constant field.
 -/
+
+@[expose] public section
 
 namespace AlgebraicCurve
 

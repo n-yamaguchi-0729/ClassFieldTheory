@@ -10,15 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.Algebra.Category.ModuleCat.Sheaf
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
-import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
-import Nyll.AlgebraicCurves.Places.Rational.Basic
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.Algebra.Category.ModuleCat.Sheaf
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Cohomology.Cech.DivisorSections
+public import Nyll.AlgebraicCurves.Models.FunctionFields.RangeAlgebraMapFunctionFieldEqIInf
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Function-field sections of the unit module
@@ -26,6 +29,8 @@ import Nyll.AlgebraicCurves.Places.Rational.Basic
 The unit module embeds in the function field of a smooth integral curve. On each
 affine open, its image is the Riemann-Roch space for the zero divisor.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -106,10 +111,10 @@ theorem φ_injective (U : X.Opens) [Nonempty U] : Function.Injective (φ (X := X
   exact Scheme.germToFunctionField_injective X U h
 
 theorem range_φ [SmoothOfRelativeDimension 1 x] (U : X.Opens) (hU : IsAffineOpen U) [Nonempty U] :
-    letI := (baseToFunctionField x).toAlgebra
+    let := (baseToFunctionField x).toAlgebra
     Set.range (φ (X := X) U) = (lSpaceOn (placesOf x U) (0 : Divisor K X.functionField) : Set
         X.functionField) := by
-  let := (baseToFunctionField x).toAlgebra
+  intro sharedOwner1
   have hsec := range_algebraMap_functionField_eq_iInf_of_isAffineOpen x U hU
   ext f
   have h1 : f ∈ Set.range (φ (X := X) U) ↔ f ∈ (algebraMap Γ(X, U) X.functionField).range := by
@@ -128,10 +133,6 @@ theorem range_φ [SmoothOfRelativeDimension 1 x] (U : X.Opens) (hU : IsAffineOpe
     exact (Place.mem_iff_adicValuation_le_one v).mpr (hf v hv)
 
 end AlgebraicGeometry.Scheme.Modules.UnitFF
-
-noncomputable local instance nativeUnitSectionsModule (X : Scheme.{u}) (U : X.Opens) :
-    Module Γ(X, U) Γ((SheafOfModules.unit X.ringCatSheaf : X.Modules), U) :=
-  ((SheafOfModules.unit X.ringCatSheaf : X.Modules).val.obj (Opposite.op U)).isModule
 
 namespace AlgebraicGeometry
 open _root_.AlgebraicGeometry
@@ -153,7 +154,10 @@ open AlgebraicGeometry.Scheme.Modules.UnitFF in
 theorem AlgebraicGeometry.Scheme.Modules.exists_unit_range_eq_lSpaceOn_zero'
     {K : Type u} [Field K] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of K))
     [IsIntegral X] [SmoothOfRelativeDimension 1 x] :
-    letI := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let : ∀ U : X.Opens, Module Γ(X, U)
+        Γ((SheafOfModules.unit X.ringCatSheaf : X.Modules), U) := fun U =>
+      ((SheafOfModules.unit X.ringCatSheaf : X.Modules).val.obj (op U)).isModule
     ∃ φ : ∀ U : X.Opens, Γ((SheafOfModules.unit X.ringCatSheaf : X.Modules), U) →+
         (X.functionField : Type u),
       (∀ (U : X.Opens) [Nonempty U] (m : Γ((SheafOfModules.unit X.ringCatSheaf : X.Modules), U)),
@@ -170,7 +174,7 @@ theorem AlgebraicGeometry.Scheme.Modules.exists_unit_range_eq_lSpaceOn_zero'
       (∀ U : X.Opens, IsAffineOpen U → Nonempty U →
           Set.range (φ U) = (AlgebraicCurve.lSpaceOn (AlgebraicCurve.placesOf x U)
             (0 : AlgebraicCurve.Divisor K X.functionField) : Set X.functionField)) := by
-  let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+  intro sharedOwner1 unitSectionModules
   refine ⟨fun U => φ U, fun U _ m => φ_apply U m, ?_, fun U _ a m => φ_smul U a m,
     fun U hU => by
       have := hU
@@ -186,7 +190,10 @@ open AlgebraicGeometry.Scheme.Modules.UnitFF in
 theorem _root_.AlgebraicGeometry.Scheme.Modules.exists_unit_range_eq_lSpaceOn_zero
     {K : Type u} [Field K] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of K))
     [IsIntegral X] [SmoothOfRelativeDimension 1 x] :
-    letI := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let := (AlgebraicCurve.baseToFunctionField x).toAlgebra
+    let : ∀ U : X.Opens, Module Γ(X, U)
+        Γ((SheafOfModules.unit X.ringCatSheaf : X.Modules), U) := fun U =>
+      ((SheafOfModules.unit X.ringCatSheaf : X.Modules).val.obj (op U)).isModule
     ∃ φ : ∀ U : X.Opens, Γ((SheafOfModules.unit X.ringCatSheaf : X.Modules), U) →+
         (X.functionField : Type u),
       (∀ (U : X.Opens) [Nonempty U] (m : Γ((SheafOfModules.unit X.ringCatSheaf : X.Modules), U)),

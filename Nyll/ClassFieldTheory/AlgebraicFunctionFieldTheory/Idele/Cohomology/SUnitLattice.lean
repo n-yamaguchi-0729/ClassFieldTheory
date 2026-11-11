@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnits
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SUnits
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 /-!
 # The degree exact sequence for the S-unit divisor lattice
@@ -15,6 +17,8 @@ degree-zero divisor lattice with the kernel of the actual weighted degree map.
 For nonempty `S`, its degree image is an infinite cyclic subgroup of Z. No
 degree-one place or degree-one divisor is assumed.
 -/
+
+@[expose] public section
 
 noncomputable section
 

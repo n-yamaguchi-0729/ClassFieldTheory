@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Mathlib.Algebra.Lie.OfAssociative
-import Mathlib.RingTheory.Discriminant
-import Mathlib.RingTheory.PicardGroup
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Mathlib.Algebra.Lie.OfAssociative
+public import Mathlib.RingTheory.Discriminant
+public import Mathlib.RingTheory.PicardGroup
 
 /-!
 # Place residue Field eq compositum of is Constant Field Extension
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Mathlib.FieldTheory.RatFunc.Valuation
-import Mathlib.RingTheory.SimpleRing.Principal
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Mathlib.FieldTheory.RatFunc.Valuation
+public import Mathlib.RingTheory.SimpleRing.Principal
 
 /-!
 # Infinity
 
 The valuation at infinity defines a place of a rational function field.
 -/
+
+@[expose] public section
 
 noncomputable section
 

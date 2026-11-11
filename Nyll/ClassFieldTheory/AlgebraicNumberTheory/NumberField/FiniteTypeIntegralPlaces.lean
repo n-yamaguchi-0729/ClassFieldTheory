@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.GoodReductionPlaces
-import Mathlib.RingTheory.Adjoin.FG
-import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.GoodReductionPlaces
+public import Mathlib.RingTheory.Adjoin.FG
+public import Mathlib.RingTheory.DedekindDomain.FiniteAdeleRing
 
 /-!
 # Integral local maps for finitely generated arithmetic models
@@ -15,6 +17,8 @@ A finitely generated integer subalgebra of a number field maps into the
 integer rings of all but finitely many finite completions. The maps are the
 restrictions of the actual field embeddings into those completions.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum

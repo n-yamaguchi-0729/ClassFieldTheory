@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.CoherentBaseChangeTwoTermComplexProjectiveKer
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.Algebra.Module.Projective
-import Mathlib.RingTheory.Nilpotent.Defs
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.CoherentBaseChangeTwoTermComplexProjectiveKer
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.RingTheory.Nilpotent.Defs
 
 /-!
 Transfer projective-kernel and base-change conclusions to a Cech kernel.
 A finite two-term model with bijective kernel comparisons preserves the fibre dimensions.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

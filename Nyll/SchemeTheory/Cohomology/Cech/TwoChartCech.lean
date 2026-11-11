@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
-import Mathlib.Algebra.Algebra.Hom
-import Mathlib.LinearAlgebra.Prod
-import Mathlib.LinearAlgebra.TensorProduct.Tower
-import Mathlib.RingTheory.TensorProduct.Basic
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
+public import Mathlib.Algebra.Algebra.Hom
+public import Mathlib.LinearAlgebra.Prod
+public import Mathlib.LinearAlgebra.TensorProduct.Tower
+public import Mathlib.RingTheory.TensorProduct.Basic
 
 /-!
 # Cech data on two charts
@@ -23,6 +25,8 @@ This file defines algebraic chart covers and their section modules, the Cech dif
 its kernel and cokernel, and their comparison maps under scalar extension. It also defines
 two-term models whose kernel and cokernel comparisons remain bijective after base change.
 -/
+
+@[expose] public section
 
 noncomputable section
 

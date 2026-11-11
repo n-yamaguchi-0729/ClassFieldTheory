@@ -4,13 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.IntegralTranslate
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.IntegralTranslate
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.PadicField
 
 /-!
 # The valuation-ring equivalence for the totally ramified cyclotomic extension
 
 This file constructs the concrete equivalence from `ℤ_[p][ζ - 1]` to the actual valuation subring.
 -/
+
+@[expose] public section
 
 noncomputable section
 

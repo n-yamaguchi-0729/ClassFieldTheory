@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Tsen.PGroupH2OfTsen
-import Nyll.GaloisCohomology.GroupTheory.H2FiniteIndexTrace
-import Nyll.GaloisCohomology.Kummer.FiniteGaloisUnitsCohomologyTransport
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Tsen.PGroupH2OfTsen
+public import Nyll.GaloisCohomology.GroupTheory.H2FiniteIndexTrace
+public import Nyll.GaloisCohomology.Kummer.LiftedUnitsCohomology
+public import Nyll.GaloisCohomology.GroupTheory.CoefficientRingEquivalence
 
 /-!
 # Unit H² of arbitrary finite Galois extensions of curve function fields
@@ -16,20 +19,26 @@ groups are p-groups, so the previously proved vanishing applies. The finite-inde
 trace detects vanishing in the original actual group-cohomology object.
 -/
 
+@[expose] public section
+
+universe u
+
 open CategoryTheory
 
 namespace AlgebraicCurve
 
+open ClassFieldTower.Cohomology
+
 /-- Actual unit H² vanishes for every finite Galois extension of a one-variable
 function field over an algebraically closed field. -/
-theorem galoisUnitsH2_eq_zero_of_transcendental_of_finiteDimensional
-    (K : Type) [Field K] [IsAlgClosed K] {F : Type} [Field F] [Algebra K F]
+theorem liftedGaloisUnitsH2_eq_zero_of_transcendental_of_finiteDimensional
+    (K : Type u) [Field K] [IsAlgClosed K] {F : Type u} [Field F] [Algebra K F]
     (x : F) (hx : Transcendental K x)
     (hfin : FiniteDimensional (IntermediateField.adjoin K ({x} : Set F)) F)
-    (E : Type) [Field E] [Algebra F E] [FiniteDimensional F E] [IsGalois F E]
-    (c : groupCohomology (Rep.ofAlgebraAutOnUnits F E) 2) : c = 0 := by
-  apply ClassFieldTower.Cohomology.H2_eq_zero_of_sylow_restrictions_isZero
-    (Rep.ofAlgebraAutOnUnits F E) ?_ c
+    (E : Type u) [Field E] [Algebra F E] [FiniteDimensional F E] [IsGalois F E]
+    (c : groupCohomology (liftedGaloisUnitsRep F E) 2) : c = 0 := by
+  apply H2_eq_zero_of_sylow_restrictions_isZero
+    (liftedGaloisUnitsRep F E) ?_ c
   intro p hp P
   let L : IntermediateField F E := IntermediateField.fixedField (P : Subgroup Gal(E/F))
   let : Algebra K L := ((algebraMap F L).comp (algebraMap K F)).toAlgebra
@@ -40,18 +49,34 @@ theorem galoisUnitsH2_eq_zero_of_transcendental_of_finiteDimensional
       (P : Subgroup Gal(E/F)))
   obtain ⟨y, hy, hyfin, _⟩ :=
     exists_separating_transcendental_over_finite_extension K x hx hfin L
-  have hz (a : groupCohomology (Rep.ofAlgebraAutOnUnits L E) 2) : a = 0 :=
-    pGroupUnitsH2_eq_zero_of_transcendental_of_finiteDimensional K y hy hyfin p E hP a
-  let : Subsingleton (groupCohomology (Rep.ofAlgebraAutOnUnits L E) 2) :=
+  have hz (a : groupCohomology (liftedGaloisUnitsRep L E) 2) : a = 0 :=
+    liftedPGroupUnitsH2_eq_zero_of_transcendental_of_finiteDimensional K y hy hyfin p E hP a
+  let : Subsingleton (groupCohomology (liftedGaloisUnitsRep L E) 2) :=
     ⟨fun a b => (hz a).trans (hz b).symm⟩
-  have hzero : Limits.IsZero (groupCohomology (Rep.ofAlgebraAutOnUnits L E) 2) :=
+  have hzero : Limits.IsZero (groupCohomology (liftedGaloisUnitsRep L E) 2) :=
     ModuleCat.isZero_of_subsingleton _
   have heq : L.fixingSubgroup = (P : Subgroup Gal(E/F)) :=
     IntermediateField.fixingSubgroup_fixedField (P : Subgroup Gal(E/F))
   change Limits.IsZero (groupCohomology
-    (Rep.res (P : Subgroup Gal(E/F)).subtype (Rep.ofAlgebraAutOnUnits F E)) 2)
+    (Rep.res (P : Subgroup Gal(E/F)).subtype (liftedGaloisUnitsRep F E)) 2)
   rw [← heq]
   exact hzero.of_iso
-    (ClassFieldTower.Cohomology.finiteGaloisUnitsRelativeCohomologyIso F E L 2)
+    (liftedFiniteGaloisUnitsRelativeCohomologyIso F E L 2)
+
+/-- The original integer-coefficient formulation, transported through the
+coefficient-complex isomorphism from native lifted unit cohomology. -/
+theorem galoisUnitsH2_eq_zero_of_transcendental_of_finiteDimensional
+    (K : Type) [Field K] [IsAlgClosed K] {F : Type} [Field F] [Algebra K F]
+    (x : F) (hx : Transcendental K x)
+    (hfin : FiniteDimensional (IntermediateField.adjoin K ({x} : Set F)) F)
+    (E : Type) [Field E] [Algebra F E] [FiniteDimensional F E] [IsGalois F E]
+    (c : groupCohomology (Rep.ofAlgebraAutOnUnits F E) 2) : c = 0 := by
+  let e := groupCohomology.coefficientRingIso
+    (ULift.ringEquiv : ULift.{0} ℤ ≃+* ℤ) (Rep.ofAlgebraAutOnUnits F E) 2
+  apply (ModuleCat.mono_iff_injective e.hom).mp inferInstance
+  change e.hom.hom c = e.hom.hom 0
+  rw [e.hom.hom.map_zero]
+  exact liftedGaloisUnitsH2_eq_zero_of_transcendental_of_finiteDimensional
+    K x hx hfin E (e.hom.hom c)
 
 end AlgebraicCurve

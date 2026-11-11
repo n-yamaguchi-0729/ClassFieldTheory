@@ -4,14 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.EmbeddedAbelianSubextension
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
-import Mathlib.NumberTheory.NumberField.Basic
-import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
+module
+
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianClassification
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.IdeleClassFormation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.EmbeddedAbelianSubextension
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
+public import Mathlib.NumberTheory.NumberField.Basic
+public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
+public import Nyll.GaloisCohomology.Cyclic.NormKernelVanishing
 
 /-!
 # The maximal finite-unramified abelian subextension
@@ -27,6 +31,10 @@ big Hilbert class field by the order-reversing finite classification.
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped NumberField
 
 noncomputable section
@@ -38,14 +46,14 @@ open ClassFormation KummerTheory
 open LocalClassFieldTheory NumberField Reciprocity
 
 private structure BigHilbertTransportedAddSubgroupData
-    {A B : Type} [AddGroup A] [AddGroup B]
+    {A : Type*} {B : Type*} [AddGroup A] [AddGroup B]
     (e : A ≃+ B) (H : AddSubgroup A) where
   subgroup : AddSubgroup B
   map_symm : subgroup.map e.symm.toAddMonoidHom = H
   mem_iff (x : B) : x ∈ subgroup ↔ e.symm x ∈ H
 
 private def bigHilbertTransportedAddSubgroupData
-    {A B : Type} [AddGroup A] [AddGroup B]
+    {A : Type*} {B : Type*} [AddGroup A] [AddGroup B]
     (e : A ≃+ B) (H : AddSubgroup A) :
     BigHilbertTransportedAddSubgroupData e H where
   subgroup := H.map e.toAddMonoidHom
@@ -59,14 +67,6 @@ private def bigHilbertTransportedAddSubgroupData
       simpa using hy
     · intro hx
       exact ⟨e.symm x, hx, e.apply_symm_apply x⟩
-
-private theorem bigHilbertAddSubgroup_eq_of_map_symm_eq
-    {A B : Type} [AddGroup A] [AddGroup B]
-    (e : A ≃+ B) (H J : AddSubgroup B)
-    (h : H.map e.symm.toAddMonoidHom =
-      J.map e.symm.toAddMonoidHom) :
-    H = J := by
-  exact AddSubgroup.map_injective e.symm.injective h
 
 /-- The intrinsic big-Hilbert norm subgroup of an actual rational fixed
 field, transported into the rational absolute idele-class formation. -/
@@ -114,7 +114,7 @@ private theorem bigHilbertNormSubgroupInRationalClassFormation_mem_iff
 /-- The fixed-field idele-class equivalence at the selected big-Hilbert
 base, named once so later subgroup comparisons do not reconstruct it. -/
 private noncomputable def bigHilbertClassFieldMaximalIdeleClassEquiv
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     Additive (IdeleClassGroup (bigHilbertClassFieldBase K)) ≃+
       ambientFixedAddSubgroup rationalIdeleClassRepresentation
         (bigHilbertClassFieldBaseSubgroup K) :=
@@ -124,7 +124,7 @@ private noncomputable def bigHilbertClassFieldMaximalIdeleClassEquiv
 /-- The intrinsic ordinary norm subgroup at the selected base, with its
 additive carrier fixed in the declaration type. -/
 private noncomputable def bigHilbertClassFieldMaximalIntrinsicNormSubgroup
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     AddSubgroup (Additive (IdeleClassGroup (bigHilbertClassFieldBase K))) :=
   (bigHilbertClassFieldNormSubgroup
     (K := bigHilbertClassFieldBase K)).toAddSubgroup
@@ -132,7 +132,7 @@ private noncomputable def bigHilbertClassFieldMaximalIntrinsicNormSubgroup
 /-- The selected abstract norm subgroup, with its ambient additive carrier
 fixed once in the declaration type. -/
 private noncomputable def bigHilbertClassFieldMaximalActualNormEndpoint
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     AddSubgroup
       (ambientFixedAddSubgroup rationalIdeleClassRepresentation
         (bigHilbertClassFieldBaseSubgroup K)) :=
@@ -140,7 +140,7 @@ private noncomputable def bigHilbertClassFieldMaximalActualNormEndpoint
     rationalIdeleClassRepresentation
 
 private noncomputable def bigHilbertClassFieldMaximalTransportData
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     BigHilbertTransportedAddSubgroupData
       (bigHilbertClassFieldMaximalIdeleClassEquiv K)
       (bigHilbertClassFieldMaximalIntrinsicNormSubgroup K) :=
@@ -150,21 +150,14 @@ private noncomputable def bigHilbertClassFieldMaximalTransportData
 
 /-- A short typed name for the transported intrinsic subgroup used below. -/
 private noncomputable def bigHilbertClassFieldMaximalNormEndpoint
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     AddSubgroup
       (ambientFixedAddSubgroup rationalIdeleClassRepresentation
         (bigHilbertClassFieldBaseSubgroup K)) :=
   (bigHilbertClassFieldMaximalTransportData K).subgroup
 
-private theorem bigHilbertClassFieldMaximalNormEndpoint_map_symm
-    (K : Type) [Field K] [NumberField K] :
-    (bigHilbertClassFieldMaximalNormEndpoint K).map
-        (bigHilbertClassFieldMaximalIdeleClassEquiv K).symm.toAddMonoidHom =
-      bigHilbertClassFieldMaximalIntrinsicNormSubgroup K :=
-  (bigHilbertClassFieldMaximalTransportData K).map_symm
-
 private theorem bigHilbertClassFieldMaximalNormEndpoint_mem_iff
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (x : ambientFixedAddSubgroup rationalIdeleClassRepresentation
       (bigHilbertClassFieldBaseSubgroup K)) :
     x ∈ bigHilbertClassFieldMaximalNormEndpoint K ↔
@@ -173,7 +166,7 @@ private theorem bigHilbertClassFieldMaximalNormEndpoint_mem_iff
   (bigHilbertClassFieldMaximalTransportData K).mem_iff x
 
 private theorem bigHilbertClassFieldMaximalNormEndpoint_eq_public
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     bigHilbertClassFieldMaximalNormEndpoint K =
       bigHilbertNormSubgroupInRationalClassFormation
         (numberFieldTowerFiniteAbstractField K
@@ -183,7 +176,7 @@ private theorem bigHilbertClassFieldMaximalNormEndpoint_eq_public
 /-- Mapping the selected abstract norm subgroup back to the ordinary
 idele-class group gives the named intrinsic subgroup. -/
 private theorem bigHilbertClassFieldMaximalNormSubgroup_map_symm
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     (bigHilbertClassFieldMaximalActualNormEndpoint K).map
       (bigHilbertClassFieldMaximalIdeleClassEquiv K).symm.toAddMonoidHom =
         bigHilbertClassFieldMaximalIntrinsicNormSubgroup K := by
@@ -229,7 +222,7 @@ private theorem bigHilbertClassFieldMaximalNormSubgroup_map_symm
 /-- Membership in the selected abstract norm subgroup is detected after
 applying the named inverse fixed-field equivalence. -/
 private theorem bigHilbertClassFieldMaximalActualNormEndpoint_mem_iff
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     ∀ x : ambientFixedAddSubgroup rationalIdeleClassRepresentation
         (bigHilbertClassFieldBaseSubgroup K),
       x ∈ bigHilbertClassFieldMaximalActualNormEndpoint K ↔
@@ -252,7 +245,7 @@ private theorem bigHilbertClassFieldMaximalActualNormEndpoint_mem_iff
     exact hy
 
 private theorem bigHilbertClassFieldMaximalNormSubgroup_eq_endpoint
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     bigHilbertClassFieldMaximalActualNormEndpoint K =
       bigHilbertClassFieldMaximalNormEndpoint K := by
   apply AddSubgroup.ext
@@ -266,7 +259,7 @@ the intrinsic big-Hilbert norm subgroup in the rational absolute class
 formation. -/
 @[simp]
 theorem bigHilbertClassFieldSubextension_normSubgroup
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     (bigHilbertClassFieldSubextension K).normSubgroup
         rationalIdeleClassRepresentation =
       bigHilbertNormSubgroupInRationalClassFormation
@@ -445,7 +438,7 @@ end GeneralFixedFieldContainment
 /-- A finite abelian subextension of the selected rational fixed-field base
 is unramified at every finite place. -/
 def bigHilbertFiniteAbelianSubextensionIsUnramifiedAtFinitePlaces
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (P : FiniteAbelianSubextension
       (bigHilbertClassFieldBaseSubgroup K)) : Prop :=
   finiteAbelianSubextensionIsUnramifiedAtFinitePlaces
@@ -455,7 +448,7 @@ def bigHilbertFiniteAbelianSubextensionIsUnramifiedAtFinitePlaces
 section FixedFieldMaximalityInstances
 
 variable
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (P : FiniteAbelianSubextension
       (bigHilbertClassFieldBaseSubgroup K))
 
@@ -516,7 +509,7 @@ base which is unramified at all finite places is contained in the
 selected big Hilbert class-field subextension. -/
 theorem
     finiteUnramifiedAbelianSubextension_le_bigHilbertClassFieldSubextension
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (P : FiniteAbelianSubextension
       (bigHilbertClassFieldBaseSubgroup K)) :
     bigHilbertFiniteAbelianSubextensionIsUnramifiedAtFinitePlaces K P →
@@ -557,7 +550,7 @@ finite-unramified abelian subextensions of the same rational fixed-field
 base. -/
 theorem
     bigHilbertClassFieldSubextension_isFiniteUnramifiedAndMaximalAbelian
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     IsUnramifiedAtFinitePlaces K (bigHilbertClassField K) ∧
       ∀ P : FiniteAbelianSubextension
           (bigHilbertClassFieldBaseSubgroup K),
@@ -584,7 +577,7 @@ ambient embedding to the selected big Hilbert class field.
 rational separable closure underlying the selected big Hilbert class
 field. -/
 noncomputable def bigHilbertClassFieldBaseEmbedding
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     K →ₐ[ℚ] SeparableClosure ℚ :=
   numberFieldTowerLowerEmbedding K
     (bigHilbertClassFieldNormAmbient K)
@@ -593,7 +586,7 @@ noncomputable def bigHilbertClassFieldBaseEmbedding
 embedding as its underlying map into the rational separable closure. -/
 @[simp]
 theorem bigHilbertClassFieldBaseEquiv_coe
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (x : K) :
     ((bigHilbertClassFieldBaseEquiv (K := K) x :
         bigHilbertClassFieldBase K) :
@@ -605,7 +598,7 @@ theorem bigHilbertClassFieldBaseEquiv_coe
 separable closure so that its restriction to `K` is exactly the base
 embedding used by the selected big Hilbert class field. -/
 noncomputable def bigHilbertClassFieldCompatibleEmbedding
-    (K E : Type)
+    (K : Type u) (E : Type v)
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E] :
@@ -620,7 +613,7 @@ noncomputable def bigHilbertClassFieldCompatibleEmbedding
 copy of the original base field. -/
 @[simp]
 theorem bigHilbertClassFieldCompatibleEmbedding_restrictDomain
-    (K E : Type)
+    (K : Type u) (E : Type v)
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E] :
@@ -636,7 +629,7 @@ theorem bigHilbertClassFieldCompatibleEmbedding_restrictDomain
 base embedding. -/
 @[simp]
 theorem bigHilbertClassFieldCompatibleEmbedding_algebraMap
-    (K E : Type)
+    (K : Type u) (E : Type v)
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E]
@@ -653,7 +646,7 @@ theorem bigHilbertClassFieldCompatibleEmbedding_algebraMap
 base subgroup of the selected big Hilbert class field. -/
 @[simp]
 theorem bigHilbertClassFieldCompatibleEmbedding_baseSubgroup
-    (K E : Type)
+    (K : Type u) (E : Type v)
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E] :
@@ -676,7 +669,7 @@ theorem bigHilbertClassFieldCompatibleEmbedding_baseSubgroup
 same rational absolute Galois group as the selected big Hilbert class
 field. -/
 noncomputable def bigHilbertClassFieldEmbeddedAbelianSubextension
-    (K E : Type)
+    (K : Type u) (E : Type v)
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E]
@@ -692,7 +685,7 @@ noncomputable def bigHilbertClassFieldEmbeddedAbelianSubextension
 the fixing subgroup of the compatible embedded copy of `E`. -/
 @[simp]
 theorem bigHilbertClassFieldEmbeddedAbelianSubextension_field
-    (K E : Type)
+    (K : Type u) (E : Type v)
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E]
@@ -709,7 +702,7 @@ theorem bigHilbertClassFieldEmbeddedAbelianSubextension_field
 /-- Finite-prime unramifiedness is preserved when the top number field
 is replaced by an equivalent `K`-algebra. -/
 theorem finitePlaceUnramifiedness_congrTop
-    {K L M : Type}
+    {K : Type u} {L : Type v} {M : Type w}
     [Field K] [NumberField K]
     [Field L] [NumberField L]
     [Field M] [NumberField M]
@@ -742,7 +735,7 @@ theorem finitePlaceUnramifiedness_congrTop
 `K` into the selected big Hilbert class field. -/
 noncomputable def
     finiteUnramifiedAbelianExtensionEmbeddingIntoBigHilbertClassField
-    (K E : Type)
+    (K : Type u) (E : Type v)
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E]
@@ -862,7 +855,7 @@ extension of `K` has a `K`-embedding into the selected big Hilbert
 class field. -/
 theorem
     finiteUnramifiedAbelianExtension_nonempty_algHom_bigHilbertClassField
-    (K E : Type)
+    (K : Type u) (E : Type v)
     [Field K] [NumberField K]
     [Field E] [NumberField E]
     [Algebra K E] [FiniteDimensional K E]
@@ -877,11 +870,11 @@ unramified abelian extension of the original number field: it is finite,
 abelian Galois and unramified at every finite prime, and it contains
 every other finite unramified abelian extension over the same base. -/
 theorem bigHilbertClassField_isMaximalUnramifiedAbelianExtension
-    (K : Type) [Field K] [NumberField K] :
+    (K : Type u) [Field K] [NumberField K] :
     FiniteDimensional K (bigHilbertClassField K) ∧
       IsAbelianGalois K (bigHilbertClassField K) ∧
       IsUnramifiedAtFinitePlaces K (bigHilbertClassField K) ∧
-      ∀ (E : Type) [Field E] [NumberField E]
+      ∀ (E : Type v) [Field E] [NumberField E]
         [Algebra K E] [FiniteDimensional K E]
         [IsAbelianGalois K E],
         IsUnramifiedAtFinitePlaces K E →

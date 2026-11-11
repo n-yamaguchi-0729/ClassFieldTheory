@@ -8,6 +8,7 @@ import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianCo
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.EmbedsInRayClassFieldIffConductorLe
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.IsAbelianConductorUnique
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 
 /-!
 # Zero finite exponent and unramifiedness
@@ -18,13 +19,15 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u v
+
 namespace ClassFieldTheory
 
 /-- A finite place has exponent zero in the public conductor exactly when
 every place above it is unramified. -/
 theorem IsAbelianConductor.finiteExponent_eq_zero_iff_unramified
-    {K : Type} [Field K] [NumberField K]
-    {L : Type} [Field L] [NumberField L]
+    {K : Type u} [Field K] [NumberField K]
+    {L : Type v} [Field L] [NumberField L]
     [Algebra K L] [IsAbelianGalois K L]
     {c : RayClassModulus K}
     (hc : IsAbelianConductor K L c)

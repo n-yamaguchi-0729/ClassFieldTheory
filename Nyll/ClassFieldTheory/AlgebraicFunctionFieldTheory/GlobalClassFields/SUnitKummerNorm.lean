@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPowerClassSubgroup
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerUnramified
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SupportedComponents
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitPowerClassSubgroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.SUnitKummerUnramified
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.SupportedComponents
 
 /-!
 # The actual S-unit Kummer norm subgroup
@@ -20,6 +22,10 @@ preimages by unramifiedness. The calculated indices then give equality with
 the actual norm subgroup of the S-unit root field.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 open AlgebraicCurve
@@ -29,12 +35,12 @@ namespace FunctionField.SUnits
 
 open IdeleGroup KummerTheory
 
-variable {k K : Type} [Field k] [Finite k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [HasPrincipalDivisors k K]
 
 private theorem powerClassSubgroup_le_norm_of_exponent
-    {E : Type} [Field E] [Algebra k E] [Algebra K E] [IsScalarTower k K E]
+    {E : Type w} [Field E] [Algebra k E] [Algebra K E] [IsScalarTower k K E]
     [FiniteDimensional K E] [IsAbelianGalois K E] [HasPrincipalDivisors k E]
     (n : ℕ+) (S : Finset (Place k K))
     (hpow : ∀ σ : Gal(E/K), σ ^ (n : ℕ) = 1)
@@ -100,7 +106,7 @@ private theorem powerClassSubgroup_le_norm_of_exponent
 
 /-- The actual S-unit Kummer extension has exactly the power-component class
 subgroup as its norm image. All extension structures are constructed. -/
-theorem kummerExtension_norm_range {Ω : Type} [Field Ω] [Algebra K Ω]
+theorem kummerExtension_norm_range {Ω : Type x} [Field Ω] [Algebra K Ω]
     [Algebra k Ω] [IsScalarTower k K Ω] [IsSepClosure K Ω]
     (n : ℕ+) (hn : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty) (S : Finset (Place k K))

@@ -15,15 +15,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.CategoryTheory.MorphismProperty.Representable
-import Mathlib.AlgebraicGeometry.GluingOneHypercover
-import Mathlib.CategoryTheory.Sites.LocallyBijective
-import Mathlib.CategoryTheory.Limits.Shapes.Products
-import Mathlib.Tactic.Simps.Basic
-import Mathlib.Tactic.CategoryTheory.Reassoc
-import Mathlib.Tactic.DSimpPercent
-import Mathlib.Tactic.Conv
-import Mathlib.CategoryTheory.Category.Basic
+module
+
+public import Mathlib.CategoryTheory.MorphismProperty.Representable
+public import Mathlib.AlgebraicGeometry.GluingOneHypercover
+public import Mathlib.CategoryTheory.Sites.LocallyBijective
+public import Mathlib.CategoryTheory.Limits.Shapes.Products
+public import Mathlib.Tactic.Simps.Basic
+public import Mathlib.Tactic.CategoryTheory.Reassoc
+public import Mathlib.Tactic.DSimpPercent
+public import Mathlib.Tactic.Conv
+public import Mathlib.CategoryTheory.Category.Basic
 
 /-!
 # Gluing schemes from locally representable open charts
@@ -32,6 +34,8 @@ Representable open charts for a sheaf determine scheme gluing data. The glued sc
 represents the sheaf through the universe-lifted Yoneda functor, with the chart maps giving
 the local comparison and the induced Yoneda morphism an isomorphism.
 -/
+
+@[expose] public section
 
 universe w v u
 
@@ -54,7 +58,7 @@ lemma presheafULift_monomorphisms_le_monomorphisms :
   intro X a b h
   suffices hf.rep.lift (g := a ≫ f) a (𝟙 X)
       (by rw [Functor.map_id, Category.id_comp]) =
-      hf.rep.lift b (𝟙 X) (by simp [← h]) by
+      hf.rep.lift b (𝟙 X) (by rw [Functor.map_id, Category.id_comp, h]) by
     simpa using uliftYoneda.{w}.congr_map this =≫ (hf.rep.fst (a ≫ f))
   have : Mono (hf.rep.snd (a ≫ f)) := hf.property_snd (a ≫ f)
   simp only [← cancel_mono (hf.rep.snd (a ≫ f)), Functor.relativelyRepresentable.lift_snd]
@@ -96,7 +100,8 @@ variable {F f} (i j k : ι)
 
 open Functor.relativelyRepresentable
 
-private noncomputable def tripleRotation :
+/-- Cyclically permute the three coordinates of a representable triple overlap. -/
+noncomputable def tripleRotation :
     pullback₃ (hf i).rep (f j) (f k) ⟶ pullback₃ (hf j).rep (f k) (f i) :=
   (hf j).rep.lift₃ (f k) (f i)
     (pullback₃.p₂ (hf i).rep (f j) (f k))
@@ -138,8 +143,12 @@ noncomputable def glueData : GlueData where
     IsOpenImmersion.mono _
   f_id i := MorphismProperty.isIso_fst'_self_ULift IsOpenImmersion.le_monomorphisms (hf i)
   t i j := (hf i).rep.symmetry (hf j).rep
-  t_id i := by apply (hf i).rep.hom_ext' <;>
-    simp [MorphismProperty.fst'_self_eq_snd_ULift IsOpenImmersion.le_monomorphisms (hf i)]
+  t_id i := by
+    apply (hf i).rep.hom_ext'
+    · rw [Functor.relativelyRepresentable.symmetry_fst, Category.id_comp,
+        MorphismProperty.fst'_self_eq_snd_ULift IsOpenImmersion.le_monomorphisms (hf i)]
+    · rw [Functor.relativelyRepresentable.symmetry_snd, Category.id_comp,
+        MorphismProperty.fst'_self_eq_snd_ULift IsOpenImmersion.le_monomorphisms (hf i)]
   t' i j k := tripleRotation hf i j k
   t_fac i j k := (hf j).rep.hom_ext'
     (by
@@ -271,7 +280,7 @@ instance : Sheaf.IsLocallyInjective (uliftYonedaGluedToSheaf hf) where
     change ULift.up (γ ≫ α) = ULift.up (γ ≫ β)
     replace h : (uliftYonedaGluedToSheaf hf).hom.app _ ⟨γ ≫ α⟩ =
         (uliftYonedaGluedToSheaf hf).hom.app _ ⟨γ ≫ β⟩ := by
-      dsimp at h; simp [h]
+      rw [uliftYonedaGluedToSheaf_app_comp, uliftYonedaGluedToSheaf_app_comp, h]
     rw [← fac₁, ← fac₂] at h ⊢
     apply congrArg ULift.up
     apply comp_toGlued_eq

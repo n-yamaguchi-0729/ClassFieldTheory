@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HasseArf.IsUpperRamificationJump
-import Nyll.ClassFieldTheory.HasseArf
-import Mathlib.Algebra.Group.Subgroup.Ker
-import Mathlib.NumberTheory.LocalField.Basic
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HasseArf.IsUpperRamificationJump
+public import Nyll.ClassFieldTheory.HasseArf
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Nyll.ValuedFieldTheory.Ramification.LocalField.Core
 
 /-!
 # Integrality of upper ramification jumps
@@ -16,12 +19,16 @@ The public upper filtration is transported to the existing local upper
 filtration in the implementation layer, including its right limit.
 -/
 
+@[expose] public section
+
 namespace ClassFieldTheory
+
+universe u v
 
 /-- Every actual upper ramification jump of a finite Abelian local extension
 is an integer, including the possible endpoint `-1`. -/
 theorem isUpperRamificationJump_int
-    (K L : Type) [Field K] [Field L] [Algebra K L]
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]

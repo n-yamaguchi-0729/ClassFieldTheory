@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Action.Defs
-import Mathlib.Algebra.Group.Subgroup.Lattice
-import Mathlib.FieldTheory.Galois.GaloisClosure
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.FieldTheory.Finite.GaloisField
-import Mathlib.FieldTheory.Normal.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFieldExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGaloisTower
+module
+
+public import Mathlib.Algebra.Group.Action.Defs
+public import Mathlib.Algebra.Group.Subgroup.Lattice
+public import Mathlib.FieldTheory.Galois.GaloisClosure
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.FieldTheory.Finite.GaloisField
+public import Mathlib.FieldTheory.Normal.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantFieldExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantGaloisTower
 
 /-!
 # Restrictions of automorphisms in a constant compositum tower
@@ -22,6 +24,8 @@ Together with restriction to `L`, this determines the automorphism. On
 automorphisms fixing `L`, the construction agrees with the existing constant
 extension restriction.
 -/
+
+@[expose] public section
 
 noncomputable section
 

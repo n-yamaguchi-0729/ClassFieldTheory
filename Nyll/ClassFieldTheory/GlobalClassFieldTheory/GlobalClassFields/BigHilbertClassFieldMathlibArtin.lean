@@ -11,6 +11,12 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertCla
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
 
 /-!
 # Arithmetic Artin reciprocity for any big Hilbert class field
@@ -25,9 +31,11 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
-variable {K : Type} [Field K] [NumberField K]
+variable {K : Type u} [Field K] [NumberField K]
 
 local instance bigHilbertArtinIdeleClassGroupIsMulCommutative :
     IsMulCommutative (IdeleClassGroup K) :=
@@ -158,12 +166,9 @@ theorem arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_prime
         (K := K) (L := E) v =
       GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom
         K E c := by
-    rw [GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin]
-    exact (DFunLike.congr_fun
-      (open _root_.GlobalClassFieldTheory.Reciprocity in
-        arithmeticGlobalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
-          (K := K) (L := E))
-      (IdeleGroup.finitePrimeIdele v)).symm
+    exact (open _root_.GlobalClassFieldTheory.GlobalClassFields in
+      arithmeticFinitePlacePrimeArtin_eq_arithmeticGlobalNormResidue
+        (K := K) (L := E) v)
   rw [hArtin]
   rw [arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_globalNormResidue]
   exact (open _root_.GlobalClassFieldTheory.GlobalClassFields in

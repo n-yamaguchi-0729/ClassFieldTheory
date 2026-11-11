@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ProfiniteUnits
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Mathlib.Topology.Algebra.Group.Quotient
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ProfiniteUnits
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Topology.Algebra.Group.Quotient
 
 /-!
 # Closed power subgroups in local fields
@@ -19,6 +21,8 @@ A field-unit power is integral precisely when its root is integral, so
 the full power subgroup is locally closed at one and hence closed.
 This includes characteristic powers, whose quotient need not be finite.
 -/
+
+@[expose] public section
 
 noncomputable section
 

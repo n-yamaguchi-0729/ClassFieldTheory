@@ -22,6 +22,8 @@ open scoped NumberField
 
 noncomputable section
 
+universe u
+
 namespace ClassFieldTheory
 
 open NumberField IsDedekindDomain
@@ -29,7 +31,7 @@ open NumberField IsDedekindDomain
 /-- Every realization of the ordinary ray class group is a small Hilbert
 class field, including its maximality property. -/
 theorem ordinaryRayRealization_isSmallHilbertClassField
-    (K : Type) [Field K] [NumberField K]
+    (K : Type u) [Field K] [NumberField K]
     (R : RayClassFieldRealization K (ordinaryRayClassModulus K)) :
     IsSmallHilbertClassField R.extension := by
   obtain ⟨E, hE⟩ := exists_smallHilbertClassField K

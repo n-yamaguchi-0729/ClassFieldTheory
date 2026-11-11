@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.Kummer.FiniteGaloisTowerBaseUnitsH2Naturality
-import Nyll.GaloisCohomology.ProP.FiniteCyclicH2PullbackNorm
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
+module
+
+public import Nyll.GaloisCohomology.Kummer.FiniteGaloisTowerBaseUnitsH2Naturality
+public import Nyll.GaloisCohomology.ProP.FiniteCyclicH2PullbackNorm
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.Hilbert90
 
 /-!
 # Cyclic unit H² classes and norms after base change
@@ -15,6 +17,8 @@ Every unit H² class is represented by a single base-field unit. A norm
 preimage of that unit in a cyclic relative extension kills the restricted
 inflation of its class.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 
@@ -84,9 +88,9 @@ theorem finiteCyclicBaseUnitH2Class_inflation_restriction_eq_zero_of_norm
     apply ha0
     rw [← hx, hz, Algebra.norm_zero, map_zero]
   let b : B := Additive.ofMul (Units.mk0 x hx0)
-  have hb : B.norm.hom b = φ.hom a₀.1 := by
+  have hb : B.norm.asHom.hom b = φ.hom a₀.1 := by
     apply Units.ext
-    change ((Additive.toMul ((Rep.ofAlgebraAutOnUnits L N).norm.hom
+    change ((Additive.toMul ((Rep.ofAlgebraAutOnUnits L N).norm.asHom.hom
       (Additive.ofMul (Units.mk0 x hx0))) : Nˣ) : N) =
         algebraMap L N (algebraMap K L (a : K))
     exact (groupCohomology.norm_ofAlgebraAutOnUnits_eq

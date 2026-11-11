@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+module
+
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ConstantExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormDivisor
+public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
 # Actual constant-extension norms are killed by the Frobenius character
@@ -19,6 +23,8 @@ original field therefore leaves a multiple of `n`.
 This proves norm vanishing without assuming that the adjoined constants have
 already been identified with the full constant field upstairs.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -59,6 +65,8 @@ theorem dvd_normalizedDegree_norm_fullConstantDegreeStage (n : ℕ) [NeZero n]
   let _ : Algebra C E := constantAlgebra (K := K) C
   have : IsScalarTower k C E :=
     IsScalarTower.of_algebraMap_eq fun _ => Subtype.ext rfl
+  have : Module.Free (algebraicClosure k K) C :=
+    Module.Free.of_divisionRing (algebraicClosure k K) C
   have hdim : Module.finrank k C = Module.finrank k (algebraicClosure k K) * n := by
     rw [← Module.finrank_mul_finrank k (algebraicClosure k K) C]
     exact congrArg (fun d => Module.finrank k (algebraicClosure k K) * d)

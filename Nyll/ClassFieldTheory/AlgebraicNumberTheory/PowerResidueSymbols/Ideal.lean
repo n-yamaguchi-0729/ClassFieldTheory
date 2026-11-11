@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
-import Mathlib.NumberTheory.NumberField.Ideal.Basic
-import Mathlib.RingTheory.DedekindDomain.Factorization
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.PowerResidueSymbols.FiniteField
+public import Mathlib.NumberTheory.NumberField.Ideal.Basic
+public import Mathlib.RingTheory.DedekindDomain.Factorization
 
 /-!
 # Power-residue symbols at prime ideals and integral ideals
@@ -19,6 +21,8 @@ this identification gives `(a/P)`.
 For a nonzero integral ideal `I`, `(a/I)` is the finite product of
 `(a/P)` raised to the multiplicity of `P` in `I`.
 -/
+
+@[expose] public section
 
 open scoped NumberField BigOperators
 open NumberField IsDedekindDomain

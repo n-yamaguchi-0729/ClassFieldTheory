@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+module
+
+public import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
 /-!
 # Exterior multiplication for module sheaves
 
 Exterior-algebra multiplication by a vector induces natural maps on module presheaves
 and module sheaves through sheafification.
 -/
+
+@[expose] public section
 
 universe u
 
@@ -49,8 +53,8 @@ lemma comp_append {N : Type*} (f : M → N) (v : Fin a → M) (w : Fin b → M) 
     f ∘ Fin.append v w = Fin.append (f ∘ v) (f ∘ w) := by
   funext i
   refine Fin.addCases (fun j => ?_) (fun j => ?_) i
-  · simp [Fin.append_left]
-  · simp [Fin.append_right]
+  · simp only [Function.comp_apply, Fin.append_left]
+  · simp only [Function.comp_apply, Fin.append_right]
 
 variable {R M} in
 lemma map_mulₗ {N : Type u} [AddCommGroup N] [Module R N] (f : M →ₗ[R] N)
@@ -133,8 +137,8 @@ lemma mapₗ_mulVec {X Y : Cᵒᵖ} (f : X ⟶ Y) (x : ⋀[R.obj X]^n (P.obj X))
     congr 1
     funext i
     refine Fin.addCases (fun j => ?_) (fun j => ?_) i
-    · simp [Fin.append_left]
-    · simp [Fin.append_right]
+    · simp only [Functor.comp_obj, CommRingCat.forgetToRingCat_obj, Fin.append_left]
+    · simp only [Functor.comp_obj, CommRingCat.forgetToRingCat_obj, Fin.append_right]
   | zero => simp only [map_zero, LinearMap.zero_apply]
   | add x y _ _ hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
   | smul r x _ hx => rw [LinearMap.map_smul₂, mapₗ_smul, mapₗ_smul, LinearMap.map_smul₂, hx]

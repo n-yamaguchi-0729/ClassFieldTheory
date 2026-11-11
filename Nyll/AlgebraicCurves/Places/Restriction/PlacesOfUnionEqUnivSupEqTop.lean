@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Models.Points.Places
-import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
-import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
-import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
-import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Models.Points.Places
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.ClosedPointRangeStalkEq
+public import Nyll.AlgebraicCurves.Geometry.IsClosedSingletonNeGenericPoint
+public import Nyll.AlgebraicCurves.Places.ValuationRings.RangeStalkEq
+public import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # PlacesOf union eq univ of sup eq top
@@ -24,6 +28,8 @@ import Nyll.AlgebraicCurves.Models.LocalGeometry.EqRangeStalkEq
 A cover of a curve by two open subsets gives a cover of all its places by their associated place
 sets.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -41,18 +47,18 @@ open CategoryTheory AlgebraicGeometry TopologicalSpace
 variable {K : Type u} [Field K] {C : Scheme.{u}} (c : C ⟶ Spec (.of K)) [IsIntegral C]
 
 theorem placesOf_top [IsProper c] [SmoothOfRelativeDimension 1 c] :
-    letI := (baseToFunctionField c).toAlgebra
+    let := (baseToFunctionField c).toAlgebra
     placesOf c (⊤ : C.Opens) = Set.univ := by
-  let := (baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   refine Set.eq_univ_of_forall fun v => ?_
   obtain ⟨x, hx, hv⟩ := exists_closedPoint_range_stalk_eq c v
   exact ⟨x, trivial, hx, hv⟩
 
 theorem exists_not_mem_placesOf [IsProper c] [SmoothOfRelativeDimension 1 c]
     (U V : C.Opens) (hUV : U ⊔ V = ⊤) (hU : U ≠ ⊤) (hV : V ≠ ⊤) :
-    letI := (baseToFunctionField c).toAlgebra
+    let := (baseToFunctionField c).toAlgebra
     ∃ v : Place K C.functionField, v ∉ placesOf c U := by
-  let := (baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   have hUne : (U : Set C).Nonempty := by
     by_contra h
     rw [Set.not_nonempty_iff_eq_empty] at h
@@ -73,11 +79,11 @@ theorem exists_not_mem_placesOf [IsProper c] [SmoothOfRelativeDimension 1 c]
 
 theorem placesOf_union_eq_univ_of_sup_eq_top' [IsProper c] [SmoothOfRelativeDimension 1 c]
     (U V : C.Opens) (hUV : U ⊔ V = ⊤) (hU : U ≠ ⊤) (hV : V ≠ ⊤) :
-    letI := (baseToFunctionField c).toAlgebra
+    let := (baseToFunctionField c).toAlgebra
     placesOf c U ∪ placesOf c V = Set.univ ∧
       (∃ v : Place K C.functionField, v ∉ placesOf c U) ∧
       (∃ v : Place K C.functionField, v ∉ placesOf c V) := by
-  let := (baseToFunctionField c).toAlgebra
+  intro sharedOwner1
   refine ⟨?_, exists_not_mem_placesOf c U V hUV hU hV,
     exists_not_mem_placesOf c V U (sup_comm U V ▸ hUV) hV hU⟩
   rw [← placesOf_sup, hUV, placesOf_top]

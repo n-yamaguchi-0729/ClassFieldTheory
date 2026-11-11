@@ -10,13 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.LocalMorphisms
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataMonoWhiskerLeftModuleIota
-import Nyll.SchemeTheory.Modules.Tensor.PushforwardUnitTensorIsoPushforwardPullback
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModule
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.LocalMorphisms
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafDataMonoWhiskerLeftModuleIota
+public import Nyll.SchemeTheory.Modules.Tensor.PushforwardUnitTensorIsoPushforwardPullback
 
 /-!
 # The tensor exact sequence of a closed immersion
@@ -25,6 +27,8 @@ Tensoring the ideal sequence of a closed immersion with a locally free module
 gives a short exact sequence. Its quotient is identified with the pushforward
 of the pulled-back module on the closed subscheme.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

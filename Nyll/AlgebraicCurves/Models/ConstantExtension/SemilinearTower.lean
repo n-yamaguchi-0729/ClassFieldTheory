@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearAction
-import Nyll.SchemeTheory.Morphisms.ConstantTwistTower
-import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusTower
+module
+
+public import Nyll.AlgebraicCurves.Models.ConstantExtension.SemilinearAction
+public import Nyll.SchemeTheory.Morphisms.ConstantTwistTower
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusTower
 
 /-!
 # Semilinear constant actions in towers
@@ -16,6 +18,10 @@ and intermediate constant fields. Arithmetic Frobenius over a finite larger
 constant field is the corresponding power of the original action.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry
@@ -23,10 +29,10 @@ open AlgebraicGeometry.SmoothProperCurve
 
 namespace AlgebraicCurve.CurveModel
 
-variable (k E Ω : Type) [Field k] [Field E] [Field Ω]
+variable (k E Ω : Type u) [Field k] [Field E] [Field Ω]
     [Algebra k E] [Algebra k Ω] [Algebra E Ω] [IsScalarTower k E Ω]
-    {F : Type} [Field F] [Algebra Ω F] (M : CurveModel Ω F)
-    {C : Scheme} (c : C ⟶ Spec (CommRingCat.of k))
+    {F : Type v} [Field F] [Algebra Ω F] (M : CurveModel Ω F)
+    {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
     (e : M.C ≅ pullback c (specMap k Ω))
 
 local notation "cE" => pullback.snd c (specMap k E)

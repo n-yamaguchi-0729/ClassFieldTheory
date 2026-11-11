@@ -10,8 +10,10 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Models.Construction.Basic
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
 
 /-!
 # Eq of range stalk eq
@@ -19,6 +21,8 @@ import Nyll.AlgebraicCurves.Models.Construction.Basic
 Points of an integral curve are identified by the images of their local rings in the function
 field.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

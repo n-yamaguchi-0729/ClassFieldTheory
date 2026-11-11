@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.RingTheory.LocalProperties.Submodule
-import Mathlib.RingTheory.Localization.Away.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.RingTheory.LocalProperties.Submodule
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
 
 /-!
 # Degree-zero exactness of the affine-cover Cech complex
@@ -22,6 +24,8 @@ import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverOf
 Sections on an open are exactly the degree-zero cochains whose Cech differential vanishes.
 The increasing-index construction is compared with the finite-subset description.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -258,7 +262,12 @@ theorem affine_acyclic₀ :
           = (V.presheaf.map (homOfLE hOτ).op).hom (z τ) := by
       intro a b hab σ τ hσ hτ O hOσ hOτ hOab
       let ρ : K.Idx 1 := ⟨![a, b], by
-        intro c d hcd; fin_cases c <;> fin_cases d <;> simp_all⟩
+        intro c d hcd
+        fin_cases c <;> fin_cases d
+        · exact (Nat.lt_irrefl 0 hcd).elim
+        · exact hab
+        · exact (Nat.not_lt_zero 1 hcd).elim
+        · exact (Nat.lt_irrefl 1 hcd).elim⟩
       have hρ0 : K.face ρ 0 = τ := altIdx_eq_of_altImg K
         (by rw [altImg_deg0, altImg_deg0, hτ]; rfl)
       have hρ1 : K.face ρ 1 = σ := altIdx_eq_of_altImg K

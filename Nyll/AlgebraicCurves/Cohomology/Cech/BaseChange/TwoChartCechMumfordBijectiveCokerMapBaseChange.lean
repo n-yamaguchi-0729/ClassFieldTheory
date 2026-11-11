@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
-import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
-import Mathlib.RingTheory.Flat.Basic
-import Mathlib.LinearAlgebra.TensorProduct.Prod
-import Mathlib.LinearAlgebra.TensorProduct.RightExactness
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Mathlib.RingTheory.Flat.Basic
+public import Mathlib.LinearAlgebra.TensorProduct.Prod
+public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
 
 /-!
 Bijectivity of cokernel base change in the finite-presentation construction for a Cech
 differential.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -46,9 +50,9 @@ variable (A : Type u) [CommRing A] [Algebra R A]
 theorem mem_range_subtype_baseChange (w : A ⊗[R] (C0 × (Fin (rank d) → R))) :
     ((d.coprod (lift d)).baseChange A) w = 0 ↔ ∃ z, ((K0 d).subtype.baseChange A) z = w := by
   have heqι : ⇑((K0 d).subtype.baseChange A) = ⇑((K0 d).subtype.lTensor A) :=
-    LinearMap.baseChange_eq_ltensor _
+    LinearMap.baseChange_eq_lTensor _
   have heqc : ⇑((d.coprod (lift d)).baseChange A) = ⇑((d.coprod (lift d)).lTensor A) :=
-    LinearMap.baseChange_eq_ltensor _
+    LinearMap.baseChange_eq_lTensor _
   rw [heqc]
   simp only [heqι]
   exact lTensor_exact A (LinearMap.exact_subtype_ker_map _) (surjective_coprod d) w
@@ -91,7 +95,7 @@ theorem cokerMapBaseChange_surjective :
   induction q using Submodule.Quotient.induction_on with
   | _ y =>
     have hsurj : Function.Surjective ((d.coprod (lift d)).baseChange A) := by
-      rw [LinearMap.baseChange_eq_ltensor]
+      rw [LinearMap.baseChange_eq_lTensor]
       exact LinearMap.lTensor_surjective A (surjective_coprod d)
     obtain ⟨w, rfl⟩ := hsurj y
     refine ⟨Submodule.Quotient.mk (-((TensorProduct.prodRight R A A C0 (Fin (rank d) → R)) w).2),

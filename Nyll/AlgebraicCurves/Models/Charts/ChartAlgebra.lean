@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.Localization.Integral
-import Mathlib.RingTheory.Valuation.Integral
-import Mathlib.RingTheory.Polynomial.ScaleRoots
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.Adjoin.Polynomial.Basic
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.FieldTheory.Perfect
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+module
+
+public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.Localization.Integral
+public import Mathlib.RingTheory.Valuation.Integral
+public import Mathlib.RingTheory.Polynomial.ScaleRoots
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.Adjoin.Polynomial.Basic
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.FieldTheory.Perfect
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Chart Algebra
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.AlgebraicGeometry.Scheme
-import Mathlib.RingTheory.Ideal.Maps
-import Mathlib.RingTheory.Ideal.Operations
+module
+
+public import Mathlib.AlgebraicGeometry.Scheme
+public import Mathlib.RingTheory.Ideal.Maps
+public import Mathlib.RingTheory.Ideal.Operations
 
 /-!
 # Cotangent vanishing under composition
@@ -15,6 +17,8 @@ The localness of every stalk map preserves maximal ideals. A morphism sending
 maximal ideals into their squares therefore retains this property after
 postcomposition by any scheme morphism.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 

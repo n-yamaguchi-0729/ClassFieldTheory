@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.GaloisCohomology.ArtinSchreier.FiniteExtension
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DVRRamificationOrder
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
-import Nyll.ValuedFieldTheory.Ramification.Herbrand.Bounds
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
-import Mathlib.Algebra.Polynomial.Degree.SmallDegree
+module
+
+public import Nyll.GaloisCohomology.ArtinSchreier.FiniteExtension
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.HerbrandFunction
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DVRRamificationOrder
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.FiniteExtension.Uniqueness
+public import Nyll.ValuedFieldTheory.Ramification.Herbrand.Bounds
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.AddVal
+public import Mathlib.Algebra.Polynomial.Degree.SmallDegree
 
 /-!
 # A ramification bound for Artin–Schreier extensions
@@ -23,7 +25,11 @@ therefore makes the lower group at p n trivial. This bound suffices for
 moduli whose coefficients are divisible by p, without a reduced parameter.
 -/
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w x
 
 namespace RamificationTheory.HilbertRamification.Higher
 
@@ -31,13 +37,13 @@ open Polynomial ArtinSchreierTheory
 open ValuationTheory.DiscreteValuationField
 open ValuationTheory.DiscreteValuationField.ValuedExtension
 
-variable {K L : Type} [Field K] [Field L] [Algebra K L]
+variable {K : Type u} {L : Type w} [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
 
 /-- A pole bound divisible by the characteristic kills the corresponding
 actual lower ramification group of an Artin–Schreier extension. -/
 theorem lowerRamificationGroup_artinSchreier_eq_bot
-    (base : CompleteDVF.{0, 0} K) (target : CompleteDVF.{0, 0} L)
+    (base : CompleteDVF.{u, v} K) (target : CompleteDVF.{w, x} L)
     [base.valuation.HasExtension target.valuation]
     (p : ℕ) [Fact p.Prime] [CharP K p]
     (π : base.valuationSubring) (hπ : Irreducible π) (n : ℕ)
@@ -152,7 +158,7 @@ theorem lowerRamificationGroup_artinSchreier_eq_bot
 /-- At a characteristic-divisible pole bound, the actual upper ramification
 group is also trivial. -/
 theorem upperRamificationGroup_artinSchreier_eq_bot
-    (base : CompleteDVF.{0, 0} K) (target : CompleteDVF.{0, 0} L)
+    (base : CompleteDVF.{u, v} K) (target : CompleteDVF.{w, x} L)
     [base.valuation.HasExtension target.valuation]
     (p : ℕ) [Fact p.Prime] [CharP K p]
     (π : base.valuationSubring) (hπ : Irreducible π) (n : ℕ)
@@ -162,7 +168,7 @@ theorem upperRamificationGroup_artinSchreier_eq_bot
     upperRamificationGroupOfUniqueExtension
       (base := base.toDVF) (target := target.toDVF)
       (hasUniqueValuationExtension_of_finite_separable base target) (p * n : ℕ) = ⊥ := by
-  let huniq : DiscreteValuationField.DVF.HasUniqueValuationExtension.{0, 0, 0, 0, 0}
+  let huniq : DiscreteValuationField.DVF.HasUniqueValuationExtension.{u, v, w, x, x}
       base.toDVF target.toDVF :=
     hasUniqueValuationExtension_of_finite_separable base target
   have hφ : herbrandFunctionOfUniqueExtension

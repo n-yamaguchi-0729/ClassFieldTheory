@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqKerGraphOverMul
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleComap
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.UnderlyingMap
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.IEqKerGraphOverMul
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.InvertibleIdealInvertibleComap
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
 
 /-!
 # Invertibility of relative divisor ideals
 
 Shows local invertibility of the defining ideal of a relative effective Cartier divisor.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -48,18 +52,8 @@ variable {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} [IsSeparated f] [SmoothOfRelativ
 
 omit [IsSeparated f] [SmoothOfRelativeDimension 1 f] in
 theorem I_eq_top_of_degree_zero {T : Scheme.{u}} {g : T ⟶ S} (D : RelEffCartierDiv f 0 g) :
-    D.I = ⊤ := by
-  have := D.isFinite
-  have := D.flat
-  have hempty : IsEmpty ↥D.I.subscheme := by
-    by_contra h
-    rw [not_isEmpty_iff] at h
-    obtain ⟨x⟩ := h
-    have h1 := Scheme.Hom.one_le_finrank_map (D.I.subschemeι ≫ pullback.snd f g) x
-    rw [D.finrank_eq] at h1
-    exact Nat.not_succ_le_zero 0 h1
-  rw [← D.I.ker_subschemeι]
-  exact Scheme.ker_eq_top_of_isEmpty _
+    D.I = ⊤ :=
+  _root_.AlgebraicGeometry.RelEffCartierDiv.I_eq_top_of_degree_zero D
 
 theorem step (r : ℕ)
     (ih : ∀ {T : Scheme.{u}} {g : T ⟶ S} (E : RelEffCartierDiv f r g), E.I.IsInvertible)

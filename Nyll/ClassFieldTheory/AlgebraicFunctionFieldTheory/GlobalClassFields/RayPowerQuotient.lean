@@ -4,18 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.FiniteAbelian.Basic
-import Mathlib.GroupTheory.Finiteness
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basis
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Degree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Topology
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegreeSurjective
+module
+
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+public import Mathlib.GroupTheory.Finiteness
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Basis
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Degree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.Topology
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegreeSurjective
 
 /-!
 # Finite ray-power quotients for the ordinary idele-class topology
@@ -31,22 +33,31 @@ subgroups. No realization of these quotients by field extensions is
 assumed or asserted here.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField.RayClass
 
-variable {k K : Type} [Field k] [Field K] [Algebra k K]
+variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 
--- Fix the first quotient's canonical dictionary before forming the ray quotient.
+/-- The canonical commutative group structure on the idele-class quotient. -/
 @[instance_reducible]
-private def powerRayIdeleClassCommGroup : CommGroup (IdeleClassGroup k K) :=
+def powerRayIdeleClassCommGroup : CommGroup (IdeleClassGroup k K) :=
   QuotientGroup.Quotient.commGroup (G := IdeleGroup k K) (IdeleGroup.principalSubgroup k K)
 
 attribute [local instance] powerRayIdeleClassCommGroup
 
 local instance : IsMulCommutative (IdeleClassGroup k K) :=
   IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
+/-- The ray quotient inherits the canonical commutative group structure. -/
+noncomputable local instance powerRayQuotientCommGroup (m : Modulus k K) :
+    CommGroup (RayClassGroup m) :=
+  QuotientGroup.Quotient.commGroup (rayClassSubgroup m)
 
 /-- Full-constant normalized degree on the actual ray quotient. -/
 def normalizedDegree (m : Modulus k K) : RayClassGroup m →* Multiplicative ℤ :=

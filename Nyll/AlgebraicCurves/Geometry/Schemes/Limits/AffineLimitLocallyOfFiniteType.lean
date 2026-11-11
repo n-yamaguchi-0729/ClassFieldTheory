@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
-import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
-import Mathlib.RingTheory.Localization.Away.Basic
-import Mathlib.RingTheory.FiniteType
-import Mathlib.Tactic.Choose
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.FiniteType
+public import Mathlib.AlgebraicGeometry.Morphisms.OpenImmersion
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Mathlib.RingTheory.FiniteType
+public import Mathlib.Tactic.Choose
 
 /-!
 # Finite type from finitely generated factorizations
@@ -23,6 +25,8 @@ A scheme over an affine base is locally of finite type if every affine test map
 factors through a finitely generated subalgebra over the base. Basic-open
 localizations transport these factorizations around a point.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

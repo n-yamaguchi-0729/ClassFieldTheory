@@ -4,7 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteGaloisSubextension
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.GaloisCohomology.Cyclic.NormKernelVanishing
 
 /-!
 # The global norm-residue symbol for finite Galois extensions
@@ -21,10 +26,14 @@ states global reciprocity at its full finite-Galois generality.
 
 
 
+@[expose] public section
+
 open scoped IsMulCommutative NumberField
 open NumberField
 
 noncomputable section
+
+universe u v
 
 namespace GlobalClassFieldTheory
 namespace Reciprocity
@@ -33,7 +42,7 @@ open ClassFormation
 open KummerTheory
 
 variable
-    (K L : Type) [Field K] [NumberField K]
+    (K : Type u) (L : Type v) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
 
@@ -90,7 +99,7 @@ theorem
 /-- The abstract norm-residue symbol followed by the concrete Galois
 comparison.  This declaration boundary keeps the dependent quotient indices
 and their instance packages from being reconstructed at each evaluation. -/
-private noncomputable def
+noncomputable def
     numberFieldTowerAbstractNormResidueGaloisAbelianizationEquiv :
     FiniteNormQuotient rationalIdeleClassRepresentation
           (numberFieldTowerBaseSubgroup K L)
@@ -158,11 +167,11 @@ private theorem
         (numberFieldTowerBaseSubgroup K L)
         (numberFieldTowerTopSubgroup L)
         (numberFieldTowerTopSubgroup_le_baseSubgroup K L)) :
-    letI :=
+    let :=
       (numberFieldTowerReciprocityFiniteAbstractField K L).finite
-    letI :=
+    let :=
       numberFieldTowerExtensionSubgroup_normal K L
-    letI :=
+    let :=
       (numberFieldTowerFiniteGaloisSubextension K L).finite
     numberFieldTowerAbstractNormResidueGaloisAbelianizationEquiv K L x =
       numberFieldTowerAbelianizedExtensionQuotientEquivGaloisAbelianization
@@ -173,12 +182,7 @@ private theorem
           rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
           (numberFieldTowerReciprocityFiniteAbstractField K L)
           (numberFieldTowerFiniteGaloisSubextension K L) x) := by
-  let hBaseFinite :=
-    (numberFieldTowerReciprocityFiniteAbstractField K L).finite
-  let hExtensionNormal :=
-    numberFieldTowerExtensionSubgroup_normal K L
-  let hRelativeFinite :=
-    (numberFieldTowerFiniteGaloisSubextension K L).finite
+  intro hBaseFinite hExtensionNormal hRelativeFinite
   rfl
 
 private theorem globalNormResidueAbelianizationEquiv_transport_apply
@@ -225,11 +229,11 @@ theorem globalNormResidueAbelianizationEquiv_finiteReciprocityHom
     (q :
       ClassFormation.FiniteGaloisSubextension.extensionQuotient
         (numberFieldTowerFiniteGaloisSubextension K L)) :
-    letI :=
+    let :=
       (numberFieldTowerReciprocityFiniteAbstractField K L).finite
-    letI :=
+    let :=
       numberFieldTowerExtensionSubgroup_normal K L
-    letI :=
+    let :=
       (numberFieldTowerFiniteGaloisSubextension K L).finite
     globalNormResidueAbelianizationEquiv K L
         (numberFieldTowerFiniteNormQuotientEquivIdeleClassNormQuotient
@@ -251,12 +255,7 @@ theorem globalNormResidueAbelianizationEquiv_finiteReciprocityHom
       Additive.ofMul
         (Abelianization.of
           (numberFieldTowerExtensionQuotientEquivGaloisGroup K L q)) := by
-  let hBaseFinite :=
-    (numberFieldTowerReciprocityFiniteAbstractField K L).finite
-  let hExtensionNormal :=
-    numberFieldTowerExtensionSubgroup_normal K L
-  let hRelativeFinite :=
-    (numberFieldTowerFiniteGaloisSubextension K L).finite
+  intro hBaseFinite hExtensionNormal hRelativeFinite
   let x :=
     rationalCyclotomicDegreeData.finiteReciprocityHom
       rationalIdeleClassRepresentation
@@ -586,7 +585,7 @@ theorem ideleClassNorm_index_eq_galoisAbelianization_card :
 section AbelianSpecialization
 
 variable
-    (F E : Type) [Field F] [NumberField F]
+    (F : Type u) (E : Type v) [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E]
     [FiniteDimensional F E] [IsAbelianGalois F E]
 

@@ -10,12 +10,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Places.Orders.AdicValuationSubLe
-import Nyll.AlgebraicCurves.Places.Orders.OrdEqFinset
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Places.Orders.AdicValuationSubLe
+public import Nyll.AlgebraicCurves.Places.Orders.OrdEqFinset
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
 
 /-!
 # Place exists forall adicValuation sub eq
@@ -23,6 +25,8 @@ import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
 Weak approximation realizes prescribed nonzero adic distances from given values at finitely many
 places.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

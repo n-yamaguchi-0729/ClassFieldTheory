@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.WeilDifferentialRankOne
-import Mathlib.Tactic.Linarith
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Duality.WeilDifferentialRankOne
+public import Mathlib.Tactic.Linarith
 
 /-! The residue pairing identifies the index of specialty with a space of sections. -/
+
+@[expose] public section
 
 namespace AlgebraicCurves.Cohomology.RiemannRoch.Proofs.IndexOfSpecialtyEllSubRankOneMax
 

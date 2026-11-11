@@ -5,6 +5,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealDecompositionLaw
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealArtin
 
 /-!
 # Ideal norms and arithmetic Artin exactness
@@ -24,13 +27,15 @@ open scoped NumberField IsMulCommutative
 
 noncomputable section
 
+universe u v
+
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
 open NumberField IsDedekindDomain
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -466,7 +471,7 @@ namespace ClassFieldTheory
 open NumberField IsDedekindDomain
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]

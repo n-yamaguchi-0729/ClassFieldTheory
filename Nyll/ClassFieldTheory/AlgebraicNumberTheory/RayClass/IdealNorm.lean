@@ -4,14 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
-import Mathlib.Algebra.BigOperators.Finsupp.Basic
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormContinuity
+public import Mathlib.Algebra.BigOperators.Finsupp.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.FractionalIdealNormExponentMap
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealFactorization
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AbsoluteValueExtensions
+public import Nyll.ValuedFieldTheory.Valuation.Completion.TensorProductDecomposition
 
 /-!
 # Norms of ideals prime to a modulus
@@ -30,6 +40,10 @@ principal ray ideals, is the norm-defined ideal group
 
 
 
+@[expose] public section
+
+universe u v w
+
 open scoped BigOperators NumberField Topology
 open NumberField IsDedekindDomain
 
@@ -38,7 +52,7 @@ noncomputable section
 namespace RayClass
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L]
@@ -51,17 +65,15 @@ theorem exists_localHigherUnitGroup_le_norm_preimage
     (m : Modulus K)
     (W : HeightOneSpectrum (𝓞 L)) :
     let v := _root_.finitePlaceBelow (K := K) W
-    letI : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
+    let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
       (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
     ∃ n : ℕ,
       localHigherUnitGroup W n ≤
         (localHigherUnitGroup v (m.finitePart v)).comap
           (LocalFieldTheory.normUnits
             (v.adicCompletion K) (W.adicCompletion L)) := by
+  intro v sharedOwner2
   classical
-  let v := _root_.finitePlaceBelow (K := K) W
-  let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
-    (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
   let : IsScalarTower
       K (v.adicCompletion K) (W.adicCompletion L) :=
     _root_.finitePlaceAdicCompletionMap_isScalarTower K L v ⟨W, rfl⟩
@@ -148,7 +160,7 @@ theorem localHigherUnitGroup_idealNormLiftedModulusExponent_le
     (hW :
       _root_.finitePlaceBelow (K := K) W ∈ m.finitePart.support) :
     let v := _root_.finitePlaceBelow (K := K) W
-    letI : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
+    let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
       (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
     localHigherUnitGroup W
         (idealNormLiftedModulusExponent
@@ -156,10 +168,8 @@ theorem localHigherUnitGroup_idealNormLiftedModulusExponent_le
       (localHigherUnitGroup v (m.finitePart v)).comap
         (LocalFieldTheory.normUnits
           (v.adicCompletion K) (W.adicCompletion L)) := by
+  intro v sharedOwner2
   classical
-  let v := _root_.finitePlaceBelow (K := K) W
-  let : Algebra (v.adicCompletion K) (W.adicCompletion L) :=
-    (_root_.finitePlaceAdicCompletionMap K L v ⟨W, rfl⟩).toAlgebra
   rw [idealNormLiftedModulusExponent, dite_eq_left hW]
   exact
     (localHigherUnitGroup_antitone W (Nat.le_succ _)).trans
@@ -417,7 +427,7 @@ private theorem idealNormExponentMap_eq_public :
   simp only [fractionalIdealNormPrimeBelow_eq_finitePlaceBelow]
 
 private theorem factorizationEquiv_eq_public
-    (F : Type) [Field F] [NumberField F] :
+    (F : Type w) [Field F] [NumberField F] :
     FractionalIdealGroup.factorizationEquiv (K := F) =
       ClassFieldTheory.NumberFieldFractionalIdealGroup.factorizationEquiv
         (K := F) := by

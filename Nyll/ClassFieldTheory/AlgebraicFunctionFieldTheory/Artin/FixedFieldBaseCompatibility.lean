@@ -4,21 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.IsSepClosed
-import Mathlib.FieldTheory.Separable
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldPrimeNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FrobeniusNormWitness
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativeFrobeniusEvaluation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusSurjectivity
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
+module
+
+public import Mathlib.FieldTheory.IsSepClosed
+public import Mathlib.FieldTheory.Separable
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldPrimeNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FrobeniusNormWitness
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativeFrobeniusEvaluation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusSurjectivity
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
 import
   Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 
 /-!
 # Native reciprocity over an actual fixed base field
@@ -27,13 +29,17 @@ The common norm witnesses are supplied by the actual auxiliary-field constructio
 The two existing prime norm evaluations then determine reciprocity on all classes.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k K : Type) [Field k] [Finite k] [Field K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra k (SeparableClosure K)]
     [Algebra (RatFunc k) (SeparableClosure K)]

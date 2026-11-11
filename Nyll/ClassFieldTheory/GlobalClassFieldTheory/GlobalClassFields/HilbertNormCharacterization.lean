@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
 
 /-!
 # Hilbert norm subgroups and unramified extensions
@@ -23,9 +26,13 @@ factorization and the resulting divisibility of orders.
 
 
 
+@[expose] public section
+
 open scoped IsMulCommutative NumberField
 
 noncomputable section
+
+universe u v
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
@@ -33,7 +40,7 @@ namespace GlobalClassFields
 open NumberField
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -284,9 +291,10 @@ theorem
           (K := K) (L := L) = ∅) :
     Module.finrank K L ∣
       Nat.card (RayClass.NarrowClassGroup K) := by
+  let : IsAbelianGalois K L := IsAbelianGalois.of_isCyclic K L
   simpa only [
     ← Subgroup.index_eq_card,
-    ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L] using
+    Reciprocity.ideleClassNorm_index_eq_finrank_abelian K L] using
       ideleClassNormQuotient_card_dvd_narrowClassGroup_card_of_no_ramifiedFinitePlaces
         (K := K) (L := L) hunramified
 
@@ -305,9 +313,10 @@ theorem
             (narrowClassGroupToIdeleClassNormQuotient
               (K := K) (L := L) hunramified)) *
         Module.finrank K L := by
+  let : IsAbelianGalois K L := IsAbelianGalois.of_isCyclic K L
   simpa only [
     ← Subgroup.index_eq_card,
-    ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L] using
+    Reciprocity.ideleClassNorm_index_eq_finrank_abelian K L] using
       narrowClassGroup_card_eq_unramifiedNormKernel_card_mul_normQuotient_card
         (K := K) (L := L) hunramified
 

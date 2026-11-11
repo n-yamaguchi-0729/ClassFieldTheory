@@ -37,14 +37,16 @@ namespace GlobalClassFields
 open NumberField
 open Reciprocity
 
-variable {K : Type} [Field K] [NumberField K]
+universe u v
+
+variable {K : Type u} [Field K] [NumberField K]
 
 /-- Fix the commutative idèle-class instance path used by every quotient in
 this module, so the norm quotient and the literal quotient share one normality
 construction during elaboration. -/
 local instance
     arithmeticClassFieldCorrespondenceIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type v} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 

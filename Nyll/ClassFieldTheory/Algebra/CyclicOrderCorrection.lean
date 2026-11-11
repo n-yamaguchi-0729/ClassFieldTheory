@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Nat.Factorial.Basic
-import Mathlib.GroupTheory.OrderOfElement
-import Lean.Elab.Tactic.Omega
+module
+
+public import Mathlib.Data.Nat.Factorial.Basic
+public import Mathlib.GroupTheory.OrderOfElement
+public import Lean.Elab.Tactic.Omega
 
 /-!
 # Correcting a cyclic element while retaining a prescribed order divisor
@@ -17,6 +19,8 @@ generator has order `m * s!`. Choose the representative exponent in `1..s`;
 that exponent divides `s!`. This supplies the finite arithmetic correction
 used with constant Frobenius and a decomposition-group lift.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

@@ -10,20 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Differentials.Local.Order
-import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
-import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Differentials.Residues.Basic
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
-import Mathlib.LinearAlgebra.Trace
-import Mathlib.RingTheory.Trace.Defs
-import Mathlib.LinearAlgebra.Projection
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.Tactic.Abel
-import Nyll.AlgebraicCurves.Places.Completion
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Differentials.Local.Order
+public import Nyll.AlgebraicCurves.Differentials.Local.Uniformizer
+public import Nyll.AlgebraicCurves.Divisors.Principal.Canonical
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Differentials.Residues.Basic
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+public import Mathlib.LinearAlgebra.Trace
+public import Mathlib.RingTheory.Trace.Defs
+public import Mathlib.LinearAlgebra.Projection
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.Tactic.Abel
+public import Nyll.AlgebraicCurves.Places.Completion
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -31,6 +33,8 @@ import Nyll.AlgebraicCurves.Places.Completion
 Finite-rank traces and Tate commutators on completions, with residue agreement and completed trace
 identities.
 -/
+
+@[expose] public section
 
 open LinearMap Submodule
 

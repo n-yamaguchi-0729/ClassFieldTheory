@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+module
+
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 
 /-!
 # Polynomial exists is Unit aeval of sub mem maximal Ideal imp eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

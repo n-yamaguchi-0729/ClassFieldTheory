@@ -58,20 +58,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.Projective
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.Tactic.Abel
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.Algebra.Module.Submodule.LinearMap
-import Mathlib.Tactic.Ext
-import Mathlib.Algebra.Module.SnakeLemma
-import Mathlib.LinearAlgebra.Quotient.Basic
-import Mathlib.Tactic.Ring.RingNF
-import Mathlib.Tactic.SimpRw
+module
+
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.Tactic.Abel
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.Algebra.Module.Submodule.LinearMap
+public import Mathlib.Tactic.Ext
+public import Mathlib.Algebra.Module.SnakeLemma
+public import Mathlib.LinearAlgebra.Quotient.Basic
+public import Mathlib.Tactic.Ring.RingNF
+public import Mathlib.Tactic.SimpRw
 
 /-!
 # Linear Map finite Dimensional ker and quotient range of exact of finite Dimensional
 -/
+
+@[expose] public section
 
 section LinearMap_finiteDimensional_ker_and_quotient_range_of_exact_of_finiteDimensional
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.FiniteFieldLangPoints
-import Nyll.GaloisCohomology.Cyclic.LangNormKernel
+module
+
+public import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.GroupLaw.FiniteFieldLangPoints
+public import Nyll.GaloisCohomology.Cyclic.LangNormKernel
 
 /-!
 # Periodic primitives for actual Frobenius norms
@@ -14,15 +16,19 @@ A zero-norm algebraic point has a Frobenius coboundary primitive fixed by the
 specified power of Frobenius. No rational-point descent is assumed here.
 -/
 
+@[expose] public section
+
+universe u
+
 noncomputable section
 
 open AlgebraicGeometry
 
 namespace GoodReductionJacobian.RelativeGroupLaw
 
-variable (k Ω : Type) [Field k] [Fintype k] [Field Ω] [Algebra k Ω]
+variable (k Ω : Type u) [Field k] [Fintype k] [Field Ω] [Algebra k Ω]
     [Algebra.IsAlgebraic k Ω] [IsAlgClosed Ω]
-    (X : Scheme.{0}) [X.Over (Spec (CommRingCat.of k))]
+    (X : Scheme.{u}) [X.Over (Spec (CommRingCat.of k))]
     (L : RelativeGroupLaw k (X ↘ Spec (CommRingCat.of k))) (hc : L.IsCommutative)
     (hX : AbelianSchemePropertyBundle k (X ↘ Spec (CommRingCat.of k)))
 

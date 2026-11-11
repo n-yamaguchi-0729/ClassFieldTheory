@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.NumberTheory.Padics.HeightOneSpectrum
-import Mathlib.NumberTheory.NumberField.Ideal.Basic
+module
+
+public import Mathlib.NumberTheory.Padics.HeightOneSpectrum
+public import Mathlib.NumberTheory.NumberField.Ideal.Basic
 
 /-!
 # Rational prime ideals
@@ -13,6 +15,8 @@ import Mathlib.NumberTheory.NumberField.Ideal.Basic
 This file identifies the height-one ideal of `ℤ` attached to a positive
 rational prime with its usual principal ideal.
 -/
+
+@[expose] public section
 
 noncomputable section
 

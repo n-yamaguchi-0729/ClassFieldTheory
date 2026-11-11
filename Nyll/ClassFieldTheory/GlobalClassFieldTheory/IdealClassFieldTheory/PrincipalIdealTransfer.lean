@@ -4,16 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Compatibility
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.ZeroTransport
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FiniteNormClass
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Compatibility
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.ZeroTransport
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FiniteNormClass
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
+public import Nyll.GaloisCohomology.Cyclic.NormKernelVanishing
+public import Nyll.GaloisCohomology.Kummer.Abstract.KummerDelta
 
 /-!
 # Transfer input for the principal ideal theorem
@@ -32,6 +37,10 @@ norm maps.
 
 
 
+@[expose] public section
+
+universe u
+
 open scoped NumberField
 
 noncomputable section
@@ -45,24 +54,24 @@ open KummerTheory
 open LocalClassFieldTheory
 open Reciprocity
 
-variable (K : Type) [Field K] [NumberField K]
+variable (K : Type u) [Field K] [NumberField K]
 
 local instance
     principalIdealTransferIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
+    {F : Type*} [Field F] [NumberField F] :
     IsMulCommutative (IdeleClassGroup F) :=
   ⟨⟨fun a b => mul_comm a b⟩⟩
 
 local instance
     principalIdealTransferIdeleClassSubgroupNormal
-    {F : Type} [Field F] [NumberField F]
+    {F : Type*} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
   N.normal_of_isMulCommutative
 
 /-- Extension-range containment descends along the lower leg of a finite
 Galois tower. -/
 private theorem ideleClassExtension_range_le_of_intermediate
-    (F E U : Type)
+    (F : Type*) (E : Type*) (U : Type*)
     [Field F] [NumberField F]
     [Field E] [NumberField E]
     [Field U] [NumberField U]
@@ -427,15 +436,15 @@ private noncomputable abbrev
   let hMHnormal :
       (CyclicCohomology.extensionSubgroup H N.field hMH).Normal :=
     N.normal
-  letI hKHfinite : Finite
+  let hKHfinite : Finite
       (K₀.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup K₀.field H hHK) :=
     L.finite
-  letI hHMfinite : Finite
+  let hHMfinite : Finite
       (H.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup H N.field hMH) :=
     N.finite
-  letI hHfinite : Finite
+  let hHfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
         CyclicCohomology.extensionSubgroup
@@ -447,59 +456,59 @@ private noncomputable abbrev
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K₀.field
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hHK
   let U := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hMH
-  letI : FiniteDimensional ℚ F :=
+  let : FiniteDimensional ℚ F :=
     RationalFiniteNormTransferInternal.fixedFiniteDimensional
       (hKfinite := K₀.finite) K₀.field
-  letI : FiniteDimensional F E :=
+  let : FiniteDimensional F E :=
     RationalFiniteNormTransferInternal.relativeFiniteDimensional
       (hKfinite := K₀.finite) (hfinite := hKHfinite)
       K₀.field H hHK
-  letI : IsScalarTower ℚ F E :=
+  let : IsScalarTower ℚ F E :=
     RationalFiniteNormTransferInternal.relativeScalarTower K₀.field H hHK
-  letI : FiniteDimensional ℚ E :=
+  let : FiniteDimensional ℚ E :=
     RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
       (hKfinite := K₀.finite) (hfinite := hKHfinite)
       K₀.field H hHK
-  letI : NumberField F :=
+  let : NumberField F :=
     RationalFiniteNormTransferInternal.fixedNumberField
       (hKfinite := K₀.finite) K₀.field
-  letI : NumberField E :=
+  let : NumberField E :=
     RationalFiniteNormTransferInternal.relativeNumberField
       (hKfinite := K₀.finite) (hfinite := hKHfinite)
       K₀.field H hHK
-  letI : FiniteDimensional ℚ U :=
+  let : FiniteDimensional ℚ U :=
     RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
       (hKfinite := hHfinite) (hfinite := hHMfinite)
       H N.field hMH
-  letI : NumberField U :=
+  let : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       (hKfinite := hHfinite) (hfinite := hHMfinite)
       H N.field hMH
-  letI : Algebra E U := by
+  let : Algebra E U := by
     change Algebra
       (abstractFixedField ℚ (SeparableClosure ℚ) H) U
     exact U.algebra
-  letI : Module E U := by
+  let : Module E U := by
     change Module
       (abstractFixedField ℚ (SeparableClosure ℚ) H) U
     exact
       (U.algebra : Algebra
         (abstractFixedField ℚ (SeparableClosure ℚ) H) U).toModule
-  letI : FiniteDimensional E U := by
+  let : FiniteDimensional E U := by
     change FiniteDimensional
       (abstractFixedField ℚ (SeparableClosure ℚ) H) U
     exact RationalFiniteNormTransferInternal.relativeFiniteDimensional
       (hKfinite := hHfinite) (hfinite := hHMfinite)
       H N.field hMH
-  letI : IsScalarTower ℚ E U := by
+  let : IsScalarTower ℚ E U := by
     change IsScalarTower ℚ
       (abstractFixedField ℚ (SeparableClosure ℚ) H) U
     exact RationalFiniteNormTransferInternal.relativeScalarTower
       H N.field hMH
-  letI : IsGalois F E :=
+  let : IsGalois F E :=
     RationalFiniteNormTransferInternal.relativeIsGalois
       K₀.field H hHK hHKnormal
-  letI : IsGalois E U := by
+  let : IsGalois E U := by
     change IsGalois
       (abstractFixedField ℚ (SeparableClosure ℚ) H) U
     exact RationalFiniteNormTransferInternal.relativeIsGalois
@@ -509,7 +518,7 @@ private noncomputable abbrev
     ideleClassExtension F E c ∈ (_root_.ideleClassNorm E U).range
 
 private structure SmallHilbertClassFieldExplicitNormMembershipData
-    (K : Type) [Field K] [NumberField K] : Type where
+    (K : Type u) [Field K] [NumberField K] : Type where
   membership : smallHilbertClassFieldExplicitNormMembershipStatement K
 
 private noncomputable def
@@ -517,39 +526,10 @@ private noncomputable def
     SmallHilbertClassFieldExplicitNormMembershipData K where
   membership := by
     unfold smallHilbertClassFieldExplicitNormMembershipStatement
-    dsimp only
-    intro c
-    let K₀ :=
-      numberFieldTowerFiniteAbstractField K
-        (smallHilbertClassFieldNormAmbient K)
-    let L := smallHilbertClassFieldSubextension K
-    let N := smallHilbertTowerSecondSubextension K
-    let H := L.field
-    let hMH : N.field.toSubgroup ≤ H.toSubgroup := N.below
-    let hHK : H.toSubgroup ≤ K₀.field.toSubgroup := L.below
-    let hHKnormal :
-        (CyclicCohomology.extensionSubgroup K₀.field H hHK).Normal :=
-      L.normal
-    let hMHnormal :
-        (CyclicCohomology.extensionSubgroup H N.field hMH).Normal :=
-      N.normal
-    let hKHfinite : Finite
-        (K₀.field.toSubgroup ⧸
-          CyclicCohomology.extensionSubgroup K₀.field H hHK) :=
-      L.finite
-    let hHMfinite : Finite
-        (H.toSubgroup ⧸
-          CyclicCohomology.extensionSubgroup H N.field hMH) :=
-      N.finite
-    let hHfinite : Finite
-        ((baseField
-          (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
-          CyclicCohomology.extensionSubgroup
-            (baseField
-              (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
-            H (le_baseField H)) :=
-      FiniteGaloisSubextension.finite_extension_trans
-        hHK (le_baseField K₀.field)
+    intro K₀ L N H hMH hHK hHKnormal hMHnormal hKHfinite hHMfinite hHfinite F E U contextOwner15
+      contextOwner16 contextOwner17 contextOwner18 contextOwner19 contextOwner20 contextOwner21
+      contextOwner22 contextOwner23 contextOwner24 contextOwner25 contextOwner26 contextOwner27
+      contextOwner28 c
     have hmembershipAll :=
       smallHilbertClassFieldCanonicalNormMembershipStatement_proof K
     unfold
@@ -617,7 +597,7 @@ noncomputable def smallHilbertClassFieldSecondNormRangeContainment : Prop :=
         (K := smallHilbertClassField K)
 
 private structure SmallHilbertClassFieldSecondNormRangeContainmentData
-    (K : Type) [Field K] [NumberField K] : Type where
+    (K : Type u) [Field K] [NumberField K] : Type where
   containment : smallHilbertClassFieldSecondNormRangeContainment K
 
 private noncomputable def

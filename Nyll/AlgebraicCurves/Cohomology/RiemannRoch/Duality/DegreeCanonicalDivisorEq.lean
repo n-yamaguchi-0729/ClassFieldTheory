@@ -10,11 +10,15 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch
 
 /-!
 # Degree canonical Divisor eq of riemann Roch
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

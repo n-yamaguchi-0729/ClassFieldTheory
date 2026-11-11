@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 
 /-!
 The structure-sheaf module presheaf associated with a scheme module and its restriction maps.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
-import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.NormSubgroup
+module
+
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.StandardLocalField
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.LevelAbelian
+public import Nyll.ClassFieldTheory.LubinTate.FiniteLevel.NormSubgroup
 
 /-!
 # Norm indices for standard finite Lubin--Tate levels
@@ -20,7 +22,11 @@ Lubin--Tate level over the canonical local-field package, this gives index
 
 
 
+@[expose] public section
+
 noncomputable section
+
+universe u v w
 
 open scoped ValuativeRel
 
@@ -30,7 +36,7 @@ open LocalClassFieldTheory
 open LocalFieldTheory
 open LocalFieldTheory.DiscreteValuationField
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 
 /-- The norm subgroup of a standard level over the canonical local-field

@@ -23,7 +23,7 @@ namespace ClassFieldTheory
 /-- For one modulus, inclusion of ray-class subgroups reverses inclusion of
 their selected class fields inside the fixed separable closure. -/
 theorem chosenRayClassSubgroupSubfield_antitone
-    (K : Type) [Field K] [NumberField K]
+    (K : Type*) [Field K] [NumberField K]
     (m : RayClassModulus K)
     {H J : Subgroup (RayClassGroup m)} (hHJ : H ≤ J) :
     GlobalClassFieldTheory.GlobalClassFields.rayClassSubgroupSubfield

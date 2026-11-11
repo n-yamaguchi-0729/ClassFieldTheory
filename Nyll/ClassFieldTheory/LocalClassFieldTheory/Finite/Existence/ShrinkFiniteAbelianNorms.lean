@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFiniteAbelianFields
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkFiniteAbelianFields
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
 
 /-!
 # Norm subgroups under a small change of local base field
@@ -13,6 +16,8 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroup
 The field norm from an intermediate field is unchanged after re-expressing
 that intermediate field over the equivalent small base field.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -27,20 +32,16 @@ variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
 norm subgroup of the same field viewed over `Shrink K`. -/
 theorem shrinkIntermediateField_normSubgroup_map
     (E : ClassFieldTheory.FiniteAbelianLocalExtension K) :
-    letI : Small.{0} K := nonarchimedeanLocalField_small K
-    letI : Algebra (Shrink.{0} K) (SeparableClosure K) :=
+    let : Small.{0} K := nonarchimedeanLocalField_small K
+    let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
       shrinkSeparableClosureAlgebra K
-    letI : FiniteDimensional (Shrink.{0} K) (shrinkIntermediateField K E.1) :=
+    let : FiniteDimensional (Shrink.{0} K) (shrinkIntermediateField K E.1) :=
       shrinkIntermediateField_finiteDimensional K E
     (E.normSubgroup).map
         (Units.mapEquiv (Shrink.ringEquiv K).symm.toMulEquiv).toMonoidHom =
       ClassFieldTheory.fieldNormSubgroup (Shrink.{0} K)
         (shrinkIntermediateField K E.1) := by
-  let : Small.{0} K := nonarchimedeanLocalField_small K
-  let : Algebra (Shrink.{0} K) (SeparableClosure K) :=
-    shrinkSeparableClosureAlgebra K
-  let : FiniteDimensional (Shrink.{0} K) (shrinkIntermediateField K E.1) :=
-    shrinkIntermediateField_finiteDimensional K E
+  intro sharedOwner1 sharedOwner2 sharedOwner3
   change (ClassFieldTheory.fieldNormSubgroup K E.1).map
       (Units.mapEquiv (Shrink.ringEquiv K).symm.toMulEquiv).toMonoidHom =
     ClassFieldTheory.fieldNormSubgroup (Shrink.{0} K)

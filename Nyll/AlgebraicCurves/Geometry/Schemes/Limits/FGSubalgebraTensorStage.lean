@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.TensorProduct.DirectLimitFG
-import Mathlib.RingTheory.TensorProduct.Maps
-import Mathlib.Order.DirectedInverseSystem
-import Nyll.SchemeTheory.Descent.FGSubalgebra
+module
+
+public import Mathlib.RingTheory.TensorProduct.DirectLimitFG
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.Order.DirectedInverseSystem
+public import Nyll.SchemeTheory.Descent.FGSubalgebra
 
 /-!
 Tensor products at finitely generated subalgebra stages and their directed-limit maps.
 -/
+
+@[expose] public section
 
 universe u
 

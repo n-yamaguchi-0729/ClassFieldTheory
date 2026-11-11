@@ -10,16 +10,20 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Overlap section equivalences for invertible scheme modules after scalar extension on two affine
 charts.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -268,16 +272,15 @@ with_weak_namespace _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 theorem exists_sectionsOf_overlap_linearEquiv_baseChange_of_isInvertible
     {R : Type u} [CommRing R] {X : Scheme.{u}} (𝒱 : X.TwoAffineOpenCover) (c : X ⟶ Spec (.of R))
     (M : X.Modules) (hM : Scheme.Modules.IsInvertible M) :
-    letI : Algebra (𝒱.cover c).A0 (𝒱.cover c).A01 := (𝒱.cover c).ρ0.toRingHom.toAlgebra
-    letI : Algebra (𝒱.cover c).A1 (𝒱.cover c).A01 := (𝒱.cover c).ρ1.toRingHom.toAlgebra
+    let : Algebra (𝒱.cover c).A0 (𝒱.cover c).A01 := (𝒱.cover c).ρ0.toRingHom.toAlgebra
+    let : Algebra (𝒱.cover c).A1 (𝒱.cover c).A01 := (𝒱.cover c).ρ1.toRingHom.toAlgebra
     ∃ (rbc0 : (𝒱.cover c).A01 ⊗[(𝒱.cover c).A0] (𝒱.sectionsOf c M).M0 ≃ₗ[(𝒱.cover c).A01]
                 (𝒱.sectionsOf c M).M01)
       (rbc1 : (𝒱.cover c).A01 ⊗[(𝒱.cover c).A1] (𝒱.sectionsOf c M).M1 ≃ₗ[(𝒱.cover c).A01]
                 (𝒱.sectionsOf c M).M01),
       (∀ m, rbc0 ((1 : (𝒱.cover c).A01) ⊗ₜ[(𝒱.cover c).A0] m) = (𝒱.sectionsOf c M).r0 m) ∧
       (∀ m, rbc1 ((1 : (𝒱.cover c).A01) ⊗ₜ[(𝒱.cover c).A1] m) = (𝒱.sectionsOf c M).r1 m) := by
-  let alg0 : Algebra (𝒱.cover c).A0 (𝒱.cover c).A01 := (𝒱.cover c).ρ0.toRingHom.toAlgebra
-  let alg1 : Algebra (𝒱.cover c).A1 (𝒱.cover c).A01 := (𝒱.cover c).ρ1.toRingHom.toAlgebra
+  intro alg0 alg1
   obtain ⟨e0, he0⟩ := P2mWs11Span.exists_baseChange_equiv (alg := alg0) M hM.exists_trivialization
     𝒱.isAffineOpen_U0 𝒱.isAffineOpen_inf inf_le_left (fun _ => rfl)
   obtain ⟨e1, he1⟩ := P2mWs11Span.exists_baseChange_equiv (alg := alg1) M hM.exists_trivialization

@@ -4,16 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.NarrowRayClassModulus
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.NarrowRayClassModulus
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassGroup
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
 
 /-!
 # Prime classes in ray class groups
 -/
 
 
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -24,7 +28,8 @@ namespace ClassFieldTheory
 
 universe u
 
-private lemma finitePrimeFractionalIdeal_mem_primeTo
+/-- A finite prime outside the modulus defines an ideal prime to that modulus. -/
+lemma finitePrimeFractionalIdeal_mem_primeTo
     {K : Type u} [Field K] [NumberField K]
     (m : RayClassModulus K)
     (v : HeightOneSpectrum (𝓞 K))
@@ -49,7 +54,8 @@ def ordinaryRayClassOfFinitePrime
     (v : HeightOneSpectrum (𝓞 K)) :
     RayClassGroup (ordinaryRayClassModulus K) :=
   rayClassOfFinitePrime (ordinaryRayClassModulus K) v (by
-    simp [ordinaryRayClassModulus])
+    simp only [ordinaryRayClassModulus, Finsupp.support_zero, Finset.notMem_empty,
+      not_false_eq_true])
 
 /-- The narrow ideal class represented by a finite prime. -/
 def narrowRayClassOfFinitePrime
@@ -57,6 +63,6 @@ def narrowRayClassOfFinitePrime
     (v : HeightOneSpectrum (𝓞 K)) :
     RayClassGroup (narrowRayClassModulus K) :=
   rayClassOfFinitePrime (narrowRayClassModulus K) v (by
-    simp [narrowRayClassModulus])
+    simp only [narrowRayClassModulus, Finsupp.support_zero, Finset.notMem_empty, not_false_eq_true])
 
 end ClassFieldTheory

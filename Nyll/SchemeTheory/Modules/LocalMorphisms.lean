@@ -59,17 +59,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.CategoryTheory.Sites.EpiMono
-import Mathlib.Algebra.Category.Grp.EpiMono
-import Mathlib.Algebra.Category.Grp.Abelian
-import Mathlib.Topology.Sheaves.Abelian
-import Mathlib.Tactic.Ext
-import Mathlib.Tactic.TermCongr
-import Mathlib.CategoryTheory.Sites.LocallyBijective
-import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
-import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
-import Mathlib.Tactic.Choose
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.CategoryTheory.Sites.EpiMono
+public import Mathlib.Algebra.Category.Grp.EpiMono
+public import Mathlib.Algebra.Category.Grp.Abelian
+public import Mathlib.Topology.Sheaves.Abelian
+public import Mathlib.Tactic.Ext
+public import Mathlib.Tactic.TermCongr
+public import Mathlib.CategoryTheory.Sites.LocallyBijective
+public import Mathlib.Topology.Sheaves.SheafCondition.UniqueGluing
+public import Mathlib.CategoryTheory.Limits.Shapes.ZeroObjects
+public import Mathlib.Tactic.Choose
 
 /-!
 # Epimorphisms and locally surjective module maps
@@ -77,6 +79,8 @@ import Mathlib.Tactic.Choose
 A morphism of module sheaves is an epimorphism precisely when sections locally lift
 through its components.
 -/
+
+@[expose] public section
 
 section Hom_epi_iff_locallySurjective
 

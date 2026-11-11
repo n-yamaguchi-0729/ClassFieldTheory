@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.ToDescentDataMapBijectiveUnit
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Descent.ToDescentDataMapBijective
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.ToDescentDataMapBijectiveUnit
 
 /-!
 # Scheme Modules Is Invertible to Descent Data map bijective of is Affine Hom of flat of
 surjective
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -116,14 +120,12 @@ theorem pullback_sieve_eq (Z : Over Y) (f : Z ⟶ Over.mk (𝟙 Y)) :
       rw [hk]
       simp only [Category.assoc]
       erw [pullback.condition]
-      try rfl
     refine ⟨Over.mk q, Over.homMk (h.left ≫ m.left ≫ pullback.fst q Z.hom) (key.trans hkw),
       Over.homMk q,
       ⟨()⟩, ?_⟩
     ext
     simp only [Over.comp_left, Over.homMk_left]
     erw [key, hf]
-    try rfl
   · rintro ⟨Y₃, b, f', ⟨i⟩, fac⟩
     have hb : b.left ≫ q = k.left ≫ Z.hom := by
       have := congr_arg CommaMorphism.left fac
@@ -202,13 +204,11 @@ theorem isSeparatedFor_pullback_cover {ι : Type u} (W : ι → Y.Opens) (hW : �
     rw [hk]
     simp only [Category.assoc]
     erw [morphismRestrict_ι]
-    try rfl
   refine ⟨Over.mk (W i).ι, Over.homMk (h.left ≫ m.left ≫ (Z.hom ∣_ (W i))) (key.trans hkw),
     Over.homMk (W i).ι, ⟨i⟩, ?_⟩
   ext
   simp only [Over.comp_left, Over.homMk_left]
   erw [key, hf]
-  try rfl
 
 end AlgebraicGeometry.Scheme.Modules.HomDescFF
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Over
-import Nyll.GaloisCohomology.Kummer.FiniteGaloisUnitsH2TowerNaturality
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Over
+public import Nyll.GaloisCohomology.Kummer.FiniteGaloisUnitsH2TowerNaturality
 
 /-!
 # Localized unit H² in an actual function-field tower
@@ -14,6 +16,8 @@ The actual completion maps form a commuting scalar tower. Naturality of unit
 inflation and injectivity of finite local inflation therefore identify the
 vanishing of a localized class before and after global inflation.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -22,13 +22,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.HomologicalAlgebra.TorExactSequence
-import Mathlib.RingTheory.TensorProduct.Quotient
-import Nyll.SchemeTheory.RingTheory.Flat.TorLocalCriterion
+module
+
+public import Nyll.SchemeTheory.HomologicalAlgebra.TorExactSequence
+public import Mathlib.RingTheory.TensorProduct.Quotient
+public import Nyll.SchemeTheory.RingTheory.Flat.TorLocalCriterion
 
 /-!
 # Is Local Ring flat of is Scalar Tower of flat of flat quotient maximal Ideal map univ
 -/
+
+@[expose] public section
 
 section IsLocalRing_flat_of_isScalarTower_of_flat_of_flat_quotient_maximalIdeal_map_univ
 

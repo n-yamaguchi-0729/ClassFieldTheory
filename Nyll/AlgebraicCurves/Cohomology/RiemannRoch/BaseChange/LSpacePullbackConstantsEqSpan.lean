@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Places.Basic
-import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.AlgebraicCurves.Places.ConstantExtension.ForgetConstantsRestrictEq
-import Mathlib.RingTheory.Adjoin.PowerBasis
-import Mathlib.RingTheory.Polynomial.IsIntegral
-import Mathlib.Data.Fintype.EquivFin
+module
+
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Divisors.ConstantExtension.ConstantExtension
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.AlgebraicCurves.Places.ConstantExtension.ForgetConstantsRestrictEq
+public import Mathlib.RingTheory.Adjoin.PowerBasis
+public import Mathlib.RingTheory.Polynomial.IsIntegral
+public import Mathlib.Data.Fintype.EquivFin
 
 /-!
 # LSpace pullback Constants eq span of is Constant Field Extension
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -103,7 +107,7 @@ theorem minpoly_algebraMap_eq_map [FiniteDimensional K K']
 variable [FiniteDimensional K K'] [Algebra.IsSeparable K K']
 
 omit [FiniteDimensional K K'] [Algebra.IsSeparable K K'] in
-private theorem adjoin_gen_eq_top (hgen : Algebra.adjoin F (Set.range (algebraMap K' F')) = ⊤)
+theorem adjoin_gen_eq_top (hgen : Algebra.adjoin F (Set.range (algebraMap K' F')) = ⊤)
     (pb : PowerBasis K K') :
     Algebra.adjoin F {algebraMap K' F' pb.gen} = ⊤ := by
   apply top_le_iff.mp

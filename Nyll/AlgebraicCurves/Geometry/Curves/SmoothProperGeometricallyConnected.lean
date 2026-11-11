@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Geometrically.Connected
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.Immersion
-import Mathlib.AlgebraicGeometry.Morphisms.Etale
-import Mathlib.AlgebraicGeometry.Morphisms.FlatDescent
-import Mathlib.RingTheory.Finiteness.Descent
-import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothDescendsAlongSurjectiveInfFlatInfQuasiCompact
+module
+
+public import Mathlib.AlgebraicGeometry.Geometrically.Connected
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.Immersion
+public import Mathlib.AlgebraicGeometry.Morphisms.Etale
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatDescent
+public import Mathlib.RingTheory.Finiteness.Descent
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Smooth.SmoothDescendsAlongSurjectiveInfFlatInfQuasiCompact
 
 /-!
 # smooth is Proper geometrically Connected of finite Etale base Change
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

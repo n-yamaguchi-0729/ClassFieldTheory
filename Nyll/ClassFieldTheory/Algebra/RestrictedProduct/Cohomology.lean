@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Order.Filter.Finite
-import Mathlib.Topology.Algebra.RestrictedProduct.Basic
-import Nyll.GaloisCohomology.Cyclic.MultiplicativeHilbert90
+module
+
+public import Mathlib.Order.Filter.Finite
+public import Mathlib.Topology.Algebra.RestrictedProduct.Basic
+public import Nyll.GaloisCohomology.Cyclic.MultiplicativeHilbert90
 
 /-!
 # Gluing cocycle primitives in a restricted product
@@ -17,6 +19,8 @@ cocycle has all its values integral simultaneously almost everywhere. Thus
 local Hilbert 90 and almost-everywhere integral Hilbert 90 imply Hilbert 90 for
 the existing restricted product with its coordinatewise action.
 -/
+
+@[expose] public section
 
 noncomputable section
 

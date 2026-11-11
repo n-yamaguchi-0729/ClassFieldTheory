@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.SchemeTheory.Morphisms.Frobenius
-import Nyll.SchemeTheory.Pi1.FiniteEtale.Geometry
+module
+
+public import Nyll.SchemeTheory.Morphisms.Frobenius
+public import Nyll.SchemeTheory.Pi1.FiniteEtale.Geometry
 
 /-!
 # Actual Frobenius over a finite field
@@ -14,6 +16,8 @@ The existing section-algebra instances of a scheme over a field supply the
 algebras used in Frobenius. Since every base-field element is fixed by its
 cardinality power, this morphism is over the actual finite base.
 -/
+
+@[expose] public section
 
 noncomputable section
 

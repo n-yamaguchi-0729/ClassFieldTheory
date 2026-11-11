@@ -19,26 +19,28 @@ isomorphisms.
 
 noncomputable section
 
+universe u v
+
 open CategoryTheory
 
 namespace LocalClassFieldTheory
 
 open LocalFieldTheory RamificationTheory
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
 private abbrev AbsoluteFiniteIndex :=
   OpenNormalSubgroup (localAbsoluteAbelianProfinite K)
 
 noncomputable local instance finiteDiagramNormQuotientTopologicalSpace
-    (E L : Type) [Field E] [Field L] [Algebra E L]
+    (E : Type u) (L : Type v) [Field E] [Field L] [Algebra E L]
     [TopologicalSpace E] :
     TopologicalSpace (NormQuotient E L) := by
   change TopologicalSpace (Eˣ ⧸ localNormSubgroup E L)
   infer_instance
 
 local instance finiteDiagramNormQuotientIsTopologicalGroup
-    (L : Type) [Field L] [Algebra K L] :
+    (L : Type v) [Field L] [Algebra K L] :
     IsTopologicalGroup (NormQuotient K L) := by
   change IsTopologicalGroup (Kˣ ⧸ localNormSubgroup K L)
   infer_instance
@@ -46,7 +48,7 @@ local instance finiteDiagramNormQuotientIsTopologicalGroup
 /-- The finite quotients of the absolute abelianized Galois group, carrying
 their quotient topologies and the canonical quotient transition maps. -/
 noncomputable def absoluteFiniteQuotientDiagram :
-    AbsoluteFiniteIndex K ⥤ ProfiniteGrp where
+    AbsoluteFiniteIndex K ⥤ ProfiniteGrp.{u} where
   obj N := ProfiniteGrp.of
     (localAbsoluteAbelianProfinite K ⧸ N.toSubgroup)
   map f := ProfiniteGrp.ofHom <|
@@ -68,7 +70,7 @@ noncomputable def absoluteFiniteQuotientDiagram :
 /-- The finite abelian Galois groups cut out by open normal subgroups of the
 absolute abelianized Galois group, with restriction as transition map. -/
 noncomputable def finiteAbelianGaloisDiagram :
-    AbsoluteFiniteIndex K ⥤ ProfiniteGrp where
+    AbsoluteFiniteIndex K ⥤ ProfiniteGrp.{u} where
   obj N := ProfiniteGrp.of
     (Gal(absoluteFiniteQuotientField K N / K))
   map {N M} f := ProfiniteGrp.ofHom <|
@@ -222,7 +224,7 @@ theorem normQuotientTransition_mk
 /-- The finite norm quotients indexed by open normal subgroups, with the
 canonical quotient maps induced by inclusions of norm subgroups. -/
 noncomputable def normQuotientDiagram :
-    AbsoluteFiniteIndex K ⥤ ProfiniteGrp where
+    AbsoluteFiniteIndex K ⥤ ProfiniteGrp.{u} where
   obj N := ProfiniteGrp.ofContinuousMulEquiv
     (G := (absoluteFiniteQuotientDiagram K).obj N)
     (absoluteFiniteArtinQuotientEquiv K N).symm
@@ -260,8 +262,8 @@ noncomputable def finiteArtinQuotientNaturalIso :
   NatIso.ofComponents
     (fun N => by
       let e :
-          ((normQuotientDiagram K).obj N : Type) ≃ₜ*
-            ((absoluteFiniteQuotientDiagram K).obj N : Type) :=
+          ((normQuotientDiagram K).obj N : Type u) ≃ₜ*
+            ((absoluteFiniteQuotientDiagram K).obj N : Type u) :=
         { (absoluteFiniteArtinQuotientEquiv K N) with
           continuous_toFun := by
             change Continuous (absoluteFiniteArtinQuotientEquiv K N)

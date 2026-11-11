@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
-import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
+public import Nyll.AlgebraicCurves.Places.Restriction.AlgEquivSmulEqRestrictEq
 
 /-!
 # Local norm images in a Galois fiber
@@ -14,6 +16,8 @@ Conjugacy identifies the norm images at all places over one base place.
 Consequently the corresponding component of an idele norm is a norm at
 each chosen upper place, even though its definition is a product over the fiber.
 -/
+
+@[expose] public section
 
 noncomputable section
 

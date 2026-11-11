@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.RingTheory.Noetherian.Basic
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDCompD
 
 /-!
 # Connecting homomorphisms for affine short exact sequences
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

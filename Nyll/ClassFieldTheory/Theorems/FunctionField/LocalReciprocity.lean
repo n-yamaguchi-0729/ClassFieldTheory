@@ -11,6 +11,9 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRestriction
 import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
+import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+import Nyll.AlgebraicCurves.Places.Basic
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Decomposition
 
 /-!
 # The image and norm kernel of local function-field reciprocity
@@ -21,13 +24,15 @@ subgroup and trivial values with genuine completed field norms.
 
 noncomputable section
 
+universe u v w x
+
 open scoped AlgebraicCurve.Place
 open AlgebraicCurves.Places.Proofs.Place_sum_ramificationIndex_mul_inertiaDeg_exchange
 open BifibreW2
 
 namespace ClassFieldTheory.FunctionField
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [_root_.FunctionField k K]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -65,7 +70,7 @@ theorem localArtin_ker (w : AlgebraicCurve.Place k L) :
 /-- Norm compatibility of local reciprocity in a finite abelian function-field
 tower. The upper function-field presentation is supplied by the given base. -/
 theorem localArtin_norm_restrictScalars
-    (M : Type) [Field M] [Algebra k M] [Algebra K M] [Algebra L M]
+    (M : Type x) [Field M] [Algebra k M] [Algebra K M] [Algebra L M]
     [IsScalarTower k K M] [IsScalarTower k L M] [IsScalarTower K L M]
     [FiniteDimensional K M] [IsAbelianGalois K M] :
     let presentation := finiteExtensionRatFuncAlgebra k K L
@@ -95,7 +100,7 @@ theorem localArtin_norm_restrictScalars
 /-- Local reciprocity commutes with restriction to an abelian subextension,
 using the same original local element at the restricted base place. -/
 theorem localArtin_restrictNormal
-    (M : Type) [Field M] [Algebra k M] [Algebra K M] [Algebra L M]
+    (M : Type x) [Field M] [Algebra k M] [Algebra K M] [Algebra L M]
     [IsScalarTower k K M] [IsScalarTower k L M] [IsScalarTower K L M]
     [FiniteDimensional K M] [IsAbelianGalois K M]
     (u : AlgebraicCurve.Place k M) (x : (u.restrict K).adicCompletionˣ) :

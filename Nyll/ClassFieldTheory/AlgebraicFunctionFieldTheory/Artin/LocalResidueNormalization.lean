@@ -4,17 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Finite.Basic
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalValuationNormalization
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
-import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegPos
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormalization
+module
+
+public import Mathlib.FieldTheory.Finite.Basic
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalValuationNormalization
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.DecompositionResidue
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
+public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
+public import Nyll.AlgebraicCurves.Places.Ramification.InertiaDegPos
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
 
 /-!
 # Residue normalization at actual unramified places
@@ -24,6 +28,10 @@ its actual decomposition automorphism. Comparing the original and completed
 integer rings identifies its order-one values with arithmetic Frobenius.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 open AlgebraicCurve
@@ -31,7 +39,8 @@ open scoped AlgebraicCurve.Place ValuativeRel
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w}
+    [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [Algebra (RatFunc k) L] [IsScalarTower k (RatFunc k) L] [FunctionField k L]
@@ -95,7 +104,7 @@ theorem localDecompositionArtin_uniformizer_residue
     rfl
   let σ := localDecompositionArtin (K := K) w x
   have hσ : IdeleGroup.decompositionCompletionAut (K := K) w σ =
-      LocalClassFieldTheory.abelianLocalArtinMap
+      LocalClassFieldTheory.Universe.abelianLocalArtinMap
         (w.restrict K).adicCompletion w.adicCompletion x⁻¹ := by
     change IdeleGroup.decompositionCompletionEquiv (K := K) w
       ((IdeleGroup.decompositionCompletionEquiv (K := K) w).symm _) = _
@@ -106,13 +115,13 @@ theorem localDecompositionArtin_uniformizer_residue
       placeCompletion_valuationMap_eq_neg_localOrder, neg_neg, hx]
   obtain ⟨a, rfl⟩ := IsLocalRing.residue_surjective y
   obtain ⟨z, hz, hzres⟩ :=
-    ClassFieldTheory.finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow
+    LocalClassFieldTheory.Universe.abelianLocalArtinMap_inverseUniformizer_residue_pow
       (w.restrict K).adicCompletion w.adicCompletion x⁻¹ hx' (incl a)
   have hza : z = incl (IdeleGroup.decompositionValuationEquiv w σ a) := by
     apply Subtype.ext
     calc
       (z : w.adicCompletion) =
-          LocalClassFieldTheory.abelianLocalArtinMap
+          LocalClassFieldTheory.Universe.abelianLocalArtinMap
             (w.restrict K).adicCompletion w.adicCompletion x⁻¹ (incl a : w.adicCompletion) := hz
       _ = IdeleGroup.decompositionCompletionAut (K := K) w σ
           (algebraMap L w.adicCompletion (a : L)) := by rw [hσ, hincl]

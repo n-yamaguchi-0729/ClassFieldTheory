@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteArtin
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletionCriteria
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteArtin
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletionCriteria
 
 /-!
 # Reciprocity on the completion for the usual idele-class topology
@@ -17,13 +19,17 @@ Each finite coordinate is the extension of the actual finite Artin coordinate.
 Injectivity requires the arithmetic existence theorem and is not asserted here.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
 open LocalClassFieldTheory
 
-variable (k K : Type) [Field k] [Finite k] [Field K] [Algebra k K]
+variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 
@@ -57,7 +63,7 @@ theorem completedArtin_finiteProjection
         ((localAbsoluteAbelianProfinite K).diagram.obj N)
         (absoluteFiniteArtinCoordinate k K N) x := by
   let q : localAbsoluteAbelianProfinite K →ₜ*
-      ((localAbsoluteAbelianProfinite K).diagram.obj N : Type) :=
+      ((localAbsoluteAbelianProfinite K).diagram.obj N : Type v) :=
     { toMonoidHom := QuotientGroup.mk' N.toSubgroup
       continuous_toFun := (continuous_apply N).comp
         (continuous_subtype_val.comp (ProfiniteGrp.toLimitFun_continuous

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.IntermediateField.Algebraic
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
+module
+
+public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.IntermediateField.Algebraic
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
 /-!
 # Subgroup data of coherent finite local reciprocity families
@@ -17,6 +19,10 @@ of an intermediate field. Transporting that field into the chosen separable
 closure lets the common norm-kernel and tower conditions compare two Artin
 families on every Galois subgroup.
 -/
+
+@[expose] public section
+
+universe u
 
 noncomputable section
 
@@ -28,7 +34,7 @@ open ClassFieldTheory
 Galois subgroup for one family implies membership for the other. Applying
 the result with the two families swapped gives equality of preimages. -/
 theorem finiteAbelianArtinFamilies_subgroup_preimage_le
-    (K : Type) [Field K] [TopologicalSpace K]
+    (K : Type u) [Field K] [TopologicalSpace K]
     (f g : (E : FiniteAbelianLocalExtension K) →
       Kˣ →ₜ* (E.1 ≃ₐ[K] E.1))
     (hfker : ∀ E : FiniteAbelianLocalExtension K,

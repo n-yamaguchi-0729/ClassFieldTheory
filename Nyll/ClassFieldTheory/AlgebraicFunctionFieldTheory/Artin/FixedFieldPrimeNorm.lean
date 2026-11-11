@@ -4,16 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainFiniteReciprocity
-import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Main
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.NormalizedValuation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.NormComparison
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainFiniteReciprocity
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Main
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FrobeniusAuxiliaryField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Main
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.NormalizedValuation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.NormComparison
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Actual prime-norm representatives for finite function-field reciprocity
@@ -27,6 +30,10 @@ A normalized-degree-one idele class of that actual auxiliary field then
 has a norm whose Artin value is the prescribed Frobenius restriction. This
 provides actual representatives for comparing reciprocity constructions.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -89,7 +96,7 @@ attribute [local instance]
   ambientFrobeniusAuxiliaryAlgebra
   ambientFrobeniusAuxiliaryConstantAlgebra
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [Algebra k Ω] [Algebra (RatFunc k) Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]
@@ -173,11 +180,23 @@ theorem fixedFieldArtin_frobenius_primeNorm
     exact hvaluation.trans
       ((congrArg (fun n : ℤ => (n : ZHat)) hc).trans Int.cast_one)
   let q : L.extensionQuotient := D.frobeniusRestriction HR L.field L.below σ
-  have hprime := D.finiteReciprocityHom_apply_eq_primeNormClass
-    A v (v.classFieldAxiom_implies_unramifiedUnitCohomology hcf)
-    H L.field L.below (Additive.ofMul q) σ rfl π hπ
+  have hprime :
+      D.finiteReciprocityHom A v
+          (v.classFieldAxiom_implies_unramifiedUnitCohomology hcf)
+          H L.field L.below (Additive.ofMul q) =
+        finiteNormClass A H.field L.field L.below
+          (relativeNorm A H.field S hSH π) :=
+    D.finiteReciprocityHom_apply_eq_primeNormClass
+      A v (v.classFieldAxiom_implies_unramifiedUnitCohomology hcf)
+      H L.field L.below (Additive.ofMul q) σ rfl π hπ
   have hnorm := abstractFixedClassEquiv_norm k K Ω H SF hSH hSnormal (Additive.ofMul c)
-  have hs := D.normResidueSymbol_finiteReciprocityHom A v hcf H L q
+  have hs :
+      D.normResidueSymbol A v hcf H L
+          (D.finiteReciprocityHom A v
+            (v.classFieldAxiom_implies_unramifiedUnitCohomology hcf)
+            H L.field L.below (Additive.ofMul q)) =
+        Additive.ofMul (Abelianization.of q) :=
+    D.normResidueSymbol_finiteReciprocityHom A v hcf H L q
   rw [hprime, ← hnorm] at hs
   change eG.abelianizationCongr
       ((D.normResidueSymbol A v hcf H L)

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Finite
-import Mathlib.FieldTheory.Finite.Basic
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Finite
+public import Mathlib.FieldTheory.Finite.Basic
 
 /-!
 # Power-residue symbols over finite fields
@@ -17,6 +19,8 @@ power-residue symbol is
 
 Its kernel is exactly the subgroup of `n`-th powers.
 -/
+
+@[expose] public section
 
 namespace AlgebraicNumberTheory
 namespace PowerResidueSymbols

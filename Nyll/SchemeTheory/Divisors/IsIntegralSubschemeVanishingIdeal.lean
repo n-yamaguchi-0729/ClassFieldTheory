@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
-import Mathlib.AlgebraicGeometry.Properties
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.AlgebraicGeometry.IdealSheaf.Subscheme
+public import Mathlib.AlgebraicGeometry.Properties
 
 /-!
 # The integral subscheme of an irreducible closed set
@@ -20,6 +22,8 @@ import Mathlib.AlgebraicGeometry.Properties
 The vanishing ideal of an irreducible closed set defines an integral subscheme with that
 closed set as its support.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

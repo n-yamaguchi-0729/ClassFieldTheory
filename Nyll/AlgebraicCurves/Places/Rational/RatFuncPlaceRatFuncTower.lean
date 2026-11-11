@@ -10,13 +10,18 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Rational Function Field nonempty place of rat Func tower
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

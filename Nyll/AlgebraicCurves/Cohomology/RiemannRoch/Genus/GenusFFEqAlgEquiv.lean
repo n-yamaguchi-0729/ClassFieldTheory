@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
-import Nyll.AlgebraicCurves.Places.Rational.Basic
+module
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Repartitions
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
 
 /-!
 The function-field genus is invariant under an algebra equivalence.
 Transport of places and repartitions identifies the defining quotient spaces.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -37,7 +41,8 @@ variable (e : F₁ ≃ₐ[K] F₂)
 
 namespace Place
 open scoped _root_.AlgebraicCurve.Place in
-private def _root_.AlgebraicCurve.Place.congr (v : Place K F₁) : Place K F₂ :=
+/-- Transport a place along an equivalence of function fields over the base field. -/
+def _root_.AlgebraicCurve.Place.congr (v : Place K F₁) : Place K F₂ :=
   Place.congrRingEquiv e.toRingEquiv e.commutes v
 
 end Place

@@ -10,15 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBijectiveAlgebraMapSectionsBaseChange
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1LineBundle
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverFinrankKerCechDiffBaseChangeEqOne
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverFinrankCechDiffBaseChange
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverBijectiveAlgebraMapSectionsBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapDataFiniteH0H1LineBundle
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverFinrankKerCechDiffBaseChangeEqOne
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.TwoAffineCoverFinrankCechDiffBaseChange
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # Base-change sections from finite-map data
@@ -26,6 +28,8 @@ import Mathlib.Util.WithWeakNamespace
 Finite-map data for line bundles on a smooth proper curve imply that sections after base
 change to an algebra are identified with that algebra by the canonical algebra map.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

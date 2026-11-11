@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.FunctionField
+module
+
+public import Mathlib.AlgebraicGeometry.FunctionField
 
 /-!
 # Sections on an affine open inside the function field
@@ -18,6 +20,8 @@ import Mathlib.AlgebraicGeometry.FunctionField
 The image of the section ring of a nonempty affine open in the function field is the
 intersection of the images of the stalks at points of that open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

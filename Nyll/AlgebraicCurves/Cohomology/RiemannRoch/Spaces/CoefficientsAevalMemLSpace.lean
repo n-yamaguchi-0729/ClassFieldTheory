@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.MulMemLSpaceAdd
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.MulMemLSpaceAdd
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 /-!
 # Pole bounds for the coefficients of a homogeneous substitution
@@ -13,6 +15,8 @@ import Mathlib.RingTheory.MvPolynomial.Homogeneous
 This is the pole-control step of the Riemann--Roch proof of Tsen's theorem
 (Stacks Project, Tag 03RD). Multiplication is supplied by the existing divisor theory.
 -/
+
+@[expose] public section
 
 noncomputable section
 

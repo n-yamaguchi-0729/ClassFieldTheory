@@ -10,8 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDEqDDMemPow
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDEqDDMemPow
+public import Nyll.SchemeTheory.Morphisms.AppLECongr
 
 /-!
 # Lifting sections through powers of a base ideal
@@ -19,6 +22,8 @@ import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafDEqDDMemPow
 Affine local lifts and ideal-power control of Čech coboundaries produce global
 sections after restricting from a sufficiently thick closed base change.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -135,7 +140,8 @@ open CategoryTheory CategoryTheory.Limits Opposite TopologicalSpace AlgebraicGeo
 
 universe u
 
-private lemma le_preimage_top {Y Z : Scheme.{u}} (f : Y ⟶ Z) (W : Y.Opens) :
+/-- Every open lies in the inverse image of the whole target. -/
+lemma le_preimage_top {Y Z : Scheme.{u}} (f : Y ⟶ Z) (W : Y.Opens) :
     W ≤ f ⁻¹ᵁ ⊤ := by
   rw [Scheme.Hom.preimage_top]
   exact le_top
@@ -208,13 +214,15 @@ abbrev quot (I : Ideal A) : A ⟶ CommRingCat.of (A ⧸ I) := CommRingCat.ofHom 
 /-- The closed base change of the scheme along an ideal quotient. -/
 abbrev XI (I : Ideal A) : Scheme.{u} := pullback p (Spec.map (quot I))
 
-private abbrev _root_.SolML0L.ι (I : Ideal A) : XI p I ⟶ X := pullback.fst _ _
+/-- The projection from the closed base change to the original scheme. -/
+abbrev _root_.SolML0L.ι (I : Ideal A) : XI p I ⟶ X := pullback.fst _ _
 open _root_.SolML0L
 
 /-- The structure morphism of the closed base change. -/
 abbrev pI (I : Ideal A) : XI p I ⟶ Spec (.of (A ⧸ I)) := pullback.snd _ _
 
-private noncomputable def _root_.SolML0L.alg (U : X.Opens) : A →+* Γ(X, U) :=
+/-- The original base-ring action on sections of an open subscheme. -/
+noncomputable def _root_.SolML0L.alg (U : X.Opens) : A →+* Γ(X, U) :=
   (p.appLE ⊤ U (le_preimage_top p U)).hom.comp (Scheme.ΓSpecIso A).inv.hom
 
 open _root_.SolML0L
@@ -233,8 +241,8 @@ lemma appLE_top_top {Y Z : Scheme.{u}} (f : Y ⟶ Z) :
   f.appLE_eq_app
 
 lemma appLE_congr_hom {Y Z : Scheme.{u}} {f g : Y ⟶ Z} (h : f = g) (U : Z.Opens) (V : Y.Opens)
-    (e : V ≤ f ⁻¹ᵁ U) (e' : V ≤ g ⁻¹ᵁ U) : f.appLE U V e = g.appLE U V e' := by
-  subst h; rfl
+    (e : V ≤ f ⁻¹ᵁ U) (e' : V ≤ g ⁻¹ᵁ U) : f.appLE U V e = g.appLE U V e' :=
+  _root_.AlgebraicGeometry.Scheme.Hom.appLE_congr_hom h U V e e'
 
 lemma ker_ι_app (I : Ideal A) {U : X.Opens} (hU : IsAffineOpen U) :
     RingHom.ker ((ι p I).app U).hom = I.map (alg p U) ∧ Function.Surjective ((ι p I).app U) := by

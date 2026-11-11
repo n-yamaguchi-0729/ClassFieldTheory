@@ -11,11 +11,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.AffineTransitionLimit
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
-import Nyll.SchemeTheory.Descent.FGSubalgebra
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraIsLimitSpecCone
+module
+
+public import Mathlib.AlgebraicGeometry.AffineTransitionLimit
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
+public import Nyll.SchemeTheory.Descent.FGSubalgebra
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraIsLimitSpecCone
 
 /-!
 # Finite-presentation morphisms satisfy the affine-limit factorization property
@@ -23,6 +25,8 @@ import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraIsLimitSpecCone
 A locally finitely presented morphism admits factorizations and eventual equalities over
 the affine inverse systems arising from finitely generated subalgebras.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

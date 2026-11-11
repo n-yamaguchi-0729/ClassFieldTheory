@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Invertible.Invertible
-import Nyll.SchemeTheory.Modules.OpenImmersionUnit
-import Nyll.SchemeTheory.Modules.Frames.PullbackFrame
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
+module
+
+public import Nyll.SchemeTheory.Modules.Invertible.Invertible
+public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+public import Nyll.SchemeTheory.Modules.Frames.PullbackFrame
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackUnitComposition
 
 /-!
 A frame of an invertible module sheaf descends to an open neighborhood when its pullback is a
 frame at a point.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

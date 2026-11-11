@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalRange
-import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormClass
-import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormCriterion
-import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormRestriction
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalRange
+public import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormClass
+public import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormCriterion
+public import Nyll.GaloisCohomology.Kummer.FiniteCyclicUnitsH2NormRestriction
 
 /-!
 # Unit H² at the actual completions
@@ -17,6 +19,10 @@ Localization is the actual inclusion of field units followed by restriction
 to completed automorphisms. Local norm preimages kill the localization of
 the corresponding cyclic base-unit class.
 -/
+
+@[expose] public section
+
+universe u v w
 
 noncomputable section
 
@@ -27,7 +33,9 @@ namespace FunctionField.IdeleGroup
 
 open ClassFieldTower.Cohomology
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+section Restriction
+
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
@@ -52,6 +60,15 @@ theorem completionRestrictionHom_algebraMap (w : Place k L)
     ((decompositionCompletionEquiv (K := K) w).symm σ) x
   rw [MulEquiv.apply_symm_apply] at h
   exact h.symm
+
+end Restriction
+
+section NativeCohomology
+
+variable {k K L : Type} [Field k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [FiniteDimensional K L] [IsGalois K L]
+    [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
 
 /-- Localization of unit H² at the given actual upper place. -/
 def completionUnitsH2Map (w : Place k L) :
@@ -123,5 +140,7 @@ theorem completionUnitsH2Map_baseUnitClass_eq_zero_iff_norm
   have hinj : Function.Injective f := hf ▸ completionRestrictionHom_injective (K := K) w
   exact finiteCyclicBaseUnitH2Class_baseChange_eq_zero_iff_norm
     K L (w.restrict K).adicCompletion w.adicCompletion hinj g hg a
+
+end NativeCohomology
 
 end FunctionField.IdeleGroup

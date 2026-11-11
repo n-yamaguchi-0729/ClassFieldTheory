@@ -4,15 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Perfect
-import Mathlib.FieldTheory.RatFunc.AsPolynomial
-import Mathlib.NumberTheory.FunctionField
-import Mathlib.RingTheory.Algebraic.Basic
-import Mathlib.RingTheory.Finiteness.Cardinality
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendentalPerfectField
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.SeparatingTranscendental
-import Nyll.AlgebraicCurves.Places.Orders.BasicTranscendental
+module
+
+public import Mathlib.FieldTheory.Perfect
+public import Mathlib.FieldTheory.RatFunc.AsPolynomial
+public import Mathlib.NumberTheory.FunctionField
+public import Mathlib.RingTheory.Algebraic.Basic
+public import Mathlib.RingTheory.Finiteness.Cardinality
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendentalPerfectField
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.SeparatingTranscendental
+public import Nyll.AlgebraicCurves.Places.Orders.BasicTranscendental
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # Function fields and the all-place curve API
@@ -22,6 +25,8 @@ A finite extension of a rational function field over a perfect field satisfies t
 the curve theorem constructs a separating parameter from perfectness. Over a finite base field,
 every place therefore has a finite residue field, including places above infinity.
 -/
+
+@[expose] public section
 
 namespace FunctionField
 

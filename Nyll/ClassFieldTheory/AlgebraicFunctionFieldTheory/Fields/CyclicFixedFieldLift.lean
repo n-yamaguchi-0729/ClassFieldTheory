@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Algebra.Subalgebra.Lattice
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+module
+
+public import Mathlib.Algebra.Algebra.Subalgebra.Lattice
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
 
 /-!
 # Lifting a cyclic fixed field into the common ambient field
@@ -17,11 +19,15 @@ generators still generates the extension, and its defining automorphism
 fixes the lifted scalars.
 -/
 
+@[expose] public section
+
+universe u v
+
 noncomputable section
 
 namespace FunctionField
 
-variable {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω]
+variable {K : Type u} {Ω : Type v} [Field K] [Field Ω] [Algebra K Ω]
     (E : IntermediateField K Ω) [FiniteDimensional K E]
 
 /-- The concrete lift of the cyclic fixed field is a base on which the

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.GeometricConstantExtension
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantClosure
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.GeometricConstantExtension
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantClosure
 
 /-!
 # Finite-stage descent in the actual geometric constant extension
@@ -15,11 +17,15 @@ geometric constant extension. Every finite set of its elements is therefore
 contained in a single constructed finite constant stage.
 -/
 
+@[expose] public section
+
+universe u v w
+
 noncomputable section
 
 namespace FunctionField
 
-variable (k K Ω : Type) [Field k] [Finite k] [Field K] [Field Ω]
+variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [IsSepClosed Ω]
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
-import Mathlib.Algebra.Colimit.DirectLimit
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionSystem
+public import Mathlib.Algebra.Colimit.DirectLimit
 
 /-!
 # The finite-extension idele-class direct limit
@@ -20,6 +22,8 @@ The representative and equality lemmas reduce questions in the limit to finite
 extensions. The universal lift applies to compatible maps out of these actual
 stages; no reciprocity or class-formation hypothesis enters the construction.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -134,7 +138,7 @@ section UniversalProperty
 variable {A : Type*} [CommGroup A]
 
 /-- Bundle the existing direct-limit lift before substituting the concrete field stages. -/
-private def liftMonoidHom {ι : Type*} [Preorder ι] [Nonempty ι] [IsDirectedOrder ι]
+def liftMonoidHom {ι : Type*} [Preorder ι] [Nonempty ι] [IsDirectedOrder ι]
     (G : ι → Type*) [∀ i, CommGroup (G i)]
     (t : ∀ i j, i ≤ j → G i →* G j) [DirectedSystem G (t · · ·)]
     (f : ∀ i, G i →* A) (hf : ∀ i j h x, f j (t i j h x) = f i x) :

@@ -10,6 +10,7 @@ import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
 import Nyll.GaloisCohomology.ArtinSchreier.FieldMapApproximation
 import Nyll.ValuedFieldTheory.Valuation.Henselian.ArtinSchreier
 import Nyll.ValuedFieldTheory.Valuation.ValuedAdicComplete
+import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Complete
 
 /-!
 # Simultaneous Artin–Schreier approximation at actual function-field places

@@ -10,26 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
-import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraTensorStage
-import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseChangeIsosStructureSheaf
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageSectionsOfBaseChangeEquiv
-import Nyll.SchemeTheory.Descent.ModuleIsDirectLimitLinearEquiv
-import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverSectionsOfInvertibleProjectiveFiniteFinrank
-import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsoSectionsOfLinearEquiv
+module
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
-import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.AffineLimit
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Limits.FGSubalgebraTensorStage
+public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.StageHom
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageBaseChangeIsosStructureSheaf
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverStageSectionsOfBaseChangeEquiv
+public import Nyll.SchemeTheory.Descent.ModuleIsDirectLimitLinearEquiv
+public import Nyll.AlgebraicCurves.Geometry.Projective.TwoAffineCoverSectionsOfInvertibleProjectiveFiniteFinrank
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Cohomology.TwoAffineCoverIsoSectionsOfLinearEquiv
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
+public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Representation
 /-!
 # Relative Picard varieties and fibre cohomology
 
 Descend line-bundle isomorphisms through finitely generated base algebras to prove the finite-
 presentation injectivity of the relative Picard presheaf.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -286,7 +290,8 @@ variable {k : Type*} [CommRing k] {Γ Γ' : Type*} [CommRing Γ] [Algebra k Γ] 
   {Q : Type*} [AddCommGroup Q] [Module Γ' Q] [Module k Q] [IsScalarTower k Γ' Q]
   {N : Type*} [AddCommGroup N] [Module k N]
 
-private noncomputable def _root_.AlgebraicGeometry.RelPicard.LFP.push (h : A' →ₐ[k] A'') (f :
+/-- Extension of a linear map between scalar-extended modules along an algebra map. -/
+noncomputable def _root_.AlgebraicGeometry.RelPicard.LFP.push (h : A' →ₐ[k] A'') (f :
   A' ⊗[k] P →ₗ[A'] A' ⊗[k] Q) :
     A'' ⊗[k] P →ₗ[A''] A'' ⊗[k] Q :=
   LinearMap.liftBaseChange A''

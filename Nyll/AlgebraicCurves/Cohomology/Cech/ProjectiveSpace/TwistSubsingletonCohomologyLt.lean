@@ -11,11 +11,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
+module
+
+public import Nyll.SchemeTheory.Cohomology.Cech.ProjSpaceCechTwist
 
 /-!
 # Proj Space Cech Twist subsingleton cohomology of lt
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

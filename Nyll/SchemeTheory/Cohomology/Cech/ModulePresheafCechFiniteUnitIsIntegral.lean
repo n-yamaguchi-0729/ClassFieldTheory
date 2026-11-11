@@ -10,27 +10,32 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
-import Nyll.SchemeTheory.ProjectiveSpace.Cover
-import Nyll.SchemeTheory.Morphisms.ChowDatum
-import Nyll.SchemeTheory.Morphisms.ChowDatumProj
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteUnitClosedImmersionProj
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayHTotEquiv
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayE2IEquiv
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayCoherentRelHPresheafChow
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayQuasicoherentRelHPresheafChow
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLeraySupportedInRelHPresheafChow
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayChowSES
-import Nyll.SchemeTheory.HomologicalAlgebra.DoubleComplexConvergenceFiniteE2Q0
-import Nyll.SchemeTheory.HomologicalAlgebra.DoubleComplexBoundedSpectralSequence
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESLeft
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.RingTheory.Noetherian.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayDoubleComplex
+public import Nyll.SchemeTheory.ProjectiveSpace.Cover
+public import Nyll.SchemeTheory.Morphisms.ChowDatum
+public import Nyll.SchemeTheory.Morphisms.ChowDatumProj
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteUnitClosedImmersionProj
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayHTotEquiv
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayE2IEquiv
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayCoherentRelHPresheafChow
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayQuasicoherentRelHPresheafChow
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLeraySupportedInRelHPresheafChow
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayChowSES
+public import Nyll.SchemeTheory.HomologicalAlgebra.DoubleComplexConvergenceFiniteE2Q0
+public import Nyll.SchemeTheory.HomologicalAlgebra.DoubleComplexBoundedSpectralSequence
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESLeft
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Nyll.SchemeTheory.Cohomology.Sheaves.DoubleComplex
 
 /-!
 Cech finiteness of the structure presheaf of an integral proper scheme by induction.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

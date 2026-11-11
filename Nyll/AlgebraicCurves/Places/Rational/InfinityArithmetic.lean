@@ -20,23 +20,27 @@ Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b3
 Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 -/
 
-import Mathlib.FieldTheory.RatFunc.Degree
-import Mathlib.FieldTheory.RatFunc.Valuation
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.ValuationRings.OrdEqNegLogValuationSubringEq
-import Nyll.AlgebraicCurves.Places.Rational.RatFuncToValuationSubringEq
-import Mathlib.Util.WithWeakNamespace
-import Lean.Elab.Tactic.Omega
-import Nyll.AlgebraicCurves.Places.Rational.Infinity
-import Nyll.AlgebraicCurves.Places.Rational.Classification
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Basic
+module
+
+public import Mathlib.FieldTheory.RatFunc.Degree
+public import Mathlib.FieldTheory.RatFunc.Valuation
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OrdEqNegLogValuationSubringEq
+public import Nyll.AlgebraicCurves.Places.Rational.RatFuncToValuationSubringEq
+public import Mathlib.Util.WithWeakNamespace
+public import Lean.Elab.Tactic.Omega
+public import Nyll.AlgebraicCurves.Places.Rational.Infinity
+public import Nyll.AlgebraicCurves.Places.Rational.Classification
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # InfinityArithmetic
 
 Orders, polynomial integrality, and residue degree at the place at infinity.
 -/
+
+@[expose] public section
 
 section
 

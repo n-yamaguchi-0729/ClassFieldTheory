@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
-import Mathlib.Algebra.Group.Subgroup.Lattice
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
+public import Mathlib.Algebra.Group.Subgroup.Lattice
 
 /-!
 # Membership in the ray-principal ideal subgroup
@@ -13,6 +15,8 @@ import Mathlib.Algebra.Group.Subgroup.Lattice
 The ray-congruent generators already form a subgroup under the principal
 ideal map, so taking their subgroup closure adds no new ideals.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField

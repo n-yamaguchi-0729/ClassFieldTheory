@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RingTheory.MvPolynomial.Homogeneous
+module
+
+public import Mathlib.RingTheory.MvPolynomial.Homogeneous
 
 /-!
 # Nonvanishing evaluations over infinite fields
@@ -15,6 +17,8 @@ Proposition 6.2.1.  The second theorem says that dehomogenizing a nonzero
 homogeneous polynomial by setting one coordinate equal to `1` remains
 nonzero.
 -/
+
+@[expose] public section
 
 namespace FieldArithmetic
 namespace Chapter06

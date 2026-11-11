@@ -10,15 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.RingTheory.Localization.Away.Basic
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
-import Nyll.SchemeTheory.Divisors.IsIntegralSubschemeVanishingIdeal
+module
+
+public import Mathlib.LinearAlgebra.Quotient.Defs
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Nyll.SchemeTheory.Divisors.IsIntegralSubschemeVanishingIdeal
 
 /-!
 Devissage of coherent quasicoherent module presheaves supported on a closed subset.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -555,25 +561,12 @@ local notation "IZ" => Scheme.IdealSheafData.vanishingIdeal Z
 @[reducible]
 def quotAnnΓmod (U : V.Opens) :
     Module Γ(V, U) (F.obj U ⧸ annIdealSub π IZ F U) := by
-  set p := annIdealSub π IZ F U
-  letI : SMul Γ(V, U) (F.obj U ⧸ p) :=
-    { smul := fun a => Quotient.map' (a • ·) fun x y h => by
-        rw [Submodule.quotientRel_def] at h ⊢
-        rw [← smul_sub]; exact annIdealSub_Γsmul π IZ F U a (x - y) h }
-  have key : ∀ (a : Γ(V, U)) (y : F.obj U), a • p.mkQ y = p.mkQ (a • y) := fun _ _ => rfl
-  exact
-  { smul := (· • ·)
-    one_smul := fun x => by obtain ⟨y, rfl⟩ := p.mkQ_surjective x; rw [key, one_smul]
-    mul_smul := fun a b x => by
-      obtain ⟨y, rfl⟩ := p.mkQ_surjective x; rw [key, key, key, mul_smul]
-    smul_zero := fun a => by rw [← map_zero p.mkQ, key, smul_zero]
-    smul_add := fun a x₁ x₂ => by
-      obtain ⟨y₁, rfl⟩ := p.mkQ_surjective x₁; obtain ⟨y₂, rfl⟩ := p.mkQ_surjective x₂
-      rw [← map_add, key, smul_add, map_add, key, key]
-    add_smul := fun a b x => by
-      obtain ⟨y, rfl⟩ := p.mkQ_surjective x; rw [key, key, key, ← map_add, add_smul]
-    zero_smul := fun x => by
-      obtain ⟨y, rfl⟩ := p.mkQ_surjective x; rw [key, zero_smul, map_zero] }
+  let p : Submodule Γ(V, U) (F.obj U) :=
+    { carrier := annIdealSub π IZ F U
+      zero_mem' := (annIdealSub π IZ F U).zero_mem
+      add_mem' := fun hx hy => (annIdealSub π IZ F U).add_mem hx hy
+      smul_mem' := fun a y hy => annIdealSub_Γsmul π IZ F U a y hy }
+  exact Submodule.Quotient.module p
 
 theorem quotAnnΓmod_mk (U : V.Opens) (a : Γ(V, U)) (y : F.obj U) :
     letI := quotAnnΓmod π Z F U

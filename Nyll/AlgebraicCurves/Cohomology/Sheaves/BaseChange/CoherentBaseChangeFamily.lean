@@ -10,12 +10,16 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
-import Mathlib.AlgebraicGeometry.AffineScheme
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
+public import Mathlib.AlgebraicGeometry.AffineScheme
 
 /-!
 Compatible local two-term models recording the degree-zero fibre dimensions on a scheme.
 -/
+
+@[expose] public section
 
 noncomputable section
 

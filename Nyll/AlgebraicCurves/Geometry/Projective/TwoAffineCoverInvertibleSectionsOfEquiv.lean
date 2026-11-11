@@ -10,21 +10,25 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.LocallyFreeOneIffInvertible
-import Nyll.SchemeTheory.Modules.OpenImmersionUnit
-import Nyll.SchemeTheory.Modules.Quasicoherent.LocallyFreeTilde
-import Nyll.SchemeTheory.Modules.Sections.FibreProductSectionsBijective
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackIsoBijectiveApp
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.Quasicoherent.TildePullback
+public import Nyll.SchemeTheory.Modules.Invertible.RankOne
+public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
+public import Nyll.SchemeTheory.Modules.Quasicoherent.LocallyFreeTilde
+public import Nyll.SchemeTheory.Modules.Sections.FibreProductSectionsBijective
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackIsoBijectiveApp
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Gluing an invertible scheme module from compatible projective chart modules and identifying its
 sections.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -110,12 +114,14 @@ theorem isLocallyFreeOfRank_of_iso {n : ℕ} {M N : Y.Modules} (e : M ≅ N)
 
 end Generic
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible.ρ0 :
+/-- The restriction homomorphism from the first chart to the intersection. -/
+abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible.ρ0 :
     X.presheaf.obj (op U0) ⟶ X.presheaf.obj (op (U0 ⊓ U1)) :=
   X.presheaf.map (homOfLE inf_le_left).op
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible.ρ1 :
+/-- The restriction homomorphism from the second chart to the intersection. -/
+abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible.ρ1 :
     X.presheaf.obj (op U1) ⟶ X.presheaf.obj (op (U0 ⊓ U1)) :=
   X.presheaf.map (homOfLE inf_le_right).op
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible
@@ -184,11 +190,13 @@ theorem preimage_f0_le_opensRange_g0 [IsOpenImmersion (g0 U0 U1)] {W : X.Opens} 
 variable (P0 : Type u) [AddCommGroup P0] [Module (X.presheaf.obj (op U0)) P0]
 variable (P1 : Type u) [AddCommGroup P1] [Module (X.presheaf.obj (op U1)) P1]
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible.M0 : (Spec
+/-- The quasicoherent module on the first affine chart. -/
+abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible.M0 : (Spec
     (X.presheaf.obj (op U0))).Modules := tilde (ModuleCat.of (X.presheaf.obj (op U0)) P0)
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible
 
-private abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible.M1 : (Spec
+/-- The quasicoherent module on the second affine chart. -/
+abbrev _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible.M1 : (Spec
     (X.presheaf.obj (op U1))).Modules := tilde (ModuleCat.of (X.presheaf.obj (op U1)) P1)
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.GlueInvertible
 

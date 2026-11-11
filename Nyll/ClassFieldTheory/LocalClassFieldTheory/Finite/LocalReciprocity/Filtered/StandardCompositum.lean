@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.AbstractUnramified
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.AbstractUnramified
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Compositum
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFixedFieldComparison
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
 
 /-!
 # Filtered reciprocity for the standard finite abelian compositum
@@ -18,6 +20,8 @@ At nonnegative indices the unramified factor contributes trivially, while
 filtered reciprocity holds on the Lubin--Tate factor.  Joint injectivity of
 the two restriction maps gives the equality on their compositum.
 -/
+
+@[expose] public section
 
 noncomputable section
 

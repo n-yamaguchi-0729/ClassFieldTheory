@@ -10,22 +10,27 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
-import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.Algebra.Module.LocalizedModule.Exact
-import Mathlib.Algebra.Exact.Basic
-import Mathlib.Algebra.Module.Projective
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
-import Nyll.SchemeTheory.RingTheory.LinearAlgebra.RankLocalization
-import Nyll.SchemeTheory.RingTheory.FinitePresentation.ModuleFinitePresentation
+module
+
+public import Nyll.AlgebraicCurves.RelativeDivisors.PointSums.RelEffCartierDivOfPoint
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.Cartier
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.Algebra.Module.LocalizedModule.Exact
+public import Mathlib.Algebra.Exact.Basic
+public import Mathlib.Algebra.Module.Projective
+public import Mathlib.RingTheory.Finiteness.ModuleFinitePresentation
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.HomInvertibleKerCompEqId
+public import Nyll.SchemeTheory.RingTheory.LinearAlgebra.RankLocalization
+public import Nyll.SchemeTheory.RingTheory.FinitePresentation.ModuleFinitePresentation
 
 /-!
 # Splitting a relative divisor along a section
 
 Splits a relative divisor into the graph of a section and a residual divisor.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -702,25 +707,6 @@ theorem finite_kerπC : Module.Finite Rᵤ (RingHom.ker (πC D a₀ h₀ hle U).
   Module.Finite.equiv (kerπCEquiv D a₀ h₀ hle U).symm
 
 section localizedChart
-
-noncomputable local instance residualBasicOpenAlgebra (h : Aᵤ) : Algebra
-      Γ((residualSheaf D a₀ h₀).subscheme,
-        (Scheme.IdealSheafData.inclusion (le_residualSheaf D a₀ h₀) ≫
-          (D.I.subschemeι ≫ pullback.snd c t)) ⁻¹ᵁ U.1)
-      Γ((residualSheaf D a₀ h₀).subscheme,
-        (residualSheaf D a₀ h₀).subscheme.basicOpen
-          (algebraMap Γ(D.I.subscheme, (D.I.subschemeι ≫ pullback.snd c t) ⁻¹ᵁ U.1)
-            Γ((residualSheaf D a₀ h₀).subscheme,
-              (Scheme.IdealSheafData.inclusion (le_residualSheaf D a₀ h₀) ≫
-                (D.I.subschemeι ≫ pullback.snd c t)) ⁻¹ᵁ U.1) h)) :=
-    (((residualSheaf D a₀ h₀).subscheme.presheaf.map (homOfLE
-      ((residualSheaf D a₀ h₀).subscheme.basicOpen_le _)).op).hom).toAlgebra
-
-noncomputable local instance divisorBasicOpenAlgebra (h : Aᵤ) : Algebra Γ(D.I.subscheme,
-  (D.I.subschemeι ≫ pullback.snd c t) ⁻¹ᵁ U.1)
-      Γ(D.I.subscheme, D.I.subscheme.basicOpen h) :=
-    ((D.I.subscheme.presheaf.map (homOfLE
-      (D.I.subscheme.basicOpen_le h)).op).hom).toAlgebra
 
 noncomputable local instance residualBasicOpenAlgebraOverDivisor (h : Aᵤ) : Algebra
   Γ(D.I.subscheme, (D.I.subschemeι ≫ pullback.snd c t) ⁻¹ᵁ U.1)

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.SchemeTheory.Morphisms.AlgebraicPointFiniteField
-import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusTower
+module
+
+public import Nyll.SchemeTheory.Morphisms.AlgebraicPointFiniteField
+public import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusTower
 
 /-!
 # Every algebraic point over a finite field is Frobenius-periodic
@@ -13,6 +15,8 @@ import Nyll.GaloisCohomology.FieldTheory.FiniteFrobeniusTower
 The finite field of definition of the specified point supplies a positive
 period. The assertion concerns the original scheme morphism, not a replacement point.
 -/
+
+@[expose] public section
 
 noncomputable section
 

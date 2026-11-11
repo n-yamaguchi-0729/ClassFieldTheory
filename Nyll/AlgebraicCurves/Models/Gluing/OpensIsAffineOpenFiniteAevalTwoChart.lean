@@ -10,15 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.ValuativeCriterion
-import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
-import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.OpensFinitePreimageSingletonToSpecPolynomial
-import Mathlib.Util.WithWeakNamespace
-import Mathlib.Algebra.Category.Ring.Basic
+module
+
+public import Mathlib.AlgebraicGeometry.ValuativeCriterion
+public import Mathlib.AlgebraicGeometry.Morphisms.QuasiFinite
+public import Mathlib.AlgebraicGeometry.ZariskisMainTheorem
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Nyll.AlgebraicCurves.Geometry.Schemes.Morphisms.OpensFinitePreimageSingletonToSpecPolynomial
+public import Mathlib.Util.WithWeakNamespace
+public import Mathlib.Algebra.Category.Ring.Basic
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 
 /-!
 # Coordinate maps from two-chart pole data
@@ -26,6 +29,8 @@ import Mathlib.Algebra.Category.Ring.Basic
 Two-chart pole data makes the coordinate map proper and finite, yields an affine open chart, and
 provides the base-change comparisons used to test transcendence on fibres.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -326,7 +331,7 @@ theorem Scheme.Opens.finite_aeval_of_twoChart
       (C.presheaf.map (homOfLE hWV).op).hom g = 1) :
     let _ := Scheme.TwoAffineOpenCover.algebraOfHom c U
     (Polynomial.aeval f : k[X] →ₐ[k] Γ(C, U)).toRingHom.Finite := by
-  let _ := Scheme.TwoAffineOpenCover.algebraOfHom c U
+  intro sharedOwner1
   have h := Scheme.Opens.finite_eval₂RingHom_of_twoChart c U V W hWU hWV hUVW hU f g hcov hUV hfg
   have hiso : (U.topIso.hom.hom : Γ((U : Scheme.{u}), ⊤) →+* Γ(C, U)).Finite :=
     RingHom.Finite.of_surjective _ (fun y => ⟨U.topIso.inv.hom y, by

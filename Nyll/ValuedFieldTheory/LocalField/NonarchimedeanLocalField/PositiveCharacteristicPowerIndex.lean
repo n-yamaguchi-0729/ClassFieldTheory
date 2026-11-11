@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassFiniteness
-import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitPowerIndexFormulas
-import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
+module
+
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PowerClassFiniteness
+public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.FieldUnitPowerIndexFormulas
+public import Mathlib.RingTheory.RootsOfUnity.PrimitiveRoots
 
 /-!
 # Power indices in a local field of positive characteristic
@@ -17,6 +19,10 @@ coprimality condition, and the finite principal-unit quotient are obtained
 from the field and the actual nonzero exponent.
 -/
 
+@[expose] public section
+
+universe u
+
 noncomputable section
 
 namespace LocalFieldTheory
@@ -24,7 +30,7 @@ namespace LocalFieldTheory
 open scoped ValuativeRel
 open LocalFieldTheory.DiscreteValuationField
 
-variable (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
 
 /-- In positive characteristic the power index is n times the number of n-th

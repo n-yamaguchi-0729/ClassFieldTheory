@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.UnramifiedRationals
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.FixedFieldUnramified
-import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.FixedFields
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.UnramifiedRationals
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.FixedFieldUnramified
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.Dedekind.FixedFields
 
 /-!
 # Global cyclotomic inertia argument: completion of the inertia-generation step
@@ -16,6 +18,8 @@ groups has an everywhere-unramified fixed field.  Minkowski's discriminant
 bound makes that fixed field equal to `ℚ`, and Galois correspondence then
 makes the subgroup equal to the full Galois group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

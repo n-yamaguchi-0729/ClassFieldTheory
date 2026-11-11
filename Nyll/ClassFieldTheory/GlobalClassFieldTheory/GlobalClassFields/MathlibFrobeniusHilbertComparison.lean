@@ -4,36 +4,47 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticHilbertClassFieldReciprocity
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.IntegerRingComparison
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SUnit.GaloisAction
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassFieldOverOriginalBase
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorFrobenius
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldMaximalSubextension
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldMaximalSubextension
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldOverOriginalBase
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealDecompositionLaw
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertPrincipalization
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertSplitting
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.NormalClosure
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SUnit.Herbrand
-import Mathlib.NumberTheory.RamificationInertia.Unramified
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.RingTheory.Frobenius
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilbertClassField
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.MathlibUnramifiedInterface
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticHilbertClassFieldReciprocity
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.IntegerRingComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SUnit.GaloisAction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassFieldOverOriginalBase
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorFrobenius
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldMaximalSubextension
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldMaximalSubextension
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassFieldOverOriginalBase
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealDecompositionLaw
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertPrincipalization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertSplitting
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.FinitePlaceIdeal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Ramification.Splitting.NormalClosure
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SUnit.Herbrand
+public import Mathlib.NumberTheory.RamificationInertia.Unramified
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.RingTheory.Frobenius
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedFrobenius
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilbertClassField
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.MathlibUnramifiedInterface
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ResidueGalois
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionGroup
 
 /-!
 # Frobenius and Hilbert class fields implementation
@@ -47,6 +58,10 @@ Frobenius at every unramified finite prime.
 -/
 
 
+
+@[expose] public section
+
+universe u v
 
 open scoped NumberField
 
@@ -64,7 +79,7 @@ open scoped Pointwise
 open AlgebraicNumberTheory.Valuations
 
 variable
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -110,8 +125,7 @@ theorem arithmeticPrimeArtin_stabilizes_chosenPrime
     GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
         (K := K) (L := L) v ∈
       MulAction.stabilizer (L ≃ₐ[K] L) W.asIdeal := by
-  let w := chosenFinitePlaceExtension (L := L) v
-  let W := finitePlaceExtensionCentre (K := K) (L := L) v w
+  intro w W
   let σ := GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
     (K := K) (L := L) v
   have hgeo :
@@ -238,7 +252,7 @@ open scoped Pointwise
 at an unramified prime.  The proof compares its residue action with the
 finite-field Frobenius and uses the decomposition-group cardinality. -/
 theorem orderOf_arithmeticFrobeniusAt_eq_inertiaDegree
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -302,7 +316,7 @@ end ArithmeticFrobenius
 independent of the prime above a fixed base prime.  Mathlib chooses
 conjugate lifts, and conjugacy is equality in the abelian Galois group. -/
 theorem arithmeticFrobeniusAt_eq_of_liesOver
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -329,7 +343,7 @@ open _root_.GlobalClassFieldTheory.GlobalClassFields
 element is Mathlib's arithmetic Frobenius, independently of the chosen prime
 above the base prime. -/
 theorem arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
-    {K L : Type}
+    {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [IsAbelianGalois K L]
@@ -456,7 +470,7 @@ theorem arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
 /-- Ideal-theoretic complete splitting at every prime above a finite place
 agrees with the decomposition-group definition used by the existing library. -/
 theorem finitePrimeSplitsCompletely_iff_original
-    (K L : Type) [Field K] [NumberField K]
+    (K : Type u) (L : Type v) [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
     (v : HeightOneSpectrum (𝓞 K)) :
@@ -515,7 +529,7 @@ theorem finitePrimeSplitsCompletely_iff_original
 
 section HilbertClassFields
 
-variable (K : Type) [Field K] [NumberField K]
+variable (K : Type u) [Field K] [NumberField K]
 
 /-- Embed the selected big Hilbert class field in the separable closure of
 its original base field. -/
@@ -659,7 +673,7 @@ open _root_.GlobalClassFieldTheory.GlobalClassFields
   (finiteAbelianExtension_nonempty_algHom_to_smallHilbertClassField_of_everywhereUnramified) in
 /-- Any publicly represented everywhere-unramified abelian extension
 embeds into the selected small Hilbert class field. -/
-private theorem nonempty_algHom_to_selectedSmallHilbertClassField
+theorem nonempty_algHom_to_selectedSmallHilbertClassField
     (F : FiniteAbelianExtension K)
     (hF : IsEverywhereUnramified K F) :
     Nonempty (F →ₐ[K]

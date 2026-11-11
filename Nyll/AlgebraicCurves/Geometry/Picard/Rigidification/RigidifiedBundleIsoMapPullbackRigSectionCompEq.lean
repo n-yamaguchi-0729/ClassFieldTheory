@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 Adjust an isomorphism of line bundles by a global unit so that it respects the given
 rigidifications.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -68,7 +72,8 @@ noncomputable abbrev resTop (s : Γ(X, ⊤)) (U : X.Opens) : Γ(X, U) :=
   rfl
 
 @[scoped simp] lemma resTop_top (s : Γ(X, ⊤)) : resTop s ⊤ = s := by
-  simp [resTop]
+  change X.presheaf.map (𝟙 (op (⊤ : X.Opens))) s = s
+  rw [CategoryTheory.Functor.map_id, ConcreteCategory.id_apply]
 
 lemma smul_res_comm (s : Γ(X, ⊤)) (M : X.Modules) (U : X.Opens) (r : Γ(X, U)) (m : Γ(M, U)) :
     resTop s U • r • m = r • resTop s U • m := by
@@ -106,7 +111,7 @@ lemma smulHom_mul (s s' : Γ(X, ⊤)) (M : X.Modules) :
 @[scoped simp] lemma smulHom_one (M : X.Modules) : smulHom (1 : Γ(X, ⊤)) M = 𝟙 M := by
   ext U x
   change (smulHom 1 M).app U x = x
-  simp [smulHom_app_apply, resTop]
+  simp only [smulHom_app_apply, resTop, map_one, one_smul]
 
 /-- The module automorphism given by multiplication by an invertible global function. -/
 noncomputable def smulIso (s : Γ(X, ⊤)ˣ) (M : X.Modules) : M ≅ M where
@@ -235,7 +240,7 @@ _root_.AlgebraicGeometry.RelPicard.RigidifiedLineBundle.exists_iso_map_pullback_
   let F := Scheme.Modules.pullback (rigSection c t ε)
   exact (congrArg (fun g => F.map φ.hom ≫ g)
     (α'.hom_inv_id_assoc (F.map φ.inv ≫ α.hom))).trans
-    (Iso.map_hom_inv_id_assoc φ F α.hom)
+    (Iso.hom_inv_id_map_assoc φ F α.hom)
 end RigidifiedLineBundle_exists_iso_map_pullback_rigSection_comp_eq
 end AlgebraicCurves.Geometry.Picard.Proofs
 end ProofImplementation

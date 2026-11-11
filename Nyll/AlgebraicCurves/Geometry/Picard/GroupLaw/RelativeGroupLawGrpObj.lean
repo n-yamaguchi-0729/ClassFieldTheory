@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.GroupLaw.RelativeGroupLaw
-import Mathlib.AlgebraicGeometry.Geometrically.Integral
-import Mathlib.AlgebraicGeometry.Group.Abelian
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
+module
+
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Basic
+public import Mathlib.AlgebraicGeometry.Geometrically.Integral
+public import Mathlib.AlgebraicGeometry.Group.Abelian
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
 
 /-!
 Conversions between pointwise relative group laws and group objects over the base.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -164,28 +168,28 @@ def RelativeGroupLaw.grpObjOverMk {R : Type u} [CommRing R] {A : Scheme.{u}}
 theorem RelativeGroupLaw.overHomToSchemeHomOver_mul {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) (a b : Over.mk t ⟶ Over.mk f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomToSchemeHomOver (a * b) =
       G.mul t (overHomToSchemeHomOver a) (overHomToSchemeHomOver b) := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   exact ((yonedaGrpObjIsoOfRepresentableBy (Over.mk f) G.yonedaGrpObjPresheaf
     G.overMkRepresentableBy).hom.app (Opposite.op (Over.mk t))).hom.map_mul a b
 
 theorem RelativeGroupLaw.overHomToSchemeHomOver_one {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomToSchemeHomOver (1 : Over.mk t ⟶ Over.mk f) = G.one t := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   exact ((yonedaGrpObjIsoOfRepresentableBy (Over.mk f) G.yonedaGrpObjPresheaf
     G.overMkRepresentableBy).hom.app (Opposite.op (Over.mk t))).hom.map_one
 
 theorem RelativeGroupLaw.overHomToSchemeHomOver_inv {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) (a : Over.mk t ⟶ Over.mk f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomToSchemeHomOver a⁻¹ = G.inv t (overHomToSchemeHomOver a) := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   let := G.pointGroup t
   exact map_inv ((yonedaGrpObjIsoOfRepresentableBy (Over.mk f) G.yonedaGrpObjPresheaf
     G.overMkRepresentableBy).hom.app (Opposite.op (Over.mk t))).hom a
@@ -193,68 +197,68 @@ theorem RelativeGroupLaw.overHomToSchemeHomOver_inv {R : Type u} [CommRing R] {A
 theorem RelativeGroupLaw.overHomEquivSchemeHomOver_mul {R : Type u} [CommRing R]
     {A : Scheme.{u}} {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f)
     (T : Over (Spec (CommRingCat.of R))) (a b : T ⟶ Over.mk f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomEquivSchemeHomOver T f (a * b) =
       G.mul T.hom (overHomEquivSchemeHomOver T f a) (overHomEquivSchemeHomOver T f b) := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   exact ((yonedaGrpObjIsoOfRepresentableBy (Over.mk f) G.yonedaGrpObjPresheaf
     G.overMkRepresentableBy).hom.app (Opposite.op T)).hom.map_mul a b
 
 theorem RelativeGroupLaw.overHomEquivSchemeHomOver_one {R : Type u} [CommRing R]
     {A : Scheme.{u}} {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f)
     (T : Over (Spec (CommRingCat.of R))) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomEquivSchemeHomOver T f (1 : T ⟶ Over.mk f) = G.one T.hom := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   exact ((yonedaGrpObjIsoOfRepresentableBy (Over.mk f) G.yonedaGrpObjPresheaf
     G.overMkRepresentableBy).hom.app (Opposite.op T)).hom.map_one
 
 theorem RelativeGroupLaw.overHomEquivSchemeHomOver_inv {R : Type u} [CommRing R]
     {A : Scheme.{u}} {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f)
     (T : Over (Spec (CommRingCat.of R))) (a : T ⟶ Over.mk f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomEquivSchemeHomOver T f a⁻¹ = G.inv T.hom (overHomEquivSchemeHomOver T f a) := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   let := G.pointGroup T.hom
   exact map_inv ((yonedaGrpObjIsoOfRepresentableBy (Over.mk f) G.yonedaGrpObjPresheaf
     G.overMkRepresentableBy).hom.app (Opposite.op T)).hom a
 
 theorem RelativeGroupLaw.grpObjOverMk_mul_eq {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomEquivSchemeHomOver (Over.mk f ⊗ Over.mk f) f μ[Over.mk f] =
       G.mul (Over.mk f ⊗ Over.mk f).hom
         (overHomEquivSchemeHomOver (Over.mk f ⊗ Over.mk f) f (fst (Over.mk f) (Over.mk f)))
         (overHomEquivSchemeHomOver (Over.mk f ⊗ Over.mk f) f (snd (Over.mk f) (Over.mk f))) := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   rw [MonObj.mul_eq_mul]
   exact G.overHomEquivSchemeHomOver_mul (Over.mk f ⊗ Over.mk f)
     (fst (Over.mk f) (Over.mk f)) (snd (Over.mk f) (Over.mk f))
 
 theorem RelativeGroupLaw.grpObjOverMk_one_eq {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomEquivSchemeHomOver (𝟙_ (Over (Spec (CommRingCat.of R)))) f η[Over.mk f] =
       G.one (𝟙_ (Over (Spec (CommRingCat.of R)))).hom := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   rw [MonObj.one_eq_one]
   exact G.overHomEquivSchemeHomOver_one (𝟙_ (Over (Spec (CommRingCat.of R))))
 
 theorem RelativeGroupLaw.grpObjOverMk_inv_eq {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     overHomEquivSchemeHomOver (Over.mk f) f ι[Over.mk f] =
       G.inv (Over.mk f).hom (overHomEquivSchemeHomOver (Over.mk f) f (𝟙 (Over.mk f))) := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   rw [GrpObj.inv_eq_inv]
   exact G.overHomEquivSchemeHomOver_inv (Over.mk f) (𝟙 (Over.mk f))
 
 theorem relativeGroupLawOfGrpObj_grpObjOverMk_mul {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) (x y : SchemeHomOver t f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     (relativeGroupLawOfGrpObj R f).mul t x y = G.mul t x y := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   have h := G.overHomToSchemeHomOver_mul t (schemeHomOverToOverHom x)
     (schemeHomOverToOverHom y)
   simpa using h
@@ -262,17 +266,17 @@ theorem relativeGroupLawOfGrpObj_grpObjOverMk_mul {R : Type u} [CommRing R] {A :
 theorem relativeGroupLawOfGrpObj_grpObjOverMk_one {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     (relativeGroupLawOfGrpObj R f).one t = G.one t := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   exact G.overHomToSchemeHomOver_one t
 
 theorem relativeGroupLawOfGrpObj_grpObjOverMk_inv {R : Type u} [CommRing R] {A : Scheme.{u}}
     {f : A ⟶ Spec (CommRingCat.of R)} (G : RelativeGroupLaw R f) {T : Scheme.{u}}
     (t : T ⟶ Spec (CommRingCat.of R)) (x : SchemeHomOver t f) :
-    letI := G.grpObjOverMk
+    let := G.grpObjOverMk
     (relativeGroupLawOfGrpObj R f).inv t x = G.inv t x := by
-  let := G.grpObjOverMk
+  intro sharedOwner1
   have h := G.overHomToSchemeHomOver_inv t (schemeHomOverToOverHom x)
   simpa using h
 
@@ -298,7 +302,7 @@ theorem isCommMonObj_of_relativeGroupLawOfGrpObj_comm {R : Type u} [CommRing R]
   intro a b
   have h := hc X.hom (overHomToSchemeHomOver a) (overHomToSchemeHomOver b)
   change a * b = b * a
-  simp only [relativeGroupLawOfGrpObj, schemeHomOverToOverHom_overHomToSchemeHomOver] at h
+  simp only [relativeGroupLawOfGrpObj_mul, schemeHomOverToOverHom_overHomToSchemeHomOver] at h
   exact overHomToSchemeHomOver_injective h
 
 theorem isCommMonObj_iff_relativeGroupLawOfGrpObj_comm {R : Type u} [CommRing R]

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Ker
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Ker
 
 /-!
 # Images of subgroups in restriction kernels
@@ -12,6 +14,8 @@ import Mathlib.Algebra.Group.Subgroup.Ker
 This file isolates a group-theoretic criterion for identifying the image of
 a subgroup with the kernel of a homomorphism after a surjective quotient.
 -/
+
+@[expose] public section
 
 namespace Subgroup
 

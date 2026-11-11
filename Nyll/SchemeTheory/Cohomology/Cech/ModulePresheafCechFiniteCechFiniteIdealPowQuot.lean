@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Noetherian
-import Mathlib.RingTheory.Localization.Away.Basic
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafIdealFiltration
-import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafIdealPowSubEqBot
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESMid
-import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESRight
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Noetherian
+public import Mathlib.RingTheory.Localization.Away.Basic
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafIdealFiltration
+public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafIdealPowSubEqBot
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESMid
+public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteAffSESRight
 
 /-!
 Cech finiteness by devissage through powers of the vanishing ideal of a supporting closed subset.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

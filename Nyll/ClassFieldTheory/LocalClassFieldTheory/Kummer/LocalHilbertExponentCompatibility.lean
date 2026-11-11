@@ -4,9 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.KummerExponentTower
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+module
+
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.KummerExponentTower
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
+public import Nyll.GaloisCohomology.Kummer.Concrete.RootCharacters
+public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
 
 /-!
 # Compatibility of local Hilbert symbols at divisible exponents
@@ -16,16 +21,20 @@ and its second as the Kummer radical. Artin restriction along the actual
 simple Kummer tower makes its values compatible as the exponent varies.
 -/
 
+@[expose] public section
+
 noncomputable section
 
 namespace LocalClassFieldTheory.Kummer
+
+universe u
 
 open RamificationTheory
 
 /-- If `m ∣ n`, the exponent-`m` Hilbert value is the `(n/m)`-th power of
 the exponent-`n` value, compared as units of the base field. -/
 theorem localHilbertSymbol_exponentCompatibility
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (m n : ℕ+) (hmK : ((m : ℕ) : K) ≠ 0)
     (hnK : ((n : ℕ) : K) ≠ 0)
@@ -62,10 +71,10 @@ theorem localHilbertSymbol_exponentCompatibility
   have hrestrict :
       intermediateFieldRestrictNormalHom Em En hEF σn = σm := by
     change intermediateFieldRestrictNormalHom Em En hEF
-        (LocalClassFieldTheory.abelianLocalArtinMonoidHom K En a) =
-      LocalClassFieldTheory.abelianLocalArtinMonoidHom K Em a
+        (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom K En a) =
+      LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom K Em a
     exact DFunLike.congr_fun
-      (LocalClassFieldTheory.abelianLocalArtinMonoidHom_restrict K Em En hEF) a
+      (LocalClassFieldTheory.Universe.abelianLocalArtinMap_restrict K Em En hEF) a
   have hβmN : βmN ^ (m : ℕ) =
       Units.map (algebraMap K En).toMonoidHom b := by
     change (Units.map (IntermediateField.inclusion hEF).toMonoidHom βm) ^

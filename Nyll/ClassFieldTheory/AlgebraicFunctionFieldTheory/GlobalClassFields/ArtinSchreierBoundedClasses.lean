@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
-import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.FiniteDimensionalLSpaceZero
-import Nyll.GaloisCohomology.ArtinSchreier.RootCharacter
-import Mathlib.GroupTheory.Coset.Card
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Genus.AdelicGenus
+public import Nyll.AlgebraicCurves.Cohomology.RiemannRoch.Spaces.FiniteDimensionalLSpaceZero
+public import Nyll.GaloisCohomology.ArtinSchreier.RootCharacter
+public import Mathlib.GroupTheory.Coset.Card
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Artin–Schreier classes with bounded poles
@@ -18,6 +20,8 @@ For an effective divisor D, an Artin–Schreier coboundary has poles bounded
 by pD exactly when its source has poles bounded by D. Thus the bounded
 parameter classes are a concrete finite quotient of Riemann–Roch spaces.
 -/
+
+@[expose] public section
 
 noncomputable section
 

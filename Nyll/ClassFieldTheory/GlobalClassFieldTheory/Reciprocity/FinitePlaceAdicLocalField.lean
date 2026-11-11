@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SemilinearNaturality
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
-import Mathlib.NumberTheory.LocalField.Basic
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SemilinearNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
+public import Mathlib.NumberTheory.LocalField.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
 
 /-!
 # Local-field structure on a finite adic completion
@@ -20,6 +22,8 @@ The distinguished integer-valued valuation on a number-field completion
 provides the valuation relation required by local reciprocity.  The
 valuation relation is passed explicitly, not registered globally.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -144,11 +148,11 @@ theorem finitePlaceAdicHilbertPairingFamily_isLocallyHilbert
   intro v
   let C := (HeightOneSpectrum.adicAbv F v).Completion
   exact
-    letI : ValuativeRel C :=
+    let : ValuativeRel C :=
       GlobalClassFieldTheory.Reciprocity.finitePlaceLocalArtinCompletionValuativeRel v
-    letI : IsNonarchimedeanLocalField C :=
+    let : IsNonarchimedeanLocalField C :=
       GlobalClassFieldTheory.Reciprocity.finitePlaceLocalArtinCompletionIsNonarchimedeanLocalField v
-    letI : CharZero C :=
+    let : CharZero C :=
       charZero_of_injective_algebraMap (algebraMap F C).injective
     have hnC : ((n : ℕ) : C) ≠ 0 := Nat.cast_ne_zero.mpr n.ne_zero
     have hmuC : (primitiveRoots (n : ℕ) C).Nonempty := by

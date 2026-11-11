@@ -4,12 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
-import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
+module
+
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.CompactUnits
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrincipalUnits
 
 /-!
 # Ray moduli and congruence subgroups over all places
@@ -18,6 +23,8 @@ A modulus is an effective finitely supported divisor, including places above inf
 The local filtration is the existing one from local class field theory. The full ray
 class quotient retains its degree direction; no finiteness is asserted here.
 -/
+
+@[expose] public section
 
 open scoped WithZero
 noncomputable section

@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.KummerExtension
+module
+
+public import Mathlib.FieldTheory.KummerExtension
 
 /-!
 # Canonical Kummer algebras
 -/
 
 
+
+@[expose] public section
 
 namespace ClassFieldTheory
 

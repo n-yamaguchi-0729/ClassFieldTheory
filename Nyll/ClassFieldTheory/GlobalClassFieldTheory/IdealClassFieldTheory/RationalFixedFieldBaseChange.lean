@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalAbstractExtensionToOrdinary
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalAbstractExtensionToOrdinary
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
 
 /-!
 # Rational fixed-field base-change transport
@@ -14,6 +17,8 @@ base change.
 -/
 
 
+
+@[expose] public section
 
 noncomputable section
 
@@ -48,20 +53,20 @@ theorem rationalFixedFieldInclusion_baseChange_eq_ideleClassExtension
       (abstractFixedField ℚ (SeparableClosure ℚ) K)) :
     let F := abstractFixedField ℚ (SeparableClosure ℚ) K
     let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-    letI := hnormal
-    letI : FiniteDimensional ℚ F :=
+    let := hnormal
+    let : FiniteDimensional ℚ F :=
       abstractFixedField_finiteDimensional
         ℚ (SeparableClosure ℚ) K hKfinite
-    letI : FiniteDimensional F E :=
+    let : FiniteDimensional F E :=
       abstractRelativeFixedField_finiteDimensional
         ℚ (SeparableClosure ℚ) K L hLK hKfinite hfinite
-    letI : IsScalarTower ℚ F E :=
+    let : IsScalarTower ℚ F E :=
       IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-    letI : FiniteDimensional ℚ E :=
+    let : FiniteDimensional ℚ E :=
       FiniteDimensional.trans ℚ F E
-    letI : NumberField F :=
+    let : NumberField F :=
       NumberField.of_module_finite ℚ F
-    letI : NumberField E :=
+    let : NumberField E :=
       NumberField.of_module_finite ℚ E
     (MulEquiv.toAdditive
       (_root_.relativeIdeleClassBaseChangeMulEquiv
@@ -81,24 +86,8 @@ theorem rationalFixedFieldInclusion_baseChange_eq_ideleClassExtension
         (ideleClassExtension F E
           (_root_.relativeIdeleClassBaseChangeMulEquiv
             (K := ℚ) (L := F) c)) := by
-  dsimp only
-  let F := abstractFixedField ℚ (SeparableClosure ℚ) K
-  let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  let := hnormal
-  let : FiniteDimensional ℚ F :=
-    abstractFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K hKfinite
-  let : FiniteDimensional F E :=
-    abstractRelativeFixedField_finiteDimensional
-      ℚ (SeparableClosure ℚ) K L hLK hKfinite hfinite
-  let : IsScalarTower ℚ F E :=
-    IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
-  let : FiniteDimensional ℚ E :=
-    FiniteDimensional.trans ℚ F E
-  let : NumberField F :=
-    NumberField.of_module_finite ℚ F
-  let : NumberField E :=
-    NumberField.of_module_finite ℚ E
+  intro F E reusedStructure3 reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
+    reusedStructure8 reusedStructure9
   let q : IdeleClassGroup F :=
     _root_.relativeIdeleClassBaseChangeMulEquiv
       (K := ℚ) (L := F) c

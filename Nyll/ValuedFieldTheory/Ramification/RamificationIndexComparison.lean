@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
-import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+module
+
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Extensions
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.AlgebraicExtension.RamificationInvariants
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Theory.ExponentialValuations
 
 /-!
 # Comparing exponential and canonical ramification indices
@@ -14,6 +17,8 @@ This module compares the exponential-valuation presentation of ramification
 with the canonical complete-DVF presentation.  The comparison is independent
 of any cyclotomic or Kronecker--Weber hypotheses.
 -/
+
+@[expose] public section
 
 noncomputable section
 

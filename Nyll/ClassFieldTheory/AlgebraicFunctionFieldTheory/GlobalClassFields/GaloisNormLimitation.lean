@@ -4,14 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.FieldTheory.Galois.Abelian
-import Mathlib.FieldTheory.Galois.Basic
-import Mathlib.GroupTheory.Abelianization.Defs
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormAlgEquiv
+module
+
+public import Mathlib.FieldTheory.Galois.Abelian
+public import Mathlib.FieldTheory.Galois.Basic
+public import Mathlib.GroupTheory.Abelianization.Defs
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormAlgEquiv
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 
 /-!
 # Norm limitation for an actual finite Galois extension
@@ -21,13 +24,17 @@ induces an isomorphism on abelianizations. Finite reciprocity and its actual
 norm kernel therefore identify the two idele-class norm images.
 -/
 
+@[expose] public section
+
+universe u v w x
+
 noncomputable section
 
 namespace FunctionField
 
 open scoped IsMulCommutative
 
-variable (k K L : Type) [Field k] [Finite k] [Field K] [Field L]
+variable (k : Type u) (K : Type v) (L : Type w) [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [IsGalois K L]
@@ -47,7 +54,7 @@ theorem finiteGalois_norm_range_eq_commutatorFixedField :
   let e : Abelianization Gal(L/K) ≃* Gal(A/K) :=
     IsGalois.normalAutEquivQuotient (commutator Gal(L/K))
   have hcomm : IsMulCommutative Gal(A/K) :=
-    e.surjective.isMulCommutative inferInstance
+    e.surjective.isMulCommutative
   let r : Gal(L/K) →* Gal(A/K) := AlgEquiv.restrictNormalHom A
   have hmap (z : Abelianization Gal(L/K)) :
       Abelianization.map r z = Abelianization.of (e z) := by
@@ -79,7 +86,7 @@ theorem finiteGalois_norm_range_eq_commutatorFixedField :
 finite abelian subextension in the same overfield whose norm image is smaller.
 The field is the embedded commutator fixed field of the finite normal closure. -/
 theorem exists_finiteAbelian_norm_le
-    (Ω : Type) [Field Ω] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
+    (Ω : Type x) [Field Ω] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     [IsGalois K Ω] (E : IntermediateField K Ω) [FiniteDimensional K E] :
     have _ : AlgebraicCurve.HasPrincipalDivisors k E :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K E).toHasPrincipalDivisors
@@ -103,7 +110,7 @@ theorem exists_finiteAbelian_norm_le
   let e : Abelianization Gal(M/K) ≃* Gal(A/K) :=
     IsGalois.normalAutEquivQuotient (commutator Gal(M/K))
   have hcomm : IsMulCommutative Gal(A/K) :=
-    e.surjective.isMulCommutative inferInstance
+    e.surjective.isMulCommutative
   have hAabelian : IsAbelianGalois K A :=
     { toIsGalois := hAgal, toIsMulCommutative := hcomm }
   have hAprincipal : AlgebraicCurve.HasPrincipalDivisors k A :=

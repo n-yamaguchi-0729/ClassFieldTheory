@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.SchemeTheory.RingTheory.Polynomial.AlgebraPolynomialIsUnitAevalImpEtaleLevelSet
-import Nyll.AlgebraicCurves.Geometry.Curves.IsDomainTensorSections
+module
+
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.SchemeTheory.RingTheory.Polynomial.AlgebraPolynomialIsUnitAevalImpEtaleLevelSet
+public import Nyll.AlgebraicCurves.Geometry.Curves.IsDomainTensorSections
 
 /-!
 # Smooth Proper Curve exists polynomial is Unit aeval imp etale level Set
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

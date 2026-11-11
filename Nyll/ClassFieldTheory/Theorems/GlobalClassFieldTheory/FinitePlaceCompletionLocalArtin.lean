@@ -4,14 +4,22 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
-import Mathlib.Algebra.Algebra.Equiv
-import Mathlib.FieldTheory.KrullTopology
-import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+module
+
+public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
+public import Mathlib.Algebra.Algebra.Equiv
+public import Mathlib.FieldTheory.KrullTopology
+public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
+public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.DecompositionGroup
+public import Nyll.ValuedFieldTheory.Valuation.AbsoluteValue.Completion
+public import Nyll.ValuedFieldTheory.Valuation.Completion.FiniteLocalization
 
 /-!
 # A local Artin map on the actual extension completion
@@ -22,6 +30,8 @@ whole completion. This theorem transports the independent local Artin map
 to the actual completion and records its image and kernel in public types.
 -/
 
+@[expose] public section
+
 open scoped NumberField TensorProduct
 open NumberField IsDedekindDomain
 
@@ -29,13 +39,15 @@ noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- At a finite place of an abelian number-field extension, one can choose
 an extension absolute value and a surjective local Artin map on its actual
 completion. Its kernel is precisely the determinant-norm image of the local
 tensor algebra. This map is constructed from local reciprocity, independently
 of any ray-class Artin map. -/
 theorem exists_finitePlaceCompletionLocalArtin
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsAbelianGalois K L]
@@ -48,8 +60,8 @@ theorem exists_finitePlaceCompletionLocalArtin
           (w.1.Completion ≃ₐ[vK.Completion] w.1.Completion),
         Continuous localArtin ∧ Function.Surjective localArtin ∧
           localArtin.ker = finitePlaceTensorNormSubgroup K L v := by
+  intro vK
   classical
-  let vK := NumberField.HeightOneSpectrum.adicAbv K v
   let hvK : vK.IsNontrivial := RayClass.adicAbv_isNontrivial v
   let w : ExtendingAbsoluteValue vK L :=
     _root_.chosenFinitePlaceExtension (L := L) v

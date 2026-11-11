@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
+module
+
+public import Mathlib.NumberTheory.NumberField.Completion.LiesOverInstances
+public import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
 
 /-!
 # The real-to-complex norm obstruction
@@ -16,17 +19,23 @@ archimedean tensor algebra cannot be negative.  The tensor algebra, rather
 than a single chosen completion, is the object in the public statement.
 -/
 
+@[expose] public section
+
 open scoped NumberField TensorProduct
 open NumberField
+
+open scoped NumberField.LiesOver
 
 noncomputable section
 
 namespace ClassFieldTheory
 
+universe u v
+
 /-- Negative one is not a norm from the complete archimedean tensor algebra
 if a real place becomes complex in a finite Galois extension. -/
 theorem not_isNormAtInfinitePlace_neg_one_of_real_complex
-    (K L : Type)
+    (K : Type u) (L : Type v)
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
@@ -48,8 +57,11 @@ theorem not_isNormAtInfinitePlace_neg_one_of_real_complex
   rw [infiniteTensorNormSubgroup_eq_localNormSubgroup
     (K := K) (L := L) v w hw] at hnorm
   obtain ⟨z, hz⟩ := hnorm
-  have hpos := GlobalClassFieldTheory.Reciprocity.infinitePlace_normUnits_real_complex_pos
-    (K := K) (K' := L) v w hw hv hc z
+  have hpos :
+      0 < InfinitePlace.Completion.ringEquivRealOfIsReal hv
+        (LocalFieldTheory.normUnits v.Completion w.Completion z : v.Completion) :=
+    GlobalClassFieldTheory.Reciprocity.infinitePlace_normUnits_real_complex_pos
+      (K := K) (K' := L) v w hw hv hc z
   have hneg : (0 : ℝ) < -1 := by
     rw [hz] at hpos
     simpa only [InfinitePlace.Completion.ringEquivRealOfIsReal_apply,

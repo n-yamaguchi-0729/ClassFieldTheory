@@ -10,22 +10,24 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
-import Nyll.AlgebraicCurves.Models.Construction.Basic
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.Etale.Field
-import Mathlib.RingTheory.Etale.Kaehler
-import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
-import Mathlib.RingTheory.Smooth.Flat
-import Mathlib.RingTheory.Flat.TorsionFree
-import Mathlib.RingTheory.RingHom.StandardSmooth
-import Mathlib.RingTheory.Algebraic.MvPolynomial
-import Mathlib.LinearAlgebra.Dimension.Constructions
-import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
-import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
-import Nyll.AlgebraicCurves.Differentials.Kaehler.TranscendentalSeparable
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
+public import Nyll.AlgebraicCurves.Models.Construction.Basic
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.Etale.Field
+public import Mathlib.RingTheory.Etale.Kaehler
+public import Mathlib.RingTheory.Smooth.StandardSmoothCotangent
+public import Mathlib.RingTheory.Smooth.Flat
+public import Mathlib.RingTheory.Flat.TorsionFree
+public import Mathlib.RingTheory.RingHom.StandardSmooth
+public import Mathlib.RingTheory.Algebraic.MvPolynomial
+public import Mathlib.LinearAlgebra.Dimension.Constructions
+public import Mathlib.LinearAlgebra.Dimension.StrongRankCondition
+public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveTranscendental
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.TranscendentalSeparable
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # IsCurveOver of ringEquiv functionField of isIntegral of smoothOfRelativeDimension one
@@ -33,6 +35,8 @@ import Mathlib.Util.WithWeakNamespace
 A field identified with the function field of an integral smooth curve inherits the curve-
 function-field structure compatible with the base-field map.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -170,7 +174,7 @@ private theorem rank_kaehler_eq_one_of_algEquiv {K : Type u} [Field K] {F : Type
     (h : Module.rank L Ω[L⁄K] = 1) : Module.rank F Ω[F⁄K] = 1 := by
   let : Algebra L F := (e.symm : L →ₐ[K] F).toRingHom.toAlgebra
   have : IsScalarTower K L F :=
-    IsScalarTower.of_algebraMap_eq fun k => by simp [RingHom.algebraMap_toAlgebra]
+    IsScalarTower.of_algebraMap_eq fun k => (e.symm.commutes k).symm
   have e' : L ≃ₐ[L] F := { e.symm.toRingEquiv with commutes' := fun l => rfl }
   have : Algebra.FormallyEtale L L := Algebra.FormallyEtale.of_formallyUnramified_and_formallySmooth
   have : Algebra.FormallyEtale L F := Algebra.FormallyEtale.of_equiv e'

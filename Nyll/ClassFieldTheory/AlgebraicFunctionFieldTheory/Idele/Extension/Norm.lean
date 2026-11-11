@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Submonoid.Units
-import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
-import Mathlib.RingTheory.Norm.Transitivity
-import Nyll.AlgebraicCurves.Foundations.CommutativeAlgebra.LocalRingHenselLiftUnique
-import Nyll.AlgebraicCurves.Places.Completion
-import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+module
+
+public import Mathlib.Algebra.Group.Submonoid.Units
+public import Mathlib.RingTheory.IntegralClosure.IntegrallyClosed
+public import Mathlib.RingTheory.Norm.Transitivity
+public import Nyll.AlgebraicCurves.Foundations.CommutativeAlgebra.LocalRingHenselLiftUnique
+public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Basic
+public import Nyll.AlgebraicCurves.Places.Basic
 
 /-!
 # The all-place idele norm
@@ -21,6 +24,8 @@ already the integral closure of the base completed valuation subring. Thus local
 norms preserve integral units, and the exceptional places of an idele norm lie in
 the image of the finite exceptional set of the original idele.
 -/
+
+@[expose] public section
 
 open scoped AlgebraicCurve.Place RestrictedProduct
 
@@ -111,7 +116,8 @@ theorem normComponent_mem_localUnits (v : AlgebraicCurve.Place k K)
   exact localNormOver_mem_localUnits v w.1
     ((AlgebraicCurve.Place.mem_fiberOver v).mp w.2) (a w.1) (ha w.1 w.2)
 
-private theorem normComponent_eventually_mem_localUnits (a : IdeleGroup k L) :
+/-- The norm components are integral outside the image of the finite exceptional set. -/
+theorem normComponent_eventually_mem_localUnits (a : IdeleGroup k L) :
     ∀ᶠ v : AlgebraicCurve.Place k K in Filter.cofinite,
       normComponent (k := k) (K := K) (L := L) v a ∈ v.adicCompletionIntegers.units := by
   have hbad : {w : AlgebraicCurve.Place k L | a w ∉ w.adicCompletionIntegers.units}.Finite :=

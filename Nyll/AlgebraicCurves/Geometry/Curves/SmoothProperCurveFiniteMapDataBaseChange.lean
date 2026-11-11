@@ -10,11 +10,13 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Util.WithWeakNamespace
-import Nyll.AlgebraicCurves.Geometry.Schemes.SchemeHomOver
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
-import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
-import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
+module
+
+public import Mathlib.Util.WithWeakNamespace
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveBase
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
+public import Nyll.AlgebraicCurves.Geometry.Curves.SmoothProperCurveFiniteMapData
 
 /-!
 # Base change of finite-map data on a smooth proper curve
@@ -23,6 +25,8 @@ A finite-map presentation pulls back along an algebra map with the same exponent
 pulled-back charts and pulled-back coordinate functions. Finite local base extensions
 also preserve the generic etaleness of its level sets.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -100,25 +104,29 @@ variable {R : Type u} [CommRing R] {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat
   {ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c} (𝔉 : FiniteMapData c ε)
   (R' : Type u) [CommRing R'] [Algebra R R']
 
-private theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.isAffineOpen_preimage_U :
+/-- The first chart remains affine after affine base change. -/
+theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.isAffineOpen_preimage_U :
     IsAffineOpen ((pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.U) :=
   have := Scheme.TwoAffineOpenCover.isAffineHom_fst c R'
   𝔉.isAffineOpen_U.preimage _
 
 open _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData
-private theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.isAffineOpen_preimage_V :
+/-- The second chart remains affine after affine base change. -/
+theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.isAffineOpen_preimage_V :
     IsAffineOpen ((pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.V) :=
   have := Scheme.TwoAffineOpenCover.isAffineHom_fst c R'
   𝔉.isAffineOpen_V.preimage _
 
 open _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData
-private theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.preimage_U_sup_preimage_V :
+/-- The two pulled-back charts cover the base-changed curve. -/
+theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.preimage_U_sup_preimage_V :
     (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.U ⊔ (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.V = ⊤ := by
   rw [← Scheme.Hom.preimage_sup, 𝔉.sup_eq_top]
   rfl
 
 open _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData
-private theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.mem_preimage_U_iff (x :
+/-- The pulled-back first chart is the complement of the base-changed section. -/
+theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.mem_preimage_U_iff (x :
     ↑(pullback c (specMap R R'))) :
     x ∈ (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.U ↔ x ∉ Set.range (sectionBaseChange R' ε).1.base :=
         by
@@ -126,7 +134,8 @@ private theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.mem_pre
   rfl
 
 open _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData
-private theorem
+/-- The pulled-back chart intersection is the basic open defined by the first coordinate. -/
+theorem
   _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.preimage_U_inf_preimage_V_eq_basicOpen_f
     :
     (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.U ⊓ (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.V =
@@ -135,7 +144,8 @@ private theorem
   rw [← Scheme.Hom.preimage_inf, 𝔉.inf_eq_basicOpen, Scheme.preimage_basicOpen]
 
 open _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData
-private theorem
+/-- The pulled-back chart intersection is the basic open defined by the second coordinate. -/
+theorem
   _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.preimage_U_inf_preimage_V_eq_basicOpen_g
     :
     (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.U ⊓ (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.V =
@@ -145,7 +155,8 @@ private theorem
 
 open _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData
 
-private theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.res_app_f_mul_res_app_g :
+/-- The pulled-back coordinates remain inverse on the chart intersection. -/
+theorem _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.res_app_f_mul_res_app_g :
     ((pullback c (specMap R R')).presheaf.map (homOfLE (inf_le_left :
         (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.U ⊓ (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.V ≤
           (pullback.fst c (specMap R R')) ⁻¹ᵁ 𝔉.U)).op).hom
@@ -324,7 +335,6 @@ lemma algebraMap_comp_ΓIso_hom :
     exact congrArg (fun k => (pullback.snd c (sm (R := R) R')).appTop ≫ k)
       (presheaf_map_comp_eq _ _ _)
   rw [reassoc_of% aux, ← reassoc_of% h]
-  try simp only [Category.assoc]
   rw [reassoc_of% (Φ_hom_appTop_comp_inv_appTop c R' U hU halg), Iso.inv_hom_id,
     Category.comp_id]
 
@@ -539,7 +549,8 @@ variable {R : Type u} [CommRing R] {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat
   {ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c} (𝔉 : FiniteMapData c ε)
   (R' : Type u) [CommRing R'] [Algebra R R']
 
-private noncomputable def _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.baseChangeData :
+/-- The finite-map data induced by affine base change. -/
+noncomputable def _root_.AlgebraicGeometry.SmoothProperCurve.FiniteMapData.baseChangeData :
     FiniteMapData (baseChange R c R') (sectionBaseChange R' ε) :=
   letI := Scheme.TwoAffineOpenCover.algebraOfHom c 𝔉.U
   letI := Scheme.TwoAffineOpenCover.algebraOfHom c 𝔉.V

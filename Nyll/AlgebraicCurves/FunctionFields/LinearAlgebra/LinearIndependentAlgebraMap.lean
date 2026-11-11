@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Valuation.Integral
+module
 
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
-import Nyll.SchemeTheory.FunctionFields.AlgebraTensorIsFieldSeparable
+public import Mathlib.RingTheory.Valuation.Integral
+
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Cohomology.Adelic.Index
+public import Nyll.SchemeTheory.FunctionFields.AlgebraTensorIsFieldSeparable
 
 /-!
 # Linear Independent algebra Map of constants Are Base of is Algebraic
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -91,7 +95,7 @@ theorem _root_.AlgebraicCurve.linearIndependent_algebraMap_of_constantsAreBase_o
   have hincl : Function.Injective (M.subtype.baseChange K') := by
     show Function.Injective ((M.subtype.baseChange K' : K' ⊗[K] M →ₗ[K'] K' ⊗[K] F) : K' ⊗[K] M →
       K' ⊗[K] F)
-    rw [LinearMap.baseChange_eq_ltensor]
+    rw [LinearMap.baseChange_eq_lTensor]
     exact Module.Flat.lTensor_preserves_injective_linearMap M.subtype (Submodule.injective_subtype
       M)
   have hli1 : LinearIndependent K' ((M.subtype.baseChange K') ∘ B) := B.linearIndependent.map' _

@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Basic
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Adele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 
 /-!
 # Principal adeles
@@ -13,6 +16,8 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
 The diagonal map on the entire field reuses the already proved finite support
 of nonzero principal ideles. Its restriction to units is the principal idele map.
 -/
+
+@[expose] public section
 
 noncomputable section
 

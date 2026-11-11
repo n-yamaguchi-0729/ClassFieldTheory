@@ -11,10 +11,12 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Morphisms.Proper
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Nyll.AlgebraicCurves.Geometry.Picard.GroupLaw.RelativeGroupLaw
-import Nyll.AlgebraicCurves.Geometry.AbelianSchemes.AbelianSchemePropertyBundle
+module
+
+public import Mathlib.AlgebraicGeometry.Morphisms.Proper
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Basic
+public import Nyll.AbelianVarieties.Basic
 
 /-!
 # Pointed carriers for the relative Picard construction
@@ -23,6 +25,8 @@ A relative Picard designation records a scheme over the base with a chosen zero 
 The avatar bridge identifies an additive group with its points over a test scheme and
 records compatibility with the relative group law.
 -/
+
+@[expose] public section
 
 noncomputable section
 

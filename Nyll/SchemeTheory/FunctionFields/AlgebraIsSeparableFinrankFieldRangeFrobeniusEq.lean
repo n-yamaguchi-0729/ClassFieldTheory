@@ -10,17 +10,21 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
-import Mathlib.Algebra.CharP.Frobenius
-import Mathlib.Algebra.Field.Subfield.Basic
-import Mathlib.LinearAlgebra.Dimension.Finrank
-import Mathlib.LinearAlgebra.FiniteDimensional.Defs
-import Mathlib.FieldTheory.Separable
+module
+
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Basic
+public import Mathlib.Algebra.CharP.Frobenius
+public import Mathlib.Algebra.Field.Subfield.Basic
+public import Mathlib.LinearAlgebra.Dimension.Finrank
+public import Mathlib.LinearAlgebra.FiniteDimensional.Defs
+public import Mathlib.FieldTheory.Separable
 
 /-!
 # Algebra Is Separable of finrank field Range frobenius eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

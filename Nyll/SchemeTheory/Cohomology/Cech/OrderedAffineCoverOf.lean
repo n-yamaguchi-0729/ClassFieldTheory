@@ -10,7 +10,9 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
+module
+
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
 
 /-!
 # Ordered affine covers of an open subset
@@ -18,6 +20,8 @@ import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafHom
 An ordered affine cover of an open has increasing-index Cech cochains, alternating
 restriction differentials, and an augmentation from sections of the structure sheaf.
 -/
+
+@[expose] public section
 
 noncomputable section
 

@@ -26,14 +26,18 @@ Place_restrictAlong_restrictAlong
 Place_restrict_ofAlgAut_smul
 -/
 
-import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
-import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+module
+
+public import Nyll.AlgebraicCurves.Divisors.Correspondences.Correspondences
+public import Nyll.AlgebraicCurves.Divisors.Maps.Semilinear
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
 
 /-!
 # Place restrict Along alg Equiv eq of Alg Aut symm smul
 -/
+
+@[expose] public section
 
 section
 

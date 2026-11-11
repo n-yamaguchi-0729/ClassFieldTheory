@@ -10,22 +10,26 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
-import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.AlgebraicCurves.Geometry.Projective.ProjTwistDatum
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.ProjPresentationLinearMapSectionsTensorPowTwistObj
-import Nyll.AlgebraicCurves.Geometry.Projective.ProjSpaceSubsingletonHSuccTwist
-import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.SubsingletonHSuccZeroModules
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.InvertibleTensorPow
-import Nyll.SchemeTheory.HomologicalAlgebra.FiniteDimensionalExactSequences
+module
+
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.Tensor.TensorPowers
+public import Nyll.SchemeTheory.Modules.ProjectivePresentation.ProjectivePresentation
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.OModulePresheafOfModules
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.AlgebraicCurves.Geometry.Projective.ProjTwistDatum
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.ProjPresentationLinearMapSectionsTensorPowTwistObj
+public import Nyll.AlgebraicCurves.Geometry.Projective.ProjSpaceSubsingletonHSuccTwist
+public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Vanishing.SubsingletonHSuccZeroModules
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Projective.InvertibleTensorPow
+public import Nyll.SchemeTheory.HomologicalAlgebra.FiniteDimensionalExactSequences
 
 /-!
 # Vanishing of higher cohomology for tensor powers with a finite projective presentation
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

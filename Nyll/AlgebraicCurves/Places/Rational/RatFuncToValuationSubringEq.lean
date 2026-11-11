@@ -11,12 +11,14 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.NumberTheory.RatFunc.Ostrowski
-import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
-import Nyll.AlgebraicCurves.Places.Rational.Basic
-import Nyll.AlgebraicCurves.Places.Basic
-import Mathlib.FieldTheory.RatFunc.Valuation
-import Mathlib.Util.WithWeakNamespace
+module
+
+public import Mathlib.NumberTheory.RatFunc.Ostrowski
+public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
+public import Nyll.AlgebraicCurves.Places.Rational.Basic
+public import Nyll.AlgebraicCurves.Places.Basic
+public import Mathlib.FieldTheory.RatFunc.Valuation
+public import Mathlib.Util.WithWeakNamespace
 
 /-!
 # RationalFunctionField toValuationSubring eq of forall ne ofHeightOneSpectrum
@@ -24,6 +26,8 @@ import Mathlib.Util.WithWeakNamespace
 A place outside the polynomial height-one spectrum has the valuation subring of the valuation at
 infinity.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

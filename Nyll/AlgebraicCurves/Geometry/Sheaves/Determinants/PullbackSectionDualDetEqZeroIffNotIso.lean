@@ -10,26 +10,30 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.Modules.Tensor.Monoidal
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
-import Nyll.SchemeTheory.Modules.Tensor.TensorSections
-import Nyll.SchemeTheory.Modules.Sections.IhomSections
-import Nyll.SchemeTheory.Modules.Frames.BasisPullbackFieldPoint
-import Nyll.SchemeTheory.Modules.Frames.IsFrameOnSheafificationAdjunctionUnitIotaMulti
-import Nyll.SchemeTheory.Modules.ExteriorPower.ExteriorPowerMapAppUnitIotaMultiEqDetSmul
-import Nyll.SchemeTheory.Modules.Frames.LocallyFreeBasis
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.InvertibleDetLocallyFree
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleBasisOne
-import Nyll.SchemeTheory.Modules.Tensor.TensorSectionRightUnitor
+module
+
+public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSections
+public import Nyll.SchemeTheory.Modules.Sections.IhomSections
+public import Nyll.SchemeTheory.Modules.Frames.BasisPullbackFieldPoint
+public import Nyll.SchemeTheory.Modules.Frames.IsFrameOnSheafificationAdjunctionUnitIotaMulti
+public import Nyll.SchemeTheory.Modules.ExteriorPower.ExteriorPowerMapAppUnitIotaMultiEqDetSmul
+public import Nyll.SchemeTheory.Modules.Frames.LocallyFreeBasis
+public import Nyll.SchemeTheory.Modules.Invertible.Determinant
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleBasisOne
+public import Nyll.SchemeTheory.Modules.Tensor.TensorSectionRightUnitor
 
 /-!
 # Determinant sections detect degeneration
 
 A section of the dual determinant vanishes precisely where the pulled-back map is not invertible.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

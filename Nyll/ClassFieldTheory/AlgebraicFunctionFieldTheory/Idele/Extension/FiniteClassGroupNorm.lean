@@ -4,12 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PurelyInseparableNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
-import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
-import Nyll.SchemeTheory.FunctionFields.Valuations.PurelyInseparable
+module
+
+public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PurelyInseparableNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
+public import Nyll.SchemeTheory.FunctionFields.Valuations.PurelyInseparable
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 
 /-!
 # Idele-class norms for every finite function-field extension
@@ -20,13 +23,15 @@ subextension then proves the principal formula for an arbitrary finite extension
 The same all-place idele norm consequently descends to the existing class group.
 -/
 
+@[expose] public section
+
 noncomputable section
 open AlgebraicCurve
 open scoped AlgebraicCurve.Place
 
 namespace FunctionField
 
-variable {k K L : Type} [Field k] [Finite k] [Field K] [Field L]
+variable {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]
     [FiniteDimensional K L] [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
@@ -58,7 +63,7 @@ theorem norm_principalIdele_of_isPurelyInseparable [IsPurelyInseparable K L] (x 
 
 omit [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K] in
 private theorem norm_principalIdele_of_separable_purelyInseparable_tower
-    {S : Type} [Field S] [Algebra k S] [Algebra K S] [Algebra S L]
+    {S : Type*} [Field S] [Algebra k S] [Algebra K S] [Algebra S L]
     [IsScalarTower k K S] [IsScalarTower k S L] [IsScalarTower K S L]
     [FiniteDimensional K S] [FiniteDimensional S L]
     [Algebra.IsSeparable K S] [IsPurelyInseparable S L]

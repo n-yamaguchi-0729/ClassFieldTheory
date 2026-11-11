@@ -10,18 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Topology.Sheaves.LocallySurjective
-import Nyll.SchemeTheory.Modules.ExteriorPower.Det
-import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
-import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
-import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocallyMemSpanUnit
-import Nyll.SchemeTheory.Modules.Frames.LocallyFreeBasis
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Determinants.InvertibleDetLocallyFree
-import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
+module
+
+public import Mathlib.Topology.Sheaves.LocallySurjective
+public import Nyll.SchemeTheory.Modules.ExteriorPower.Det
+public import Nyll.SchemeTheory.Modules.LocallyFreeOfRank
+public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
+public import Nyll.SchemeTheory.Modules.Functoriality.PullbackLocallyMemSpanUnit
+public import Nyll.SchemeTheory.Modules.Frames.LocallyFreeBasis
+public import Nyll.SchemeTheory.Modules.Invertible.Determinant
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Invertible.InvertibleIsoLocallySurjective
+public import Nyll.SchemeTheory.Modules.ExteriorPower.PresheafExteriorPower
 
 /-!
 # Scheme Modules nonempty pullback det iso det pullback
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -114,33 +119,36 @@ variable (U : Y.Opens)
   Module.compHom N (ψ.app U).hom
 
 /-- The adjunction-unit section map viewed as a linear map after restricting scalars. -/
-noncomputable def etaₗ : letI := along ψ U Γ(F ψ E, ψ ⁻¹ᵁ U); Γ(E, U) →ₗ[Γ(Y, U)] Γ(F ψ E, ψ ⁻¹ᵁ U)
-  :=
-  letI := along ψ U Γ(F ψ E, ψ ⁻¹ᵁ U)
-  { toFun := fun e => eta ψ E U e
-    map_add' := eta_add ψ E U
-    map_smul' := fun r e => eta_smul ψ E U r e }
+noncomputable def etaₗ :
+    let : Module Γ(Y, U) Γ(F ψ E, ψ ⁻¹ᵁ U) := along ψ U Γ(F ψ E, ψ ⁻¹ᵁ U)
+    Γ(E, U) →ₗ[Γ(Y, U)] Γ(F ψ E, ψ ⁻¹ᵁ U) := by
+  intro alongSections
+  exact
+    { toFun := fun e => eta ψ E U e
+      map_add' := eta_add ψ E U
+      map_smul' := fun r e => eta_smul ψ E U r e }
 
 /-- The canonical alternating exterior-product map with scalars restricted along the
 section-ring map. -/
 noncomputable def ιMultiAlong :
-    letI := along ψ U Γ(F ψ E, ψ ⁻¹ᵁ U)
-    letI := along ψ U (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U))
-    Γ(F ψ E, ψ ⁻¹ᵁ U) [⋀^Fin n]→ₗ[Γ(Y, U)] (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U)) :=
-  letI := along ψ U Γ(F ψ E, ψ ⁻¹ᵁ U)
-  letI := along ψ U (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U))
-  { toFun := exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U))
-    map_update_add' :=
-      (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U))).map_update_add'
-    map_update_smul' := fun v i r x => by
-      change (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U)))
-          (Function.update v i ((ψ.app U).hom r • x)) =
-        (ψ.app U).hom r • (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U)))
-          (Function.update v i x)
-      exact (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U))).map_update_smul
-        v i ((ψ.app U).hom r) x
-    map_eq_zero_of_eq' := fun v _ _ h hij =>
-      (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U))).map_eq_zero_of_eq v h hij }
+    let : Module Γ(Y, U) Γ(F ψ E, ψ ⁻¹ᵁ U) := along ψ U Γ(F ψ E, ψ ⁻¹ᵁ U)
+    let : Module Γ(Y, U) (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U)) :=
+      along ψ U (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U))
+    Γ(F ψ E, ψ ⁻¹ᵁ U) [⋀^Fin n]→ₗ[Γ(Y, U)] (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U)) := by
+  intro alongSections alongExterior
+  exact
+    { toFun := exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U))
+      map_update_add' :=
+        (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U))).map_update_add'
+      map_update_smul' := fun v i r x => by
+        change (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U)))
+            (Function.update v i ((ψ.app U).hom r • x)) =
+          (ψ.app U).hom r • (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U)))
+            (Function.update v i x)
+        exact (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U))).map_update_smul
+          v i ((ψ.app U).hom r) x
+      map_eq_zero_of_eq' := fun v _ _ h hij =>
+        (exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n (M := Γ(F ψ E, ψ ⁻¹ᵁ U))).map_eq_zero_of_eq v h hij }
 
 lemma ιMultiAlong_apply (v : Fin n → Γ(F ψ E, ψ ⁻¹ᵁ U)) :
     ιMultiAlong ψ n E U v = exteriorPower.ιMulti Γ(X, ψ ⁻¹ᵁ U) n v := by
@@ -151,11 +159,13 @@ lemma etaₗ_apply (e : Γ(E, U)) : etaₗ ψ E U e = eta ψ E U e := rfl
 
 /-- The linear map on exterior powers induced by the local adjunction-unit map. -/
 noncomputable def wedgeEtaₗ :
-    letI := along ψ U (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U))
-    (⋀[Γ(Y, U)]^n Γ(E, U)) →ₗ[Γ(Y, U)] (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U)) :=
-  letI := along ψ U Γ(F ψ E, ψ ⁻¹ᵁ U)
-  letI := along ψ U (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U))
-  exteriorPower.alternatingMapLinearEquiv ((ιMultiAlong ψ n E U).compLinearMap (etaₗ ψ E U))
+    let : Module Γ(Y, U) (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U)) :=
+      along ψ U (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U))
+    (⋀[Γ(Y, U)]^n Γ(E, U)) →ₗ[Γ(Y, U)] (⋀[Γ(X, ψ ⁻¹ᵁ U)]^n Γ(F ψ E, ψ ⁻¹ᵁ U)) := by
+  intro alongExterior
+  let : Module Γ(Y, U) Γ(F ψ E, ψ ⁻¹ᵁ U) := along ψ U Γ(F ψ E, ψ ⁻¹ᵁ U)
+  exact exteriorPower.alternatingMapLinearEquiv
+    ((ιMultiAlong ψ n E U).compLinearMap (etaₗ ψ E U))
 
 lemma wedgeEtaₗ_ιMulti (e : Fin n → Γ(E, U)) :
     wedgeEtaₗ ψ n E U (exteriorPower.ιMulti Γ(Y, U) n e) =

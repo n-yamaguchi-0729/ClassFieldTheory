@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.AlgebraicGeometry.Modules.Sheaf
-import Mathlib.AlgebraicGeometry.AffineScheme
-import Mathlib.RingTheory.Finiteness.Defs
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.RingTheory.Ideal.Span
-import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
+module
+
+public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.AlgebraicGeometry.AffineScheme
+public import Mathlib.RingTheory.Finiteness.Defs
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.RingTheory.Ideal.Span
+public import Nyll.SchemeTheory.Modules.Localization.LocallyTrivialSectionsLocalization
 /-!
 # Finite section modules of locally trivial sheaves
 
 Local trivializations on basic opens and a finite affine cover provide finite generation
 of module sections over an affine open.
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

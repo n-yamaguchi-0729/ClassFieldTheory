@@ -10,9 +10,11 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.SchemeTheory.ProjectiveSpace.Basic
-import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
-import Mathlib.AlgebraicGeometry.Morphisms.Affine
+module
+
+public import Nyll.SchemeTheory.ProjectiveSpace.Basic
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
+public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 
 /-!
 # The standard affine cover of projective space
@@ -20,6 +22,8 @@ import Mathlib.AlgebraicGeometry.Morphisms.Affine
 The coordinate basic opens give an ordered affine cover of projective space and affine
 pullback covers for affine morphisms into projective space.
 -/
+
+@[expose] public section
 
 noncomputable section
 

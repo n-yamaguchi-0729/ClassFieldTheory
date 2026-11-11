@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
-import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteEtale
-import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.Etale.Field
+module
+
+public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebra
+public import Nyll.ClassFieldTheory.Theorems.HilbertSymbols.KummerAlgebraFiniteEtale
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Algebra
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.Etale.Field
 
 /-!
 # Product decomposition of a Kummer algebra
@@ -17,6 +19,8 @@ When the exponent is invertible, the possibly reducible algebra
 `K[X] / (X ^ n - a)` is a finite product of finite separable simple field
 extensions. This applies in particular when `a = 1`.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTheory
 
