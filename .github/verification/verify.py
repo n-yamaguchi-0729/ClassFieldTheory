@@ -14,6 +14,7 @@ import re
 import shutil
 import subprocess
 import sys
+import threading
 import time
 import generate_manifest
 
@@ -28,6 +29,7 @@ WRAPPERS = ("Inventory.lean", "ExportSelected.lean", "ReplayKernel.lean")
 INVENTORY_FILES = ("summary.json", "declarations.jsonl",
                    "exceptional-declarations.jsonl", "modules.json")
 HERE = Path(__file__).resolve().parent
+HEARTBEAT_SECONDS = 60
 
 
 class VerificationError(RuntimeError):
@@ -270,6 +272,16 @@ class Pipeline:
         path = self.out / (name + ".json")
         write_json(path, receipt)
         log = self.out / (name + ".log")
+        print(f"[{utc()}] START {name}; log={log}", flush=True)
+        stopped = threading.Event()
+
+        def heartbeat():
+            while not stopped.wait(HEARTBEAT_SECONDS):
+                print(f"[{utc()}] RUNNING {name}; "
+                      f"elapsedSeconds={round(time.monotonic() - start, 1)}", flush=True)
+
+        reporter = threading.Thread(target=heartbeat, daemon=True)
+        reporter.start()
         try:
             receipt["inputsBeforeSha256"] = self.guard()
             settings = dict(self.environment, **(environment or {}))
@@ -303,11 +315,18 @@ class Pipeline:
                 receipt["exitCode"] = 1
             raise
         finally:
+            stopped.set()
+            reporter.join()
             receipt.update(completedUtc=utc(), elapsedSeconds=round(time.monotonic() - start, 3))
             write_json(path, receipt)
             self.stages.append({"stage": name, "passed": receipt["passed"], "receipt": str(path),
                                 "sha256": digest(path)})
             self.sealed[str(path)] = digest(path)
+            print(f"[{utc()}] END {name}; status={receipt['status']}; "
+                  f"exitCode={receipt['exitCode']}; elapsedSeconds={receipt['elapsedSeconds']}",
+                  flush=True)
+            if "error" in receipt:
+                print(f"[{utc()}] ERROR {name}: {receipt['error']}", flush=True)
         return receipt
 
     def check_inventory(self):
@@ -435,6 +454,7 @@ class Pipeline:
             code = 0
         except BaseException as error:
             final.update(status="failed", error=str(error))
+            print(f"[{utc()}] Verification failed: {error}", file=sys.stderr, flush=True)
         finally:
             final.update(completedUtc=utc(), elapsedSeconds=round(time.monotonic() - start, 3),
                          exitCode=code, stages=self.stages,

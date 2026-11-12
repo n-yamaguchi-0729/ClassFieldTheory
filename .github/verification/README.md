@@ -42,3 +42,11 @@ a missing or invalid cache falls back to a normal build. A separate verification
 job still runs the complete declaration, NanoDa, and Lean kernel checks on every
 run, including cache hits. Build stages stop after five hours to leave time for
 saving completed outputs and diagnostic receipts before the runner deadline.
+
+## Live diagnostics
+
+The verifier prints flushed START/END messages and a heartbeat every 60 seconds
+for the active stage. Detailed checker output and the unchanged success receipts
+remain in the verification artifact. If a runner is shut down before artifact
+upload, the Actions job log still identifies the last stage reached and its
+elapsed time. A heartbeat is progress information, never proof of success.
