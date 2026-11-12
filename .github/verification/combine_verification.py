@@ -16,7 +16,7 @@ import verify
 
 PHASE_STAGES = {
     "proof": ["build", "inventory", "selection", "export", "coverage", "nanoda"],
-    "replay": ["build", "inventory", "selection", "replay"],
+    "replay": ["build", "inventory", "selection", "replay-compile", "replay-link", "replay"],
 }
 
 
@@ -93,7 +93,7 @@ def combine(proof, replay, root, commit, run_id):
         "passed": True, "exitCode": 0, "status": "finished", "phase": "combined",
         "completedUtc": verify.utc(), "repositoryCommit": commit, "workflowRun": run_id,
         "safeSelectedDeclarations": pf["safeSelectedDeclarations"],
-        "stages": pf["stages"] + [rf["stages"][-1]],
+        "stages": pf["stages"] + rf["stages"][-3:],
         "phaseEvidenceSha256": {str(d / "phase-final.json"): verify.digest(d / "phase-final.json")
                                 for d in (proof, replay)},
     }
@@ -113,3 +113,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

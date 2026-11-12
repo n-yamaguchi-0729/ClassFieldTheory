@@ -136,6 +136,7 @@ class PhaseTests(unittest.TestCase):
                 def inputs():
                     pipeline.manifest = {"roots": ["Nyll"]}
                     pipeline.lean = root / "lean"
+                    pipeline.leanc = root / "leanc"
                     pipeline.export_core_dir = root
                     pipeline.selector_path = pipeline.out / "safe-union.txt"
                     pipeline.selectors = ["one"]
@@ -148,7 +149,7 @@ class PhaseTests(unittest.TestCase):
                      patch.object(pipeline, "guard"), patch.object(pipeline, "check_physical_snapshot"), \
                      patch.object(pipeline, "capture", return_value="lean-path"):
                     self.assertEqual(pipeline.execute(), 0)
-                expected = (gate.PHASE_STAGES["proof"] + ["replay"]) if phase == "all" else gate.PHASE_STAGES[phase]
+                expected = (gate.PHASE_STAGES["proof"] + ["replay-compile", "replay-link", "replay"]) if phase == "all" else gate.PHASE_STAGES[phase]
                 self.assertEqual(list(commands), expected)
                 final = verify.read_json(pipeline.out / ("final.json" if phase == "all" else "phase-final.json"))
                 self.assertEqual(final["passed"], phase == "all")
@@ -157,6 +158,11 @@ class PhaseTests(unittest.TestCase):
                     self.assertFalse((pipeline.out / "final.json").exists())
                 if "replay" in commands:
                     self.assertEqual(commands["replay"][-1], "Nyll")
+                    self.assertNotIn("--run", commands["replay"])
+                    self.assertEqual(commands["replay"][2], str(pipeline.out / "ReplayKernel"))
+                    self.assertEqual(commands["replay-compile"][-1], str(verify.HERE / "ReplayKernel.lean"))
+                    self.assertEqual(commands["replay-link"][0], str(pipeline.leanc))
 
 if __name__ == '__main__':
     unittest.main()
+

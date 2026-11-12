@@ -263,6 +263,7 @@ class Pipeline:
         self.environment = dict(os.environ, LEAN_NUM_THREADS="1")
         self.environment.pop("LEAN_PATH", None)
         self.environment.pop("LEAN_SYSROOT", None)
+        self.environment.pop("LEAN_CC", None)
         self.paths, self.baseline, self.sealed, self.stages = [], {}, {}, []
         self.provenance = {}
 
@@ -300,8 +301,14 @@ class Pipeline:
         require("version 4.35.0," in version and LEAN_COMMIT in version, "Active Lean version mismatch")
         prefix = Path(self.capture(["lake", "env", "lean", "--print-prefix"])).resolve()
         self.lean = prefix / "bin/lean"
+        self.leanc = prefix / "bin/leanc"
         require(self.lean.is_file(), "Missing active Lean executable")
-        self.paths += [self.lean, prefix / "src/lean/Lean/Replay.lean"]
+        self.paths += [self.lean, self.leanc, prefix / "src/lean/Lean/Replay.lean"]
+        # Bind the bundled compiler/linker, headers and native libraries used to
+        # compile the unchanged wrapper. Never substitute an arbitrary binary.
+        self.paths += [prefix / "bin" / name for name in ("clang", "ld.lld")]
+        self.paths += sorted((prefix / "include/lean").rglob("*.h"))
+        self.paths += sorted((prefix / "lib/lean").glob("*.a"))
         self.paths += sorted((prefix / "lib/lean/Lean").glob("Replay.olean*"))
         self.paths += sorted((prefix / "lib/lean").glob("libleanshared*.so"))
         lake = shutil.which("lake")
@@ -517,15 +524,25 @@ class Pipeline:
                 self.sealed[str(config_path)] = digest(config_path)
                 self.stage("nanoda", [str(self.nanoda), str(config_path)], validate=self.check_nanoda)
             if self.args.phase in ("all", "replay"):
-                self.stage("replay", ["lake", "env", str(self.lean), "-j1", "-DautoImplicit=false", "--run",
-                           str(HERE / "ReplayKernel.lean"), *roots], validate=self.check_replay)
+                # lean --run retains the wrapper's elaboration environment while
+                # importing the target. A native executable runs exactly the same
+                # full fresh-environment official replay without that extra heap.
+                replay_c = self.out / "ReplayKernel.c"
+                replay_binary = self.out / "ReplayKernel"
+                self.stage("replay-compile", ["lake", "env", str(self.lean), "-j1",
+                           "-DautoImplicit=false", "-c", str(replay_c),
+                           str(HERE / "ReplayKernel.lean")], artifacts=[replay_c])
+                self.stage("replay-link", [str(self.leanc), "-O2", "-o", str(replay_binary),
+                           str(replay_c)], artifacts=[replay_binary])
+                self.stage("replay", ["lake", "env", str(replay_binary), *roots],
+                           validate=self.check_replay)
             self.guard()
             self.check_physical_snapshot()
             expected = ["build", "inventory", "selection"]
             if self.args.phase in ("all", "proof"):
                 expected += ["export", "coverage", "nanoda"]
             if self.args.phase in ("all", "replay"):
-                expected += ["replay"]
+                expected += ["replay-compile", "replay-link", "replay"]
             require([r["stage"] for r in self.stages] == expected
                     and all(r["passed"] for r in self.stages), "Missing mandatory successful stage")
             final.update(passed=self.args.phase == "all", phasePassed=True,
@@ -559,3 +576,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     sys.exit(main())
+
