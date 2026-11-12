@@ -32,6 +32,73 @@ HERE = Path(__file__).resolve().parent
 HEARTBEAT_SECONDS = 60
 
 
+def resource_snapshot(directory, proc_root=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup")):
+    """Best-effort diagnostics only; never determine verification success.
+
+    Do not read command lines or environment variables: they may contain secrets.
+    Process RSS is a sum, not unique physical memory, because shared pages overlap.
+    """
+    snapshot = {}
+    try:
+        wanted = {"MemTotal", "MemAvailable", "SwapTotal", "SwapFree"}
+        snapshot["hostMemoryKiB"] = {
+            key: int(value.split()[0])
+            for line in (proc_root / "meminfo").read_text().splitlines()
+            for key, value in [line.split(":", 1)] if key in wanted
+        }
+    except (OSError, ValueError):
+        snapshot["hostMemoryKiB"] = None
+    try:
+        processes = {}
+        for status in proc_root.glob("[0-9]*/status"):
+            try:
+                fields = dict(line.split(":", 1) for line in status.read_text().splitlines()
+                              if ":" in line)
+                processes[int(status.parent.name)] = {
+                    "ppid": int(fields["PPid"]),
+                    "rssKiB": int(fields.get("VmRSS", "0 kB").split()[0]),
+                    "swapKiB": int(fields.get("VmSwap", "0 kB").split()[0]),
+                }
+            except (OSError, ValueError, KeyError):
+                continue  # A process can exit between listing and reading it.
+        descendants = {os.getpid()}
+        while True:
+            expanded = descendants | {pid for pid, data in processes.items()
+                                      if data["ppid"] in descendants}
+            if expanded == descendants:
+                break
+            descendants = expanded
+        selected = {pid: processes[pid] for pid in descendants if pid in processes}
+        snapshot["processTree"] = {
+            "processCount": len(selected),
+            "rssSumKiB": sum(data["rssKiB"] for data in selected.values()),
+            "swapSumKiB": sum(data["swapKiB"] for data in selected.values()),
+        }
+    except OSError:
+        snapshot["processTree"] = None
+    snapshot["cgroup"] = {}
+    for name in ("memory.current", "memory.peak", "memory.max", "memory.events"):
+        try:
+            snapshot["cgroup"][name] = (cgroup_root / name).read_text().strip()
+        except OSError:
+            snapshot["cgroup"][name] = None
+    try:
+        usage = shutil.disk_usage(directory)
+        snapshot["diskBytes"] = {"total": usage.total, "free": usage.free}
+    except OSError:
+        snapshot["diskBytes"] = None
+    return snapshot
+
+
+def report_resources(stage, directory):
+    # Diagnostic failures must not mask a checker result or terminate its heartbeat.
+    try:
+        snapshot = resource_snapshot(directory)
+        print(f"[{utc()}] RESOURCES {stage}; " + json.dumps(snapshot, sort_keys=True), flush=True)
+    except Exception as error:
+        print(f"[{utc()}] RESOURCES {stage}; unavailable={type(error).__name__}", flush=True)
+
+
 class VerificationError(RuntimeError):
     pass
 
@@ -273,12 +340,14 @@ class Pipeline:
         write_json(path, receipt)
         log = self.out / (name + ".log")
         print(f"[{utc()}] START {name}; log={log}", flush=True)
+        report_resources(name, self.out)
         stopped = threading.Event()
 
         def heartbeat():
             while not stopped.wait(HEARTBEAT_SECONDS):
                 print(f"[{utc()}] RUNNING {name}; "
                       f"elapsedSeconds={round(time.monotonic() - start, 1)}", flush=True)
+                report_resources(name, self.out)
 
         reporter = threading.Thread(target=heartbeat, daemon=True)
         reporter.start()
@@ -477,3 +546,4 @@ def main(argv=None):
 
 if __name__ == "__main__":
     sys.exit(main())
+
