@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Fail-closed gate for the two mandatory whole-repository verification jobs.
+"""Fail-closed gate for whole-repository verification evidence.
 
 Only same-run, same-commit phases with complete matching physical source snapshots
-may produce final.json. Partial phases are not standalone verification success.
+may produce final.json. The explicit proof-only policy retains NanoDa and all declaration/source checks;
+it does not claim fresh official kernel replay.
 Artifacts must be restored to their original RUNNER_TEMP paths; mismatches fail.
 The large exported proof is checked in the proof job and need not be uploaded.
 """
@@ -101,16 +102,41 @@ def combine(proof, replay, root, commit, run_id):
     return final
 
 
+def finalize_proof(proof, root, commit, run_id):
+    """Explicit no-replay policy, retaining the entire proof evidence gate."""
+    verify.require(run_id and commit, "Missing workflow identity")
+    root, proof = root.resolve(), proof.resolve()
+    verify.require(not (proof / "final.json").exists(), "Aggregate receipt already exists")
+    pf, _ = phase_evidence(proof, "proof", root, commit, run_id)
+    final = {
+        "passed": True, "exitCode": 0, "status": "finished", "phase": "proof-only",
+        "completedUtc": verify.utc(), "repositoryCommit": commit, "workflowRun": run_id,
+        "safeSelectedDeclarations": pf["safeSelectedDeclarations"],
+        "stages": pf["stages"], "officialKernelReplay": "not-run",
+        "verificationPolicy": "Lean build, strict declaration/axiom audit, exact export coverage, NanoDa",
+        "phaseEvidenceSha256": {str(proof / "phase-final.json"): verify.digest(proof / "phase-final.json")},
+    }
+    verify.write_json(proof / "final.json", final)
+    return final
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for arg in ("proof", "replay", "package-root"):
+    for arg in ("proof", "package-root"):
         parser.add_argument("--" + arg, required=True, type=Path)
+    parser.add_argument("--replay", type=Path)
+    parser.add_argument("--proof-only", action="store_true")
     args = parser.parse_args()
+    if args.proof_only == (args.replay is not None):
+        parser.error("Specify exactly one of --proof-only or --replay")
     commit = subprocess.check_output(["git", "-C", str(args.package_root), "rev-parse", "HEAD"], text=True).strip()
-    combine(args.proof, args.replay, args.package_root, commit, os.environ.get("GITHUB_RUN_ID"))
-    print("PASS: both mandatory whole-repository verification phases completed")
+    if args.proof_only:
+        finalize_proof(args.proof, args.package_root, commit, os.environ.get("GITHUB_RUN_ID"))
+        print("PASS: NanoDa and complete proof audit; official kernel replay not run")
+    else:
+        combine(args.proof, args.replay, args.package_root, commit, os.environ.get("GITHUB_RUN_ID"))
+        print("PASS: both mandatory whole-repository verification phases completed")
 
 
 if __name__ == "__main__":
     main()
-

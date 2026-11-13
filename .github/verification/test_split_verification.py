@@ -124,6 +124,55 @@ class GateTests(unittest.TestCase):
         with self.assertRaises(RuntimeError): self.run_gate()
 
 
+class ProofOnlyTests(unittest.TestCase):
+    setUp = GateTests.setUp
+
+    def run_gate(self):
+        return gate.finalize_proof(self.proof, self.root, 'commit', 'run')
+
+    def test_complete_proof_without_replay(self):
+        import shutil
+        shutil.rmtree(self.replay)
+        final = self.run_gate()
+        self.assertTrue(final['passed'])
+        self.assertEqual(final['officialKernelReplay'], 'not-run')
+        self.assertEqual(final['phase'], 'proof-only')
+        self.assertEqual([s['stage'] for s in final['stages']], gate.PHASE_STAGES['proof'])
+
+    def test_missing_nanoda(self):
+        (self.proof / 'nanoda.json').unlink()
+        with self.assertRaises((FileNotFoundError, RuntimeError)): self.run_gate()
+
+    def test_invalid_proof_identity_and_stage_set(self):
+        path = self.proof / 'phase-final.json'
+        original = path.read_bytes()
+        for change in ({'phasePassed': False}, {'passed': True}, {'exitCode': 1},
+                       {'workflowRun': 'foreign'}, {'phase': 'replay'}, {'status': 'started'},
+                       {'stages': []}):
+            row = json.loads(original); row.update(change); verify.write_json(path, row)
+            with self.subTest(change=change), self.assertRaises(RuntimeError): self.run_gate()
+            path.write_bytes(original)
+
+    def test_source_and_artifact_tampering(self):
+        for path in (self.root / 'Demo.lean', self.proof / 'nanoda.log',
+                     self.proof / 'inventory.json', self.proof / 'inputs.json'):
+            original = path.read_bytes(); path.write_text('{}')
+            with self.subTest(path=path), self.assertRaises(RuntimeError): self.run_gate()
+            path.write_bytes(original)
+
+    def test_foreign_commit(self):
+        with self.assertRaises(RuntimeError):
+            gate.finalize_proof(self.proof, self.root, 'foreign', 'run')
+
+    def test_missing_identity(self):
+        with self.assertRaises(RuntimeError):
+            gate.finalize_proof(self.proof, self.root, 'commit', '')
+
+    def test_no_overwrite(self):
+        self.run_gate()
+        with self.assertRaises(RuntimeError): self.run_gate()
+
+
 class PhaseTests(unittest.TestCase):
     def test_mandatory_sequences_and_partial_not_success(self):
         for phase in ("all", "proof", "replay"):
@@ -165,4 +214,3 @@ class PhaseTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

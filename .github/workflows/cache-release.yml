@@ -76,6 +76,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          toolchain="$(tr -d '\r\n' < lean-toolchain)"
+          [[ "$toolchain" == "leanprover/lean4:v4.35.0" ]]
+          lean_version="${toolchain##*:v}"
           tag="cache-${GITHUB_SHA}-linux-x86_64"
           export_dir="$RUNNER_TEMP/cache-release"
           python3 -B .github/scripts/cache-notes.py render \
@@ -95,7 +98,7 @@ jobs:
             fi
           else
             gh release create "$tag" --target "$GITHUB_SHA" --draft --latest=false \
-              --title "Lean proof cache ${GITHUB_SHA:0:12} (Linux x86_64)" \
+              --title "Lean ${lean_version} proof cache ${GITHUB_SHA:0:12} (Linux x86_64)" \
               --notes-file "$RUNNER_TEMP/cache-release-notes.md"
           fi
           gh release upload "$tag" "$export_dir"/* --clobber

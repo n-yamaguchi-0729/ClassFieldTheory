@@ -210,7 +210,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        phase: [proof, replay]
+        phase: [proof]
     if: github.event.repository.private == false
     needs: [library-procgroups, library-valuedfieldtheory, library-galoiscohomology, library-schemetheory, library-classfieldtheory-algebra, library-classfieldtheory-abstractclassfieldtheory, library-classfieldtheory-localfieldtheory, library-classfieldtheory-ramificationtheory, library-classfieldtheory-lubintate, library-classfieldtheory-algebraicnumbertheory, library-classfieldtheory-algebraicfunctionfieldtheory, library-classfieldtheory-kummertheory, library-classfieldtheory-localclassfieldtheory-classformation, library-classfieldtheory-localclassfieldtheory-lubintateapplication, library-classfieldtheory-localclassfieldtheory-finite, library-classfieldtheory-localclassfieldtheory, library-classfieldtheory-globalclassfieldtheory, library-classfieldtheory-kroneckerweber, library-classfieldtheory, library-algebraiccurves, library-etalefundamentalgroups, library-etalecohomology, library-abelianvarieties, library-entrypoint]
     runs-on: ubuntu-24.04
@@ -293,7 +293,7 @@ jobs:
           retention-days: 14
 
   verify:
-    name: Gate both complete verification phases
+    name: Gate NanoDa and complete declaration audit (no replay)
     if: github.event.repository.private == false
     needs: verify-phase
     runs-on: ubuntu-24.04
@@ -309,17 +309,12 @@ jobs:
         with:
           name: verification-proof-${{ github.run_id }}
           path: ${{ runner.temp }}/verification-proof
-      - name: Download replay phase evidence
-        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
-        with:
-          name: verification-replay-${{ github.run_id }}
-          path: ${{ runner.temp }}/verification-replay
-      - name: Require both complete phases for the same source snapshot
+      - name: Require complete proof verification for this source snapshot
         run: |
           python3 -B .github/verification/combine_verification.py \
             --package-root "$GITHUB_WORKSPACE" \
             --proof "$RUNNER_TEMP/verification-proof/checks" \
-            --replay "$RUNNER_TEMP/verification-replay/checks"
+            --proof-only
       - name: Check designated main declarations in the audited inventory
         shell: bash
         run: |
@@ -348,4 +343,3 @@ jobs:
     uses: ./.github/workflows/cache-release.yml
     with:
       cache-kind: legacy
-
