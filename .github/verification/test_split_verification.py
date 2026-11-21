@@ -31,7 +31,7 @@ class GateTests(unittest.TestCase):
         paths = [p for p in self.root.rglob('*') if p.is_file()]
         self.inputs = {'repositoryCommit': 'commit', 'moduleManifest': self.manifest,
                        'fileSha256': {str(p): verify.digest(p) for p in paths},
-                       'leanVersion': 'version 4.35.0, ' + verify.LEAN_COMMIT,
+                       'leanVersion': 'version 4.36.0, ' + verify.LEAN_COMMIT,
                        'exporter': {'commit': verify.EXPORT_COMMIT, 'clean': True},
                        'nanoda': {'commit': verify.NANODA_COMMIT, 'clean': True}}
         self.baseline = hashlib.sha256(json.dumps(self.inputs['fileSha256'], sort_keys=True).encode()).hexdigest()

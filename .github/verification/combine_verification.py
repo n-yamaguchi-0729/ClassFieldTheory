@@ -32,7 +32,7 @@ def phase_evidence(directory, phase, root, commit, run_id):
     verify.require(verify.digest(inputs_path) == final["inputsSha256"], "Inputs receipt changed")
     inputs = verify.read_json(inputs_path)
     verify.require(inputs.get("repositoryCommit") == commit, "Source commit mismatch")
-    verify.require("version 4.35.0," in inputs["leanVersion"]
+    verify.require("version 4.36.0," in inputs["leanVersion"]
                    and verify.LEAN_COMMIT in inputs["leanVersion"], "Lean pin mismatch")
     for tool, pin in (("exporter", verify.EXPORT_COMMIT), ("nanoda", verify.NANODA_COMMIT)):
         verify.require(inputs[tool]["commit"] == pin and inputs[tool]["clean"] is True,
