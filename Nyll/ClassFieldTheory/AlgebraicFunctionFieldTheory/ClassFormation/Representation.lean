@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionTopology
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FieldRepresentation
 public import Nyll.GaloisCohomology.Kummer.Abstract.MultiplicativeFixedPoints
 

@@ -47,23 +47,10 @@ open LocalFieldTheory.DiscreteValuationField
 open ValuationTheory.DiscreteValuationField
 open ValuationTheory.DiscreteValuationField.ValuedExtension
 
-noncomputable local instance standardChangedUnramifiedBaseAlgebra
-    {K : Type u} [Field K] (F : LocalField.{u, v} K) :
-    Algebra F.residueField⸨X⸩
-      (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  equalCharacteristicCompletedLevelBaseAlgebra F
-
-noncomputable local instance standardChangedUnramifiedLevelAlgebra
-    {K : Type u} [Field K] (F : LocalField.{u, v} K) (n : ℕ) :
-    Algebra F.residueField⸨X⸩ (equalCharacteristicCompletedLevelField F n) :=
-  equalCharacteristicCompletedLevelLaurentAlgebra F n
-
-local instance standardChangedUnramifiedScalarTower
-    {K : Type u} [Field K] (F : LocalField.{u, v} K) (n : ℕ) :
-    IsScalarTower F.residueField⸨X⸩
-      (equalCharacteristicCompletedUnramifiedField F.residueField)
-      (equalCharacteristicCompletedLevelField F n) :=
-  IsScalarTower.of_algebraMap_eq' rfl
+attribute [local instance]
+  equalCharacteristicCompletedLevelBaseAlgebra
+  equalCharacteristicCompletedLevelLaurentAlgebra
+  equalCharacteristicCompletedLevelScalarTower
 
 /-- Coefficientwise Laurent extension preserves the actual valuation ring,
 so its completed coefficient valuation extends the native local valuation. -/
@@ -298,7 +285,8 @@ theorem
     let :
         IsScalarTower (localCompleteDVF D).valuationSubring
           (localCompleteDVF M).valuationSubring M :=
-      IsScalarTower.of_algebraMap_eq' rfl
+      Valuation.HasExtension.instIsScalarTower_valuationSubring'
+        (localCompleteDVF D).valuation (localCompleteDVF M).valuation
     let :
         Module.Finite (ValuativeRel.valuation D).integer
           (ValuativeRel.valuation M).integer := by

@@ -16,7 +16,6 @@ import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.LubinTateUni
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MathlibFieldClassification
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.MaximalKummerNorm
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupSurjectivity
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkChosenFiniteAbelianFields

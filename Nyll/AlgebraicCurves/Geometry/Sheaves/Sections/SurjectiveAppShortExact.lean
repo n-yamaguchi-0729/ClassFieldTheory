@@ -21,7 +21,7 @@ public import Nyll.SchemeTheory.Modules.Exactness
 public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
 public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.KerDSuccLeRangeD
 public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
-public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleModuleFrames
+public import Nyll.SchemeTheory.Modules.Frames.FrameFromTrivialization
 public import Nyll.SchemeTheory.Modules.Frames.IsFrameOnPullbackIsoUnit
 
 /-!
@@ -692,8 +692,6 @@ attribute [-instance]
   AlgebraicGeometry.Scheme.OrderedAffineCoverOf.instLinearOrder
   AlgebraicGeometry.Scheme.OrderedAffineCoverOf.instFintypeIdx
   AlgebraicGeometry.Scheme.Hom.opensMapFinal
-  AlgebraicGeometry.RelPicard.RigidifiedLineBundle.setoid
-  AlgebraicGeometry.RelPicard.RigidifiedLineBundle.instInhabited
 attribute [-simp]
   AlgebraicGeometry.Scheme.OrderedAffineCover.mk.injEq
   AlgebraicGeometry.OModulePresheaf.mk.sizeOf_spec
@@ -759,5 +757,3 @@ attribute [-simp]
   AlgebraicGeometry.OModulePresheaf.AffHom.mk.injEq
   AlgebraicGeometry.OModulePresheaf.Hom.appSections_apply
   AlgebraicGeometry.OModulePresheaf.AffSES.mk.injEq
-  AlgebraicGeometry.RelPicard.RigidifiedLineBundle.mk.sizeOf_spec
-  AlgebraicGeometry.RelPicard.RigidifiedLineBundle.mk.injEq

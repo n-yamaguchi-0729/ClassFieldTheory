@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.GeometricNativeRayTransfer
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.FieldIsomorphismRayNaturality
 
@@ -39,7 +41,7 @@ variable (k K Ω : Type*) [Field k] [Finite k] [Field K] [Field Ω]
   (i : GeometricArtinIndex k K Ω) (σ : Gal(Ω/K))
 
 local notation "L" => geometricArtinStageField k K Ω i
-local notation "M" => rayModulusBaseChange L m
+local notation "M" => reindexAlongPlaces L m
 local notation "ε" => geometricNativeStageClosureEquiv k K Ω i
 local notation "τ" => σ.restrictNormal L
 local notation "hσ" => fun x : L =>
@@ -55,7 +57,7 @@ def geometricNativeRayConjugation :
     (localAbsoluteAbelianProfinite L ⧸ artinRaySubgroup M) →ₜ*
       (localAbsoluteAbelianProfinite L ⧸ artinRaySubgroup M) :=
   fieldIsoNativeRayHom ((τ).restrictScalars k) M M
-    (rayModulusBaseChange_reduced m hm) hM a ha
+    (reindexAlongPlaces_reduced m hm) hM a ha
 
 /-- Every original native absolute-abelian representative retains its
 actual ambient semilinear conjugation. -/
@@ -68,7 +70,7 @@ theorem geometricNativeRayConjugation_mk (z : localAbsoluteAbelianProfinite L) :
       QuotientGroup.mk' (artinRaySubgroup M) (abelianConjugation z) := by
   intro abelianConjugation
   have hRay := fieldIsoNativeRayHom_mk ((τ).restrictScalars k) M M
-    (rayModulusBaseChange_reduced m hm) hM a ha z
+    (reindexAlongPlaces_reduced m hm) hM a ha z
   have hNative :
       nativeFieldIsoAbelianEquiv ((τ).restrictScalars k).toRingEquiv a ha =
         abelianConjugation :=
@@ -80,11 +82,10 @@ theorem geometricNativeRayConjugation_mk (z : localAbsoluteAbelianProfinite L) :
 actual field-isomorphism map on restricted products. -/
 theorem geometricNativeRayConjugation_artin (z : RayRestrictedProduct M) :
     restrictedProductAbsoluteArtin M
-        (fieldIsoRestrictedRayHom ((τ).restrictScalars k) M M
-          (rayModulusBaseChange_reduced m hm) hM z) =
+        (fieldIsoRestrictedRayHom ((τ).restrictScalars k) M M hM z) =
       geometricNativeRayConjugation k K Ω m hm i σ
         (restrictedProductAbsoluteArtin M z) :=
   fieldIsoNativeRayHom_artin ((τ).restrictScalars k) M M
-    (rayModulusBaseChange_reduced m hm) hM a ha z
+    (reindexAlongPlaces_reduced m hm) hM a ha z
 
 end FunctionField.RayClass

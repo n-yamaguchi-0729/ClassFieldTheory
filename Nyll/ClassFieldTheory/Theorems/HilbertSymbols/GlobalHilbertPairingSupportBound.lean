@@ -11,7 +11,8 @@ public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquiv
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
-public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Valuation
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.HilbertFamilyAlgEquiv
 public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.PowerResidueReciprocity

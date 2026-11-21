@@ -12,8 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
-public import Nyll.SchemeTheory.RingTheory.Flat.Product
-public import Nyll.SchemeTheory.RingTheory.Flat.Kernel
+public import Nyll.SchemeTheory.RingTheory.MumfordTruncation
 public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 public import Mathlib.RingTheory.Flat.Basic
 public import Mathlib.RingTheory.Flat.Equalizer
@@ -43,6 +42,7 @@ universe u
 
 namespace TwoChartCech
 open _root_.TwoChartCech
+open _root_.TwoChartCech.Mumford
 
 namespace Truncation
 
@@ -50,102 +50,6 @@ variable {R : Type u} [CommRing R]
 
 variable {C0 C1 : Type u} [AddCommGroup C0] [Module R C0] [AddCommGroup C1] [Module R C1]
 variable (d : C0 →ₗ[R] C1) [Module.Finite R (C1 ⧸ LinearMap.range d)]
-
-/-- The rank of a chosen finite free module surjecting onto the cokernel of the original
-differential. -/
-def rank : ℕ := (Module.Finite.exists_fin' R (C1 ⧸ LinearMap.range d)).choose
-
-/-- The chosen surjection from a finite free module onto the cokernel of the original
-differential. -/
-def quot : (Fin (rank d) → R) →ₗ[R] (C1 ⧸ LinearMap.range d) :=
-  (Module.Finite.exists_fin' R (C1 ⧸ LinearMap.range d)).choose_spec.choose
-
-theorem quot_surjective : Function.Surjective (quot d) :=
-  (Module.Finite.exists_fin' R (C1 ⧸ LinearMap.range d)).choose_spec.choose_spec
-
-/-- A lift of the chosen cokernel generators to the codomain of the original differential. -/
-def lift : (Fin (rank d) → R) →ₗ[R] C1 :=
-  (Module.projective_lifting_property (LinearMap.range d).mkQ (quot d)
-    (LinearMap.range d).mkQ_surjective).choose
-
-theorem mkQ_comp_lift : (LinearMap.range d).mkQ ∘ₗ lift d = quot d :=
-  (Module.projective_lifting_property (LinearMap.range d).mkQ (quot d)
-    (LinearMap.range d).mkQ_surjective).choose_spec
-
-theorem surjective_coprod : Function.Surjective (d.coprod (lift d)) := by
-  intro y
-  obtain ⟨v, hv⟩ := quot_surjective d ((LinearMap.range d).mkQ y)
-  have hy : y - lift d v ∈ LinearMap.range d := by
-    rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sub, ← hv,
-      ← LinearMap.comp_apply, mkQ_comp_lift, sub_self]
-  obtain ⟨x, hx⟩ := hy
-  exact ⟨(x, v), by simp only [LinearMap.coprod_apply, hx, sub_add_cancel]⟩
-
-/-- The kernel of the surjection formed by the original differential and the chosen generator
-lift. -/
-abbrev K0 : Submodule R (C0 × (Fin (rank d) → R)) := LinearMap.ker (d.coprod (lift d))
-
-/-- The projection from the kernel of the combined surjection to its finite free summand. -/
-def dK : K0 d →ₗ[R] (Fin (rank d) → R) := (LinearMap.snd R C0 (Fin (rank d) → R)).comp (K0
-    d).subtype
-
-/-- The projection from the kernel of the combined surjection to the original source module. -/
-def iota0 : K0 d →ₗ[R] C0 := (LinearMap.fst R C0 (Fin (rank d) → R)).comp (K0 d).subtype
-
-@[scoped simp] theorem dK_apply (z : K0 d) : dK d z = (z : C0 × (Fin (rank d) → R)).2 := rfl
-@[scoped simp] theorem iota0_apply (z : K0 d) : iota0 d z = (z : C0 × (Fin (rank d) → R)).1 := rfl
-
-theorem comm : d ∘ₗ iota0 d = (-(lift d)) ∘ₗ dK d := by
-  ext ⟨⟨x, v⟩, hxv⟩
-  have hxv' : d x + lift d v = 0 := by
-    have := (LinearMap.mem_ker).mp hxv; simpa [LinearMap.coprod_apply] using this
-  simp only [LinearMap.comp_apply, iota0_apply, dK_apply, LinearMap.neg_apply,
-    eq_neg_iff_add_eq_zero]
-  exact hxv'
-
-/-- Embed the kernel of the original differential into the kernel of the combined surjection
-with zero finite-free component. -/
-def h0ToK0 : LinearMap.ker d →ₗ[R] K0 d :=
-  LinearMap.codRestrict (K0 d)
-    ((LinearMap.inl R C0 (Fin (rank d) → R)).comp (LinearMap.ker d).subtype)
-    (fun ⟨x, hx⟩ => by
-      simp only [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.coe_subtype,
-        LinearMap.inl_apply,
-        LinearMap.coprod_apply, map_zero, add_zero]
-      exact hx)
-
-/-- Identify the kernel of the finite-free projection with the kernel of the original
-differential. -/
-def kerEquiv : LinearMap.ker (dK d) ≃ₗ[R] LinearMap.ker d := by
-  refine LinearEquiv.ofLinearMap
-    (LinearMap.codRestrict (LinearMap.ker d) ((iota0 d).comp (LinearMap.ker (dK d)).subtype) ?_)
-    (LinearMap.codRestrict (LinearMap.ker (dK d)) (h0ToK0 d) (fun x => by
-      simp only [LinearMap.mem_ker, dK_apply]; rfl))
-    ?_ ?_
-  · rintro ⟨⟨⟨x, v⟩, hxv⟩, hv⟩
-    have hxv' : d x + lift d v = 0 := by
-      have := (LinearMap.mem_ker).mp hxv; simpa [LinearMap.coprod_apply] using this
-    have hv' : v = 0 := (LinearMap.mem_ker).mp hv
-    simp only [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.coe_subtype, iota0_apply]
-    simpa [hv', map_zero, add_zero] using hxv'
-  · apply LinearMap.ext; rintro ⟨x, hx⟩; rfl
-  · apply LinearMap.ext; rintro ⟨⟨⟨x, v⟩, hxv⟩, hv⟩
-    have hv' : v = 0 := (LinearMap.mem_ker).mp hv
-    apply Subtype.ext; apply Subtype.ext
-    change ((x, 0) : C0 × _) = (x, v)
-    rw [hv']
-
-theorem finite_K0 [IsNoetherianRing R] [Module.Finite R (LinearMap.ker d)] : Module.Finite R (K0
-    d) := by
-  have hker : Module.Finite R (LinearMap.ker (dK d)) := Module.Finite.equiv (kerEquiv d).symm
-  have hquot : Module.Finite R (K0 d ⧸ LinearMap.ker (dK d)) := by
-    have : Module.Finite R (LinearMap.range (dK d)) := inferInstance
-    exact Module.Finite.equiv (dK d).quotKerEquivRange.symm
-  exact Module.Finite.of_submodule_quotient (LinearMap.ker (dK d))
-
-theorem flat_K0 [Module.Flat R C0] [Module.Flat R C1] : Module.Flat R (K0 d) :=
-  haveI : Module.Flat R (C0 × (Fin (rank d) → R)) := Module.Flat.prod _ _
-  Module.Flat.ker_of_surjective_of_flat (d.coprod (lift d)) (surjective_coprod d)
 
 theorem free_K0 [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0] [Module.Flat R C1]
     [Module.Finite R (LinearMap.ker d)] : Module.Free R (K0 d) :=
@@ -163,10 +67,10 @@ section BaseChange
 variable (A : Type u) [CommRing A] [Algebra R A]
 
 theorem d_baseChange_comp_iota0_baseChange :
-    (d.baseChange A) ∘ₗ ((iota0 d).baseChange A)
+    (d.baseChange A) ∘ₗ ((ι0 d).baseChange A)
       = -(((lift d).baseChange A) ∘ₗ ((dK d).baseChange A)) := by
-  rw [← LinearMap.baseChange_comp, comm, LinearMap.baseChange_comp, LinearMap.baseChange_neg,
-    LinearMap.neg_comp]
+  rw [← LinearMap.baseChange_comp, Mumford.comm, Mumford.ι1_eq, LinearMap.baseChange_comp,
+    LinearMap.baseChange_neg, LinearMap.neg_comp]
 
 variable [Module.Flat R C1]
 
@@ -196,7 +100,7 @@ theorem prodRight_apply_eq_baseChange {M N : Type u} [AddCommGroup M] [Module R 
 omit [Module.Flat R C1] in
 theorem prodRight_subtype_baseChange (z : A ⊗[R] K0 d) :
     (TensorProduct.prodRight R A A C0 (Fin (rank d) → R)) (((K0 d).subtype.baseChange A) z)
-      = (((iota0 d).baseChange A) z, ((dK d).baseChange A) z) := by
+      = (((ι0 d).baseChange A) z, ((dK d).baseChange A) z) := by
   rw [prodRight_apply_eq_baseChange]
   refine Prod.ext ?_ ?_
   · change ((LinearMap.fst R C0 (Fin (rank d) → R)).baseChange A) (((K0 d).subtype.baseChange A)
@@ -214,9 +118,8 @@ theorem coprod_baseChange_apply (w : A ⊗[R] (C0 × (Fin (rank d) → R))) :
   | tmul a x => simp [TensorProduct.prodRight_tmul, LinearMap.coprod_apply, TensorProduct.tmul_add]
   | add x y hx hy => simp only [map_add, hx, hy, Prod.fst_add, Prod.snd_add]; abel
 
-theorem kerMap_injective [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0]
-    [Module.Finite R (LinearMap.ker d)] :
-    Function.Injective (kerMapBaseChange (model d).d d (iota0 d) (-(lift d)) (comm d) A) := by
+theorem kerMap_injective :
+    Function.Injective (kerMapBaseChange (dK d) d (ι0 d) (-(lift d)) (Mumford.comm d) A) := by
   rintro ⟨z, hz⟩ ⟨z', hz'⟩ hzz'
   apply Subtype.ext
   apply subtype_baseChange_injective d A
@@ -227,9 +130,9 @@ theorem kerMap_injective [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0]
   rw [h1, h2]
   exact congrArg (·, (0 : A ⊗[R] (Fin (rank d) → R))) (congrArg Subtype.val hzz')
 
-theorem kerMap_surjective [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0]
-    [Module.Finite R (LinearMap.ker d)] :
-    Function.Surjective (kerMapBaseChange (model d).d d (iota0 d) (-(lift d)) (comm d) A) := by
+omit [Module.Flat R C1] in
+theorem kerMap_surjective :
+    Function.Surjective (kerMapBaseChange (dK d) d (ι0 d) (-(lift d)) (Mumford.comm d) A) := by
   rintro ⟨w, hw⟩
   set w' : A ⊗[R] (C0 × (Fin (rank d) → R)) :=
     ((LinearMap.inl R C0 (Fin (rank d) → R)).baseChange A) w with hw'def
@@ -244,14 +147,15 @@ theorem kerMap_surjective [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0
       LinearMap.snd_comp_inl R C0 (Fin (rank d) → R),
       LinearMap.baseChange_id, LinearMap.baseChange_zero, LinearMap.id_apply,
       LinearMap.zero_apply]
-  have hpair : (((iota0 d).baseChange A) z, ((dK d).baseChange A) z) = (w, 0) := by
+  have hpair : (((ι0 d).baseChange A) z, ((dK d).baseChange A) z) = (w, 0) := by
     rw [← prodRight_subtype_baseChange d A z, hz, hpr]
   refine ⟨⟨z, (Prod.ext_iff.mp hpair).2⟩, ?_⟩
   exact Subtype.ext (Prod.ext_iff.mp hpair).1
 
 theorem cokerMap_surjective [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0]
     [Module.Finite R (LinearMap.ker d)] :
-    Function.Surjective (cokerMapBaseChange (model d).d d (iota0 d) (-(lift d)) (comm d) A) := by
+    Function.Surjective
+      (cokerMapBaseChange (model d).d d (ι0 d) (-(lift d)) (Mumford.comm d) A) := by
   intro q
   induction q using Submodule.Quotient.induction_on with
   | _ y =>
@@ -269,7 +173,8 @@ theorem cokerMap_surjective [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R 
 
 theorem cokerMap_injective [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0]
     [Module.Finite R (LinearMap.ker d)] :
-    Function.Injective (cokerMapBaseChange (model d).d d (iota0 d) (-(lift d)) (comm d) A) := by
+    Function.Injective
+      (cokerMapBaseChange (model d).d d (ι0 d) (-(lift d)) (Mumford.comm d) A) := by
   rw [injective_iff_map_eq_zero]
   intro q hq
   induction q using Submodule.Quotient.induction_on with
@@ -302,9 +207,9 @@ flat base changes. -/
 def grothendieckComplex [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0] [Module.Flat R C1]
     [Module.Finite R (LinearMap.ker d)] : GrothendieckComplex d where
   G := model d
-  ι0 := iota0 d
+  ι0 := ι0 d
   ι1 := -(lift d)
-  comm := comm d
+  comm := Mumford.comm d
   bijective_kerMap A _ _ := ⟨kerMap_injective d A, kerMap_surjective d A⟩
   bijective_cokerMap A _ _ := ⟨cokerMap_injective d A, cokerMap_surjective d A⟩
 

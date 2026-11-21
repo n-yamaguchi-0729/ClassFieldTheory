@@ -14,7 +14,7 @@ public import Mathlib.GroupTheory.OrderOfElement
 public import Mathlib.Topology.Homeomorph.Lemmas
 
 /-!
-# Prime-coefficient dévissage for continuous degree-two cohomology
+# Prime-coefficient dévissage for continuous cohomology
 
 The p-torsion submodule and its actual quotient reduce a finite coefficient
 module's annihilator. Thus vanishing for all finite modules killed by a
@@ -33,33 +33,39 @@ universe u v
 variable (G : Type u) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   [LocallyCompactSpace G]
 
-/-- Vanishing for every prime-annihilated finite coefficient module implies
-vanishing for arbitrary actual finite discrete coefficients. -/
-theorem continuousModuleH2_isZero_of_prime_coefficients
+omit [IsTopologicalGroup G] [LocallyCompactSpace G] in
+/-- An extension-closed property of actual finite discrete coefficients is
+determined by its prime-annihilated and zero cases. -/
+theorem finiteCoefficient_of_prime_coefficients (P : TopRep.{u} ℤ G → Prop)
+    (hzero : ∀ (A : TopRep.{u} ℤ G) [Subsingleton A], P A)
+    (hstep : ∀ (A B : TopRep.{u} ℤ G) [Finite A] [Finite B]
+      [DiscreteTopology A] [DiscreteTopology B] (f : A ⟶ B),
+      Function.Injective f → Continuous (fun ga : G × A => A.ρ ga.1 ga.2) →
+      Continuous (fun gb : G × B => B.ρ gb.1 gb.2) →
+      P A → P (coefficientRangeShortComplex ℤ G A B f).X₃ → P B)
     (hprime : ∀ (p : ℕ) [Fact p.Prime] (A : TopRep.{u} ℤ G)
       [Finite A] [DiscreteTopology A],
       Continuous (fun ga : G × A => A.ρ ga.1 ga.2) →
-      (∀ a : A, p • a = 0) →
-      IsZero (((continuousModuleComplexFunctor G).obj A).homology 2))
+      (∀ a : A, p • a = 0) → P A)
     (X : TopRep.{u} ℤ G) [Finite X] [DiscreteTopology X]
-    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2)) :
-    IsZero (((continuousModuleComplexFunctor G).obj X).homology 2) := by
+    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2)) : P X := by
   classical
   suffices step : ∀ n : ℕ, 0 < n →
       ∀ (Y : TopRep.{u} ℤ G) [Finite Y] [DiscreteTopology Y],
       Continuous (fun gy : G × Y => Y.ρ gy.1 gy.2) →
-      (∀ y : Y, n • y = 0) →
-      IsZero (((continuousModuleComplexFunctor G).obj Y).homology 2) by
+      (∀ y : Y, n • y = 0) → P Y by
     exact step (Nat.card X) Nat.card_pos X hX (fun _ => card_nsmul_eq_zero')
   intro n
   induction n using Nat.strong_induction_on with
-  | h n ih =>
+  | ind n ih =>
     intro hn Y hfin hdisc hY hnY
     by_cases hn1 : n = 1
-    · apply continuousModuleComplex_isZero_of_cohomology_eq_zero G Y 2
-      intro v
-      have hv := ContinuousCohomology.nsmul_H2_eq_zero_of_coefficients Y n hnY v
-      simpa only [hn1, one_nsmul] using hv
+    · have : Subsingleton Y := ⟨fun x y => by
+        have hx := hnY x
+        have hy := hnY y
+        rw [hn1, one_nsmul] at hx hy
+        exact hx.trans hy.symm⟩
+      exact hzero Y
     · obtain ⟨p, hp, hpd⟩ := Nat.exists_prime_and_dvd hn1
       have : Fact p.Prime := ⟨hp⟩
       let : Module ℤ Y := Y.hV2
@@ -86,7 +92,6 @@ theorem continuousModuleH2_isZero_of_prime_coefficients
         rintro g y ⟨a, rfl⟩
         exact ⟨A.ρ g a, φ.hom.isIntertwining g a⟩
       let Q := invariantCoefficientQuotient ℤ G Y U hU
-      let q : Y ⟶ Q := invariantCoefficientQuotientProjection ℤ G Y U hU
       have : Finite (Y ⧸ U) := Finite.of_surjective U.mkQ U.mkQ_surjective
       have : Finite Q := inferInstanceAs (Finite (Y ⧸ U))
       have : DiscreteTopology Q := invariantCoefficientQuotient_discrete ℤ G Y U hU
@@ -105,9 +110,37 @@ theorem continuousModuleH2_isZero_of_prime_coefficients
       have hm : 0 < n / p := Nat.div_pos (Nat.le_of_dvd hn hpd) hp.pos
       have hlt : n / p < n := Nat.div_lt_self hn hp.one_lt
       have hQ := ih (n / p) hlt hm Q hQcont hmQ
-      have hS := coefficientRangeContinuousModule_shortExact G A Y φ
-        (invariantSubmoduleInclusion_injective ℤ G Y W hW) hAcont hY
-      exact (hS.homology_exact₂ 2).isZero_X₂ (hA.eq_of_src _ _) (hQ.eq_of_tgt _ _)
+      exact hstep A Y φ (invariantSubmoduleInclusion_injective ℤ G Y W hW) hAcont hY hA hQ
+
+/-- Vanishing for every prime-annihilated finite coefficient module implies
+vanishing for arbitrary actual finite discrete coefficients. -/
+theorem continuousModuleHomology_isZero_of_prime_coefficients (d : ℕ)
+    (hprime : ∀ (p : ℕ) [Fact p.Prime] (A : TopRep.{u} ℤ G)
+      [Finite A] [DiscreteTopology A],
+      Continuous (fun ga : G × A => A.ρ ga.1 ga.2) →
+      (∀ a : A, p • a = 0) →
+      IsZero (((continuousModuleComplexFunctor G).obj A).homology d))
+    (X : TopRep.{u} ℤ G) [Finite X] [DiscreteTopology X]
+    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2)) :
+    IsZero (((continuousModuleComplexFunctor G).obj X).homology d) := by
+  refine finiteCoefficient_of_prime_coefficients G
+    (fun A => IsZero (((continuousModuleComplexFunctor G).obj A).homology d))
+    (fun A _ => continuousModuleHomology_isZero_of_subsingleton G A d) ?_ hprime X hX
+  intro A B _ _ _ _ f hf hA hB hI hQ
+  have hS := coefficientRangeContinuousModule_shortExact G A B f hf hA hB
+  exact (hS.homology_exact₂ d).isZero_X₂ (hI.eq_of_src _ _) (hQ.eq_of_tgt _ _)
+
+/-- The prime dévissage on the original degree-two complexes. -/
+theorem continuousModuleH2_isZero_of_prime_coefficients
+    (hprime : ∀ (p : ℕ) [Fact p.Prime] (A : TopRep.{u} ℤ G)
+      [Finite A] [DiscreteTopology A],
+      Continuous (fun ga : G × A => A.ρ ga.1 ga.2) →
+      (∀ a : A, p • a = 0) →
+      IsZero (((continuousModuleComplexFunctor G).obj A).homology 2))
+    (X : TopRep.{u} ℤ G) [Finite X] [DiscreteTopology X]
+    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2)) :
+    IsZero (((continuousModuleComplexFunctor G).obj X).homology 2) :=
+  continuousModuleHomology_isZero_of_prime_coefficients G 2 hprime X hX
 
 /-- Prime dévissage for an independently sized original coefficient module.
 The prime test uses the same working group as its actual lifted homogeneous complex. -/

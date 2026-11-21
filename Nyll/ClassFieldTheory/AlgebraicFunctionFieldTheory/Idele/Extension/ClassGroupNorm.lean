@@ -7,7 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Mathlib.Data.Finset.Image
-public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNormCore
 public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
 public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
@@ -82,10 +82,8 @@ namespace IdeleClassGroup
 variable [AlgebraicCurve.HasPrincipalDivisors k K]
 
 /-- The field norm on idele classes, descended through the actual principal subgroup. -/
-def norm : IdeleClassGroup k L →* IdeleClassGroup k K :=
-  QuotientGroup.map (IdeleGroup.principalSubgroup k L) (IdeleGroup.principalSubgroup k K)
-    (IdeleGroup.norm (K := K) (L := L))
-    (fun _ ha => IdeleGroup.norm_mem_principalSubgroup ha)
+noncomputable abbrev norm : IdeleClassGroup k L →* IdeleClassGroup k K :=
+  normOfPrincipal (k := k) (K := K) (L := L) (fun _ ha => IdeleGroup.norm_mem_principalSubgroup ha)
 
 @[simp]
 theorem norm_mk (a : IdeleGroup k L) :

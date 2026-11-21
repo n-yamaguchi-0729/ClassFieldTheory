@@ -34,7 +34,7 @@ theorem idealInertia_isClosed_of_openFixedSets
     (Q : Ideal B.carrier)
     (hopen :
       let : MulSemiringAction G.carrier B.carrier := a
-      ∀ b : B.carrier, IsOpen (fun g : G.carrier => g • b = b)) :
+      ∀ b : B.carrier, IsOpen {g : G.carrier | g • b = b}) :
     let : MulSemiringAction G.carrier B.carrier := a
     IsClosed (Q.inertia G.carrier).carrier := by
   intro ringAction

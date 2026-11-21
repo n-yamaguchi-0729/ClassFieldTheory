@@ -12,6 +12,8 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Modules.Functoriality.IsoPullbackPullback
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Sections.RelativeSectionTwist
 public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
 public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroCut
 public import Nyll.AlgebraicCurves.Geometry.Picard.Theta.ThetaBundle
@@ -45,6 +47,10 @@ Euler characteristics of section twists tensored with divisor ideals on geometri
 -/
 
 @[expose] public section
+
+open _root_.AlgebraicGeometry.RelPicard (fibreIso fibreIso_hom_baseChangeSnd
+  fibreIso_hom_fst fibreIso_hom_snd fibreIso_inv_fibreAt fibreModuleIso fibreUnitIso)
+open _root_.AlgebraicGeometry.Scheme.Modules (isoPullbackInvOfIso)
 
 section ProofImplementation
 
@@ -274,42 +280,6 @@ open _root_.AlgebraicGeometry
 
 variable {R : Type u} [CommRing R]
 
-theorem cover_ext {X : Scheme.{u}} {𝒱 𝒱' : X.TwoAffineOpenCover}
-    (h0 : 𝒱.U0 = 𝒱'.U0) (h1 : 𝒱.U1 = 𝒱'.U1) : 𝒱 = 𝒱' := by
-  cases 𝒱; cases 𝒱'; cases h0; cases h1; rfl
-
-theorem nonempty_linearEquiv_of_iso {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of R))
-    (𝒱 : X.TwoAffineOpenCover) {M M' : X.Modules} (e : M ≅ M') :
-    Nonempty ((𝒱.sectionsOf x M).H0 ≃ₗ[R] (𝒱.sectionsOf x M').H0) ∧
-      Nonempty ((𝒱.sectionsOf x M).H1 ≃ₗ[R] (𝒱.sectionsOf x M').H1) := by
-  obtain ⟨𝒱₂, h0, h1, ⟨e0⟩, ⟨e1⟩⟩ :=
-    Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso
-      x x (Iso.refl X) (Category.id_comp x)
-      𝒱 M' M (e ≪≫ ((Scheme.Modules.pullbackId X).app M').symm)
-  obtain rfl : 𝒱₂ = 𝒱 := cover_ext h0 h1
-  exact ⟨⟨e0⟩, ⟨e1⟩⟩
-
-theorem eulerChar_congr {k : Type u} [Field k] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of k))
-    (𝒱 : X.TwoAffineOpenCover) {M M' : X.Modules} (e : M ≅ M') :
-    (Module.finrank k (𝒱.sectionsOf x M).H0 : ℤ) - Module.finrank k (𝒱.sectionsOf x M).H1 =
-      (Module.finrank k (𝒱.sectionsOf x M').H0 : ℤ) - Module.finrank k (𝒱.sectionsOf x M').H1 := by
-  obtain ⟨⟨e0⟩, ⟨e1⟩⟩ := nonempty_linearEquiv_of_iso x 𝒱 e
-  rw [e0.finrank_eq, e1.finrank_eq]
-
-theorem finrank_H1_congr {k : Type u} [Field k] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of k))
-    (𝒱 : X.TwoAffineOpenCover) {M M' : X.Modules} (e : M ≅ M') :
-    Module.finrank k (𝒱.sectionsOf x M).H1 = Module.finrank k (𝒱.sectionsOf x M').H1 := by
-  obtain ⟨-, ⟨e1⟩⟩ := nonempty_linearEquiv_of_iso x 𝒱 e
-  exact e1.finrank_eq
-
-/-- Transport a module isomorphism along the inverse scheme isomorphism. -/
-def isoPullbackInvOfIso {X Y : Scheme.{u}} (φ : X ≅ Y) {M : X.Modules} {N : Y.Modules}
-    (e : M ≅ (Scheme.Modules.pullback φ.hom).obj N) : N ≅ (Scheme.Modules.pullback φ.inv).obj M :=
-  ((Scheme.Modules.pullbackId Y).app N).symm ≪≫
-    (Scheme.Modules.pullbackCongr φ.inv_hom_id.symm).app N ≪≫
-    ((Scheme.Modules.pullbackComp φ.inv φ.hom).app N).symm ≪≫
-    (Scheme.Modules.pullback φ.inv).mapIso e.symm
-
 section FibreIso
 
 variable {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))
@@ -317,55 +287,6 @@ variable {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))
   {k : Type u} [Field k] (s : Spec (CommRingCat.of k) ⟶ T)
   (x : Spec (CommRingCat.of k) ⟶ Spec (CommRingCat.of R))
   (hx : s ≫ t = x)
-
-/-- Identify an iterated fibre with the fibre of the original morphism. -/
-def fibreIso : pullback (pullback.snd c t) s ≅ pullback c x :=
-  pullbackLeftPullbackSndIso c t s ≪≫ pullback.congrHom rfl hx
-
-@[reassoc]
-theorem fibreIso_hom_snd : (fibreIso c t s x hx).hom ≫ pullback.snd c x = fibreAt c t s := by
-  subst hx
-  rw [fibreIso, Iso.trans_hom, Category.assoc, pullback.congrHom_hom,
-    pullback.lift_snd, Category.comp_id]
-  exact pullbackLeftPullbackSndIso_hom_snd c t s
-
-@[reassoc]
-theorem fibreIso_hom_fst :
-    (fibreIso c t s x hx).hom ≫ pullback.fst c x =
-      pullback.fst (pullback.snd c t) s ≫ pullback.fst c t := by
-  subst hx
-  rw [fibreIso, Iso.trans_hom, Category.assoc, pullback.congrHom_hom,
-    pullback.lift_fst, Category.comp_id]
-  exact pullbackLeftPullbackSndIso_hom_fst c t s
-
-theorem fibreIso_inv_fibreAt : (fibreIso c t s x hx).inv ≫ fibreAt c t s = pullback.snd c x := by
-  rw [← fibreIso_hom_snd c t s x hx, Iso.inv_hom_id_assoc]
-
-theorem fibreIso_hom_baseChangeSnd :
-    (fibreIso c t s x hx).hom ≫ baseChangeSnd c (⟨s, hx⟩ : SchemeHomOver x t)
-      = pullback.fst (pullback.snd c t) s := by
-  apply pullback.hom_ext
-  · rw [Category.assoc]
-    unfold baseChangeSnd
-    rw [pullback.lift_fst, ← Category.assoc, fibreIso_hom_fst, Category.assoc, Category.comp_id]
-  · rw [Category.assoc]
-    unfold baseChangeSnd
-    rw [pullback.lift_snd, ← Category.assoc, fibreIso_hom_snd, pullback.condition]
-    rfl
-
-/-- Compare the two pullbacks of a module under the canonical fibre isomorphism. -/
-def fibreModuleIso (F : (pullback c t).Modules) :
-    fibreModule c t s F ≅ (Scheme.Modules.pullback (fibreIso c t s x hx).hom).obj
-      ((Scheme.Modules.pullback (baseChangeSnd c (⟨s, hx⟩ : SchemeHomOver x t))).obj F) :=
-  (Scheme.Modules.pullbackCongr (fibreIso_hom_baseChangeSnd c t s x hx).symm).app F ≪≫
-    ((Scheme.Modules.pullbackComp (fibreIso c t s x hx).hom
-      (baseChangeSnd c (⟨s, hx⟩ : SchemeHomOver x t))).app F).symm
-
-/-- Identify unit modules under the canonical fibre isomorphism. -/
-def fibreUnitIso :
-    (𝟙_ (pullback (pullback.snd c t) s).Modules) ≅
-      (Scheme.Modules.pullback (fibreIso c t s x hx).hom).obj (𝟙_ (pullback c x).Modules) :=
-  (Scheme.Modules.pullbackTensorUnitObjIso (fibreIso c t s x hx).hom).symm
 
 variable [IsSeparated c] [SmoothOfRelativeDimension 1 c]
   (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c)
@@ -481,7 +402,7 @@ theorem eulerChar_chart_eq_one
     hP.tensor hEI.isInvertible_module
   have h2b := RelEffCartierDiv.eulerChar_tensor_lineBundle_eq x (Dγ.pullbackAlong x hx)
     (sectionTwist c ε x r ⊗ (Dγ.pullbackAlong x hx).idealModule) hPE 𝒱
-  have h2c := eulerChar_congr (pullback.snd c x) 𝒱
+  have h2c := Scheme.TwoAffineOpenCover.eulerChar_sectionsOf_congr (pullback.snd c x) 𝒱
     (α_ (sectionTwist c ε x r) (Dγ.pullbackAlong x hx).idealModule
         (Dγ.pullbackAlong x hx).lineBundle ≪≫
       whiskerLeftIso (sectionTwist c ε x r)
@@ -492,7 +413,8 @@ theorem eulerChar_chart_eq_one
     Scheme.Hom.isFinite_and_finrank_subschemeIota_ker_pow_of_comp_eq_id (rigSection c x ε) hσ r
   have h2d := Scheme.IdealSheafData.IsInvertible.eulerChar_sectionsOf_tensor_invModule_eq
     (pullback.snd c x) hIr hZ hdeg (𝟙_ _) (Scheme.Modules.isInvertible_unit _) 𝒱
-  have h2d' := eulerChar_congr (M := 𝟙_ _ ⊗ ((sectionIdeal c ε x) ^ r).invModule)
+  have h2d' := Scheme.TwoAffineOpenCover.eulerChar_sectionsOf_congr
+    (M := 𝟙_ _ ⊗ ((sectionIdeal c ε x) ^ r).invModule)
     (M' := sectionTwist c ε x r) (pullback.snd c x) 𝒱 (λ_ (sectionTwist c ε x r))
   have : IsIntegral (pullback c x) :=
     GeometricallyIntegral.geometrically_isIntegral _ _ _ (.of_hasPullback c x)

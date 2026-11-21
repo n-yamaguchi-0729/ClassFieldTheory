@@ -30,7 +30,7 @@ theorem IsAbelianConductor.mem_infinitePart_iff_realRamified
     [Algebra K L] [IsAbelianGalois K L]
     {c : RayClassModulus K}
     (hc : IsAbelianConductor K L c)
-    (v : RayClassRealPlace K) :
+    (v : RayClass.RealPlace K) :
     v ∈ c.infinitePart ↔ ¬ v.1.IsUnramifiedIn L := by
   let H := GlobalClassFieldTheory.GlobalClassFields.ideleClassNormConductorialSubgroup
     (K := K) (L := L)

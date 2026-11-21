@@ -63,9 +63,10 @@ theorem padicAbsoluteValueBaseMap_isometry :
 `ℚ` at `p` to the concrete `p`-adic field. -/
 noncomputable def padicAbsoluteValueCompletionRingHom :
     (Rat.AbsoluteValue.padic p).Completion →+* ℚ_[p] :=
-  UniformSpace.Completion.extensionHom
+  (UniformSpace.Completion.extensionHom
     (padicAbsoluteValueBaseMap p)
-    (padicAbsoluteValueBaseMap_isometry p).continuous
+    (padicAbsoluteValueBaseMap_isometry p).continuous).comp
+      AbsoluteValue.Completion.toCompletion
 
 /-- On the dense rational subring, the completed map agrees with the original
 `p`-adic embedding. -/
@@ -74,15 +75,18 @@ theorem padicAbsoluteValueCompletionRingHom_coe
     (x : WithAbs (Rat.AbsoluteValue.padic p)) :
     padicAbsoluteValueCompletionRingHom p
         (x : (Rat.AbsoluteValue.padic p).Completion) =
-      padicAbsoluteValueBaseMap p x :=
-  UniformSpace.Completion.extensionHom_coe
+      padicAbsoluteValueBaseMap p x := by
+  rw [padicAbsoluteValueCompletionRingHom, RingHom.comp_apply,
+    AbsoluteValue.Completion.toCompletion_coe]
+  exact UniformSpace.Completion.extensionHom_coe
     (padicAbsoluteValueBaseMap p)
     (padicAbsoluteValueBaseMap_isometry p).continuous x
 
 /-- The completed map remains an isometry. -/
 theorem padicAbsoluteValueCompletionRingHom_isometry :
     Isometry (padicAbsoluteValueCompletionRingHom p) :=
-  (padicAbsoluteValueBaseMap_isometry p).completion_extension
+  (padicAbsoluteValueBaseMap_isometry p).completion_extension.comp
+    (AbsoluteValue.Completion.isometry_toCompletion (Rat.AbsoluteValue.padic p))
 
 /-- The completed map is surjective because its closed range contains the
 dense copy of `ℚ` in `ℚ_[p]`. -/
@@ -122,6 +126,7 @@ noncomputable def padicAbsoluteValueCompletionAlgEquiv :
     (Rat.AbsoluteValue.padic p).Completion ≃ₐ[ℚ] ℚ_[p] where
   __ := padicAbsoluteValueCompletionRingEquiv p
   commutes' q := by
+    rw [← AbsoluteValue.toCompletion_eq_algebraMap, AbsoluteValue.toCompletion_apply]
     change padicAbsoluteValueCompletionRingHom p
         (((WithAbs.equiv (Rat.AbsoluteValue.padic p)).symm q :
           WithAbs (Rat.AbsoluteValue.padic p)) :

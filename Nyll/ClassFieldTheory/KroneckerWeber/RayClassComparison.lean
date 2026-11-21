@@ -53,7 +53,7 @@ noncomputable def rationalRayClassGroupEquivCyclotomicAut
 group of the corresponding cyclotomic field. -/
 noncomputable def rationalRayClassFieldQuotientEquivCyclotomicAut
     (m : ℕ) (hm : m ≠ 0) :
-    IdeleClassGroup ℚ ⧸
+    NumberField.IdeleClassGroup (𝓞 ℚ) ℚ ⧸
         RayClass.Modulus.congruenceSubgroup
           (RayClass.rationalModulus m) ≃*
       (CyclotomicField m ℚ ≃ₐ[ℚ] CyclotomicField m ℚ) :=
@@ -64,7 +64,7 @@ of the `m`-th cyclotomic field. -/
 theorem rationalRayClassFieldQuotient_card_eq_cyclotomicDegree
     (m : ℕ) (hm : m ≠ 0) :
     Nat.card
-        (IdeleClassGroup ℚ ⧸
+        (NumberField.IdeleClassGroup (𝓞 ℚ) ℚ ⧸
           RayClass.Modulus.congruenceSubgroup
             (RayClass.rationalModulus m)) =
       Module.finrank ℚ (CyclotomicField m ℚ) := by
@@ -78,7 +78,7 @@ theorem rationalRayClassFieldQuotient_card_eq_cyclotomicDegree
       (CyclotomicField m ℚ)
   calc
     Nat.card
-        (IdeleClassGroup ℚ ⧸
+        (NumberField.IdeleClassGroup (𝓞 ℚ) ℚ ⧸
           RayClass.Modulus.congruenceSubgroup
             (RayClass.rationalModulus m)) =
         Nat.card
@@ -95,7 +95,7 @@ Euler-totient order. -/
 theorem rationalRayClassFieldQuotient_card_eq_totient
     (m : ℕ) (hm : m ≠ 0) :
     Nat.card
-        (IdeleClassGroup ℚ ⧸
+        (NumberField.IdeleClassGroup (𝓞 ℚ) ℚ ⧸
           RayClass.Modulus.congruenceSubgroup
             (RayClass.rationalModulus m)) =
       m.totient := by
@@ -106,7 +106,7 @@ theorem rationalRayClassFieldQuotient_card_eq_totient
     CyclotomicField.isCyclotomicExtension m ℚ
   calc
     Nat.card
-        (IdeleClassGroup ℚ ⧸
+        (NumberField.IdeleClassGroup (𝓞 ℚ) ℚ ⧸
           RayClass.Modulus.congruenceSubgroup
             (RayClass.rationalModulus m)) =
         Module.finrank ℚ (CyclotomicField m ℚ) :=

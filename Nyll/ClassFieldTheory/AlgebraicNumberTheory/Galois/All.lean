@@ -4,6 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteNormCoordinates
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.EmbeddedAbsoluteRestriction
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteFiniteQuotients
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteFiniteQuotientTransitions
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteAbelianization
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeDegreeSubextension
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.CyclicPrimeSubextension

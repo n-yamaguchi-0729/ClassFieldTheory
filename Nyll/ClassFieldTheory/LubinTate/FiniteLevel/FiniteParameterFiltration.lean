@@ -38,7 +38,7 @@ def standardLubinTateUnitParameterSubgroup
     (F : LocalField.{u, v} K) (n k : ℕ) :
     Subgroup (standardLubinTateUnitParameter F n) :=
   (higherPrincipalUnitGroup.toPrincipalUnitFiltration F.toCompleteDVF
-    ).principalUnitSubgroupClassInQuotient
+    ).levelClassInQuotient
     k (n + 1)
 
 /-- A represented finite parameter belongs to the `k`-th parameter subgroup
@@ -53,11 +53,11 @@ theorem standardLubinTateUnitParameterClass_mem_subgroup_iff
     QuotientGroup.mk'
         (higherPrincipalUnitGroup F.toCompleteDVF (n + 1)) u ∈
       (higherPrincipalUnitGroup.toPrincipalUnitFiltration F.toCompleteDVF
-        ).principalUnitSubgroupClassInQuotient
+        ).levelClassInQuotient
         k (n + 1) ↔
       u ∈ higherPrincipalUnitGroup F.toCompleteDVF k
   exact
-    AntitoneSubgroupFiltration.quotient_principalUnitSubgroup_mk_mem_classInQuotient_iff
+    AntitoneSubgroupFiltration.quotient_level_mk_mem_classInQuotient_iff
       (higherPrincipalUnitGroup.toPrincipalUnitFiltration F.toCompleteDVF)
       hk u
 
@@ -73,7 +73,7 @@ theorem standardLubinTateUnitParameterSubgroup_natCard
   let U := higherPrincipalUnitGroup.toPrincipalUnitFiltration D
   let hfinite (i j : ℕ) : Finite (U.principalUnitSubquotient i j) :=
     higherPrincipalUnitGroup.finite_principalUnitSubquotient_of_finite_residue D i j
-  have hnormal : ∀ i : ℕ, (U.principalUnitSubgroup i).Normal := by
+  have hnormal : ∀ i : ℕ, (U.level i).Normal := by
     intro i
     change (higherPrincipalUnitGroup D i).Normal
     infer_instance

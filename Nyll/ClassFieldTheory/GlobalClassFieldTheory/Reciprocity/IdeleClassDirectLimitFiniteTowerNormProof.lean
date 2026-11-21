@@ -4,9 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormStatement
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassEmbeddingBaseChange
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimit
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteEmbedding
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormStatement
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
 
 /-!
 # Proof of ordinary norm comparison in finite towers of rational fixed fields
@@ -16,6 +21,8 @@ the normal-closure embedding calculation, the pointwise coset action, and the
 finite product calculation into separate commands.  The public theorem is a
 thin wrapper around those providers.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -27,7 +34,59 @@ open LocalClassFieldTheory
 open CyclicCohomology
 open FiniteTowerNormCore
 
-attribute [local instance] rationalIdeleClassDirectLimitSMul
+attribute [local instance] ideleClassDirectLimitSMul
+
+private theorem rationalClassEmbedding_directLimit_smul
+    (E : IntermediateField ℚ (SeparableClosure ℚ)) [FiniteDimensional ℚ E]
+    (U : FiniteGaloisIntermediateField ℚ (SeparableClosure ℚ))
+    (hEU : E ≤ U.toIntermediateField) (c : IdeleClassGroup E)
+    (σ : Gal(SeparableClosure ℚ/ℚ)) :
+    σ • rationalIntermediateIdeleClassToDirectLimit E c =
+      rationalIntermediateIdeleClassToDirectLimit U
+        (relativeIdeleClassBaseChangeMulEquiv (K := ℚ) (L := U)
+          (RelativeIdeleGroup.classEmbedding
+            ((AlgEquiv.restrictNormalHom (↥U.toIntermediateField) σ).toAlgHom.comp
+              (IntermediateField.inclusion hEU))
+            ((relativeIdeleClassBaseChangeMulEquiv (K := ℚ) (L := E)).symm c))) := by
+  let d := (relativeIdeleClassBaseChangeMulEquiv (K := ℚ) (L := E)).symm c
+  let τ := AlgEquiv.restrictNormalHom (↥U.toIntermediateField) σ
+  let j := IntermediateField.inclusion hEU
+  have hStage := rationalIntermediateIdeleClassToDirectLimit_classEmbedding E U hEU c
+  have hAction := rationalRelativeIdeleClassToDirectLimit_smul U σ
+    (RelativeIdeleGroup.classEmbedding j d)
+  have hComp := classEmbedding_smul_eq_classEmbedding_comp j τ d
+  have hEval := rationalFiniteGaloisIdeleClassToDirectLimit_baseChange U
+    (RelativeIdeleGroup.classEmbedding (τ.toAlgHom.comp j) d)
+  exact (congrArg (σ • ·) hStage).trans
+    (hAction.trans ((congrArg (rationalRelativeIdeleClassToDirectLimit U) hComp).trans hEval.symm))
+
+private theorem rationalIntermediateIdeleClassToDirectLimit_ordinaryExtension
+    {E U : IntermediateField ℚ (SeparableClosure ℚ)}
+    [FiniteDimensional ℚ E] [FiniteDimensional ℚ U] (h : E ≤ U) (x : IdeleClassGroup E) :
+    let _ : Algebra E U := (IntermediateField.inclusion h).toRingHom.toAlgebra
+    rationalIntermediateIdeleClassToDirectLimit U (ideleClassExtension E U x) =
+      rationalIntermediateIdeleClassToDirectLimit E x := by
+  intro hAlg
+  let _ : IsScalarTower ℚ E U := IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
+  let _ : FiniteDimensional E U := FiniteDimensional.right ℚ E U
+  let d := (relativeIdeleClassBaseChangeMulEquiv (K := ℚ) (L := E)).symm x
+  have h₀ := rationalIntermediateIdeleClassToDirectLimit_extension h d
+  have hj : IntermediateField.inclusion h = IsScalarTower.toAlgHom ℚ E U := by
+    ext a
+    rfl
+  let rU := relativeIdeleClassBaseChangeMulEquiv (K := ℚ) (L := U)
+  have h₁ : rU (RelativeIdeleGroup.classEmbedding (IntermediateField.inclusion h) d) =
+      ideleClassExtension E U x :=
+    (congrArg (fun j => rU (RelativeIdeleGroup.classEmbedding j d)) hj).trans
+      ((relativeIdeleClassBaseChange_classEmbedding_toAlgHom
+        (K := ℚ) (M := E) (L := U) d).trans
+        (congrArg (ideleClassExtension E U)
+          ((relativeIdeleClassBaseChangeMulEquiv (K := ℚ) (L := E)).apply_symm_apply x)))
+  let iE := rationalIntermediateIdeleClassToDirectLimit E
+  let iU := rationalIntermediateIdeleClassToDirectLimit U
+  exact (congrArg iU h₁).symm.trans
+    (h₀.trans (congrArg iE
+      ((relativeIdeleClassBaseChangeMulEquiv (K := ℚ) (L := E)).apply_symm_apply x)))
 
 section RationalFiniteTower
 
@@ -45,52 +104,44 @@ local notation "E₀" =>
   abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
 local notation "N₀" =>
   IntermediateField.normalClosure F₀ E₀ (SeparableClosure ℚ)
-private abbrev rationalFiniteTowerRestrictedNormal :
-    IntermediateField ℚ (SeparableClosure ℚ) :=
-  IntermediateField.restrictScalars ℚ N₀
-private abbrev rationalFiniteTowerRestrictedUpper :
-    IntermediateField ℚ (SeparableClosure ℚ) :=
-  IntermediateField.restrictScalars ℚ E₀
-local notation "EQ₀" =>
-  rationalFiniteTowerRestrictedUpper K L hLK
-local notation "NQ₀" =>
-  rationalFiniteTowerRestrictedNormal K L hLK
-local notation "U₀" => rationalNormalClosure NQ₀
+local notation "EQ₀" => IntermediateField.restrictScalars ℚ E₀
+local notation "NQ₀" => IntermediateField.restrictScalars ℚ N₀
+local notation "U₀" => finiteIdeleClassNormalClosure ℚ NQ₀
 local notation "Q₀" =>
   K.toSubgroup ⧸ extensionSubgroup K L hLK
 
-noncomputable local instance rationalFiniteTowerLowerFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerLowerFiniteDimensional :
     FiniteDimensional ℚ F₀ :=
   abstractFixedField_finiteDimensional
     ℚ (SeparableClosure ℚ) K hKfinite
 
-noncomputable local instance rationalFiniteTowerUpperFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerUpperFiniteDimensional :
     FiniteDimensional F₀ E₀ :=
   abstractRelativeFixedField_finiteDimensional
     ℚ (SeparableClosure ℚ) K L hLK hKfinite hfinite
 
-local instance rationalFiniteTowerLowerUpperScalarTower :
+private local instance rationalFiniteTowerLowerUpperScalarTower :
     IsScalarTower ℚ F₀ E₀ :=
   IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
 
-noncomputable local instance rationalFiniteTowerUpperAbsoluteFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerUpperAbsoluteFiniteDimensional :
     FiniteDimensional ℚ E₀ :=
   FiniteDimensional.trans ℚ F₀ E₀
 
-noncomputable local instance rationalFiniteTowerRestrictedUpperFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerRestrictedUpperFiniteDimensional :
     FiniteDimensional ℚ EQ₀ := by
   change FiniteDimensional ℚ E₀
   infer_instance
 
-noncomputable local instance rationalFiniteTowerLowerNumberField :
+private noncomputable local instance rationalFiniteTowerLowerNumberField :
     NumberField F₀ :=
   NumberField.of_module_finite ℚ F₀
 
-noncomputable local instance rationalFiniteTowerUpperNumberField :
+private noncomputable local instance rationalFiniteTowerUpperNumberField :
     NumberField E₀ :=
   NumberField.of_module_finite ℚ E₀
 
-local instance rationalFiniteTowerUpperSeparableClosureScalarTower :
+private local instance rationalFiniteTowerUpperSeparableClosureScalarTower :
     IsScalarTower F₀ E₀ (SeparableClosure ℚ) :=
   IsScalarTower.of_algebraMap_eq' (by
     ext x
@@ -113,23 +164,23 @@ private theorem rationalFiniteTower_lower_le_normal :
   (rationalFiniteTower_lower_le_upper K L hLK).trans
     (rationalFiniteTower_upper_le_normal K L hLK)
 
-local instance rationalFiniteTowerNormalScalarTower :
+private local instance rationalFiniteTowerNormalScalarTower :
     IsScalarTower ℚ F₀ N₀ :=
   IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
 
-noncomputable local instance rationalFiniteTowerNormalFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerNormalFiniteDimensional :
     FiniteDimensional F₀ N₀ :=
   normalClosure.is_finiteDimensional F₀ E₀ (SeparableClosure ℚ)
 
-noncomputable local instance rationalFiniteTowerNormalAbsoluteFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerNormalAbsoluteFiniteDimensional :
     FiniteDimensional ℚ N₀ :=
   FiniteDimensional.trans ℚ F₀ N₀
 
-noncomputable local instance rationalFiniteTowerNormalNumberField :
+private noncomputable local instance rationalFiniteTowerNormalNumberField :
     NumberField N₀ :=
   NumberField.of_module_finite ℚ N₀
 
-noncomputable local instance rationalFiniteTowerRestrictedNormalFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerRestrictedNormalFiniteDimensional :
     FiniteDimensional ℚ NQ₀ := by
   change FiniteDimensional ℚ N₀
   infer_instance
@@ -151,77 +202,77 @@ private theorem rationalFiniteTower_upper_le_rationalNormalClosure :
   (rationalFiniteTower_upper_le_normal K L hLK).trans
     (rationalFiniteTower_normal_le_rationalNormalClosure K L hLK)
 
-local instance rationalFiniteTowerRationalNormalClosureLowerAlgebra :
+private local instance rationalFiniteTowerRationalNormalClosureLowerAlgebra :
     Algebra F₀ U₀ :=
   (IntermediateField.inclusion
     (rationalFiniteTower_lower_le_rationalNormalClosure K L hLK)).toRingHom.toAlgebra
 
-local instance rationalFiniteTowerRationalNormalClosureUpperAlgebra :
+private local instance rationalFiniteTowerRationalNormalClosureUpperAlgebra :
     Algebra E₀ U₀ :=
   (IntermediateField.inclusion
     (rationalFiniteTower_upper_le_rationalNormalClosure K L hLK)).toRingHom.toAlgebra
 
-local instance rationalFiniteTowerRationalNormalClosureNormalAlgebra :
+private local instance rationalFiniteTowerRationalNormalClosureNormalAlgebra :
     Algebra N₀ U₀ :=
   (IntermediateField.inclusion
     (rationalFiniteTower_normal_le_rationalNormalClosure K L hLK)).toRingHom.toAlgebra
 
-local instance rationalFiniteTowerRationalNormalClosureLowerScalarTower :
+private local instance rationalFiniteTowerRationalNormalClosureLowerScalarTower :
     IsScalarTower ℚ F₀ U₀ :=
   IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
 
-local instance rationalFiniteTowerRationalNormalClosureUpperScalarTower :
+private local instance rationalFiniteTowerRationalNormalClosureUpperScalarTower :
     IsScalarTower ℚ E₀ U₀ :=
   IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
 
-local instance rationalFiniteTowerRationalNormalClosureNormalScalarTower :
+private local instance rationalFiniteTowerRationalNormalClosureNormalScalarTower :
     IsScalarTower ℚ N₀ U₀ :=
   IsScalarTower.of_algebraMap_eq' (RingHom.ext_rat _ _)
 
-local instance rationalFiniteTowerLowerUpperClosureScalarTower :
+private local instance rationalFiniteTowerLowerUpperClosureScalarTower :
     IsScalarTower F₀ E₀ U₀ :=
   IsScalarTower.of_algebraMap_eq' (by
     ext x
     rfl)
 
-local instance rationalFiniteTowerLowerNormalClosureScalarTower :
+private local instance rationalFiniteTowerLowerNormalClosureScalarTower :
     IsScalarTower F₀ N₀ U₀ :=
   IsScalarTower.of_algebraMap_eq' (by
     ext x
     rfl)
 
-local instance rationalFiniteTowerClosureSeparableClosureScalarTower :
+private local instance rationalFiniteTowerClosureSeparableClosureScalarTower :
     IsScalarTower F₀ U₀ (SeparableClosure ℚ) :=
   IsScalarTower.of_algebraMap_eq' (by
     ext x
     rfl)
 
-noncomputable local instance rationalFiniteTowerClosureOverUpperFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerClosureOverUpperFiniteDimensional :
     FiniteDimensional E₀ U₀ :=
   FiniteDimensional.right ℚ E₀ U₀
 
-noncomputable local instance rationalFiniteTowerClosureOverLowerFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerClosureOverLowerFiniteDimensional :
     FiniteDimensional F₀ U₀ :=
   FiniteDimensional.right ℚ F₀ U₀
 
-noncomputable local instance rationalFiniteTowerClosureOverNormalFiniteDimensional :
+private noncomputable local instance rationalFiniteTowerClosureOverNormalFiniteDimensional :
     FiniteDimensional N₀ U₀ :=
   FiniteDimensional.right ℚ N₀ U₀
 
-local instance rationalFiniteTowerLowerSeparableClosureGalois :
+private local instance rationalFiniteTowerLowerSeparableClosureGalois :
     IsGalois F₀ (SeparableClosure ℚ) :=
   IsGalois.tower_top_of_isGalois ℚ F₀ (SeparableClosure ℚ)
 
-local instance rationalFiniteTowerNormalGalois : IsGalois F₀ N₀ :=
+private local instance rationalFiniteTowerNormalGalois : IsGalois F₀ N₀ :=
   IsGalois.normalClosure F₀ E₀ (SeparableClosure ℚ)
 
-local instance rationalFiniteTowerClosureOverLowerGalois : IsGalois F₀ U₀ :=
+private local instance rationalFiniteTowerClosureOverLowerGalois : IsGalois F₀ U₀ :=
   IsGalois.tower_top_of_isGalois ℚ F₀ U₀
 
-local instance rationalFiniteTowerClosureOverNormalGalois : IsGalois N₀ U₀ :=
+private local instance rationalFiniteTowerClosureOverNormalGalois : IsGalois N₀ U₀ :=
   IsGalois.tower_top_of_isGalois ℚ N₀ U₀
 
-noncomputable local instance rationalFiniteTowerQuotientFintype : Fintype Q₀ :=
+private noncomputable local instance rationalFiniteTowerQuotientFintype : Fintype Q₀ :=
   Fintype.ofFinite Q₀
 
 private noncomputable def rationalFiniteTowerCosetEquiv :
@@ -339,93 +390,47 @@ private theorem rationalFiniteTower_representativeAction
             ((AlgEquiv.restrictNormalHom U₀ sigma.1).toAlgHom.comp
               (rationalFiniteTowerUpperInclusion K L hLK))
             (rationalFiniteTowerRationalRelativeClass K L hLK c))) := by
-  let finiteLevelSMul :
-      (E : FiniteGaloisIntermediateField ℚ (SeparableClosure ℚ)) →
-        SMul (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)
-          (RelativeIdeleGroup.ClassGroup ℚ E) :=
-    fun E => (rationalAbsoluteGaloisIdeleClassAction E).toSMul
-  let dℚ := rationalFiniteTowerRationalRelativeClass K L hLK c
-  let tau := AlgEquiv.restrictNormalHom U₀ sigma.1
-  let jEU := rationalFiniteTowerUpperInclusion K L hLK
-  rw [toMul_ofMul]
-  have hlevel :
-      rationalIntermediateIdeleClassToDirectLimit EQ₀ c =
-        rationalRelativeIdeleClassToDirectLimit U₀
-          (RelativeIdeleGroup.classEmbedding jEU dℚ) := by
-    exact rationalIntermediateIdeleClassToDirectLimit_classEmbedding
-      EQ₀ U₀
-      (rationalFiniteTower_upper_le_rationalNormalClosure K L hLK) c
-  rw [hlevel]
-  rw [rationalFiniteGaloisIdeleClassToDirectLimit_baseChange]
-  change
-    sigma.1 •
-        (⟦⟨U₀, RelativeIdeleGroup.classEmbedding jEU dℚ⟩⟧ :
-          rationalIdeleClassDirectLimit) = _
-  rw [DirectLimit.smul_def
-    (R := SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)
-    (G := fun E : FiniteGaloisIntermediateField ℚ (SeparableClosure ℚ) =>
-      RelativeIdeleGroup.ClassGroup ℚ E)
-    (f := fun _ _ h => rationalRelativeIdeleClassTransition h)]
-  apply congrArg
-    (fun z : RelativeIdeleGroup.ClassGroup ℚ U₀ =>
-      (⟦⟨U₀, z⟩⟧ : rationalIdeleClassDirectLimit))
-  exact classEmbedding_smul_eq_classEmbedding_comp jEU tau dℚ
+  exact rationalClassEmbedding_directLimit_smul EQ₀ U₀
+    (rationalFiniteTower_upper_le_rationalNormalClosure K L hLK) c sigma.1
 
 private theorem rationalRelativeFixedFieldCosetActionPointwise
     (c : IdeleClassGroup E₀) (q : Q₀) :
     Additive.toMul
-        ((relativeCosetAction rationalIdeleClassRepresentation
+        ((relativeCosetAction (ideleClassRepresentation ℚ)
           K L hLK
           (rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
             K L hLK (Additive.ofMul c)) q :
-          Additive rationalIdeleClassDirectLimit)) =
+          Additive (ideleClassDirectLimit ℚ))) =
       rationalIntermediateIdeleClassToDirectLimit
         (U₀ : IntermediateField ℚ (SeparableClosure ℚ))
         (rationalFiniteTowerEmbeddedClass K L hLK c q) := by
   let dℚ := rationalFiniteTowerRationalRelativeClass K L hLK c
-  let dF := rationalFiniteTowerRelativeClass K L hLK c
-  let a :=
-    rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
-      K L hLK (Additive.ofMul c)
-  let term : Q₀ → Additive rationalIdeleClassDirectLimit :=
-    fun q =>
-      (relativeCosetAction rationalIdeleClassRepresentation
-        K L hLK a q : Additive rationalIdeleClassDirectLimit)
-  change
-    Additive.toMul (term q) =
-      rationalIntermediateIdeleClassToDirectLimit
-        (U₀ : IntermediateField ℚ (SeparableClosure ℚ))
-        (_root_.relativeIdeleClassBaseChangeMulEquiv
-          (K := F₀) (L := U₀)
-          (RelativeIdeleGroup.classEmbedding
-            ((rationalFiniteTowerNormalInclusion K L hLK).comp
-              (rationalFiniteTowerCosetEquiv K L hLK q)) dF))
-  have hbase (f : E₀ →ₐ[F₀] U₀) :
-      _root_.relativeIdeleClassBaseChangeMulEquiv
-          (K := ℚ) (L := U₀)
-          (RelativeIdeleGroup.classEmbedding
-            (f.restrictScalars ℚ) dℚ) =
-        _root_.relativeIdeleClassBaseChangeMulEquiv
-          (K := F₀) (L := U₀)
-          (RelativeIdeleGroup.classEmbedding f dF) := by
-    exact relativeIdeleClassBaseChange_classEmbedding_changeBase
-      (k := ℚ) (F := F₀) (E := E₀) (U := U₀) f c
-  rw [← hbase ((rationalFiniteTowerNormalInclusion K L hLK).comp
-    (rationalFiniteTowerCosetEquiv K L hLK q))]
-  obtain ⟨sigma, rfl⟩ :=
-    QuotientGroup.mk_surjective q
-  rw [← rationalFiniteTower_restrictedEmbedding K L hLK sigma]
-  change
-    Additive.toMul
-        (Additive.ofMul
-          (sigma.1 • rationalIntermediateIdeleClassToDirectLimit EQ₀ c)) =
-      rationalIntermediateIdeleClassToDirectLimit U₀
-        (_root_.relativeIdeleClassBaseChangeMulEquiv
-          (K := ℚ) (L := U₀)
-          (RelativeIdeleGroup.classEmbedding
-            ((AlgEquiv.restrictNormalHom U₀ sigma.1).toAlgHom.comp
-              (rationalFiniteTowerUpperInclusion K L hLK)) dℚ))
-  exact rationalFiniteTower_representativeAction K L hLK c sigma
+  let a := rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
+    K L hLK (Additive.ofMul c)
+  let term (q : Q₀) : Additive (ideleClassDirectLimit ℚ) :=
+    relativeCosetAction (ideleClassRepresentation ℚ) K L hLK a q
+  let g := rationalIntermediateIdeleClassToDirectLimit U₀
+  let P (q : Q₀) := (term q).toMul = g (rationalFiniteTowerEmbeddedClass K L hLK c q)
+  have hp (σ : K.toSubgroup) : P (QuotientGroup.mk σ) := by
+    let f := (rationalFiniteTowerNormalInclusion K L hLK).comp
+      (rationalFiniteTowerCosetEquiv K L hLK (QuotientGroup.mk σ))
+    let τ := AlgEquiv.restrictNormalHom U₀ σ.1
+    let embed (j : EQ₀ →ₐ[ℚ] U₀) := g
+      (relativeIdeleClassBaseChangeMulEquiv (K := ℚ) (L := U₀)
+        (RelativeIdeleGroup.classEmbedding j dℚ))
+    have h₀ := rationalFiniteTower_representativeAction K L hLK c σ
+    have h₁ := congrArg embed (rationalFiniteTower_restrictedEmbedding K L hLK σ)
+    have h₂ := congrArg g (relativeIdeleClassBaseChange_classEmbedding_changeBase
+      (k := ℚ) (F := F₀) (E := E₀) (U := U₀) f c)
+    change (term (QuotientGroup.mk σ)).toMul = _
+    have hact : (term (QuotientGroup.mk σ)).toMul =
+        σ.1 • rationalIntermediateIdeleClassToDirectLimit EQ₀ c := by
+      exact congrArg Additive.toMul
+        (relativeCosetAction_mk (ideleClassRepresentation ℚ) K L hLK a σ)
+    exact hact.trans (h₀.trans (h₁.trans h₂))
+  let mk : K.toSubgroup → Q₀ := QuotientGroup.mk
+  have hm : Function.Surjective mk := QuotientGroup.mk_surjective
+  exact (hm.forall.mpr hp) q
 
 private theorem rationalFiniteTower_product_embeddedClass
     (c : IdeleClassGroup E₀) :
@@ -489,13 +494,16 @@ private theorem
           (rationalFiniteTowerNormalInclusion K L hLK)
           (RelativeIdeleGroup.classInclusion F₀ N₀ x)) =
       _root_.ideleClassExtension F₀ U₀ x := by
-  rw [rationalFiniteTowerNormalInclusion_eq_toAlgHom K L hLK]
-  rw [relativeIdeleClassBaseChange_classEmbedding_toAlgHom
-    (K := F₀) (M := N₀) (L := U₀)]
-  exact
-    (congrArg (_root_.ideleClassExtension N₀ U₀)
-      (rationalFiniteTower_baseChange_classInclusion K L hLK x)).trans
-        (rationalFiniteTower_ideleClassExtension_comp_apply K L hLK x)
+  let d := RelativeIdeleGroup.classInclusion F₀ N₀ x
+  let e := relativeIdeleClassBaseChangeMulEquiv (K := F₀) (L := U₀)
+  have h₀ := congrArg (fun j : N₀ →ₐ[F₀] U₀ => e (RelativeIdeleGroup.classEmbedding j d))
+    (rationalFiniteTowerNormalInclusion_eq_toAlgHom K L hLK)
+  have h₁ := relativeIdeleClassBaseChange_classEmbedding_toAlgHom
+    (K := F₀) (M := N₀) (L := U₀) d
+  have h₂ := congrArg (ideleClassExtension N₀ U₀)
+    (rationalFiniteTower_baseChange_classInclusion K L hLK x)
+  exact h₀.trans (h₁.trans
+    (h₂.trans (rationalFiniteTower_ideleClassExtension_comp_apply K L hLK x)))
 
 private theorem rationalFiniteTower_directLimit_ideleClassExtension
     (x : IdeleClassGroup F₀) :
@@ -503,17 +511,8 @@ private theorem rationalFiniteTower_directLimit_ideleClassExtension
         (U₀ : IntermediateField ℚ (SeparableClosure ℚ))
         (_root_.ideleClassExtension F₀ U₀ x) =
       rationalIntermediateIdeleClassToDirectLimit F₀ x := by
-  let dℚF : RelativeIdeleGroup.ClassGroup ℚ F₀ :=
-    (_root_.relativeIdeleClassBaseChangeMulEquiv
-      (K := ℚ) (L := F₀)).symm x
-  have hext := rationalIntermediateIdeleClassToDirectLimit_extension
-    (rationalFiniteTower_lower_le_rationalNormalClosure K L hLK) dℚF
-  rw [rationalFiniteTowerLowerInclusion_eq_toAlgHom K L hLK] at hext
-  rw [relativeIdeleClassBaseChange_classEmbedding_toAlgHom
-    (K := ℚ) (M := F₀) (L := U₀) dℚF] at hext
-  rw [(_root_.relativeIdeleClassBaseChangeMulEquiv
-    (K := ℚ) (L := F₀)).apply_symm_apply] at hext
-  exact hext
+  exact rationalIntermediateIdeleClassToDirectLimit_ordinaryExtension
+    (rationalFiniteTower_lower_le_rationalNormalClosure K L hLK) x
 
 private theorem rationalFiniteTower_relativeClassNorm_eq_ordinaryNorm
     (c : IdeleClassGroup E₀) :
@@ -612,39 +611,58 @@ private theorem rationalFiniteTower_product_embeddings_eq_norm
         (_root_.ideleClassNorm F₀ E₀ c) :=
       rationalFiniteTower_directLimit_extension_eq_norm K L hLK c
 
+private theorem mapped_additive_sum_toMul
+    {A B X : Type*} [CommMonoid A] [CommMonoid B] [Fintype X]
+    (g : A →* B) (f : X → A) :
+    (g.toAdditive (∑ x, Additive.ofMul (f x))).toMul = ∏ x, g (f x) := by
+  rw [map_sum, toMul_sum]
+  rfl
+
+private theorem rationalFiniteTower_sum_embeddings_eq_norm
+    (c : IdeleClassGroup E₀) :
+    (rationalIntermediateIdeleClassToDirectLimit U₀).toAdditive
+        (∑ q : Q₀, Additive.ofMul (rationalFiniteTowerEmbeddedClass K L hLK c q)) =
+      Additive.ofMul (rationalIntermediateIdeleClassToDirectLimit F₀
+        (_root_.ideleClassNorm F₀ E₀ c)) := by
+  let g := rationalIntermediateIdeleClassToDirectLimit U₀
+  let b : Q₀ → IdeleClassGroup U₀ := rationalFiniteTowerEmbeddedClass K L hLK c
+  have h₁ := mapped_additive_sum_toMul (B := (ideleClassDirectLimit ℚ)) g b
+  have h₂ := rationalFiniteTower_product_embeddings_eq_norm K L hLK c
+  exact Additive.toMul.injective (h₁.trans h₂)
+
+private theorem rationalAbstractRelativeFixedFieldNorm_val
+    (c : IdeleClassGroup E₀) :
+    (relativeNorm (ideleClassRepresentation ℚ) K L hLK
+        (rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
+          K L hLK (Additive.ofMul c))).1 =
+      Additive.ofMul (rationalIntermediateIdeleClassToDirectLimit F₀
+        (_root_.ideleClassNorm F₀ E₀ c)) := by
+  let a := rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
+    K L hLK (Additive.ofMul c)
+  let g := rationalIntermediateIdeleClassToDirectLimit U₀
+  let i := g.toAdditive
+  let f (q : Q₀) := Additive.ofMul (rationalFiniteTowerEmbeddedClass K L hLK c q)
+  have hPoint (q : Q₀) : relativeCosetAction (ideleClassRepresentation ℚ) K L hLK a q =
+      i (f q) :=
+    Additive.toMul.injective (rationalRelativeFixedFieldCosetActionPointwise K L hLK c q)
+  have hSum := relativeNorm_eq_mapped_sum (ideleClassRepresentation ℚ) K L hLK a
+    i (Equiv.refl Q₀) f hPoint
+  have hValue := rationalFiniteTower_sum_embeddings_eq_norm K L hLK c
+  exact hSum.trans hValue
+
 private theorem rationalAbstractRelativeFixedFieldNormCore
     (c : IdeleClassGroup E₀) :
-    relativeNorm rationalIdeleClassRepresentation K L hLK
+    relativeNorm (ideleClassRepresentation ℚ) K L hLK
         (rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
           K L hLK (Additive.ofMul c)) =
       rationalAbstractFixedFieldIdeleClassEquivFixed K
         (Additive.ofMul (_root_.ideleClassNorm F₀ E₀ c)) := by
-  let a :=
-    rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
-      K L hLK (Additive.ofMul c)
-  let term : Q₀ → Additive rationalIdeleClassDirectLimit :=
-    fun q =>
-      (relativeCosetAction rationalIdeleClassRepresentation
-        K L hLK a q : Additive rationalIdeleClassDirectLimit)
   apply Subtype.ext
-  apply Additive.toMul.injective
-  change
-    Additive.toMul (∑ q : Q₀, term q) =
-      rationalIntermediateIdeleClassToDirectLimit F₀
-        (_root_.ideleClassNorm F₀ E₀ c)
-  rw [toMul_sum]
-  calc
-    ∏ q : Q₀, Additive.toMul (term q) =
-        ∏ q : Q₀,
-          rationalIntermediateIdeleClassToDirectLimit
-            (U₀ : IntermediateField ℚ (SeparableClosure ℚ))
-            (rationalFiniteTowerEmbeddedClass K L hLK c q) := by
-      apply Finset.prod_congr rfl
-      intro q _
-      exact rationalRelativeFixedFieldCosetActionPointwise K L hLK c q
-    _ = rationalIntermediateIdeleClassToDirectLimit F₀
-        (_root_.ideleClassNorm F₀ E₀ c) :=
-      rationalFiniteTower_product_embeddings_eq_norm K L hLK c
+  let b := Additive.ofMul (_root_.ideleClassNorm F₀ E₀ c)
+  have hb : (rationalAbstractFixedFieldIdeleClassEquivFixed K b).1 =
+      Additive.ofMul (rationalIntermediateIdeleClassToDirectLimit F₀ b.toMul) := by
+    exact rationalAbstractFixedFieldIdeleClassEquivFixed_coe K b
+  exact (rationalAbstractRelativeFixedFieldNorm_val K L hLK c).trans hb.symm
 
 /-- The abstract relative norm agrees with the ordinary idèle-class norm
 for every finite tower of rational fixed fields. -/

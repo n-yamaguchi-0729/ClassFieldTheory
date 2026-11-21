@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.Algebra.FixedFieldTransfer
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldSymbol
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.ClassFormation.Representation
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediateTower
@@ -85,58 +86,6 @@ theorem abstractFixedClassEquiv_baseChange (H J : FiniteAbstractField Gal(Ω/K))
       (abstractFixedField K Ω J.field) (abstractFixedField_le K Ω hJH) c.toMul)
 
 end FixedCoefficients
-
-section FiniteTransfer
-
-variable (K : Type v) (Ω : Type w) [Field K] [Field Ω] [Algebra K Ω] [IsGalois K Ω]
-    (T : FiniteAbstractFieldExtension Gal(Ω/K)) (U : ClosedSubgroup Gal(Ω/K))
-    (hU : U.toSubgroup ≤ T.field.field.toSubgroup)
-    [hUnormal : (extensionSubgroup T.base.field U (hU.trans T.below)).Normal]
-    [hUfinite : Finite (T.base.field.toSubgroup ⧸
-      extensionSubgroup T.base.field U (hU.trans T.below))]
-
-/-- The original finite group transfer, with values in the actual relative
-Galois abelianizations of the same fixed fields. -/
-def fixedFieldAbelianizedTransfer :
-    Abelianization Gal((abstractRelativeFixedField K Ω (hU.trans T.below))/
-      (abstractFixedField K Ω T.base.field)) →*
-    Abelianization Gal((abstractRelativeFixedField K Ω hU)/
-      (abstractFixedField K Ω T.field.field)) := by
-  have hUnormal' : (extensionSubgroup T.field.field U hU).Normal :=
-    transferNormNaturality_intermediateExtension_normal
-      T.base.field T.field.field U hU T.below
-  let eH := abstractExtensionQuotientEquivGaloisGroup
-    K Ω T.base.field U (hU.trans T.below) hUnormal
-  let eJ := abstractExtensionQuotientEquivGaloisGroup
-    K Ω T.field.field U hU hUnormal'
-  exact eJ.abelianizationCongr.toMonoidHom.comp
-    ((transferNormNaturalityTransfer T.base.field T.field.field U hU T.below).comp
-      eH.abelianizationCongr.symm.toMonoidHom)
-
-/-- On the original quotient representative the map is precisely finite group transfer. -/
-theorem fixedFieldAbelianizedTransfer_apply
-    (x : Abelianization (T.base.field.toSubgroup ⧸
-      extensionSubgroup T.base.field U (hU.trans T.below))) :
-    let hUnormal' : (extensionSubgroup T.field.field U hU).Normal :=
-      transferNormNaturality_intermediateExtension_normal
-        T.base.field T.field.field U hU T.below
-    fixedFieldAbelianizedTransfer K Ω T U hU
-        ((abstractExtensionQuotientEquivGaloisGroup K Ω T.base.field U
-          (hU.trans T.below) hUnormal).abelianizationCongr x) =
-      (abstractExtensionQuotientEquivGaloisGroup K Ω T.field.field U
-        hU hUnormal').abelianizationCongr
-          (transferNormNaturalityTransfer T.base.field T.field.field U hU T.below x) := by
-  intro hUnormal'
-  change (abstractExtensionQuotientEquivGaloisGroup K Ω T.field.field U
-      hU hUnormal').abelianizationCongr
-    (transferNormNaturalityTransfer T.base.field T.field.field U hU T.below
-      ((abstractExtensionQuotientEquivGaloisGroup K Ω T.base.field U
-        (hU.trans T.below) hUnormal).abelianizationCongr.symm
-        ((abstractExtensionQuotientEquivGaloisGroup K Ω T.base.field U
-          (hU.trans T.below) hUnormal).abelianizationCongr x))) = _
-  rw [MulEquiv.symm_apply_apply]
-
-end FiniteTransfer
 
 section ArtinTransfer
 

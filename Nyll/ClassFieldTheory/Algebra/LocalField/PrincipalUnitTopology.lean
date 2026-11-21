@@ -60,4 +60,12 @@ theorem isOpen_fieldPrincipalUnits (n : ℕ) :
   exact (isOpenEmbedding_integerUnitsToFieldUnits F).isOpenMap _
     (isOpen_principalUnits F n)
 
+/-- Every principal-unit step is compact inside the field unit group. -/
+theorem isCompact_fieldPrincipalUnits (n : ℕ) :
+    IsCompact (fieldPrincipalUnits F n : Set Fˣ) := by
+  let : T2Space F := localFieldT2Space F
+  let : CompactSpace 𝒪[F]ˣ := inferInstanceAs (CompactSpace (localUnits_profinite F))
+  exact (((principalUnits F n).isClosed_of_isOpen (isOpen_principalUnits F n)).isCompact).image
+    (isOpenEmbedding_integerUnitsToFieldUnits F).continuous
+
 end LocalFieldTheory

@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChangeCoherence
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayReconstruction
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.NativeRayArtinTransfer
@@ -35,7 +36,7 @@ namespace FunctionField.RayClass
 
 -- Reuse the native closure owners already used by the transfer construction.
 attribute [local instance]
-  nativeRayFixedFieldSeparableClosureAlgebra nativeRayFixedFieldSeparableClosureSMul
+  finiteFixedFieldSeparableClosureAlgebra finiteFixedFieldSeparableClosureSMul
 
 private theorem nativeReciprocitySquare
     {A B C D : Type*} [Monoid A] [Monoid B] [Monoid C] [Monoid D]
@@ -66,54 +67,54 @@ variable {k₁ K₁ L₁ k₂ K₂ L₂ : Type*}
     (e : Place k₁ K₁ ≃ Place k₂ K₂)
     (eF : Place k₁ L₁ ≃ Place k₂ L₂)
 
-local notation "M₁" => rayModulusBaseChange L₁ m₁
-local notation "M₂" => rayModulusBaseChange L₂ m₂
+local notation "M₁" => reindexAlongPlaces L₁ m₁
+local notation "M₂" => reindexAlongPlaces L₂ m₂
 
 variable
     (γ : (localAbsoluteAbelianProfinite K₁ ⧸ artinRaySubgroup m₁) ≃*
       (localAbsoluteAbelianProfinite K₂ ⧸ artinRaySubgroup m₂))
-    (Γ : (localAbsoluteAbelianProfinite L₁ ⧸ artinRaySubgroup (rayModulusBaseChange L₁ m₁)) ≃*
-      (localAbsoluteAbelianProfinite L₂ ⧸ artinRaySubgroup (rayModulusBaseChange L₂ m₂)))
+    (Γ : (localAbsoluteAbelianProfinite L₁ ⧸ artinRaySubgroup (reindexAlongPlaces L₁ m₁)) ≃*
+      (localAbsoluteAbelianProfinite L₂ ⧸ artinRaySubgroup (reindexAlongPlaces L₂ m₂)))
     (hclosure : ∀ v g,
       g ∈ (localRayAbsoluteArtin m₁ v).range.topologicalClosure ↔
         γ g ∈ (localRayAbsoluteArtin m₂ (e v)).range.topologicalClosure)
     (hdegree : ∀ g, rayAbelianDegree m₂ (γ g) = rayAbelianDegree m₁ g)
     (hclosureF : ∀ w g,
-      g ∈ (localRayAbsoluteArtin (rayModulusBaseChange L₁ m₁) w).range.topologicalClosure ↔
-        Γ g ∈ (localRayAbsoluteArtin (rayModulusBaseChange L₂ m₂) (eF w)).range.topologicalClosure)
-    (hdegreeF : ∀ g, rayAbelianDegree (rayModulusBaseChange L₂ m₂) (Γ g) =
-      rayAbelianDegree (rayModulusBaseChange L₁ m₁) g)
+      g ∈ (localRayAbsoluteArtin (reindexAlongPlaces L₁ m₁) w).range.topologicalClosure ↔
+        Γ g ∈ (localRayAbsoluteArtin (reindexAlongPlaces L₂ m₂) (eF w)).range.topologicalClosure)
+    (hdegreeF : ∀ g, rayAbelianDegree (reindexAlongPlaces L₂ m₂) (Γ g) =
+      rayAbelianDegree (reindexAlongPlaces L₁ m₁) g)
     (hboundary₁ : ∀ v : Place k₁ K₁, ∃ z : Place k₁ K₁, z ≠ v ∧ m₁ z ≠ 0)
     (hboundary₂ : ∀ v : Place k₂ K₂, ∃ z : Place k₂ K₂, z ≠ v ∧ m₂ z ≠ 0)
 
-local notation "hbF₁" => rayModulusBaseChange_other_boundary (L := L₁) m₁ hboundary₁
-local notation "hbF₂" => rayModulusBaseChange_other_boundary (L := L₂) m₂ hboundary₂
+local notation "hbF₁" => reindexAlongPlaces_other_boundary (L := L₁) m₁ hboundary₁
+local notation "hbF₂" => reindexAlongPlaces_other_boundary (L := L₂) m₂ hboundary₂
 local notation "ρ" => reconstructedRestrictedRayEquiv m₁ m₂ e γ
   hclosure hdegree hboundary₁ hboundary₂
 local notation "ρF" => reconstructedRestrictedRayEquiv M₁ M₂ eF Γ
   hclosureF hdegreeF hbF₁ hbF₂
-local notation "b₁" => restrictedRayBaseChange (L := L₁) m₁ hm₁
-local notation "b₂" => restrictedRayBaseChange (L := L₂) m₂ hm₂
+local notation "b₁" => restrictedRayBaseChange (L := L₁) m₁
+local notation "b₂" => restrictedRayBaseChange (L := L₂) m₂
 
 variable
     (τ₁ : (localAbsoluteAbelianProfinite K₁ ⧸ artinRaySubgroup m₁) →ₜ*
-      (localAbsoluteAbelianProfinite L₁ ⧸ artinRaySubgroup (rayModulusBaseChange L₁ m₁)))
+      (localAbsoluteAbelianProfinite L₁ ⧸ artinRaySubgroup (reindexAlongPlaces L₁ m₁)))
     (τ₂ : (localAbsoluteAbelianProfinite K₂ ⧸ artinRaySubgroup m₂) →ₜ*
-      (localAbsoluteAbelianProfinite L₂ ⧸ artinRaySubgroup (rayModulusBaseChange L₂ m₂)))
+      (localAbsoluteAbelianProfinite L₂ ⧸ artinRaySubgroup (reindexAlongPlaces L₂ m₂)))
     (hplaces : ∀ w : Place k₁ L₁, (eF w).restrict K₂ = e (w.restrict K₁))
     (hindex : ∀ w : Place k₁ L₁,
       w.ramificationIndex K₁ = (eF w).ramificationIndex K₂)
     (htransfer : ∀ g, Γ (τ₁ g) = τ₂ (γ g))
     (hlower :
-      (restrictedProductAbsoluteArtin (rayModulusBaseChange L₁ m₁)).comp
-        (restrictedRayBaseChange (L := L₁) m₁ hm₁) =
+      (restrictedProductAbsoluteArtin (reindexAlongPlaces L₁ m₁)).comp
+        (restrictedRayBaseChange (L := L₁) m₁) =
       τ₁.toMonoidHom.comp (restrictedProductAbsoluteArtin m₁))
     (hupper :
-      (restrictedProductAbsoluteArtin (rayModulusBaseChange L₂ m₂)).comp
-        (restrictedRayBaseChange (L := L₂) m₂ hm₂) =
+      (restrictedProductAbsoluteArtin (reindexAlongPlaces L₂ m₂)).comp
+        (restrictedRayBaseChange (L := L₂) m₂) =
       τ₂.toMonoidHom.comp (restrictedProductAbsoluteArtin m₂))
 
-include hplaces hindex htransfer hlower hupper
+include hm₁ hm₂ hplaces hindex htransfer hlower hupper
 
 -- Carry out the separation, principal-kernel restriction, and adjoining zero
 -- over abstract finite extensions; fixed-field presentations are supplied below.
@@ -156,7 +157,7 @@ local notation "η" => reconstructedRayFunctionUnits m₁ m₂ e γ
   hclosure hdegree hboundary₁ hboundary₂ hmzero₁ hmzero₂
 local notation "ηF" => reconstructedRayFunctionUnits M₁ M₂ eF Γ
   hclosureF hdegreeF hbF₁ hbF₂
-  (rayModulusBaseChange_ne_zero m₁ hmzero₁) (rayModulusBaseChange_ne_zero m₂ hmzero₂)
+  (reindexAlongPlaces_ne_zero m₁ hmzero₁) (reindexAlongPlaces_ne_zero m₂ hmzero₂)
 
 private theorem reconstructedRayFunctionUnits_baseChange_core (x : K₁ˣ) :
     ηF (Units.map (algebraMap K₁ L₁) x) = Units.map (algebraMap K₂ L₂) (η x) := by
@@ -171,11 +172,11 @@ private theorem reconstructedRayFunctionUnits_baseChange_core (x : K₁ˣ) :
     hclosure hdegree hboundary₁ hboundary₂ hmzero₁ hmzero₂ x
   have hprincipalUpper := reconstructedRayFunctionUnits_principal M₁ M₂ eF Γ
     hclosureF hdegreeF hbF₁ hbF₂
-    (rayModulusBaseChange_ne_zero m₁ hmzero₁) (rayModulusBaseChange_ne_zero m₂ hmzero₂)
+    (reindexAlongPlaces_ne_zero m₁ hmzero₁) (reindexAlongPlaces_ne_zero m₂ hmzero₂)
     (Units.map (algebraMap K₁ L₁) x)
   simp only [principalRestrictedArtinKernelEquiv_coe] at hprincipalLower hprincipalUpper
   apply (principalRestrictedArtinKernelEquiv M₂
-    (rayModulusBaseChange_ne_zero m₂ hmzero₂)).injective
+    (reindexAlongPlaces_ne_zero m₂ hmzero₂)).injective
   apply Subtype.ext
   simp only [principalRestrictedArtinKernelEquiv_coe]
   calc
@@ -183,19 +184,19 @@ private theorem reconstructedRayFunctionUnits_baseChange_core (x : K₁ˣ) :
         ρF (principalToRayRestrictedProduct M₁ (Units.map (algebraMap K₁ L₁) x)) :=
       hprincipalUpper
     _ = ρF (b₁ (principalToRayRestrictedProduct m₁ x)) :=
-      congrArg ρF (restrictedRayBaseChange_principal m₁ hm₁ x).symm
+      congrArg ρF (restrictedRayBaseChange_principal m₁ x).symm
     _ = b₂ (ρ (principalToRayRestrictedProduct m₁ x)) :=
       DFunLike.congr_fun hcoherence (principalToRayRestrictedProduct m₁ x)
     _ = b₂ (principalToRayRestrictedProduct m₂ (η x)) :=
       congrArg b₂ hprincipalLower.symm
     _ = principalToRayRestrictedProduct M₂ (Units.map (algebraMap K₂ L₂) (η x)) :=
-      restrictedRayBaseChange_principal m₂ hm₂ (η x)
+      restrictedRayBaseChange_principal m₂ (η x)
 
 local notation "η₀" => reconstructedRayFunction m₁ m₂ e γ
   hclosure hdegree hboundary₁ hboundary₂ hmzero₁ hmzero₂
 local notation "ηF₀" => reconstructedRayFunction M₁ M₂ eF Γ
   hclosureF hdegreeF hbF₁ hbF₂
-  (rayModulusBaseChange_ne_zero m₁ hmzero₁) (rayModulusBaseChange_ne_zero m₂ hmzero₂)
+  (reindexAlongPlaces_ne_zero m₁ hmzero₁) (reindexAlongPlaces_ne_zero m₂ hmzero₂)
 
 private theorem reconstructedRayFunction_baseChange_core (x : K₁) :
     ηF₀ (algebraMap K₁ L₁ x) = algebraMap K₂ L₂ (η₀ x) := by
@@ -246,7 +247,7 @@ theorem reconstructedRestrictedRayEquiv_fixedField_baseChange
     let : FiniteDimensional K₁ F₁ :=
       abstractFixedField_finiteDimensional K₁ (SeparableClosure K₁) H₁.field H₁.finite
     let : FunctionField k₁ F₁ :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k₁) (K := K₁) (Ω := SeparableClosure K₁) F₁
     let : HasPrincipalDivisors k₁ F₁ :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k₁ K₁ F₁).toHasPrincipalDivisors
@@ -264,7 +265,7 @@ theorem reconstructedRestrictedRayEquiv_fixedField_baseChange
     let : FiniteDimensional K₂ F₂ :=
       abstractFixedField_finiteDimensional K₂ (SeparableClosure K₂) H₂.field H₂.finite
     let : FunctionField k₂ F₂ :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k₂) (K := K₂) (Ω := SeparableClosure K₂) F₂
     let : HasPrincipalDivisors k₂ F₂ :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k₂ K₂ F₂).toHasPrincipalDivisors
@@ -274,8 +275,8 @@ theorem reconstructedRestrictedRayEquiv_fixedField_baseChange
       (hm₁ : ∀ v, m₁ v ≤ 1) (hm₂ : ∀ v, m₂ v ≤ 1)
       (e : Place k₁ K₁ ≃ Place k₂ K₂)
       (eF : Place k₁ F₁ ≃ Place k₂ F₂),
-    let M₁ := rayModulusBaseChange F₁ m₁
-    let M₂ := rayModulusBaseChange F₂ m₂
+    let M₁ := reindexAlongPlaces F₁ m₁
+    let M₂ := reindexAlongPlaces F₂ m₂
     ∀ (γ : (localAbsoluteAbelianProfinite K₁ ⧸ artinRaySubgroup m₁) ≃*
         (localAbsoluteAbelianProfinite K₂ ⧸ artinRaySubgroup m₂))
       (Γ : (localAbsoluteAbelianProfinite F₁ ⧸ artinRaySubgroup M₁) ≃*
@@ -290,8 +291,8 @@ theorem reconstructedRestrictedRayEquiv_fixedField_baseChange
       (hdegreeF : ∀ g, rayAbelianDegree M₂ (Γ g) = rayAbelianDegree M₁ g)
       (hboundary₁ : ∀ v : Place k₁ K₁, ∃ z : Place k₁ K₁, z ≠ v ∧ m₁ z ≠ 0)
       (hboundary₂ : ∀ v : Place k₂ K₂, ∃ z : Place k₂ K₂, z ≠ v ∧ m₂ z ≠ 0),
-    let hbF₁ := rayModulusBaseChange_other_boundary (L := F₁) m₁ hboundary₁
-    let hbF₂ := rayModulusBaseChange_other_boundary (L := F₂) m₂ hboundary₂
+    let hbF₁ := reindexAlongPlaces_other_boundary (L := F₁) m₁ hboundary₁
+    let hbF₂ := reindexAlongPlaces_other_boundary (L := F₂) m₂ hboundary₂
     let τ₁ := nativeRayTransferOfFixedField k₁ K₁ H₁ ε₁ m₁ hm₁
     let τ₂ := nativeRayTransferOfFixedField k₂ K₂ H₂ ε₂ m₂ hm₂
     ∀ (_ : ∀ w : Place k₁ F₁, (eF w).restrict K₂ = e (w.restrict K₁))
@@ -302,8 +303,8 @@ theorem reconstructedRestrictedRayEquiv_fixedField_baseChange
       hclosure hdegree hboundary₁ hboundary₂
     let ρF := reconstructedRestrictedRayEquiv M₁ M₂ eF Γ
       hclosureF hdegreeF hbF₁ hbF₂
-    let b₁ := restrictedRayBaseChange (L := F₁) m₁ hm₁
-    let b₂ := restrictedRayBaseChange (L := F₂) m₂ hm₂
+    let b₁ := restrictedRayBaseChange (L := F₁) m₁
+    let b₂ := restrictedRayBaseChange (L := F₂) m₂
     (ρF).toMonoidHom.comp b₁ = (b₂).comp (ρ).toMonoidHom := by
   intro F₁ F₂ ak₁Ω aR₁Ω hk₁K₁Ω hR₁K₁Ω hk₁R₁Ω hK₁F₁ hF₁field hF₁principal
     ak₂Ω aR₂Ω hk₂K₂Ω hR₂K₂Ω hk₂R₂Ω hK₂F₂ hF₂field hF₂principal
@@ -358,7 +359,7 @@ theorem reconstructedRayFunctionUnits_fixedField_baseChange
     let : FiniteDimensional K₁ F₁ :=
       abstractFixedField_finiteDimensional K₁ (SeparableClosure K₁) H₁.field H₁.finite
     let : FunctionField k₁ F₁ :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k₁) (K := K₁) (Ω := SeparableClosure K₁) F₁
     let : HasPrincipalDivisors k₁ F₁ :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k₁ K₁ F₁).toHasPrincipalDivisors
@@ -376,7 +377,7 @@ theorem reconstructedRayFunctionUnits_fixedField_baseChange
     let : FiniteDimensional K₂ F₂ :=
       abstractFixedField_finiteDimensional K₂ (SeparableClosure K₂) H₂.field H₂.finite
     let : FunctionField k₂ F₂ :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k₂) (K := K₂) (Ω := SeparableClosure K₂) F₂
     let : HasPrincipalDivisors k₂ F₂ :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k₂ K₂ F₂).toHasPrincipalDivisors
@@ -386,8 +387,8 @@ theorem reconstructedRayFunctionUnits_fixedField_baseChange
       (hm₁ : ∀ v, m₁ v ≤ 1) (hm₂ : ∀ v, m₂ v ≤ 1)
       (e : Place k₁ K₁ ≃ Place k₂ K₂)
       (eF : Place k₁ F₁ ≃ Place k₂ F₂),
-    let M₁ := rayModulusBaseChange F₁ m₁
-    let M₂ := rayModulusBaseChange F₂ m₂
+    let M₁ := reindexAlongPlaces F₁ m₁
+    let M₂ := reindexAlongPlaces F₂ m₂
     ∀ (γ : (localAbsoluteAbelianProfinite K₁ ⧸ artinRaySubgroup m₁) ≃*
         (localAbsoluteAbelianProfinite K₂ ⧸ artinRaySubgroup m₂))
       (Γ : (localAbsoluteAbelianProfinite F₁ ⧸ artinRaySubgroup M₁) ≃*
@@ -402,8 +403,8 @@ theorem reconstructedRayFunctionUnits_fixedField_baseChange
       (hdegreeF : ∀ g, rayAbelianDegree M₂ (Γ g) = rayAbelianDegree M₁ g)
       (hboundary₁ : ∀ v : Place k₁ K₁, ∃ z : Place k₁ K₁, z ≠ v ∧ m₁ z ≠ 0)
       (hboundary₂ : ∀ v : Place k₂ K₂, ∃ z : Place k₂ K₂, z ≠ v ∧ m₂ z ≠ 0),
-    let hbF₁ := rayModulusBaseChange_other_boundary (L := F₁) m₁ hboundary₁
-    let hbF₂ := rayModulusBaseChange_other_boundary (L := F₂) m₂ hboundary₂
+    let hbF₁ := reindexAlongPlaces_other_boundary (L := F₁) m₁ hboundary₁
+    let hbF₂ := reindexAlongPlaces_other_boundary (L := F₂) m₂ hboundary₂
     let τ₁ := nativeRayTransferOfFixedField k₁ K₁ H₁ ε₁ m₁ hm₁
     let τ₂ := nativeRayTransferOfFixedField k₂ K₂ H₂ ε₂ m₂ hm₂
     ∀ (_ : ∀ w : Place k₁ F₁, (eF w).restrict K₂ = e (w.restrict K₁))
@@ -415,7 +416,7 @@ theorem reconstructedRayFunctionUnits_fixedField_baseChange
       hclosure hdegree hboundary₁ hboundary₂ hmzero₁ hmzero₂
     let ηF := reconstructedRayFunctionUnits M₁ M₂ eF Γ
       hclosureF hdegreeF hbF₁ hbF₂
-      (rayModulusBaseChange_ne_zero m₁ hmzero₁) (rayModulusBaseChange_ne_zero m₂ hmzero₂)
+      (reindexAlongPlaces_ne_zero m₁ hmzero₁) (reindexAlongPlaces_ne_zero m₂ hmzero₂)
     ∀ x : K₁ˣ,
     ηF (Units.map (algebraMap K₁ F₁) x) =
       Units.map (algebraMap K₂ F₂) (η x) := by
@@ -472,7 +473,7 @@ theorem reconstructedRayFunction_fixedField_baseChange
     let : FiniteDimensional K₁ F₁ :=
       abstractFixedField_finiteDimensional K₁ (SeparableClosure K₁) H₁.field H₁.finite
     let : FunctionField k₁ F₁ :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k₁) (K := K₁) (Ω := SeparableClosure K₁) F₁
     let : HasPrincipalDivisors k₁ F₁ :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k₁ K₁ F₁).toHasPrincipalDivisors
@@ -490,7 +491,7 @@ theorem reconstructedRayFunction_fixedField_baseChange
     let : FiniteDimensional K₂ F₂ :=
       abstractFixedField_finiteDimensional K₂ (SeparableClosure K₂) H₂.field H₂.finite
     let : FunctionField k₂ F₂ :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k₂) (K := K₂) (Ω := SeparableClosure K₂) F₂
     let : HasPrincipalDivisors k₂ F₂ :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k₂ K₂ F₂).toHasPrincipalDivisors
@@ -500,8 +501,8 @@ theorem reconstructedRayFunction_fixedField_baseChange
       (hm₁ : ∀ v, m₁ v ≤ 1) (hm₂ : ∀ v, m₂ v ≤ 1)
       (e : Place k₁ K₁ ≃ Place k₂ K₂)
       (eF : Place k₁ F₁ ≃ Place k₂ F₂),
-    let M₁ := rayModulusBaseChange F₁ m₁
-    let M₂ := rayModulusBaseChange F₂ m₂
+    let M₁ := reindexAlongPlaces F₁ m₁
+    let M₂ := reindexAlongPlaces F₂ m₂
     ∀ (γ : (localAbsoluteAbelianProfinite K₁ ⧸ artinRaySubgroup m₁) ≃*
         (localAbsoluteAbelianProfinite K₂ ⧸ artinRaySubgroup m₂))
       (Γ : (localAbsoluteAbelianProfinite F₁ ⧸ artinRaySubgroup M₁) ≃*
@@ -516,8 +517,8 @@ theorem reconstructedRayFunction_fixedField_baseChange
       (hdegreeF : ∀ g, rayAbelianDegree M₂ (Γ g) = rayAbelianDegree M₁ g)
       (hboundary₁ : ∀ v : Place k₁ K₁, ∃ z : Place k₁ K₁, z ≠ v ∧ m₁ z ≠ 0)
       (hboundary₂ : ∀ v : Place k₂ K₂, ∃ z : Place k₂ K₂, z ≠ v ∧ m₂ z ≠ 0),
-    let hbF₁ := rayModulusBaseChange_other_boundary (L := F₁) m₁ hboundary₁
-    let hbF₂ := rayModulusBaseChange_other_boundary (L := F₂) m₂ hboundary₂
+    let hbF₁ := reindexAlongPlaces_other_boundary (L := F₁) m₁ hboundary₁
+    let hbF₂ := reindexAlongPlaces_other_boundary (L := F₂) m₂ hboundary₂
     let τ₁ := nativeRayTransferOfFixedField k₁ K₁ H₁ ε₁ m₁ hm₁
     let τ₂ := nativeRayTransferOfFixedField k₂ K₂ H₂ ε₂ m₂ hm₂
     ∀ (_ : ∀ w : Place k₁ F₁, (eF w).restrict K₂ = e (w.restrict K₁))
@@ -529,7 +530,7 @@ theorem reconstructedRayFunction_fixedField_baseChange
       hclosure hdegree hboundary₁ hboundary₂ hmzero₁ hmzero₂
     let ηF₀ := reconstructedRayFunction M₁ M₂ eF Γ
       hclosureF hdegreeF hbF₁ hbF₂
-      (rayModulusBaseChange_ne_zero m₁ hmzero₁) (rayModulusBaseChange_ne_zero m₂ hmzero₂)
+      (reindexAlongPlaces_ne_zero m₁ hmzero₁) (reindexAlongPlaces_ne_zero m₂ hmzero₂)
     ∀ x : K₁,
     ηF₀ (algebraMap K₁ F₁ x) = algebraMap K₂ F₂ (η₀ x) := by
   intro F₁ F₂ ak₁Ω aR₁Ω hk₁K₁Ω hR₁K₁Ω hk₁R₁Ω hK₁F₁ hF₁field hF₁principal

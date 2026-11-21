@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ValuedFieldTheory.Valuation.DiscreteValuationField.Complete
 public import Nyll.ValuedFieldTheory.LocalField.Padic.PrincipalUnits
 public import Nyll.ValuedFieldTheory.LocalField.Padic.Cyclotomic.TotallyRamified.Existence
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
@@ -108,8 +109,7 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_odd
   rw [AlgebraicNumberTheory.Valuations.padicCyclotomic_finrank_eq_prime_sub_one_mul_pow
     zeta hzeta hgen] at hnorm
   rw [hr_pow] at hnorm
-  simpa [LocalFieldTheory.DiscreteValuationField.fieldNormSubgroup,
-    localNormSubgroup] using hnorm
+  exact hnorm
 
 /-- The prime element `p` is a norm from a primitive prime-power cyclotomic
 extension of `ℚ_p`. -/
@@ -736,8 +736,7 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_zero
   rw [AlgebraicNumberTheory.Valuations.padicCyclotomic_finrank_eq_prime_sub_one_mul_pow
     zeta hzeta hgen] at hnorm
   norm_num at hnorm
-  simpa [LocalFieldTheory.DiscreteValuationField.fieldNormSubgroup,
-    localNormSubgroup] using hnorm
+  exact hnorm
 
 /-- At a dyadic cyclotomic level `2^(m+2)`, all `(m+2)`-nd principal units
 are norms. -/
@@ -833,8 +832,7 @@ theorem fieldPrincipalUnits_le_normSubgroup_cyclotomic_two_succ
     have hsNormRaw :=
       LocalFieldTheory.DiscreteValuationField.fieldNormSubgroup_pow_finrank_mem ℚ_[2] L s
     rw [hfin] at hsNormRaw
-    simpa [LocalFieldTheory.DiscreteValuationField.fieldNormSubgroup,
-      localNormSubgroup] using hsNormRaw
+    exact hsNormRaw
   rcases hsD with hsD | hsD
   · have huDpow :
         (uD : F.valuationSubringˣ) =

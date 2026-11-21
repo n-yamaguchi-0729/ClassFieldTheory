@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassModulus
 public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
-public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Nyll.ClassFieldTheory.Algebra.FractionalIdealFactorization
 
 /-!
 # Fractional ideals prime to a ray modulus
@@ -30,17 +30,7 @@ ray modulus. -/
 def rayClassPrimeToIdeals
     {K : Type u} [Field K] [NumberField K]
     (m : RayClassModulus K) :
-    Subgroup (NumberFieldFractionalIdealGroup K) where
-  carrier := {I | ∀ v, v ∈ m.finitePart.support →
-    FractionalIdeal.count K v
-      (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) = 0}
-  one_mem' v _ := FractionalIdeal.count_one K v
-  mul_mem' {I J} hI hJ v hv := by
-    rw [Units.val_mul,
-      FractionalIdeal.count_mul K v (Units.ne_zero I) (Units.ne_zero J),
-      hI v hv, hJ v hv, add_zero]
-  inv_mem' {I} hI v hv := by
-    rw [Units.val_inv_eq_inv_val, FractionalIdeal.count_inv K v,
-      hI v hv, neg_zero]
+    Subgroup (NumberFieldFractionalIdealGroup K) :=
+  FractionalIdealFactorization.primeTo (F := K) m.finitePart.support
 
 end ClassFieldTheory

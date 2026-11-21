@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
 public import Mathlib.FieldTheory.Galois.Basic
@@ -42,7 +43,7 @@ variable [Algebra.IsSeparable K L]
 
 private theorem completionMapOver_baseChange (v : Place k K) (w : Place k L)
     (hw : w.restrict K = v) (a : IdeleGroup k K) :
-    completionMapOver v w hw (a v : v.adicCompletion) =
+    AlgebraicCurve.Place.completionMapOver v w hw (a v : v.adicCompletion) =
       (baseChange (k := k) (K := K) (L := L) a w : w.adicCompletion) := by
   subst v
   rfl
@@ -69,8 +70,8 @@ theorem algAut_smul_baseChange (σ : L ≃ₐ[K] L) (a : IdeleGroup k K) :
       (g⁻¹ • w).adicCompletion => f (a (w.restrict K)))
     (completionMapOver_algAut σ.symm (w.restrict K) w rfl)
   change placeCompletionRingEquiv g⁻¹ w
-      (completionMapOver (w.restrict K) w rfl (a (w.restrict K))) =
-    completionMapOver (w.restrict K) (g⁻¹ • w)
+      (AlgebraicCurve.Place.completionMapOver (w.restrict K) w rfl (a (w.restrict K))) =
+    AlgebraicCurve.Place.completionMapOver (w.restrict K) (g⁻¹ • w)
       hrestrict (a (w.restrict K)) at h
   rw [completionMapOver_baseChange, completionMapOver_baseChange] at h
   exact h.symm

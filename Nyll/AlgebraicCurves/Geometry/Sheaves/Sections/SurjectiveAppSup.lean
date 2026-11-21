@@ -81,8 +81,6 @@ attribute [-instance] SheafOfModules.symmetricCategory
   AlgebraicGeometry.Scheme.OrderedAffineCoverOf.instLinearOrder
   AlgebraicGeometry.Scheme.OrderedAffineCoverOf.instFintypeIdx
   AlgebraicGeometry.Scheme.Hom.opensMapFinal
-  AlgebraicGeometry.RelPicard.RigidifiedLineBundle.setoid
-  AlgebraicGeometry.RelPicard.RigidifiedLineBundle.instInhabited
 attribute [-simp] AlgebraicGeometry.Scheme.OrderedAffineCover.mk.injEq
   AlgebraicGeometry.OModulePresheaf.mk.sizeOf_spec
   AlgebraicGeometry.Scheme.OrderedAffineCover.mk.sizeOf_spec
@@ -129,8 +127,6 @@ attribute [-simp] AlgebraicGeometry.Scheme.Modules.tensorUnit_eq
   AlgebraicGeometry.OModulePresheaf.AffHom.mk.injEq
   AlgebraicGeometry.OModulePresheaf.Hom.appSections_apply
   AlgebraicGeometry.OModulePresheaf.AffSES.mk.injEq
-  AlgebraicGeometry.RelPicard.RigidifiedLineBundle.mk.sizeOf_spec
-  AlgebraicGeometry.RelPicard.RigidifiedLineBundle.mk.injEq
 
 universe u
 

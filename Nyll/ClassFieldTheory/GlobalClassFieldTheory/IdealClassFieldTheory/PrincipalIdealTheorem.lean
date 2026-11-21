@@ -33,8 +33,6 @@ namespace IdealClassFieldTheory
 
 open NumberField
 
-attribute [local instance]
-  GlobalClassFields.hilbertClassFieldComparison_ideleClassGroupIsMulCommutative
 
 section SmallHilbertIdeleExtension
 
@@ -59,8 +57,7 @@ noncomputable def smallHilbertClassFieldIdeleExtensionMap :
       rintro _ ⟨a, ha, rfl⟩
       change
         ideleClassExtension K L
-            (QuotientGroup.mk'
-              (IdeleGroup.principalSubgroup K) a) ∈
+            (IdeleGroup.toStandardClass K a) ∈
           GlobalClassFields.smallHilbertClassFieldNormSubgroup
       rw [ideleClassExtension_mk]
       exact
@@ -95,29 +92,13 @@ theorem smallHilbertClassFieldIdeleExtensionMap_naturality
       ClassGroup.extendedHom (𝓞 K) (𝓞 L)
         (GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup
           (K := K) q) := by
-  induction q using QuotientGroup.induction_on with
-  | _ c =>
-      induction c using QuotientGroup.induction_on with
-      | _ a =>
-          change
-            GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup
-                (K := L)
-                (QuotientGroup.mk'
-                  GlobalClassFields.smallHilbertClassFieldNormSubgroup
-                  (QuotientGroup.mk'
-                    (IdeleGroup.principalSubgroup L)
-                    (IdeleGroup.extension K L a))) =
-              ClassGroup.extendedHom (𝓞 K) (𝓞 L)
-                (GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup
-                  (K := K)
-                  (QuotientGroup.mk'
-                    GlobalClassFields.smallHilbertClassFieldNormSubgroup
-                    (QuotientGroup.mk'
-                      (IdeleGroup.principalSubgroup K) a)))
-          rw [
-            GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup_mk,
-            GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup_mk,
-            IdeleGroup.idealClass_extension]
+  obtain ⟨c, rfl⟩ := QuotientGroup.mk'_surjective
+    (GlobalClassFields.smallHilbertClassFieldNormSubgroup (K := K)) q
+  obtain ⟨a, rfl⟩ := IdeleGroup.toStandardClass_surjective K c
+  rw [smallHilbertClassFieldIdeleExtensionMap_mk', ideleClassExtension_mk,
+    GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup_mk,
+    GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup_mk,
+    IdeleGroup.idealClass_extension]
 
 end SmallHilbertIdeleExtension
 

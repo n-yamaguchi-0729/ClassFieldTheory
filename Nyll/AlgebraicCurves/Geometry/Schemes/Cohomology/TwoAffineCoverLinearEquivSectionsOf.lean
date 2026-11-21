@@ -85,8 +85,8 @@ end Generic
 
 section ModuleIso
 
-variable {R : Type u} [CommRing R] {X' : Scheme.{u}} (𝒱' : X'.TwoAffineOpenCover)
-  (x' : X' ⟶ Spec (.of R)) {M' P : X'.Modules} (ψ : M' ≅ P)
+variable {R : Type u} [CommRing R] {X' : Scheme.{u}} (x' : X' ⟶ Spec (.of R))
+  (𝒱' : X'.TwoAffineOpenCover) {M' P : X'.Modules} (ψ : M' ≅ P)
 
 /-- The linear equivalence on sections induced by the module isomorphism ψ. -/
 noncomputable def appEquiv (U : X'.Opens) :
@@ -119,7 +119,8 @@ theorem app_res {U V : X'.Opens} (i : V ⟶ U) (m : Γ(M', U)) :
   exact hx
 
 include ψ in
-theorem of_moduleIso :
+/-- A module isomorphism induces linear equivalences in both degrees on the same cover. -/
+theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.sectionsOf_linearEquiv_of_moduleIso :
     Nonempty ((𝒱'.sectionsOf x' M').H0 ≃ₗ[R] (𝒱'.sectionsOf x' P).H0) ∧
       Nonempty ((𝒱'.sectionsOf x' M').H1 ≃ₗ[R] (𝒱'.sectionsOf x' P).H1) := by
   refine h0h1_of_equiv (𝒱'.sectionsOf x' M') (𝒱'.sectionsOf x' P)
@@ -248,7 +249,8 @@ theorem main
       Nonempty ((𝒱.sectionsOf x M).H0 ≃ₗ[R] (𝒱'.sectionsOf x' M').H0) ∧
       Nonempty ((𝒱.sectionsOf x M).H1 ≃ₗ[R] (𝒱'.sectionsOf x' M').H1) := by
   obtain ⟨⟨a0⟩, ⟨a1⟩⟩ := of_pushforward x x' φ hφ 𝒱' M
-  obtain ⟨⟨b0⟩, ⟨b1⟩⟩ := of_moduleIso 𝒱' x' (isoPushforward φ M' M e)
+  obtain ⟨⟨b0⟩, ⟨b1⟩⟩ :=
+    𝒱'.sectionsOf_linearEquiv_of_moduleIso x' (isoPushforward φ M' M e)
   exact ⟨preimageCover φ 𝒱', rfl, rfl, ⟨a0.trans b0.symm⟩, ⟨a1.trans b1.symm⟩⟩
 
 end AlgebraicGeometry.Scheme.TwoAffineOpenCover.Trans
@@ -266,3 +268,35 @@ theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.exists_linearEquiv_se
 end Scheme_TwoAffineOpenCover_exists_linearEquiv_sectionsOf_of_iso
 end AlgebraicCurves.Geometry.Schemes.Proofs
 end ProofImplementation
+
+namespace AlgebraicGeometry.Scheme.TwoAffineOpenCover
+
+open CategoryTheory
+
+universe u
+
+variable {k : Type u} [Field k] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of k))
+  (𝒱 : X.TwoAffineOpenCover) {M M' : X.Modules} (e : M ≅ M')
+
+include e
+
+/-- A module isomorphism preserves both section cohomology dimensions on the fixed cover. -/
+theorem finrank_sectionsOf_H0_H1_congr :
+    Module.finrank k (𝒱.sectionsOf x M).H0 = Module.finrank k (𝒱.sectionsOf x M').H0 ∧
+      Module.finrank k (𝒱.sectionsOf x M).H1 = Module.finrank k (𝒱.sectionsOf x M').H1 := by
+  obtain ⟨⟨e₀⟩, ⟨e₁⟩⟩ := 𝒱.sectionsOf_linearEquiv_of_moduleIso x e
+  exact ⟨e₀.finrank_eq, e₁.finrank_eq⟩
+
+/-- The Euler characteristic computed on a fixed cover is invariant under module isomorphism. -/
+theorem eulerChar_sectionsOf_congr :
+    (Module.finrank k (𝒱.sectionsOf x M).H0 : ℤ) - Module.finrank k (𝒱.sectionsOf x M).H1 =
+      (Module.finrank k (𝒱.sectionsOf x M').H0 : ℤ) - Module.finrank k (𝒱.sectionsOf x M').H1 := by
+  obtain ⟨h₀, h₁⟩ := 𝒱.finrank_sectionsOf_H0_H1_congr x e
+  rw [h₀, h₁]
+
+/-- The dimension of first cohomology on a fixed cover is invariant under module isomorphism. -/
+theorem finrank_sectionsOf_H1_congr :
+    Module.finrank k (𝒱.sectionsOf x M).H1 = Module.finrank k (𝒱.sectionsOf x M').H1 := by
+  exact (𝒱.finrank_sectionsOf_H0_H1_congr x e).2
+
+end AlgebraicGeometry.Scheme.TwoAffineOpenCover

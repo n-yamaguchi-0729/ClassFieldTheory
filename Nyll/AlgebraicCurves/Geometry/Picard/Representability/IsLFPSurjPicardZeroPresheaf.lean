@@ -387,16 +387,6 @@ open _root_.AlgebraicGeometry
 
 variable {R : Type u} [CommRing R]
 
-theorem twoAffineOpenCover_ext {X : Scheme.{u}} {𝒱 𝒲 : X.TwoAffineOpenCover}
-    (h0 : 𝒱.U0 = 𝒲.U0) (h1 : 𝒱.U1 = 𝒲.U1) : 𝒱 = 𝒲 := by
-  obtain ⟨U0, U1, p1, p2, p3, p4⟩ := 𝒱
-  obtain ⟨U0', U1', q1, q2, q3, q4⟩ := 𝒲
-  change U0 = U0' at h0
-  change U1 = U1' at h1
-  subst h0
-  subst h1
-  rfl
-
 theorem finrank_sectionsOf_eq_of_iso {S : Type u} [CommRing S] {X : Scheme.{u}}
     (x : X ⟶ Spec (CommRingCat.of S))
     (𝒱 : X.TwoAffineOpenCover) {M M' : X.Modules} (e : M ≅ M') :
@@ -405,7 +395,7 @@ theorem finrank_sectionsOf_eq_of_iso {S : Type u} [CommRing S] {X : Scheme.{u}}
   obtain ⟨𝒱', hU0, hU1, ⟨e0⟩, ⟨e1⟩⟩ :=
     Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso x x (Iso.refl X)
     (Category.id_comp x) 𝒱 M' M (e ≪≫ ((Scheme.Modules.pullbackId X).app M').symm)
-  have h𝒱 : 𝒱' = 𝒱 := twoAffineOpenCover_ext (hU0.trans (Scheme.Hom.id_preimage _))
+  have h𝒱 : 𝒱' = 𝒱 := Scheme.TwoAffineOpenCover.cover_ext (hU0.trans (Scheme.Hom.id_preimage _))
     (hU1.trans (Scheme.Hom.id_preimage _))
   subst h𝒱
   exact ⟨e0.finrank_eq, e1.finrank_eq⟩

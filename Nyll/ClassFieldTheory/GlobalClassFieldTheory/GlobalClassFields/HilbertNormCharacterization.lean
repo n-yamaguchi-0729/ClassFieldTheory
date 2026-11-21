@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassField
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
@@ -45,11 +47,6 @@ variable
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
 
-/-- Keep norm-range quotient normality out of exported declaration types. -/
-local instance
-    hilbertNormCharacterization_ideleClassGroupIsMulCommutative :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- If no finite prime of the base ramifies in the extension, then the
 narrow finite conductor of the actual idele-class norm subgroup is zero. -/

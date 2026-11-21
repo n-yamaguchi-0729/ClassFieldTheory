@@ -37,9 +37,6 @@ namespace ClassFieldTheory.GlobalClassFieldComparison
 
 variable {K : Type u} [Field K] [NumberField K]
 
-local instance bigHilbertArtinIdeleClassGroupIsMulCommutative :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- An intrinsic big Hilbert class field is equivalent over `K` to the
 selected realization. -/
@@ -50,7 +47,7 @@ noncomputable def bigHilbertClassFieldEquivOfIsBig
   let f := Classical.choice
     (open _root_.GlobalClassFieldTheory.GlobalClassFields in
       finiteUnramifiedAbelianExtension_nonempty_algHom_bigHilbertClassField
-        K E ((isUnramifiedAtFinitePlaces_iff_original K E).mp hE.1))
+        K E hE.1)
   have hdim : Module.finrank K E = Module.finrank K H :=
     (GlobalClassFieldComparison.bigHilbertClassField_degree_eq_narrowClassGroup_card_of_isBig
       K E hE).trans
@@ -159,7 +156,7 @@ theorem arithmeticBigHilbertClassFieldGaloisEquivNarrowClassGroup_prime
       QuotientGroup.mk' (RayClass.narrowDenominator (K := K))
         (IdeleGroup.finitePrimeIdele v) := by
   let c : IdeleClassGroup K :=
-    QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+    IdeleGroup.toStandardClass K
       (IdeleGroup.finitePrimeIdele v)
   have hArtin :
       GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
@@ -187,6 +184,8 @@ theorem narrowRayClassGroupEquivNarrowClassGroup_prime
       (narrowRayClassOfFinitePrime v)) = _
   rw [narrowRayClassOfFinitePrime,
     rayClassGroupEquivOriginalIdele_prime]
-  rfl
+  exact RayClass.rayClassGroupEquivIdeleQuotient_mk_mk
+    (RayClass.Modulus.narrowOfFinite (0 : RayClass.FiniteModulus K))
+    (IdeleGroup.finitePrimeIdele v)
 
 end ClassFieldTheory.GlobalClassFieldComparison

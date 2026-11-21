@@ -171,7 +171,7 @@ theorem exists_irreducible_card_gt [Finite k] (n : ℕ) :
     exact dvd_pow_self p (Nat.mul_ne_zero (PNat.ne_zero m) (Nat.succ_ne_zero n))
   let F : k[X] := X ^ N - X
   have hFsep : F.Separable := galois_poly_separable p N hpN
-  have hFdeg : F.natDegree = N := FiniteField.X_pow_card_sub_X_natDegree_eq k (by omega)
+  have hFdeg : F.natDegree = N := Polynomial.natDegree_X_pow_sub_X (by omega)
   let K := F.SplittingField
   have : Finite K := Module.finite_of_finite k
   let : Fintype K := Fintype.ofFinite K

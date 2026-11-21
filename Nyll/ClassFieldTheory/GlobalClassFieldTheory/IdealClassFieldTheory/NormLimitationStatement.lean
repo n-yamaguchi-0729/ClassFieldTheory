@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormLimitation
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNormCore
 
 /-!
 # Statement boundary for ideal norm limitation

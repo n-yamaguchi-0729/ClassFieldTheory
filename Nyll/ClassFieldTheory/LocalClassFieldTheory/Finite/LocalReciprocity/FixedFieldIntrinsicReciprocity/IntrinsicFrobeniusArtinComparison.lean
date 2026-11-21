@@ -22,6 +22,8 @@ noncomputable section
 
 namespace LocalClassFieldTheory
 
+universe u
+
 open LocalFieldTheory RamificationTheory CyclicCohomology KummerTheory
 open ClassFormation
 open scoped ValuativeRel
@@ -29,7 +31,7 @@ open scoped ValuativeRel
 section IntrinsicFixedFieldArtinComparison
 
 variable
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -39,14 +41,7 @@ variable
     [hJfinite : Finite
       (H.field.toSubgroup ⧸ extensionSubgroup H.field J hJH)]
 
-local instance intrinsicFixedFieldArtin_absoluteFinite :
-    Finite
-      ((baseField
-        Gal(SeparableClosure K/K)).toSubgroup ⧸
-        extensionSubgroup
-          (baseField Gal(SeparableClosure K/K))
-          H.field (le_baseField H.field)) :=
-  H.finite
+attribute [local instance] FiniteAbstractField.finite
 
 /-- The canonical local Artin homomorphism of the actual finite fixed-field
 extension agrees with the ambient fixed-field norm-residue symbol.  The proof

@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
 
@@ -65,27 +66,27 @@ theorem completionMapOver_semilinear_compatible
     (v : Place k K) (w : Place k L) (hw : w.restrict K = v)
     (x : v.adicCompletion) :
     placeCompletionRingEquiv σ w
-        (completionMapOver v w hw x) =
-      completionMapOver (τ • v) (σ • w)
+        (AlgebraicCurve.Place.completionMapOver v w hw x) =
+      AlgebraicCurve.Place.completionMapOver (τ • v) (σ • w)
         ((restrict_semilinear_smul_of_compatible σ τ h w).trans
           (congrArg (fun u : Place k K => τ • u) hw))
         (placeCompletionRingEquiv τ v x) := by
   have heq : (fun x : v.adicCompletion =>
       placeCompletionRingEquiv σ w
-        (completionMapOver v w hw x)) =
+        (AlgebraicCurve.Place.completionMapOver v w hw x)) =
       (fun x : v.adicCompletion =>
-        completionMapOver (τ • v) (σ • w)
+        AlgebraicCurve.Place.completionMapOver (τ • v) (σ • w)
           ((restrict_semilinear_smul_of_compatible σ τ h w).trans
             (congrArg (fun u : Place k K => τ • u) hw))
           (placeCompletionRingEquiv τ v x)) := by
     apply (IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap
       K v.heightOneSpectrum).equalizer
     · exact (continuous_placeCompletionRingEquiv _ w).comp
-        (continuous_completionMapOver v w hw)
-    · exact (continuous_completionMapOver _ _ _).comp
+        (AlgebraicCurve.Place.continuous_completionMapOver v w hw)
+    · exact (AlgebraicCurve.Place.continuous_completionMapOver _ _ _).comp
         (continuous_placeCompletionRingEquiv _ v)
     · funext y
-      simp only [Function.comp_apply, completionMapOver_algebraMap,
+      simp only [Function.comp_apply, AlgebraicCurve.Place.completionMapOver_algebraMap,
         placeCompletionRingEquiv_algebraMap]
       rw [h]
   exact congrFun heq x
@@ -115,7 +116,7 @@ theorem baseChange_semilinear_smul (σ : SemilinearAut k L) (τ : SemilinearAut 
   change placeCompletionRingEquiv σ⁻¹ w
       (baseChange (k := k) (K := K) (L := L)
         (τ • a) w) =
-    completionMapOver (τ⁻¹ • w.restrict K) (σ⁻¹ • w) _
+    AlgebraicCurve.Place.completionMapOver (τ⁻¹ • w.restrict K) (σ⁻¹ • w) _
       (placeCompletionRingEquiv τ⁻¹ (w.restrict K)
         ((placeCompletionRingEquiv τ⁻¹ (w.restrict K)).symm
           (a (τ⁻¹ • w.restrict K)))) at hc

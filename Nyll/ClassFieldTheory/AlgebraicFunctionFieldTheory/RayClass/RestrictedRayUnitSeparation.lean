@@ -156,10 +156,10 @@ variable {k K L : Type*} [Field k] [Field K] [Field L]
 /-- Actual finite base change of a one-place ray family is trivial at
 every place outside the entire original restriction fibre. -/
 theorem restrictedRayBaseChange_single_of_restrict_ne
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+    (m : Modulus k K) (_hm : ∀ v, m v ≤ 1)
     (v : Place k K) (x : RayLocalFactor m v)
     (w : Place k L) (hw : w.restrict K ≠ v) :
-    restrictedRayBaseChange (L := L) m hm (localRayToRestrictedProduct m v x) w = 1 := by
+    restrictedRayBaseChange (L := L) m (localRayToRestrictedProduct m v x) w = 1 := by
   rw [restrictedRayBaseChange_apply,
     localRayToRestrictedProduct_of_ne m v (w.restrict K) x hw, map_one]
 
@@ -168,21 +168,21 @@ the entire fibre supporting the actual base-changed one-place family. -/
 theorem exists_boundary_outside_restriction_fibre
     (m : Modulus k K) (v : Place k K)
     (hboundary : ∃ z : Place k K, z ≠ v ∧ m z ≠ 0) :
-    ∃ w : Place k L, w.restrict K ≠ v ∧ rayModulusBaseChange L m w ≠ 0 := by
+    ∃ w : Place k L, w.restrict K ≠ v ∧ reindexAlongPlaces L m w ≠ 0 := by
   obtain ⟨z, hzv, hzm⟩ := hboundary
   obtain ⟨w, hw⟩ := Place.exists_restrict_eq (M := L) z
   refine ⟨w, ?_, ?_⟩
   · exact fun h => hzv (hw.symm.trans h)
-  · rw [rayModulusBaseChange_apply, hw]
+  · rw [reindexAlongPlaces_apply, hw]
     exact hzm
 
 /-- A different lower boundary lifts to a genuinely different boundary
 at every actual upper place. -/
-theorem rayModulusBaseChange_other_boundary
+theorem reindexAlongPlaces_other_boundary
     (m : Modulus k K)
     (hboundary : ∀ v : Place k K, ∃ z : Place k K, z ≠ v ∧ m z ≠ 0)
     (w : Place k L) :
-    ∃ z : Place k L, z ≠ w ∧ rayModulusBaseChange L m z ≠ 0 := by
+    ∃ z : Place k L, z ≠ w ∧ reindexAlongPlaces L m z ≠ 0 := by
   obtain ⟨z, hzw, hzm⟩ := exists_boundary_outside_restriction_fibre
     (L := L) m (w.restrict K) (hboundary (w.restrict K))
   refine ⟨z, ?_, hzm⟩
@@ -206,21 +206,21 @@ The boundary anchor is supplied by an original different boundary place. -/
 theorem restrictedRay_eq_baseChange_single_of_artin_order_support
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
     (v : Place k K) (x : RayLocalFactor m v)
-    (b : RayRestrictedProduct (rayModulusBaseChange L m))
+    (b : RayRestrictedProduct (reindexAlongPlaces L m))
     (hartin :
-      restrictedProductAbsoluteArtin (rayModulusBaseChange L m) b =
-        restrictedProductAbsoluteArtin (rayModulusBaseChange L m)
-          (restrictedRayBaseChange (L := L) m hm (localRayToRestrictedProduct m v x)))
+      restrictedProductAbsoluteArtin (reindexAlongPlaces L m) b =
+        restrictedProductAbsoluteArtin (reindexAlongPlaces L m)
+          (restrictedRayBaseChange (L := L) m (localRayToRestrictedProduct m v x)))
     (horder : ∀ w : Place k L,
-      localRayFactorOrder (rayModulusBaseChange L m) w (b w) =
-        localRayFactorOrder (rayModulusBaseChange L m) w
-          (restrictedRayBaseChange (L := L) m hm (localRayToRestrictedProduct m v x) w))
+      localRayFactorOrder (reindexAlongPlaces L m) w (b w) =
+        localRayFactorOrder (reindexAlongPlaces L m) w
+          (restrictedRayBaseChange (L := L) m (localRayToRestrictedProduct m v x) w))
     (hsupport : ∀ w : Place k L, w.restrict K ≠ v → b w = 1)
     (hboundary : ∃ z : Place k K, z ≠ v ∧ m z ≠ 0) :
-    b = restrictedRayBaseChange (L := L) m hm (localRayToRestrictedProduct m v x) := by
+    b = restrictedRayBaseChange (L := L) m (localRayToRestrictedProduct m v x) := by
   obtain ⟨w, hwv, hwm⟩ := exists_boundary_outside_restriction_fibre (L := L) m v hboundary
-  exact restrictedRay_eq_of_artin_order_anchor (rayModulusBaseChange L m) b
-    (restrictedRayBaseChange (L := L) m hm (localRayToRestrictedProduct m v x))
+  exact restrictedRay_eq_of_artin_order_anchor (reindexAlongPlaces L m) b
+    (restrictedRayBaseChange (L := L) m (localRayToRestrictedProduct m v x))
     hartin horder w hwm
     ((hsupport w hwv).trans
       (restrictedRayBaseChange_single_of_restrict_ne m hm v x w hwv).symm)

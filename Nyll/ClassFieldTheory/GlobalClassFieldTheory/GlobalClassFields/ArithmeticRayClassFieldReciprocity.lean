@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
@@ -37,10 +39,6 @@ namespace GlobalClassFields
 open NumberField
 open Reciprocity
 
-attribute [local instance]
-  globalNormResidueIdeleClassCommGroup
-  globalNormResidueIdeleClassIsMulCommutative
-
 variable {K : Type u} [Field K] [NumberField K]
 
 /-- Arithmetic reciprocity followed by transport between equal norm
@@ -50,9 +48,9 @@ private theorem
     {F : Type u} {E : Type v} [Field F] [NumberField F]
     [Field E] [NumberField E] [Algebra F E]
     [FiniteDimensional F E] [IsAbelianGalois F E]
-    (H : Subgroup (IdeleClassGroup F))
+    (H : Subgroup (NumberField.IdeleClassGroup (𝓞 F) F))
     (h : (_root_.ideleClassNorm F E).range = H)
-    (c : IdeleClassGroup F) :
+    (c : NumberField.IdeleClassGroup (𝓞 F) F) :
     QuotientGroup.quotientMulEquivOfEq h
         (arithmeticGlobalReciprocityContinuousMulEquiv F E
           (arithmeticGlobalNormResidueMonoidHom F E c)) =
@@ -88,17 +86,16 @@ noncomputable def
     Gal((rayClassField K m) / K) ≃ₜ*
       RayClass.RayClassGroup m := by
   letI normQuotientDiscreteTopology : DiscreteTopology
-      (IdeleClassGroup K ⧸
+      (NumberField.IdeleClassGroup (𝓞 K) K ⧸
         (_root_.ideleClassNorm
           K (rayClassField K m)).range) :=
-    ideleClassNormQuotient_discreteTopology
-      K (rayClassField K m)
+    ideleClassNormQuotient_discreteTopology (K := K) (L := rayClassField K m)
   letI rayClassGroupDiscreteTopology : DiscreteTopology
       (RayClass.RayClassGroup m) :=
     QuotientGroup.discreteTopology
       (RayClass.isOpen_congruenceSubgroup m)
   let quotientTransport :
-      (IdeleClassGroup K ⧸
+      (NumberField.IdeleClassGroup (𝓞 K) K ⧸
           (_root_.ideleClassNorm
             K (rayClassField K m)).range) ≃ₜ*
         RayClass.RayClassGroup m :=
@@ -133,7 +130,7 @@ norm-residue symbol of an idèle class to its literal ray class. -/
 theorem
     arithmeticRayClassFieldGaloisContinuousMulEquivRayClassGroup_globalNormResidue
     (m : RayClass.Modulus K)
-    (c : IdeleClassGroup K) :
+    (c : NumberField.IdeleClassGroup (𝓞 K) K) :
     arithmeticRayClassFieldGaloisContinuousMulEquivRayClassGroup
         (K := K) m
         (arithmeticGlobalNormResidueMonoidHom
@@ -167,7 +164,7 @@ back to the arithmetic global norm-residue symbol. -/
 theorem
     arithmeticRayClassFieldGaloisContinuousMulEquivRayClassGroup_symm_mk
     (m : RayClass.Modulus K)
-    (c : IdeleClassGroup K) :
+    (c : NumberField.IdeleClassGroup (𝓞 K) K) :
     (arithmeticRayClassFieldGaloisContinuousMulEquivRayClassGroup
       (K := K) m).symm
         (QuotientGroup.mk'

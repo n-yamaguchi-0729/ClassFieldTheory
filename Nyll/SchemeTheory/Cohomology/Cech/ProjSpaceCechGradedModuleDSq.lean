@@ -95,7 +95,7 @@ theorem GradedModule.d_sq' (i : ℕ) :
       apply Subtype.ext
       change s.1 ∘ (Fin.succAbove a ∘ Fin.succAbove b)
         = s.1 ∘ (Fin.succAbove b.succ ∘ Fin.succAbove a')
-      rw [← hacs, Idx.succAbove_comp_succAbove halt]
+      rw [← hacs, Fin.succAbove_comp_succAbove_of_le halt]
     have hsign : ((-1 : R) ^ ((a : ℕ) + (b : ℕ)))
         = -((-1 : R) ^ (((b.succ : Fin (i + 3)) : ℕ) + (a' : ℕ))) := by
       simp only [Fin.val_succ, a', Fin.val_castLT]

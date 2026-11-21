@@ -45,7 +45,7 @@ theorem liftedGaloisUnitsH2_eq_zero_of_transcendental_of_finiteDimensional
   have : IsScalarTower K F L := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   have : IsGalois L E := IsGalois.of_fixed_field E (P : Subgroup Gal(E/F))
   have hP : IsPGroup p Gal(E/L) :=
-    P.isPGroup'.of_equiv (IntermediateField.subgroupEquivAlgEquiv
+    P.isPGroup.of_equiv (IntermediateField.subgroupEquivAlgEquiv
       (P : Subgroup Gal(E/F)))
   obtain ⟨y, hy, hyfin, _⟩ :=
     exists_separating_transcendental_over_finite_extension K x hx hfin L

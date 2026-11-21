@@ -134,7 +134,7 @@ theorem ramificationIndex_eq_one_finiteLayer
   have hdvd : P.asIdeal ^ (e - 1) ∣ (⊤ : Ideal _) := by
     rw [← hdiff]
     exact pow_sub_one_dvd_differentIdeal_aux v.toValuationSubring F L P.asIdeal
-      hepos.ne' (Place.maximalIdeal_ne_bot v) (Ideal.dvd_iff_le.mpr hle)
+      (Place.maximalIdeal_ne_bot v) (Ideal.dvd_iff_le.mpr hle)
   have htop' : P.asIdeal ^ (e - 1) = ⊤ := top_le_iff.mp (Ideal.dvd_iff_le.mp hdvd)
   by_contra hne
   have : P.asIdeal = ⊤ :=

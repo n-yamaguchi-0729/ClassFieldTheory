@@ -6,7 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Cohomology
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.ResidueNorm
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Uniformizer
 

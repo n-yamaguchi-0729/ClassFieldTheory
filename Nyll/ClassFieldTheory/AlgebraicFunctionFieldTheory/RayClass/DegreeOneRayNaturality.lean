@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.Algebra.DegreeOneAbsoluteGalois
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.DegreeOneArtinNaturality
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.NativeRayArtinTransfer
@@ -50,12 +52,12 @@ is carried by the inverse of the native restriction comparison. -/
 theorem absoluteArtin_degreeOne_forward (c : IdeleClassGroup k K) :
     δ (absoluteArtin k K c) =
       absoluteArtin k F (IdeleClassGroup.baseChange (k := k) (K := K) (L := F) c) := by
-  apply (degreeOneAbsoluteAbelianEquiv K F hKF eΩ).injective
-  rw [ContinuousMulEquiv.apply_symm_apply]
-  exact (absoluteArtin_baseChange_of_finrank_one k K F hKF eΩ c).symm
+  let e := degreeOneAbsoluteAbelianEquiv K F hKF eΩ
+  exact e.injective ((e.apply_symm_apply (absoluteArtin k K c)).trans
+    (absoluteArtin_baseChange_of_finrank_one k K F hKF eΩ c).symm)
 
 variable (m : Modulus k K) (n : Modulus k F)
-  (hm : ∀ v, m v ≤ 1) (hn : rayModulusBaseChange F m = n)
+  (hm : ∀ v, m v ≤ 1) (hn : reindexAlongPlaces F m = n)
 
 include hm hn in
 /-- Original degree-one covariance carries the actual reduced ray
@@ -104,7 +106,7 @@ theorem degreeOneRayHom_mk_mk (σ : Gal(SeparableClosure K/K)) :
 map satisfy the original reciprocity square. -/
 theorem restrictedProductAbsoluteArtin_degreeOne (a : RayRestrictedProduct m) :
     restrictedProductAbsoluteArtin n
-        (rayModulusCongr hn (restrictedRayBaseChange (L := F) m hm a)) =
+        (rayModulusCongr hn (restrictedRayBaseChange (L := F) m a)) =
       degreeOneRayHom k K F hKF eΩ m n hm hn
         (restrictedProductAbsoluteArtin m a) := by
   obtain ⟨b, rfl⟩ := ideleToRayRestrictedProduct_surjective m a

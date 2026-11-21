@@ -7,6 +7,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimit
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtension
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Tower
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
 public import Nyll.GaloisCohomology.Kummer.Abstract.KummerDelta
@@ -35,7 +37,7 @@ open Reciprocity
 open LocalClassFieldTheory
 
 attribute [local instance]
-  rationalAbstractFixedFieldFiniteDimensional rationalIdeleClassDirectLimitSMul
+  rationalAbstractFixedFieldFiniteDimensional ideleClassDirectLimitSMul
   rationalAbstractTowerClassGroupCommGroup
 
 /-- The abstract extension representation, followed by the actual
@@ -56,7 +58,7 @@ theorem rationalAbstractExtensionIdeleClassEquiv_to_ordinary
     [hfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)]
     (x : (extensionFixedRepresentation
-      rationalIdeleClassRepresentation
+      (ideleClassRepresentation ℚ)
       K L hLK hnormal).V) :
     let F := abstractFixedField ℚ (SeparableClosure ℚ) K
     let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
@@ -88,69 +90,13 @@ theorem rationalAbstractExtensionIdeleClassEquiv_to_ordinary
       (rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
         K L hLK).symm
         (extensionFixedRepresentationEquiv
-          rationalIdeleClassRepresentation
+          (ideleClassRepresentation ℚ)
           K L hLK hnormal x) := by
   intro F E hnormalInstance hFfinite hFEfinite htower hEfinite
     hRestrictFinite hFnumberField hEnumberField
-  let eAmbient :=
-    extensionFixedRepresentationEquiv
-      rationalIdeleClassRepresentation K L hLK hnormal
-  let eFixed :
-      Additive (IdeleClassGroup E) ≃+
-        KummerTheory.ambientFixedAddSubgroup
-          rationalIdeleClassRepresentation L :=
-    rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
-      K L hLK
-  let eRelative :
-      Additive (RelativeIdeleGroup.ClassGroup ℚ E) ≃+
-        Additive (IdeleClassGroup E) :=
-    MulEquiv.toAdditive
-      (_root_.relativeIdeleClassBaseChangeMulEquiv
-        (K := ℚ) (L := E))
-  let eTower :
-      Additive (RelativeIdeleGroup.ClassGroup ℚ E) ≃+
-        Additive (RelativeIdeleGroup.ClassGroup F E) :=
-    (MulEquiv.toAdditive
-      (TowerRelativeIdeleGroup.classGroupEquiv
-        ℚ F E).symm).trans
-      (MulEquiv.toAdditive
-        (towerRelativeIdeleClassBaseChangeMulEquiv
-          ℚ F E))
-  let c :
-      Additive (RelativeIdeleGroup.ClassGroup ℚ E) :=
-    eRelative.symm (eFixed.symm (eAmbient x))
-  have htransport :
-      (MulEquiv.toAdditive
-        (_root_.relativeIdeleClassBaseChangeMulEquiv
-          (K := F) (L := E))) (eTower c) =
-        eRelative c := by
-    change
-      Additive.ofMul
-          (_root_.relativeIdeleClassBaseChangeMulEquiv
-            (K := F) (L := E)
-            (towerRelativeIdeleClassBaseChangeMulEquiv ℚ F E
-              ((TowerRelativeIdeleGroup.classGroupEquiv
-                ℚ F E).symm (Additive.toMul c)))) =
-        Additive.ofMul
-          (_root_.relativeIdeleClassBaseChangeMulEquiv
-            (K := ℚ) (L := E) (Additive.toMul c))
-    exact
-      congrArg Additive.ofMul
-        (relativeIdeleClassBaseChangeMulEquiv_tower
-          ℚ F E (Additive.toMul c))
-  change
-    (MulEquiv.toAdditive
-      (_root_.relativeIdeleClassBaseChangeMulEquiv
-        (K := F) (L := E)))
-        (eTower
-          (eRelative.symm
-            (eFixed.symm (eAmbient x)))) =
-      eFixed.symm (eAmbient x)
-  calc
-    _ = eRelative c := htransport
-    _ = eFixed.symm (eAmbient x) := by
-      exact eRelative.apply_symm_apply
-        (eFixed.symm (eAmbient x))
+  let e := (MulEquiv.toAdditive
+    (_root_.relativeIdeleClassBaseChangeMulEquiv (K := F) (L := E)))
+  exact e.apply_symm_apply _
 
 end RationalIdeleExtension
 

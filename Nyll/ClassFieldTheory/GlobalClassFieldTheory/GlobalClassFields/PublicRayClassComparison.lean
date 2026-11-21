@@ -98,9 +98,9 @@ theorem principalIdele_mem_primeTo_iff_isRayCongruent
           (rayClassModulusToOriginal K m) ↔
       IsRayCongruent m x := by
   have hinfinite :
-      (IdeleGroup.principalIdele K x).1 ∈
+      IdeleGroup.infinitePart (IdeleGroup.principalIdele K x) ∈
           (rayClassModulusToOriginal K m).infiniteCongruenceSubgroup ↔
-        ∀ v : RayClassRealPlace K, v ∈ m.infinitePart →
+        ∀ v : RayClass.RealPlace K, v ∈ m.infinitePart →
           0 < v.1.embedding_of_isReal v.2 (x : K) := by
     rw [RayClass.Modulus.mem_infiniteCongruenceSubgroup_iff]
     exact ⟨fun h v hv =>
@@ -108,15 +108,15 @@ theorem principalIdele_mem_primeTo_iff_isRayCongruent
       fun h v hv =>
         (principalIdele_mem_infinitePositiveSubgroup_iff K x v).mpr (h v hv)⟩
   have hfinite :
-      (IdeleGroup.principalIdele K x).2 ∈
+      IdeleGroup.finiteCoordinates (IdeleGroup.principalIdele K x) ∈
           RayClass.finitePrimeToModulusSubgroup
             (rayClassModulusToOriginal K m) ↔
         ∀ v, v ∈ m.finitePart.support →
           finitePlaceUnitEmbedding v x ∈
             rayLocalHigherUnitGroup v (m.finitePart v) := by
     change (∀ v, v ∈ m.finitePart.support →
-      (IdeleGroup.principalIdele K x).2 v ∈
-        RayClass.localHigherUnitGroup v (m.finitePart v)) ↔ _
+      IdeleGroup.finiteCoordinates (IdeleGroup.principalIdele K x) v ∈
+        ClassFieldTheory.rayLocalHigherUnitGroup v (m.finitePart v)) ↔ _
     constructor
     · intro h v hv
       have h' := h v hv
@@ -125,12 +125,12 @@ theorem principalIdele_mem_primeTo_iff_isRayCongruent
       exact h'
     · intro h v hv
       have h' := h v hv
-      change (IdeleGroup.principalIdele K x).2 v ∈
-        RayClass.localHigherUnitGroup v (m.finitePart v) at h'
+      change IdeleGroup.finiteCoordinates (IdeleGroup.principalIdele K x) v ∈
+        ClassFieldTheory.rayLocalHigherUnitGroup v (m.finitePart v) at h'
       exact h'
-  change ((IdeleGroup.principalIdele K x).1 ∈
+  change (IdeleGroup.infinitePart (IdeleGroup.principalIdele K x) ∈
       (rayClassModulusToOriginal K m).infiniteCongruenceSubgroup ∧
-      (IdeleGroup.principalIdele K x).2 ∈
+      IdeleGroup.finiteCoordinates (IdeleGroup.principalIdele K x) ∈
         RayClass.finitePrimeToModulusSubgroup
           (rayClassModulusToOriginal K m)) ↔ _
   exact ⟨fun h => ⟨hfinite.mp h.2, hinfinite.mp h.1⟩,
@@ -281,10 +281,8 @@ noncomputable def rayClassGroupEquivOriginalIdele
     (RayClass.rayClassGroupEquivIdealRayClassGroup
       (rayClassModulusToOriginal K m)).symm
 
-open _root_.GlobalClassFieldTheory.GlobalClassFields (
-  finitePrimeIdele_mem_idelePrimeToModulusSubgroup
-  rayClassGroupEquivIdealRayClassGroup_mk_primeTo
-) in
+open _root_.GlobalClassFieldTheory.GlobalClassFields
+  (finitePrimeIdele_mem_idelePrimeToModulusSubgroup) in
 /-- A public prime ray class corresponds to the original normalized prime
 idèle class, with the same finite and infinite modulus. -/
 theorem rayClassGroupEquivOriginalIdele_prime
@@ -295,8 +293,7 @@ theorem rayClassGroupEquivOriginalIdele_prime
     rayClassGroupEquivOriginalIdele K m (rayClassOfFinitePrime m v hv) =
       QuotientGroup.mk'
         (RayClass.Modulus.congruenceSubgroup (rayClassModulusToOriginal K m))
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-          (IdeleGroup.finitePrimeIdele v)) := by
+        (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v)) := by
   let m' := rayClassModulusToOriginal K m
   have hv' : v ∉ m'.finitePart.support := hv
   let a : RayClass.idelePrimeToModulusSubgroup m' :=
@@ -327,8 +324,8 @@ theorem rayClassGroupEquivOriginalIdele_prime
         m' v hv').symm
     _ = e (QuotientGroup.mk'
           (RayClass.Modulus.congruenceSubgroup m')
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K) (a : IdeleGroup K))) := by
-      exact (rayClassGroupEquivIdealRayClassGroup_mk_primeTo
+          (IdeleGroup.toStandardClass K (a : IdeleGroup K))) := by
+      exact (_root_.RayClass.rayClassGroupEquivIdealRayClassGroup_mk_primeTo
         m' a).symm
 
 /-- The public ideal-theoretic narrow ray class group agrees with the
@@ -510,8 +507,7 @@ theorem rayClassSubgroup_existence
           GlobalClassFieldTheory.GlobalClassFields.rayClassSubgroupArtin
             (K := K) m' H'
             (QuotientGroup.mk' m'.congruenceSubgroup
-              (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-                (IdeleGroup.finitePrimeIdele v))) := by
+              (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) := by
         change GlobalClassFieldTheory.GlobalClassFields.rayClassSubgroupArtin
           (K := K) m' H'
           (e (rayClassOfFinitePrime m v hv)) = _
@@ -573,14 +569,12 @@ theorem normFullConductor_isAbelianConductor
       (R.unramifiedOutsideModulus.1 v hvm) w.asIdeal inferInstance hw
     calc
       e (QuotientGroup.mk' m'.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v))) =
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) =
           R.artinEquiv (rayClassOfFinitePrime m v hvm) := by
         change R.artinEquiv
           ((GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K m).symm
             (QuotientGroup.mk' m'.congruenceSubgroup
-              (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-                (IdeleGroup.finitePrimeIdele v)))) = _
+              (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v)))) = _
         rw [← GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele_prime K m v hvm]
         exact congrArg R.artinEquiv
           ((GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K m).symm_apply_apply _)

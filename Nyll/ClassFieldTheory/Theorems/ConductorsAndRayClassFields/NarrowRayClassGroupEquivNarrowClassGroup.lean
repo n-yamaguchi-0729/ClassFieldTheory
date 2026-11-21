@@ -33,8 +33,10 @@ private theorem narrow_rayClassPrimeToIdeals_eq_top :
     rayClassPrimeToIdeals (narrowRayClassModulus K) = ⊤ := by
   ext I
   simp only [rayClassPrimeToIdeals, narrowRayClassModulus, Finsupp.support_zero,
-    Finset.notMem_empty, IsEmpty.forall_iff, implies_true, Set.ofPred_true, Subgroup.mem_mk,
-    Submonoid.mem_mk, Subsemigroup.mem_mk, Set.mem_univ, Subgroup.mem_top]
+    FractionalIdealFactorization.primeTo, Subgroup.mem_mk, Submonoid.mem_mk,
+    Subsemigroup.mem_mk, Finset.coe_empty, Set.mem_empty_iff_false, false_implies, implies_true,
+    Subgroup.mem_top]
+  rfl
 
 private theorem narrow_rayPrincipalIdealSubgroup_eq_positive :
     rayPrincipalIdealSubgroup (narrowRayClassModulus K) =

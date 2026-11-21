@@ -32,7 +32,7 @@ universe u
 /-- Nonzero field elements positive at every real place. -/
 def totallyPositiveFieldUnits
     (K : Type u) [Field K] [NumberField K] : Subgroup Kˣ where
-  carrier := {x | ∀ v : RayClassRealPlace K,
+  carrier := {x | ∀ v : RayClass.RealPlace K,
     0 < v.1.embedding_of_isReal v.2 (x : K)}
   one_mem' := by
     intro v

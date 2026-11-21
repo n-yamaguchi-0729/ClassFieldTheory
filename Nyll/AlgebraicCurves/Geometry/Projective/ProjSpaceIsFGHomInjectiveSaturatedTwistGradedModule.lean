@@ -317,9 +317,9 @@ theorem twistXMul_pow_apply (j : Fin (N + 1)) (k : ℕ) (f : (twistGradedModule 
   Fin (N + 1)) :
     (((twistGradedModule φ π).xMul j ^ k) f) d i = uTop φ i j ^ k * f (d - k) i := by
   induction k generalizing d with
-  | zero => simp only [pow_zero, Module.End.one_apply, Nat.cast_zero, sub_zero, one_mul]
+  | zero => simp only [pow_zero, one_apply_eq_self, Nat.cast_zero, sub_zero, one_mul]
   | succ k ih =>
-    rw [pow_succ', Module.End.mul_apply, D_xMul_apply, ih, pow_succ', mul_assoc]
+    rw [pow_succ', mul_apply_eq_comp, D_xMul_apply, ih, pow_succ', mul_assoc]
     congr 2
     · push_cast; ring_nf
 

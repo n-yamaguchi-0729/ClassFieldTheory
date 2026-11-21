@@ -123,7 +123,7 @@ theorem germToFunctionField_algebraMap (U : C.Opens) [Nonempty U] (r : K) :
   dsimp only [Scheme.Hom.appLE]
   rw [Category.assoc]
   erw [TopCat.Presheaf.germ_res]
-  try rfl
+  rfl
 
 omit [IsIntegral C] in
 theorem germToFunctionField_map [IrreducibleSpace C] {U V : C.Opens} [Nonempty U] [Nonempty V]

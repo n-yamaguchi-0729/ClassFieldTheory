@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.EmbeddedAbsoluteRestriction
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteRestriction
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
@@ -40,50 +41,12 @@ variable (K : Type v) [Field K]
     (E : IntermediateField K (SeparableClosure K))
     [FiniteDimensional K E] [IsGalois K E]
 
-/-- Finite Galois restriction followed by abelianization has an open and closed kernel. -/
-theorem restrictionAbelianization_ker_closed_open :
-    let q : Gal(SeparableClosure K/K) →* Abelianization Gal(E/K) :=
-      Abelianization.of.comp (AlgEquiv.restrictNormalHom E)
-    IsClosed (q.ker : Set Gal(SeparableClosure K/K)) ∧
-      IsOpen (q.ker : Set Gal(SeparableClosure K/K)) := by
-  intro q
-  let r : Gal(SeparableClosure K/K) →* Gal(E/K) := AlgEquiv.restrictNormalHom E
-  have hker : (q.ker : Set Gal(SeparableClosure K/K)) =
-      r ⁻¹' (commutator Gal(E/K) : Set Gal(E/K)) := by
-    ext σ
-    change Abelianization.of (r σ) = 1 ↔ r σ ∈ commutator Gal(E/K)
-    exact QuotientGroup.eq_one_iff (N := commutator Gal(E/K)) (r σ)
-  rw [hker]
-  exact ⟨(isClosed_discrete _).preimage (InfiniteGalois.restrictNormalHom_continuous E),
-    (isOpen_discrete _).preimage (InfiniteGalois.restrictNormalHom_continuous E)⟩
-
-/-- Actual finite Galois restriction, descended after abelianization. -/
-def absoluteAbelianizedRestriction :
-    localAbsoluteAbelianProfinite K →* Abelianization Gal(E/K) := by
-  let q : Gal(SeparableClosure K/K) →* Abelianization Gal(E/K) :=
-    Abelianization.of.comp (AlgEquiv.restrictNormalHom E)
-  have hcomm : commutator Gal(SeparableClosure K/K) ≤ q.ker :=
-    Abelianization.commutator_subset_ker q
-  have hclosed : IsClosed (q.ker : Set Gal(SeparableClosure K/K)) :=
-    (restrictionAbelianization_ker_closed_open K E).1
-  have hclosure : (commutator Gal(SeparableClosure K/K)).topologicalClosure ≤ q.ker :=
-    (commutator Gal(SeparableClosure K/K)).topologicalClosure_minimal hcomm hclosed
-  exact QuotientGroup.lift (commutator Gal(SeparableClosure K/K)).topologicalClosure q
-    (fun σ hσ => MonoidHom.mem_ker.mp (hclosure hσ))
-
-/-- On an absolute automorphism, the map is literal finite restriction
-followed by the ordinary abelianization quotient. -/
-theorem absoluteAbelianizedRestriction_mk (σ : Gal(SeparableClosure K/K)) :
-    absoluteAbelianizedRestriction K E
-        (QuotientGroup.mk σ : localAbsoluteAbelianProfinite K) =
-      Abelianization.of (AlgEquiv.restrictNormalHom E σ) := rfl
-
 private theorem absoluteAbelianizedRestriction_factor
     (M : IntermediateField K (SeparableClosure K))
     [FiniteDimensional K M] [IsAbelianGalois K M]
-    (e : Abelianization Gal(E/K) ≃* Gal(M/K))
+    (e : Group.Abelianization Gal(E/K) ≃* Gal(M/K))
     (he : ∀ σ : Gal(SeparableClosure K/K),
-      e (Abelianization.of (AlgEquiv.restrictNormalHom E σ)) =
+      e (Group.Abelianization.of (AlgEquiv.restrictNormalHom E σ)) =
         AlgEquiv.restrictNormalHom M σ) :
     e.toMonoidHom.comp (absoluteAbelianizedRestriction K E) =
       (absoluteAbelianRestriction K M).toMonoidHom := by
@@ -107,9 +70,9 @@ private theorem absoluteArtin_abelianizedRestriction_of_factor
     [FiniteDimensional K E] [IsGalois K E]
     [FiniteDimensional K M] [IsAbelianGalois K M]
     [Algebra M E] [IsScalarTower K M E] [IsScalarTower M E (SeparableClosure K)]
-    (e : Abelianization Gal(E/K) ≃* Gal(M/K))
+    (e : Group.Abelianization Gal(E/K) ≃* Gal(M/K))
     (he : ∀ σ : Gal(SeparableClosure K/K),
-      e (Abelianization.of (AlgEquiv.restrictNormalHom E σ)) =
+      e (Group.Abelianization.of (AlgEquiv.restrictNormalHom E σ)) =
         AlgEquiv.restrictNormalHom M σ)
     (c : IdeleClassGroup k K) :
     let _ : Algebra k (SeparableClosure K) :=
@@ -131,24 +94,24 @@ private theorem absoluteArtin_abelianizedRestriction_of_factor
   have hrestrict (σ : Gal(SeparableClosure K/K)) :
       rEM (r σ) = AlgEquiv.restrictNormalHom M σ := by
     exact (IsScalarTower.AlgEquiv.restrictNormalHom_comp_apply M E σ).symm
-  have heFinite (z : Abelianization Gal(E/K)) :
-      Abelianization.of (e z) = Abelianization.map rEM z := by
+  have heFinite (z : Group.Abelianization Gal(E/K)) :
+      Group.Abelianization.of (e z) = Group.Abelianization.map rEM z := by
     obtain ⟨τ, rfl⟩ := (show Function.Surjective
-      (Abelianization.of : Gal(E/K) →* Abelianization Gal(E/K)) from
+      (Group.Abelianization.of : Gal(E/K) →* Group.Abelianization Gal(E/K)) from
         QuotientGroup.mk_surjective) z
     obtain ⟨σ, rfl⟩ := AlgEquiv.restrictNormalHom_surjective
       (F := K) (K₁ := E) (E := SeparableClosure K) τ
-    change Abelianization.of (e (Abelianization.of (r σ))) =
-      Abelianization.of (rEM (r σ))
-    exact congrArg Abelianization.of ((he σ).trans (hrestrict σ).symm)
+    change Group.Abelianization.of (e (Group.Abelianization.of (r σ))) =
+      Group.Abelianization.of (rEM (r σ))
+    exact congrArg Group.Abelianization.of ((he σ).trans (hrestrict σ).symm)
   have heAbsoluteHom := absoluteAbelianizedRestriction_factor K E M e he
   have heAbsolute (x : localAbsoluteAbelianProfinite K) :
       e (absoluteAbelianizedRestriction K E x) = absoluteAbelianRestriction K M x :=
     DFunLike.congr_fun heAbsoluteHom x
   have heArtin : e (finiteArtin k K E c) = abelianFiniteArtin k K M c := by
-    apply (Abelianization.equivOfComm (H := Gal(M/K))).injective
-    change Abelianization.of (e (finiteArtin k K E c)) =
-      Abelianization.of (abelianFiniteArtin k K M c)
+    apply (Group.Abelianization.equivOfComm (H := Gal(M/K))).injective
+    change Group.Abelianization.of (e (finiteArtin k K E c)) =
+      Group.Abelianization.of (abelianFiniteArtin k K M c)
     rw [heFinite, abelianFiniteArtin_of]
     exact finiteArtin_restrictNormal k K M E c
   apply e.injective
@@ -174,15 +137,16 @@ theorem absoluteArtin_abelianizedRestriction
     absoluteAbelianizedRestriction K E (absoluteArtin k K c) = finiteArtin k K E c := by
   intro akΩ aRΩ hkKΩ hRKΩ hkRΩ
   let r : Gal(SeparableClosure K/K) →* Gal(E/K) := AlgEquiv.restrictNormalHom E
-  let q : Gal(SeparableClosure K/K) →* Abelianization Gal(E/K) := Abelianization.of.comp r
+  let q : Gal(SeparableClosure K/K) →* Group.Abelianization Gal(E/K) :=
+    Group.Abelianization.of.comp r
   have hq : Function.Surjective q := by
     intro z
     obtain ⟨τ, rfl⟩ := (show Function.Surjective
-      (Abelianization.of : Gal(E/K) →* Abelianization Gal(E/K)) from
+      (Group.Abelianization.of : Gal(E/K) →* Group.Abelianization Gal(E/K)) from
         QuotientGroup.mk_surjective) z
     obtain ⟨σ, hσ⟩ := AlgEquiv.restrictNormalHom_surjective
       (F := K) (K₁ := E) (E := SeparableClosure K) τ
-    exact ⟨σ, congrArg Abelianization.of hσ⟩
+    exact ⟨σ, congrArg Group.Abelianization.of hσ⟩
   have hker := restrictionAbelianization_ker_closed_open K E
   let S : ClosedSubgroup Gal(SeparableClosure K/K) :=
     { toSubgroup := q.ker
@@ -198,11 +162,11 @@ theorem absoluteArtin_abelianizedRestriction
     rw [InfiniteGalois.fixingSubgroup_fixedField S]
     exact hker.2
   have hMgal : IsGalois K M := IsGalois.of_fixedField_normal_subgroup S.toSubgroup
-  let eQ : (Gal(SeparableClosure K/K) ⧸ q.ker) ≃* Abelianization Gal(E/K) :=
+  let eQ : (Gal(SeparableClosure K/K) ⧸ q.ker) ≃* Group.Abelianization Gal(E/K) :=
     QuotientGroup.quotientKerEquivOfSurjective q hq
   let eG : (Gal(SeparableClosure K/K) ⧸ S.toSubgroup) ≃* Gal(M/K) :=
     InfiniteGalois.normalAutEquivQuotient S
-  let e : Abelianization Gal(E/K) ≃* Gal(M/K) := eQ.symm.trans eG
+  let e : Group.Abelianization Gal(E/K) ≃* Gal(M/K) := eQ.symm.trans eG
   have he (σ : Gal(SeparableClosure K/K)) :
       e (q σ) = AlgEquiv.restrictNormalHom M σ := by
     change eG (eQ.symm (q σ)) = _
@@ -220,7 +184,7 @@ theorem absoluteArtin_abelianizedRestriction
       change σ ∈ (AlgEquiv.restrictNormalHom E).ker
       rw [IntermediateField.restrictNormalHom_ker]
       exact hσ
-    change Abelianization.of (r σ) = 1
+    change Group.Abelianization.of (r σ) = 1
     rw [MonoidHom.mem_ker.mp hr, map_one]
   have hME : M ≤ E :=
     (IntermediateField.fixedField_le hfix).trans

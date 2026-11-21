@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricArtinKernel
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayTower
 public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
@@ -54,19 +56,18 @@ def geometricArtinStagePlaceRestrict (i j : I) (hij : i ≤ j)
 
 /-- The original restricted-product inclusion between actual finite
 constant stages, retaining the direct pullback of the original boundary. -/
-def geometricRestrictedRayTransition (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+def geometricRestrictedRayTransition (m : Modulus k K) (_hm : ∀ v, m v ≤ 1)
     (i j : I) (hij : i ≤ j) :
-    RayRestrictedProduct (rayModulusBaseChange (E i) m) →*
-      RayRestrictedProduct (rayModulusBaseChange (E j) m) := by
+    RayRestrictedProduct (reindexAlongPlaces (E i) m) →*
+      RayRestrictedProduct (reindexAlongPlaces (E j) m) := by
   let _ : Algebra (E i) (E j) := stageInclusionAlgebra k K Ω i j hij
   have _ : IsScalarTower K (E i) (E j) :=
     IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
   have _ : IsScalarTower k (E i) (E j) :=
     IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
   have _ : FiniteDimensional (E i) (E j) := FiniteDimensional.right K (E i) (E j)
-  exact (rayModulusCongr (rayModulusBaseChange_trans (L := E i) (M := E j) m)).toMonoidHom.comp
-    (restrictedRayBaseChange (L := E j) (rayModulusBaseChange (E i) m)
-      (rayModulusBaseChange_reduced m hm))
+  exact (rayModulusCongr (reindexAlongPlaces_trans (L := E i) (M := E j) m)).toMonoidHom.comp
+    (restrictedRayBaseChange (L := E j) (reindexAlongPlaces (E i) m))
 
 /-- The native kernel transition is the restriction of the same original
 restricted-product transition, including its literal modulus equality. -/
@@ -82,8 +83,7 @@ theorem geometricArtinTransition_coe
     IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
   have _ : FiniteDimensional (E i) (E j) := FiniteDimensional.right K (E i) (E j)
   exact principalArtinKernelCongr_coe
-    (rayModulusBaseChange_trans (L := E i) (M := E j) m)
-    (principalArtinKernelBaseChange (L := E j) (rayModulusBaseChange (E i) m)
-      (rayModulusBaseChange_reduced m hm) a)
+    (reindexAlongPlaces_trans (L := E i) (M := E j) m)
+    (principalArtinKernelBaseChange (L := E j) (reindexAlongPlaces (E i) m) a)
 
 end FunctionField.RayClass

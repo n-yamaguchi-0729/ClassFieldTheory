@@ -113,6 +113,6 @@ theorem fullConstantDegreeData_inertia_eq_iInf :
   ext σ
   rw [Subgroup.mem_iInf]
   simp only [← Subgroup.zpowers_le,
-    ← IntermediateField.le_iff_le, iSup_le_iff]
+    ← IntermediateField.le_fixedField_iff_le_fixingSubgroup, iSup_le_iff]
 
 end FunctionField

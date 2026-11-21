@@ -176,7 +176,7 @@ theorem normalizationCommAlg_fixedSet_isOpen_krull
     [CommRing A] [Field K] [Field F]
     [Algebra A K] [IsFractionRing A K] [Algebra K F] [Algebra A F]
     [IsScalarTower A K F] [Algebra.IsAlgebraic K F]
-    (b : normalizationCommAlgCat A F) : IsOpen (fun σ : Gal(F/K) => σ • b = b) :=
+    (b : normalizationCommAlgCat A F) : IsOpen {σ : Gal(F/K) | σ • b = b} :=
   integralClosure_fixedSet_isOpen_krull A K F b
 
 /-- The prescribed normalization action fixes the actual coefficient map.

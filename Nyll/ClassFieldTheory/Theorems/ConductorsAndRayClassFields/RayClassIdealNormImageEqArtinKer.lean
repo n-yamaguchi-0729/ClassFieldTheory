@@ -9,6 +9,7 @@ import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianRec
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicIdealArtinKernelComparison
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicIdealNormQuotientComparison
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNormCore
 
 /-!
 # The ideal norm subgroup is the Artin kernel

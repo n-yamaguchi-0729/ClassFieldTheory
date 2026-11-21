@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.TowerBaseChange
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.CyclicIdeleClassNormIndex
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
@@ -37,12 +38,6 @@ private theorem cyclicNormTower_relativeClassGroupIsMulCommutative
 
 attribute [local instance] cyclicNormTower_relativeClassGroupIsMulCommutative
 
-private theorem cyclicNormTower_ideleClassGroupIsMulCommutative
-    (A : Type*) [Field A] [NumberField A] :
-    IsMulCommutative (IdeleClassGroup A) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-attribute [local instance] cyclicNormTower_ideleClassGroupIsMulCommutative
 
 variable
     (K : Type u) (M : Type v) (L : Type w)
@@ -67,7 +62,7 @@ theorem intermediateToCompositeNormQuotient_injective_of_cyclicTower :
       (intermediateToCompositeNormQuotient K M L) := by
   let A := IntermediateClassNormQuotient K M L
   let B := TowerCompositeClassNormQuotient K M L
-  let C := IdeleClassNormQuotient K M
+  let C := RelativeIdeleGroup.ClassNormQuotient K M
   let f : A →* B :=
     intermediateToCompositeNormQuotient K M L
   let g : B →* C :=
@@ -76,12 +71,12 @@ theorem intermediateToCompositeNormQuotient_injective_of_cyclicTower :
       Nat.card A = Module.finrank M L := by
     calc
       Nat.card A =
-          Nat.card (IdeleClassNormQuotient M L) :=
+          Nat.card (RelativeIdeleGroup.ClassNormQuotient M L) :=
         Nat.card_congr
           (intermediateClassNormQuotientBaseChangeMulEquiv
             K M L).toEquiv
       _ =
-          (RelativeIdeleGroup.Cohomology.ideleClassNorm
+          (RelativeIdeleGroup.classNorm
             M L).range.index := by
         rw [Subgroup.index_eq_card]
       _ = Module.finrank M L :=
@@ -91,12 +86,12 @@ theorem intermediateToCompositeNormQuotient_injective_of_cyclicTower :
       Nat.card B = Module.finrank K L := by
     calc
       Nat.card B =
-          Nat.card (IdeleClassNormQuotient K L) :=
+          Nat.card (RelativeIdeleGroup.ClassNormQuotient K L) :=
         Nat.card_congr
           (towerCompositeClassNormQuotientEquiv
             K M L).toEquiv
       _ =
-          (RelativeIdeleGroup.Cohomology.ideleClassNorm
+          (RelativeIdeleGroup.classNorm
             K L).range.index := by
         rw [Subgroup.index_eq_card]
       _ = Module.finrank K L :=
@@ -106,7 +101,7 @@ theorem intermediateToCompositeNormQuotient_injective_of_cyclicTower :
       Nat.card C = Module.finrank K M := by
     calc
       Nat.card C =
-          (RelativeIdeleGroup.Cohomology.ideleClassNorm
+          (RelativeIdeleGroup.classNorm
             K M).range.index := by
         rw [Subgroup.index_eq_card]
       _ = Module.finrank K M :=
@@ -198,15 +193,15 @@ theorem cyclicTowerNormQuotient_shortExact :
 theorem cyclicTowerNormQuotient_card_eq_mul :
     Nat.card (TowerCompositeClassNormQuotient K M L) =
       Nat.card (IntermediateClassNormQuotient K M L) *
-        Nat.card (IdeleClassNormQuotient K M) := by
+        Nat.card (RelativeIdeleGroup.ClassNormQuotient K M) := by
   calc
     Nat.card (TowerCompositeClassNormQuotient K M L) =
-        Nat.card (IdeleClassNormQuotient K L) :=
+        Nat.card (RelativeIdeleGroup.ClassNormQuotient K L) :=
       Nat.card_congr
         (towerCompositeClassNormQuotientEquiv
           K M L).toEquiv
     _ =
-        (RelativeIdeleGroup.Cohomology.ideleClassNorm
+        (RelativeIdeleGroup.classNorm
           K L).range.index := by
       rw [Subgroup.index_eq_card]
     _ = Module.finrank K L :=
@@ -216,8 +211,8 @@ theorem cyclicTowerNormQuotient_card_eq_mul :
         Module.finrank K M * Module.finrank M L :=
       (Module.finrank_mul_finrank K M L).symm
     _ =
-        Nat.card (IdeleClassNormQuotient K M) *
-          Nat.card (IdeleClassNormQuotient M L) := by
+        Nat.card (RelativeIdeleGroup.ClassNormQuotient K M) *
+          Nat.card (RelativeIdeleGroup.ClassNormQuotient M L) := by
       rw [←
           GlobalClassFieldTheory.ClassFieldAxiom.relativeIdeleClassNorm_index_eq_finrank_cyclic
             K M,
@@ -227,16 +222,15 @@ theorem cyclicTowerNormQuotient_card_eq_mul :
         Subgroup.index_eq_card,
         Subgroup.index_eq_card]
     _ =
-        Nat.card (IdeleClassNormQuotient M L) *
-          Nat.card (IdeleClassNormQuotient K M) := by
+        Nat.card (RelativeIdeleGroup.ClassNormQuotient M L) *
+          Nat.card (RelativeIdeleGroup.ClassNormQuotient K M) := by
       rw [Nat.mul_comm]
     _ =
         Nat.card (IntermediateClassNormQuotient K M L) *
-          Nat.card (IdeleClassNormQuotient K M) := by
+          Nat.card (RelativeIdeleGroup.ClassNormQuotient K M) := by
       rw [Nat.card_congr
         (intermediateClassNormQuotientBaseChangeMulEquiv
           K M L).toEquiv]
-      rfl
 
 end GlobalClassFields
 end GlobalClassFieldTheory

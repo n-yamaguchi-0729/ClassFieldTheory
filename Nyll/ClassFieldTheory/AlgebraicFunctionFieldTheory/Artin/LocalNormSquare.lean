@@ -6,13 +6,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalNormNaturality
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalRestriction
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Separable
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
 public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 
@@ -48,15 +49,15 @@ private theorem completedNorm_commutes
     [FiniteDimensional A C] [IsAbelianGalois A C]
     [FiniteDimensional B D] [IsAbelianGalois B D]
     (x : Bˣ) (n : Aˣ) (hn : LocalFieldTheory.normUnits A B x = n) (z : C) :
-    LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom B D x (algebraMap C D z) =
-      algebraMap C D (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom A C n z) := by
+    LocalClassFieldTheory.abelianLocalArtinMonoidHom B D x (algebraMap C D z) =
+      algebraMap C D (LocalClassFieldTheory.abelianLocalArtinMonoidHom A C n z) := by
   let ρ : Gal(D/A) :=
-    (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom B D x).restrictScalars A
+    (LocalClassFieldTheory.abelianLocalArtinMonoidHom B D x).restrictScalars A
   have h := DFunLike.congr_fun
-    (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_norm_restriction A B C D) x
+    (LocalClassFieldTheory.abelianLocalArtinMonoidHom_norm_restriction A B C D) x
   have hres : ρ.restrictNormal C =
-      LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom A C n :=
-    h.trans (congrArg (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom A C) hn)
+      LocalClassFieldTheory.abelianLocalArtinMonoidHom A C n :=
+    h.trans (congrArg (LocalClassFieldTheory.abelianLocalArtinMonoidHom A C) hn)
   exact (ρ.restrictNormal_commutes C z).symm.trans
     (congrArg (fun χ : Gal(C/A) => algebraMap C D (χ z)) hres)
 
@@ -82,7 +83,7 @@ private def normSquareUpperAction (u : Place k M)
   let _ : ValuativeRel w.adicCompletion := placeCompletionValuativeRel w
   let _ : IsNonarchimedeanLocalField w.adicCompletion :=
     placeCompletion_isNonarchimedeanLocalField w
-  LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom w.adicCompletion u.adicCompletion x⁻¹
+  LocalClassFieldTheory.abelianLocalArtinMonoidHom w.adicCompletion u.adicCompletion x⁻¹
 
 private theorem normSquareUpperAction_apply (u : Place k M)
     (x : (u.restrict F).adicCompletionˣ) (y : M) :
@@ -98,7 +99,7 @@ private def normSquareLowerAction [FiniteDimensional L M] (u : Place k M)
   let _ : ValuativeRel v.adicCompletion := placeCompletionValuativeRel v
   let _ : IsNonarchimedeanLocalField v.adicCompletion :=
     placeCompletion_isNonarchimedeanLocalField v
-  LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom v.adicCompletion z.adicCompletion n⁻¹
+  LocalClassFieldTheory.abelianLocalArtinMonoidHom v.adicCompletion z.adicCompletion n⁻¹
 
 omit [Algebra K M] [IsScalarTower k K M] [IsScalarTower K L M] [HasPrincipalDivisors k M] in
 private theorem normSquareLowerAction_apply [FiniteDimensional L M] (u : Place k M)
@@ -129,9 +130,9 @@ private theorem normSquareCompleted_commutes
   have hu : u.restrict K = v :=
     (restrict_restrict (F := K) (E := L) u).symm
   let avw : Algebra v.adicCompletion w.adicCompletion :=
-    (IdeleGroup.completionMapOver v w hw).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
   let avu : Algebra v.adicCompletion u.adicCompletion :=
-    (IdeleGroup.completionMapOver v u hu).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver v u hu).toAlgebra
   let rv : ValuativeRel v.adicCompletion := placeCompletionValuativeRel v
   let rw' : ValuativeRel w.adicCompletion := placeCompletionValuativeRel w
   have hvlocal : IsNonarchimedeanLocalField v.adicCompletion :=
@@ -148,11 +149,11 @@ private theorem normSquareCompleted_commutes
   have hvwu : IsScalarTower v.adicCompletion w.adicCompletion u.adicCompletion :=
     IsScalarTower.of_algebraMap_eq (fun y =>
       (congrArg (fun f : v.adicCompletion →+* u.adicCompletion => f y)
-        (IdeleGroup.completionMapOver_trans v w u hw rfl hu)).symm)
+        (AlgebraicCurve.Place.completionMapOver_trans v w u hw rfl hu)).symm)
   have hvzu : IsScalarTower v.adicCompletion z.adicCompletion u.adicCompletion :=
     IsScalarTower.of_algebraMap_eq (fun y =>
       (congrArg (fun f : v.adicCompletion →+* u.adicCompletion => f y)
-        (IdeleGroup.completionMapOver_trans v z u rfl rfl hu)).symm)
+        (AlgebraicCurve.Place.completionMapOver_trans v z u rfl rfl hu)).symm)
   have hn₀ : LocalFieldTheory.normUnits v.adicCompletion w.adicCompletion x = n :=
     (IdeleGroup.localNormOver_eq_norm v w hw x).symm.trans hnValue.symm
   have hn : LocalFieldTheory.normUnits v.adicCompletion w.adicCompletion x⁻¹ = n⁻¹ :=
@@ -176,7 +177,7 @@ private theorem localArtin_norm_restrictNormal_core
   let iL : L →+* z.adicCompletion := algebraMap L z.adicCompletion
   let iM : M →+* u.adicCompletion := algebraMap M u.adicCompletion
   have hmap (y : L) : algebraMap z.adicCompletion u.adicCompletion (iL y) =
-      iM (algebraMap L M y) := IdeleGroup.completionMapOver_algebraMap z u rfl y
+      iM (algebraMap L M y) := AlgebraicCurve.Place.completionMapOver_algebraMap z u rfl y
   exact restrictNormalHom_eq_of_pointwise_actions (K := K) (L := L) (M := M)
     (E := z.adicCompletion) (T := u.adicCompletion)
     σ τ (normSquareUpperAction (F := F) u x)

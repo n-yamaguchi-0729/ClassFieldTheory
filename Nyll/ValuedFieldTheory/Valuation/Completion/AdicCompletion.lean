@@ -18,7 +18,8 @@ public import Mathlib.RingTheory.Valuation.ValuationSubring
 public import Mathlib.Topology.Algebra.Valued.ValuationTopology
 public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Basic
 public import Mathlib.RingTheory.LocalRing.MaximalIdeal.Defs
-public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Valuation
 public import Mathlib.Analysis.Normed.Ring.Lemmas
 public import Mathlib.NumberTheory.RamificationInertia.Inertia
 public import Mathlib.RingTheory.Valuation.Discrete.Basic
@@ -71,27 +72,6 @@ private theorem IsLocalRing.maximalIdeal_le {R : Type*} [CommSemiring R] [IsLoca
     (hJ : J ≠ ⊤) (h : IsLocalRing.maximalIdeal R ≤ J) :
     J.IsMaximal :=
   (IsLocalRing.maximalIdeal.isMaximal R).eq_of_le hJ h ▸ IsLocalRing.maximalIdeal.isMaximal R
-
-end
-
-section
-
-variable {F : Type*} [Field F]
-
-private theorem ValuationSubring.valued_eq_one_of_isUnit {K : Type*} [Field K] {Γ₀ : Type*}
-    [LinearOrderedCommGroupWithZero Γ₀] [hv : Valued K Γ₀] (x : hv.v.valuationSubring)
-    (hx : IsUnit x) : Valued.v x.val = 1 := by
-  obtain ⟨u, hu⟩ := hx
-  apply le_antisymm ((hv.v.mem_valuationSubring_iff _).1 x.2)
-  rw [← Valued.v.map_one (R := K), ← Submonoid.coe_one, ← u.mul_inv, hu,
-    Submonoid.coe_mul, Valued.v.map_mul]
-  nth_rw 2 [← mul_one (Valued.v x.val)]
-  exact mul_le_mul_right ((hv.v.mem_valuationSubring_iff _).1 (u⁻¹.val.property)) _
-
-private theorem ValuationSubring.isUnit_of_valued_eq_one {K : Type*} [Field K] {Γ₀ : Type*}
-    [LinearOrderedCommGroupWithZero Γ₀] [hv : Valued K Γ₀] (x : hv.v.valuationSubring)
-    (hx : Valued.v x.val = 1) : IsUnit x := by
-  exact (Valuation.valuationSubring.integers hv.v).isUnit_of_one' hx
 
 end
 
@@ -160,8 +140,6 @@ lemma exists_adicValued_mul_sub_le {a b : A} {γ : WithZero (Multiplicative ℤ)
   obtain ⟨n, hn⟩ := exists_ofAdd_natCast_of_le_one hγ hγ'
   rw [← hn, ← WithZero.exp] at hle ⊢
   have hnz : a ≠ 0 := ne_zero_of_some_le_intValuation _ hle
-  have hnb : Ideal.span {a} ≠ ⊥ := by
-    rwa [ne_eq, Ideal.span_singleton_eq_bot]
   rw [intValuation_eq_coe_neg_multiplicity _ hnz, WithZero.exp_le_exp, neg_le_neg_iff,
     Int.ofNat_le] at hle
   have hm : emultiplicity v.asIdeal (Ideal.span {a}) ≤ n :=
@@ -170,7 +148,7 @@ lemma exists_adicValued_mul_sub_le {a b : A} {γ : WithZero (Multiplicative ℤ)
       (ENat.natCast_le_natCast.mpr hle)
   have hb : b ∈ v.asIdeal ^ multiplicity v.asIdeal (Ideal.span {a}) := by
     rwa [← intValuation_le_pow_iff_mem, ← intValuation_eq_coe_neg_multiplicity _ hnz]
-  rw [← Ideal.irreducible_pow_sup_of_ge hnb (irreducible v) n hm] at hb
+  rw [← Ideal.irreducible_pow_sup_of_ge (irreducible v) n hm] at hb
   obtain ⟨x, hx, z, hz, hxz⟩ := Submodule.mem_sup.mp hb
   obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.mp hz
   use y
@@ -449,7 +427,8 @@ theorem uniformizer_not_isUnit {π : v.adicCompletionIntegers K}
     ¬IsUnit (π : v.adicCompletionIntegers K) := by
   intro hunit
   have hval : Valued.v π.val = 1 :=
-    ValuationSubring.valued_eq_one_of_isUnit π hunit
+    ((Valuation.valuationSubring.integers
+      (Valued.v : Valuation (v.adicCompletion K) ℤᵐ⁰)).isUnit_iff_valuation_eq_one).mp hunit
   rw [hπ] at hval
   have hlt : (WithZero.coe (Multiplicative.ofAdd (-1 : ℤ)) : ℤᵐ⁰) < 1 := by
     rw [← WithZero.coe_one, ← ofAdd_zero, WithZero.coe_lt_coe, Multiplicative.ofAdd_lt]
@@ -470,7 +449,9 @@ theorem eq_pow_uniformizer_mul_unit {x : v.adicCompletionIntegers K} (hx : x ≠
       inv_zpow', neg_neg, ← WithZero.coe_zpow, ← Int.ofAdd_mul, one_mul, ofAdd_neg, ofAdd_toAdd,
       WithZero.coe_inv, WithZero.coe_unzero, inv_mul_cancel₀ hx']
   let a : v.adicCompletionIntegers K := ⟨π ^ (-m) * x.val, le_of_eq hpow⟩
-  let hu : IsUnit a := ValuationSubring.isUnit_of_valued_eq_one a hpow
+  let hu : IsUnit a :=
+    ((Valuation.valuationSubring.integers
+      (Valued.v : Valuation (v.adicCompletion K) ℤᵐ⁰)).isUnit_iff_valuation_eq_one).mpr hpow
   refine ⟨m.toNat, hu.unit, Subtype.ext ?_⟩
   change x.val = π.val ^ m.toNat * ((hu.unit : v.adicCompletionIntegers K) : v.adicCompletion K)
   rw [hu.unit_spec]

@@ -31,8 +31,8 @@ theorem autCongr_abelianizationCongr_eq (e f : L ≃ₐ[K] E) :
   intro z
   refine QuotientGroup.induction_on z ?_
   intro σ
-  change Abelianization.of (AlgEquiv.autCongr e σ) =
-    Abelianization.of (AlgEquiv.autCongr f σ)
+  change Group.Abelianization.of (AlgEquiv.autCongr e σ) =
+    Group.Abelianization.of (AlgEquiv.autCongr f σ)
   let τ : E ≃ₐ[K] E := e.symm.trans f
   have hconj : AlgEquiv.autCongr f σ = τ * AlgEquiv.autCongr e σ * τ⁻¹ := by
     apply AlgEquiv.ext
@@ -41,6 +41,6 @@ theorem autCongr_abelianizationCongr_eq (e f : L ≃ₐ[K] E) :
       AlgEquiv.trans_apply, AlgEquiv.symm_trans_apply, AlgEquiv.symm_symm,
       AlgEquiv.symm_apply_apply]
   rw [hconj, map_mul, map_mul, map_inv,
-    mul_comm (Abelianization.of τ), mul_inv_cancel_right]
+    mul_comm (Group.Abelianization.of τ), mul_inv_cancel_right]
 
 end ClassFieldTheory

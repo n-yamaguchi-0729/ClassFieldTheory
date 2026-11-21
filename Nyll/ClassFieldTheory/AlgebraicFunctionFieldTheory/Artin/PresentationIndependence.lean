@@ -30,14 +30,14 @@ open ClassFormation LocalClassFieldTheory
 private theorem abelianizationCongr_trans_autCongr_eq
     {G F E D : Type*} [Group G] [Field F] [Field E] [Field D]
     [Algebra F E] [Algebra F D]
-    (r : G ≃* Gal(E/F)) (a b : E ≃ₐ[F] D) (z : Abelianization G) :
+    (r : G ≃* Gal(E/F)) (a b : E ≃ₐ[F] D) (z : Group.Abelianization G) :
     (r.trans (AlgEquiv.autCongr a)).abelianizationCongr z =
       (r.trans (AlgEquiv.autCongr b)).abelianizationCongr z := by
   refine QuotientGroup.induction_on z ?_
   intro g
   exact congrArg
-    (fun f : Abelianization (Gal(E/F)) ≃* Abelianization (Gal(D/F)) =>
-      f (Abelianization.of (r g)))
+    (fun f : Group.Abelianization (Gal(E/F)) ≃* Group.Abelianization (Gal(D/F)) =>
+      f (Group.Abelianization.of (r g)))
     (ClassFieldTheory.autCongr_abelianizationCongr_eq a b)
 
 variable (k : Type u) (K : Type v) (L : Type w) (Ω : Type x)

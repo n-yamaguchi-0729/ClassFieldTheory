@@ -51,24 +51,24 @@ theorem finiteGalois_norm_range_eq_commutatorFixedField :
     (IdeleClassGroup.norm (k := k) (K := K) (L := L)).range =
       (IdeleClassGroup.norm (k := k) (K := K) (L := A)).range := by
   intro A hAgal hAprincipal
-  let e : Abelianization Gal(L/K) ≃* Gal(A/K) :=
+  let e : Group.Abelianization Gal(L/K) ≃* Gal(A/K) :=
     IsGalois.normalAutEquivQuotient (commutator Gal(L/K))
   have hcomm : IsMulCommutative Gal(A/K) :=
     e.surjective.isMulCommutative
   let r : Gal(L/K) →* Gal(A/K) := AlgEquiv.restrictNormalHom A
-  have hmap (z : Abelianization Gal(L/K)) :
-      Abelianization.map r z = Abelianization.of (e z) := by
+  have hmap (z : Group.Abelianization Gal(L/K)) :
+      Group.Abelianization.map r z = Group.Abelianization.of (e z) := by
     refine QuotientGroup.induction_on z ?_
     intro σ
-    change Abelianization.map r (Abelianization.of σ) =
-      Abelianization.of (e (Abelianization.of σ))
-    rw [Abelianization.map_of]
-    apply congrArg Abelianization.of
+    change Group.Abelianization.map r (Group.Abelianization.of σ) =
+      Group.Abelianization.of (e (Group.Abelianization.of σ))
+    rw [Group.Abelianization.map_of]
+    apply congrArg Group.Abelianization.of
     exact (IsGalois.normalAutEquivQuotient_apply (commutator Gal(L/K)) σ).symm
-  have hinjective : Function.Injective (Abelianization.map r) := by
+  have hinjective : Function.Injective (Group.Abelianization.map r) := by
     intro x y hxy
     apply e.injective
-    apply (Abelianization.equivOfComm (H := Gal(A/K))).injective
+    apply (Group.Abelianization.equivOfComm (H := Gal(A/K))).injective
     exact (hmap x).symm.trans (hxy.trans (hmap y))
   apply Subgroup.ext
   intro c
@@ -80,7 +80,7 @@ theorem finiteGalois_norm_range_eq_commutatorFixedField :
     rw [← hrestriction, hc, map_one]
   · intro hc
     apply hinjective
-    exact hrestriction.trans (hc.trans (map_one (Abelianization.map r)).symm)
+    exact hrestriction.trans (hc.trans (map_one (Group.Abelianization.map r)).symm)
 
 /-- Every finite subextension of the fixed Galois overfield admits an actual
 finite abelian subextension in the same overfield whose norm image is smaller.
@@ -107,7 +107,7 @@ theorem exists_finiteAbelian_norm_le
   let A : IntermediateField K M := IntermediateField.fixedField (commutator Gal(M/K))
   have hAgal : IsGalois K A :=
     IsGalois.of_fixedField_normal_subgroup (commutator Gal(M/K))
-  let e : Abelianization Gal(M/K) ≃* Gal(A/K) :=
+  let e : Group.Abelianization Gal(M/K) ≃* Gal(A/K) :=
     IsGalois.normalAutEquivQuotient (commutator Gal(M/K))
   have hcomm : IsMulCommutative Gal(A/K) :=
     e.surjective.isMulCommutative

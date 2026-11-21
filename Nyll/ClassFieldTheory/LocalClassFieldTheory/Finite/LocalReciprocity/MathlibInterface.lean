@@ -6,8 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocity
+public import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocityQuotient
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
 public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
-public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Classification
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.OrderReversal
@@ -40,6 +43,8 @@ retain the native class-formation model used by their classification source.
 
 @[expose] public section
 
+open LocalFieldTheory (localNormSubgroup)
+
 noncomputable section
 
 namespace ClassFieldTheory.LocalCFT
@@ -59,7 +64,7 @@ noncomputable local instance fieldNormQuotientTopologicalSpace
     (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [FiniteDimensional K L] [TopologicalSpace K] :
     TopologicalSpace (FieldNormQuotient K L) := by
-  change TopologicalSpace (Kˣ ⧸ fieldNormSubgroup K L)
+  change TopologicalSpace (Kˣ ⧸ localNormSubgroup K L)
   infer_instance
 
 /-- Finite abelian local extensions are classified, contravariantly, by
@@ -83,48 +88,6 @@ theorem finiteAbelianLocalExistence_orderIso
         (LocalClassFieldTheory.OpenFiniteIndexSubgroup K)ᵒᵈ) :=
   ⟨LocalClassFieldTheory.finiteAbelianNormSubgroupOrderIso K⟩
 
-/-- Construction of the Artin map in the finite abelian local reciprocity
-theorem, expressed only through its mathematical universal properties. -/
-theorem finiteAbelianLocalReciprocity
-    (K : Type u) (L : Type v)
-    [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsAbelianGalois K L]
-    [ValuativeRel K] [TopologicalSpace K]
-    [IsNonarchimedeanLocalField K] :
-    ∃ artin : Kˣ →ₜ* (L ≃ₐ[K] L),
-      Function.Surjective artin ∧
-      ∀ x : Kˣ, artin x = 1 ↔ IsFieldNorm K L x := by
-  refine ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L,
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L, ?_⟩
-  intro x
-  change x ∈ (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L).toMonoidHom.ker ↔
-    x ∈ fieldNormSubgroup K L
-  rw [LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker]
-
-/-- The quotient form of finite abelian local reciprocity. -/
-theorem finiteAbelianLocalReciprocity_quotient
-    (K : Type u) (L : Type v)
-    [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsAbelianGalois K L]
-    [ValuativeRel K] [TopologicalSpace K]
-    [IsNonarchimedeanLocalField K] :
-    Nonempty
-      (FieldNormQuotient K L ≃ₜ* (L ≃ₐ[K] L)) := by
-  obtain ⟨e, _, _⟩ := LocalClassFieldTheory.Universe.quotientEquiv_existsUnique K L
-  exact ⟨e⟩
-
-/-- The field-norm subgroup is open in the native topology on `Kˣ`. -/
-theorem isOpen_fieldNormSubgroup
-    (K : Type u) (L : Type v)
-    [Field K] [Field L] [Algebra K L]
-    [FiniteDimensional K L] [IsAbelianGalois K L]
-    [ValuativeRel K] [TopologicalSpace K]
-    [IsNonarchimedeanLocalField K] :
-    IsOpen (fieldNormSubgroup K L : Set Kˣ) := by
-  rw [← LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K L]
-  exact (isOpen_discrete ({1} : Set Gal(L/K))).preimage
-    (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L).continuous_toFun
-
 /-- The field-norm subgroup has finite index, by finite local reciprocity. -/
 theorem fieldNormSubgroup_finiteIndex
     (K : Type u) (L : Type v)
@@ -132,12 +95,12 @@ theorem fieldNormSubgroup_finiteIndex
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
-    (fieldNormSubgroup K L).FiniteIndex := by
+    (localNormSubgroup K L).FiniteIndex := by
   let : Finite (L ≃ₐ[K] L) := by
     apply Nat.finite_of_card_ne_zero
     rw [IsGalois.card_aut_eq_finrank K L]
     exact Nat.ne_of_gt Module.finrank_pos
-  obtain ⟨e⟩ := finiteAbelianLocalReciprocity_quotient K L
+  obtain ⟨e⟩ := ClassFieldTheory.finiteAbelianLocalReciprocity_quotient K L
   let : Finite (FieldNormQuotient K L) :=
     Finite.of_equiv (L ≃ₐ[K] L) e.symm.toEquiv
   exact Subgroup.finiteIndex_of_finite_quotient
@@ -149,8 +112,8 @@ theorem fieldNormSubgroup_index_eq_finrank
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
-    (fieldNormSubgroup K L).index = Module.finrank K L := by
-  obtain ⟨e⟩ := finiteAbelianLocalReciprocity_quotient K L
+    (localNormSubgroup K L).index = Module.finrank K L := by
+  obtain ⟨e⟩ := ClassFieldTheory.finiteAbelianLocalReciprocity_quotient K L
   rw [Subgroup.index_eq_card]
   exact (Nat.card_congr e.toEquiv).trans (IsGalois.card_aut_eq_finrank K L)
 

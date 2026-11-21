@@ -60,8 +60,8 @@ private theorem abstractFixedField_restrictScalars_abelianization
     let eHU : (H.toSubgroup ⧸ extensionSubgroup H U hUH) ≃*
         Gal((abstractFixedField K Ω U)/(abstractFixedField K Ω H)) :=
       abstractExtensionQuotientEquivGaloisGroup K Ω H U hUH hUnormal
-    ∀ z : Abelianization (J.toSubgroup ⧸ extensionSubgroup J U hUJ),
-      Abelianization.map (AlgEquiv.restrictScalarsHom (abstractFixedField K Ω H))
+    ∀ z : Group.Abelianization (J.toSubgroup ⧸ extensionSubgroup J U hUJ),
+      Group.Abelianization.map (AlgEquiv.restrictScalarsHom (abstractFixedField K Ω H))
           (eJU.abelianizationCongr z) =
         eHU.abelianizationCongr
             (normResidueNaturalityAbelianizedRestriction H J U U
@@ -71,10 +71,10 @@ private theorem abstractFixedField_restrictScalars_abelianization
   intro q
   refine QuotientGroup.induction_on q ?_
   intro σ
-  change Abelianization.of
+  change Group.Abelianization.of
       ((eJU (QuotientGroup.mk σ)).restrictScalars (abstractFixedField K Ω H)) =
-    Abelianization.of (eHU (QuotientGroup.mk (Subgroup.inclusion hJH σ)))
-  apply congrArg Abelianization.of
+    Group.Abelianization.of (eHU (QuotientGroup.mk (Subgroup.inclusion hJH σ)))
+  apply congrArg Group.Abelianization.of
   apply AlgEquiv.ext
   intro x
   apply Subtype.val_injective
@@ -127,7 +127,7 @@ theorem fixedFieldArtin_norm_restrictScalars
         (abstractFixedField K Ω T.field.field) :=
       abstractRelativeFixedField_isGalois K Ω T.base.field T.field.field T.below hJnormal
     ∀ c : IdeleClassGroup k (abstractFixedField K Ω T.field.field),
-      Abelianization.map
+      Group.Abelianization.map
         (AlgEquiv.restrictScalarsHom (abstractFixedField K Ω T.base.field) :
           Gal((abstractFixedField K Ω U)/(abstractFixedField K Ω T.field.field)) →*
           Gal((abstractFixedField K Ω U)/(abstractFixedField K Ω T.base.field)))
@@ -152,7 +152,7 @@ theorem fixedFieldArtin_norm_restrictScalars
   let z := ((D.normResidueSymbol A v hcf T.field E')
     (finiteNormClass A T.field.field U hUJ a)).toMul
   have hg :
-      Abelianization.map
+      Group.Abelianization.map
         (AlgEquiv.restrictScalarsHom (abstractFixedField K Ω T.base.field) :
           Gal((abstractFixedField K Ω U)/(abstractFixedField K Ω T.field.field)) →*
           Gal((abstractFixedField K Ω U)/(abstractFixedField K Ω T.base.field)))
@@ -179,7 +179,7 @@ theorem fixedFieldArtin_norm_restrictScalars
     (congrArg (finiteNormClass A T.base.field U hUH) hN.symm)
   have hsymbol := h.trans
     (congrArg (D.normResidueSymbol A v hcf T.base E) hclass)
-  change Abelianization.map
+  change Group.Abelianization.map
         (AlgEquiv.restrictScalarsHom (abstractFixedField K Ω T.base.field) :
           Gal((abstractFixedField K Ω U)/(abstractFixedField K Ω T.field.field)) →*
           Gal((abstractFixedField K Ω U)/(abstractFixedField K Ω T.base.field)))
@@ -244,7 +244,7 @@ theorem fixedFieldArtin_norm_of_basePresentation
     ∀ c : IdeleClassGroup k (abstractFixedField K Ω H₀.field),
       let n : IdeleClassGroup k K := IdeleClassGroup.norm (k := k) (K := K)
         (L := abstractFixedField K Ω H₀.field) c
-      Abelianization.map
+      Group.Abelianization.map
         (AlgEquiv.restrictScalarsHom
           (S := abstractFixedField K Ω B₀.field)
           (A := abstractFixedField K Ω U) K :
@@ -253,7 +253,7 @@ theorem fixedFieldArtin_norm_of_basePresentation
         (fixedFieldArtin k K Ω B₀ ⟨U, hUB, hUnormal, hUfinite⟩
           (IdeleClassGroup.baseChange (k := k) (K := K)
             (L := abstractFixedField K Ω B₀.field) n)) =
-      Abelianization.map
+      Group.Abelianization.map
         (AlgEquiv.restrictScalarsHom
           (S := abstractFixedField K Ω H₀.field)
           (A := abstractFixedField K Ω U) K :
@@ -286,7 +286,7 @@ theorem fixedFieldArtin_norm_of_basePresentation
   let ρH : Gal(E/H) →* Gal(E/B) := AlgEquiv.restrictScalarsHom B
   let ρ : Gal(E/H) →* Gal(E/K) := AlgEquiv.restrictScalarsHom K
   have hambient :
-      Abelianization.map ρH
+      Group.Abelianization.map ρH
           (fixedFieldArtin k K Ω H₀ ⟨U, hUH, hU'normal, hU'finite⟩ c) =
         fixedFieldArtin k K Ω B₀ ⟨U, hUB, hUnormal, hUfinite⟩
           (IdeleClassGroup.norm (k := k) (K := B) (L := H) c) := by
@@ -299,10 +299,10 @@ theorem fixedFieldArtin_norm_of_basePresentation
     apply AlgEquiv.ext
     intro x
     rfl
-  have hrestrict : (Abelianization.map ρ0).comp (Abelianization.map ρH) =
-      Abelianization.map ρ :=
-    (Abelianization.map_comp ρH ρ0).trans (congrArg Abelianization.map hcomp)
-  have htransport := congrArg (Abelianization.map ρ0) hambient.symm
+  have hrestrict : (Group.Abelianization.map ρ0).comp (Group.Abelianization.map ρH) =
+      Group.Abelianization.map ρ :=
+    (Group.Abelianization.map_comp ρH ρ0).trans (congrArg Group.Abelianization.map hcomp)
+  have htransport := congrArg (Group.Abelianization.map ρ0) hambient.symm
   refine htransport.trans ?_
   exact DFunLike.congr_fun hrestrict _
 

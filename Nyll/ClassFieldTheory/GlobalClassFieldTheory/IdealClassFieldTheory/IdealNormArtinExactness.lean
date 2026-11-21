@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealDecompositionLaw
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNormCore
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.ArithmeticIdealArtin
 
 /-!

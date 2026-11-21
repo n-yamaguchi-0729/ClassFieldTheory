@@ -45,7 +45,8 @@ theorem artinSchreier_ramificationIndex_eq_one
   let A := v.toValuationSubring
   let aAE : Algebra A E := Place.valuationSubringAlgebra E v
   have hAKE : IsScalarTower A K E := IsScalarTower.of_algebraMap_eq fun _ => rfl
-  have hcharA : CharP A p := CharP.subring K p v.toValuationSubring.toSubring
+  have hcharA : CharP A p :=
+    v.toValuationSubring.toSubring.subtype.charP v.toValuationSubring.toSubring.subtype_injective p
   let aA : A := ⟨a, ha⟩
   let P : Polynomial A := artinSchreierPolynomial p aA
   have hPmonic : P.Monic :=

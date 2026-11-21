@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Morphisms.NoetherianFiniteType
 public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafIdealFiltration
 public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafHasDevissageStep
 public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFinitePushforward
@@ -53,14 +54,6 @@ open _root_.AlgebraicGeometry
 
 variable {R : Type u} [CommRing R] {V : Scheme.{u}}
 
-theorem isNoetherian_of_isProper [IsNoetherianRing R] (π : V ⟶ Spec (.of R)) [IsProper π] :
-    IsNoetherian V := by
-  have : LocallyOfFiniteType π := inferInstance
-  have : IsLocallyNoetherian (Spec (CommRingCat.of R)) := inferInstance
-  have : IsLocallyNoetherian V := LocallyOfFiniteType.isLocallyNoetherian π
-  have : CompactSpace V := QuasiCompact.compactSpace_of_compactSpace π
-  exact {}
-
 theorem cechFinite_of_supportedIn_empty (π : V ⟶ Spec (.of R)) [IsSeparated π] (K :
     V.OrderedAffineCover)
     (F : OModulePresheaf π) {Y : Closeds V} (hY : (Y : Set V) = ∅) (hFs : F.SupportedIn Y) :
@@ -90,7 +83,7 @@ theorem _root_.AlgebraicGeometry.OModulePresheaf.cechFinite_of_forall_integral
     ∀ (Y : TopologicalSpace.Closeds V) (F : OModulePresheaf π),
       F.IsCoherent → F.IsQuasicoherent → F.SupportedIn Y → F.CechFinite K := by
   have : IsSeparated π := inferInstance
-  have : IsNoetherian V := isNoetherian_of_isProper π
+  have : IsNoetherian V := LocallyOfFiniteType.isNoetherian π
   have : IsLocallyNoetherian V := inferInstance
   intro Y
   induction Y using WellFoundedLT.induction with

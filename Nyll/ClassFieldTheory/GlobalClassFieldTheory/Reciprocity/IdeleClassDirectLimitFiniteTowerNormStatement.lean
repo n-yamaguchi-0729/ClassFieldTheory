@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormCore
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
+module
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteTowerNormCore
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimit
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitFiniteEmbedding
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.NormComparison
 
 /-!
 # Ordinary norms in finite towers of rational fixed fields
@@ -18,6 +22,8 @@ The construction is kept separate from the foundational direct-limit norm
 module so that the normal-closure and coset-product proof elaborates in a
 fresh command environment.
 -/
+
+@[expose] public section
 
 noncomputable section
 
@@ -72,7 +78,7 @@ idele-class norm on a finite tower of rational fixed fields. -/
   letI : NumberField F := NumberField.of_module_finite ℚ F
   letI : NumberField E := NumberField.of_module_finite ℚ E
   ∀ c : IdeleClassGroup E,
-    relativeNorm rationalIdeleClassRepresentation K L hLK
+    relativeNorm (ideleClassRepresentation ℚ) K L hLK
         (rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
           K L hLK (Additive.ofMul c)) =
       rationalAbstractFixedFieldIdeleClassEquivFixed K
@@ -121,7 +127,7 @@ ordinary class embedding into a common rational normal closure. -/
   letI : FiniteDimensional ℚ Nℚ := by
     change FiniteDimensional ℚ N
     infer_instance
-  let U := rationalNormalClosure Nℚ
+  let U := finiteIdeleClassNormalClosure ℚ Nℚ
   let hNU : Nℚ ≤
       (U : IntermediateField ℚ (SeparableClosure ℚ)) := by
     change Nℚ ≤ IntermediateField.normalClosure
@@ -146,11 +152,11 @@ ordinary class embedding into a common rational normal closure. -/
       (fun _ => rfl)
   ∀ (c : IdeleClassGroup E) (q : Q),
     Additive.toMul
-        ((relativeCosetAction rationalIdeleClassRepresentation
+        ((relativeCosetAction (ideleClassRepresentation ℚ)
           K L hLK
           (rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
             K L hLK (Additive.ofMul c)) q :
-          Additive rationalIdeleClassDirectLimit)) =
+          Additive (ideleClassDirectLimit ℚ))) =
       rationalIntermediateIdeleClassToDirectLimit
         (U : IntermediateField ℚ (SeparableClosure ℚ))
         (_root_.relativeIdeleClassBaseChangeMulEquiv

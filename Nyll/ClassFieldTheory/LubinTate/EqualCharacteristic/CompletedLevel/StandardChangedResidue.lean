@@ -39,23 +39,10 @@ open ValuationTheory.DiscreteValuationField.ValuedExtension
 
 variable {K : Type u} [Field K]
 
-noncomputable local instance standardChangedResidueBaseAlgebra
-    (F : LocalField.{u, v} K) :
-    Algebra F.residueField⸨X⸩
-      (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  equalCharacteristicCompletedLevelBaseAlgebra F
-
-noncomputable local instance standardChangedResidueLevelAlgebra
-    (F : LocalField.{u, v} K) (n : ℕ) :
-    Algebra F.residueField⸨X⸩ (equalCharacteristicCompletedLevelField F n) :=
-  equalCharacteristicCompletedLevelLaurentAlgebra F n
-
-local instance standardChangedResidueScalarTower
-    (F : LocalField.{u, v} K) (n : ℕ) :
-    IsScalarTower F.residueField⸨X⸩
-      (equalCharacteristicCompletedUnramifiedField F.residueField)
-      (equalCharacteristicCompletedLevelField F n) :=
-  IsScalarTower.of_algebraMap_eq' rfl
+attribute [local instance]
+  equalCharacteristicCompletedLevelBaseAlgebra
+  equalCharacteristicCompletedLevelLaurentAlgebra
+  equalCharacteristicCompletedLevelScalarTower
 
 /-- The chosen finite-subfield valuation is the restriction of the actual
 ambient completed valuation, up to equivalence of value groups. -/
@@ -242,14 +229,14 @@ theorem equalCharacteristicCompletedFrobeniusFixedField_residueField_card
       (Polynomial.X ^ Nat.card F.residueField - Polynomial.X : Polynomial 𝓀[D]).roots := by
     intro x _
     rw [Polynomial.mem_roots']
-    refine ⟨FiniteField.X_pow_card_sub_X_ne_zero 𝓀[D] hq, ?_⟩
+    refine ⟨Polynomial.X_pow_sub_X_ne_zero (R := 𝓀[D]) hq, ?_⟩
     change Polynomial.eval x
       (Polynomial.X ^ Nat.card F.residueField - Polynomial.X : Polynomial 𝓀[D]) = 0
     rw [Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X,
       equalCharacteristicCompletedFrobeniusFixedField_residue_pow_eq F a n x, sub_self]
   have hupper : Nat.card 𝓀[D] ≤ Nat.card F.residueField := by
     have h := Polynomial.card_le_degree_of_subset_roots hroots
-    rw [Finset.card_univ, FiniteField.X_pow_card_sub_X_natDegree_eq 𝓀[D] hq] at h
+    rw [Finset.card_univ, Polynomial.natDegree_X_pow_sub_X (R := 𝓀[D]) hq] at h
     simpa only [Nat.card_eq_fintype_card] using h
   let : Valuation.HasExtension (ValuativeRel.valuation F.residueField⸨X⸩)
       (ValuativeRel.valuation D) :=

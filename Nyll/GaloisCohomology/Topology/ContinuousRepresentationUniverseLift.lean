@@ -30,7 +30,19 @@ universe r u v
 
 open CategoryTheory ContRepresentation
 
+/-- A universe lift preserves the continuity of scalar multiplication on the coefficient type. -/
+theorem ULift.continuousSMul
+    {R : Type r} {A : Type v} [TopologicalSpace R] [TopologicalSpace A]
+    [SMul R A] [ContinuousSMul R A] : ContinuousSMul R (ULift.{u} A) :=
+  ⟨continuous_uliftUp.comp
+    (continuous_fst.smul (continuous_uliftDown.comp continuous_snd))⟩
+
 namespace TopRep
+
+/-- The integral module supplied by a topological representation, for local instance scopes. -/
+@[instance_reducible]
+def integralModuleOfRepresentation {G : Type u} [Monoid G] (X : TopRep.{v} ℤ G) :
+    Module ℤ X := X.hV2
 
 variable {R : Type r} [Ring R] [TopologicalSpace R]
 variable {G : Type u} [Group G]
@@ -39,11 +51,7 @@ local instance universeLiftIsTopologicalAddGroup
     {A : Type v} [AddCommGroup A] [TopologicalSpace A] [IsTopologicalAddGroup A] :
     IsTopologicalAddGroup (ULift.{u} A) := {}
 
-local instance universeLiftContinuousSMul
-    {A : Type v} [AddCommGroup A] [TopologicalSpace A] [Module R A] [ContinuousSMul R A] :
-    ContinuousSMul R (ULift.{u} A) :=
-  ⟨continuous_uliftUp.comp
-    (continuous_fst.smul (continuous_uliftDown.comp continuous_snd))⟩
+attribute [local instance] ULift.continuousSMul
 
 /-- The actual coefficient action on the lifted carrier and lifted group. -/
 def universeLift (X : TopRep.{v} R G) : TopRep.{max u v} R (ULift.{v} G) := by

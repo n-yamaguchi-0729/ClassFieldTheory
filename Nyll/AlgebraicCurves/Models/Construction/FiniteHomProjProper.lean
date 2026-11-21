@@ -235,7 +235,7 @@ private lemma ι_φ (f : C.functionField) :
       𝟙 _ := by
     erw [← cancel_mono (R c f).domain.ι]
     simp only [Category.assoc, Scheme.isoOfEq_inv_ι, Scheme.toIso_inv_ι, Category.comp_id]
-    try rfl
+    exact (Category.id_comp (R c f).domain.ι).symm
   erw [φ, ← Category.assoc, ← Category.assoc, h2]
   exact Category.id_comp _
 
@@ -330,7 +330,7 @@ private lemma φ_pole_not_mem (f : C.functionField) (x₀ : C)
       Spec.map (CommRingCat.ofHom (ψ c f)) ≫ ι₀ := by
     rw [Spec.map_comp, Category.assoc, hχ, hLfac, hlx,
       Scheme.SpecMap_stalkSpecializes_fromSpecStalk_assoc, fromSpecStalk_φ, p, hι₀]
-    try rfl
+    rfl
   have hring : χ ≫ C.presheaf.stalkSpecializes (genericPoint_specializes x₀) =
       CommRingCat.ofHom (ψ c f) :=
     Spec.map_injective ((cancel_mono ι₀).mp hgen)

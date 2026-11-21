@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.EffectiveCartierIdeal
 public import Batteries.Tactic.Init
 public import Mathlib.RingTheory.Unramified.Finite
 public import Mathlib.RingTheory.RingHom.StandardSmooth
@@ -388,3 +389,25 @@ theorem _root_.AlgebraicGeometry.Scheme.Hom.isInvertible_ker_of_comp_eq_id {X T 
 end
 end AlgebraicCurves.Geometry.Schemes.Proofs.Scheme_Hom_isInvertible_ker_of_comp_eq_id
 end ProofImplementation
+
+namespace AlgebraicGeometry.Scheme.Hom
+
+universe u
+
+open CategoryTheory
+
+/-- The original kernel of a section of a separated smooth relative
+curve, with the genuine Cartier regularity supplied by that section. -/
+def sectionEffectiveCartierDivisor
+    {X S : Scheme.{u}} (f : X ⟶ S) [IsSeparated f]
+    [SmoothOfRelativeDimension 1 f] (p : S ⟶ X) (hp : p ≫ f = 𝟙 S) :
+    Scheme.EffectiveCartierDivisor X :=
+  ⟨p.ker, (Scheme.Hom.isInvertible_ker_of_comp_eq_id p hp).isEffectiveCartier⟩
+
+/-- The divisor retains the actual point kernel ideal. -/
+theorem sectionEffectiveCartierDivisor_ideal
+    {X S : Scheme.{u}} (f : X ⟶ S) [IsSeparated f]
+    [SmoothOfRelativeDimension 1 f] (p : S ⟶ X) (hp : p ≫ f = 𝟙 S) :
+    (sectionEffectiveCartierDivisor f p hp).1 = p.ker := rfl
+
+end AlgebraicGeometry.Scheme.Hom

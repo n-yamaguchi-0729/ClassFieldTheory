@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Mathlib.RepresentationTheory.Homological.ContCohomology.Basic
+public import Mathlib.RepresentationTheory.Homological.ContCohomology.Functoriality
 public import Mathlib.Data.Fin.Tuple.Basic
 
 /-!
@@ -59,6 +60,37 @@ theorem resolutionTupleHomeomorph_succ_apply (n : ℕ)
     (f : resolutionX X (n + 1)) (a : Fin (n + 1) → G) :
     resolutionTupleHomeomorph G X (n + 1) f a =
       resolutionTupleHomeomorph G X n (f (a 0)) (fun i => a i.succ) := rfl
+
+section Map
+
+variable {J : Type u} [Group J] [TopologicalSpace J] [IsTopologicalGroup J] [LocallyCompactSpace J]
+    (Y : TopRep.{u} ℤ J) (r : J →ₜ* G) (φ : TopRep.res r.toMonoidHom X ⟶ Y)
+
+/-- In tuple coordinates the actual resolution map applies the group map to
+each argument and the coefficient map to the value. -/
+theorem resolutionTupleHomeomorph_resolutionMap (n : ℕ) (w : resolutionX X n)
+    (a : Fin n → J) :
+    resolutionTupleHomeomorph J Y n (ContinuousCohomology.resolutionMap r φ n w) a =
+      φ (resolutionTupleHomeomorph G X n w (fun i => r (a i))) := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    rw [ContinuousCohomology.resolutionMap_succ]
+    change resolutionTupleHomeomorph J Y n
+      (ContinuousCohomology.resolutionMap r φ n (w (r (a 0)))) (fun i => a i.succ) =
+        φ (resolutionTupleHomeomorph G X n (w (r (a 0))) (fun i => r (a i.succ)))
+    exact ih (w (r (a 0))) (fun i => a i.succ)
+
+/-- The tuple evaluation of a mapped equivariant cochain uses the same
+coordinatewise substitution as the underlying resolution. -/
+theorem resolutionTupleHomeomorph_cochainsMap (n : ℕ) (w : (homogeneousCochains X).X n)
+    (a : Fin (n + 1) → J) :
+    resolutionTupleHomeomorph J Y (n + 1)
+      (((ContinuousCohomology.cochainsMap r φ).f n) w).val a =
+      φ (resolutionTupleHomeomorph G X (n + 1) w.val (fun i => r (a i))) :=
+  resolutionTupleHomeomorph_resolutionMap G X Y r φ (n + 1) w.val a
+
+end Map
 
 /-- Tuple evaluation preserves addition in every degree. -/
 theorem resolutionTupleHomeomorph_add (n : ℕ) (f g : resolutionX X n) :

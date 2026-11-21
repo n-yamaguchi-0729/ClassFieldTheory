@@ -293,47 +293,6 @@ namespace DivRep
 open _root_.AlgebraicGeometry.RelPicard
 open _root_.AlgebraicGeometry
 
-theorem twoAffineOpenCover_ext {X : Scheme.{u}} {𝒱 𝒲 : X.TwoAffineOpenCover}
-    (h0 : 𝒱.U0 = 𝒲.U0) (h1 : 𝒱.U1 = 𝒲.U1) : 𝒱 = 𝒲 := by
-  obtain ⟨U0, U1, p1, p2, p3, p4⟩ := 𝒱
-  obtain ⟨U0', U1', q1, q2, q3, q4⟩ := 𝒲
-  change U0 = U0' at h0
-  change U1 = U1' at h1
-  subst h0
-  subst h1
-  rfl
-
-/-- The compatible family of restrictions of a global section. -/
-noncomputable def sectionOfGlobal {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) : M.val.sections :=
-  ⟨fun U => (Scheme.Modules.presheaf M).map (homOfLE (le_top : U.unop ≤ ⊤)).op σ,
-   fun {U V} f => by
-     change (Scheme.Modules.presheaf M).map f ((Scheme.Modules.presheaf M).map (homOfLE (le_top :
-       U.unop ≤ ⊤)).op σ) =
-       (Scheme.Modules.presheaf M).map (homOfLE (le_top : V.unop ≤ ⊤)).op σ
-     have hg : (homOfLE (le_top : U.unop ≤ ⊤)).op ≫ f = (homOfLE (le_top : V.unop ≤ ⊤)).op :=
-       Subsingleton.elim _ _
-     rw [← CategoryTheory.ConcreteCategory.comp_apply, ← Functor.map_comp, hg]⟩
-
-theorem sectionOfGlobal_top {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) :
-    (sectionOfGlobal M σ).val (op ⊤) = σ := by
-  change (Scheme.Modules.presheaf M).map (homOfLE (le_top : (⊤ : X.Opens) ≤ ⊤)).op σ = σ
-  have h1 : (homOfLE (le_top : (⊤ : X.Opens) ≤ ⊤)).op = 𝟙 (op ⊤) := Subsingleton.elim _ _
-  rw [h1, CategoryTheory.Functor.map_id]
-  rfl
-
-theorem exists_hom_ne_zero {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) (hσ : σ ≠ 0) :
-    ∃ s : 𝟙_ X.Modules ⟶ M, s ≠ 0 := by
-  obtain ⟨s, hs⟩ :
-      ∃ s : 𝟙_ X.Modules ⟶ M, (SheafOfModules.unitHomEquiv M) s = sectionOfGlobal M σ :=
-    ⟨(SheafOfModules.unitHomEquiv M).symm (sectionOfGlobal M σ), Equiv.apply_symm_apply _ _⟩
-  refine ⟨s, fun h0 => hσ ?_⟩
-  have e2 : (sectionOfGlobal M σ).val (op ⊤) = σ := sectionOfGlobal_top M σ
-  have e3 : (sectionOfGlobal M σ).val (op ⊤) = (Scheme.Modules.Hom.app s ⊤) (1 : Γ(X, ⊤)) := by
-    rw [← hs]
-    rfl
-  rw [← e2, e3, h0, Scheme.Modules.Hom.zero_app]
-  rfl
-
 theorem main
     {k : Type u} [Field k] [IsAlgClosed k] {A : Scheme.{u}} {a : A ⟶ Spec (CommRingCat.of k)}
     [IsProper a] [SmoothOfRelativeDimension 1 a] [GeometricallyIntegral a]
@@ -373,7 +332,8 @@ theorem main
     Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso
       (pullback.snd a (𝟙 (Spec (CommRingCat.of k)))) a φ hφ 𝒱A (L ⊗ 𝟙_ A.Modules) L'
       ((Scheme.Modules.pullback (pullback.fst a (𝟙 (Spec (CommRingCat.of k))))).mapIso (ρ_ L).symm)
-  have h𝒱 : 𝒱₂ = 𝒱 := twoAffineOpenCover_ext (hU0₂.trans hU0.symm) (hU1₂.trans hU1.symm)
+  have h𝒱 : 𝒱₂ = 𝒱 :=
+    Scheme.TwoAffineOpenCover.cover_ext (hU0₂.trans hU0.symm) (hU1₂.trans hU1.symm)
   subst h𝒱
   have hχA := RelPicard.IsAlgEquivZero.eulerChar_sectionsOf_tensor_eq a 𝒱A L (𝟙_ A.Modules) hL
     (Scheme.Modules.isInvertible_unit A) h0
@@ -411,7 +371,8 @@ theorem main
   obtain ⟨eΓ, -⟩ := Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_H0 𝒱₂
     (pullback.snd a (𝟙 (Spec (CommRingCat.of k)))) (L' ⊗ E.lineBundle)
   have hσ : eΓ.symm y ≠ 0 := fun h => hy (by rw [← eΓ.apply_symm_apply y, h, map_zero])
-  obtain ⟨s, hs⟩ := exists_hom_ne_zero (L' ⊗ E.lineBundle) (eΓ.symm y) hσ
+  obtain ⟨s, hs⟩ := _root_.AlgebraicGeometry.Scheme.Modules.exists_hom_ne_zero
+    (L' ⊗ E.lineBundle) (eΓ.symm y) hσ
   have hχ3 : (Module.finrank k (𝒱₂.sectionsOf (pullback.snd a (𝟙 (Spec (CommRingCat.of k)))) (L' ⊗
     E.lineBundle)).H0 : ℤ)
         - Module.finrank k (𝒱₂.sectionsOf (pullback.snd a (𝟙 (Spec (CommRingCat.of k)))) (L' ⊗

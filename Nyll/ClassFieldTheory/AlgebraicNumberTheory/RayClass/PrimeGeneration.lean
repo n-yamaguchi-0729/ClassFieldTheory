@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.Algebra.FractionalIdealFactorization
 public import Mathlib.Algebra.Group.Subgroup.Ker
 public import Mathlib.Algebra.Group.Subgroup.Finite
 
@@ -45,51 +46,8 @@ theorem primeToModulusIdeals_hom_ext
       (hv : v ∉ m.finitePart.support),
         f (RayClass.primeToModulusIdeal m v hv) =
           g (RayClass.primeToModulusIdeal m v hv)) :
-    f = g := by
-  let P := RayClass.primeToModulusIdeals m
-  let p (v : HeightOneSpectrum (𝓞 K)) : P :=
-    if hv : v ∉ m.finitePart.support then
-      RayClass.primeToModulusIdeal m v hv else 1
-  have hp (v : HeightOneSpectrum (𝓞 K)) : f (p v) = g (p v) := by
-    by_cases hv : v ∉ m.finitePart.support
-    · simpa only [p, dite_eq_left hv] using hprime v hv
-    · simp only [p, dite_eq_right hv, map_one]
-  apply MonoidHom.ext
-  intro I
-  let c := FractionalIdealGroup.countVector (I : FractionalIdealGroup K)
-  have hfactor :
-      FractionalIdealGroup.factorization (Multiplicative.ofAdd c) =
-        (I : FractionalIdealGroup K) := by
-    apply FractionalIdealGroup.ext_count
-    intro v
-    rw [FractionalIdealGroup.count_factorization]
-    exact FractionalIdealGroup.countVector_apply (I : FractionalIdealGroup K) v
-  have hI : I = c.prod (fun v e => p v ^ e) := by
-    apply Subtype.ext
-    change (I : FractionalIdealGroup K) =
-      (P.subtype : P →* FractionalIdealGroup K)
-        (c.prod (fun v e => p v ^ e))
-    rw [← hfactor]
-    change FractionalIdealGroup.factorization (Multiplicative.ofAdd c) =
-      (P.subtype : P →* FractionalIdealGroup K)
-        (c.support.prod (fun v => p v ^ c v))
-    rw [map_prod]
-    change c.support.prod
-        (fun v => FractionalIdealGroup.prime v ^ c v) =
-      c.support.prod
-        (fun v => (P.subtype : P →* FractionalIdealGroup K) (p v ^ c v))
-    apply Finset.prod_congr rfl
-    intro v hv
-    have hv' : v ∉ m.finitePart.support := by
-      intro hvm
-      exact (Finsupp.mem_support_iff.mp hv) (I.property v hvm)
-    rw [map_zpow]
-    change FractionalIdealGroup.prime v ^ c v =
-      (p v : FractionalIdealGroup K) ^ c v
-    simp only [p, dite_eq_left hv', RayClass.primeToModulusIdeal_coe]
-  change I ∈ f.eqLocus g
-  rw [hI]
-  change c.support.prod (fun v => p v ^ c v) ∈ f.eqLocus g
-  exact (f.eqLocus g).prod_mem fun v _ => (f.eqLocus g).zpow_mem (hp v) (c v)
+    f = g :=
+  ClassFieldTheory.FractionalIdealFactorization.primeTo_hom_ext
+    (R := 𝓞 K) (F := K) (↑m.finitePart.support) f g hprime
 
 end RayClass

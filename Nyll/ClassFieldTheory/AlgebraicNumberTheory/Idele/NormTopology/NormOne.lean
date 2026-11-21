@@ -4,8 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.AbsoluteNormCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FieldNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.StandardNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalNorm
 
 /-!
 # Norms on norm-one idele groups
@@ -14,10 +22,37 @@ The ordinary idele norm restricts to a homomorphism between the actual
 norm-one idele subgroups.
 -/
 
+@[expose] public section
+
 open scoped NumberField
 open NumberField
 
 noncomputable section
+
+namespace NumberField.IdeleGroup
+
+universe u v
+
+variable (K : Type u) (L : Type v)
+  [Field K] [NumberField K] [Field L] [NumberField L]
+  [Algebra K L] [FiniteDimensional K L]
+
+/-- The standard field norm restricts to the kernels of the absolute norms. -/
+def normOneNorm : normOneSubgroup (K := L) →* normOneSubgroup (K := K) :=
+  ((norm K L).comp (normOneSubgroup (K := L)).subtype).codRestrict
+    (normOneSubgroup (K := K)) (fun a =>
+      show absoluteNorm (norm K L a.1) = 1 from (absoluteNorm_norm K L a.1).trans a.2)
+
+/-- The map on norm-one ideles is the ordinary norm on the underlying idele. -/
+@[simp]
+theorem normOneNorm_apply (a : normOneSubgroup (K := L)) :
+    (normOneNorm K L a : IdeleGroup (𝓞 K) K) = norm K L a.1 := rfl
+
+/-- The restricted norm on standard ideles is continuous for the subgroup topology. -/
+theorem normOneNorm_continuous : Continuous (normOneNorm K L) :=
+  ((norm_continuous K L).comp continuous_subtype_val).subtype_mk _
+
+end NumberField.IdeleGroup
 
 namespace IdeleGroup
 
@@ -39,15 +74,9 @@ theorem norm_mem_normOneSubgroup
   rw [absoluteNorm_norm]
   exact ha
 
-/-- The ordinary idele norm restricted to the norm-one idele groups. -/
-noncomputable def normOneNorm :
-    normOneSubgroup (K := L) →*
-      normOneSubgroup (K := K) :=
-  ((norm K L).comp
-      (normOneSubgroup (K := L)).subtype).codRestrict
-    (normOneSubgroup (K := K))
-    (fun a =>
-      norm_mem_normOneSubgroup K L a.1 a.2)
+/-- The norm restricted to the subgroup of ideles of absolute norm one. -/
+noncomputable abbrev normOneNorm : normOneSubgroup (K := L) →* normOneSubgroup (K := K) :=
+  NumberField.IdeleGroup.normOneNorm K L
 
 /-- Coercing the restricted norm-one map recovers the ordinary idèle norm. -/
 @[simp]
@@ -56,9 +85,6 @@ theorem normOneNorm_apply
     (normOneNorm K L a : IdeleGroup K) =
       norm K L a.1 :=
   rfl
-
-/- The canonical map between completions at infinite places is an
-isometry.  This is the metric form of the `LiesOver` condition. -/
 
 end IdeleGroup
 

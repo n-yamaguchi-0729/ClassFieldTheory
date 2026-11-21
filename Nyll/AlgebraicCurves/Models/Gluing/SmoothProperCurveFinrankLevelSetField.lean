@@ -162,7 +162,7 @@ theorem finrank_quotient_tmul {R : Type u} [CommRing R] [Nontrivial R] {B : Type
       := by
       ext z
       simp only [RingHom.mem_ker, AlgHom.toRingHom_eq_coe, AlgHom.coe_toRingHom]
-      try rfl
+      rfl
     rw [h1, Algebra.TensorProduct.lTensor_ker q hq]
     have hkq : RingHom.ker q = Ideal.span {g} := Ideal.mk_ker
     rw [hkq, Ideal.map_span, Set.image_singleton]

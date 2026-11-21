@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicDegreeOnNumberField
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldRealization
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerConjugation
 public import Mathlib.Data.Rat.Cast.Defs
@@ -50,15 +52,6 @@ open LocalClassFieldTheory
 open RamificationTheory
 open Reciprocity
 
-/-- The ordinary idèle-class operations used by the two-stage transport,
-fixed at the canonical principal-subgroup quotient. -/
-@[instance_reducible]
-noncomputable def smallHilbertTowerIdeleClassCommGroup
-    (F : Type*) [Field F] [NumberField F] :
-    CommGroup (IdeleClassGroup F) :=
-  QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup F)
-
-attribute [local instance] smallHilbertTowerIdeleClassCommGroup
 
 private theorem addSubgroup_comap_symm_eq_map
     {A B : Type*} [AddGroup A] [AddGroup B]
@@ -142,7 +135,7 @@ package merely to recover its `field = L.field` projection. -/
 noncomputable def smallHilbertTowerMiddleNormSubgroup :
     AddSubgroup
       (ambientFixedAddSubgroup
-        rationalIdeleClassRepresentation L.field) :=
+        (ideleClassRepresentation ℚ) L.field) :=
   (smallHilbertClassFieldNormSubgroup (K := E)).toAddSubgroup.comap
     (rationalAbstractFixedFieldIdeleClassEquivFixed
       L.field
@@ -449,9 +442,9 @@ literal middle-field carrier. -/
 noncomputable def smallHilbertFiniteGaloisNormNeighborhoodNormSubgroup :
     AddSubgroup
       (ambientFixedAddSubgroup
-        rationalIdeleClassRepresentation L.field) :=
+        (ideleClassRepresentation ℚ) L.field) :=
   (smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
-    rationalIdeleClassRepresentation
+    (ideleClassRepresentation ℚ)
 
 private noncomputable abbrev
     smallHilbertFiniteGaloisNormNeighborhoodTopField : Type :=
@@ -578,13 +571,13 @@ private theorem
 private theorem
     smallHilbertFiniteGaloisNormNeighborhood_abstractNormMap_eq :
     ((smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
-        rationalIdeleClassRepresentation).map
+        (ideleClassRepresentation ℚ)).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
             L.field
             (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (_root_.ideleClassNorm E E₂).range.toAddSubgroup := by
   change
-    (finiteNormSubgroup rationalIdeleClassRepresentation
+    (finiteNormSubgroup (ideleClassRepresentation ℚ)
       L.field
       (smallHilbertFiniteGaloisNormNeighborhood K L).field
       (smallHilbertFiniteGaloisNormNeighborhood K L).below).map
@@ -605,7 +598,7 @@ keeps downstream membership proofs pointwise. -/
 private theorem
     smallHilbertFiniteGaloisNormNeighborhood_abstractNormMap_eq_ordinaryNormRange :
     ((smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
-        rationalIdeleClassRepresentation).map
+        (ideleClassRepresentation ℚ)).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
             L.field
             (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
@@ -620,7 +613,7 @@ private theorem
     (a : Additive (IdeleClassGroup E))
     (ha :
       a ∈ ((smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
-        rationalIdeleClassRepresentation).map
+        (ideleClassRepresentation ℚ)).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
             L.field
             (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom) :
@@ -635,19 +628,19 @@ middle fixed field.  This is the source-producing norm-topology input;
 no norm-openness premise is assumed. -/
 theorem smallHilbertFiniteGaloisNormNeighborhood_normSubgroup_le :
     ∀ a : ambientFixedAddSubgroup
-        rationalIdeleClassRepresentation L.field,
+        (ideleClassRepresentation ℚ) L.field,
       a ∈ smallHilbertFiniteGaloisNormNeighborhoodNormSubgroup K L →
         a ∈ smallHilbertTowerMiddleNormSubgroup K L := by
   intro a ha
   change
     a ∈ (smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
-      rationalIdeleClassRepresentation at ha
+      (ideleClassRepresentation ℚ) at ha
   have haMap :
       (rationalAbstractFixedFieldIdeleClassEquivFixed
           L.field
           (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm a ∈
         ((smallHilbertFiniteGaloisNormNeighborhood K L).normSubgroup
-          rationalIdeleClassRepresentation).map
+          (ideleClassRepresentation ℚ)).map
             (rationalAbstractFixedFieldIdeleClassEquivFixed
               L.field
               (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom :=
@@ -663,11 +656,11 @@ theorem smallHilbertFiniteGaloisNormNeighborhood_normSubgroup_le :
 /-- The canonical small-Hilbert subgroup of the actual middle fixed
 field is open in the genuine norm topology. -/
 theorem smallHilbertNormSubgroupInRationalClassFormation_isNormOpen :
-    IsNormOpen rationalIdeleClassRepresentation L.field
+    IsNormOpen (ideleClassRepresentation ℚ) L.field
       (smallHilbertTowerMiddleNormSubgroup K L :
         Set
           (ambientFixedAddSubgroup
-            rationalIdeleClassRepresentation L.field)) := by
+            (ideleClassRepresentation ℚ) L.field)) := by
   rw [normTopology_addSubgroup_isOpen_iff]
   refine
     ⟨smallHilbertFiniteGaloisNormNeighborhood K L, ?_⟩
@@ -681,14 +674,14 @@ subextension of the literal first-stage field. -/
 noncomputable def secondSmallHilbertClassFieldSubextension :
     FiniteAbelianSubextension L.field := by
   let H : FiniteAbelianSubextension.NormOpenAddSubgroup
-      rationalIdeleClassRepresentation L.field :=
+      (ideleClassRepresentation ℚ) L.field :=
     ⟨smallHilbertTowerMiddleNormSubgroup K L,
       smallHilbertNormSubgroupInRationalClassFormation_isNormOpen K L⟩
   exact
     Classical.choose
       (FiniteAbelianSubextension.normSubgroupMap_surjective
-        rationalCyclotomicIdeleClassValuationData
-        rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+        (numberFieldCyclotomicIdeleClassValuationData ℚ)
+        (ideleClassRepresentation_satisfiesClassFieldAxiom ℚ)
         (smallHilbertTowerMiddleFiniteAbstractField K L) H)
 
 /-- The second-stage extension realizes exactly the canonical
@@ -696,17 +689,17 @@ small-Hilbert norm subgroup of the actual middle field. -/
 @[simp]
 theorem secondSmallHilbertClassFieldSubextension_normSubgroup :
     (secondSmallHilbertClassFieldSubextension K L).normSubgroup
-        rationalIdeleClassRepresentation =
+        (ideleClassRepresentation ℚ) =
       smallHilbertTowerMiddleNormSubgroup K L := by
   let H : FiniteAbelianSubextension.NormOpenAddSubgroup
-      rationalIdeleClassRepresentation L.field :=
+      (ideleClassRepresentation ℚ) L.field :=
     ⟨smallHilbertTowerMiddleNormSubgroup K L,
       smallHilbertNormSubgroupInRationalClassFormation_isNormOpen K L⟩
   have h :=
     Classical.choose_spec
       (FiniteAbelianSubextension.normSubgroupMap_surjective
-        rationalCyclotomicIdeleClassValuationData
-        rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+        (numberFieldCyclotomicIdeleClassValuationData ℚ)
+        (ideleClassRepresentation_satisfiesClassFieldAxiom ℚ)
         (smallHilbertTowerMiddleFiniteAbstractField K L) H)
   exact congrArg Subtype.val h
 
@@ -762,13 +755,13 @@ noncomputable local instance
 private theorem
     secondSmallHilbertClassFieldSubextension_abstractNormMap_eq_actualNormRange :
     ((secondSmallHilbertClassFieldSubextension K L).normSubgroup
-        rationalIdeleClassRepresentation).map
+        (ideleClassRepresentation ℚ)).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
             L.field
             (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (_root_.ideleClassNorm E T₂).range.toAddSubgroup := by
   change
-    (finiteNormSubgroup rationalIdeleClassRepresentation
+    (finiteNormSubgroup (ideleClassRepresentation ℚ)
         L.field
         (secondSmallHilbertClassFieldSubextension K L).field
         (secondSmallHilbertClassFieldSubextension K L).below).map
@@ -786,24 +779,24 @@ private theorem
 private theorem
     secondSmallHilbertClassFieldSubextension_abstractNormMap_eq_smallHilbertNormSubgroup :
     ((secondSmallHilbertClassFieldSubextension K L).normSubgroup
-        rationalIdeleClassRepresentation).map
+        (ideleClassRepresentation ℚ)).map
           (rationalAbstractFixedFieldIdeleClassEquivFixed
             L.field
             (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)).symm.toAddMonoidHom =
       (smallHilbertClassFieldNormSubgroup (K := E)).toAddSubgroup := by
   let e : Additive (IdeleClassGroup E) ≃+
-      ambientFixedAddSubgroup rationalIdeleClassRepresentation L.field :=
+      ambientFixedAddSubgroup (ideleClassRepresentation ℚ) L.field :=
     rationalAbstractFixedFieldIdeleClassEquivFixed L.field
       (hfinite := smallHilbertTowerMiddleAbstractQuotientFinite K L)
   let H : AddSubgroup (Additive (IdeleClassGroup E)) :=
     (smallHilbertClassFieldNormSubgroup (K := E)).toAddSubgroup
   let back : AddSubgroup
-      (ambientFixedAddSubgroup rationalIdeleClassRepresentation L.field) →
+      (ambientFixedAddSubgroup (ideleClassRepresentation ℚ) L.field) →
       AddSubgroup (Additive (IdeleClassGroup E)) :=
     fun n => n.map e.symm.toAddMonoidHom
   have hNorm :
       back ((secondSmallHilbertClassFieldSubextension K L).normSubgroup
-        rationalIdeleClassRepresentation) =
+        (ideleClassRepresentation ℚ)) =
       back (smallHilbertTowerMiddleNormSubgroup K L) :=
     congrArg back (secondSmallHilbertClassFieldSubextension_normSubgroup K L)
   have hCancel : back (smallHilbertTowerMiddleNormSubgroup K L) = H :=
@@ -857,7 +850,7 @@ noncomputable def smallHilbertTowerSecondSubextension :
 @[simp]
 theorem smallHilbertTowerSecondSubextension_normSubgroup :
     (smallHilbertTowerSecondSubextension K).normSubgroup
-        rationalIdeleClassRepresentation =
+        (ideleClassRepresentation ℚ) =
       smallHilbertTowerMiddleNormSubgroup
         (numberFieldTowerFiniteAbstractField K
           (smallHilbertClassFieldNormAmbient K))

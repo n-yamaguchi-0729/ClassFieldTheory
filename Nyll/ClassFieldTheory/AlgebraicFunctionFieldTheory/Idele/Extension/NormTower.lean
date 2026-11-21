@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNormCore
 public import Mathlib.Algebra.BigOperators.Group.Finset.Sigma
 public import Mathlib.FieldTheory.SeparableDegree
 public import Mathlib.RingTheory.Norm.Transitivity
@@ -43,28 +44,10 @@ variable {k K L : Type*} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L]
 
-/-- The existing completion map, transported only by the equality of base places. -/
-def completionMapOver (v : AlgebraicCurve.Place k K)
-    (w : AlgebraicCurve.Place k L) (hw : w.restrict K = v) :
-    v.adicCompletion →+* w.adicCompletion :=
-  hw ▸ AlgebraicCurve.Place.kw_ffgc_adicCompletionComap K w
-
-theorem continuous_completionMapOver (v : AlgebraicCurve.Place k K)
-    (w : AlgebraicCurve.Place k L) (hw : w.restrict K = v) :
-    Continuous (completionMapOver v w hw) := by
-  subst v
-  exact AlgebraicCurve.Place.continuous_adicCompletionComap K w
-
-theorem completionMapOver_algebraMap (v : AlgebraicCurve.Place k K)
-    (w : AlgebraicCurve.Place k L) (hw : w.restrict K = v) (x : K) :
-    completionMapOver v w hw (algebraMap K v.adicCompletion x) =
-      algebraMap L w.adicCompletion (algebraMap K L x) := by
-  subst v
-  exact (AlgebraicCurve.Place.adicCompletionComap_algebraMap_algebraMap K w x).symm
-
 theorem localNormOver_eq_norm (v : AlgebraicCurve.Place k K)
     (w : AlgebraicCurve.Place k L) (hw : w.restrict K = v) (x : w.adicCompletionˣ) :
-    let _ : Algebra v.adicCompletion w.adicCompletion := (completionMapOver v w hw).toAlgebra
+    let _ : Algebra v.adicCompletion w.adicCompletion :=
+      (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
     localNormOver v w hw x = Units.map (Algebra.norm v.adicCompletion) x := by
   subst v
   rfl
@@ -83,23 +66,6 @@ section Local
 
 variable [FiniteDimensional K M]
 
-private theorem completionMapOver_comp (v : AlgebraicCurve.Place k K)
-    (w : AlgebraicCurve.Place k L) (u : AlgebraicCurve.Place k M)
-    (hw : w.restrict K = v) (hu : u.restrict L = w) (huv : u.restrict K = v) :
-    (completionMapOver w u hu).comp (completionMapOver v w hw) =
-      completionMapOver v u huv := by
-  have hdense : DenseRange (algebraMap K v.adicCompletion) :=
-    IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap K v.heightOneSpectrum
-  have hfun : (fun x => completionMapOver w u hu (completionMapOver v w hw x)) =
-      completionMapOver v u huv :=
-    hdense.equalizer
-      ((continuous_completionMapOver w u hu).comp (continuous_completionMapOver v w hw))
-      (continuous_completionMapOver v u huv) (by
-        funext x
-        simp only [Function.comp_apply, completionMapOver_algebraMap]
-        rw [← IsScalarTower.algebraMap_apply K L M])
-  exact RingHom.ext (fun x => congrFun hfun x)
-
 /-- Local norms compose along the actual completed extension tower. The three
 place equalities specify only the points of the fiber, not a norm comparison. -/
 theorem localNormOver_trans (v : AlgebraicCurve.Place k K)
@@ -108,15 +74,15 @@ theorem localNormOver_trans (v : AlgebraicCurve.Place k K)
     (x : u.adicCompletionˣ) :
     localNormOver v w hw (localNormOver w u hu x) = localNormOver v u huv x := by
   let aKL : Algebra v.adicCompletion w.adicCompletion :=
-    (completionMapOver v w hw).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
   let aLM : Algebra w.adicCompletion u.adicCompletion :=
-    (completionMapOver w u hu).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver w u hu).toAlgebra
   let aKM : Algebra v.adicCompletion u.adicCompletion :=
-    (completionMapOver v u huv).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver v u huv).toAlgebra
   have htower : IsScalarTower v.adicCompletion w.adicCompletion u.adicCompletion :=
     IsScalarTower.of_algebraMap_eq fun y =>
       (congrArg (fun f : v.adicCompletion →+* u.adicCompletion => f y)
-        (completionMapOver_comp v w u hw hu huv)).symm
+        (AlgebraicCurve.Place.completionMapOver_trans v w u hw hu huv)).symm
   have hKL (y : w.adicCompletionˣ) : localNormOver v w hw y =
       Units.map (Algebra.norm v.adicCompletion) y := localNormOver_eq_norm v w hw y
   have hLM : localNormOver w u hu x = Units.map (Algebra.norm w.adicCompletion) x :=
@@ -205,9 +171,28 @@ variable {k K L M : Type*} [Field k] [Field K] [Field L] [Field M]
     [Algebra K L] [Algebra L M] [Algebra K M]
     [IsScalarTower k K L] [IsScalarTower k L M] [IsScalarTower k K M]
     [IsScalarTower K L M] [FiniteDimensional K L] [FiniteDimensional L M]
-    [Algebra.IsSeparable K L] [Algebra.IsSeparable L M]
     [AlgebraicCurve.HasPrincipalDivisors k K] [AlgebraicCurve.HasPrincipalDivisors k L]
     [AlgebraicCurve.HasPrincipalDivisors k M]
+
+/-- The single quotient construction respects every finite tower, independently
+of which arithmetic proofs establish preservation of principal ideles. -/
+theorem normOfPrincipal_trans [FiniteDimensional K M]
+    (hKL : IdeleGroup.principalSubgroup k L ≤
+      (IdeleGroup.principalSubgroup k K).comap (IdeleGroup.norm (K := K) (L := L)))
+    (hLM : IdeleGroup.principalSubgroup k M ≤
+      (IdeleGroup.principalSubgroup k L).comap (IdeleGroup.norm (K := L) (L := M)))
+    (hKM : IdeleGroup.principalSubgroup k M ≤
+      (IdeleGroup.principalSubgroup k K).comap (IdeleGroup.norm (K := K) (L := M)))
+    (c : IdeleClassGroup k M) :
+    normOfPrincipal hKL (normOfPrincipal hLM c) = normOfPrincipal hKM c := by
+  obtain ⟨a, rfl⟩ := mk_surjective (k := k) (K := M) c
+  change normOfPrincipal hKL (normOfPrincipal hLM (QuotientGroup.mk a)) =
+    normOfPrincipal hKM (QuotientGroup.mk a)
+  rw [normOfPrincipal_mk hLM a, normOfPrincipal_mk hKL, normOfPrincipal_mk hKM a]
+  exact congrArg (mk (k := k) (K := K))
+    (IdeleGroup.norm_trans (k := k) (K := K) (L := L) (M := M) a)
+
+variable [Algebra.IsSeparable K L] [Algebra.IsSeparable L M]
 
 /-- The same tower law holds after quotienting by the actual principal ideles. -/
 theorem norm_trans (c : IdeleClassGroup k M) :
@@ -216,12 +201,10 @@ theorem norm_trans (c : IdeleClassGroup k M) :
     norm (k := k) (K := K) (L := L) (norm (k := k) (K := L) (L := M) c) =
       norm (k := k) (K := K) (L := M) c := by
   intro hfinite hseparable
-  obtain ⟨a, rfl⟩ := mk_surjective (k := k) (K := M) c
-  change QuotientGroup.mk (IdeleGroup.norm (k := k) (K := K) (L := L)
-      (IdeleGroup.norm (k := k) (K := L) (L := M) a)) =
-    QuotientGroup.mk (IdeleGroup.norm (k := k) (K := K) (L := M) a)
-  exact congrArg (mk (k := k) (K := K))
-    (IdeleGroup.norm_trans (k := k) (K := K) (L := L) (M := M) a)
+  exact normOfPrincipal_trans (k := k) (K := K) (L := L) (M := M)
+    (fun _ ha => IdeleGroup.norm_mem_principalSubgroup ha)
+    (fun _ ha => IdeleGroup.norm_mem_principalSubgroup ha)
+    (fun _ ha => IdeleGroup.norm_mem_principalSubgroup ha) c
 
 end IdeleClassGroup
 

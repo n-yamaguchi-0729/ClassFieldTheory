@@ -44,15 +44,7 @@ namespace FunctionField.RayClass
 variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 
-/-- The canonical commutative group structure on the idele-class quotient. -/
-@[instance_reducible]
-def powerRayIdeleClassCommGroup : CommGroup (IdeleClassGroup k K) :=
-  QuotientGroup.Quotient.commGroup (G := IdeleGroup k K) (IdeleGroup.principalSubgroup k K)
-
-attribute [local instance] powerRayIdeleClassCommGroup
-
-local instance : IsMulCommutative (IdeleClassGroup k K) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+attribute [local instance] IdeleClassGroup.commGroup IdeleClassGroup.isMulCommutative
 
 /-- The ray quotient inherits the canonical commutative group structure. -/
 noncomputable local instance powerRayQuotientCommGroup (m : Modulus k K) :

@@ -12,6 +12,7 @@ public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianExtension
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorLattice
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldConstruction
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.QuotientTransport
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
@@ -33,10 +34,9 @@ For a modulus `m` of a number field `K`, its ray congruence subgroup
 construction therefore selects an actual finite abelian extension whose
 determinant-norm range is exactly `C_K^m`.
 
-The construction first occurs over the canonical fixed-field copy of `K`
-inside the rational separable closure.  We then install the canonical
-scalar structure from the original field, identify the norm range over
-that original field, and obtain the genuine reciprocity equivalence
+The intrinsic class field is selected directly in the separable closure
+of the original number field. The norm-range characterization also
+identifies the previously selected realization and its reciprocity equivalence
 
 `Gal(K^m / K) ≃ C_K / C_K^m`.
 -/
@@ -62,155 +62,20 @@ open CyclicCohomology
 
 variable {K : Type u} [Field K] [NumberField K]
 
-/-- The concrete finite Galois norm neighbourhood used to select the
-ray class field attached to `m`. -/
-noncomputable abbrev rayClassFieldNormAmbient
-    (K : Type u) [Field K] [NumberField K]
-    (m : RayClass.Modulus K) : Type u :=
-  closedFiniteIndexClassFieldNormAmbient
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- The compatible abstract base subgroup used by the selected ray
-class-field realization. -/
-noncomputable abbrev rayClassFieldBaseSubgroup
-    (K : Type u) [Field K] [NumberField K]
-    (m : RayClass.Modulus K) :=
-  closedFiniteIndexClassFieldBaseSubgroup
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- The finite abelian subextension selected by the ray congruence
-subgroup `C_K^m`. -/
-noncomputable abbrev rayClassFieldSubextension
-    (K : Type u) [Field K] [NumberField K]
-    (m : RayClass.Modulus K) :
-    FiniteAbelianSubextension
-      (rayClassFieldBaseSubgroup K m) :=
-  closedFiniteIndexClassFieldSubextension
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- The canonical fixed-field copy of the original number field in the
-selected ray class-field realization. -/
-noncomputable abbrev rayClassFieldBase
-    (K : Type u) [Field K] [NumberField K]
-    (m : RayClass.Modulus K) : Type :=
-  closedFiniteIndexClassFieldBase
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- A chosen finite ray-class-field realization attached to `m`, selected
-inside the rational separable closure.  Its intrinsic realization in the
-fixed separable closure of `K` is `rayClassFieldSubfield`. -/
+/-- The ray class field attached to `m`, in the fixed separable closure of `K`. -/
 noncomputable abbrev rayClassField
-    (K : Type u) [Field K] [NumberField K]
-    (m : RayClass.Modulus K) : Type :=
-  closedFiniteIndexClassField
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- The canonical equivalence from `K` to the fixed-field base of its
-selected ray class field. -/
-noncomputable abbrev rayClassFieldBaseEquiv
-    (m : RayClass.Modulus K) :
-    K ≃ₐ[ℚ] rayClassFieldBase K m :=
-  closedFiniteIndexClassFieldBaseEquiv
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- The ray congruence subgroup transported to the fixed-field base of
-the selected realization. -/
-def rayClassFieldTransportedCongruenceSubgroup
-    (m : RayClass.Modulus K) :
-    Subgroup
-      (IdeleClassGroup (rayClassFieldBase K m)) :=
-  (RayClass.Modulus.congruenceSubgroup m).map
-    (ideleClassCongr
-      (rayClassFieldBaseEquiv (K := K) m)).toMonoidHom
-
-/-- The determinant-norm range over the fixed-field base of the
-selected ray class field is the transported ray congruence subgroup. -/
-theorem rayClassField_ideleClassNorm_range
-    (m : RayClass.Modulus K) :
-    (_root_.ideleClassNorm
-      (rayClassFieldBase K m)
-      (rayClassField K m)).range =
-      rayClassFieldTransportedCongruenceSubgroup
-        (K := K) m := by
-  simpa only [rayClassFieldTransportedCongruenceSubgroup,
-    rayClassFieldBaseEquiv, rayClassField, rayClassFieldBase] using
-    (closedFiniteIndexClassField_ideleClassNorm_range_over_base
-      (K := K) (RayClass.Modulus.congruenceSubgroup m)
-      (RayClass.isClosed_congruenceSubgroup m))
-
-/-- The fixed-field base of the selected ray class field, regarded as
-an algebra over the original number field. -/
-noncomputable abbrev rayClassFieldBaseAlgebraOverOriginal
-    (m : RayClass.Modulus K) :
-    Algebra K (rayClassFieldBase K m) :=
-  closedFiniteIndexClassFieldBaseAlgebraOverOriginal
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- The canonical fixed-field identification as an equivalence over
-the original number field. -/
-noncomputable abbrev rayClassFieldBaseEquivOverOriginal
-    (m : RayClass.Modulus K) :
-    K ≃ₐ[K] rayClassFieldBase K m :=
-  closedFiniteIndexClassFieldBaseEquivOverOriginal
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- The selected ray class field as an algebra over the original
-number field. -/
-noncomputable abbrev rayClassFieldAlgebraOverOriginal
-    (m : RayClass.Modulus K) :
-    Algebra K (rayClassField K m) :=
-  closedFiniteIndexClassFieldAlgebraOverOriginal
-    (K := K) (RayClass.Modulus.congruenceSubgroup m)
-    (RayClass.isClosed_congruenceSubgroup m)
-
-/-- The scalar map into the ray class field is the canonical base
-equivalence followed by fixed-field inclusion. -/
-@[simp]
-theorem rayClassField_algebraMap_original
-    (m : RayClass.Modulus K) (x : K) :
-    algebraMap K (rayClassField K m) x =
-      algebraMap
-        (rayClassFieldBase K m)
-        (rayClassField K m)
-        (rayClassFieldBaseEquiv (K := K) m x) := by
-  simpa only [rayClassField, rayClassFieldBase,
-    rayClassFieldBaseEquiv] using
-    (closedFiniteIndexClassField_algebraMap_original
-      (K := K) (RayClass.Modulus.congruenceSubgroup m)
-      (RayClass.isClosed_congruenceSubgroup m) x)
-
-/-- A chosen embedding of the finite ray-class-field realization into the
-fixed separable closure of its original base field. -/
-noncomputable def rayClassFieldEmbedding
-    (K : Type u) [Field K] [NumberField K]
-    (m : RayClass.Modulus K) :
-    rayClassField K m →ₐ[K] SeparableClosure K :=
-  IsSepClosed.lift
-
-/-- The intrinsic ray class field as an intermediate field of the fixed
-separable closure of `K`. -/
-noncomputable def rayClassFieldSubfield
-    (K : Type u) [Field K] [NumberField K]
-    (m : RayClass.Modulus K) :
+    (K : Type u) [Field K] [NumberField K] (m : RayClass.Modulus K) :
     IntermediateField K (SeparableClosure K) :=
-  (rayClassFieldEmbedding K m).fieldRange
+  closedFiniteIndexClassField (RayClass.Modulus.congruenceSubgroup m)
+    (RayClass.isClosed_congruenceSubgroup m)
 
-/-- Every embedding of the chosen finite ray-class-field realization into
-the fixed separable closure has the intrinsic ray-class-field range. -/
-theorem rayClassFieldSubfield_eq_fieldRange
-    (m : RayClass.Modulus K)
-    (f : rayClassField K m →ₐ[K] SeparableClosure K) :
-    rayClassFieldSubfield K m = f.fieldRange :=
-  AlgHom.fieldRange_eq_of_normal
-    (rayClassFieldEmbedding K m) f
+/-- Every embedding of the ray class field into the fixed separable closure
+has the same image. -/
+theorem rayClassField_eq_fieldRange
+    (m : RayClass.Modulus K) (f : rayClassField K m →ₐ[K] SeparableClosure K) :
+    rayClassField K m = f.fieldRange :=
+  ((rayClassField K m).fieldRange_val).symm.trans
+    (AlgHom.fieldRange_eq_of_normal (rayClassField K m).val f)
 
 /-- Over the original number field, the determinant-norm range of the
 selected ray class field is exactly `C_K^m`. -/
@@ -263,7 +128,7 @@ theorem rayClassField_ideleClassNorm_range_antitone
 /-- Divisibility of moduli produces an embedding between the selected
 ray-class-field types over the original number field.  Literal containment
 inside the fixed separable closure is instead stated by
-`rayClassFieldSubfield_mono`. -/
+`rayClassField_mono`. -/
 theorem rayClassField_nonempty_algHom_of_le
     {m n : RayClass.Modulus K}
     (hmn : m ≤ n) :
@@ -279,23 +144,24 @@ theorem rayClassField_nonempty_algHom_of_le
 
 /-- Divisibility of moduli gives literal inclusion of the corresponding
 intrinsic ray class fields inside the fixed separable closure. -/
-theorem rayClassFieldSubfield_mono
+theorem rayClassField_mono
     {m n : RayClass.Modulus K}
     (hmn : m ≤ n) :
-    rayClassFieldSubfield K m ≤ rayClassFieldSubfield K n := by
-  let f : rayClassField K m →ₐ[K] rayClassField K n :=
-    Classical.choice
-      (rayClassField_nonempty_algHom_of_le (K := K) hmn)
-  calc
-    rayClassFieldSubfield K m =
-        ((rayClassFieldEmbedding K n).comp f).fieldRange :=
-      rayClassFieldSubfield_eq_fieldRange
-        (K := K) m ((rayClassFieldEmbedding K n).comp f)
-    _ ≤ (rayClassFieldEmbedding K n).fieldRange := by
-      intro x hx
-      rcases AlgHom.mem_fieldRange.mp hx with ⟨y, rfl⟩
-      exact AlgHom.mem_fieldRange.mpr ⟨f y, rfl⟩
-    _ = rayClassFieldSubfield K n := rfl
+    rayClassField K m ≤ rayClassField K n := by
+  let F := rayClassField K m
+  let E := rayClassField K n
+  have h : (_root_.ideleClassNorm K E).range ≤ (_root_.ideleClassNorm K F).range := by
+    rw [rayClassField_ideleClassNorm_range_over_original n,
+      rayClassField_ideleClassNorm_range_over_original m]
+    exact rayClassCongruenceSubgroup_antitone (K := K) hmn
+  let f := finiteAbelianExtensionEmbeddingOfNormRangeLE (K := K) F E h
+  have hF := AlgHom.fieldRange_eq_of_normal F.val (E.val.comp f)
+  rw [IntermediateField.fieldRange_val] at hF
+  intro x hx
+  have hx' : x ∈ (E.val.comp f).fieldRange := hF ▸ (show x ∈ F from hx)
+  obtain ⟨y, hy⟩ := AlgHom.mem_fieldRange.mp hx'
+  change (f y : SeparableClosure K) = x at hy
+  exact hy ▸ (f y).property
 
 /-- A finite abelian extension embeds in the selected ray class field
 of modulus `m` exactly when `m` is a defining modulus for its genuine
@@ -457,7 +323,7 @@ class modulo `C_K^m`. -/
 theorem
     rayClassFieldGaloisContinuousMulEquivRayClassGroup_globalNormResidue
     (m : RayClass.Modulus K)
-    (c : IdeleClassGroup K) :
+    (c : NumberField.IdeleClassGroup (𝓞 K) K) :
     rayClassFieldGaloisContinuousMulEquivRayClassGroup
         (K := K) m
         (Reciprocity.globalNormResidueMonoidHom
@@ -486,7 +352,7 @@ theorem rayClassField_finrank_eq_rayClassGroup_card
             (RayClass.isClosed_congruenceSubgroup m))
     _ =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             RayClass.Modulus.congruenceSubgroup m) :=
       Subgroup.index_eq_card
         (RayClass.Modulus.congruenceSubgroup m)
@@ -520,7 +386,7 @@ noncomputable def rayClassSubgroupSubfield
     (H : Subgroup (RayClass.RayClassGroup m)) :
     IntermediateField K (SeparableClosure K) :=
   (rayClassSubgroupFixedField (K := K) m H).map
-    (rayClassFieldEmbedding K m)
+    ((rayClassField K m).val)
 
 /-- The fixed field is a finite abelian extension of the original field. -/
 noncomputable def rayClassSubgroupSubextension
@@ -528,7 +394,7 @@ noncomputable def rayClassSubgroupSubextension
     (H : Subgroup (RayClass.RayClassGroup m)) :
     ClassFieldTheory.FiniteAbelianExtension K := by
   let F := rayClassSubgroupFixedField (K := K) m H
-  let j := rayClassFieldEmbedding K m
+  let j := (rayClassField K m).val
   let E := F.map j
   have hfin : FiniteDimensional K E :=
     (IntermediateField.equivMap F j).toLinearEquiv.finiteDimensional
@@ -614,7 +480,7 @@ noncomputable def rayClassSubgroupArtin
   (AlgEquiv.autCongr
       (IntermediateField.equivMap
         (rayClassSubgroupFixedField (K := K) m H)
-        (rayClassFieldEmbedding K m))).toMonoidHom.comp
+        ((rayClassField K m).val))).toMonoidHom.comp
     ((rayClassSubgroupFixedFieldArtin (K := K) m H).comp
       (rayClassGroupInvHom (K := K) m))
 
@@ -624,7 +490,7 @@ theorem rayClassSubgroupArtin_surjective
     (H : Subgroup (RayClass.RayClassGroup m)) :
     Function.Surjective (rayClassSubgroupArtin (K := K) m H) := by
   let F := rayClassSubgroupFixedField (K := K) m H
-  let j := rayClassFieldEmbedding K m
+  let j := (rayClassField K m).val
   let α := AlgEquiv.autCongr (IntermediateField.equivMap F j)
   change Function.Surjective
     (α.toMonoidHom.comp
@@ -640,7 +506,7 @@ theorem rayClassSubgroupArtin_ker
     (H : Subgroup (RayClass.RayClassGroup m)) :
     (rayClassSubgroupArtin (K := K) m H).ker = H := by
   let F := rayClassSubgroupFixedField (K := K) m H
-  let j := rayClassFieldEmbedding K m
+  let j := (rayClassField K m).val
   let α := AlgEquiv.autCongr (IntermediateField.equivMap F j)
   let a := rayClassSubgroupFixedFieldArtin (K := K) m H
   ext x
@@ -665,7 +531,7 @@ theorem rayClassSubgroupSubextension_norm_range
       (_root_.ideleClassNorm K
         (rayClassSubgroupSubextension (K := K) m H)).range := by
   let F := rayClassSubgroupFixedField (K := K) m H
-  let j := rayClassFieldEmbedding K m
+  let j := (rayClassField K m).val
   let E := rayClassSubgroupSubextension (K := K) m H
   let f : E →ₐ[K] rayClassField K m :=
     (IntermediateField.val F).comp
@@ -687,7 +553,7 @@ is the ray class of its idèle-class representative. -/
 @[simp]
 theorem rayClassFieldGaloisEquivRayClassGroup_globalNormResidue
     (m : RayClass.Modulus K)
-    (c : IdeleClassGroup K) :
+    (c : NumberField.IdeleClassGroup (𝓞 K) K) :
     rayClassFieldGaloisEquivRayClassGroup
         (K := K) m
         (globalNormResidueMonoidHom K

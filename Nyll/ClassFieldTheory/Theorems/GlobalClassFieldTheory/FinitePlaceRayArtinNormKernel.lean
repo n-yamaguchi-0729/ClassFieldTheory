@@ -16,6 +16,7 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 
 /-!
@@ -51,19 +52,6 @@ theorem exists_finitePlaceRayArtin_normKernel
       (D.artin.comp ι).ker = finitePlaceTensorNormSubgroup K L v := by
   let m := GlobalClassFieldComparison.rayClassModulusToOriginal K D.modulus
   let e := GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K D.modulus
-  let a : RayClass.RayClassGroup m →* (L ≃ₐ[K] L) :=
-    D.artin.comp e.symm.toMonoidHom
-  have hprime :
-      ∀ (p : HeightOneSpectrum (𝓞 K))
-        (_hp : p ∉ m.finitePart.support),
-        a (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele p))) =
-          GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-            (K := K) (L := L) p := D.originalArtin_prime
-  have hNorm :=
-    GlobalClassFieldTheory.GlobalClassFields.rayModulus_normSubgroup_eq_artinKer_preimage
-      m a hprime
   let ι : (v.adicCompletion K)ˣ →* RayClassGroup D.modulus :=
     e.symm.toMonoidHom.comp
       ((QuotientGroup.mk' m.congruenceSubgroup).comp
@@ -75,15 +63,12 @@ theorem exists_finitePlaceRayArtin_normKernel
         (IdeleGroup.finitePlaceIdeleClass v x))) = 1 ↔
     x ∈ finitePlaceTensorNormSubgroup K L v
   have hRay :
-      D.artin
-          (e.symm (QuotientGroup.mk' m.congruenceSubgroup
-            (IdeleGroup.finitePlaceIdeleClass v x))) = 1 ↔
-        IdeleGroup.finitePlaceIdeleClass v x ∈
-          (_root_.ideleClassNorm K L).range := by
-    rw [hNorm]
-    change a (QuotientGroup.mk' m.congruenceSubgroup
-      (IdeleGroup.finitePlaceIdeleClass v x)) = 1 ↔ _
-    rfl
+      D.ideleClassArtin (IdeleGroup.finitePlaceIdeleClass v x) = 1 ↔
+        IdeleGroup.finitePlaceIdeleClass v x ∈ (_root_.ideleClassNorm K L).range := by
+    rw [D.ideleClassArtin_apply,
+      GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom_apply,
+      inv_eq_one,
+      GlobalClassFieldTheory.Reciprocity.globalNormResidueMonoidHom_eq_one_iff]
   have hLocal :
       IdeleGroup.finitePlaceIdeleClass v x ∈
           (_root_.ideleClassNorm K L).range ↔

@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicNormConductor
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormRayClassMaximality
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
@@ -37,14 +39,6 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
-
-/-- The canonical idèle-class multiplication makes every subgroup normal. -/
-theorem cyclicRayClassMaximalityClassGroupIsMulCommutative
-    (F : Type*) [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
-
-attribute [local instance] cyclicRayClassMaximalityClassGroupIsMulCommutative
 
 variable
     {K : Type u} {L : Type v}
@@ -103,7 +97,7 @@ def cyclicNormQuotientEquivNarrowFiniteConductorRayClassGroup
             (RayClass.Modulus.narrowOfFinite
               (ideleClassNormNarrowFiniteConductor (K := K) (L := L)))) =
         Module.finrank K L) :
-    (IdeleClassGroup K ⧸
+    (NumberField.IdeleClassGroup (𝓞 K) K ⧸
         (_root_.ideleClassNorm K L).range) ≃*
       RayClass.RayClassGroup
         (RayClass.Modulus.narrowOfFinite
@@ -122,7 +116,7 @@ def cyclicNormQuotientEquivNarrowFiniteConductorRayClassGroup
             K L).symm
         _ =
             Nat.card
-              (IdeleClassGroup K ⧸
+              (NumberField.IdeleClassGroup (𝓞 K) K ⧸
                 (_root_.ideleClassNorm K L).range) :=
           Subgroup.index_eq_card ((_root_.ideleClassNorm K L).range)
 

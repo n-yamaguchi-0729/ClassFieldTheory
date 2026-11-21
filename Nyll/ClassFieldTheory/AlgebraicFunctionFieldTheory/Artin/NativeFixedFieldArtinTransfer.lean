@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NativeFixedFieldTransfer
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldArtinTransfer
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativePresentation
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FixedFieldBaseCompatibility
@@ -38,58 +39,11 @@ namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-/-- An actual finite abstract field, viewed over the intrinsic degree-one base. -/
-@[reducible] def finiteAbstractFieldOverIntrinsicBase
-    (K : Type v) [Field K]
-    (H : FiniteAbstractField Gal(SeparableClosure K/K)) :
-    FiniteAbstractFieldExtension Gal(SeparableClosure K/K) := by
-  have hB : (intrinsicFiniteAbstractBase K).field =
-      baseField Gal(SeparableClosure K/K) :=
-    congrArg FiniteAbstractField.field (intrinsicFiniteAbstractBase_eq_base K)
-  have hHB : H.field.toSubgroup ≤ (intrinsicFiniteAbstractBase K).field.toSubgroup := by
-    rw [hB]
-    exact le_baseField H.field
-  exact
-    { field := H
-      base := intrinsicFiniteAbstractBase K
-      below := hHB
-      finiteQuotient :=
-        (congrArg (fun V : ClosedSubgroup Gal(SeparableClosure K/K) =>
-          Finite (V.toSubgroup ⧸ H.field.toSubgroup.subgroupOf V.toSubgroup)) hB).mpr
-          H.finite }
-
 section NativeTransfer
 
 variable (K : Type v) [Field K]
     (H : FiniteAbstractField Gal(SeparableClosure K/K))
     (T : FiniteGaloisSubextension H.field) [T.field.toSubgroup.Normal]
-
-/-- Finite group transfer on the native relative Galois groups. The source
-is identified with the intrinsic-base presentation only by degree-one
-scalar restriction, without using an Artin symbol. -/
-def nativeFixedFieldAbelianizedTransfer :
-    Abelianization Gal((abstractFixedField K (SeparableClosure K) T.field)/K) →*
-      Abelianization Gal((abstractRelativeFixedField K (SeparableClosure K) T.below)/
-        (abstractFixedField K (SeparableClosure K) H.field)) := by
-  let S := finiteAbstractFieldOverIntrinsicBase K H
-  let F₀ := abstractFixedField K (SeparableClosure K) (intrinsicFiniteAbstractBase K).field
-  let E := abstractFixedField K (SeparableClosure K) T.field
-  have hTB : T.field.toSubgroup ≤ S.base.field.toSubgroup := T.below.trans S.below
-  have hTnormal : (extensionSubgroup S.base.field T.field hTB).Normal := by
-    infer_instance
-  have hTfinite : Finite
-      (S.base.field.toSubgroup ⧸ extensionSubgroup S.base.field T.field hTB) :=
-    (finiteAbstractFieldOverIntrinsicBase K T.toFiniteAbstractFieldExtension.field).finiteQuotient
-  let aF₀E : Algebra F₀ E := (abstractRelativeFixedField K (SeparableClosure K) hTB).algebra
-  have hKF₀E : IsScalarTower K F₀ E :=
-    IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
-  have hF₀ : Module.finrank K F₀ = 1 := by
-    rw [← (finiteGaloisBaseFixedFieldEquiv K).toLinearEquiv.finrank_eq,
-      Module.finrank_self]
-  let e₀ : Gal(E/F₀) ≃* Gal(E/K) :=
-    ClassFieldTheory.galoisRestrictScalarsEquivOfFinrankOne hF₀
-  exact (fixedFieldAbelianizedTransfer K (SeparableClosure K) S T.field T.below).comp
-    e₀.abelianizationCongr.symm.toMonoidHom
 
 private theorem nativeFixedFieldAbelianizedTransfer_intrinsic :
     let S := finiteAbstractFieldOverIntrinsicBase K H
@@ -108,7 +62,7 @@ private theorem nativeFixedFieldAbelianizedTransfer_intrinsic :
         Module.finrank_self]
     let e₀ : Gal(E/F₀) ≃* Gal(E/K) :=
       ClassFieldTheory.galoisRestrictScalarsEquivOfFinrankOne hF₀
-    ∀ b : Abelianization Gal(E/F₀),
+    ∀ b : Group.Abelianization Gal(E/F₀),
       nativeFixedFieldAbelianizedTransfer K H T (e₀.abelianizationCongr b) =
         fixedFieldAbelianizedTransfer K (SeparableClosure K) S T.field T.below b := by
   intro S F₀ E hTB hTnormal hTfinite aF₀E hKF₀E hF₀ e₀ b
@@ -158,11 +112,11 @@ private theorem finiteArtin_intrinsicBase_equiv
   let e₀ : Gal(E/F₀) ≃* Gal(E/K) :=
     ClassFieldTheory.galoisRestrictScalarsEquivOfFinrankOne hF₀
   let r : Gal(E/F₀) →* Gal(E/K) := AlgEquiv.restrictScalarsHom K
-  have he₀ (z : Abelianization Gal(E/F₀)) :
-      e₀.abelianizationCongr z = Abelianization.map r z := by
+  have he₀ (z : Group.Abelianization Gal(E/F₀)) :
+      e₀.abelianizationCongr z = Group.Abelianization.map r z := by
     refine QuotientGroup.induction_on z ?_
     intro σ
-    change Abelianization.of (e₀ σ) = Abelianization.of (σ.restrictScalars K)
+    change Group.Abelianization.of (e₀ σ) = Group.Abelianization.of (σ.restrictScalars K)
     rfl
   exact (finiteArtin_eq_intrinsicFixedField_restrict k K S hSB c).trans (he₀ _).symm
 
@@ -276,7 +230,7 @@ private theorem fixedFieldArtin_baseChange_nativeTransfer :
     ClassFieldTheory.galoisRestrictScalarsEquivOfFinrankOne hF₀
   let c₀ : IdeleClassGroup k F₀ :=
     IdeleClassGroup.baseChange (k := k) (K := K) (L := F₀) c
-  let b : Abelianization Gal(E/F₀) :=
+  let b : Group.Abelianization Gal(E/F₀) :=
     fixedFieldArtin k K (SeparableClosure K) B U c₀
   have hLower : finiteArtin k K E c = e₀.abelianizationCongr b :=
     finiteArtin_intrinsicBase_equiv k K T.field hTB

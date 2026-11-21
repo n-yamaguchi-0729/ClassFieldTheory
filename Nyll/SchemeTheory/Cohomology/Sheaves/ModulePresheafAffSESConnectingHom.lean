@@ -53,12 +53,6 @@ theorem mem_comap_range_iff {F : OModulePresheaf π} {i : ℕ} (x : LinearMap.ke
       ↔ ∃ c, F.d K i c = x.1 := by
   simp only [Submodule.mem_comap, Submodule.subtype_apply, LinearMap.mem_range]
 
-omit [IsSeparated π] in
-theorem d_d_apply (F : OModulePresheaf π) (i : ℕ) (c : F.cochain K i) : F.d K (i + 1) (F.d K i c)
-    = 0 := by
-  have h := LinearMap.congr_fun (F.d_comp_d K i) c
-  rwa [LinearMap.comp_apply, LinearMap.zero_apply] at h
-
 theorem cochain_ses (i : ℕ) :
     Function.Injective (ιC i) ∧ Function.Surjective (πC i) ∧ LinearMap.range (ιC i) =
       LinearMap.ker (πC i) := by
@@ -97,7 +91,7 @@ theorem snake_data (i : ℕ) (z : LinearMap.ker (F₃.d K i)) :
   have hk₀c : k₀ ∈ LinearMap.ker (F₁.d K (i + 1)) := by
     refine LinearMap.mem_ker.mpr ((cochain_ses K S (i + 2)).1 ?_)
     rw [← LinearMap.comp_apply, AffHom.cochainMap_comp_d, LinearMap.comp_apply, hk₀, map_zero]
-    exact d_d_apply K F₂ i f₀
+    exact OModulePresheaf.d_comp_d_apply F₂ K i f₀
   refine ⟨⟨k₀, hk₀c⟩, f₀, hf₀, hk₀, fun f hf => ?_⟩
   have hdiff : f₀ - f ∈ LinearMap.range (ιC i) := by
     rw [(cochain_ses K S i).2.2]
@@ -149,7 +143,7 @@ theorem delta0_eq_zero_of_mem_range (j : ℕ) (z : LinearMap.ker (F₃.d K (j + 
   rw [hδ]
   refine (Submodule.Quotient.mk_eq_zero _).mpr ((mem_comap_range_iff K _).mpr ⟨h, (cochain_ses K S
     (j + 2)).1 ?_⟩)
-  rw [hh, d_d_apply, zero_add]
+  rw [hh, OModulePresheaf.d_comp_d_apply, zero_add]
 
 /-- The connecting homomorphism induced on positive-degree Čech cohomology. -/
 noncomputable def delta (i : ℕ) : F₃.HSucc K i →ₗ[R] F₁.HSucc K (i + 1) :=

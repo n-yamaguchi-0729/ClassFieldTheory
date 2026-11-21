@@ -7,7 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteReciprocity
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteConstantDegree
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
+import Nyll.ProCGroups.Completion.Topological
 
 /-!
 # Finite coordinates and constant degree of completed reciprocity

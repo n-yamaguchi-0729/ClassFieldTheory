@@ -40,24 +40,24 @@ variable (k : Type u) (K : Type v) (L : Type w)
 
 /-- The finite abelian Artin homomorphism, using the chosen separable-closure realization. -/
 def abelianFiniteArtin : IdeleClassGroup k K →* Gal(L/K) :=
-  (Abelianization.equivOfComm (H := Gal(L/K))).symm.toMonoidHom.comp
+  (Group.Abelianization.equivOfComm (H := Gal(L/K))).symm.toMonoidHom.comp
     (finiteArtin k K L)
 
 /-- Abelianization of the actual automorphism recovers the finite Artin symbol. -/
 theorem abelianFiniteArtin_of (c : IdeleClassGroup k K) :
-    Abelianization.of (abelianFiniteArtin k K L c) = finiteArtin k K L c :=
-  (Abelianization.equivOfComm (H := Gal(L/K))).apply_symm_apply (finiteArtin k K L c)
+    Group.Abelianization.of (abelianFiniteArtin k K L c) = finiteArtin k K L c :=
+  (Group.Abelianization.equivOfComm (H := Gal(L/K))).apply_symm_apply (finiteArtin k K L c)
 
 /-- Finite abelian reciprocity is surjective. -/
 theorem abelianFiniteArtin_surjective : Function.Surjective (abelianFiniteArtin k K L) :=
-  (Abelianization.equivOfComm (H := Gal(L/K))).symm.surjective.comp
+  (Group.Abelianization.equivOfComm (H := Gal(L/K))).symm.surjective.comp
     (finiteArtin_surjective k K L)
 
 /-- Triviality is equivalent to being an actual all-place class norm. -/
 theorem abelianFiniteArtin_eq_one_iff_mem_norm (c : IdeleClassGroup k K) :
     abelianFiniteArtin k K L c = 1 ↔
       c ∈ (IdeleClassGroup.norm (k := k) (K := K) (L := L)).range := by
-  change (Abelianization.equivOfComm (H := Gal(L/K))).symm (finiteArtin k K L c) = 1 ↔ _
+  change (Group.Abelianization.equivOfComm (H := Gal(L/K))).symm (finiteArtin k K L c) = 1 ↔ _
   rw [MulEquiv.map_eq_one_iff]
   exact finiteArtin_eq_one_iff_mem_norm k K L c
 
@@ -72,7 +72,7 @@ theorem abelianFiniteArtin_ker : (abelianFiniteArtin k K L).ker =
 def abelianFiniteNormQuotientEquiv :
     (IdeleClassGroup k K ⧸ (IdeleClassGroup.norm (k := k) (K := K) (L := L)).range) ≃*
       Gal(L/K) :=
-  (finiteNormQuotientEquiv k K L).trans (Abelianization.equivOfComm (H := Gal(L/K))).symm
+  (finiteNormQuotientEquiv k K L).trans (Group.Abelianization.equivOfComm (H := Gal(L/K))).symm
 
 end FiniteSymbols
 

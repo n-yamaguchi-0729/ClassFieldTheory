@@ -115,6 +115,8 @@ theorem nativeFieldIsoGaloisEquiv_constantDegree
   let C₂ := separableClosure k₂ (SeparableClosure K₂)
   have : IsAlgClosed C₁ := IsAlgClosure.isAlgClosed (R := k₁) (K := C₁)
   have : IsAlgClosed C₂ := IsAlgClosure.isAlgClosed (R := k₂) (K := C₂)
+  let : Normal k₁ C₁ := IsAlgClosure.normal k₁ C₁
+  let : Normal k₂ C₂ := IsAlgClosure.normal k₂ C₂
   let e := semilinearConstantClosureEquiv τ a hc
   let δ := absoluteConstantRestriction k₁ K₁ (SeparableClosure K₁) σ
   let σ' := nativeFieldIsoGaloisEquiv Φ a ha σ

@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicRayNorm
@@ -45,11 +47,7 @@ open GlobalClassFieldTheory.GlobalClassFields
 open GlobalClassFieldTheory.Reciprocity
 open NumberField IsDedekindDomain
 
-noncomputable local instance rationalCyclotomicLevelIsAbelianGalois
-    (n : ℕ+) :
-    IsAbelianGalois ℚ (KummerTheory.rationalCyclotomicLevel n) :=
-  IsCyclotomicExtension.isAbelianGalois {(n : ℕ)} ℚ
-    (KummerTheory.rationalCyclotomicLevel n)
+attribute [local instance] KummerTheory.rationalCyclotomicLevelIsAbelianGalois
 
 /-- Global reciprocity transported along an actual ray-class norm-range equality. -/
 noncomputable def
@@ -67,7 +65,7 @@ noncomputable def
       (RayClass.isOpen_congruenceSubgroup r)
   let reciprocity :
       Gal(L / ℚ) ≃*
-        (IdeleClassGroup ℚ ⧸
+        (NumberField.IdeleClassGroup (𝓞 ℚ) ℚ ⧸
           (_root_.ideleClassNorm ℚ L).range) :=
     AddEquiv.toMultiplicative (globalReciprocityEquiv ℚ L)
   exact
@@ -79,10 +77,10 @@ noncomputable def
 private theorem quotientMulEquivOfNormRangeEq_globalNormResidue
     (L : Type) [Field L] [NumberField L] [Algebra ℚ L]
     [FiniteDimensional ℚ L] [IsAbelianGalois ℚ L]
-    (H : Subgroup (IdeleClassGroup ℚ))
+    (H : Subgroup (NumberField.IdeleClassGroup (𝓞 ℚ) ℚ))
     [(_root_.ideleClassNorm ℚ L).range.Normal] [H.Normal]
     (h : (_root_.ideleClassNorm ℚ L).range = H)
-    (c : IdeleClassGroup ℚ) :
+    (c : NumberField.IdeleClassGroup (𝓞 ℚ) ℚ) :
     QuotientGroup.quotientMulEquivOfEq h
         (Additive.toMul
           ((globalNormResidueEquiv ℚ L).symm
@@ -194,7 +192,7 @@ noncomputable local instance :
     IsAbelianGalois ℚ
       (KummerTheory.rationalCyclotomicLevel
         ⟨m, NeZero.pos m⟩) :=
-  rationalCyclotomicLevelIsAbelianGalois
+  KummerTheory.rationalCyclotomicLevelIsAbelianGalois
     ⟨m, NeZero.pos m⟩
 
 noncomputable local instance rationalCyclotomicLevelIsCyclotomicExtensionAtOrder :
@@ -428,7 +426,7 @@ is the actual global norm-residue symbol followed by its rational ray
 class modulo `(m)`. -/
 theorem
     rationalCyclotomicLevelGaloisContinuousMulEquivRayClassGroup_globalNormResidue
-    (c : IdeleClassGroup ℚ) :
+    (c : NumberField.IdeleClassGroup (𝓞 ℚ) ℚ) :
     rationalCyclotomicLevelGaloisContinuousMulEquivRayClassGroup
         m
         (globalNormResidueMonoidHom
@@ -447,7 +445,7 @@ theorem
 idèle class back to its genuine global norm-residue symbol. -/
 theorem
     rationalCyclotomicLevelGaloisContinuousMulEquivRayClassGroup_symm_mk
-    (c : IdeleClassGroup ℚ) :
+    (c : NumberField.IdeleClassGroup (𝓞 ℚ) ℚ) :
     (rationalCyclotomicLevelGaloisContinuousMulEquivRayClassGroup
         m).symm
         (QuotientGroup.mk'
@@ -502,9 +500,9 @@ noncomputable def rationalCyclotomicPrimeArithmeticFrobenius
   let : NumberField L :=
     KummerTheory.rationalCyclotomicLevel_numberField mp
   let : FiniteDimensional ℚ L :=
-    rationalCyclotomicPrincipalPrimeLevelFiniteDimensional mp
+    KummerTheory.rationalCyclotomicLevelFiniteDimensional mp
   let : IsAbelianGalois ℚ L :=
-    rationalCyclotomicLevelIsAbelianGalois mp
+    KummerTheory.rationalCyclotomicLevelIsAbelianGalois mp
   exact
     AlgEquiv.autCongr
       (rationalCyclotomicLevelAlgEquivCyclotomicField m)
@@ -535,9 +533,9 @@ theorem rationalCyclotomicPrimeArithmeticFrobenius_galEquivZMod
           ⟨m, NeZero.pos m⟩)
     exact rationalCyclotomicLevelIsCyclotomicExtensionAtOrder m
   let : FiniteDimensional ℚ L :=
-    rationalCyclotomicPrincipalPrimeLevelFiniteDimensional mp
+    KummerTheory.rationalCyclotomicLevelFiniteDimensional mp
   let : IsAbelianGalois ℚ L :=
-    rationalCyclotomicLevelIsAbelianGalois mp
+    KummerTheory.rationalCyclotomicLevelIsAbelianGalois mp
   change
     IsCyclotomicExtension.Rat.galEquivZMod
         m (CyclotomicField m ℚ)
@@ -555,34 +553,14 @@ theorem rationalCyclotomicPrimeArithmeticFrobenius_galEquivZMod
     rationalCyclotomicLevel_globalNormResidue_at_unramifiedPrime
       m q hq]
 
-/-- The selected rational ray class field is the actual cyclotomic field
-of the same modulus, as an equivalence of fields over `ℚ`. -/
-noncomputable def rationalRayClassFieldCyclotomicRingEquiv
-    :
-    rayClassField ℚ (RayClass.rationalModulus m) ≃+*
-      CyclotomicField m ℚ := by
-  letI : Algebra ℚ
-      (rayClassField ℚ (RayClass.rationalModulus m)) :=
-    rayClassFieldAlgebraOverOriginal (RayClass.rationalModulus m)
-  exact
-    (Classical.choice
-      ((nonempty_algEquiv_rayClassField_iff_ideleClassNorm_range_eq
-          (K := ℚ)
-          (CyclotomicField m ℚ)
-          (RayClass.rationalModulus m)).2
-        (rationalCyclotomicField_ideleClassNorm_range_eq_rationalCongruenceSubgroup
-          m (NeZero.ne m)))).symm.toRingEquiv
-
-/-- A chosen `ℚ`-algebra equivalence from the selected rational ray class
-field to the cyclotomic field of the same modulus. -/
-noncomputable def rationalRayClassFieldCyclotomicAlgEquiv
-    :
-    rayClassField ℚ (RayClass.rationalModulus m) ≃ₐ[ℚ]
-      CyclotomicField m ℚ := by
-  let e := rationalRayClassFieldCyclotomicRingEquiv m
-  refine { e with commutes' := ?_ }
-  intro q
-  exact map_ratCast e q
+/-- The selected rational ray class field is the actual cyclotomic field of the same modulus. -/
+noncomputable def rationalRayClassFieldCyclotomicAlgEquiv :
+    rayClassField ℚ (RayClass.rationalModulus m) ≃ₐ[ℚ] CyclotomicField m ℚ :=
+  (Classical.choice
+    ((nonempty_algEquiv_rayClassField_iff_ideleClassNorm_range_eq
+        (K := ℚ) (CyclotomicField m ℚ) (RayClass.rationalModulus m)).2
+      (rationalCyclotomicField_ideleClassNorm_range_eq_rationalCongruenceSubgroup
+        m (NeZero.ne m)))).symm
 
 noncomputable local instance rationalRayClassFieldIsCyclotomicExtension :
     IsCyclotomicExtension {m} ℚ
@@ -602,7 +580,7 @@ cyclotomic character.  The left side uses the literal conjugation map on
 Galois automorphisms, not an abstract identification of finite groups. -/
 theorem
     rationalRayClassFieldCyclotomicAlgEquiv_autCongr_globalNormResidue_character
-    (c : IdeleClassGroup ℚ) :
+    (c : NumberField.IdeleClassGroup (𝓞 ℚ) ℚ) :
     IsCyclotomicExtension.Rat.galEquivZMod
         m (CyclotomicField m ℚ)
         (AlgEquiv.autCongr
@@ -702,7 +680,7 @@ sends the actual global norm-residue symbol to its ray class modulo
 `(m)`. -/
 theorem
     rationalCyclotomicGaloisContinuousMulEquivRayClassGroup_globalNormResidue
-    (c : IdeleClassGroup ℚ) :
+    (c : NumberField.IdeleClassGroup (𝓞 ℚ) ℚ) :
     rationalCyclotomicGaloisContinuousMulEquivRayClassGroup
         m
         (globalNormResidueMonoidHom

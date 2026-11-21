@@ -3,6 +3,8 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_Scheme_TwoAffineOpenCover_exists_stage_baseChangeIsos_structureSheaf.lean
+The section algebra transport also uses the following upstream source.
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_RelPicard_exists_algEquiv_sections_stage_baseChange_of_isAffineOpen.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -78,34 +80,39 @@ theorem transportIso_hom_apply (t : Γ(Y, W)) :
 
 variable {S : Type u} [CommRing S] (p : Y ⟶ Spec (.of S)) (p' : Y' ⟶ Spec (.of S)) (hφ : φ ≫ p = p')
 
-/-- The base-algebra equivalence on chart sections induced by the given scheme isomorphism. -/
+/-- Transport of sections along an isomorphism over the base preserves the base algebra. -/
 def transportAlgEquiv :
-    letI := algebraOfHom p W; letI := algebraOfHom p' W'
-    Γ(Y, W) ≃ₐ[S] Γ(Y', W') :=
-  letI := algebraOfHom p W; letI := algebraOfHom p' W'
-  AlgEquiv.ofRingEquiv (f := (transportIso φ hW).commRingCatIsoToRingEquiv) (fun a => by
-    change (transportIso φ hW).hom.hom ((p.appLE ⊤ W le_top).hom ((Scheme.ΓSpecIso (.of
-      S)).inv.hom a))
+    let _ : Algebra S Γ(Y, W) := algebraOfHom p W
+    let _ : Algebra S Γ(Y', W') := algebraOfHom p' W'
+    Γ(Y, W) ≃ₐ[S] Γ(Y', W') := by
+  intro iW iW'
+  exact AlgEquiv.ofRingEquiv (f := (transportIso φ hW).commRingCatIsoToRingEquiv) (fun a => by
+    change (transportIso φ hW).hom.hom ((p.appLE ⊤ W le_top).hom ((Scheme.ΓSpecIso (.of S)).inv.hom
+      a))
       = (p'.appLE ⊤ W' le_top).hom ((Scheme.ΓSpecIso (.of S)).inv.hom a)
     rw [transportIso_hom]
-    have hcomp : p.appLE ⊤ W le_top ≫ φ.appLE W W' hW.ge =
-        p'.appLE ⊤ W' le_top :=
-      (Scheme.Hom.appLE_comp_appLE φ p ⊤ W W' le_top hW.ge).trans
-        (appLE_congrHom hφ ⊤ W' _ le_top)
-    exact (CommRingCat.comp_apply _ _ _).symm.trans
-      (DFunLike.congr_fun (congrArg CommRingCat.Hom.hom hcomp)
-        ((Scheme.ΓSpecIso (.of S)).inv.hom a)))
+    exact congrArg (fun k : Γ(Spec (.of S), ⊤) ⟶ Γ(Y', W') => k.hom ((Scheme.ΓSpecIso (.of
+      S)).inv.hom a))
+      ((_root_.AlgebraicGeometry.Scheme.Hom.appLE_comp_appLE φ p ⊤ W W' le_top hW.ge).trans
+        (appLE_congrHom hφ ⊤ W' _ _)))
 
+/-- The transport algebra equivalence acts by the restricted section map. -/
 theorem transportAlgEquiv_apply (t : Γ(Y, W)) :
-    letI := algebraOfHom p W; letI := algebraOfHom p' W'
+    let _ : Algebra S Γ(Y, W) := algebraOfHom p W
+    let _ : Algebra S Γ(Y', W') := algebraOfHom p' W'
     transportAlgEquiv φ hW p p' hφ t = (φ.appLE W W' hW.ge).hom t := by
+  intro iW iW'
   change (transportIso φ hW).hom.hom t = _
   rw [transportIso_hom]
+
 include hφ in
+/-- A scheme isomorphism over the base transports the algebras of sections. -/
 theorem exists_transportAlgEquiv :
-    letI := algebraOfHom p W; letI := algebraOfHom p' W'
-    ∃ τ : Γ(Y, W) ≃ₐ[S] Γ(Y', W'), ∀ t, τ t = (φ.appLE W W' hW.ge).hom t :=
-  ⟨transportAlgEquiv φ hW p p' hφ, transportAlgEquiv_apply φ hW p p' hφ⟩
+    let _ : Algebra S Γ(Y, W) := algebraOfHom p W
+    let _ : Algebra S Γ(Y', W') := algebraOfHom p' W'
+    ∃ τ : Γ(Y, W) ≃ₐ[S] Γ(Y', W'), ∀ t, τ t = (φ.appLE W W' hW.ge).hom t := by
+  intro iW iW'
+  exact ⟨transportAlgEquiv φ hW p p' hφ, transportAlgEquiv_apply φ hW p p' hφ⟩
 
 end AlgebraicGeometry.RelPicard.LFP.StageTransport
 

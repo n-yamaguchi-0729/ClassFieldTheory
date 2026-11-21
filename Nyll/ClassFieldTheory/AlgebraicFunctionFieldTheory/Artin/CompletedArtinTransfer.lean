@@ -12,8 +12,8 @@ public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddedA
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteReciprocity
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTopology
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
+public import Nyll.ProCGroups.Completion.Topological
 
 /-!
 # Completed reciprocity and the original absolute transfer

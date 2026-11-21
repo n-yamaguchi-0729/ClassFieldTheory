@@ -135,7 +135,6 @@ lemma pf_ε_app (V : Y.Opens) (g : (𝟙_ Y.PresheafOfModules).obj (op V)) :
     X.sheaf.obj)
       = 𝟙 _ from rfl, CategoryTheory.Functor.map_id, Category.comp_id]
   erw [ModuleCat.restrictScalars_η]
-  rfl
 
 lemma pb₀_η_app_pb₀Section (V : Y.Opens) (g : (𝟙_ Y.PresheafOfModules).obj (op V)) :
     (η (pullback₀ f)).app (op (f ⁻¹ᵁ V)) (pb₀Section f (𝟙_ Y.PresheafOfModules) V g)
@@ -376,7 +375,7 @@ theorem τIso_hom_app_pullbackLocalSection (V : X.Opens) (s : Γ(F, V)) :
           (pullbackLocalSection U.ι s)))) = _
   rw [h1]
   erw [h2, app_naturality, h3']
-  all_goals rfl
+  rfl
 
 /-- The comparison isomorphism for restriction of the projection formula source. -/
 noncomputable def βIso :
@@ -439,7 +438,7 @@ theorem key_lhs (V : X.Opens) (a : Γ((Scheme.Modules.pushforward i).obj (𝟙_ 
     rw [← hτ]
     exact hid
   erw [hinv]
-  all_goals rfl
+  rfl
 
 theorem key_rhs (V : X.Opens) (a : Γ((Scheme.Modules.pushforward i).obj (𝟙_ Z.Modules), V)) (s :
     Γ(F, V)) :
@@ -468,7 +467,7 @@ theorem key_rhs (V : X.Opens) (a : Γ((Scheme.Modules.pushforward i).obj (𝟙_ 
     erw [pullbackTensorUnitObjIso_hom_app_pullbackLocalSection]
   rw [hu]
   erw [projectionMorphism_app_tensorSections]
-  all_goals rfl
+  rfl
 
 theorem key :
     (Scheme.Modules.pullback U.ι).map (projectionMorphism i F) ≫ (βIso i F U).hom

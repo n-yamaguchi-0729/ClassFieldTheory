@@ -9,7 +9,7 @@ module
 public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeFractionalIdeal
 public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
 public import Mathlib.Algebra.BigOperators.Finsupp.Basic
-public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Nyll.ClassFieldTheory.Algebra.FractionalIdealFactorization
 
 /-!
 # Prime factorization of nonzero fractional ideals
@@ -37,34 +37,27 @@ namespace NumberFieldFractionalIdealGroup
 
 variable {K : Type u} [Field K] [NumberField K]
 
-/-- The integer exponent of one finite prime, viewed multiplicatively. -/
-def primePowerHom (v : HeightOneSpectrum (𝓞 K)) :
+/-- The homomorphism sending an integer exponent to the corresponding
+power of a finite prime. -/
+noncomputable def primePowerHom (v : HeightOneSpectrum (𝓞 K)) :
     Multiplicative ℤ →* NumberFieldFractionalIdealGroup K :=
-  MonoidHom.mk'
-    (fun n => finitePrimeFractionalIdeal v ^ n.toAdd)
-    (fun m n => by simp only [toAdd_mul, zpow_add])
+  ClassFieldTheory.FractionalIdealFactorization.primePowerHom (F := K) v
 
-/-- Reconstruct a nonzero fractional ideal from finitely many prime
-exponents. -/
-def factorization :
+/-- Reconstruct a fractional ideal from its finitely supported vector
+of prime exponents. -/
+noncomputable def factorization :
     Multiplicative (HeightOneSpectrum (𝓞 K) →₀ ℤ) →*
       NumberFieldFractionalIdealGroup K :=
-  MonoidHom.mk'
-    (fun exps =>
-      exps.toAdd.prod fun v n => primePowerHom v (Multiplicative.ofAdd n))
-    (fun a b => by
-      exact Finsupp.prod_hom_add_index (fun v => primePowerHom v))
+  ClassFieldTheory.FractionalIdealFactorization.factorization (R := 𝓞 K) (F := K)
 
 @[simp]
-theorem factorization_val
-    (exps : Multiplicative (HeightOneSpectrum (𝓞 K) →₀ ℤ)) :
+theorem factorization_val (exps :
+    Multiplicative (HeightOneSpectrum (𝓞 K) →₀ ℤ)) :
     ((factorization exps : NumberFieldFractionalIdealGroup K) :
       FractionalIdeal (nonZeroDivisors (𝓞 K)) K) =
       exps.toAdd.prod fun v n =>
-        (v.asIdeal : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) ^ n := by
-  classical
-  simp only [factorization, Finsupp.prod, primePowerHom, finitePrimeFractionalIdeal,
-    MonoidHom.mk'_apply, toAdd_ofAdd, Units.coe_prod, Units.val_zpow_eq_zpow_val, Units.val_mk0]
+        (v.asIdeal : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) ^ n :=
+  ClassFieldTheory.FractionalIdealFactorization.factorization_val exps
 
 /-- Only finitely many finite primes occur with nonzero exponent in a
 nonzero fractional ideal. -/
@@ -72,20 +65,13 @@ theorem finite_count_support (I : NumberFieldFractionalIdealGroup K) :
     {v : HeightOneSpectrum (𝓞 K) |
       FractionalIdeal.count K v
         (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) ≠ 0}.Finite :=
-  Filter.eventually_cofinite.mp
-    (FractionalIdeal.finite_factors
-      (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K))
+  ClassFieldTheory.FractionalIdealFactorization.finite_count_support I
 
-/-- The finitely supported prime-exponent vector of a nonzero fractional
-ideal. -/
-def countVector (I : NumberFieldFractionalIdealGroup K) :
+/-- The finitely supported vector of prime exponents of a nonzero
+fractional ideal. -/
+noncomputable def countVector (I : NumberFieldFractionalIdealGroup K) :
     HeightOneSpectrum (𝓞 K) →₀ ℤ :=
-  Finsupp.onFinset (finite_count_support I).toFinset
-    (fun v => FractionalIdeal.count K v
-      (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K))
-    (fun v hv => by
-      rw [Set.Finite.mem_toFinset]
-      exact hv)
+  ClassFieldTheory.FractionalIdealFactorization.countVector I
 
 @[simp]
 theorem countVector_apply (I : NumberFieldFractionalIdealGroup K)
@@ -93,18 +79,17 @@ theorem countVector_apply (I : NumberFieldFractionalIdealGroup K)
     countVector I v =
       FractionalIdeal.count K v
         (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) :=
-  rfl
+  ClassFieldTheory.FractionalIdealFactorization.countVector_apply I v
 
 @[simp]
-theorem count_factorization
-    (exps : Multiplicative (HeightOneSpectrum (𝓞 K) →₀ ℤ))
+theorem count_factorization (exps :
+    Multiplicative (HeightOneSpectrum (𝓞 K) →₀ ℤ))
     (v : HeightOneSpectrum (𝓞 K)) :
     FractionalIdeal.count K v
       ((factorization exps : NumberFieldFractionalIdealGroup K) :
         FractionalIdeal (nonZeroDivisors (𝓞 K)) K) =
-      exps.toAdd v := by
-  rw [factorization_val]
-  exact FractionalIdeal.count_finsuppProd K v exps.toAdd
+      exps.toAdd v :=
+  ClassFieldTheory.FractionalIdealFactorization.count_factorization exps v
 
 theorem ext_count {I J : NumberFieldFractionalIdealGroup K}
     (h : ∀ v : HeightOneSpectrum (𝓞 K),
@@ -112,41 +97,29 @@ theorem ext_count {I J : NumberFieldFractionalIdealGroup K}
         (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) =
       FractionalIdeal.count K v
         (J : FractionalIdeal (nonZeroDivisors (𝓞 K)) K)) :
-    I = J := by
-  apply Units.ext
-  rw [← FractionalIdeal.finprod_heightOneSpectrum_factorization'
-      K (Units.ne_zero I),
-    ← FractionalIdeal.finprod_heightOneSpectrum_factorization'
-      K (Units.ne_zero J)]
-  exact finprod_congr fun v => congrArg
-    (fun n : ℤ =>
-      (v.asIdeal : FractionalIdeal (nonZeroDivisors (𝓞 K)) K) ^ n) (h v)
+    I = J :=
+  ClassFieldTheory.FractionalIdealFactorization.ext_count h
 
 theorem factorization_injective :
-    Function.Injective (factorization (K := K)) := by
-  intro a b hab
-  apply Multiplicative.ext
-  ext v
-  rw [← count_factorization a v, ← count_factorization b v, hab]
+    Function.Injective (factorization (K := K)) :=
+  ClassFieldTheory.FractionalIdealFactorization.factorization_injective
 
 theorem factorization_surjective :
-    Function.Surjective (factorization (K := K)) := by
-  intro I
-  refine ⟨Multiplicative.ofAdd (countVector I), ?_⟩
-  apply ext_count
-  intro v
-  rw [count_factorization]
-  change countVector I v =
-    FractionalIdeal.count K v
-      (I : FractionalIdeal (nonZeroDivisors (𝓞 K)) K)
-  exact countVector_apply I v
+    Function.Surjective (factorization (K := K)) :=
+  ClassFieldTheory.FractionalIdealFactorization.factorization_surjective
 
-/-- Multiplicative prime factorization of nonzero fractional ideals. -/
-def factorizationEquiv :
+/-- Multiplicative unique factorization of nonzero fractional ideals by
+finite primes. -/
+noncomputable def factorizationEquiv :
     Multiplicative (HeightOneSpectrum (𝓞 K) →₀ ℤ) ≃*
       NumberFieldFractionalIdealGroup K :=
-  MulEquiv.ofBijective (factorization (K := K))
-    ⟨factorization_injective, factorization_surjective⟩
+  ClassFieldTheory.FractionalIdealFactorization.factorizationEquiv (R := 𝓞 K) (F := K)
+
+/-- The inverse factorization map is the actual prime-count vector. -/
+@[simp]
+theorem factorizationEquiv_symm_toAdd (I : NumberFieldFractionalIdealGroup K) :
+    ((factorizationEquiv (K := K)).symm I).toAdd = countVector I :=
+  ClassFieldTheory.FractionalIdealFactorization.factorizationEquiv_symm_toAdd I
 
 end NumberFieldFractionalIdealGroup
 

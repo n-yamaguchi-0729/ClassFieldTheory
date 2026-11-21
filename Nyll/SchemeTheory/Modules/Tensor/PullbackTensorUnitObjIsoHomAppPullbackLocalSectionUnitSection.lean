@@ -228,7 +228,6 @@ lemma pf_ε_app (V : Y.Opens) (g : (𝟙_ Y.PresheafOfModules).obj (op V)) :
     X.sheaf.obj)
       = 𝟙 _ from rfl, CategoryTheory.Functor.map_id, Category.comp_id]
   erw [ModuleCat.restrictScalars_η]
-  rfl
 
 lemma pb₀_η_app_pb₀Section (V : Y.Opens) (g : (𝟙_ Y.PresheafOfModules).obj (op V)) :
     (η (pullback₀ f)).app (op (f ⁻¹ᵁ V)) (pb₀Section f (𝟙_ Y.PresheafOfModules) V g)

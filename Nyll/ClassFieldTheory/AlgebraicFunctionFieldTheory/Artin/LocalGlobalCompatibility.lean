@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.FiniteAbelianCompositum
+public import Nyll.ClassFieldTheory.Algebra.NormalEmbeddingRange
 public import Mathlib.FieldTheory.Galois.Abelian
 public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
@@ -247,7 +249,7 @@ private theorem localGlobalArtinFactor_constantGenerated_descent
         τ.1.restrictScalars K := by
   intro aFE sFE mFE hKFE hkFE hFEfinite hFEabelian hgenA W τ
   have hEfield : FunctionField k E :=
-    IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+    IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
       (k := k) (K := K) (Ω := SeparableClosure K) E
   have hcompare (y : (W.restrict F).adicCompletionˣ) :
       localArtin (K := F) W y = abelianFiniteArtin k F E
@@ -281,7 +283,7 @@ theorem localGlobalArtinFactor_cyclicFixedField
   have hKFabelian : IsAbelianGalois K F := IsAbelianGalois.tower_bot K F E
   have hFEabelian : IsAbelianGalois F E := IsAbelianGalois.tower_top K F E
   have hFfield : FunctionField k F :=
-    IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+    IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
       (k := k) (K := K) (Ω := SeparableClosure K) F
   have hFcurve : IsCurveOver k F := isCurveOver k F
   have hFprincipal : HasPrincipalDivisors k F := IsCurveOver.hasPrincipalDivisors
@@ -410,8 +412,8 @@ theorem localArtin_eq_abelianFiniteArtin_placeIdele
   let akΩ : Algebra k Ω := ((algebraMap K Ω).comp (algebraMap k K)).toAlgebra
   have hkKΩ : IsScalarTower k K Ω := IsScalarTower.of_algebraMap_eq (fun _ => rfl)
   let M : FiniteGaloisIntermediateField K Ω :=
-    { toIntermediateField := LocalClassFieldTheory.finiteGaloisFieldRange K L }
-  let e : L ≃ₐ[K] M := LocalClassFieldTheory.finiteGaloisFieldRangeEquiv K L
+    (AlgebraicNumberTheory.separableEmbeddingIntoSeparableClosure K L).finiteGaloisFieldRange
+  let e : L ≃ₐ[K] M := AlgebraicNumberTheory.finiteGaloisFieldRangeEquiv K L
   have hKMabelian : IsAbelianGalois K M := IsAbelianGalois.of_algHom e.symm.toAlgHom
   have hMcurve : IsCurveOver k M :=
     ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K M

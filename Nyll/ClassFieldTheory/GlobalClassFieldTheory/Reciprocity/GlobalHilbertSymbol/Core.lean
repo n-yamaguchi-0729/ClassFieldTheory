@@ -205,11 +205,8 @@ theorem finitePlaceKummerRootCharacterOfExtension_eq_of_extensions
   have hArtin := DFunLike.congr_fun
     (finitePlaceArtinMonoidHomOfExtension_eq
       (K := K) (L := L) v w w') a_v
-  have hRoot := congrArg
-    (chosenSimpleKummerRootCharacter K n hnK hmu b) hArtin
-  unfold finitePlaceKummerRootCharacterOfExtension
-  exact congrArg
-    (nthRootsSubgroupEquivOfPrimitiveRoots K L n hmu).symm hRoot
+  dsimp only [finitePlaceKummerRootCharacterOfExtension]
+  congr 2
 
 /-- The finite-place Kummer root-character value obtained from the canonical
 chosen extension of the base place. -/

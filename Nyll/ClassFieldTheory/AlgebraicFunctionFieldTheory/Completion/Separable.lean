@@ -6,10 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.AlgebraicCurves.FunctionFields.NormTrace.CompletionTraceSumSeparable
 public import Nyll.AlgebraicCurves.Places.ValuationRings.OverDVR
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.NormOpen
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
 
 /-!
 # Actual completions of finite separable extensions
@@ -47,7 +47,7 @@ theorem completionFiniteSeparableOver [FiniteDimensional K L] [Algebra.IsSeparab
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
     (v : Place k K) (w : Place k L) (hw : w.restrict K = v) :
     let _ : Algebra v.adicCompletion w.adicCompletion :=
-      (completionMapOver v w hw).toAlgebra
+      (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
     FiniteDimensional v.adicCompletion w.adicCompletion ∧
       Algebra.IsSeparable v.adicCompletion w.adicCompletion := by
   have hf : FiniteDimensional (w.restrict K).adicCompletion w.adicCompletion := inferInstance
@@ -60,7 +60,7 @@ actual restricted place is identified with the specified base place. -/
 theorem completionCanonical_hasExtension_over [FiniteDimensional K L]
     (v : Place k K) (w : Place k L) (hw : w.restrict K = v) :
     let _ : Algebra v.adicCompletion w.adicCompletion :=
-      (completionMapOver v w hw).toAlgebra
+      (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
     let _ : ValuativeRel v.adicCompletion := placeCompletionValuativeRel v
     let _ : ValuativeRel w.adicCompletion := placeCompletionValuativeRel w
     (ValuativeRel.valuation v.adicCompletion).HasExtension

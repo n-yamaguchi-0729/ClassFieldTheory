@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNormCore
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
@@ -38,7 +39,9 @@ group.
 
 universe u v w
 
-open scoped NumberField BigOperators NumberField.LiesOver
+open scoped NumberField BigOperators
+
+attribute [local instance] AbsoluteValue.Completion.algebraOfLiesOver
 
 noncomputable section
 
@@ -49,10 +52,6 @@ open NumberField
 
 variable {K : Type u} [Field K] [NumberField K]
 
-local instance
-    idealArtinMap_ideleClassGroupIsMulCommutative :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 local instance ideleClassSubgroupNormal
     (N : Subgroup (IdeleClassGroup K)) : N.Normal :=
@@ -131,75 +130,6 @@ def idealArtinMap
     (QuotientGroup.mk'
       (RayClass.principalRayIdealSubgroup m))
 
-private theorem
-    quotientRaySubgroupEquivIdealRayClassGroup_mk
-    (m : RayClass.Modulus K)
-    (a : RayClass.idelePrimeToModulusSubgroup m) :
-    RayClass.quotientRaySubgroupEquivIdealRayClassGroup m
-        (QuotientGroup.mk'
-          (RayClass.raySubgroupInPrimeTo m) a) =
-      RayClass.idealRayProjection m a := by
-  exact RayClass.quotientRaySubgroupEquivIdealRayClassGroup_mk m a
-
-private theorem
-    quotientRaySubgroupEquivIdeleRayQuotient_mk
-    (m : RayClass.Modulus K)
-    (a : RayClass.idelePrimeToModulusSubgroup m) :
-    RayClass.quotientRaySubgroupEquivIdeleRayQuotient m
-        (QuotientGroup.mk'
-          (RayClass.raySubgroupInPrimeTo m) a) =
-      RayClass.primeToRayClassProjection m a := by
-  exact RayClass.quotientRaySubgroupEquivIdeleRayQuotient_mk m a
-
-private theorem rayClassGroupEquivIdeleQuotient_mk_mk
-    (m : RayClass.Modulus K)
-    (a : IdeleGroup K) :
-    RayClass.rayClassGroupEquivIdeleQuotient m
-        (QuotientGroup.mk'
-          (RayClass.Modulus.congruenceSubgroup m)
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K) a)) =
-      QuotientGroup.mk'
-        (RayClass.Modulus.ideleCongruenceSubgroup m ⊔
-          IdeleGroup.principalSubgroup K) a := by
-  exact
-    QuotientGroup.quotientQuotientEquivQuotientAux_mk_mk
-      (IdeleGroup.principalSubgroup K)
-      (RayClass.Modulus.ideleCongruenceSubgroup m ⊔
-        IdeleGroup.principalSubgroup K)
-      le_sup_right a
-
-private theorem
-    rayClassGroupEquivIdealRayClassGroup_mk_primeTo
-    (m : RayClass.Modulus K)
-    (a : RayClass.idelePrimeToModulusSubgroup m) :
-    RayClass.rayClassGroupEquivIdealRayClassGroup m
-        (QuotientGroup.mk'
-          (RayClass.Modulus.congruenceSubgroup m)
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (a : IdeleGroup K))) =
-      RayClass.idealRayProjection m a := by
-  change
-    RayClass.quotientRaySubgroupEquivIdealRayClassGroup m
-        ((RayClass.quotientRaySubgroupEquivIdeleRayQuotient m).symm
-          (RayClass.rayClassGroupEquivIdeleQuotient m
-            (QuotientGroup.mk'
-              (RayClass.Modulus.congruenceSubgroup m)
-              (QuotientGroup.mk'
-                (IdeleGroup.principalSubgroup K)
-                (a : IdeleGroup K))))) =
-      RayClass.idealRayProjection m a
-  rw [rayClassGroupEquivIdeleQuotient_mk_mk]
-  change
-    RayClass.quotientRaySubgroupEquivIdealRayClassGroup m
-        ((RayClass.quotientRaySubgroupEquivIdeleRayQuotient m).symm
-          (RayClass.primeToRayClassProjection m a)) =
-      RayClass.idealRayProjection m a
-  rw [← quotientRaySubgroupEquivIdeleRayQuotient_mk m a,
-    MulEquiv.symm_apply_apply,
-    quotientRaySubgroupEquivIdealRayClassGroup_mk]
-
 /-- The ideal Artin map of the fractional ideal attached to a
 prime-to-modulus idèle is its class in the idèle-class quotient. -/
 @[simp]
@@ -211,21 +141,19 @@ theorem idealArtinMap_primeToIdealMap
     idealArtinMap m N hm
         (RayClass.primeToIdealMap m a) =
       QuotientGroup.mk' N
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (a : IdeleGroup K)) := by
   let e :=
     RayClass.rayClassGroupEquivIdealRayClassGroup m
   let c : RayClass.RayClassGroup m :=
     QuotientGroup.mk'
       (RayClass.Modulus.congruenceSubgroup m)
-      (QuotientGroup.mk'
-        (IdeleGroup.principalSubgroup K)
+      (IdeleGroup.toStandardClass K
         (a : IdeleGroup K))
   have he :
       e c = RayClass.idealRayProjection m a := by
     exact
-      rayClassGroupEquivIdealRayClassGroup_mk_primeTo m a
+      RayClass.rayClassGroupEquivIdealRayClassGroup_mk_primeTo m a
   have he' :
       e.symm (RayClass.idealRayProjection m a) = c := by
     rw [← he, e.symm_apply_apply]
@@ -233,8 +161,7 @@ theorem idealArtinMap_primeToIdealMap
     rayClassToNormQuotient m N hm
         (e.symm (RayClass.idealRayProjection m a)) =
       QuotientGroup.mk' N
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (a : IdeleGroup K))
   rw [he', rayClassToNormQuotient_mk]
 
@@ -287,7 +214,7 @@ private theorem ideleNorm_mem_finitePrimeToModulusSubgroup_aux
     (m : RayClass.Modulus K)
     (a : RayClass.idelePrimeToModulusSubgroup
       (normIdeleLiftedModulus (K := K) (L := L) m)) :
-    (IdeleGroup.norm K L (a : IdeleGroup L)).2 ∈
+    IdeleGroup.finiteCoordinates (IdeleGroup.norm K L (a : IdeleGroup L)) ∈
       RayClass.finitePrimeToModulusSubgroup m := by
   let aFinite :
       RayClass.idelePrimeToModulusSubgroup
@@ -324,7 +251,7 @@ theorem ideleNorm_mem_idelePrimeToModulusSubgroup
   constructor
   · apply
       (RayClass.Modulus.mem_infiniteCongruenceSubgroup_iff m
-        (IdeleGroup.norm K L (a : IdeleGroup L)).1).2
+        (IdeleGroup.infinitePart (IdeleGroup.norm K L (a : IdeleGroup L)))).2
     intro v _hv
     let : ∀ W : {W : InfinitePlace L //
         _root_.infinitePlaceBelow (K := K) W = v.1},
@@ -360,7 +287,7 @@ theorem ideleNorm_mem_idelePrimeToModulusSubgroup
             (RayClass.Modulus.mem_infiniteCongruenceSubgroup_iff
               (normIdeleLiftedModulus
                 (K := K) (L := L) m)
-              (a : IdeleGroup L).1).1 a.property.1
+              (IdeleGroup.infinitePart (a : IdeleGroup L))).1 a.property.1
                 ⟨W.1, hWReal⟩ (by exact Finset.mem_univ _)
           exact
             (RayClass.mem_infinitePositiveSubgroup_iff W.1
@@ -434,9 +361,10 @@ theorem primeToIdealMap_primeToModulusIdeleNorm
           (K := K) (L := L) m a) =
       RayClass.primeToModulusIdealNorm
         (K := K) (L := L) m
-        (RayClass.primeToIdealMap
-          (normIdeleLiftedModulus
-            (K := K) (L := L) m) a) := by
+        (RayClass.idealNormLiftedDomainEquiv (L := L) m
+          (RayClass.primeToIdealMap
+            (normIdeleLiftedModulus
+              (K := K) (L := L) m) a)) := by
   apply Subtype.ext
   exact
     IdeleGroup.fractionalIdeal_ideleNorm
@@ -457,11 +385,9 @@ private theorem
         ∃ b : RayClass.idelePrimeToModulusSubgroup
             (normIdeleLiftedModulus
               (K := K) (L := L) m),
-          QuotientGroup.mk'
-              (IdeleGroup.principalSubgroup K)
+          IdeleGroup.toStandardClass K
               (IdeleGroup.norm K L (b : IdeleGroup L)) =
-            QuotientGroup.mk'
-              (IdeleGroup.principalSubgroup K)
+            IdeleGroup.toStandardClass K
               (a : IdeleGroup K) := by
   change
     idealArtinMap m
@@ -471,22 +397,19 @@ private theorem
   have haKernel :
       QuotientGroup.mk'
           (_root_.ideleClassNorm K L).range
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
+          (IdeleGroup.toStandardClass K
             (a : IdeleGroup K)) = 1 := by
     rw [← idealArtinMap_primeToIdealMap m
       (_root_.ideleClassNorm K L).range hm a, ha]
     exact hI
   have haNormRange :
-      QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+      IdeleGroup.toStandardClass K
           (a : IdeleGroup K) ∈
         (_root_.ideleClassNorm K L).range :=
     (QuotientGroup.eq_one_iff _).1 haKernel
   obtain ⟨c, hc⟩ := haNormRange
   obtain ⟨b, rfl⟩ :=
-    QuotientGroup.mk'_surjective
-      (IdeleGroup.principalSubgroup L) c
+    IdeleGroup.toStandardClass_surjective L c
   obtain ⟨x, hbx⟩ :=
     RayClass.exists_principal_quotient_mem_primeTo
       (normIdeleLiftedModulus
@@ -497,38 +420,13 @@ private theorem
           (K := K) (L := L) m) :=
     ⟨b * (IdeleGroup.principalIdele L x)⁻¹, hbx⟩
   have hb'class :
-      QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup L)
+      IdeleGroup.toStandardClass L
           (b' : IdeleGroup L) =
-        QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup L) b := by
-    change
-      QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup L)
-            (b * (IdeleGroup.principalIdele L x)⁻¹) =
-          QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup L) b
-    apply
-      (QuotientGroup.eq_iff_div_mem
-        (N := IdeleGroup.principalSubgroup L)
-        (x := b * (IdeleGroup.principalIdele L x)⁻¹)
-        (y := b)).2
-    have hp :
-        IdeleGroup.principalIdele L x ∈
-          IdeleGroup.principalSubgroup L :=
-      ⟨x, rfl⟩
-    have hdiv :
-        (b * (IdeleGroup.principalIdele L x)⁻¹) / b =
-          (IdeleGroup.principalIdele L x)⁻¹ := by
-      rw [div_eq_mul_inv]
-      calc
-        b * (IdeleGroup.principalIdele L x)⁻¹ * b⁻¹ =
-            (IdeleGroup.principalIdele L x)⁻¹ * (b * b⁻¹) := by
-          ac_rfl
-        _ = (IdeleGroup.principalIdele L x)⁻¹ := by
-          simp only [mul_inv_cancel, mul_one]
-    rw [hdiv]
-    exact (IdeleGroup.principalSubgroup L).inv_mem hp
+        IdeleGroup.toStandardClass L b := by
+    apply (IdeleGroup.toStandardClass_eq_iff (K := L) _ _).2
+    change (b * (IdeleGroup.principalIdele L x)⁻¹)⁻¹ * b ∈ IdeleGroup.principalSubgroup L
+    refine ⟨x, ?_⟩
+    simp only [mul_inv_rev, inv_inv, mul_assoc, inv_mul_cancel, mul_one]
   refine ⟨a, ha, b', ?_⟩
   rw [← _root_.ideleClassNorm_mk, hb'class]
   exact hc
@@ -541,11 +439,9 @@ private theorem
       (normIdeleLiftedModulus
         (K := K) (L := L) m))
     (hNormClass :
-      QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+      IdeleGroup.toStandardClass K
           (IdeleGroup.norm K L (b : IdeleGroup L)) =
-        QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+        IdeleGroup.toStandardClass K
           (a : IdeleGroup K)) :
     RayClass.primeToIdealMap m a ∈
       RayClass.idealNormSubgroup
@@ -558,10 +454,9 @@ private theorem
   have hdPrincipal :
       (d : IdeleGroup K) ∈
         IdeleGroup.principalSubgroup K := by
-    rw [← QuotientGroup.eq_one_iff]
+    apply (IdeleGroup.toStandardClass_eq_one_iff K d).1
     change
-      QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
+      IdeleGroup.toStandardClass K
             ((a : IdeleGroup K) *
               (IdeleGroup.norm K L
                 (b : IdeleGroup L))⁻¹) = 1
@@ -572,9 +467,10 @@ private theorem
         RayClass.principalRayIdealSubgroup m :=
     ⟨d, hdPrincipal, rfl⟩
   let J :=
-    RayClass.primeToIdealMap
-      (normIdeleLiftedModulus
-        (K := K) (L := L) m) b
+    RayClass.idealNormLiftedDomainEquiv (L := L) m
+      (RayClass.primeToIdealMap
+        (normIdeleLiftedModulus
+          (K := K) (L := L) m) b)
   let n :=
     RayClass.primeToModulusIdealNorm
       (K := K) (L := L) m J
@@ -640,20 +536,25 @@ private theorem idealNormSubgroup_le_idealArtinKernel
     obtain ⟨b, hb⟩ :=
       RayClass.primeToIdealMap_surjective
         (normIdeleLiftedModulus
-          (K := K) (L := L) m) J
+          (K := K) (L := L) m)
+        ((RayClass.idealNormLiftedDomainEquiv (L := L) m).symm J)
+    have hJ : RayClass.idealNormLiftedDomainEquiv (L := L) m
+        (RayClass.primeToIdealMap
+          (normIdeleLiftedModulus (K := K) (L := L) m) b) = J := by
+      rw [hb]
+      exact (RayClass.idealNormLiftedDomainEquiv (L := L) m).apply_symm_apply J
     change
       idealArtinMap m
           (_root_.ideleClassNorm K L).range hm
           (RayClass.primeToModulusIdealNorm
             (K := K) (L := L) m J) = 1
-    rw [← hb,
+    rw [← hJ,
       ← primeToIdealMap_primeToModulusIdeleNorm
         (K := K) (L := L) m b,
       idealArtinMap_primeToIdealMap]
     apply (QuotientGroup.eq_one_iff _).2
     exact
-      ⟨QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup L)
+      ⟨IdeleGroup.toStandardClass L
           (b : IdeleGroup L),
         _root_.ideleClassNorm_mk
           K L (b : IdeleGroup L)⟩

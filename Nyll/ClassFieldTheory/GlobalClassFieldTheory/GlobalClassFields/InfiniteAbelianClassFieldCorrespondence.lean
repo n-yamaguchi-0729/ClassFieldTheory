@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MaximalAbelianKernel
 
 /-!
@@ -24,79 +25,6 @@ open scoped NumberField
 
 noncomputable section
 
-namespace ClosedSubgroup
-
-variable {G H : Type*}
-  [Group G] [TopologicalSpace G]
-  [Group H] [TopologicalSpace H]
-
-/-- Transport a closed subgroup along a continuous multiplicative
-equivalence. -/
-noncomputable def mapContinuousMulEquiv
-    (e : G ≃ₜ* H) (S : ClosedSubgroup G) : ClosedSubgroup H where
-  toSubgroup := e.toMulEquiv.mapSubgroup S.toSubgroup
-  isClosed' := by
-    change IsClosed (e '' (S : Set G))
-    exact e.toHomeomorph.isClosedMap (S : Set G) S.isClosed'
-
-/-- A continuous multiplicative equivalence induces an order equivalence on
-closed subgroups. -/
-noncomputable def orderIsoMapContinuousMulEquiv
-    (e : G ≃ₜ* H) : ClosedSubgroup G ≃o ClosedSubgroup H where
-  toFun := mapContinuousMulEquiv e
-  invFun := mapContinuousMulEquiv e.symm
-  left_inv S := by
-    apply ClosedSubgroup.toSubgroup_injective
-    change
-      e.symm.toMulEquiv.mapSubgroup
-          (e.toMulEquiv.mapSubgroup S.toSubgroup) =
-        S.toSubgroup
-    exact e.toMulEquiv.mapSubgroup.left_inv S.toSubgroup
-  right_inv T := by
-    apply ClosedSubgroup.toSubgroup_injective
-    change
-      e.toMulEquiv.mapSubgroup
-          (e.symm.toMulEquiv.mapSubgroup T.toSubgroup) =
-        T.toSubgroup
-    exact e.toMulEquiv.mapSubgroup.right_inv T.toSubgroup
-  map_rel_iff' {S T} := by
-    change
-      e.toMulEquiv.mapSubgroup S.toSubgroup ≤
-          e.toMulEquiv.mapSubgroup T.toSubgroup ↔
-        S.toSubgroup ≤ T.toSubgroup
-    exact e.toMulEquiv.mapSubgroup.le_iff_le
-
-/-- The order-dual form of closed-subgroup transport. -/
-noncomputable def orderDualIsoMapContinuousMulEquiv
-    (e : G ≃ₜ* H) :
-    (ClosedSubgroup G)ᵒᵈ ≃o (ClosedSubgroup H)ᵒᵈ where
-  toFun S := OrderDual.toDual
-    (mapContinuousMulEquiv e (OrderDual.ofDual S))
-  invFun T := OrderDual.toDual
-    (mapContinuousMulEquiv e.symm (OrderDual.ofDual T))
-  left_inv S := by
-    exact congrArg OrderDual.toDual
-      ((orderIsoMapContinuousMulEquiv e).left_inv (OrderDual.ofDual S))
-  right_inv T := by
-    exact congrArg OrderDual.toDual
-      ((orderIsoMapContinuousMulEquiv e).right_inv (OrderDual.ofDual T))
-  map_rel_iff' {S T} := by
-    change
-      mapContinuousMulEquiv e (OrderDual.ofDual T) ≤
-          mapContinuousMulEquiv e (OrderDual.ofDual S) ↔
-        OrderDual.ofDual T ≤ OrderDual.ofDual S
-    exact (orderIsoMapContinuousMulEquiv e).le_iff_le
-
-@[simp]
-theorem coe_mapContinuousMulEquiv
-    (e : G ≃ₜ* H) (S : ClosedSubgroup G) :
-    (mapContinuousMulEquiv e S : Set H) = e '' (S : Set G) := by
-  change
-    (↑(Subgroup.map e.toMonoidHom S.toSubgroup) : Set H) =
-      e.toMonoidHom '' (S : Set G)
-  exact Subgroup.coe_map e.toMonoidHom S.toSubgroup
-
-end ClosedSubgroup
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
@@ -196,20 +124,19 @@ theorem maximalAbelianGlobalArtin_comap_fixingSubgroup
       (_root_.ideleClassNorm K E).range := by
   intro numberFieldE
   ext c
-  obtain ⟨a, rfl⟩ := QuotientGroup.mk'_surjective
-    (IdeleGroup.principalSubgroup K) c
-  let q := QuotientGroup.mk' (IdeleGroup.principalSubgroup K) a
+  obtain ⟨a, rfl⟩ := IdeleGroup.toStandardClass_surjective K c
+  let q := IdeleGroup.toStandardClass K a
   let g := maximalAbelianGlobalArtin K q
   change g ∈ E.toIntermediateField.fixingSubgroup ↔ q ∈ (_root_.ideleClassNorm K E).range
   have hfix : g ∈ E.toIntermediateField.fixingSubgroup ↔ AlgEquiv.restrictNormalHom E g = 1 := by
     rw [← E.toIntermediateField.restrictNormalHom_ker]
     exact Iff.rfl
   have hproj : AlgEquiv.restrictNormalHom E g =
-      globalIdeleClassArtinMonoidHom (K := K) (L := E) q :=
+      globalNormResidueMonoidHom K E q :=
     (maximalAbelianGlobalArtin_finiteProjection K a E).trans
-      (globalIdeleClassArtinMonoidHom_mk (K := K) (L := E) a).symm
+      (globalNormResidueMonoidHom_mk (K := K) (L := E) a).symm
   exact hfix.trans ((congrArg (· = 1) hproj).to_iff.trans
-    (globalIdeleClassArtinMonoidHom_eq_one_iff (K := K) (L := E) q))
+    (globalNormResidueMonoidHom_eq_one_iff (K := K) (L := E) q))
 
 /-- The infinite correspondence recovers the original subgroup on idèle
 classes, through the same component quotient and the same Artin map. -/

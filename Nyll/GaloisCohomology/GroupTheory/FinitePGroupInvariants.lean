@@ -138,7 +138,7 @@ theorem isPGroup_quotient_image {p : ℕ} {R G V : Type*}
   intro q
   obtain ⟨v, rfl⟩ := W.mkQ_surjective q
   have hv : ρ g v = v := by
-    simpa only [asGroupHom_apply, Units.val_one, Module.End.one_apply] using
+    simpa only [asGroupHom_apply, Units.val_one, one_apply_eq_self] using
       congrArg (fun u : Units (Module.End R V) => (u : Module.End R V) v) hg
   change W.mkQ (ρ g v) = W.mkQ v
   exact congrArg W.mkQ hv

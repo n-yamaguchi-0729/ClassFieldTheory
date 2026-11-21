@@ -41,7 +41,7 @@ def abelianFixedFieldArtin (H : FiniteAbstractField Gal(Ω/K))
       Gal((abstractFixedField K Ω L.field)/(abstractFixedField K Ω H.field)) :=
     abstractExtensionQuotientEquivGaloisGroup K Ω H.field L.field L.below L.normal
   let e := eG.abelianizationCongr.symm.trans
-    ((Abelianization.equivOfComm (H := L.extensionQuotient)).symm.trans eG)
+    ((Group.Abelianization.equivOfComm (H := L.extensionQuotient)).symm.trans eG)
   exact e.toMonoidHom.comp (fixedFieldArtin k K Ω H L.toFiniteGaloisExtension)
 
 /-- Every relative Galois element is realized by an actual idele class. -/
@@ -57,7 +57,7 @@ theorem abelianFixedFieldArtin_surjective (H : FiniteAbstractField Gal(Ω/K))
       Gal((abstractFixedField K Ω L.field)/(abstractFixedField K Ω H.field)) :=
     abstractExtensionQuotientEquivGaloisGroup K Ω H.field L.field L.below L.normal
   let e := eG.abelianizationCongr.symm.trans
-    ((Abelianization.equivOfComm (H := L.extensionQuotient)).symm.trans eG)
+    ((Group.Abelianization.equivOfComm (H := L.extensionQuotient)).symm.trans eG)
   exact e.surjective.comp (fixedFieldArtin_surjective k K Ω H L.toFiniteGaloisExtension)
 
 /-- Removing abelianization preserves exactly the trivial Artin values. -/
@@ -75,7 +75,7 @@ theorem abelianFixedFieldArtin_eq_one_iff (H : FiniteAbstractField Gal(Ω/K))
       Gal((abstractFixedField K Ω L.field)/(abstractFixedField K Ω H.field)) :=
     abstractExtensionQuotientEquivGaloisGroup K Ω H.field L.field L.below L.normal
   let e := eG.abelianizationCongr.symm.trans
-    ((Abelianization.equivOfComm (H := L.extensionQuotient)).symm.trans eG)
+    ((Group.Abelianization.equivOfComm (H := L.extensionQuotient)).symm.trans eG)
   exact e.map_eq_one_iff
 
 end FunctionField

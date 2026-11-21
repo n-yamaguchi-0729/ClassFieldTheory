@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedFaceMaps
 public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
 
 /-!
@@ -39,15 +40,6 @@ universe u
 
 variable {R : Type u} [CommRing R] {V : Scheme.{u}} {π : V ⟶ Spec (.of R)}
 variable (F : OModulePresheaf π) (K : V.OrderedAffineCover)
-
-theorem succAbove_comp_succAbove {n : ℕ} {i j : Fin (n + 2)} (H : i ≤ j) :
-    Fin.succAbove j.succ ∘ Fin.succAbove i = Fin.succAbove i.castSucc ∘ Fin.succAbove j := by
-  ext k
-  simp only [Function.comp_apply, Fin.succAbove]
-  rcases i with ⟨i, hi⟩; rcases j with ⟨j, hj⟩; rcases k with ⟨k, hk⟩
-  simp only [Fin.le_def] at H
-  simp only [Fin.lt_def, Fin.castSucc_mk, Fin.succ_mk, Fin.val_castSucc]
-  split_ifs <;> simp_all only [Fin.val_succ, Fin.val_castSucc] <;> omega
 
 theorem res_at_eq {i : ℕ} {t t' : K.Idx i} (heq : t = t') (f : F.cochain K i) {U : V.Opens}
     (h : U ≤ K.inter t) (h' : U ≤ K.inter t') : F.res h (f t) = F.res h' (f t') := by
@@ -104,7 +96,7 @@ theorem d_comp_d (i : ℕ) : F.d K (i + 1) ∘ₗ F.d K i = 0 := by
       apply Subtype.ext
       change s.1 ∘ (Fin.succAbove a ∘ Fin.succAbove b) = s.1 ∘ (Fin.succAbove b.succ ∘
         Fin.succAbove a')
-      rw [← hacs, succAbove_comp_succAbove halt]
+      rw [← hacs, Fin.succAbove_comp_succAbove_of_le halt]
     have hsign : ((-1 : ℤ) ^ ((a : ℕ) + (b : ℕ)))
         = -((-1 : ℤ) ^ (((b.succ : Fin (i + 3)) : ℕ) + (a' : ℕ))) := by
       simp only [Fin.val_succ, a', Fin.val_castLT]
@@ -123,5 +115,14 @@ theorem _root_.AlgebraicGeometry.OModulePresheaf.d_comp_d {R : Type u} [CommRing
     (F : OModulePresheaf π) (K : V.OrderedAffineCover) (i : ℕ) :
     F.d K (i + 1) ∘ₗ F.d K i = 0 :=
   OModulePresheaf.DCompD.d_comp_d F K i
+
+/-- Evaluation of the Čech differential squared on an original cochain. -/
+theorem _root_.AlgebraicGeometry.OModulePresheaf.d_comp_d_apply
+    {R : Type u} [CommRing R] {V : Scheme.{u}} {π : V ⟶ Spec (.of R)}
+    (F : OModulePresheaf π) (K : V.OrderedAffineCover) (i : ℕ) (c : F.cochain K i) :
+    F.d K (i + 1) (F.d K i c) = 0 := by
+  have h := LinearMap.congr_fun (F.d_comp_d K i) c
+  rwa [LinearMap.comp_apply, LinearMap.zero_apply] at h
+
 end AlgebraicCurves.Cohomology.Sheaves.Proofs.OModulePresheaf_d_comp_d
 end ProofImplementation

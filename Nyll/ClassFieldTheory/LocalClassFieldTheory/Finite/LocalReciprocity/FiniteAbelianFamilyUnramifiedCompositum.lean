@@ -7,7 +7,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.FiniteUnramifiedField
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
 public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuationExactSequence
@@ -83,24 +84,24 @@ theorem finiteAbelianArtin_unramifiedRestriction_zpowers_eq_top
     Subgroup.zpowers
       (intermediateFieldRestrictNormalHom
         (localFiniteUnramifiedField K d hd) F hUF
-        (Universe.abelianLocalArtinMap K F u)) = ⊤ := by
+        (abelianLocalArtinMap K F u)) = ⊤ := by
   let U := localFiniteUnramifiedField K d hd
   let rU := intermediateFieldRestrictNormalHom U F hUF
-  have hrestrict : rU (Universe.abelianLocalArtinMap K F u) =
+  have hrestrict : rU (abelianLocalArtinMap K F u) =
       arithmeticFrobeniusOfUnramifiedValuation K U := by
     have h := DFunLike.congr_fun
-      (Universe.abelianLocalArtinMap_restrict K U F hUF) u
-    change rU (Universe.abelianLocalArtinMap K F u) =
-      Universe.abelianLocalArtinMap K U u at h
+      (LocalClassFieldTheory.abelianLocalArtinMap_restrict K U F hUF) u
+    change rU (abelianLocalArtinMap K F u) =
+      abelianLocalArtinMap K U u at h
     exact h.trans (Universe.abelianLocalArtinMap_uniformizer K U u hu)
   have hUcard : Nat.card (U ≃ₐ[K] U) = d := by
     rw [IsGalois.card_aut_eq_finrank]
     exact localFiniteUnramifiedField_finrank K d hd
   apply (Subgroup.card_eq_iff_eq_top
-    (Subgroup.zpowers (rU (Universe.abelianLocalArtinMap K F u)))).mp
+    (Subgroup.zpowers (rU (abelianLocalArtinMap K F u)))).mp
   calc
-    Nat.card (Subgroup.zpowers (rU (Universe.abelianLocalArtinMap K F u))) =
-        orderOf (rU (Universe.abelianLocalArtinMap K F u)) := Nat.card_zpowers _
+    Nat.card (Subgroup.zpowers (rU (abelianLocalArtinMap K F u))) =
+        orderOf (rU (abelianLocalArtinMap K F u)) := Nat.card_zpowers _
     _ = d := by
       rw [hrestrict]
       exact localFiniteUnramifiedField_arithmeticFrobenius_order K d hd

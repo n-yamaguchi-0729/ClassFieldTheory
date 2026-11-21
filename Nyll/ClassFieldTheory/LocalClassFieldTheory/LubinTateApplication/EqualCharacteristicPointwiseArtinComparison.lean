@@ -6,9 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.NormRestriction
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SemilinearNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseSemilinearNaturality
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicArtinNormalization
 public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.CompletedLevel.StandardChangedFrobenius
 public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.UnitActionRestriction
@@ -47,16 +48,9 @@ open ValuationTheory.DiscreteValuationField.ValuedExtension
 
 variable {K : Type u} [Field K]
 
-noncomputable local instance equalCharacteristicArtinComparisonBaseAlgebra
-    (F : LocalField.{u, v} K) :
-    Algebra F.residueField⸨X⸩
-      (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  equalCharacteristicCompletedLevelBaseAlgebra F
-
-noncomputable local instance equalCharacteristicArtinComparisonLevelAlgebra
-    (F : LocalField.{u, v} K) (n : ℕ) :
-    Algebra F.residueField⸨X⸩ (equalCharacteristicCompletedLevelField F n) :=
-  equalCharacteristicCompletedLevelLaurentAlgebra F n
+attribute [local instance]
+  equalCharacteristicCompletedLevelBaseAlgebra
+  equalCharacteristicCompletedLevelLaurentAlgebra
 
 /-- The negative changed-uniformizer prime element as an actual unit of its
 completed fixed field. Its norm is the changed base uniformizer `aT`. -/
@@ -180,7 +174,7 @@ theorem
         IsNonarchimedeanLocalField.IsUnramifiedValuedExtension D M :=
       equalCharacteristicCompletedStandardChangedCompositum_isUnramifiedValuedExtension
         F a n
-    Universe.abelianLocalArtinMonoidHom D M
+    abelianLocalArtinMonoidHom D M
         (equalCharacteristicCompletedFrobeniusNegativePrimeUnit F n a) =
       equalCharacteristicCompletedStandardChangedRelativeInverseFrobenius F a n := by
   intro baseValuativeRel baseLocalField D M changedNorm changedValuation changedLocalField
@@ -189,7 +183,7 @@ theorem
   let : IsIntegralClosure 𝒪[M] 𝒪[D] M :=
     localCompleteDVF_integerRing_isIntegralClosure D M
   calc
-    Universe.abelianLocalArtinMonoidHom D M
+    abelianLocalArtinMonoidHom D M
         (equalCharacteristicCompletedFrobeniusNegativePrimeUnit F n a) =
         (arithmeticFrobeniusOfUnramifiedValuation D M) ^
           IsNonarchimedeanLocalField.valuationMap D
@@ -248,7 +242,7 @@ theorem equalCharacteristicAbelianLocalArtin_eq_explicitUnitAction
     let : IsNonarchimedeanLocalField B :=
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
     let : FiniteDimensional B T := equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    Universe.abelianLocalArtinMonoidHom B T
+    abelianLocalArtinMonoidHom B T
         (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a) =
       equalCharacteristicLubinTateArtinUnitToGal F n a⁻¹ := by
   intro B T baseValuativeRel baseLocalField standardFinite
@@ -273,9 +267,9 @@ theorem equalCharacteristicAbelianLocalArtin_eq_explicitUnitAction
   let : IsNonarchimedeanLocalField.IsUnramifiedValuedExtension D M :=
     equalCharacteristicCompletedStandardChangedCompositum_isUnramifiedValuedExtension F a n
   have hnormRestriction := DFunLike.congr_fun
-    (Universe.abelianLocalArtinMonoidHom_norm_restriction B D T M)
+    (LocalClassFieldTheory.abelianLocalArtinMonoidHom_norm_restriction B D T M)
     (equalCharacteristicCompletedFrobeniusNegativePrimeUnit F n a)
-  have hrelative : Universe.abelianLocalArtinMonoidHom D M
+  have hrelative : abelianLocalArtinMonoidHom D M
       (equalCharacteristicCompletedFrobeniusNegativePrimeUnit F n a) =
         equalCharacteristicCompletedStandardChangedRelativeInverseFrobenius F a n :=
     equalCharacteristicCompletedFrobeniusRelativeArtin_negativePrime F n a
@@ -288,13 +282,13 @@ theorem equalCharacteristicAbelianLocalArtin_eq_explicitUnitAction
       (equalCharacteristicCompletedFrobeniusNegativePrimeUnit F n a) =
         equalCharacteristicChangedLaurentUniformizerUnit F a :=
     equalCharacteristicCompletedFrobeniusNegativePrimeUnit_norm F n a
-  have hchanged : Universe.abelianLocalArtinMonoidHom B T
+  have hchanged : abelianLocalArtinMonoidHom B T
       (equalCharacteristicChangedLaurentUniformizerUnit F a) =
-        Universe.abelianLocalArtinMonoidHom B T
+        abelianLocalArtinMonoidHom B T
           (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a) :=
     equalCharacteristicAbelianLocalArtin_changedUniformizer F n a
   exact (show equalCharacteristicLubinTateArtinUnitToGal F n a⁻¹ =
-      Universe.abelianLocalArtinMonoidHom B T
+      abelianLocalArtinMonoidHom B T
         (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a) by
     simpa only [MonoidHom.comp_apply, hrelative, hrestrict, hnorm, hchanged]
       using hnormRestriction).symm
@@ -308,7 +302,7 @@ theorem equalCharacteristicAbelianLocalArtin_apply_primitiveRoot
     let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
     let : IsNonarchimedeanLocalField B := equalCharacteristicLaurentIsNonarchimedeanLocalField F
     let : FiniteDimensional B T := equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    ((Universe.abelianLocalArtinMonoidHom B T
+    ((abelianLocalArtinMonoidHom B T
           (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a))
         (equalCharacteristicLubinTateLevelPowerBasis F n).gen : SeparableClosure B) =
       equalCharacteristicLubinTateAmbientBracket F
@@ -332,7 +326,7 @@ theorem equalCharacteristicAbelianLocalArtin_explicitUnitAction_restrict
     RamificationTheory.intermediateFieldRestrictNormalHom
         (equalCharacteristicLubinTateLevelField F m) T
         (equalCharacteristicLubinTateLevelField_mono F hmn)
-        (Universe.abelianLocalArtinMonoidHom B T
+        (abelianLocalArtinMonoidHom B T
           (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a)) =
       equalCharacteristicLubinTateArtinUnitToGal F m a⁻¹ := by
   intro B T baseValuativeRel baseLocalField standardFinite
@@ -360,11 +354,11 @@ theorem equalCharacteristicAbelianLocalArtin_explicitUnitAction_semilinear
     let : FiniteDimensional B T := equalCharacteristicLubinTateLevelField_finiteDimensional F n
     SemilinearValuationCompatible B B' eB →
       eT (equalCharacteristicLubinTateArtinUnitToGal F n a⁻¹ x) =
-        Universe.abelianLocalArtinMonoidHom B' T'
+        abelianLocalArtinMonoidHom B' T'
           (Units.map eB.toMonoidHom (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a))
           (eT x) := by
   intro B T baseValuativeRel baseLocalField standardFinite hExt
-  have h := Universe.abelianLocalArtinMonoidHom_semilinear_action
+  have h := LocalClassFieldTheory.abelianLocalArtinMonoidHom_semilinear_action
     B B' T T' eB eT hcomm hExt
     (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a) x
   rw [equalCharacteristicAbelianLocalArtin_eq_explicitUnitAction F n a] at h
@@ -381,11 +375,11 @@ theorem equalCharacteristicAbelianLocalArtin_eq_explicitLaurentAction
     let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
     let : IsNonarchimedeanLocalField B := equalCharacteristicLaurentIsNonarchimedeanLocalField F
     let : FiniteDimensional B T := equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    Universe.abelianLocalArtinMonoidHom B T x =
+    abelianLocalArtinMonoidHom B T x =
       equalCharacteristicLubinTateArtinUnitToGal F n
         (equalCharacteristicLaurentPowerSeriesUnitPart F x)⁻¹ := by
   intro B T valuationOwner localFieldOwner finiteOwner
-  let artin : Bˣ →* Gal(T/B) := Universe.abelianLocalArtinMonoidHom B T
+  let artin : Bˣ →* Gal(T/B) := abelianLocalArtinMonoidHom B T
   let a := equalCharacteristicLaurentPowerSeriesUnitPart F x
   let t : Bˣ := (equalCharacteristicLaurentUniformizerUnit F)⁻¹
   let z := IsNonarchimedeanLocalField.valuationMap B (Additive.ofMul x)
@@ -413,7 +407,7 @@ theorem equalCharacteristicAbelianLocalArtin_laurentUnit_apply_primitiveRoot
     let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
     let : IsNonarchimedeanLocalField B := equalCharacteristicLaurentIsNonarchimedeanLocalField F
     let : FiniteDimensional B T := equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    ((Universe.abelianLocalArtinMonoidHom B T x)
+    ((abelianLocalArtinMonoidHom B T x)
         (equalCharacteristicLubinTateLevelPowerBasis F n).gen : SeparableClosure B) =
       equalCharacteristicLubinTateAmbientBracket F
         (equalCharacteristicSeparableCoefficientHom F)
@@ -438,7 +432,7 @@ theorem equalCharacteristicAbelianLocalArtin_laurentUnit_restrict
     RamificationTheory.intermediateFieldRestrictNormalHom
         (equalCharacteristicLubinTateLevelField F m) T
         (equalCharacteristicLubinTateLevelField_mono F hmn)
-        (Universe.abelianLocalArtinMonoidHom B T x) =
+        (abelianLocalArtinMonoidHom B T x) =
       equalCharacteristicLubinTateArtinUnitToGal F m
         (equalCharacteristicLaurentPowerSeriesUnitPart F x)⁻¹ := by
   intro B T valuationOwner localFieldOwner finiteOwner
@@ -467,9 +461,9 @@ theorem equalCharacteristicAbelianLocalArtin_explicitLaurentAction_semilinear
     SemilinearValuationCompatible B B' eB →
       eT (equalCharacteristicLubinTateArtinUnitToGal F n
           (equalCharacteristicLaurentPowerSeriesUnitPart F x)⁻¹ y) =
-        Universe.abelianLocalArtinMonoidHom B' T' (Units.map eB.toMonoidHom x) (eT y) := by
+        abelianLocalArtinMonoidHom B' T' (Units.map eB.toMonoidHom x) (eT y) := by
   intro B T valuationOwner localFieldOwner finiteOwner hExt
-  have h := Universe.abelianLocalArtinMonoidHom_semilinear_action
+  have h := LocalClassFieldTheory.abelianLocalArtinMonoidHom_semilinear_action
     B B' T T' eB eT hcomm hExt x y
   rw [equalCharacteristicAbelianLocalArtin_eq_explicitLaurentAction F n x] at h
   exact h

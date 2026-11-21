@@ -47,13 +47,13 @@ theorem finiteArtin_autCongr [IsGalois K L] [IsGalois K M]
     intro x
     apply e.injective
     exact (AlgEquiv.restrictNormal_commutes σ L x).trans (e.apply_symm_apply _).symm
-  have hx (z : Abelianization Gal(M/K)) :
+  have hx (z : Group.Abelianization Gal(M/K)) :
       (AlgEquiv.autCongr e).abelianizationCongr
-        (Abelianization.map (AlgEquiv.restrictNormalHom L) z) = z := by
+        (Group.Abelianization.map (AlgEquiv.restrictNormalHom L) z) = z := by
     refine QuotientGroup.induction_on z ?_
     intro σ
-    change Abelianization.of (AlgEquiv.autCongr e (AlgEquiv.restrictNormalHom L σ)) =
-      Abelianization.of σ
+    change Group.Abelianization.of (AlgEquiv.autCongr e (AlgEquiv.restrictNormalHom L σ)) =
+      Group.Abelianization.of σ
     rw [hr, MulEquiv.apply_symm_apply]
   rw [← finiteArtin_restrictNormal k K L M c]
   exact hx (finiteArtin k K M c)
@@ -62,10 +62,10 @@ theorem finiteArtin_autCongr [IsGalois K L] [IsGalois K M]
 theorem abelianFiniteArtin_autCongr [IsAbelianGalois K L] [IsAbelianGalois K M]
     (e : L ≃ₐ[K] M) (c : IdeleClassGroup k K) :
     AlgEquiv.autCongr e (abelianFiniteArtin k K L c) = abelianFiniteArtin k K M c := by
-  apply (Abelianization.equivOfComm (H := Gal(M/K))).injective
-  change Abelianization.of (AlgEquiv.autCongr e (abelianFiniteArtin k K L c)) =
-    Abelianization.of (abelianFiniteArtin k K M c)
-  rw [← abelianizationCongr_of, abelianFiniteArtin_of, abelianFiniteArtin_of]
+  apply (Group.Abelianization.equivOfComm (H := Gal(M/K))).injective
+  change Group.Abelianization.of (AlgEquiv.autCongr e (abelianFiniteArtin k K L c)) =
+    Group.Abelianization.of (abelianFiniteArtin k K M c)
+  rw [← Group.abelianizationCongr_of, abelianFiniteArtin_of, abelianFiniteArtin_of]
   exact finiteArtin_autCongr k K L M e c
 
 end FunctionField

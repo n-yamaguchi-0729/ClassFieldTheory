@@ -93,23 +93,15 @@ theorem chosenFinitePlaceLocalArtin_eq_arithmeticFrobenius_inv_of_unramified
       IsNonarchimedeanLocalField.valuationMap C
         (Additive.ofMul (finitePlaceLocalArtinInput v x)) = -1 :=
     finitePlaceLocalArtinInput_chosenLocalOrderSection_valuationMap v
-  have hvalInv :
-      IsNonarchimedeanLocalField.valuationMap C
-        (Additive.ofMul (finitePlaceLocalArtinInput v x)⁻¹) = 1 := by
-    rw [IsNonarchimedeanLocalField.valuationMap_ofMul_inv, hval]
-    rfl
-  have hfrob := LocalClassFieldTheory.Universe.abelianLocalArtinMap_uniformizer
-    C E (finitePlaceLocalArtinInput v x)⁻¹ hvalInv
   have hnorm :
-      LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom C E
+      LocalClassFieldTheory.abelianLocalArtinMonoidHom C E
           (finitePlaceLocalArtinInput v x) =
         (arithmeticFrobeniusOfUnramifiedValuation C E)⁻¹ := by
-    change LocalClassFieldTheory.Universe.abelianLocalArtinMap C E
-      (finitePlaceLocalArtinInput v x) = _
-    simpa only [map_inv, inv_inv] using congrArg (fun σ : Gal(E / C) => σ⁻¹) hfrob
+    rw [LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_eq_frobenius_zpow,
+      hval, zpow_neg_one]
   calc
     finitePlaceLocalArtinMonoidHom (K := K) (L := L) v w x =
-        LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom C E
+        LocalClassFieldTheory.abelianLocalArtinMonoidHom C E
           (finitePlaceLocalArtinInput v x) := by
       have h := finitePlaceLocalArtinMonoidHom_apply_normalized_universe v w x
       with_reducible exact h

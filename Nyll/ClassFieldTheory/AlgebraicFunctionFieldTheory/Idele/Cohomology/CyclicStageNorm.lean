@@ -42,7 +42,7 @@ variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] 
 theorem principalNormSubgroup_eq_fieldNormSubgroup_cyclicStage
     (L : FiniteGaloisIntermediateField K Ω) [IsCyclic Gal(L/K)] :
     NormObstruction.principalNormSubgroup (k := k) (K := K) (L := L) =
-      NormObstruction.fieldNormSubgroup (K := K) (L := L) := by
+      LocalFieldTheory.localNormSubgroup K L := by
   apply le_antisymm
   · intro a ha
     obtain ⟨g, hg⟩ := IsCyclic.exists_generator (α := Gal(L/K))

@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricArtinKernelLocalization
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionTower
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
@@ -57,11 +59,7 @@ local notation "E" => geometricArtinStageField k K Ω
 local notation "G" => geometricConstantExtension k K Ω
 local notation "C" => separableClosure k Ω
 
-local instance geometricBoundaryConstants : Algebra C G :=
-  constantAlgebra (K := K) C
-
-local instance geometricBoundaryConstantTower : IsScalarTower k C G :=
-  constantScalarTower (K := K) C
+attribute [local instance] constantAlgebra constantScalarTower
 
 omit [Algebra k Ω] [IsScalarTower k K Ω] in
 /-- Actual containment of finite constant stages is exactly divisibility of
@@ -171,7 +169,7 @@ theorem exists_geometricArtinStage_other_boundary
     ∃ j : GeometricArtinIndex k K Ω, i ≤ j ∧
       ∀ l : GeometricArtinIndex k K Ω, j ≤ l →
       ∀ v : Place k (E l), ∃ w : Place k (E l),
-        w ≠ v ∧ rayModulusBaseChange (E l) m w ≠ 0 := by
+        w ≠ v ∧ reindexAlongPlaces (E l) m w ≠ 0 := by
   classical
   obtain ⟨j, hij, hsep⟩ := exists_geometricArtinStage_separating k K Ω i W V hWV
   refine ⟨j, hij, fun l hjl v => ?_⟩
@@ -179,10 +177,10 @@ theorem exists_geometricArtinStage_other_boundary
       geometricArtinPlaceAtStage k K Ω l V := by
     intro h
     exact hsep (geometricArtinPlaceAtStage_eq_of_le k K Ω j l hjl W V h)
-  have hW' : rayModulusBaseChange (E l) m (geometricArtinPlaceAtStage k K Ω l W) ≠ 0 := by
+  have hW' : reindexAlongPlaces (E l) m (geometricArtinPlaceAtStage k K Ω l W) ≠ 0 := by
     rw [geometricArtinPlaceAtStage_modulus]
     exact hW
-  have hV' : rayModulusBaseChange (E l) m (geometricArtinPlaceAtStage k K Ω l V) ≠ 0 := by
+  have hV' : reindexAlongPlaces (E l) m (geometricArtinPlaceAtStage k K Ω l V) ≠ 0 := by
     rw [geometricArtinPlaceAtStage_modulus]
     exact hV
   by_cases hv : geometricArtinPlaceAtStage k K Ω l W = v
@@ -202,7 +200,7 @@ theorem exists_geometricArtin_good_boundary_representative
     (hV : m (algebraicConstantPlaceRestrict (K := K) C K V) ≠ 0) :
     ∃ j : GeometricArtinIndex k K Ω, i ≤ j ∧
       (∀ v : Place k (E j), ∃ w : Place k (E j),
-        w ≠ v ∧ rayModulusBaseChange (E j) m w ≠ 0) ∧
+        w ≠ v ∧ reindexAlongPlaces (E j) m w ≠ 0) ∧
       ∃ a : GeometricArtinStageKernel k K Ω m j,
         geometricArtinKernelEquiv k K Ω m hm hmzero ⟦⟨j, a⟩⟧ = x := by
   obtain ⟨n, hn⟩ :=
@@ -225,8 +223,8 @@ theorem exists_geometricArtin_good_boundary_representative
     exact congrArg (fun z : E j => (z : Ω)) hzero
   let u : (E j)ˣ := Units.mk0 y hy
   refine ⟨j, (show i ≤ b from hid).trans hbj, hgood j le_rfl,
-    principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E j) m)
-      (rayModulusBaseChange_ne_zero m hmzero) u, ?_⟩
+    principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E j) m)
+      (reindexAlongPlaces_ne_zero m hmzero) u, ?_⟩
   rw [geometricArtinKernelEquiv_principal]
   apply Units.ext
   apply Subtype.ext

@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassFieldRealization
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilbertClassField
@@ -39,7 +40,7 @@ theorem smallHilbertClassField_hasOrdinaryRayRealization
     unramifiedOutsideModulus := by
       constructor
       · intro v _
-        exact hE.1.1 v
+        exact IsUnramifiedAtFinitePlaces.atBasePrime hE.1.1 v
       · intro _ _ _ w _
         exact hE.1.2.isUnramified w
     artinEquiv := artin

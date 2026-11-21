@@ -35,12 +35,8 @@ section CyclotomicExtension
 variable {p k : ℕ} [Fact p.Prime]
 variable {L : Type u} [Field L] [Algebra ℚ_[p] L]
 
-local instance padicCyclotomicTotallyRamifiedRamificationIndexAlgebraPadicInt : Algebra ℤ_[p] L :=
-  ((algebraMap ℚ_[p] L).comp (algebraMap ℤ_[p] ℚ_[p])).toAlgebra
-
-local instance padicCyclotomicTotallyRamifiedRamificationIndexScalarTowerPadicInt :
-    IsScalarTower ℤ_[p] ℚ_[p] L :=
-  IsScalarTower.of_algebraMap_eq' rfl
+attribute [local instance] padicCyclotomicTotallyRamifiedAlgebraPadicInt
+  padicCyclotomicTotallyRamifiedScalarTowerPadicInt
 
 /-- The ideal-theoretic core of the totally ramified cyclotomic theorem(i): for the actual
 integral-closure valuation, `1 - ζ` is a uniformizer and the Eisenstein

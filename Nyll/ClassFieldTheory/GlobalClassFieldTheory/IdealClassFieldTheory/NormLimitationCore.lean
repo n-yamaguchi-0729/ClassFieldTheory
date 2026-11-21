@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationStatement
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNormCore
 
 /-!
 # Proof core for ideal norm limitation

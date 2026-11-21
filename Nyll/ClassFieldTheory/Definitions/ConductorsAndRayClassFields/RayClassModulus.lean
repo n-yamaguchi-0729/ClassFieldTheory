@@ -27,14 +27,17 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
+namespace RayClass
+
+/-- A real infinite place of a number field. -/
+abbrev RealPlace (K : Type*) [Field K] [NumberField K] :=
+  {v : InfinitePlace K // v.IsReal}
+
+end RayClass
+
 namespace ClassFieldTheory
 
 universe u
-
-/-- A real infinite place of a number field. -/
-abbrev RayClassRealPlace
-    (K : Type u) [Field K] [NumberField K] :=
-  {v : InfinitePlace K // v.IsReal}
 
 /-- A ray modulus: finite prime exponents together with the real places at
 which positivity is imposed. -/
@@ -43,7 +46,7 @@ structure RayClassModulus
   /-- The finite prime-power part. -/
   finitePart : HeightOneSpectrum (𝓞 K) →₀ ℕ
   /-- The selected real places. -/
-  infinitePart : Finset (RayClassRealPlace K)
+  infinitePart : Finset (RayClass.RealPlace K)
 
 namespace RayClassModulus
 
@@ -120,7 +123,7 @@ instance {K : Type u} [Field K] [NumberField K] :
 
 @[simp] theorem mem_infinitePart_inf
     {K : Type u} [Field K] [NumberField K]
-    (m n : RayClassModulus K) (v : RayClassRealPlace K) :
+    (m n : RayClassModulus K) (v : RayClass.RealPlace K) :
     v ∈ (m ⊓ n).infinitePart ↔
       v ∈ m.infinitePart ∧ v ∈ n.infinitePart := by
   classical
@@ -134,7 +137,7 @@ instance {K : Type u} [Field K] [NumberField K] :
 
 @[simp] theorem mem_infinitePart_sup
     {K : Type u} [Field K] [NumberField K]
-    (m n : RayClassModulus K) (v : RayClassRealPlace K) :
+    (m n : RayClassModulus K) (v : RayClass.RealPlace K) :
     v ∈ (m ⊔ n).infinitePart ↔
       v ∈ m.infinitePart ∨ v ∈ n.infinitePart := by
   classical

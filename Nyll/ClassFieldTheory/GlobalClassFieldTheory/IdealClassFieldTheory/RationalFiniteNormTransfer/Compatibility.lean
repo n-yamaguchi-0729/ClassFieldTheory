@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
 
 /-!
@@ -32,11 +34,6 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance
-    compatibilityIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
 local instance
     compatibilityIdeleClassSubgroupNormal
@@ -66,7 +63,7 @@ noncomputable def
       K L hLK hnormal c =
     Additive.ofMul
       (rationalFiniteNormTransferOrdinaryExtensionRepresentative
-        K L hLK hnormal c)
+        K L hLK c)
 
 /-- Named relative-to-ordinary comparison for the same canonical input. -/
 noncomputable def
@@ -123,7 +120,7 @@ theorem rationalFiniteNormTransferCanonicalBaseChangeCompatibility_proof
             (K := ℚ) (L := F) relativeClass) =
       Additive.ofMul
         (rationalFiniteNormTransferOrdinaryExtensionRepresentative
-          K L hLK hnormal
+          K L hLK
             (_root_.relativeIdeleClassBaseChangeMulEquiv
               (K := ℚ) (L := F) relativeClass))
   simpa only [rationalFiniteNormTransferCanonicalAbstractExtensionEndpoint,
@@ -182,12 +179,12 @@ theorem rationalFiniteNormTransferCanonicalToOrdinaryCompatibility_proof
       K L hLK
   let eAmbient :=
     extensionFixedRepresentationEquiv
-      rationalIdeleClassRepresentation K L hLK hnormal
+      (ideleClassRepresentation ℚ) K L hLK hnormal
   let x :
       (extensionFixedRepresentation
-        rationalIdeleClassRepresentation K L hLK hnormal).V :=
+        (ideleClassRepresentation ℚ) K L hLK hnormal).V :=
     eAmbient.symm
-      (fixedFieldInclusion rationalIdeleClassRepresentation K L hLK
+      (fixedFieldInclusion (ideleClassRepresentation ℚ) K L hLK
         (rationalAbstractFixedFieldIdeleClassEquivFixed K
           (Additive.ofMul c)))
   have hOrdinary :=
@@ -195,11 +192,11 @@ theorem rationalFiniteNormTransferCanonicalToOrdinaryCompatibility_proof
       K L hLK hnormal x
   have hx :
       eAmbient x =
-        fixedFieldInclusion rationalIdeleClassRepresentation K L hLK
+        fixedFieldInclusion (ideleClassRepresentation ℚ) K L hLK
           (rationalAbstractFixedFieldIdeleClassEquivFixed K
             (Additive.ofMul c)) :=
     eAmbient.apply_symm_apply
-      (fixedFieldInclusion rationalIdeleClassRepresentation K L hLK
+      (fixedFieldInclusion (ideleClassRepresentation ℚ) K L hLK
         (rationalAbstractFixedFieldIdeleClassEquivFixed K
           (Additive.ofMul c)))
   change
@@ -220,7 +217,6 @@ noncomputable def
     (K L : ClosedSubgroup
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hLK : L.toSubgroup ≤ K.toSubgroup)
-    (hnormal : (extensionSubgroup K L hLK).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -234,7 +230,7 @@ noncomputable def
       (hKfinite := hKfinite) K) : Prop :=
     rationalFiniteNormTransferCanonicalFixedRepresentative K L hLK c =
       rationalFiniteNormTransferOrdinaryExtensionRepresentative
-        K L hLK hnormal c
+        K L hLK c
 
 /-- Fixed-field inclusion gives exactly the ordinary idele-class extension of
 the canonical base representative. -/
@@ -255,11 +251,11 @@ theorem rationalFiniteNormTransferCanonicalFixedRepresentative_eq_extension
     (c : rationalFiniteNormTransferBaseIdeleClass
       (hKfinite := hKfinite) K) :
     rationalFiniteNormTransferCanonicalFixedRepresentativeExtensionCompatibility
-      K L hLK hnormal c := by
+      K L hLK c := by
   change
     rationalFiniteNormTransferCanonicalFixedRepresentative K L hLK c =
       rationalFiniteNormTransferOrdinaryExtensionRepresentative
-        K L hLK hnormal c
+        K L hLK c
   have hBaseChange :=
     rationalFiniteNormTransferCanonicalBaseChangeCompatibility_proof
       K L hLK hnormal c
@@ -271,7 +267,7 @@ theorem rationalFiniteNormTransferCanonicalFixedRepresentative_eq_extension
         K L hLK hnormal c =
       Additive.ofMul
         (rationalFiniteNormTransferOrdinaryExtensionRepresentative
-          K L hLK hnormal c) at hBaseChange
+          K L hLK c) at hBaseChange
   change
     rationalFiniteNormTransferCanonicalAbstractExtensionEndpoint
         K L hLK hnormal c =

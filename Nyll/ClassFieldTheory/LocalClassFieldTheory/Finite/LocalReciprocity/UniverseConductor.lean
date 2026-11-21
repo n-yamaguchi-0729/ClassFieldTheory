@@ -43,7 +43,7 @@ theorem isUnramifiedValuedExtension_iff_localConductorExponent_eq_zero
     [IsIntegralClosure 𝒪[L] 𝒪[K] L] [Module.Finite 𝒪[K] 𝒪[L]] :
     IsUnramifiedValuedExtension K L ↔ localConductorExponent K L = 0 := by
   have hnorm : (abelianLocalArtinMonoidHom K L).ker = localNormSubgroup K L :=
-    abelianLocalArtinMap_ker K L
+    abelianLocalArtinMonoidHom_ker K L
   rw [localConductorExponent_eq_zero_iff, ← hnorm, ← Subgroup.map_eq_bot_iff,
     abelianLocalArtinMonoidHom_units_eq_residue_ker]
   constructor

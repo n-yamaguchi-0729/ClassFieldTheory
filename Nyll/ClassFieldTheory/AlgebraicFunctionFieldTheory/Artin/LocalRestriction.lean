@@ -6,12 +6,13 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.LocalNormNaturality
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Abelian
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Over
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
 
 /-!
@@ -43,7 +44,7 @@ variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
 private theorem completionIsAbelianGalois_over
     (v : Place k K) (w : Place k L) (hw : w.restrict K = v) :
     let _ : Algebra v.adicCompletion w.adicCompletion :=
-      (IdeleGroup.completionMapOver v w hw).toAlgebra
+      (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
     IsAbelianGalois v.adicCompletion w.adicCompletion := by
   have h : IsAbelianGalois (w.restrict K).adicCompletion w.adicCompletion :=
     inferInstance
@@ -57,7 +58,7 @@ private theorem localArtin_completion_apply_over
     (v : Place k K) (w : Place k L) (hw : w.restrict K = v)
     (x : v.adicCompletionˣ) (y : L) :
     let _ : Algebra v.adicCompletion w.adicCompletion :=
-      (IdeleGroup.completionMapOver v w hw).toAlgebra
+      (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
     let _ : FiniteDimensional v.adicCompletion w.adicCompletion :=
       (IdeleGroup.completionFiniteGaloisOver v w hw).1
     let _ : IsAbelianGalois v.adicCompletion w.adicCompletion :=
@@ -65,7 +66,7 @@ private theorem localArtin_completion_apply_over
     let _ : ValuativeRel v.adicCompletion := placeCompletionValuativeRel v
     let _ : IsNonarchimedeanLocalField v.adicCompletion :=
       placeCompletion_isNonarchimedeanLocalField v
-    LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom
+    LocalClassFieldTheory.abelianLocalArtinMonoidHom
         v.adicCompletion w.adicCompletion x⁻¹
         (algebraMap L w.adicCompletion y) =
       algebraMap L w.adicCompletion (localArtin (K := K) w (hw.symm ▸ x) y) := by
@@ -122,10 +123,10 @@ private theorem completionArtin_restrict_tower_at
     [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F]
     [FiniteDimensional F E] [FiniteDimensional F T]
     [IsAbelianGalois F E] [IsAbelianGalois F T] (x : Fˣ) :
-    (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom F T x).restrictNormal E =
-      LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom F E x :=
-  DFunLike.congr_fun
-    (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_restrict_tower F E T) x
+    (LocalClassFieldTheory.abelianLocalArtinMonoidHom F T x).restrictNormal E =
+      LocalClassFieldTheory.abelianLocalArtinMonoidHom F E x := by
+  exact DFunLike.congr_fun
+      (LocalClassFieldTheory.abelianLocalArtinMonoidHom_restrict_tower F E T) x
 
 open AlgebraicCurves.Places.Proofs.Place_sum_ramificationIndex_mul_inertiaDeg_exchange.BifibreW2
 
@@ -154,7 +155,7 @@ theorem localArtin_restrictNormal (u : Place k M)
   have hw : w.restrict K = v := restrict_restrict (F := K) (E := L) u
   have hLMgalois : IsGalois L M := IsGalois.tower_top_of_isGalois K L M
   let avw : Algebra v.adicCompletion w.adicCompletion :=
-    (IdeleGroup.completionMapOver v w hw).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
   have hvwfinite : FiniteDimensional v.adicCompletion w.adicCompletion :=
     (IdeleGroup.completionFiniteGaloisOver v w hw).1
   have hvwabelian : IsAbelianGalois v.adicCompletion w.adicCompletion :=
@@ -165,11 +166,11 @@ theorem localArtin_restrictNormal (u : Place k M)
   have hvwu : IsScalarTower v.adicCompletion w.adicCompletion u.adicCompletion :=
     IsScalarTower.of_algebraMap_eq (fun y =>
       (congrArg (fun f : v.adicCompletion →+* u.adicCompletion => f y)
-        (IdeleGroup.completionMapOver_trans v w u hw rfl rfl)).symm)
+        (AlgebraicCurve.Place.completionMapOver_trans v w u hw rfl rfl)).symm)
   let ρ : Gal(u.adicCompletion/v.adicCompletion) :=
-    LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom v.adicCompletion u.adicCompletion x⁻¹
+    LocalClassFieldTheory.abelianLocalArtinMonoidHom v.adicCompletion u.adicCompletion x⁻¹
   let θ : Gal(w.adicCompletion/v.adicCompletion) :=
-    LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom v.adicCompletion w.adicCompletion x⁻¹
+    LocalClassFieldTheory.abelianLocalArtinMonoidHom v.adicCompletion w.adicCompletion x⁻¹
   let σ : Gal(M/K) := localArtin (K := K) u x
   let τ : Gal(L/K) := localArtin (K := K) w (hw.symm ▸ x)
   let iL : L →+* w.adicCompletion := algebraMap L w.adicCompletion
@@ -178,7 +179,7 @@ theorem localArtin_restrictNormal (u : Place k M)
     v.adicCompletion w.adicCompletion u.adicCompletion x⁻¹
   have hmap (y : L) :
       algebraMap w.adicCompletion u.adicCompletion (iL y) = iM (algebraMap L M y) :=
-    IdeleGroup.completionMapOver_algebraMap w u rfl y
+    AlgebraicCurve.Place.completionMapOver_algebraMap w u rfl y
   have hupper (y : L) :
       ρ (iM (algebraMap L M y)) = iM (σ (algebraMap L M y)) :=
     localArtin_completion_apply_universe (K := K) u x (algebraMap L M y)

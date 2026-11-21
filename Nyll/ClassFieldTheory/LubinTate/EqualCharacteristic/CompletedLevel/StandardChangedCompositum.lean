@@ -39,16 +39,9 @@ open LocalFieldTheory.DiscreteValuationField
 
 variable {K : Type u} [Field K]
 
-noncomputable local instance standardChangedCompositumBaseAlgebra
-    (F : LocalField.{u, v} K) :
-    Algebra F.residueField⸨X⸩
-      (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  equalCharacteristicCompletedLevelBaseAlgebra F
-
-noncomputable local instance standardChangedCompositumLevelAlgebra
-    (F : LocalField.{u, v} K) (n : ℕ) :
-    Algebra F.residueField⸨X⸩ (equalCharacteristicCompletedLevelField F n) :=
-  equalCharacteristicCompletedLevelLaurentAlgebra F n
+attribute [local instance]
+  equalCharacteristicCompletedLevelBaseAlgebra
+  equalCharacteristicCompletedLevelLaurentAlgebra
 
 /-- The original level's actual image in the completed level. -/
 noncomputable def equalCharacteristicCompletedStandardLevelField

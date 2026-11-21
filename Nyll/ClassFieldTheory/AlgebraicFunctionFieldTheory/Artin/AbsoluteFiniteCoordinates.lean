@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteRestriction
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.FiniteExtensionIntermediate
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotientTransitions
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteFiniteQuotientTransitions
 
 /-!
 # Finite coordinates of absolute function-field reciprocity
@@ -128,7 +128,7 @@ theorem absoluteFiniteArtinCoordinate_transition
   rw [ContinuousMulEquiv.apply_symm_apply]
   have ht := DFunLike.congr_fun (absoluteFiniteQuotientEquiv_transition (K := K) hNM)
     ((absoluteFiniteQuotientEquiv K N).symm (abelianFiniteArtin k K F c))
-  change intermediateFieldRestrictContinuous K E F hEF
+  change RamificationTheory.intermediateFieldRestrictContinuous K E F hEF
       (absoluteFiniteQuotientEquiv K N
         ((absoluteFiniteQuotientEquiv K N).symm (abelianFiniteArtin k K F c))) =
     absoluteFiniteQuotientEquiv K M

@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 public import Nyll.ClassFieldTheory.KroneckerWeber.RationalRayClassFieldCyclotomic
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
@@ -126,11 +128,11 @@ theorem
           (RayClass.rationalPrime q)
           (rationalPrimeArithmeticFrobeniusLocalInput q)) := by
   let n : ℕ+ := ⟨m, NeZero.pos m⟩
-  let g : IdeleClassGroup ℚ →*
+  let g : NumberField.IdeleClassGroup (𝓞 ℚ) ℚ →*
       Gal(KummerTheory.rationalCyclotomicLevel n / ℚ) :=
     globalNormResidueMonoidHom ℚ (KummerTheory.rationalCyclotomicLevel n)
   let i : ((RayClass.rationalPrime q).adicCompletion ℚ)ˣ →*
-      IdeleClassGroup ℚ :=
+      NumberField.IdeleClassGroup (𝓞 ℚ) ℚ :=
     IdeleGroup.finitePlaceIdeleClass (RayClass.rationalPrime q)
   let u : ((RayClass.rationalPrime q).adicCompletion ℚ)ˣ :=
     rationalPrimeUniformizerLocalInput q
@@ -189,7 +191,7 @@ noncomputable def
 of an idèle class to its genuine rational ray class. -/
 theorem
   rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup_arithmeticGlobalNormResidue
-    (c : IdeleClassGroup ℚ) :
+    (c : NumberField.IdeleClassGroup (𝓞 ℚ) ℚ) :
     rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup
         m
         (arithmeticGlobalNormResidueMonoidHom
@@ -217,7 +219,7 @@ theorem
 idèle class back to its arithmetic global norm-residue symbol. -/
 theorem
     rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup_symm_mk
-    (c : IdeleClassGroup ℚ) :
+    (c : NumberField.IdeleClassGroup (𝓞 ℚ) ℚ) :
     (rationalCyclotomicLevelArithmeticGaloisContinuousMulEquivRayClassGroup
         m).symm
         (QuotientGroup.mk'

@@ -30,6 +30,12 @@ namespace FunctionField
 
 open AlgebraicCurve AlgebraicGeometry CategoryTheory
 
+/-- The original geometric constant field over a finite base is algebraically closed. -/
+theorem geometricConstantField_isAlgClosed (k : Type u) (Ω : Type w)
+    [Field k] [Finite k] [Field Ω] [Algebra k Ω] [IsSepClosed Ω] :
+    IsAlgClosed (separableClosure k Ω) :=
+  IsAlgClosure.isAlgClosed (R := k) (K := separableClosure k Ω)
+
 section Algebraic
 
 variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Field K] [Field Ω]
@@ -70,7 +76,7 @@ theorem geometricConstantExtension_norm_surjective
   have htower : IsScalarTower k (separableClosure k Ω) (geometricConstantExtension k K Ω) :=
     constantScalarTower (K := K) (separableClosure k Ω)
   have hclosed : IsAlgClosed (separableClosure k Ω) :=
-    IsAlgClosure.isAlgClosed (R := k) (K := separableClosure k Ω)
+    geometricConstantField_isAlgClosed k Ω
   exact norm_surjective_constantBaseChange (k := k)
     (constantExtension_adjoin_originalField (K := K) (separableClosure k Ω)) L
 
@@ -100,7 +106,7 @@ theorem geometricConstantExtension_galoisUnitsH2_eq_zero
   have htower : IsScalarTower k (separableClosure k Ω) (geometricConstantExtension k K Ω) :=
     constantScalarTower (K := K) (separableClosure k Ω)
   have hclosed : IsAlgClosed (separableClosure k Ω) :=
-    IsAlgClosure.isAlgClosed (R := k) (K := separableClosure k Ω)
+    geometricConstantField_isAlgClosed k Ω
   exact galoisUnitsH2_eq_zero_constantBaseChange (k := k)
     (constantExtension_adjoin_originalField (K := K) (separableClosure k Ω)) L c
 
@@ -119,7 +125,7 @@ theorem geometricConstantExtension_constantFinite_etaleCohomology_eq_zero
   have htower : IsScalarTower k (separableClosure k Ω) (geometricConstantExtension k K Ω) :=
     constantScalarTower (K := K) (separableClosure k Ω)
   have hclosed : IsAlgClosed (separableClosure k Ω) :=
-    IsAlgClosure.isAlgClosed (R := k) (K := separableClosure k Ω)
+    geometricConstantField_isAlgClosed k Ω
   exact fieldEtale_constantFinite_cohomology_eq_zero_constantBaseChange (k := k)
     (constantExtension_adjoin_originalField (K := K) (separableClosure k Ω)) A n v
 

@@ -324,10 +324,6 @@ open _root_.AlgebraicGeometry
 
 open TensorProduct Opposite
 
-theorem cover_ext {X : Scheme.{u}} {𝒱 𝒱' : X.TwoAffineOpenCover}
-    (h0 : 𝒱.U0 = 𝒱'.U0) (h1 : 𝒱.U1 = 𝒱'.U1) : 𝒱 = 𝒱' := by
-  cases 𝒱; cases 𝒱'; cases h0; cases h1; rfl
-
 theorem finrank_H0_congr {k : Type u} [Field k] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of k))
     (𝒱 : X.TwoAffineOpenCover) {M M' : X.Modules} (e : M ≅ M') :
     Module.finrank k (𝒱.sectionsOf x M).H0 = Module.finrank k (𝒱.sectionsOf x M').H0 := by
@@ -335,7 +331,8 @@ theorem finrank_H0_congr {k : Type u} [Field k] {X : Scheme.{u}} (x : X ⟶ Spec
     Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso x x (Iso.refl X)
       (Category.id_comp x)
       𝒱 M' M (e ≪≫ ((Scheme.Modules.pullbackId X).app M').symm)
-  obtain rfl : 𝒱₂ = 𝒱 := cover_ext h0 h1
+  obtain rfl : 𝒱₂ = 𝒱 :=
+    _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.cover_ext h0 h1
   exact e0.finrank_eq
 
 theorem specMap_residueField_base {A : Type u} [CommRing A] (𝔭 : PrimeSpectrum A)
@@ -345,37 +342,6 @@ theorem specMap_residueField_base {A : Type u} [CommRing A] (𝔭 : PrimeSpectru
   have hp : p.asIdeal = ⊥ := (Ideal.eq_bot_or_top _).resolve_right p.isPrime.ne_top
   change Ideal.comap (algebraMap A 𝔭.asIdeal.ResidueField) p.asIdeal = 𝔭.asIdeal
   rw [hp, ← RingHom.ker_eq_comap_bot, Ideal.ker_algebraMap_residueField]
-
-/-- The compatible family of restrictions of a global section. -/
-def sectionOfGlobal {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) : M.val.sections :=
-  ⟨fun U => (Scheme.Modules.presheaf M).map (homOfLE (le_top : U.unop ≤ ⊤)).op σ,
-   fun {U V} f => by
-     change (Scheme.Modules.presheaf M).map f ((Scheme.Modules.presheaf M).map (homOfLE (le_top :
-       U.unop ≤ ⊤)).op σ) =
-       (Scheme.Modules.presheaf M).map (homOfLE (le_top : V.unop ≤ ⊤)).op σ
-     have hg : (homOfLE (le_top : U.unop ≤ ⊤)).op ≫ f = (homOfLE (le_top : V.unop ≤ ⊤)).op :=
-       Subsingleton.elim _ _
-     rw [← CategoryTheory.ConcreteCategory.comp_apply, ← Functor.map_comp, hg]⟩
-
-theorem sectionOfGlobal_top {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) :
-    (sectionOfGlobal M σ).val (op ⊤) = σ := by
-  change (Scheme.Modules.presheaf M).map (homOfLE (le_top : (⊤ : X.Opens) ≤ ⊤)).op σ = σ
-  have h1 : (homOfLE (le_top : (⊤ : X.Opens) ≤ ⊤)).op = 𝟙 (op ⊤) := Subsingleton.elim _ _
-  rw [h1, CategoryTheory.Functor.map_id]
-  rfl
-
-theorem exists_hom_ne_zero {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) (hσ : σ ≠ 0) :
-    ∃ s : 𝟙_ X.Modules ⟶ M, s ≠ 0 := by
-  obtain ⟨s, hs⟩ : ∃ s : 𝟙_ X.Modules ⟶ M, (SheafOfModules.unitHomEquiv M) s = sectionOfGlobal M σ
-    :=
-    ⟨(SheafOfModules.unitHomEquiv M).symm (sectionOfGlobal M σ), Equiv.apply_symm_apply _ _⟩
-  refine ⟨s, fun h0 => hσ ?_⟩
-  have e2 : (sectionOfGlobal M σ).val (op ⊤) = σ := sectionOfGlobal_top M σ
-  have e3 : (sectionOfGlobal M σ).val (op ⊤) = (Scheme.Modules.Hom.app s ⊤) (1 : Γ(X, ⊤)) := by
-    rw [← hs]
-    rfl
-  rw [← e2, e3, h0, Scheme.Modules.Hom.zero_app]
-  rfl
 
 theorem isClosed_setOf_le_finrank_ker_cechDiff_baseChange
     {A : Type u} [CommRing A] [IsNoetherianRing A] {X : Scheme.{u}} (π : X ⟶ Spec (CommRingCat.of
@@ -498,7 +464,8 @@ theorem isClosed_setOf_exists_fibreModule_iso_unit
     obtain ⟨eΓ, -⟩ := Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_H0 𝒲 (fibreAt c t s)
       (fibreModule c t s L.L)
     have hσ : eΓ.symm y ≠ 0 := fun h => hy (by rw [← eΓ.apply_symm_apply y, h, map_zero])
-    obtain ⟨σ, hσ0⟩ := exists_hom_ne_zero (fibreModule c t s L.L) (eΓ.symm y) hσ
+    obtain ⟨σ, hσ0⟩ := _root_.AlgebraicGeometry.Scheme.Modules.exists_hom_ne_zero
+      (fibreModule c t s L.L) (eΓ.symm y) hσ
     have : GeometricallyIntegral (fibreAt c t s) := geometricallyIntegral_of_isAlgClosed (fibreAt c
       t s)
     exact IsAlgEquivZero.nonempty_iso_tensorUnit_of_ne_zero (fibreAt c t s) 𝒲

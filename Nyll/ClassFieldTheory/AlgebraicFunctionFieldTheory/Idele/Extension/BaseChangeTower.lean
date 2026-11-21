@@ -6,8 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTower
 
 /-!
 # Functoriality of idele inclusion
@@ -38,7 +39,7 @@ variable {k K L : Type*} [Field k] [Field K] [Field L]
 component of idele inclusion. -/
 theorem completionMapOver_apply_baseChange (v : AlgebraicCurve.Place k K)
     (w : AlgebraicCurve.Place k L) (hw : w.restrict K = v) (a : IdeleGroup k K) :
-    completionMapOver v w hw (a v : v.adicCompletion) =
+    AlgebraicCurve.Place.completionMapOver v w hw (a v : v.adicCompletion) =
       (baseChange (k := k) (K := K) (L := L) a w : w.adicCompletion) := by
   subst v
   rfl
@@ -53,25 +54,6 @@ variable {k K L M : Type*} [Field k] [Field K] [Field L] [Field M]
     [IsScalarTower k K L] [IsScalarTower k L M] [IsScalarTower k K M]
     [IsScalarTower K L M]
     [FiniteDimensional K L] [FiniteDimensional L M] [FiniteDimensional K M]
-
-/-- The completion maps compose along a finite field tower. The equalities
-record only the restrictions of the three places. -/
-theorem completionMapOver_trans (v : AlgebraicCurve.Place k K)
-    (w : AlgebraicCurve.Place k L) (u : AlgebraicCurve.Place k M)
-    (hw : w.restrict K = v) (hu : u.restrict L = w) (huv : u.restrict K = v) :
-    (completionMapOver w u hu).comp (completionMapOver v w hw) =
-      completionMapOver v u huv := by
-  have hdense : DenseRange (algebraMap K v.adicCompletion) :=
-    IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap K v.heightOneSpectrum
-  have hfun : (fun x => completionMapOver w u hu (completionMapOver v w hw x)) =
-      completionMapOver v u huv :=
-    hdense.equalizer
-      ((continuous_completionMapOver w u hu).comp (continuous_completionMapOver v w hw))
-      (continuous_completionMapOver v u huv) (by
-        funext x
-        simp only [Function.comp_apply, completionMapOver_algebraMap]
-        rw [← IsScalarTower.algebraMap_apply K L M])
-  exact RingHom.ext (fun x => congrFun hfun x)
 
 open AlgebraicCurves.Places.Proofs.Place_sum_ramificationIndex_mul_inertiaDeg_exchange.BifibreW2
 
@@ -90,7 +72,8 @@ theorem baseChange_trans (a : IdeleGroup k K) :
   have h := congrArg
     (fun f : ((u.restrict L).restrict K).adicCompletion →+* u.adicCompletion =>
       f (a ((u.restrict L).restrict K)))
-    (completionMapOver_trans ((u.restrict L).restrict K) (u.restrict L) u rfl rfl hu)
+    (AlgebraicCurve.Place.completionMapOver_trans
+      ((u.restrict L).restrict K) (u.restrict L) u rfl rfl hu)
   simpa only [RingHom.comp_apply, completionMapOver_apply_baseChange] using h
 
 /-- The idele inclusion homomorphisms compose in finite towers. -/

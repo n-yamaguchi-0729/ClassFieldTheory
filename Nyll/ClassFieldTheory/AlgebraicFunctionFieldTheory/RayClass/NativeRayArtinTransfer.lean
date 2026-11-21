@@ -48,13 +48,13 @@ variable {k K L : Type*} [Field k] [Field K] [Field L]
 /-- Actual idele-class inclusion preserves the pulled-back reduced ray
 congruence subgroup. -/
 theorem baseChange_mem_reducedRayClassSubgroup
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+    (m : Modulus k K) (_hm : ∀ v, m v ≤ 1)
     (c : IdeleClassGroup k K) (hc : c ∈ rayClassSubgroup m) :
     IdeleClassGroup.baseChange (k := k) (K := K) (L := L) c ∈
-      rayClassSubgroup (rayModulusBaseChange L m) := by
+      rayClassSubgroup (reindexAlongPlaces L m) := by
   obtain ⟨a, ha, rfl⟩ := hc
   refine ⟨IdeleGroup.baseChange (K := K) (L := L) a,
-    baseChange_mem_reducedCongruence m hm a ha, ?_⟩
+    baseChange_mem_congruence m a ha, ?_⟩
   exact (IdeleClassGroup.baseChange_mk a).symm
 
 end RaySubgroups
@@ -70,7 +70,7 @@ def rayQuotientTransferOfSubgroupMap
     (N : Subgroup G) (M : Subgroup P) [N.Normal] [M.Normal]
     (f : G →ₜ* P) (hf : ∀ g : G, g ∈ N → f g ∈ M) :
     RayQuotientTransfer G P N M :=
-  ProCGroups.QuotientGroup.mapₜ N M f (by
+  ProCGroups.QuotientGroup.mapContinuousMonoidHom (N := N) (M := M) f (by
     intro g hg
     exact (Subgroup.mem_comap (K := M) (f := f.toMonoidHom) (x := g)).2 (hf g hg))
 
@@ -92,13 +92,8 @@ variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
 
 local notation "F" => abstractFixedField K (SeparableClosure K) H.field
 
-/-- The canonical separable-closure algebra of the actual fixed field. -/
-local instance nativeRayFixedFieldSeparableClosureAlgebra : Algebra F (SeparableClosure F) :=
-  (separableClosure F (AlgebraicClosure F)).toSubalgebra.algebra
-
-/-- The fixed field acts on its closure through that same canonical algebra. -/
-local instance nativeRayFixedFieldSeparableClosureSMul : SMul F (SeparableClosure F) :=
-  (nativeRayFixedFieldSeparableClosureAlgebra (K := K) (H := H)).toSMul
+attribute [local instance]
+  finiteFixedFieldSeparableClosureAlgebra finiteFixedFieldSeparableClosureSMul
 
 variable (e : SeparableClosure (abstractFixedField K (SeparableClosure K) H.field)
     ≃ₐ[(abstractFixedField K (SeparableClosure K) H.field)] SeparableClosure K)
@@ -121,7 +116,7 @@ theorem nativeAbsoluteTransfer_mem_artinRaySubgroup
     have _ : FiniteDimensional K (abstractFixedField K (SeparableClosure K) H.field) :=
       abstractFixedField_finiteDimensional K (SeparableClosure K) H.field H.finite
     have _ : FunctionField k (abstractFixedField K (SeparableClosure K) H.field) :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k) (K := K) (Ω := SeparableClosure K)
         (abstractFixedField K (SeparableClosure K) H.field)
     have _ : HasPrincipalDivisors k (abstractFixedField K (SeparableClosure K) H.field) :=
@@ -130,7 +125,7 @@ theorem nativeAbsoluteTransfer_mem_artinRaySubgroup
     ∀ g : localAbsoluteAbelianProfinite K, g ∈ artinRaySubgroup m →
       nativeAbsoluteTransferOfFixedField K H e g ∈
         artinRaySubgroup
-          (rayModulusBaseChange (abstractFixedField K (SeparableClosure K) H.field) m) := by
+          (reindexAlongPlaces (abstractFixedField K (SeparableClosure K) H.field) m) := by
   intro akΩ aRΩ hkKΩ hRKΩ hkRΩ hKF hFfield hFprincipal g hg
   obtain ⟨c, hc, rfl⟩ := hg
   refine ⟨IdeleClassGroup.baseChange (k := k) (K := K)
@@ -161,13 +156,13 @@ def nativeRayTransferOfFixedField (m : Modulus k K) (hm : ∀ v, m v ≤ 1) :
     have _ : FiniteDimensional K E₀ :=
       abstractFixedField_finiteDimensional K (SeparableClosure K) H.field H.finite
     have _ : FunctionField k E₀ :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k) (K := K) (Ω := SeparableClosure K) E₀
     have _ : HasPrincipalDivisors k E₀ :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K E₀).toHasPrincipalDivisors
     let G₀ := localAbsoluteAbelianProfinite K
     let P₀ := localAbsoluteAbelianProfinite E₀
-    let mF : Modulus k E₀ := rayModulusBaseChange E₀ m
+    let mF : Modulus k E₀ := reindexAlongPlaces E₀ m
     let N : Subgroup G₀ := artinRaySubgroup m
     let M : Subgroup P₀ := artinRaySubgroup mF
     have _ : N.Normal := artinRaySubgroup_normal m
@@ -195,7 +190,7 @@ theorem nativeRayTransferOfFixedField_mk (m : Modulus k K) (hm : ∀ v, m v ≤ 
     have _ : FiniteDimensional K (abstractFixedField K (SeparableClosure K) H.field) :=
       abstractFixedField_finiteDimensional K (SeparableClosure K) H.field H.finite
     have _ : FunctionField k (abstractFixedField K (SeparableClosure K) H.field) :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k) (K := K) (Ω := SeparableClosure K)
         (abstractFixedField K (SeparableClosure K) H.field)
     have _ : HasPrincipalDivisors k (abstractFixedField K (SeparableClosure K) H.field) :=
@@ -205,10 +200,10 @@ theorem nativeRayTransferOfFixedField_mk (m : Modulus k K) (hm : ∀ v, m v ≤ 
       nativeRayTransferOfFixedField k K H e m hm (QuotientGroup.mk' (artinRaySubgroup m) g) =
         QuotientGroup.mk'
           (artinRaySubgroup
-            (rayModulusBaseChange (abstractFixedField K (SeparableClosure K) H.field) m))
+            (reindexAlongPlaces (abstractFixedField K (SeparableClosure K) H.field) m))
           (nativeAbsoluteTransferOfFixedField K H e g) := by
   intro akΩ aRΩ hkKΩ hRKΩ hkRΩ hKF hFfield hFprincipal g
-  let mF : Modulus k F := rayModulusBaseChange F m
+  let mF : Modulus k F := reindexAlongPlaces F m
   let N : Subgroup (localAbsoluteAbelianProfinite K) := artinRaySubgroup m
   let M : Subgroup (localAbsoluteAbelianProfinite F) := artinRaySubgroup mF
   let transfer : localAbsoluteAbelianProfinite K →ₜ* localAbsoluteAbelianProfinite F :=
@@ -242,7 +237,7 @@ theorem restrictedProductAbsoluteArtin_baseChange_nativeTransfer
     have _ : FiniteDimensional K (abstractFixedField K (SeparableClosure K) H.field) :=
       abstractFixedField_finiteDimensional K (SeparableClosure K) H.field H.finite
     have _ : FunctionField k (abstractFixedField K (SeparableClosure K) H.field) :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k) (K := K) (Ω := SeparableClosure K)
         (abstractFixedField K (SeparableClosure K) H.field)
     have _ : HasPrincipalDivisors k (abstractFixedField K (SeparableClosure K) H.field) :=
@@ -250,20 +245,20 @@ theorem restrictedProductAbsoluteArtin_baseChange_nativeTransfer
         (abstractFixedField K (SeparableClosure K) H.field)).toHasPrincipalDivisors
     ∀ a : RayRestrictedProduct m,
       restrictedProductAbsoluteArtin
-          (rayModulusBaseChange (abstractFixedField K (SeparableClosure K) H.field) m)
+          (reindexAlongPlaces (abstractFixedField K (SeparableClosure K) H.field) m)
           (restrictedRayBaseChange
-            (L := abstractFixedField K (SeparableClosure K) H.field) m hm a) =
+            (L := abstractFixedField K (SeparableClosure K) H.field) m a) =
         nativeRayTransferOfFixedField k K H e m hm (restrictedProductAbsoluteArtin m a) := by
   intro akΩ aRΩ hkKΩ hRKΩ hkRΩ hKF hFfield hFprincipal a
   obtain ⟨b, rfl⟩ := ideleToRayRestrictedProduct_surjective m a
-  let mF : Modulus k F := rayModulusBaseChange F m
+  let mF : Modulus k F := reindexAlongPlaces F m
   let bF : IdeleGroup k F := IdeleGroup.baseChange (k := k) (K := K) (L := F) b
   let quotient : localAbsoluteAbelianProfinite F →
       (localAbsoluteAbelianProfinite F ⧸ artinRaySubgroup mF) :=
     QuotientGroup.mk' (artinRaySubgroup mF)
-  have hbase : restrictedRayBaseChange (L := F) m hm (ideleToRayRestrictedProduct m b) =
+  have hbase : restrictedRayBaseChange (L := F) m (ideleToRayRestrictedProduct m b) =
       ideleToRayRestrictedProduct mF bF :=
-    restrictedRayBaseChange_idele (L := F) m hm b
+    restrictedRayBaseChange_idele (L := F) m b
   have hsource : restrictedProductAbsoluteArtin m (ideleToRayRestrictedProduct m b) =
       QuotientGroup.mk' (artinRaySubgroup m) (absoluteArtin k K (IdeleClassGroup.mk b)) :=
     restrictedProductAbsoluteArtin_idele m b
@@ -284,7 +279,7 @@ theorem restrictedProductAbsoluteArtin_baseChange_nativeTransfer
     nativeRayTransferOfFixedField_mk k K H e m hm
       (absoluteArtin k K (IdeleClassGroup.mk b))
   have hleft : restrictedProductAbsoluteArtin mF
-      (restrictedRayBaseChange (L := F) m hm (ideleToRayRestrictedProduct m b)) =
+      (restrictedRayBaseChange (L := F) m (ideleToRayRestrictedProduct m b)) =
       quotient (absoluteArtin k F (IdeleClassGroup.mk bF)) :=
     (congrArg (restrictedProductAbsoluteArtin mF) hbase).trans htarget
   have hright : nativeRayTransferOfFixedField k K H e m hm

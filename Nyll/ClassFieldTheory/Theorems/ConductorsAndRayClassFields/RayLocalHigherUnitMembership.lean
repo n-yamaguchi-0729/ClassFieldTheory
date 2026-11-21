@@ -7,7 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
-public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 public import Mathlib.RingTheory.Ideal.Quotient.Defs
 
 /-!
@@ -42,8 +41,7 @@ theorem mem_rayLocalHigherUnitGroup_iff
           (v.adicCompletion K)ˣ) = x ∧
         (y : v.adicCompletionIntegers K) - 1 ∈
           (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ n := by
-  change x ∈ RayClass.localHigherUnitGroup v n ↔ _
-  rw [RayClass.mem_localHigherUnitGroup_iff]
+  rw [ClassFieldTheory.mem_rayLocalHigherUnitGroup_iff_reduction_eq_one]
   constructor
   · rintro ⟨y, hxy, hmap⟩
     let z : (v.adicCompletionIntegers K)ˣ :=

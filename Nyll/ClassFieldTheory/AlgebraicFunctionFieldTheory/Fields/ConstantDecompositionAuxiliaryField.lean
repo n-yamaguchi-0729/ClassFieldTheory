@@ -108,6 +108,63 @@ theorem constantGaloisTower_fixedField_adjoin_eq_top
 
 end FixedField
 
+private theorem restrictNormalHom_mul_of_fixes_field {F M E : Type*}
+    [Field F] [Field M] [Field E] [Algebra F M] [Algebra F E] [Algebra M E]
+    [IsScalarTower F M E] [Normal F M] (δ : Gal(E/M)) (ρ : Gal(E/F)) :
+    AlgEquiv.restrictNormalHom M (δ.restrictScalars F * ρ) =
+      AlgEquiv.restrictNormalHom M ρ := by
+  have hδ : AlgEquiv.restrictNormalHom M (δ.restrictScalars F) = 1 := by
+    apply AlgEquiv.ext
+    intro x
+    apply (algebraMap M E).injective
+    calc
+      algebraMap M E (AlgEquiv.restrictNormalHom M (δ.restrictScalars F) x) =
+          δ.restrictScalars F (algebraMap M E x) :=
+        AlgEquiv.restrictNormal_commutes (δ.restrictScalars F) M x
+      _ = δ (algebraMap M E x) := rfl
+      _ = algebraMap M E x := δ.commutes x
+      _ = algebraMap M E ((1 : Gal(M/F)) x) := rfl
+  rw [map_mul, hδ, one_mul]
+
+private theorem exists_corrected_decomposition_automorphism
+    {k K L E G : Type*} [Field k] [Field K] [Field L] [Field E] [Group G]
+    [Algebra k K] [Algebra k L] [Algebra k E] [Algebra K L] [Algebra K E] [Algebra L E]
+    [IsScalarTower k K E] [IsScalarTower k L E] [IsScalarTower K L E]
+    [Normal K L] [FiniteDimensional K E] [FiniteDimensional L E]
+    (W : Place k E) (ρ : IdeleGroup.decompositionGroup (K := K) W)
+    (δ : IdeleGroup.decompositionGroup (K := L) W)
+    (R : Gal(E/K) →* G) (η : G) (m : ℕ)
+    (hδ : R (δ.1.restrictScalars K) = η) (hη : m ∣ orderOf (η * R ρ.1)) :
+    ∃ τ : IdeleGroup.decompositionGroup (K := K) W,
+      AlgEquiv.restrictNormalHom L τ.1 = AlgEquiv.restrictNormalHom L ρ.1 ∧
+        m ∣ orderOf (R τ.1) := by
+  let τ := δ.1.restrictScalars K * ρ.1
+  have hτ : τ ∈ IdeleGroup.decompositionGroup (K := K) W := by
+    change (SemilinearAut.ofAlgAut (δ.1.restrictScalars k) *
+      SemilinearAut.ofAlgAut (ρ.1.restrictScalars k)) • W = W
+    rw [mul_smul, IdeleGroup.decompositionGroup_smul_eq W ρ]
+    exact IdeleGroup.decompositionGroup_smul_eq W δ
+  refine ⟨⟨τ, hτ⟩, restrictNormalHom_mul_of_fixes_field δ.1 ρ.1, ?_⟩
+  change m ∣ orderOf (R (δ.1.restrictScalars K * ρ.1))
+  rw [map_mul, hδ]
+  exact hη
+
+private theorem exists_frobenius_order_correction
+    {k C : Type*} [Field k] [Field C] [Algebra k C] [Fintype k] [FiniteDimensional k C]
+    (r m n s : ℕ) (hs : 0 < s) (hn : n = m * s.factorial)
+    (hdegree : Module.finrank k C = r * n) (γ : Gal(C/k)) :
+    let g := FiniteField.frobeniusAlgEquivOfAlgebraic k C
+    ∃ η : Gal(C/k), η ∈ Subgroup.zpowers (g ^ s) ∧ r * m ∣ orderOf (η * γ) := by
+  intro g
+  let : Finite C := Module.finite_of_finite k
+  have hg : orderOf g = (r * m) * s.factorial := by
+    rw [FiniteField.orderOf_frobeniusAlgEquivOfAlgebraic, hdegree, hn, ← mul_assoc]
+  have hγ : γ ∈ Subgroup.zpowers g := by
+    obtain ⟨i, hi⟩ := (FiniteField.bijective_frobeniusAlgEquivOfAlgebraic_pow k C).surjective γ
+    rw [← hi]
+    exact Subgroup.pow_mem (Subgroup.zpowers g) (Subgroup.mem_zpowers g) i.val
+  exact ClassFieldTheory.exists_zpowers_mul_orderOf_dvd g (r * m) s hs hg γ hγ
+
 variable (k K Ω : Type*) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
@@ -149,9 +206,7 @@ theorem exists_constantDecomposition_corrected_lift (n : ℕ) [NeZero n] :
   let mAD : Module A D := (inferInstance : Algebra A D).toModule
   have hkAD : IsScalarTower k A D := IntermediateField.isScalarTower D
   have hfreeAD : Module.Free A D := Module.Free.of_divisionRing A D
-  have hCset : Finite C := Module.finite_of_finite k
   let _ : Fintype k := Fintype.ofFinite k
-  let g : Gal(C/k) := FiniteField.frobeniusAlgEquivOfAlgebraic k C
   let r : ℕ := Module.finrank k A
   let s : ℕ := (W.restrict L).deg
   have hs : 0 < s := by
@@ -159,50 +214,19 @@ theorem exists_constantDecomposition_corrected_lift (n : ℕ) [NeZero n] :
     have : FiniteDimensional k (W.restrict L).ResidueField :=
       IsCurveOver.finite_residueField (W.restrict L)
     exact Module.finrank_pos
-  have hg : orderOf g = (r * m) * s.factorial := by
-    rw [FiniteField.orderOf_frobeniusAlgEquivOfAlgebraic]
-    have hdegree : Module.finrank k C = r * n := by
-      change Module.finrank k D = r * n
-      have hmul : Module.finrank k A * Module.finrank A D = Module.finrank k D :=
-        Module.finrank_mul_finrank k A D
-      have hdim : Module.finrank A D = n := finrank_finiteConstantsInClosure A Ω n
-      exact hmul.symm.trans (congrArg (fun d : ℕ => r * d) hdim)
-    rw [hdegree, hn, ← mul_assoc]
-  have hx : R ρ.1 ∈ Subgroup.zpowers g := by
-    obtain ⟨i, hi⟩ :=
-      (FiniteField.bijective_frobeniusAlgEquivOfAlgebraic_pow k C).surjective (R ρ.1)
-    rw [← hi]
-    exact Subgroup.pow_mem (Subgroup.zpowers g) (Subgroup.mem_zpowers g) i.val
-  obtain ⟨η, hη, horder⟩ :=
-    ClassFieldTheory.exists_zpowers_mul_orderOf_dvd g (r * m) s hs hg (R ρ.1) hx
+  have hdegree : Module.finrank k C = r * n := by
+    change Module.finrank k D = r * n
+    have hmul : Module.finrank k A * Module.finrank A D = Module.finrank k D :=
+      Module.finrank_mul_finrank k A D
+    have hdim : Module.finrank A D = n := finrank_finiteConstantsInClosure A Ω n
+    exact hmul.symm.trans (congrArg (fun d : ℕ => r * d) hdim)
+  obtain ⟨η, hη, horder⟩ := exists_frobenius_order_correction r m n s hs hn hdegree (R ρ.1)
   obtain ⟨δ, hδ, hδC⟩ :=
     exists_constantDecomposition_frobeniusPower_lift k L Ω n W η hη
-  let τ : Gal(E/K) := δ.restrictScalars K * ρ.1
-  have hτ : τ ∈ IdeleGroup.decompositionGroup (K := K) W := by
-    change (SemilinearAut.ofAlgAut (δ.restrictScalars k) *
-      SemilinearAut.ofAlgAut (ρ.1.restrictScalars k)) • W = W
-    rw [mul_smul, IdeleGroup.decompositionGroup_smul_eq W ρ]
-    exact hδ
-  refine ⟨⟨τ, hτ⟩, ?_, ?_⟩
-  · apply AlgEquiv.ext
-    intro x
-    apply (algebraMap L E).injective
-    calc
-      algebraMap L E ((AlgEquiv.restrictNormalHom L τ) x) = τ (algebraMap L E x) :=
-        AlgEquiv.restrictNormal_commutes τ L x
-      _ = ρ.1 (algebraMap L E x) := by
-        change δ (ρ.1 (algebraMap L E x)) = ρ.1 (algebraMap L E x)
-        rw [← AlgEquiv.restrictNormal_commutes ρ.1 L x, δ.commutes]
-      _ = algebraMap L E ((AlgEquiv.restrictNormalHom L ρ.1) x) :=
-        (AlgEquiv.restrictNormal_commutes ρ.1 L x).symm
-  · have hτC : R τ = η * R ρ.1 := by
-      change R (δ.restrictScalars K * ρ.1) = η * R ρ.1
-      rw [map_mul]
-      have hrestrict : R (δ.restrictScalars K) = η :=
-        (constantGaloisTowerRestriction_restrictScalars L C δ).trans hδC
-      rw [hrestrict]
-    rw [hτC]
-    exact (dvd_mul_left m r).trans horder
+  have hRestriction : R (δ.restrictScalars K) = η :=
+    (constantGaloisTowerRestriction_restrictScalars L C δ).trans hδC
+  exact exists_corrected_decomposition_automorphism W ρ ⟨δ, hδ⟩ R η m hRestriction
+    ((dvd_mul_left m r).trans horder)
 
 
 /-- Every actual decomposition automorphism admits a lift to a finite constant

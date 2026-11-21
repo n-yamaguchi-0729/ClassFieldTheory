@@ -81,8 +81,8 @@ theorem integral_tate_lowDegree_finite_card_eq_finrank
   have hfinite : Finite (HerbrandH0 Gal(L/K) (IdeleClassGroup k L)) := hC.1
   have hminus : Subsingleton (HerbrandHMinusOne Gal(L/K) (IdeleClassGroup k L) g) :=
     herbrandHMinusOne_subsingleton (k := k) g hg
-  let e0 := (integralTateH0EquivHerbrandH0 (G := Gal(L/K))
-    (A := IdeleClassGroup k L) g hg).toEquiv
+  let e0 := (integralTateZeroEquivHerbrandH0 (G := Gal(L/K))
+    (A := IdeleClassGroup k L)).toEquiv
   let em := (integralTateHMinusOneEquivHerbrandHMinusOne (G := Gal(L/K))
     (A := IdeleClassGroup k L) g hg).toEquiv
   have h0finite : Finite (IntegralGroupCohomology.Universe.tate A 0) :=

@@ -6,7 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.TopologicalProfiniteCompletion
+public import Nyll.ProCGroups.Completion.TopologicalBasic
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteLocalReciprocity
 public import Mathlib.FieldTheory.AbsoluteGaloisGroup
 public import Mathlib.NumberTheory.LocalField.Basic

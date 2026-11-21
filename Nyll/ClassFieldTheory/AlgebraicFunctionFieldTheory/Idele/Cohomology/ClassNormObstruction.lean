@@ -8,6 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.GlobalHilbert90
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 
 /-!
 # The actual class norm obstruction
@@ -34,10 +35,6 @@ variable {k K L : Type*} [Field k] [Field K] [Field L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
 
-/-- The subgroup of actual global field norms on units. -/
-def fieldNormSubgroup : Subgroup Kˣ :=
-  (Units.map (Algebra.norm K : L →* K)).range
-
 /-- The field units whose principal ideles are actual idele norms. -/
 def principalNormSubgroup : Subgroup Kˣ :=
   (IdeleGroup.norm (k := k) (K := K) (L := L)).range.comap
@@ -45,16 +42,16 @@ def principalNormSubgroup : Subgroup Kˣ :=
 
 /-- An actual field norm gives an actual idele norm through the principal embedding. -/
 theorem fieldNormSubgroup_le_principalNormSubgroup :
-    fieldNormSubgroup (K := K) (L := L) ≤
+    LocalFieldTheory.localNormSubgroup K L ≤
       principalNormSubgroup (k := k) (K := K) (L := L) := by
   rintro x ⟨y, rfl⟩
   exact ⟨IdeleGroup.principalIdele k L y, IdeleGroup.norm_principalIdele y⟩
 
 /-- The actual global-to-idele norm diagonal. -/
 def hasseNormDiagonal :
-    Kˣ ⧸ fieldNormSubgroup (K := K) (L := L) →*
+    Kˣ ⧸ LocalFieldTheory.localNormSubgroup K L →*
       IdeleGroup k K ⧸ (IdeleGroup.norm (k := k) (K := K) (L := L)).range :=
-  QuotientGroup.map (fieldNormSubgroup (K := K) (L := L))
+  QuotientGroup.map (LocalFieldTheory.localNormSubgroup K L)
     (IdeleGroup.norm (k := k) (K := K) (L := L)).range
     (IdeleGroup.principalIdele k K)
     (fun _ hx => fieldNormSubgroup_le_principalNormSubgroup hx)
@@ -63,7 +60,7 @@ def hasseNormDiagonal :
 @[simp]
 theorem hasseNormDiagonal_mk (x : Kˣ) :
     hasseNormDiagonal (k := k) (K := K) (L := L)
-        (QuotientGroup.mk' (fieldNormSubgroup (K := K) (L := L)) x) =
+        (QuotientGroup.mk' (LocalFieldTheory.localNormSubgroup K L) x) =
       QuotientGroup.mk' (IdeleGroup.norm (k := k) (K := K) (L := L)).range
         (IdeleGroup.principalIdele k K x) :=
   rfl
@@ -73,7 +70,7 @@ idele norm is a global field norm. -/
 theorem hasseNormDiagonal_injective_iff :
     Function.Injective (hasseNormDiagonal (k := k) (K := K) (L := L)) ↔
       principalNormSubgroup (k := k) (K := K) (L := L) ≤
-        fieldNormSubgroup (K := K) (L := L) := by
+        LocalFieldTheory.localNormSubgroup K L := by
   constructor
   · intro hinj x hx
     apply (QuotientGroup.eq_one_iff x).mp
@@ -88,7 +85,7 @@ theorem hasseNormDiagonal_injective_iff :
     · intro q hq
       refine QuotientGroup.induction_on q ?_ hq
       intro x hx
-      change QuotientGroup.mk' (fieldNormSubgroup (K := K) (L := L)) x = 1
+      change QuotientGroup.mk' (LocalFieldTheory.localNormSubgroup K L) x = 1
       apply (QuotientGroup.eq_one_iff x).mpr
       apply hlocal
       exact (QuotientGroup.eq_one_iff (IdeleGroup.principalIdele k K x)).mp hx
@@ -124,7 +121,8 @@ theorem class_normKernel_le_augmentationSubgroup_of_diagonal_injective
   obtain ⟨y, hy⟩ := (hasseNormDiagonal_injective_iff.mp hinj) hxlocal
   have hN : IdeleGroup.norm (k := k) (K := K) (L := L)
       (a / IdeleGroup.principalIdele k L y) = 1 := by
-    rw [map_div, IdeleGroup.norm_principalIdele, hy, hx, div_self']
+    have hfieldNorm : Units.map (Algebra.norm K) y = x := hy
+    rw [map_div, IdeleGroup.norm_principalIdele, hfieldNorm, hx, div_self']
   obtain ⟨b, hb⟩ := IdeleGroup.exists_div_of_norm_eq_one σ hσ _ hN
   refine ⟨IdeleClassGroup.mk (k := k) (K := L) b, ?_⟩
   change σ • IdeleClassGroup.mk (k := k) (K := L) b *
@@ -146,7 +144,7 @@ theorem principalNormSubgroup_le_fieldNormSubgroup_of_class_normKernel_le
     (hclass : normKernelSubgroup (L ≃ₐ[K] L) (IdeleClassGroup k L) ≤
       augmentationSubgroup (L ≃ₐ[K] L) (IdeleClassGroup k L) σ) :
     principalNormSubgroup (k := k) (K := K) (L := L) ≤
-      fieldNormSubgroup (K := K) (L := L) := by
+      LocalFieldTheory.localNormSubgroup K L := by
   rintro x ⟨a, ha⟩
   have hc : IdeleClassGroup.mk (k := k) (K := L) a ∈
       normKernelSubgroup (L ≃ₐ[K] L) (IdeleClassGroup k L) := by
@@ -170,6 +168,8 @@ theorem principalNormSubgroup_le_fieldNormSubgroup_of_class_normKernel_le
   obtain ⟨y, hy⟩ := hprincipal
   refine ⟨y, ?_⟩
   apply IdeleGroup.principalIdele_injective_of_nonempty (k := k) (L := K)
+  change IdeleGroup.principalIdele k K (Units.map (Algebra.norm K) y) =
+    IdeleGroup.principalIdele k K x
   rw [← IdeleGroup.norm_principalIdele, hy, map_div, norm_sigma_div, div_one, ha]
 
 /-- For a cyclic extension, injectivity of the actual global-to-idele norm

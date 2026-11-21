@@ -373,6 +373,33 @@ theorem placeOfPrime_toValuationSubring (P : HeightOneSpectrum (integralClosureA
     (placeOfPrime P).toValuationSubring = HeightOneSpectrum.valuationSubringAtPrime F' P :=
   rfl
 
+section PrimeValuation
+
+variable (v)
+
+/-- The place valuation ring receives the actual finite normalization algebra map. -/
+@[reducible]
+noncomputable def placeOfPrimeAlgebra (P : HeightOneSpectrum (integralClosureAt F' v)) :
+    Algebra (integralClosureAt F' v) (placeOfPrime P).toValuationSubring := by
+  change Algebra (integralClosureAt F' v) (HeightOneSpectrum.valuationSubringAtPrime F' P)
+  infer_instance
+
+attribute [local instance] placeOfPrimeAlgebra
+
+/-- This normalization algebra map factors the original inclusion into the extension field. -/
+theorem placeOfPrimeIsScalarTower (P : HeightOneSpectrum (integralClosureAt F' v)) :
+    IsScalarTower (integralClosureAt F' v) (placeOfPrime P).toValuationSubring F' := by
+  change IsScalarTower (integralClosureAt F' v) (HeightOneSpectrum.valuationSubringAtPrime F' P) F'
+  infer_instance
+
+/-- The actual place valuation ring is the localization at the chosen normalization prime. -/
+theorem placeOfPrimeIsLocalization (P : HeightOneSpectrum (integralClosureAt F' v)) :
+    IsLocalization.AtPrime (placeOfPrime P).toValuationSubring P.asIdeal := by
+  change IsLocalization.AtPrime (HeightOneSpectrum.valuationSubringAtPrime F' P) P.asIdeal
+  infer_instance
+
+end PrimeValuation
+
 theorem restrict_placeOfPrime (P : HeightOneSpectrum (integralClosureAt F' v)) :
     (placeOfPrime P).restrict F = v := by
   have hle : v.toValuationSubring ≤ ((placeOfPrime P).restrict F).toValuationSubring := by

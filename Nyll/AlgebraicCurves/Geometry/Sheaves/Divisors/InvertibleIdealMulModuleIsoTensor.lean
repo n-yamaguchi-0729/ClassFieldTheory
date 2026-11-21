@@ -405,7 +405,6 @@ lemma mulApp_bijective : Function.Bijective (mulApp I J (op W)) := by
   · induction z using TensorProduct.inductionOn with
     | add z₁ z₂ h₁ h₂ =>
       erw [map_add, map_add, h₁, h₂]
-      rfl
     | tmul s t =>
       erw [hm]
       change ((genEquiv (I * J) (a * b) hab hIJ).symm (genEquiv (I * J) (a * b) hab hIJ

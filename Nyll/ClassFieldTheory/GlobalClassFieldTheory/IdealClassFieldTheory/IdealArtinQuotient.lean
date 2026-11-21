@@ -55,16 +55,10 @@ noncomputable def idealClassQuotientEquivNormQuotient
     (hm : RayClass.Modulus.congruenceSubgroup m ≤ N) :
     RayClass.primeToModulusIdeals m ⧸
         idealArtinKernel m N hm ≃*
-      IdeleClassGroup K ⧸ N := by
-  have hker :
-      idealArtinKernel m N hm =
-        (idealArtinMap m N hm).ker :=
-    rfl
-  exact
-    (QuotientGroup.quotientMulEquivOfEq hker).trans
-      (QuotientGroup.quotientKerEquivOfSurjective
-        (idealArtinMap m N hm)
-        (idealArtinMap_surjective m N hm))
+      IdeleClassGroup K ⧸ N :=
+  QuotientGroup.quotientKerEquivOfSurjective
+    (idealArtinMap m N hm)
+    (idealArtinMap_surjective m N hm)
 
 /-- The ideal class-field equivalence sends a quotient representative to
 its ideal Artin image. -/

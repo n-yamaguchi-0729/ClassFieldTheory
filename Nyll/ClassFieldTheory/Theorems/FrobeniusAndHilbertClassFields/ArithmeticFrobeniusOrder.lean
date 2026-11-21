@@ -38,7 +38,7 @@ theorem orderOf_arithmeticFrobeniusAt_eq_inertiaDegree
     {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
-    [IsAbelianGalois K L]
+    [IsGalois K L]
     (v : HeightOneSpectrum (𝓞 K))
     (w : HeightOneSpectrum (𝓞 L))
     (hw : w.asIdeal.LiesOver v.asIdeal)

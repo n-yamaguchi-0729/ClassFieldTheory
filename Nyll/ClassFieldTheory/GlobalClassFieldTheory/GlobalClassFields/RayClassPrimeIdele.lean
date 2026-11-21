@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
@@ -38,6 +40,7 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
+open ClassFieldTheory
 open NumberField IsDedekindDomain IdeleGroup
 
 universe u v w
@@ -70,12 +73,12 @@ theorem finitePrimeIdele_mem_idelePrimeToModulusSubgroup
     change
       IdeleGroup.finiteComponent w
           (finitePrimeIdele v) ∈
-        RayClass.localHigherUnitGroup w (m.finitePart w)
+        ClassFieldTheory.rayLocalHigherUnitGroup w (m.finitePart w)
     rw [finitePrimeIdele,
       IdeleGroup.finitePlaceIdele_finiteComponent_of_ne
         v w (FiniteIdeleGroup.chosenLocalOrderSection v 1) hwv]
     exact
-      (RayClass.localHigherUnitGroup w (m.finitePart w)).one_mem
+      (ClassFieldTheory.rayLocalHigherUnitGroup w (m.finitePart w)).one_mem
 
 /-- The fractional-ideal image of a normalized one-place prime idèle,
 viewed as prime to a modulus, is the corresponding prime-to-modulus
@@ -112,123 +115,27 @@ theorem idealRayProjection_finitePrimeIdele
     MonoidHom.comp_apply,
     primeToIdealMap_finitePrimeIdele]
 
-/-- The idèle-class/full-idèle ray-class equivalence evaluates on a
-double quotient representative by forgetting the intermediate
-principal-idèle quotient. -/
-@[simp]
-theorem rayClassGroupEquivIdeleQuotient_mk_mk
-    (m : RayClass.Modulus K)
-    (a : IdeleGroup K) :
-    RayClass.rayClassGroupEquivIdeleQuotient m
-        (QuotientGroup.mk'
-          (RayClass.Modulus.congruenceSubgroup m)
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K) a)) =
-      QuotientGroup.mk'
-        (RayClass.Modulus.ideleCongruenceSubgroup m ⊔
-          IdeleGroup.principalSubgroup K) a := by
-  exact
-    QuotientGroup.quotientQuotientEquivQuotientAux_mk_mk
-      (IdeleGroup.principalSubgroup K)
-      (RayClass.Modulus.ideleCongruenceSubgroup m ⊔
-        IdeleGroup.principalSubgroup K)
-      le_sup_right a
-
-/-- The canonical idelic-to-ideal ray-class equivalence sends a
-prime-to-modulus idèle class to the ideal ray class of its fractional
-ideal. -/
-@[simp]
-theorem rayClassGroupEquivIdealRayClassGroup_mk_primeTo
-    (m : RayClass.Modulus K)
-    (a : RayClass.idelePrimeToModulusSubgroup m) :
-    RayClass.rayClassGroupEquivIdealRayClassGroup m
-        (QuotientGroup.mk'
-          (RayClass.Modulus.congruenceSubgroup m)
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (a : IdeleGroup K))) =
-      RayClass.idealRayProjection m a := by
-  change
-    RayClass.quotientRaySubgroupEquivIdealRayClassGroup m
-        ((RayClass.quotientRaySubgroupEquivIdeleRayQuotient m).symm
-          (RayClass.rayClassGroupEquivIdeleQuotient m
-            (QuotientGroup.mk'
-              (RayClass.Modulus.congruenceSubgroup m)
-              (QuotientGroup.mk'
-                (IdeleGroup.principalSubgroup K)
-                (a : IdeleGroup K))))) =
-      RayClass.idealRayProjection m a
-  rw [rayClassGroupEquivIdeleQuotient_mk_mk]
-  change
-    RayClass.quotientRaySubgroupEquivIdealRayClassGroup m
-        ((RayClass.quotientRaySubgroupEquivIdeleRayQuotient m).symm
-          (RayClass.primeToRayClassProjection m a)) =
-      RayClass.idealRayProjection m a
-  rw [← RayClass.quotientRaySubgroupEquivIdeleRayQuotient_mk m a,
-    MulEquiv.symm_apply_apply,
-    RayClass.quotientRaySubgroupEquivIdealRayClassGroup_mk]
 
 end GenericPrimeIdele
 
 variable {K : Type u} [Field K] [NumberField K]
-
-/-- The ideal Artin map of the fractional ideal attached to a
-prime-to-modulus idèle is its direct class in the idèle-class
-quotient.  This is the commuting square between the idelic and
-ideal-theoretic ray-class constructions. -/
-@[simp]
-theorem idealArtinMap_primeToIdealMap
-    (m : RayClass.Modulus K)
-    (N : Subgroup (IdeleClassGroup K))
-    (hm : RayClass.Modulus.congruenceSubgroup m ≤ N)
-    (a : RayClass.idelePrimeToModulusSubgroup m) :
-    IdealClassFieldTheory.idealArtinMap m N hm
-        (RayClass.primeToIdealMap m a) =
-      QuotientGroup.mk' N
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
-          (a : IdeleGroup K)) := by
-  let e :=
-    RayClass.rayClassGroupEquivIdealRayClassGroup m
-  let c : RayClass.RayClassGroup m :=
-    QuotientGroup.mk'
-      (RayClass.Modulus.congruenceSubgroup m)
-      (QuotientGroup.mk'
-        (IdeleGroup.principalSubgroup K)
-        (a : IdeleGroup K))
-  have he :
-      e c = RayClass.idealRayProjection m a := by
-    exact rayClassGroupEquivIdealRayClassGroup_mk_primeTo m a
-  have he' :
-      e.symm (RayClass.idealRayProjection m a) = c := by
-    rw [← he, e.symm_apply_apply]
-  change
-    IdealClassFieldTheory.rayClassToNormQuotient m N hm
-        (e.symm (RayClass.idealRayProjection m a)) =
-      QuotientGroup.mk' N
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
-          (a : IdeleGroup K))
-  rw [he', IdealClassFieldTheory.rayClassToNormQuotient_mk]
 
 /-- Outside a defining modulus, the ideal-theoretic Frobenius class is
 the quotient class of the normalized one-place prime idèle. -/
 @[simp]
 theorem idealFrobeniusClass_eq_finitePrimeIdeleClass
     (m : RayClass.Modulus K)
-    (N : Subgroup (IdeleClassGroup K))
+    (N : Subgroup (NumberField.IdeleClassGroup (𝓞 K) K))
     (hm : RayClass.Modulus.congruenceSubgroup m ≤ N)
     (v : HeightOneSpectrum (𝓞 K))
     (hv : v ∉ m.finitePart.support) :
     IdealClassFieldTheory.idealFrobeniusClass
         m N hm v hv =
       QuotientGroup.mk' N
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
-          (finitePrimeIdele v)) := by
+        (IdeleGroup.toStandardClass K (finitePrimeIdele v)) := by
   rw [IdealClassFieldTheory.idealFrobeniusClass,
     ← primeToIdealMap_finitePrimeIdele m v hv,
-    idealArtinMap_primeToIdealMap]
+    IdealClassFieldTheory.idealArtinMap_primeToIdealMap]
 
 /-- The ideal Artin Frobenius class for the big Hilbert norm subgroup is
 the canonical big-Hilbert Frobenius class. -/
@@ -305,7 +212,7 @@ theorem
               (RayClass.Modulus.narrowOfFinite
                 (0 : RayClass.FiniteModulus K)) ∧
           toPrincipalIdeal (𝓞 K) K x =
-            FractionalIdealGroup.prime v := by
+            finitePrimeFractionalIdeal v := by
   rw [
     bigHilbertIdealFrobeniusClass_eq_bigHilbertFrobeniusClass,
     bigHilbertFrobeniusClass_eq_one_iff_exists_totallyPositiveGenerator]
@@ -352,13 +259,13 @@ theorem orderOf_smallHilbertIdealFrobeniusClass
           exact Finset.notMem_empty v)) =
       orderOf
         (ClassGroup.mk K
-          (FractionalIdealGroup.prime v)) := by
+          (finitePrimeFractionalIdeal v)) := by
   rw [smallHilbertIdealFrobeniusClass_eq_smallHilbertFrobeniusClass]
   exact
     (smallHilbertClassFieldQuotientEquivClassGroup
       (K := K)).symm.orderOf_eq
         (ClassGroup.mk K
-          (FractionalIdealGroup.prime v))
+          (finitePrimeFractionalIdeal v))
 
 /-- The small-Hilbert ideal Artin Frobenius is trivial exactly when its
 prime ideal is principal. -/
@@ -373,7 +280,7 @@ theorem smallHilbertIdealFrobeniusClass_eq_one_iff_principal
           rw [RayClass.Modulus.finitePart_zero, Finsupp.support_zero]
           exact Finset.notMem_empty v) =
         1 ↔
-      FractionalIdealGroup.prime v ∈
+      finitePrimeFractionalIdeal v ∈
         (toPrincipalIdeal (𝓞 K) K).range := by
   rw [smallHilbertIdealFrobeniusClass_eq_smallHilbertFrobeniusClass]
   exact

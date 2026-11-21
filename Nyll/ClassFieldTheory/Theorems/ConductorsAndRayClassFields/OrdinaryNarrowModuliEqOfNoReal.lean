@@ -19,10 +19,10 @@ universe u
 class-group moduli coincide. -/
 theorem ordinaryRayClassModulus_eq_narrow_of_noReal
     (K : Type u) [Field K] [NumberField K]
-    [IsEmpty (RayClassRealPlace K)] :
+    [IsEmpty (RayClass.RealPlace K)] :
     ordinaryRayClassModulus K = narrowRayClassModulus K := by
   classical
-  have h : (Finset.univ : Finset (RayClassRealPlace K)) = ∅ := by
+  have h : (Finset.univ : Finset (RayClass.RealPlace K)) = ∅ := by
     ext v
     exact isEmptyElim v
   unfold ordinaryRayClassModulus narrowRayClassModulus

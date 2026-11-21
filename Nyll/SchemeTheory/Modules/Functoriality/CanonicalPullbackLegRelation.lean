@@ -27,6 +27,10 @@ open Scheme_Modules_toDescentData_map_bijective_of_openCover.AlgebraicGeometry.S
 
 namespace AlgebraicCurves.Geometry.Sheaves.DescentComparison
 
+private theorem mdl_map_toFunctor {X Y : Scheme.{u}} (f : X ⟶ Y) :
+    (Mdl.map f.op.toLoc).toFunctor = Scheme.Modules.pullback f :=
+  rfl
+
 /-- The prescribed canonical transition, with native module objects fixed
 before any geometric pullback schemes are substituted. -/
 noncomputable def canonicalTransition
@@ -192,20 +196,10 @@ theorem canonical_pullback_leg_relation
         m.op.toLoc (by rw [← G₂]; rfl))).symm.app ((Scheme.Modules.pullback p).obj M)
     N ≫ (C₂ ≪≫ (Scheme.Modules.pullback r₂).mapIso K₂ ≪≫ T₂).hom =
       (C₁ ≪≫ (Scheme.Modules.pullback r₁).mapIso K₁ ≪≫ T₁).hom := by
-  intro N C₁ C₂ K₁ K₂ T₁ T₂
-  have hN := congrArg
-    (fun γ : (Scheme.Modules.pullback a₁).obj ((Scheme.Modules.pullback (f i)).obj M) ⟶
-        (Scheme.Modules.pullback a₂).obj ((Scheme.Modules.pullback (f j)).obj M) =>
-      (Scheme.Modules.pullback s).map γ)
-    (canonicalTransition_eq_prescribed (f i) (f j) d a₁ a₂ e₁ e₂ M)
-  have H := prescribed_pullback_leg_relation
+  have h := prescribed_pullback_leg_relation
     f f' p p' w M d m s i j a₁ a₂ r₁ r₂ e₁ e₂ G₁ G₂ E₁ E₂ hq
-  exact (congrArg
-    (fun n : (Scheme.Modules.pullback s).obj
-        ((Scheme.Modules.pullback a₁).obj ((Scheme.Modules.pullback (f i)).obj M)) ⟶
-      (Scheme.Modules.pullback s).obj
-        ((Scheme.Modules.pullback a₂).obj ((Scheme.Modules.pullback (f j)).obj M)) =>
-      n ≫ (C₂ ≪≫ (Scheme.Modules.pullback r₂).mapIso K₂ ≪≫ T₂).hom) hN).trans H
+  simpa only [CategoryTheory.Pseudofunctor.DescentComparison.CanonicalPullbackLegRelation,
+    Cat.Hom.comp_toFunctor, Functor.comp_obj, mdl_map_toFunctor, canonicalTransition] using! h
 
 /-- Canonical overlap coherence in the native module categories.
 Every commutative square is supplied by the original geometric maps. -/

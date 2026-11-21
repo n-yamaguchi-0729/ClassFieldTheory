@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.PresentedAbsoluteArtinTransfer
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.NativeRayArtinTransfer
 
@@ -36,7 +38,7 @@ variable (k : Type w) (K : Type u) (L : Type v) [Field k] [Finite k] [Field K] [
   (H : FiniteAbstractField Gal(SeparableClosure K/K)) [H.field.toSubgroup.Normal]
 
 attribute [local instance]
-  presentedFixedFieldSeparableClosureAlgebra presentedFixedFieldSeparableClosureSMul
+  finiteFixedFieldSeparableClosureAlgebra finiteFixedFieldSeparableClosureSMul
 
 variable [Algebra L (abstractFixedField K (SeparableClosure K) H.field)]
   [IsScalarTower K L (abstractFixedField K (SeparableClosure K) H.field)]
@@ -55,7 +57,7 @@ theorem presentedAbsoluteTransfer_mem_artinRaySubgroup
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
     (a : localAbsoluteAbelianProfinite K) (ha : a ∈ artinRaySubgroup m) :
     nativeAbsoluteTransferOfDegreeOnePresentation K L H hLF eF eL a ∈
-      artinRaySubgroup (rayModulusBaseChange L m) := by
+      artinRaySubgroup (reindexAlongPlaces L m) := by
   obtain ⟨c, hc, rfl⟩ := ha
   refine ⟨IdeleClassGroup.baseChange (k := k) (K := K) (L := L) c,
     baseChange_mem_reducedRayClassSubgroup m hm c hc, ?_⟩
@@ -66,10 +68,10 @@ reduced ray quotient. -/
 def nativeRayTransferOfDegreeOnePresentation
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1) :
     (localAbsoluteAbelianProfinite K ⧸ artinRaySubgroup m) →ₜ*
-      (localAbsoluteAbelianProfinite L ⧸ artinRaySubgroup (rayModulusBaseChange L m)) := by
+      (localAbsoluteAbelianProfinite L ⧸ artinRaySubgroup (reindexAlongPlaces L m)) := by
   let t := nativeAbsoluteTransferOfDegreeOnePresentation K L H hLF eF eL
   let f := QuotientGroup.map (artinRaySubgroup m)
-    (artinRaySubgroup (rayModulusBaseChange L m)) t.toMonoidHom
+    (artinRaySubgroup (reindexAlongPlaces L m)) t.toMonoidHom
     (presentedAbsoluteTransfer_mem_artinRaySubgroup k K L H hLF eF eL m hm)
   refine { toMonoidHom := f, continuous_toFun := ?_ }
   rw [← (QuotientGroup.isOpenQuotientMap_mk
@@ -81,22 +83,22 @@ theorem nativeRayTransferOfDegreeOnePresentation_mk
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (a : localAbsoluteAbelianProfinite K) :
     nativeRayTransferOfDegreeOnePresentation k K L H hLF eF eL m hm
         (QuotientGroup.mk' (artinRaySubgroup m) a) =
-      QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange L m))
+      QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces L m))
         (nativeAbsoluteTransferOfDegreeOnePresentation K L H hLF eF eL a) := rfl
 
 /-- Actual restricted-product inclusion commutes with original transfer
 into the actual upper field, using native reciprocity at both ends. -/
 theorem restrictedProductAbsoluteArtin_baseChange_presentedTransfer
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (a : RayRestrictedProduct m) :
-    restrictedProductAbsoluteArtin (rayModulusBaseChange L m)
-        (restrictedRayBaseChange (L := L) m hm a) =
+    restrictedProductAbsoluteArtin (reindexAlongPlaces L m)
+        (restrictedRayBaseChange (L := L) m a) =
       nativeRayTransferOfDegreeOnePresentation k K L H hLF eF eL m hm
         (restrictedProductAbsoluteArtin m a) := by
   obtain ⟨b, rfl⟩ := ideleToRayRestrictedProduct_surjective m a
   rw [restrictedRayBaseChange_idele, restrictedProductAbsoluteArtin_idele,
     restrictedProductAbsoluteArtin_idele, nativeRayTransferOfDegreeOnePresentation_mk,
     ← IdeleClassGroup.baseChange_mk]
-  exact congrArg (QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange L m)))
+  exact congrArg (QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces L m)))
     (absoluteArtin_baseChange_presentedTransfer k K L H hLF eF eL (IdeleClassGroup.mk b))
 
 end FunctionField.RayClass

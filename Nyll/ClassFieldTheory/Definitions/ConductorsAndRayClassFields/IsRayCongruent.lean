@@ -78,6 +78,24 @@ theorem inv {K : Type u} [Field K] [NumberField K]
   · intro v hv
     simpa only [Units.val_inv_eq_inv_val, map_inv₀] using inv_pos.mpr (hx.2 v hv)
 
+/-- An element ray-congruent for a larger modulus is ray-congruent for a
+smaller modulus. -/
+theorem of_le
+    {K : Type u} [Field K] [NumberField K]
+    {m n : RayClassModulus K} (hmn : m ≤ n)
+    {x : Kˣ} (hx : IsRayCongruent n x) :
+    IsRayCongruent m x := by
+  constructor
+  · intro v hv
+    have hvn : v ∈ n.finitePart.support := by
+      apply Finsupp.mem_support_iff.mpr
+      have hpos : 0 < m.finitePart v :=
+        Nat.pos_of_ne_zero (Finsupp.mem_support_iff.mp hv)
+      exact Nat.ne_of_gt (lt_of_lt_of_le hpos (hmn.1 v))
+    exact rayLocalHigherUnitGroup_antitone v (hmn.1 v) (hx.1 v hvn)
+  · intro v hv
+    exact hx.2 v (hmn.2 hv)
+
 end IsRayCongruent
 
 end ClassFieldTheory

@@ -215,8 +215,6 @@ Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechKerBaseChangeTowerEq
 Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechKerMapInjective.lean
 Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordBijectiveCokerMapBaseChange.lean
 Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordBijectiveKerMapBaseChange.lean
-Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordFiniteK0.lean
-Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordFlatK0.lean
 Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordProjectiveK0.lean
 Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechMumfordProjectiveKer.lean
 Nyll/AlgebraicCurves/Cohomology/Cech/BaseChange/TwoChartCechProjectiveKer.lean
@@ -426,6 +424,8 @@ Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveSurjectiveUnitAppTopInvMod
 Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperCurveTwoAffineCover.lean
 Nyll/AlgebraicCurves/Geometry/Curves/SmoothProperGeometricallyConnected.lean
 Nyll/AlgebraicCurves/Geometry/Curves/TwoAffineFibreRiemannRochGenus.lean
+Nyll/AlgebraicCurves/Geometry/Deformation/RigKerDualNumber.lean
+Nyll/AlgebraicCurves/Geometry/Deformation/RigKerDualNumberBaseTransport.lean
 Nyll/AlgebraicCurves/Geometry/Descent/DescentAction.lean
 Nyll/AlgebraicCurves/Geometry/Descent/DescentActionEffectiveFiniteEtale.lean
 Nyll/AlgebraicCurves/Geometry/Descent/DescentActionEffectivePullback.lean
@@ -605,7 +605,6 @@ Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverSubsingletonH1Sec
 Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverSubsingletonH1SectionsOfSubsingletonH1.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/Cohomology/TwoAffineCoverToH0Bijective.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/Covers/MemIffSubsetUnionPreimageOrDisjoint.lean
-Nyll/AlgebraicCurves/Geometry/Schemes/Covers/MumfordTruncation.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/Covers/OrderedAffineCoverComap.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/Covers/OrderedAffineCoverCompactSpace.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/FunctionFields/IsAffineOpenRangeAlgebraMapFunctionFieldEqIInf.lean
@@ -632,7 +631,6 @@ Nyll/AlgebraicCurves/Geometry/Schemes/Points/HomIsClosedIrreducibleSubsetFiber.l
 Nyll/AlgebraicCurves/Geometry/Schemes/Points/MemIsClosedSingletonNe.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/Points/OverHomBaseClosedPointEq.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/Points/UniversallyInjectiveAlgClosedPointsEq.lean
-Nyll/AlgebraicCurves/Geometry/Schemes/Quotients/InvariantIsAffineOpenFiniteLocallyFreeEquivalenceRelation.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/Quotients/QuotientFiniteLocallyFreeEquivalenceRelation.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/Quotients/QuotientQuotientRestrict.lean
 Nyll/AlgebraicCurves/Geometry/Schemes/RigidifiedLineBundleOfInvertible.lean
@@ -692,7 +690,6 @@ Nyll/AlgebraicCurves/Geometry/Sheaves/Divisors/ZeroSchemeIdealCompLe.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/BasicOpenFrameFramePullback.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/InvertibleBasisOne.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/InvertibleIsFrameOnApp.lean
-Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/InvertibleModuleFrames.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Frames/IsFrameOnTensorPowThree.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/InvertibleIsoEvAppIsoCurryBraidingEv.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Invertible/InvertibleIsoLocallySurjective.lean
@@ -731,7 +728,6 @@ Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleDualTensor.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleIsoEvAppTensorUnit.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleIsoTensorUnitField.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleTensor.lean
-Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/InvertibleTensorInverse.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/OfUnitSectionSectionDualApp.lean
 Nyll/AlgebraicCurves/Geometry/Sheaves/Tensor/ShortExactKerModuleTensor.lean
 Nyll/AlgebraicCurves/Hilbert/SymmetricPowerData.lean
@@ -774,7 +770,6 @@ Nyll/AlgebraicCurves/Models/LocalGeometry/EqRangeStalkEq.lean
 Nyll/AlgebraicCurves/Models/LocalGeometry/TranscendentalMemRangeStalkIffNe.lean
 Nyll/AlgebraicCurves/Models/Points/AlgEquivPointPlaceCompHomEqAlgAutSmulPointPlace.lean
 Nyll/AlgebraicCurves/Models/Points/Places.lean
-Nyll/AlgebraicCurves/Models/Points/UniquePointOrdEqOrdEqZero.lean
 Nyll/AlgebraicCurves/Models/Ramification/Ramification.lean
 Nyll/AlgebraicCurves/Models/Sections/RationalSectionBoundaryPlace.lean
 Nyll/AlgebraicCurves/Places/Basic.lean
@@ -806,7 +801,6 @@ Nyll/AlgebraicCurves/Places/Orders/PositiveOrderElement.lean
 Nyll/AlgebraicCurves/Places/Orders/TranscendentalOrdNeZero.lean
 Nyll/AlgebraicCurves/Places/Ramification/CardFiberOverMulRamificationIndexMulInertiaDeg.lean
 Nyll/AlgebraicCurves/Places/Ramification/FiberCenterResidueComparison.lean
-Nyll/AlgebraicCurves/Places/Ramification/InertiaDegEqInertiaDegFiberCenter.lean
 Nyll/AlgebraicCurves/Places/Ramification/InertiaDegEqRestrictEq.lean
 Nyll/AlgebraicCurves/Places/Ramification/InertiaDegPos.lean
 Nyll/AlgebraicCurves/Places/Ramification/LeOrdIffMemPowFiberCenter.lean
@@ -853,6 +847,7 @@ Nyll/AlgebraicCurves/Places/Restriction/RestrictAlongEqSmulEqInvSmulPow.lean
 Nyll/AlgebraicCurves/Places/Restriction/RestrictEq.lean
 Nyll/AlgebraicCurves/Places/Restriction/RestrictEqMem.lean
 Nyll/AlgebraicCurves/Places/Restriction/RestrictionComposition.lean
+Nyll/AlgebraicCurves/Places/RingEquiv.lean
 Nyll/AlgebraicCurves/Places/Taylor/UniquePDigitsTranscendental.lean
 Nyll/AlgebraicCurves/Places/ValuationRings/BasicValuationSubringFiniteDimensional.lean
 Nyll/AlgebraicCurves/Places/ValuationRings/BasicValuationSubringSeparable.lean
@@ -962,6 +957,7 @@ Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverOf.lean
 Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverOfAugInjective.lean
 Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverOfKerDSuccLeRangeD.lean
 Nyll/SchemeTheory/Cohomology/Cech/OrderedAffineCoverOfKerDZeroEqRangeAug.lean
+Nyll/SchemeTheory/Cohomology/Cech/OrderedFaceMaps.lean
 Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModule.lean
 Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModuleDSq.lean
 Nyll/SchemeTheory/Cohomology/Cech/ProjSpaceCechGradedModuleFiniteCohomology.lean
@@ -978,7 +974,6 @@ Nyll/SchemeTheory/Cohomology/Sheaves/CoherentBaseChange.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/DoubleComplex.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafAffSESConnectingHom.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafBasicOpenSectionsFree.lean
-Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafCoherentCoker.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafCoherentIdealPowQuot.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafDCompD.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafDEqDDMemPow.lean
@@ -994,10 +989,10 @@ Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayQuasicoherentRelHPreshea
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayRelHPresheafObjEquiv.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLerayRowsExact.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafLeraySupportedInRelHPresheafChow.lean
-Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafQuasicoherentCoker.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafQuasicoherentIdealPow.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafQuasicoherentIdealPowQuot.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/ModulePresheafSupportedInIdealPowQuot.lean
+Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafCoherence.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafConstructions.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafHom.lean
 Nyll/SchemeTheory/Cohomology/Sheaves/OModulePresheafIdealFiltration.lean
@@ -1054,6 +1049,7 @@ Nyll/SchemeTheory/Modules/Frames/BasisPullbackFieldPoint.lean
 Nyll/SchemeTheory/Modules/Frames/FrameBridge.lean
 Nyll/SchemeTheory/Modules/Frames/FrameDescent.lean
 Nyll/SchemeTheory/Modules/Frames/FrameFromTrivialization.lean
+Nyll/SchemeTheory/Modules/Frames/FrameGeneration.lean
 Nyll/SchemeTheory/Modules/Frames/FrameLinearCombination.lean
 Nyll/SchemeTheory/Modules/Frames/FrameLocality.lean
 Nyll/SchemeTheory/Modules/Frames/Frames.lean
@@ -1062,6 +1058,7 @@ Nyll/SchemeTheory/Modules/Frames/IsFrameOnSheafificationAdjunctionUnitIotaMulti.
 Nyll/SchemeTheory/Modules/Frames/LocallyFreeBasis.lean
 Nyll/SchemeTheory/Modules/Frames/ProjectivePresentationFromFrames.lean
 Nyll/SchemeTheory/Modules/Frames/PullbackFrame.lean
+Nyll/SchemeTheory/Modules/Functoriality/AffinePullbackSections.lean
 Nyll/SchemeTheory/Modules/Functoriality/AffineSectionsBaseChange.lean
 Nyll/SchemeTheory/Modules/Functoriality/BaseChangeComposition.lean
 Nyll/SchemeTheory/Modules/Functoriality/BaseChangeHom.lean
@@ -1106,6 +1103,8 @@ Nyll/SchemeTheory/Modules/Sections/FibreProductSectionsBijective.lean
 Nyll/SchemeTheory/Modules/Sections/FiniteSectionsLocallyTrivial.lean
 Nyll/SchemeTheory/Modules/Sections/IhomSections.lean
 Nyll/SchemeTheory/Modules/Sections/RankAtStalkSectionsEqOne.lean
+Nyll/SchemeTheory/Modules/Sections/SectionsAlgebra.lean
+Nyll/SchemeTheory/Modules/Sections/SectionsGluing.lean
 Nyll/SchemeTheory/Modules/Tensor/Monoidal.lean
 Nyll/SchemeTheory/Modules/Tensor/PresheafPullbackMonoidal.lean
 Nyll/SchemeTheory/Modules/Tensor/PullbackMonoidal.lean
@@ -1125,11 +1124,13 @@ Nyll/SchemeTheory/Modules/Tensor/TensorSections.lean
 Nyll/SchemeTheory/Morphisms/AppTopPullbackMapEqAppTopPullbackFst.lean
 Nyll/SchemeTheory/Morphisms/ChowDatum.lean
 Nyll/SchemeTheory/Morphisms/ChowDatumProj.lean
+Nyll/SchemeTheory/Morphisms/ClosedBaseChangeLifts.lean
 Nyll/SchemeTheory/Morphisms/GeometricallyConnectedDescent.lean
 Nyll/SchemeTheory/Morphisms/GeometricallyIntegralAlgClosed.lean
 Nyll/SchemeTheory/Morphisms/GeometricallyIrreducibleOverAlgebraicallyClosed.lean
 Nyll/SchemeTheory/Morphisms/ProperGlobalSectionsFinite.lean
 Nyll/SchemeTheory/Morphisms/ReducedSmooth.lean
+Nyll/SchemeTheory/Morphisms/SeparatedQuasiCompactDescent.lean
 Nyll/SchemeTheory/Morphisms/SmoothDimensionCharts.lean
 Nyll/SchemeTheory/Morphisms/SmoothReducedReduced.lean
 Nyll/SchemeTheory/ProjectiveSpace/AwayRatio.lean
@@ -1169,6 +1170,7 @@ Nyll/SchemeTheory/RingTheory/LinearAlgebra/ModuleKerBaseChangeField.lean
 Nyll/SchemeTheory/RingTheory/LinearAlgebra/RankLocalization.lean
 Nyll/SchemeTheory/RingTheory/LinearAlgebra/SquareZeroProjectiveModules.lean
 Nyll/SchemeTheory/RingTheory/Localization/InertiaDegree.lean
+Nyll/SchemeTheory/RingTheory/MumfordTruncation.lean
 Nyll/SchemeTheory/RingTheory/Polynomial/AlgebraPolynomialIsUnitAevalImpEtaleLevelSet.lean
 Nyll/SchemeTheory/RingTheory/Polynomial/HomogeneousIdealHomogeneousPosMemNotMem.lean
 Nyll/SchemeTheory/RingTheory/Polynomial/PolynomialIsUnitAevalSubMemMaximalIdealImpEq.lean
@@ -1207,6 +1209,7 @@ Earlier copyright holders and authors are not replaced by Anthropic.
 Nyll/ValuedFieldTheory/Valuation/Completion/AdicCompletion.lean
 Nyll/ValuedFieldTheory/Valuation/DiscreteValuationField/AlgebraStandardSmoothDVRLocalizationAtPrime.lean
 Nyll/ValuedFieldTheory/Valuation/Subring/Discrete/DVRAlgebraMapMemFinite.lean
+Nyll/ValuedFieldTheory/Valuation/Subring/Discrete/DVRAlgebraMapMemSeparable.lean
 Nyll/ValuedFieldTheory/Valuation/Subring/Discrete/IsPrincipalIdealRing.lean
 Nyll/ValuedFieldTheory/Valuation/Subring/Ramification/SmulEqCardStabilizerEqRamificationIdxMulInertiaDeg.lean
 
@@ -1223,6 +1226,42 @@ The initially-small argument is extracted from Mathlib/AlgebraicGeometry/Sites/E
 at https://github.com/leanprover-community/mathlib4/blob/065356127b1dc0016f66b7283ce0ce2c4055aa55/Mathlib/AlgebraicGeometry/Sites/EtalePoint.lean.
 The bottom-topology point and arbitrary-field generalization are by
 Naganori Yamaguchi (assisted by OpenAI Codex).
+
+Nyll/GaloisCohomology/Cyclic/IntegralTateCup.lean
+Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
+Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex), The Tau Ceti contributors
+
+The degree-shifting construction follows Tau Ceti's
+`RepresentationTheory/Homological/TateCohomology/Cup/Product.lean`.
+
+Nyll/GaloisCohomology/Cyclic/IntegralTateCupConnecting.lean
+Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
+Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex), The Tau Ceti contributors
+
+The comparison with split sequences follows Tau Ceti's
+`RepresentationTheory/Homological/TateCohomology/Cup/Delta.lean`.
+
+Nyll/GaloisCohomology/Cyclic/IntegralTateSplitSequences.lean
+Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
+Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex), The Tau Ceti contributors
+
+The comparison with split sequences follows Tau Ceti's
+`RepresentationTheory/Homological/TateCohomology/Cup/Delta.lean`.
+
+Nyll/GaloisCohomology/Cyclic/IntegralTateTensorShift.lean
+Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
+Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Naganori Yamaguchi (assisted by OpenAI Codex), Claude
+
+The tensor trace argument follows Tau Ceti's
+`RepresentationTheory/Homological/TateCohomology/Coinduced.lean`.
 
 Nyll/SchemeTheory/CategoryTheory/DescentComparison.lean
 Copyright (c) 2026 Naganori Yamaguchi. All rights reserved.
@@ -1277,3 +1316,9 @@ Nyll/SchemeTheory/Sheaves/OverExtension.lean
 Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: OpenAI Codex
+
+Nyll/ValuedFieldTheory/Ramification/Different/GaloisPolynomial.lean
+Copyright (c) 2026 The Tau Ceti contributors. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: The Tau Ceti contributors
+Adapted from TauCeti/FieldTheory/Galois/Minpoly.lean at ca32605ff53921fa0689dd312618b7cfaafa7e43.

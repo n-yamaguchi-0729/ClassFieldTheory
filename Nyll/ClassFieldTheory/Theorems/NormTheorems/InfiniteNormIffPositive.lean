@@ -6,7 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Mathlib.NumberTheory.NumberField.Completion.LiesOverInstances
+public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 public import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
@@ -26,7 +26,6 @@ factor of the tensor product.
 open scoped NumberField TensorProduct
 open NumberField
 
-open scoped NumberField.LiesOver
 
 noncomputable section
 
@@ -51,6 +50,8 @@ theorem isNormAtInfinitePlace_iff_positive_of_real_complex
   let xv : v.Completionˣ := Units.map (algebraMap K v.Completion) x
   let : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
+  let : Algebra v.Completion w.Completion :=
+    AbsoluteValue.Completion.algebraOfLiesOver v.1 w.1
   constructor
   · rintro ⟨y, hy⟩
     have hnorm : xv ∈ infiniteTensorNormSubgroup (K := K) (L := L) v := by

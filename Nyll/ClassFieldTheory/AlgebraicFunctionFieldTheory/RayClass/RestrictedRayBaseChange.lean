@@ -8,17 +8,20 @@ module
 
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayReciprocity
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RayPrincipalUnitValues
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.HigherUnitBaseChange
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChange
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionUnramified
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
 public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
+public import Nyll.AlgebraicCurves.Divisors.Modulus.Modulus
 
 /-!
 # Actual restricted-ray transitions under finite field extension
 
-The original completion maps preserve the full first principal-unit groups.
-For a reduced boundary modulus they therefore induce a map of the actual
-restricted ray products. This map is constructed from idele base change,
+The original completion maps preserve every principal-unit depth and
+therefore induce maps on restricted ray products with arbitrary boundary
+multiplicities. This map is constructed from idele base change,
 before its restriction to the absolute-reciprocity kernels.
 
 The kernel transition carries every original function to its actual field
@@ -44,21 +47,58 @@ variable {k K L : Type*} [Field k] [Field K] [Field L]
     [FiniteDimensional K L]
 
 variable (L) in
-/-- Pull the modulus function back along the original restriction of places.
+/-- Reindex the modulus coefficients along restriction of places.
 Its support stays finite because the extension has finite place fibres. -/
-def rayModulusBaseChange (m : Modulus k K) : Modulus k L :=
+def reindexAlongPlaces (m : Modulus k K) : Modulus k L :=
   Finsupp.ofSupportFinite (fun w : Place k L => m (w.restrict K))
     (Filter.eventually_cofinite.mp
       ((IdeleGroup.tendsto_restrict_cofinite (k := k) (K := K) (L := L)).eventually
         (Filter.eventually_cofinite.mpr m.hasFiniteSupport)))
 
 /-- The new exponent is precisely the exponent at the original place below. -/
-theorem rayModulusBaseChange_apply (m : Modulus k K) (w : Place k L) :
-    rayModulusBaseChange L m w = m (w.restrict K) := rfl
+theorem reindexAlongPlaces_apply (m : Modulus k K) (w : Place k L) :
+    reindexAlongPlaces L m w = m (w.restrict K) := rfl
+
+variable (L) in
+/-- Pull back an effective divisor, multiplying each coefficient by the
+ramification index at the extending place. -/
+def pullbackDivisor (m : Modulus k K) : Modulus k L :=
+  Finsupp.ofSupportFinite
+    (fun w : Place k L => w.ramificationIndex K * m (w.restrict K))
+    ((reindexAlongPlaces L m).hasFiniteSupport.subset (by
+      intro w hw
+      change w.ramificationIndex K * m (w.restrict K) ≠ 0 at hw
+      change m (w.restrict K) ≠ 0
+      intro hz
+      exact hw (by rw [hz, mul_zero])))
+
+/-- Divisor pullback weights a multiplicity by the actual ramification index. -/
+@[simp]
+theorem pullbackDivisor_apply (m : Modulus k K) (w : Place k L) :
+    pullbackDivisor L m w = w.ramificationIndex K * m (w.restrict K) :=
+  rfl
+
+/-- Passing to integer divisors recovers the existing geometric pullback. -/
+theorem pullbackDivisor_toDivisor [HasPrincipalDivisors k L] (m : Modulus k K) :
+    AlgebraicCurve.Modulus.toDivisor (pullbackDivisor L m) =
+      AlgebraicCurve.Divisor.pullback L (AlgebraicCurve.Modulus.toDivisor m) := by
+  apply Finsupp.ext
+  intro w
+  rw [AlgebraicCurve.Modulus.toDivisor_apply, pullbackDivisor_apply,
+    AlgebraicCurve.Divisor.pullback_apply, AlgebraicCurve.Modulus.toDivisor_apply,
+    Nat.cast_mul]
+
+/-- At an everywhere unramified extension, divisor pullback is coefficient reindexing. -/
+theorem pullbackDivisor_eq_reindexAlongPlaces_of_unramified
+    (m : Modulus k K) (h : ∀ w : Place k L, w.ramificationIndex K = 1) :
+    pullbackDivisor L m = reindexAlongPlaces L m := by
+  apply Finsupp.ext
+  intro w
+  rw [pullbackDivisor_apply, reindexAlongPlaces_apply, h w, one_mul]
 
 /-- A nonempty boundary remains nonempty under actual finite extension. -/
-theorem rayModulusBaseChange_ne_zero (m : Modulus k K) (hm : m ≠ 0) :
-    rayModulusBaseChange L m ≠ 0 := by
+theorem reindexAlongPlaces_ne_zero (m : Modulus k K) (hm : m ≠ 0) :
+    reindexAlongPlaces L m ≠ 0 := by
   intro h
   apply hm
   apply Finsupp.ext
@@ -82,55 +122,47 @@ theorem localBaseChange_mem_firstHigherUnit_iff (w : Place k L)
     ← map_sub, Place.algebraMap_adicCompletionComap_eq, Place.valued_adicCompletionComap]
   exact pow_lt_one_iff_of_nonneg zero_le (w.ramificationIndex_pos (F := K)).ne'
 
-/-- Actual idele base change respects every reduced boundary congruence. -/
-theorem baseChange_mem_reducedCongruence (m : Modulus k K)
-    (hm : ∀ v, m v ≤ 1) (a : IdeleGroup k K) (ha : a ∈ congruenceSubgroup m) :
+/-- Actual idele base change respects every boundary multiplicity. -/
+theorem baseChange_mem_congruence (m : Modulus k K)
+    (a : IdeleGroup k K) (ha : a ∈ congruenceSubgroup m) :
     IdeleGroup.baseChange (K := K) (L := L) a ∈
-      congruenceSubgroup (rayModulusBaseChange L m) := by
+      congruenceSubgroup (reindexAlongPlaces L m) := by
   intro w
-  change IdeleGroup.localBaseChange (K := K) w (a (w.restrict K)) ∈
-    localHigherUnitGroup w (m (w.restrict K))
-  rcases Nat.eq_zero_or_pos (m (w.restrict K)) with hzero | hpos
-  · rw [hzero, localHigherUnitGroup_zero]
-    apply IdeleGroup.localBaseChange_mem_localUnits
-    exact localHigherUnitGroup_le_localUnits _ _ (ha (w.restrict K))
-  · have hone : m (w.restrict K) = 1 := Nat.le_antisymm (hm _) hpos
-    rw [hone]
-    apply (localBaseChange_mem_firstHigherUnit_iff w _).mpr
-    simpa only [hone] using ha (w.restrict K)
+  exact localBaseChange_mem_higherUnit w (m (w.restrict K)) (a (w.restrict K))
+    (ha (w.restrict K))
 
 /-- The map on local ray quotients induced by the original idele inclusion. -/
-def rayLocalBaseChange (m : Modulus k K) (hm : ∀ v, m v ≤ 1) :
-    RayLocalQuotient m →* RayLocalQuotient (rayModulusBaseChange L m) :=
-  QuotientGroup.map (congruenceSubgroup m) (congruenceSubgroup (rayModulusBaseChange L m))
+def rayLocalBaseChange (m : Modulus k K) :
+    RayLocalQuotient m →* RayLocalQuotient (reindexAlongPlaces L m) :=
+  QuotientGroup.map (congruenceSubgroup m) (congruenceSubgroup (reindexAlongPlaces L m))
     (IdeleGroup.baseChange (K := K) (L := L))
-    (fun a ha => baseChange_mem_reducedCongruence m hm a ha)
+    (fun a ha => baseChange_mem_congruence m a ha)
 
 /-- Actual finite-extension transition on the restricted product of local ray factors. -/
-def restrictedRayBaseChange (m : Modulus k K) (hm : ∀ v, m v ≤ 1) :
-    RayRestrictedProduct m →* RayRestrictedProduct (rayModulusBaseChange L m) :=
-  (rayLocalRestrictedProductEquiv (rayModulusBaseChange L m)).toMonoidHom.comp
-    ((rayLocalBaseChange m hm).comp (rayLocalRestrictedProductEquiv m).symm.toMonoidHom)
+def restrictedRayBaseChange (m : Modulus k K) :
+    RayRestrictedProduct m →* RayRestrictedProduct (reindexAlongPlaces L m) :=
+  (rayLocalRestrictedProductEquiv (reindexAlongPlaces L m)).toMonoidHom.comp
+    ((rayLocalBaseChange m).comp (rayLocalRestrictedProductEquiv m).symm.toMonoidHom)
 
 /-- The transition is induced by the original completion maps on every idele. -/
-theorem restrictedRayBaseChange_idele (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem restrictedRayBaseChange_idele (m : Modulus k K)
     (a : IdeleGroup k K) :
-    restrictedRayBaseChange (L := L) m hm (ideleToRayRestrictedProduct m a) =
-      ideleToRayRestrictedProduct (rayModulusBaseChange L m)
+    restrictedRayBaseChange (L := L) m (ideleToRayRestrictedProduct m a) =
+      ideleToRayRestrictedProduct (reindexAlongPlaces L m)
         (IdeleGroup.baseChange (K := K) (L := L) a) := by
   have he : ideleToRayRestrictedProduct m a =
       rayLocalRestrictedProductEquiv m (QuotientGroup.mk' (congruenceSubgroup m) a) := rfl
   rw [he]
-  change rayLocalRestrictedProductEquiv (rayModulusBaseChange L m)
-    (rayLocalBaseChange m hm ((rayLocalRestrictedProductEquiv m).symm
+  change rayLocalRestrictedProductEquiv (reindexAlongPlaces L m)
+    (rayLocalBaseChange m ((rayLocalRestrictedProductEquiv m).symm
       (rayLocalRestrictedProductEquiv m (QuotientGroup.mk' (congruenceSubgroup m) a)))) = _
   rw [MulEquiv.symm_apply_apply]
   rfl
 
 /-- Every coordinate is the actual inclusion into the extending completion. -/
 theorem restrictedRayBaseChange_idele_apply
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (a : IdeleGroup k K) (w : Place k L) :
-    restrictedRayBaseChange (L := L) m hm (ideleToRayRestrictedProduct m a) w =
+    (m : Modulus k K) (a : IdeleGroup k K) (w : Place k L) :
+    restrictedRayBaseChange (L := L) m (ideleToRayRestrictedProduct m a) w =
       QuotientGroup.mk' (localHigherUnitGroup w (m (w.restrict K)))
         (IdeleGroup.localBaseChange (K := K) w (a (w.restrict K))) := by
   rw [restrictedRayBaseChange_idele]
@@ -139,14 +171,14 @@ theorem restrictedRayBaseChange_idele_apply
 variable [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
 
 /-- The actual transition sends diagonal functions to their original field images. -/
-theorem restrictedRayBaseChange_principal (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem restrictedRayBaseChange_principal (m : Modulus k K)
     (x : Kˣ) :
-    restrictedRayBaseChange (L := L) m hm (principalToRayRestrictedProduct m x) =
-      principalToRayRestrictedProduct (rayModulusBaseChange L m)
+    restrictedRayBaseChange (L := L) m (principalToRayRestrictedProduct m x) =
+      principalToRayRestrictedProduct (reindexAlongPlaces L m)
         (Units.map (algebraMap K L) x) := by
-  change restrictedRayBaseChange (L := L) m hm
+  change restrictedRayBaseChange (L := L) m
     (ideleToRayRestrictedProduct m (IdeleGroup.principalIdele k K x)) =
-      ideleToRayRestrictedProduct (rayModulusBaseChange L m)
+      ideleToRayRestrictedProduct (reindexAlongPlaces L m)
         (IdeleGroup.principalIdele k L (Units.map (algebraMap K L) x))
   rw [restrictedRayBaseChange_idele, IdeleGroup.baseChange_principalIdele]
 
@@ -172,63 +204,63 @@ variable {k : Type u} {K : Type v} {L : Type w}
 /-- The actual restricted-product transition carries the native absolute-Artin
 kernel into the native absolute-Artin kernel of the extended field. -/
 theorem restrictedRayBaseChange_mem_artinKernel
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (a : RayRestrictedProduct m)
+    (m : Modulus k K) (a : RayRestrictedProduct m)
     (ha : a ∈ (restrictedProductAbsoluteArtin m).ker) :
-    restrictedRayBaseChange (L := L) m hm a ∈
-      (restrictedProductAbsoluteArtin (rayModulusBaseChange L m)).ker := by
+    restrictedRayBaseChange (L := L) m a ∈
+      (restrictedProductAbsoluteArtin (reindexAlongPlaces L m)).ker := by
   have hsource : a ∈ (principalToRayRestrictedProduct m).range :=
     (congrArg (fun H : Subgroup (RayRestrictedProduct m) => a ∈ H)
       (restrictedProductAbsoluteArtin_ker m)).mp ha
   apply (congrArg
-    (fun H : Subgroup (RayRestrictedProduct (rayModulusBaseChange L m)) =>
-      restrictedRayBaseChange (L := L) m hm a ∈ H)
-    (restrictedProductAbsoluteArtin_ker (rayModulusBaseChange L m))).mpr
+    (fun H : Subgroup (RayRestrictedProduct (reindexAlongPlaces L m)) =>
+      restrictedRayBaseChange (L := L) m a ∈ H)
+    (restrictedProductAbsoluteArtin_ker (reindexAlongPlaces L m))).mpr
   exact map_mem_range_of_commuting_square
     (principalToRayRestrictedProduct m)
-    (principalToRayRestrictedProduct (rayModulusBaseChange L m))
-    (restrictedRayBaseChange (L := L) m hm)
+    (principalToRayRestrictedProduct (reindexAlongPlaces L m))
+    (restrictedRayBaseChange (L := L) m)
     (Units.map (algebraMap K L).toMonoidHom)
-    (restrictedRayBaseChange_principal (L := L) m hm) hsource
+    (restrictedRayBaseChange_principal (L := L) m) hsource
 
 /-- The kernel transition is the restriction of actual idele base change;
 it is constructed before comparing the kernels with function groups. -/
-def principalArtinKernelBaseChange (m : Modulus k K) (hm : ∀ v, m v ≤ 1) :
+def principalArtinKernelBaseChange (m : Modulus k K) :
     (restrictedProductAbsoluteArtin m).ker →*
-      (restrictedProductAbsoluteArtin (rayModulusBaseChange L m)).ker where
-  toFun a := ⟨restrictedRayBaseChange (L := L) m hm a.val,
-    restrictedRayBaseChange_mem_artinKernel (L := L) m hm a.val a.property⟩
-  map_one' := Subtype.ext (map_one (restrictedRayBaseChange (L := L) m hm))
-  map_mul' a b := Subtype.ext (map_mul (restrictedRayBaseChange (L := L) m hm) a.val b.val)
+      (restrictedProductAbsoluteArtin (reindexAlongPlaces L m)).ker where
+  toFun a := ⟨restrictedRayBaseChange (L := L) m a.val,
+    restrictedRayBaseChange_mem_artinKernel (L := L) m a.val a.property⟩
+  map_one' := Subtype.ext (map_one (restrictedRayBaseChange (L := L) m))
+  map_mul' a b := Subtype.ext (map_mul (restrictedRayBaseChange (L := L) m) a.val b.val)
 
 /-- The kernel identifications commute with the original inclusion of functions. -/
 theorem principalArtinKernelBaseChange_equiv
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (hmzero : m ≠ 0) (x : Kˣ) :
-    principalArtinKernelBaseChange (L := L) m hm
+    (m : Modulus k K) (hmzero : m ≠ 0) (x : Kˣ) :
+    principalArtinKernelBaseChange (L := L) m
         (principalRestrictedArtinKernelEquiv m hmzero x) =
-      principalRestrictedArtinKernelEquiv (rayModulusBaseChange L m)
-        (rayModulusBaseChange_ne_zero m hmzero) (Units.map (algebraMap K L) x) := by
+      principalRestrictedArtinKernelEquiv (reindexAlongPlaces L m)
+        (reindexAlongPlaces_ne_zero m hmzero) (Units.map (algebraMap K L) x) := by
   apply Subtype.ext
-  exact restrictedRayBaseChange_principal m hm x
+  exact restrictedRayBaseChange_principal m x
 
 /-- The actual kernel transition is injective, as is the original field inclusion. -/
 theorem principalArtinKernelBaseChange_injective
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (hmzero : m ≠ 0) :
-    Function.Injective (principalArtinKernelBaseChange (L := L) m hm) := by
+    (m : Modulus k K) (hmzero : m ≠ 0) :
+    Function.Injective (principalArtinKernelBaseChange (L := L) m) := by
   intro a b hab
   obtain ⟨x, rfl⟩ := (principalRestrictedArtinKernelEquiv m hmzero).surjective a
   obtain ⟨y, rfl⟩ := (principalRestrictedArtinKernelEquiv m hmzero).surjective b
   rw [principalArtinKernelBaseChange_equiv, principalArtinKernelBaseChange_equiv] at hab
-  have hxy := (principalRestrictedArtinKernelEquiv (rayModulusBaseChange L m)
-    (rayModulusBaseChange_ne_zero m hmzero)).injective hab
+  have hxy := (principalRestrictedArtinKernelEquiv (reindexAlongPlaces L m)
+    (reindexAlongPlaces_ne_zero m hmzero)).injective hab
   exact congrArg (principalRestrictedArtinKernelEquiv m hmzero)
     (Units.map_injective (algebraMap K L).injective hxy)
 
 /-- Every original local order transforms by its actual ramification index. -/
 theorem principalArtinKernelBaseChange_order
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (hmzero : m ≠ 0)
+    (m : Modulus k K) (hmzero : m ≠ 0)
     (x : Kˣ) (w : Place k L) :
-    (restrictedRayOrder (rayModulusBaseChange L m) w
-        (principalArtinKernelBaseChange (L := L) m hm
+    (restrictedRayOrder (reindexAlongPlaces L m) w
+        (principalArtinKernelBaseChange (L := L) m
           (principalRestrictedArtinKernelEquiv m hmzero x))).toAdd =
       (w.ramificationIndex K : ℤ) * (w.restrict K).ord (x : K) := by
   rw [principalArtinKernelBaseChange_equiv,
@@ -245,11 +277,21 @@ variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     (Ω : Type w) [Field Ω] [Algebra K Ω] [Algebra k Ω] [IsScalarTower k K Ω]
     [IsSepClosed Ω]
 
+omit [HasPrincipalDivisors k K] in
+/-- At every multiplicity, an actual finite extension of the full constants
+has the same geometric divisor pullback and coefficient reindexing. -/
+theorem pullbackDivisor_fullConstantDegreeStage
+    (n : ℕ) [NeZero n] (m : Modulus k K) :
+    pullbackDivisor (fullConstantDegreeStage k K Ω n) m =
+      reindexAlongPlaces (fullConstantDegreeStage k K Ω n) m :=
+  pullbackDivisor_eq_reindexAlongPlaces_of_unramified m
+    (ramificationIndex_fullConstantDegreeStage k K Ω n)
+
 /-- Along the actual finite extensions of the full constants, the kernel
 transition preserves every original normalized integer order. The target
 function-field presentation and principal divisors are supplied internally. -/
 theorem principalArtinKernelBaseChange_fullConstant_order
-    (n : ℕ) [NeZero n] (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+    (n : ℕ) [NeZero n] (m : Modulus k K)
     (hmzero : m ≠ 0) (x : Kˣ) :
     let E := fullConstantDegreeStage k K Ω n
     let p := ClassFieldTheory.FunctionField.finiteExtensionRatFuncAlgebra k K E
@@ -259,8 +301,8 @@ theorem principalArtinKernelBaseChange_fullConstant_order
     let _ : HasPrincipalDivisors k E :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K E).toHasPrincipalDivisors
     ∀ w : Place k E,
-      (restrictedRayOrder (rayModulusBaseChange E m) w
-          (principalArtinKernelBaseChange (L := E) m hm
+      (restrictedRayOrder (reindexAlongPlaces E m) w
+          (principalArtinKernelBaseChange (L := E) m
             (principalRestrictedArtinKernelEquiv m hmzero x))).toAdd =
         (w.restrict K).ord (x : K) := by
   intro E p aRE hkRE hE hprincipal w

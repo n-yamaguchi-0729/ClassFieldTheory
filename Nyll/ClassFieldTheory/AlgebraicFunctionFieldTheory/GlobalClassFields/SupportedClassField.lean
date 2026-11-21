@@ -53,7 +53,7 @@ theorem exists_classField_unramified_away
   dsimp only at hexists
   obtain ⟨E, hEfinite, hEabelian, hEnorm⟩ := hexists
   have hfunctionE : FunctionField k E :=
-    IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+    IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
       (k := k) (K := K) (Ω := SeparableClosure K) E
   have hEprincipal : HasPrincipalDivisors k E :=
     (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K E).toHasPrincipalDivisors

@@ -21,6 +21,8 @@ public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.BaseChange
 public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.RelativePic0DesignationBaseChange
 
 public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicBaseChange
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
+public import Nyll.AlgebraicCurves.Geometry.Deformation.RigKerDualNumberBaseTransport
 
 /-!
 # Base change of a relative Picard representation
@@ -43,27 +45,6 @@ namespace RepBCSketch
 
 variable {R : Type u} [CommRing R] {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat.of R)}
   {ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c}
-
-/-- Identify iterated pullback of a rigidified line bundle with pullback along the composite. -/
-noncomputable def pullbackAlongComp {T T' T'' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
-    {t' : T' ⟶ Spec (CommRingCat.of R)} {t'' : T'' ⟶ Spec (CommRingCat.of R)}
-    (M : RigidifiedLineBundle c ε t) (φ : SchemeHomOver t' t) (ψ : SchemeHomOver t'' t') :
-    ((M.pullbackAlong φ).pullbackAlong ψ).L ≅ (M.pullbackAlong (postComp φ ψ)).L :=
-  (Scheme.Modules.pullbackComp (baseChangeSnd c ψ) (baseChangeSnd c φ)).app M.L ≪≫
-    (Scheme.Modules.pullbackCongr (baseChangeSnd_comp c φ ψ)).app M.L
-
-/-- Identify pullbacks of a rigidified line bundle along equal morphisms. -/
-noncomputable def pullbackAlongCongr {T T' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
-    {t' : T' ⟶ Spec (CommRingCat.of R)} (M : RigidifiedLineBundle c ε t) {φ ψ : SchemeHomOver t' t}
-    (e : φ.1 = ψ.1) : (M.pullbackAlong φ).L ≅ (M.pullbackAlong ψ).L :=
-  eqToIso (by cases φ; cases ψ; cases e; rfl)
-
-/-- Pullback of the unit rigidified line bundle is isomorphic to the unit bundle. -/
-noncomputable def unitPullbackAlong {T T' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
-    {t' : T' ⟶ Spec (CommRingCat.of R)} (ψ : SchemeHomOver t' t) :
-    ((RigidifiedLineBundle.unit (c := c) (ε := ε) t).pullbackAlong ψ).L ≅
-      (RigidifiedLineBundle.unit (c := c) (ε := ε) t').L :=
-  Scheme.Modules.pullbackUnitIso (baseChangeSnd c ψ)
 
 variable (R' : Type u) [CommRing R'] [Algebra R R']
 
@@ -106,7 +87,7 @@ theorem _root_.AlgebraicGeometry.RelPicard.exists_representsRelSubPic_baseChange
           ≅ (h.poincare.pullbackAlong (postComp ψ₀ (overR R' γ))).L :=
     fun γ => (toR_pullbackAlong_iso c ε R' γ P').symm ≪≫
       (Scheme.Modules.pullback (baseChangeSnd c (overR R' γ))).mapIso (toR_ofR_iso c ε R' _) ≪≫
-      pullbackAlongComp h.poincare ψ₀ (overR R' γ)
+      h.poincare.pullbackAlongPullbackAlongIso ψ₀ (overR R' γ)
   refine ⟨{ poincare := P', poincare_mem := ?_, univ := ?_, zero := ?_ }, ⟨Iso.refl _⟩⟩
   · have hmem : (algEquivZeroCut c ε).P _ (h.poincare.pullbackAlong ψ₀) :=
       (algEquivZeroCut c ε).pullback_mem _ _ ψ₀ _ h.poincare_mem
@@ -118,7 +99,7 @@ theorem _root_.AlgebraicGeometry.RelPicard.exists_representsRelSubPic_baseChange
       := ⟨pullback.lift g.1 t g.2, pullback.lift_snd _ _ _⟩
     have hg' : (postComp ψ₀ (overR R' g')).1 = g.1 := pullback.lift_fst _ _ _
     refine ⟨g', ⟨?_⟩, ?_⟩
-    · exact isoOfToRIso R' _ _ (chain g' ≪≫ pullbackAlongCongr h.poincare hg' ≪≫ eg)
+    · exact isoOfToRIso R' _ _ (chain g' ≪≫ h.poincare.pullbackAlong_congr_hom _ _ hg' ≪≫ eg)
     · rintro γ ⟨eγ⟩
       let i := chain γ
       have hG : postComp ψ₀ (overR R' γ) = g :=
@@ -138,9 +119,9 @@ theorem _root_.AlgebraicGeometry.RelPicard.exists_representsRelSubPic_baseChange
         = (postComp ⟨D.zeroSection, D.zeroSection_toBase⟩ s).1 :=
       pullback.lift_fst _ _ _
     obtain ⟨e0⟩ := h.zero
-    exact ⟨isoOfToRIso R' _ _ (chain z' ≪≫ pullbackAlongCongr h.poincare hz ≪≫
-      (pullbackAlongComp h.poincare ⟨D.zeroSection, D.zeroSection_toBase⟩ s).symm ≪≫
+    exact ⟨isoOfToRIso R' _ _ (chain z' ≪≫ h.poincare.pullbackAlong_congr_hom _ _ hz ≪≫
+      (h.poincare.pullbackAlongPullbackAlongIso ⟨D.zeroSection, D.zeroSection_toBase⟩ s).symm ≪≫
       (Scheme.Modules.pullback (baseChangeSnd c s)).mapIso e0 ≪≫
-      unitPullbackAlong s ≪≫ (toR_unit_iso c ε R' (𝟙 _)).symm)⟩
+      Scheme.Modules.pullbackUnitIso (baseChangeSnd c s) ≪≫ (toR_unit_iso c ε R' (𝟙 _)).symm)⟩
 end JacobianVarieties.Picard.Proofs.Exists_representsRelSubPic_baseChange
 end ProofImplementation

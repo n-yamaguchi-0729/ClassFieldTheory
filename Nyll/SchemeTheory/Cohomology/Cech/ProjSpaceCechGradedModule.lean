@@ -569,7 +569,7 @@ theorem GradedModule.free_monMul_apply (a : Fin (n + 1) → ℕ)
     induction k with
     | zero => simp only [pow_zero]; exact (one_mul q).symm
     | succ k' ihk =>
-      erw [pow_succ', pow_succ', Module.End.mul_apply, ihk]
+      erw [pow_succ', pow_succ', mul_apply_eq_comp, ihk]
       exact (mul_assoc (X j) (X j ^ k') q).symm
   intro s
   induction s using Finset.induction with
@@ -577,7 +577,7 @@ theorem GradedModule.free_monMul_apply (a : Fin (n + 1) → ℕ)
   | insert j s hj ih =>
     intro hc
     erw [Finset.noncommProd_insert_of_notMem _ _ _ _ hj, Finset.prod_insert hj,
-      Module.End.mul_apply, ih (hc.mono (by intro i hi; exact Finset.mem_insert_of_mem hi)), hpow]
+      mul_apply_eq_comp, ih (hc.mono (by intro i hi; exact Finset.mem_insert_of_mem hi)), hpow]
     exact (mul_assoc (X j ^ a j) (∏ i ∈ s, X i ^ a i) p).symm
 
 theorem GradedModule.free_monMul_injective (a : Fin (n + 1) → ℕ) :
@@ -662,17 +662,17 @@ theorem GradedModule.Hom.map_monMul (φ : GradedModule.Hom D₁ D₂) (a : Fin (
         = (s.noncommProd (fun j => D₂.xMul j ^ a j) hc₂) (φ.toLinearMap m) from h Finset.univ _ _
   intro s
   induction s using Finset.induction with
-  | empty => intro _ _; simp only [Finset.noncommProd_empty, Module.End.one_apply]
+  | empty => intro _ _; simp only [Finset.noncommProd_empty, one_apply_eq_self]
   | insert j s hj ih =>
     intro hc₁ hc₂
     rw [Finset.noncommProd_insert_of_notMem _ _ _ _ hj,
-      Finset.noncommProd_insert_of_notMem _ _ _ _ hj, Module.End.mul_apply, Module.End.mul_apply]
+      Finset.noncommProd_insert_of_notMem _ _ _ _ hj, mul_apply_eq_comp, mul_apply_eq_comp]
     have hih := ih (hc₁.mono (by intro i hi; exact Finset.mem_insert_of_mem hi))
       (hc₂.mono (by intro i hi; exact Finset.mem_insert_of_mem hi))
     induction a j with
     | zero => simpa using hih
     | succ p ihp =>
-      rw [pow_succ', pow_succ', Module.End.mul_apply, Module.End.mul_apply,
+      rw [pow_succ', pow_succ', mul_apply_eq_comp, mul_apply_eq_comp,
         ← LinearMap.comp_apply, φ.xMul_comm j, LinearMap.comp_apply, ihp]
 
 /-- The linear map on fraction sections induced by a graded module homomorphism. -/

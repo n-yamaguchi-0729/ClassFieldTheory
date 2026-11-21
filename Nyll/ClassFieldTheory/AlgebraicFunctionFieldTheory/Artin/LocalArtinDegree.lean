@@ -9,6 +9,7 @@ module
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayReciprocity
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayLocalArtin
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteConstantDegree
+public import Nyll.GaloisCohomology.ProfiniteIntegers.ProfiniteInteger
 
 /-!
 # Integer valuations from the arithmetic degree of actual local Artin symbols
@@ -33,19 +34,6 @@ noncomputable section
 open AlgebraicCurve ClassFormation LocalClassFieldTheory
 
 namespace FunctionField
-
-private theorem zHat_intCast_injective : Function.Injective (Int.cast : ℤ → ZHat) := by
-  intro a b hab
-  apply sub_eq_zero.mp
-  have hz : ((a - b : ℤ) : ZHat) = 0 := by rw [Int.cast_sub, hab, sub_self]
-  let n := (a - b).natAbs + 1
-  have hn : 0 < n := Nat.succ_pos _
-  have hr : ((a - b : ℤ) : ZMod n) = 0 := by
-    have h := congrArg (zHatReduction n hn) hz
-    simpa only [zHatReduction_intCast, map_zero] using h
-  apply Int.eq_zero_of_dvd_of_natAbs_lt_natAbs
-    ((ZMod.intCast_zmod_eq_zero_iff_dvd (a - b) n).mp hr)
-  simpa only [Int.natAbs_natCast] using Nat.lt_succ_self (a - b).natAbs
 
 variable {k : Type u} {K : Type v} [Field k] [Finite k] [Field K] [Algebra k K]
     [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K] [FunctionField k K]

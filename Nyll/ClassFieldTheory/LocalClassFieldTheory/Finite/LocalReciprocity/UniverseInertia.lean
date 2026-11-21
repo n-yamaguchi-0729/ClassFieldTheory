@@ -9,10 +9,9 @@ module
 public import Nyll.ClassFieldTheory.Algebra.ShrinkFiniteExtension
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkOpenSubgroups
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelian
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelianNative
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidue
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteExtensionCompleteDVF
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.GaloisIntegerRing
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrincipalUnits
@@ -41,6 +40,34 @@ open LocalFieldTheory LocalFieldTheory.IsNonarchimedeanLocalField
 open scoped ValuativeRel
 
 universe u v
+
+/-- The supplied valuation-extension relation survives the same two small field embeddings. -/
+private theorem shrink_valuationHasExtension
+    (K : Type u) (E : Type v) [Field K] [Field E] [Algebra K E]
+    [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+    [ValuativeRel E] [TopologicalSpace E] [IsNonarchimedeanLocalField E]
+    [Valuation.HasExtension (ValuativeRel.valuation K) (ValuativeRel.valuation E)] :
+    let : Small.{0} K := smallLocalField K
+    let : Small.{0} E := smallLocalField E
+    let : Algebra (Shrink.{0} K) (Shrink.{0} E) := HasseArf.shrinkAlgebra K E
+    let : ValuativeRel (Shrink.{0} K) := shrinkLocalFieldValuativeRel K
+    let : ValuativeRel (Shrink.{0} E) := shrinkLocalFieldValuativeRel E
+    Valuation.HasExtension
+      (ValuativeRel.valuation (Shrink.{0} K)) (ValuativeRel.valuation (Shrink.{0} E)) := by
+  intro sharedSmallK sharedSmallE sharedAlgebra sharedValuationK sharedValuationE
+  let wK := shrinkLocalFieldValuation K
+  let wE := shrinkLocalFieldValuation E
+  let : wK.HasExtension wE := hasExtension_comap_ringEquivs
+    (Shrink.ringEquiv K) (Shrink.ringEquiv E) (HasseArf.shrinkAlgebra_apply K E)
+      (ValuativeRel.valuation K) (ValuativeRel.valuation E)
+  have hK : wK.IsEquiv (ValuativeRel.valuation (Shrink.{0} K)) :=
+    let : wK.Compatible := Valuation.Compatible.ofValuation wK
+    ValuativeRel.isEquiv _ _
+  have hE : wE.IsEquiv (ValuativeRel.valuation (Shrink.{0} E)) :=
+    let : wE.Compatible := Valuation.Compatible.ofValuation wE
+    ValuativeRel.isEquiv _ _
+  exact hasExtension_of_isEquiv wK (ValuativeRel.valuation (Shrink.{0} K))
+    wE (ValuativeRel.valuation (Shrink.{0} E)) hK hE
 
 /-- The specified Artin map sends integral units onto the actual residue-action kernel. -/
 theorem abelianLocalArtinMonoidHom_units_eq_residue_ker
@@ -95,17 +122,8 @@ theorem abelianLocalArtinMonoidHom_units_eq_residue_ker
   have hArtin (a : (Shrink.{0} K)ˣ) :
       abelianLocalArtinMonoidHom K L (eU a) =
         eG (_root_.LocalClassFieldTheory.abelianLocalArtinMonoidHom
-          (Shrink.{0} K) (Shrink.{0} L) a) := by
-    rw [← _root_.LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom]
-    apply AlgEquiv.ext
-    intro z
-    obtain ⟨z₀, rfl⟩ := (Shrink.ringEquiv L).surjective z
-    change abelianLocalArtinMap K L (eU a) (Shrink.ringEquiv L z₀) =
-      HasseArf.shrinkGalEquiv K L
-        (_root_.LocalClassFieldTheory.abelianLocalArtinMap
-          (Shrink.{0} K) (Shrink.{0} L) a) (Shrink.ringEquiv L z₀)
-    rw [abelianLocalArtinMap_apply_shrink, ContinuousMulEquiv.symm_apply_apply,
-      HasseArf.shrinkGalEquiv_apply]
+          (Shrink.{0} K) (Shrink.{0} L) a) :=
+    abelianLocalArtinMonoidHom_apply_shrink K L a
   have hmax (a : 𝒪[Shrink.{0} L]) :
       eL a ∈ (𝓂[L] : Ideal 𝒪[L]) ↔
         a ∈ (𝓂[Shrink.{0} L] : Ideal 𝒪[Shrink.{0} L]) := by

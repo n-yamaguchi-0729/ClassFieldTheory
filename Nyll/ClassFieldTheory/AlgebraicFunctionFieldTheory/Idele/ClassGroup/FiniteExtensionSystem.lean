@@ -39,21 +39,19 @@ variable {k K Ω : Type*} [Field k] [Field K] [Field Ω]
     [IsScalarTower k (RatFunc k) Ω]
     [FunctionField k K] [PerfectField k]
 
-/-- The rational parameter and the constants act through the same ambient inclusion. -/
-instance stageRatFuncTower (E : FiniteGaloisIntermediateField K Ω) :
+/-- A finite intermediate field uses the compatible ambient rational parameter. -/
+instance intermediateRatFuncTower (E : IntermediateField K Ω) :
     IsScalarTower k (RatFunc k) E :=
   IsScalarTower.of_algebraMap_eq fun x =>
     Subtype.ext (IsScalarTower.algebraMap_apply k (RatFunc k) Ω x)
 
-/-- A finite stage remains a finite extension of the original rational function field. -/
-instance stageFunctionField (E : FiniteGaloisIntermediateField K Ω) :
-    FunctionField k E :=
-  Module.Finite.trans K E
+/-- Every finite intermediate field is an ordinary one-variable function field. -/
+instance intermediateFunctionField (E : IntermediateField K Ω) [FiniteDimensional K E] :
+    FunctionField k E := Module.Finite.trans K E
 
-/-- The stage has the established curve structure, including principal divisors. -/
-instance stageIsCurveOver (E : FiniteGaloisIntermediateField K Ω) :
-    AlgebraicCurve.IsCurveOver k E :=
-  FunctionField.isCurveOver k E
+/-- The actual curve and principal-divisor structure of a finite intermediate field. -/
+instance intermediateIsCurveOver (E : IntermediateField K Ω) [FiniteDimensional K E] :
+    AlgebraicCurve.IsCurveOver k E := FunctionField.isCurveOver k E
 
 /-- The group at a finite Galois stage is its actual all-place idele class group. -/
 abbrev stage (E : FiniteGaloisIntermediateField K Ω) := IdeleClassGroup k E

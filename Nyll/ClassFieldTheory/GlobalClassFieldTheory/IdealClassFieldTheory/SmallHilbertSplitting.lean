@@ -6,6 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.Algebra.PrincipalFractionalIdeal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertClassField
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.Core
@@ -30,10 +33,9 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
+open ClassFieldTheory
 open NumberField IsDedekindDomain
 
-attribute [local instance]
-  GlobalClassFields.smallHilbertClassFieldIdeleClassGroupIsMulCommutative
 
 variable {K : Type*} [Field K] [NumberField K]
 
@@ -45,7 +47,7 @@ noncomputable def smallHilbertFrobeniusClass
       GlobalClassFields.smallHilbertClassFieldNormSubgroup :=
   (GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup
       (K := K)).symm
-    (ClassGroup.mk K (FractionalIdealGroup.prime v))
+    (ClassGroup.mk K (finitePrimeFractionalIdeal v))
 
 /-- Reciprocity formulation of complete splitting in the small Hilbert
 class field: the prime Frobenius class is trivial. -/
@@ -58,14 +60,14 @@ field if and only if its prime ideal is principal. -/
 theorem splitsCompletelyInSmallHilbertClassField_iff_principal
     (v : HeightOneSpectrum (𝓞 K)) :
     SplitsCompletelyInSmallHilbertClassField v ↔
-      FractionalIdealGroup.prime v ∈
+      finitePrimeFractionalIdeal v ∈
         (toPrincipalIdeal (𝓞 K) K).range := by
   change
     (GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup
         (K := K)).symm
-          (ClassGroup.mk K (FractionalIdealGroup.prime v)) =
+          (ClassGroup.mk K (finitePrimeFractionalIdeal v)) =
         1 ↔
-      FractionalIdealGroup.prime v ∈
+      finitePrimeFractionalIdeal v ∈
         (toPrincipalIdeal (𝓞 K) K).range
   rw [←
     (GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup
@@ -73,8 +75,8 @@ theorem splitsCompletelyInSmallHilbertClassField_iff_principal
     (GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup
       (K := K)).symm.injective.eq_iff]
   exact
-    IdeleGroup.classGroup_mk_eq_one_iff
-      (FractionalIdealGroup.prime v)
+    ClassGroup.mk_eq_one_iff_mem_principal
+      (finitePrimeFractionalIdeal v)
 
 /-- Existential generator form of the small Hilbert splitting criterion. -/
 theorem splitsCompletelyInSmallHilbertClassField_iff_exists_generator
@@ -82,7 +84,7 @@ theorem splitsCompletelyInSmallHilbertClassField_iff_exists_generator
     SplitsCompletelyInSmallHilbertClassField v ↔
       ∃ x : Kˣ,
         toPrincipalIdeal (𝓞 K) K x =
-          FractionalIdealGroup.prime v := by
+          finitePrimeFractionalIdeal v := by
   rw [splitsCompletelyInSmallHilbertClassField_iff_principal]
   rfl
 

@@ -94,7 +94,7 @@ theorem ramificationIndex_eq_one_of_minpoly_derivative_unit
       (p := IsLocalRing.maximalIdeal A) (P := P) he2)
   have hPdiff : P ∣ differentIdeal A B := by
     simpa only [Nat.reduceSub, pow_one] using pow_sub_one_dvd_differentIdeal_aux A F F' P
-      (e := 2) (by decide) (maximalIdeal_ne_bot v) hP2
+      (e := 2) (maximalIdeal_ne_bot v) hP2
   exact hdnot ((Ideal.dvd_iff_le.mp hPdiff) hddiff)
 
 end Place

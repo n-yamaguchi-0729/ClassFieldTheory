@@ -782,7 +782,7 @@ theorem
   have hArtin :
       chosenSimpleKummerNormResidueAutomorphism K n hnK hmu b piInv =
         arithmeticFrobeniusOfUnramifiedValuation K E := by
-    change Universe.abelianLocalArtinMonoidHom K E piInv = _
+    change abelianLocalArtinMonoidHom K E piInv = _
     rw [Universe.abelianLocalArtinMonoidHom_eq_frobenius_zpow,
       valuationMap_apply, v_inverseIntegerRingUniformizerFieldUnit, zpow_one]
   have hHilbertVal := congrArg Subtype.val
@@ -927,7 +927,7 @@ theorem localHilbertSymbol_integerUnit_integerUnit_eq_one
     simpa only [a] using v_integerUnitsToFieldUnits K u
   have hArtin :
       chosenSimpleKummerNormResidueAutomorphism K n hnK hmu b a = 1 := by
-    change Universe.abelianLocalArtinMonoidHom K E a = 1
+    change abelianLocalArtinMonoidHom K E a = 1
     rw [Universe.abelianLocalArtinMonoidHom_eq_frobenius_zpow, haVal, zpow_zero]
   have hHilbertVal := congrArg Subtype.val
     (localHilbertSymbol_map_eq_rootQuotient K n hnK hmu a b)

@@ -53,6 +53,9 @@ open _root_.AlgebraicGeometry
 
 namespace FrameBridge
 
+open _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge
+  (restrictFunctor' restrictFunctor'IsoPullback)
+
 open Opposite TopologicalSpace
 
 variable {X : Scheme.{u}}
@@ -61,31 +64,8 @@ section restrict
 
 variable (W : X.Opens)
 
-/-- The identity map of ring sheaves describing restriction to the scheme associated to an open
-    subset. -/
-def restrictRingCatSheafHom : (W : Scheme.{u}).ringCatSheaf ⟶
-    (W.ι.opensFunctor.sheafPushforwardContinuous RingCat.{u}
-      (Opens.grothendieckTopology (W : Scheme.{u})) (Opens.grothendieckTopology X)).obj
-        X.ringCatSheaf :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictRingCatSheafHom W
-
-/-- Restriction of module sheaves to an open subset, expressed as a sheaf pushforward. -/
-def restrictFunctor' : X.Modules ⥤ (W : Scheme.{u}).Modules :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor' W
-
-lemma restrictFunctor'_eq : restrictFunctor' W = Modules.restrictFunctor W.ι :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor'_eq W
-
-/-- The natural isomorphism identifying open restriction with pullback along its inclusion. -/
-def restrictFunctor'IsoPullback : restrictFunctor' W ≅ Modules.pullback W.ι :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor'IsoPullback W
-
 lemma image_le (W' : (W : Scheme.{u}).Opens) : W.ι ''ᵁ W' ≤ W :=
   (W.ι.image_le_opensRange W').trans_eq W.opensRange_ι
-
-variable {W} in
-lemma image_preimage_of_le {W₂ : X.Opens} (h : W₂ ≤ W) : W.ι ''ᵁ (W.ι ⁻¹ᵁ W₂) = W₂ :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.image_preimage_of_le (U := W) h
 
 /-- A section on the scheme associated to an open, regarded as a section on its image in the
     original scheme. -/

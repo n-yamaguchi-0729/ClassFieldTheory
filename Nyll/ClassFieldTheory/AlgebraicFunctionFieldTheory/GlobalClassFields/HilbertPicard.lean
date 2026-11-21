@@ -38,11 +38,7 @@ namespace FunctionField
 variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
     [HasPrincipalDivisors k K]
 
-local instance : CommGroup (IdeleClassGroup k K) :=
-  QuotientGroup.Quotient.commGroup (G := IdeleGroup k K) (IdeleGroup.principalSubgroup k K)
-
-local instance : IsMulCommutative (IdeleClassGroup k K) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+attribute [local instance] IdeleClassGroup.commGroup IdeleClassGroup.isMulCommutative
 
 namespace IdeleClassGroup
 

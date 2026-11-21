@@ -1598,12 +1598,10 @@ theorem padicCyclotomicUnramified_valuationSubring_adjoin_eq_top
       Submodule.add_mem_sup hzA hdiffSmul
     have hsum_eq : z + (b - z) = b := by ring
     simpa [hsum_eq] using hsum
-  have hjac :
-      IsLocalRing.maximalIdeal V ≤
-        Ideal.jacobson (⊥ : Ideal V) := by
-    exact IsLocalRing.maximalIdeal_le_jacobson (⊥ : Ideal V)
+  have hjac : IsLocalRing.maximalIdeal V ≤ Ring.jacobson V :=
+    (IsLocalRing.ringJacobson_eq_maximalIdeal V).ge
   have hle : (⊤ : Submodule V W) ≤ A.toSubmodule :=
-    Submodule.le_of_le_smul_of_le_jacobson_bot
+    Submodule.le_of_le_smul_of_le_jacobson
       (I := IsLocalRing.maximalIdeal V) (N := A.toSubmodule)
       (N' := (⊤ : Submodule V W)) Module.Finite.fg_top hjac htop
   have hA : A.toSubmodule = ⊤ := le_antisymm le_top hle

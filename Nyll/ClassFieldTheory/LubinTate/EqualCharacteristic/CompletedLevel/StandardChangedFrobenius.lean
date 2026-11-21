@@ -33,10 +33,7 @@ open LocalFieldTheory.DiscreteValuationField
 
 variable {K : Type u} [Field K]
 
-noncomputable local instance standardChangedFrobeniusLevelAlgebra
-    (F : LocalField.{u, v} K) (n : ℕ) :
-    Algebra F.residueField⸨X⸩ (equalCharacteristicCompletedLevelField F n) :=
-  equalCharacteristicCompletedLevelLaurentAlgebra F n
+attribute [local instance] equalCharacteristicCompletedLevelLaurentAlgebra
 
 /-- The actual relative inverse completed Frobenius equals inverse arithmetic
 Frobenius for the canonical unramified extension of the changed fixed field. -/

@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
 public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FiniteAbelianReciprocityData
 public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
 public import Nyll.ClassFieldTheory.Definitions.NormTheorems.ExtendingAbsoluteValue
@@ -119,16 +121,6 @@ theorem exists_finitePlaceRayArtin_localValueDiagram
     S.subtype.comp (eD.symm.toMonoidHom.comp eAut.symm.toMonoidHom)
   let m := GlobalClassFieldComparison.rayClassModulusToOriginal K D.modulus
   let e := GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K D.modulus
-  let a : RayClass.RayClassGroup m →* (L ≃ₐ[K] L) :=
-    D.artin.comp e.symm.toMonoidHom
-  have hprime :
-      ∀ (p : HeightOneSpectrum (𝓞 K))
-        (_hp : p ∉ m.finitePart.support),
-        a (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele p))) =
-          GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-            (K := K) (L := L) p := D.originalArtin_prime
   let ι : (v.adicCompletion K)ˣ →* RayClassGroup D.modulus :=
     e.symm.toMonoidHom.comp
       ((QuotientGroup.mk' m.congruenceSubgroup).comp
@@ -141,9 +133,7 @@ theorem exists_finitePlaceRayArtin_localValueDiagram
       D.artin (ι x) =
           GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom
             K L (IdeleGroup.finitePlaceIdeleClass v x) :=
-        (open GlobalClassFieldTheory.GlobalClassFields in
-          rayArtin_comp_ideleClass_eq_arithmeticGlobalNormResidue
-            m a hprime (IdeleGroup.finitePlaceIdeleClass v x))
+        D.ideleClassArtin_apply (IdeleGroup.finitePlaceIdeleClass v x)
       _ = GlobalClassFieldTheory.Reciprocity.arithmeticChosenFinitePlaceArtinMonoidHom
             K L v x := by
         exact DFunLike.congr_fun

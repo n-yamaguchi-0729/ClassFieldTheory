@@ -107,14 +107,14 @@ theorem absoluteArtin_transfer_fixedFieldCoordinate
     IdeleClassGroup.baseChange (k := k) (K := K) (L := F) c
   have hleft := fixedFieldAbsoluteArtinOfClosure_projection k K Ω H T e cF
   have hleftAb :=
-    congrArg (Abelianization.of : Gal(E/F) → Abelianization Gal(E/F)) hleft
+    congrArg (Group.Abelianization.of : Gal(E/F) → Group.Abelianization Gal(E/F)) hleft
   have habel := abelianFiniteArtin_of k F E cF
   have hfinite := finiteArtin_baseChange_transfer_of_fixedField k K H T c
   have hright :=
     (nativeFixedFieldAbelianizedTransfer_absoluteCoordinate K H T (absoluteArtin k K c)).trans
       (congrArg (nativeFixedFieldAbelianizedTransfer K H T)
         (absoluteArtin_abelianizedRestriction k K E c))
-  exact (Abelianization.equivOfComm (H := Gal(E/F))).injective
+  exact (Group.Abelianization.equivOfComm (H := Gal(E/F))).injective
     (hleftAb.trans (habel.trans (hfinite.trans hright.symm)))
 
 /-- Native absolute reciprocity carries original idele-class inclusion

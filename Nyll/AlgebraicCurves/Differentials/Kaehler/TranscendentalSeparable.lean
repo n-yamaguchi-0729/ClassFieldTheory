@@ -47,7 +47,7 @@ theorem
       rw [← finrank_top, htop, finrank_bot]
     omega
   have hspan : ∀ ω : Ω[F⁄K], ∃ c : F, c • KaehlerDifferential.D K F t = ω :=
-    (finrank_eq_one_iff_of_nonzero' _ ht).mp hΩ
+    (finrank_eq_one_iff_of_ne_zero' _ ht).mp hΩ
   have hDt : KaehlerDifferential.D K⟮t⟯ F t = 0 := by
     have h := (KaehlerDifferential.D K⟮t⟯ F).map_algebraMap (AdjoinSimple.gen K t)
     rwa [AdjoinSimple.algebraMap_gen] at h

@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.AlgebraicCurves.Places.Restriction.RestrictionComposition
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.AlgEquiv
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.AlgEquiv
@@ -49,24 +50,28 @@ Only the equality of the restricted place is transported. -/
 theorem completionMapOver_algAut (σ : L ≃ₐ[K] L) (v : Place k K)
     (w : Place k L) (hw : w.restrict K = v) :
     (placeCompletionRingEquiv (SemilinearAut.ofAlgAut (σ.restrictScalars k)) w).toRingHom.comp
-        (completionMapOver v w hw) =
-      completionMapOver v (SemilinearAut.ofAlgAut (σ.restrictScalars k) • w)
+        (AlgebraicCurve.Place.completionMapOver v w hw) =
+      AlgebraicCurve.Place.completionMapOver v (SemilinearAut.ofAlgAut (σ.restrictScalars k) • w)
         ((Place.restrict_ofAlgAut_smul σ w).trans hw) := by
   let g : SemilinearAut k L := SemilinearAut.ofAlgAut (σ.restrictScalars k)
-  have hfun : (fun x => placeCompletionRingEquiv g w (completionMapOver v w hw x)) =
-      completionMapOver v (g • w) ((Place.restrict_ofAlgAut_smul σ w).trans hw) := by
+  have hfun :
+    (fun x => placeCompletionRingEquiv g w (AlgebraicCurve.Place.completionMapOver v w hw x)) =
+      AlgebraicCurve.Place.completionMapOver v (g • w)
+        ((Place.restrict_ofAlgAut_smul σ w).trans hw) := by
     apply (IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap
       K v.heightOneSpectrum).equalizer
     · exact (continuous_placeCompletionRingEquiv g w).comp
-        (continuous_completionMapOver v w hw)
-    · exact continuous_completionMapOver v (g • w)
+        (AlgebraicCurve.Place.continuous_completionMapOver v w hw)
+    · exact AlgebraicCurve.Place.continuous_completionMapOver v (g • w)
         ((Place.restrict_ofAlgAut_smul σ w).trans hw)
     · funext x
       change placeCompletionRingEquiv g w
-          (completionMapOver v w hw (algebraMap K v.adicCompletion x)) =
-        completionMapOver v (g • w) ((Place.restrict_ofAlgAut_smul σ w).trans hw)
+          (AlgebraicCurve.Place.completionMapOver v w hw (algebraMap K v.adicCompletion x)) =
+        AlgebraicCurve.Place.completionMapOver v (g • w)
+        ((Place.restrict_ofAlgAut_smul σ w).trans hw)
           (algebraMap K v.adicCompletion x)
-      rw [completionMapOver_algebraMap, completionMapOver_algebraMap,
+      rw [AlgebraicCurve.Place.completionMapOver_algebraMap,
+        AlgebraicCurve.Place.completionMapOver_algebraMap,
         placeCompletionRingEquiv_algebraMap]
       change algebraMap L (g • w).adicCompletion (σ (algebraMap K L x)) =
         algebraMap L (g • w).adicCompletion (algebraMap K L x)
@@ -83,9 +88,10 @@ theorem localNormOver_algAut (σ : L ≃ₐ[K] L) (v : Place k K)
       localNormOver v w hw x := by
   let g : SemilinearAut k L := SemilinearAut.ofAlgAut (σ.restrictScalars k)
   let a₁ : Algebra v.adicCompletion w.adicCompletion :=
-    (completionMapOver v w hw).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
   let a₂ : Algebra v.adicCompletion (g • w).adicCompletion :=
-    (completionMapOver v (g • w) ((Place.restrict_ofAlgAut_smul σ w).trans hw)).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver v (g • w)
+        ((Place.restrict_ofAlgAut_smul σ w).trans hw)).toAlgebra
   let e : w.adicCompletion ≃ₐ[v.adicCompletion] (g • w).adicCompletion :=
     { __ := placeCompletionRingEquiv g w
       commutes' := fun y => congrArg (fun f : v.adicCompletion →+* (g • w).adicCompletion =>

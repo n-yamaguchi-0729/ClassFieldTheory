@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Decomposition
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.HerbrandExactSequence
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.All
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Decomposition
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.Herbrand
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.PrincipalSequence
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.HerbrandExactSequence
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SPlaces.All
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Cohomology.SupportedBridge
 
 /-! # Cohomology of ideles and supported local decompositions -/

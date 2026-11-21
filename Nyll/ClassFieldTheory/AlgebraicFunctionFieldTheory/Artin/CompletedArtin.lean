@@ -7,8 +7,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteArtin
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletionCriteria
+public import Nyll.ProCGroups.Completion.Topological
+public import Nyll.ProCGroups.Completion.TopologicalCriteria
 
 /-!
 # Reciprocity on the completion for the usual idele-class topology

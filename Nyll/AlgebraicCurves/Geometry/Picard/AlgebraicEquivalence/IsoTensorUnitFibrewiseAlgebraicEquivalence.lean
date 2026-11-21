@@ -282,37 +282,6 @@ namespace G0E9
 open _root_.AlgebraicGeometry.RelPicard
 open _root_.AlgebraicGeometry
 
-/-- The compatible family of restrictions of a global section. -/
-noncomputable def sectionOfGlobal {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) : M.val.sections :=
-  ⟨fun U => (Scheme.Modules.presheaf M).map (homOfLE (le_top : U.unop ≤ ⊤)).op σ,
-   fun {U V} f => by
-     change (Scheme.Modules.presheaf M).map f ((Scheme.Modules.presheaf M).map (homOfLE (le_top :
-       U.unop ≤ ⊤)).op σ) =
-       (Scheme.Modules.presheaf M).map (homOfLE (le_top : V.unop ≤ ⊤)).op σ
-     have hg : (homOfLE (le_top : U.unop ≤ ⊤)).op ≫ f = (homOfLE (le_top : V.unop ≤ ⊤)).op :=
-       Subsingleton.elim _ _
-     rw [← CategoryTheory.ConcreteCategory.comp_apply, ← Functor.map_comp, hg]⟩
-
-theorem sectionOfGlobal_top {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) :
-    (sectionOfGlobal M σ).val (op ⊤) = σ := by
-  change (Scheme.Modules.presheaf M).map (homOfLE (le_top : (⊤ : X.Opens) ≤ ⊤)).op σ = σ
-  have h1 : (homOfLE (le_top : (⊤ : X.Opens) ≤ ⊤)).op = 𝟙 (op ⊤) := Subsingleton.elim _ _
-  rw [h1, CategoryTheory.Functor.map_id]
-  rfl
-
-theorem exists_hom_ne_zero {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) (hσ : σ ≠ 0) :
-    ∃ s : 𝟙_ X.Modules ⟶ M, s ≠ 0 := by
-  obtain ⟨s, hs⟩ :
-      ∃ s : 𝟙_ X.Modules ⟶ M, (SheafOfModules.unitHomEquiv M) s = sectionOfGlobal M σ :=
-    ⟨(SheafOfModules.unitHomEquiv M).symm (sectionOfGlobal M σ), Equiv.apply_symm_apply _ _⟩
-  refine ⟨s, fun h0 => hσ ?_⟩
-  have e2 : (sectionOfGlobal M σ).val (op ⊤) = σ := sectionOfGlobal_top M σ
-  have e3 : (sectionOfGlobal M σ).val (op ⊤) = (Scheme.Modules.Hom.app s ⊤) (1 : Γ(X, ⊤)) := by
-    rw [← hs]
-    rfl
-  rw [← e2, e3, h0, Scheme.Modules.Hom.zero_app]
-  rfl
-
 theorem nonempty_invModule_top_iso (X : Scheme.{u}) :
     Nonempty ((⊤ : X.IdealSheafData).invModule ≅ 𝟙_ X.Modules) := by
   have hT : (⊤ : X.IdealSheafData).IsInvertible := Scheme.IdealSheafData.isInvertible_top
@@ -384,7 +353,7 @@ theorem main
     (fibreAt c t (𝟙 (Spec (CommRingCat.of K)))) (fibreModule c t (𝟙 (Spec (CommRingCat.of K))) (M.L
       ⊗ sectionTwist c ε t 0))
   have hσ : eΓ.symm y ≠ 0 := fun h => hy (by rw [← eΓ.apply_symm_apply y, h, map_zero])
-  obtain ⟨s', hs'⟩ := exists_hom_ne_zero _ (eΓ.symm y) hσ
+  obtain ⟨s', hs'⟩ := _root_.AlgebraicGeometry.Scheme.Modules.exists_hom_ne_zero _ (eΓ.symm y) hσ
   have h0 : sectionTwist c ε t 0 = (⊤ : (pullback c t).IdealSheafData).invModule := by
     change ((sectionIdeal c ε t) ^ 0).invModule = _
     rw [pow_zero, Scheme.IdealSheafData.one_eq_top]

@@ -6,6 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitNormQuotient
 public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Reduction
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
 
@@ -34,19 +37,8 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
+
 namespace RationalFiniteNormTransferInternal
-
-/-- Shared commutativity proof for ordinary idèle class groups. -/
-theorem ideleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-local instance
-    fieldSpineIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ideleClassGroupIsMulCommutative
 
 /-- Shared normality proof for subgroups of ordinary idèle class groups. -/
 theorem ideleClassSubgroupNormal
@@ -224,12 +216,6 @@ theorem relativeIsGalois
 end RationalFiniteNormTransferInternal
 
 local instance
-    fieldSpinePublicIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
-
-local instance
     fieldSpinePublicIdeleClassSubgroupNormal
     {F : Type} [Field F] [NumberField F]
     (N : Subgroup (IdeleClassGroup F)) : N.Normal :=
@@ -260,7 +246,6 @@ noncomputable abbrev rationalFiniteNormTransferQuotientTarget
     (K L : ClosedSubgroup
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hLK : L.toSubgroup ≤ K.toSubgroup)
-    (hnormal : (extensionSubgroup K L hLK).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -270,29 +255,7 @@ noncomputable abbrev rationalFiniteNormTransferQuotientTarget
           K (le_baseField K))]
     [hfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)] : Type :=
-  let F := abstractFixedField ℚ (SeparableClosure ℚ) K
-  let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI := hnormal
-  letI : FiniteDimensional ℚ F :=
-    RationalFiniteNormTransferInternal.fixedFiniteDimensional K
-  letI : FiniteDimensional F E :=
-    RationalFiniteNormTransferInternal.relativeFiniteDimensional
-      K L hLK
-  letI : IsScalarTower ℚ F E :=
-    RationalFiniteNormTransferInternal.relativeScalarTower
-      K L hLK
-  letI : FiniteDimensional ℚ E :=
-    RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
-      K L hLK
-  letI : NumberField F :=
-    RationalFiniteNormTransferInternal.fixedNumberField K
-  letI : NumberField E :=
-    RationalFiniteNormTransferInternal.relativeNumberField
-      K L hLK
-  letI : IsGalois F E :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      K L hLK hnormal
-  Additive (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range)
+  rationalOrdinaryNormQuotientAdditiveType K L hLK
 
 
 namespace RationalFiniteNormTransferInternal
@@ -304,7 +267,6 @@ fixed-field quotient. -/
     (K L : ClosedSubgroup
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hLK : L.toSubgroup ≤ K.toSubgroup)
-    (hnormal : (extensionSubgroup K L hLK).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -315,31 +277,8 @@ fixed-field quotient. -/
     [hfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)] :
     Zero (rationalFiniteNormTransferQuotientTarget
-      K L hLK hnormal) := by
-  let F := abstractFixedField ℚ (SeparableClosure ℚ) K
-  let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI : FiniteDimensional ℚ F :=
-    RationalFiniteNormTransferInternal.fixedFiniteDimensional K
-  letI : FiniteDimensional F E :=
-    RationalFiniteNormTransferInternal.relativeFiniteDimensional
-      K L hLK
-  letI : IsScalarTower ℚ F E :=
-    RationalFiniteNormTransferInternal.relativeScalarTower
-      K L hLK
-  letI : FiniteDimensional ℚ E :=
-    RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
-      K L hLK
-  letI : NumberField F :=
-    RationalFiniteNormTransferInternal.fixedNumberField K
-  letI : NumberField E :=
-    RationalFiniteNormTransferInternal.relativeNumberField
-      K L hLK
-  letI : IsGalois F E :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      K L hLK hnormal
-  exact inferInstanceAs
-    (Zero (Additive
-      (IdeleClassGroup F ⧸ (_root_.ideleClassNorm F E).range)))
+      K L hLK) :=
+  inferInstanceAs (Zero (rationalOrdinaryNormQuotientAdditiveType K L hLK))
 
 
 end RationalFiniteNormTransferInternal

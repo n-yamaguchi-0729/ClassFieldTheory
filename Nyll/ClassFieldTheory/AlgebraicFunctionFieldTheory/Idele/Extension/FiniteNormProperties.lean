@@ -29,15 +29,12 @@ variable {k K L : Type*} [Field k] [Finite k] [Field K] [Field L]
 
 /-- Every finite function-field norm is continuous in the ordinary quotient topology. -/
 theorem continuous_finiteNorm :
-    Continuous (finiteNorm (k := k) (K := K) (L := L)) := by
-  apply continuous_coinduced_dom.2
-  exact QuotientGroup.continuous_mk.comp
-    (IdeleGroup.continuous_norm (k := k) (K := K) (L := L))
+    Continuous (finiteNorm (k := k) (K := K) (L := L)) :=
+  continuous_normOfPrincipal (fun _ ha => IdeleGroup.norm_mem_principalSubgroup_of_finite ha)
 
 /-- The arbitrary finite class norm with its proved quotient continuity. -/
-def finiteNormContinuous : IdeleClassGroup k L →ₜ* IdeleClassGroup k K where
-  __ := finiteNorm (k := k) (K := K) (L := L)
-  continuous_toFun := continuous_finiteNorm
+noncomputable abbrev finiteNormContinuous : IdeleClassGroup k L →ₜ* IdeleClassGroup k K :=
+  normOfPrincipalContinuous (fun _ ha => IdeleGroup.norm_mem_principalSubgroup_of_finite ha)
 
 /-- The quotient norm of every finite extension preserves the actual idele-class degree. -/
 @[simp]
@@ -61,10 +58,9 @@ theorem finiteNorm_trans (c : IdeleClassGroup k M) :
         (finiteNorm (k := k) (K := L) (L := M) c) =
       finiteNorm (k := k) (K := K) (L := M) c := by
   intro hKMfinite
-  refine QuotientGroup.induction_on c ?_
-  intro a
-  rw [finiteNorm_mk, finiteNorm_mk, finiteNorm_mk]
-  exact congrArg (QuotientGroup.mk : IdeleGroup k K → IdeleClassGroup k K)
-    (IdeleGroup.norm_trans (k := k) (K := K) (L := L) (M := M) a)
+  exact normOfPrincipal_trans (k := k) (K := K) (L := L) (M := M)
+    (fun _ ha => IdeleGroup.norm_mem_principalSubgroup_of_finite ha)
+    (fun _ ha => IdeleGroup.norm_mem_principalSubgroup_of_finite ha)
+    (fun _ ha => IdeleGroup.norm_mem_principalSubgroup_of_finite ha) c
 
 end FunctionField.IdeleClassGroup

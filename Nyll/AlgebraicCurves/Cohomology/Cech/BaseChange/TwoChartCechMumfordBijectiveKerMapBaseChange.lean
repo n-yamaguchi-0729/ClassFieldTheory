@@ -12,7 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
-public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Nyll.SchemeTheory.RingTheory.MumfordTruncation
 public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveCokerMapBaseChange
 public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 public import Mathlib.RingTheory.Flat.Basic

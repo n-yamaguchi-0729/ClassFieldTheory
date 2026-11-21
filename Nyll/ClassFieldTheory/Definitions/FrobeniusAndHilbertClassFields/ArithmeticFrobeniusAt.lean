@@ -34,7 +34,7 @@ def arithmeticFrobeniusAt
     {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
-    [IsAbelianGalois K L]
+    [IsGalois K L]
     (w : HeightOneSpectrum (𝓞 L)) : L ≃ₐ[K] L :=
   arithFrobAt (𝓞 K) (L ≃ₐ[K] L) w.asIdeal
 

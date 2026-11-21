@@ -56,7 +56,7 @@ theorem normQuotientEquivOfFixedFieldPresentation_unramified
       rw [← eF.toLinearEquiv.finrank_eq, Module.finrank_self]
     ∀ c : IdeleClassGroup k K,
       normQuotientEquivOfFixedFieldPresentation k K L Ω H T eF eE (QuotientGroup.mk c) =
-        Abelianization.of
+        Group.Abelianization.of
           ((((ClassFieldTheory.galoisRestrictScalarsEquivOfFinrankOne
               (K := K) (F := abstractFixedField K Ω H.field)
               (E := abstractFixedField K Ω T.field) hFdegree).trans
@@ -79,17 +79,17 @@ theorem normQuotientEquivOfFixedFieldPresentation_unramified
           (H.toFiniteResidueAbstractField (fullConstantDegreeData k K Ω)) T.field T.below))
   have hm := normQuotientEquivOfFixedFieldPresentation_mk k K L Ω H T eF eE c
   change normQuotientEquivOfFixedFieldPresentation k K L Ω H T eF eE (QuotientGroup.mk c) =
-    Abelianization.of ((eG φ) ^ (IdeleClassGroup.normalizedDegree (k := k) (K := K) c).toAdd)
+    Group.Abelianization.of ((eG φ) ^ (IdeleClassGroup.normalizedDegree (k := k) (K := K) c).toAdd)
   calc
     _ = eG.abelianizationCongr (fixedFieldArtin k K Ω H T
         (IdeleClassGroup.baseChange (k := k) (K := K)
           (L := abstractFixedField K Ω H.field) c)) := hm
-    _ = eG.abelianizationCongr (Abelianization.of
+    _ = eG.abelianizationCongr (Group.Abelianization.of
         (φ ^ (IdeleClassGroup.normalizedDegree (k := k) (K := K) c).toAdd)) := by
       apply congrArg eG.abelianizationCongr
       rw [fixedFieldArtin_unramified_zpow k K Ω H T hu,
         IdeleClassGroup.normalizedDegree_baseChange_of_finrank_one hFdegree]
       rfl
-    _ = _ := by rw [abelianizationCongr_of, map_zpow]
+    _ = _ := by rw [Group.abelianizationCongr_of, map_zpow]
 
 end FunctionField

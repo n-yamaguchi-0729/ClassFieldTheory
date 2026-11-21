@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.SectionZeroScheme
 public import Nyll.AlgebraicCurves.RelativeDivisors.Cartier.RelEffCartierDiv
 public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
@@ -247,11 +248,6 @@ open _root_.AlgebraicGeometry
 
 namespace T1Ws13
 
-theorem cover_ext {X : Scheme.{u}} (𝒱 𝒲 : X.TwoAffineOpenCover) (h0 : 𝒱.U0 = 𝒲.U0) (h1 : 𝒱.U1 =
-    𝒲.U1) :
-    𝒱 = 𝒲 := by
-  cases 𝒱; cases 𝒲; cases h0; cases h1; rfl
-
 theorem invModuleSection_comp_eqToHom {X : Scheme.{u}} {I J : X.IdealSheafData} (h : I = J) :
     I.invModuleSection ≫ eqToHom (by rw [h]) = J.invModuleSection := by
   subst h
@@ -289,7 +285,9 @@ theorem exists_I_eq_zeroSchemeIdeal_of_eulerChar_eq
     Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso (pullback.snd f x)
       (pullback.snd f x)
       (Iso.refl _) (Category.id_comp _) 𝒱 M (𝟙_ (pullback f x).Modules ⊗ D.lineBundle) ι₁
-  have h𝒱 : 𝒱₂ = 𝒱 := cover_ext 𝒱₂ 𝒱 (by rw [hU0]; rfl) (by rw [hU1]; rfl)
+  have h𝒱 : 𝒱₂ = 𝒱 :=
+    _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.cover_ext (𝒱 := 𝒱₂) (𝒱' := 𝒱)
+      (by rw [hU0]; rfl) (by rw [hU1]; rfl)
   subst h𝒱
   have hunit : Scheme.Modules.IsInvertible (𝟙_ (pullback f x).Modules) :=
     Scheme.Modules.isInvertible_unit _

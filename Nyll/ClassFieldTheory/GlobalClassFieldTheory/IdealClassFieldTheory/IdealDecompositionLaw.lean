@@ -6,6 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.Algebra.PrincipalFractionalIdeal
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
@@ -46,6 +49,7 @@ universe u v
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
+open ClassFieldTheory
 open NumberField IsDedekindDomain
 open HilbertRamification
 
@@ -74,17 +78,16 @@ theorem idealArtinGaloisMap_primeToIdealMap_eq_globalArtin
       Reciprocity.globalArtinMonoidHom
         (K := K) (L := L) (a : IdeleGroup K) := by
   rw [idealArtinGaloisMap_apply]
-  rw [GlobalClassFields.idealArtinMap_primeToIdealMap]
+  rw [IdealClassFieldTheory.idealArtinMap_primeToIdealMap]
   change
     Reciprocity.globalNormResidueMonoidHom K L
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
+          (IdeleGroup.toStandardClass K
             (a : IdeleGroup K)) =
       Reciprocity.globalArtinMonoidHom
         (K := K) (L := L) (a : IdeleGroup K)
   exact
     DFunLike.congr_fun
-      (Reciprocity.globalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
+      (Reciprocity.standardNumberFieldArtin_comp_toStandardClass_eq_globalArtin
           (K := K) (L := L))
       (a : IdeleGroup K)
 
@@ -92,7 +95,7 @@ private theorem finitePlacePrimeArtin_eq_globalNormResidue
     (v : HeightOneSpectrum (𝓞 K)) :
     GlobalClassFields.finitePlacePrimeArtin (K := K) (L := L) v =
       Reciprocity.globalNormResidueMonoidHom K L
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (IdeleGroup.finitePrimeIdele v)) := by
   rw [GlobalClassFields.finitePlacePrimeArtin_eq_chosenFinitePlaceArtin]
   exact (DFunLike.congr_fun
@@ -116,7 +119,7 @@ theorem idealArtinGaloisMap_primeIdeal_eq_finitePlacePrimeArtin
       GlobalClassFields.finitePlacePrimeArtin
         (K := K) (L := L) v := by
   rw [← GlobalClassFields.primeToIdealMap_finitePrimeIdele m v hv]
-  rw [idealArtinGaloisMap_apply, GlobalClassFields.idealArtinMap_primeToIdealMap]
+  rw [idealArtinGaloisMap_apply, IdealClassFieldTheory.idealArtinMap_primeToIdealMap]
   exact (finitePlacePrimeArtin_eq_globalNormResidue (K := K) (L := L) v).symm
 
 /-- Direct local form of the prime-ideal Artin identification: the
@@ -488,7 +491,7 @@ theorem
           (GlobalClassFields.finitePlacePrimeArtin
             (K := K)
             (L := GlobalClassFields.smallHilbertClassField K) v) =
-      ClassGroup.mk K (FractionalIdealGroup.prime v) := by
+      ClassGroup.mk K (finitePrimeFractionalIdeal v) := by
   rw [finitePlacePrimeArtin_eq_globalNormResidue]
   rw [
     GlobalClassFields.smallHilbertClassFieldGaloisEquivClassGroupOverOriginal_idele,
@@ -514,8 +517,7 @@ theorem smallHilbertClassField_chosenFinitePlaceIsUnramified
       (K := K)
       (L := GlobalClassFields.smallHilbertClassField K) v
   exact
-    GlobalClassFields.smallHilbertClassField_isUnramifiedAtFinitePlaces
-      K W
+    (GlobalClassFields.smallHilbertClassField_isUnramifiedAtFinitePlaces K).atPrime W
 
 /-- A prime of the original number field actually splits completely
 in the selected small Hilbert class field exactly when its prime ideal
@@ -525,7 +527,7 @@ theorem finitePlaceSplitsCompletelyInSmallHilbertClassField_iff_principal
     _root_.FinitePlaceSplitsCompletely
           (K := K)
           (L := GlobalClassFields.smallHilbertClassField K) v ↔
-      FractionalIdealGroup.prime v ∈
+      finitePrimeFractionalIdeal v ∈
         (toPrincipalIdeal (𝓞 K) K).range := by
   let e :=
     GlobalClassFields.smallHilbertClassFieldGaloisEquivClassGroupOverOriginal
@@ -541,12 +543,12 @@ theorem finitePlaceSplitsCompletelyInSmallHilbertClassField_iff_principal
             (K := K)
             (L := GlobalClassFields.smallHilbertClassField K) v =
           1 ↔
-        ClassGroup.mk K (FractionalIdealGroup.prime v) =
+        ClassGroup.mk K (finitePrimeFractionalIdeal v) =
           1 := by
     constructor
     · intro h
       calc
-        ClassGroup.mk K (FractionalIdealGroup.prime v) =
+        ClassGroup.mk K (finitePrimeFractionalIdeal v) =
             e
               (GlobalClassFields.finitePlacePrimeArtin
                 (K := K)
@@ -566,8 +568,8 @@ theorem finitePlaceSplitsCompletelyInSmallHilbertClassField_iff_principal
         (L := GlobalClassFields.smallHilbertClassField K) v hunram,
     hFrobenius]
   exact
-    IdeleGroup.classGroup_mk_eq_one_iff
-      (FractionalIdealGroup.prime v)
+    ClassGroup.mk_eq_one_iff_mem_principal
+      (finitePrimeFractionalIdeal v)
 
 end SmallHilbertPrimeSplitting
 

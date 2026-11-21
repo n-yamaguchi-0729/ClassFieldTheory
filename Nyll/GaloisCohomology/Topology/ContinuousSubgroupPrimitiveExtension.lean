@@ -42,6 +42,33 @@ def openSubgroupPrimitiveExtension (H : OpenSubgroup G)
       z xy.1 (openSubgroupRetraction H xy.1) (openSubgroupRetraction H xy.2) +
       z xy.1 xy.2 (openSubgroupRetraction H xy.2), by fun_prop⟩
 
+/-- The retraction prism compares a cocycle with its simultaneous pullback
+along the open-subgroup retraction. -/
+theorem openSubgroupPrism_boundary (H : OpenSubgroup G)
+    [LocallyCompactSpace ↥(H : Subgroup G)]
+    (z : C(G, C(G, C(G, M))))
+    (hz : ∀ a b c d : G, z b c d - z a c d + z a b d - z a b c = 0)
+    (g₀ g₁ g₂ : G) :
+    openSubgroupPrimitiveExtension H z 0 g₁ g₂ -
+        openSubgroupPrimitiveExtension H z 0 g₀ g₂ + openSubgroupPrimitiveExtension H z 0 g₀ g₁ =
+      z g₀ g₁ g₂ - z (openSubgroupRetraction H g₀) (openSubgroupRetraction H g₁)
+        (openSubgroupRetraction H g₂) := by
+  let r := openSubgroupRetraction H
+  let E₁ := z (r g₀) (r g₁) (r g₂) - z g₀ (r g₁) (r g₂) +
+    z g₀ (r g₀) (r g₂) - z g₀ (r g₀) (r g₁)
+  let E₂ := z g₁ (r g₁) (r g₂) - z g₀ (r g₁) (r g₂) + z g₀ g₁ (r g₂) - z g₀ g₁ (r g₁)
+  let E₃ := z g₁ g₂ (r g₂) - z g₀ g₂ (r g₂) + z g₀ g₁ (r g₂) - z g₀ g₁ g₂
+  have h₁ : E₁ = 0 := hz g₀ (r g₀) (r g₁) (r g₂)
+  have h₂ : E₂ = 0 := hz g₀ g₁ (r g₁) (r g₂)
+  have h₃ : E₃ = 0 := hz g₀ g₁ g₂ (r g₂)
+  calc
+    _ = (z g₀ g₁ g₂ - z (r g₀) (r g₁) (r g₂)) + E₁ - E₂ + E₃ := by
+      simp only [openSubgroupPrimitiveExtension, ContinuousMap.curry_apply, ContinuousMap.coe_mk,
+        ContinuousMap.zero_apply, zero_sub]
+      dsimp only [E₁, E₂, E₃, r]
+      abel
+    _ = _ := by simp only [h₁, h₂, h₃, add_zero, sub_zero, r]
+
 /-- The corrected extension has the original ambient cocycle as its boundary. -/
 theorem openSubgroupPrimitiveExtension_boundary (H : OpenSubgroup G)
     [LocallyCompactSpace ↥(H : Subgroup G)]

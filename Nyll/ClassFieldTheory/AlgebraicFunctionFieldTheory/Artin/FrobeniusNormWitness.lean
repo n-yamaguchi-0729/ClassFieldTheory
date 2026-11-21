@@ -15,7 +15,7 @@ public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Frobeniu
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGroup.NormalizedDegree
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.DegreeOneNormWitness
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
@@ -55,19 +55,21 @@ theorem relativeFixedField_constantTower
 theorem frobeniusFixedField_finiteDimensional
     (F : Type v) (Ω : Type w) [Field F] [Field Ω] [Algebra F Ω] [IsGalois F Ω]
     (D : DegreeData Gal(Ω/F)) (H : FiniteAbstractField Gal(Ω/F))
-    (T : FiniteGaloisSubextension H.field)
-    (σ : D.FrobeniusElements (H.toFiniteResidueAbstractField D) T.field T.below) :
-    let S : IntermediateField F Ω := abstractFixedField F Ω
-      (D.frobeniusFixedField (H.toFiniteResidueAbstractField D) T.field T.below σ)
-    let _ : CommSemiring S := (inferInstance : Field S).toSemifield.toCommSemiring
-    let aFS : Algebra F S := S.algebra
-    let _ : Module F S := aFS.toModule
-    FiniteDimensional F S := by
-  intro S cS aFS mFS
+    (T : FiniteGaloisSubextension H.field) :
+    let HR := H.toFiniteResidueAbstractField D
+    let _ : (extensionSubgroup HR.field T.field T.below).Normal := T.normal
+    ∀ σ : D.FrobeniusElements HR T.field T.below,
+      let S : IntermediateField F Ω := abstractFixedField F Ω
+        (D.frobeniusFixedField HR T.field T.below σ)
+      let _ : CommSemiring S := (inferInstance : Field S).toSemifield.toCommSemiring
+      let aFS : Algebra F S := S.algebra
+      let _ : Module F S := aFS.toModule
+      FiniteDimensional F S := by
+  intro HR hTnormal σ S cS aFS mFS
   have hTfinite : Finite (H.field.toSubgroup ⧸ extensionSubgroup H.field T.field T.below) :=
     T.finite
   exact abstractFixedField_finiteDimensional F Ω
-    (D.frobeniusFixedField (H.toFiniteResidueAbstractField D) T.field T.below σ)
+    (D.frobeniusFixedField HR T.field T.below σ)
     (D.frobeniusFixedField_absoluteFinite H T.field T.below σ)
 
 variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
@@ -148,112 +150,6 @@ local instance fixedBaseFrobeniusAuxiliaryConstantAlgebra
 attribute [local instance]
   fixedBaseFrobeniusAuxiliaryConstantAlgebra
   ambientFrobeniusAuxiliaryConstantAlgebra
-
-omit [Algebra (RatFunc k) (SeparableClosure K)]
-  [IsScalarTower (RatFunc k) K (SeparableClosure K)]
-  [IsScalarTower k (RatFunc k) (SeparableClosure K)] in
-/-- The actual intrinsic and ambient auxiliary fields share a degree-one norm. -/
-theorem exists_common_frobenius_norm
-    (T : FiniteGaloisSubextension H.field)
-    (e : SeparableClosure (abstractFixedField K (SeparableClosure K) H.field)
-      ≃ₐ[abstractFixedField K (SeparableClosure K) H.field] SeparableClosure K)
-    (σ : intrinsicFixedBaseFrobeniusElements k K H T e) :
-    have φ : (fixedBaseFrobeniusAuxiliaryField k K H T e σ)
-        ≃ₐ[abstractFixedField K (SeparableClosure K) H.field]
-        (ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) :=
-      intrinsicConstantFrobeniusFixedFieldEquivAmbientFixedField k K H T e σ
-    have _ :
-    IsScalarTower k (abstractFixedField K (SeparableClosure K) H.field)
-        (fixedBaseFrobeniusAuxiliaryField k K H T e σ) :=
-      IsScalarTower.of_algebraMap_eq
-        (R := k) (S := abstractFixedField K (SeparableClosure K) H.field)
-        (A := fixedBaseFrobeniusAuxiliaryField k K H T e σ)
-        (fun x => Subtype.ext (IsScalarTower.algebraMap_apply k
-          (abstractFixedField K (SeparableClosure K) H.field)
-          (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field)) x))
-    have _ :
-    IsScalarTower k (abstractFixedField K (SeparableClosure K) H.field)
-        (ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) :=
-      relativeFixedField_constantTower k K (SeparableClosure K) H.field
-        ((fullConstantDegreeData k K (SeparableClosure K)).frobeniusFixedField
-          (H.toFiniteResidueAbstractField (fullConstantDegreeData k K (SeparableClosure K)))
-          T.field T.below
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ))
-        ((fullConstantDegreeData k K (SeparableClosure K)).frobeniusFixedField_le
-          (H.toFiniteResidueAbstractField (fullConstantDegreeData k K (SeparableClosure K)))
-          T.field T.below
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ))
-    have _ :
-    FiniteDimensional (abstractFixedField K (SeparableClosure K) H.field)
-        (fixedBaseFrobeniusAuxiliaryField k K H T e σ) :=
-      frobeniusFixedField_finiteDimensional
-        (abstractFixedField K (SeparableClosure K) H.field)
-        (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))
-        (fullConstantDegreeData k (abstractFixedField K (SeparableClosure K) H.field)
-          (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field)))
-        (intrinsicFiniteAbstractBase (abstractFixedField K (SeparableClosure K) H.field))
-        (finiteGaloisAbstractExtensionOfEmbedding
-          (abstractFixedField K (SeparableClosure K) H.field)
-          (abstractRelativeFixedField K (SeparableClosure K) T.below)
-          (e.symm.toAlgHom.comp (abstractRelativeFixedField K (SeparableClosure K) T.below).val)) σ
-    have _ :
-    Algebra.IsSeparable (abstractFixedField K (SeparableClosure K) H.field)
-        (fixedBaseFrobeniusAuxiliaryField k K H T e σ) :=
-      IntermediateField.isSeparable_tower_bot
-        (abstractFixedField K (SeparableClosure K) H.field)
-        (K := SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))
-        (fixedBaseFrobeniusAuxiliaryField k K H T e σ)
-    have _ :
-    FiniteDimensional (abstractFixedField K (SeparableClosure K) H.field)
-        (ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) :=
-      φ.toLinearEquiv.finiteDimensional
-    have _ :
-    Algebra.IsSeparable (abstractFixedField K (SeparableClosure K) H.field)
-        (ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) :=
-      AlgEquiv.Algebra.isSeparable φ
-    have _ : AlgebraicCurve.HasPrincipalDivisors k
-        (abstractFixedField K (SeparableClosure K) H.field) :=
-      (isCurveOver k (abstractFixedField K (SeparableClosure K) H.field)).toHasPrincipalDivisors
-    have _ :
-    AlgebraicCurve.HasPrincipalDivisors k (fixedBaseFrobeniusAuxiliaryField k K H T e σ) :=
-      (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k
-        (abstractFixedField K (SeparableClosure K) H.field)
-        (fixedBaseFrobeniusAuxiliaryField k K H T e σ)).toHasPrincipalDivisors
-    have _ :
-    AlgebraicCurve.HasPrincipalDivisors k
-        (ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) :=
-      (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k
-        (abstractFixedField K (SeparableClosure K) H.field)
-        (ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ))
-        ).toHasPrincipalDivisors
-    ∃ (cI : IdeleClassGroup k (fixedBaseFrobeniusAuxiliaryField k K H T e σ))
-      (cA : IdeleClassGroup k (ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ))),
-      (IdeleClassGroup.normalizedDegree (k := k)
-        (K := fixedBaseFrobeniusAuxiliaryField k K H T e σ) cI).toAdd = 1 ∧
-      (IdeleClassGroup.normalizedDegree (k := k)
-        (K := ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) cA).toAdd = 1 ∧
-      IdeleClassGroup.norm (k := k)
-          (K := abstractFixedField K (SeparableClosure K) H.field)
-          (L := fixedBaseFrobeniusAuxiliaryField k K H T e σ) cI =
-        IdeleClassGroup.norm (k := k)
-          (K := abstractFixedField K (SeparableClosure K) H.field)
-          (L := ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) cA := by
-  intro φ hkFLI hkFLA hFLI hLIsep hFLA hLAsep hFprincipal hLIprincipal hLAprincipal
-  with_reducible
-    exact IdeleClassGroup.exists_normalizedDegree_one_norm_eq_of_algEquiv k
-      (abstractFixedField K (SeparableClosure K) H.field)
-      (fixedBaseFrobeniusAuxiliaryField k K H T e σ)
-      (ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T
-          (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) φ
 
 end CommonNormWitness
 

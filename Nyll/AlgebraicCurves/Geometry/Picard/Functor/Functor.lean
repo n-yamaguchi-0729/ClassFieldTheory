@@ -3,6 +3,8 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/Definitions/Def_AlgebraicGeometry_RelativePicardFunctor.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_RelPicard_exists_chart_subsingleton_H1_fibre.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/Definitions/Def_AlgebraicGeometry_RelPicardAlgEquivZeroCut.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -16,6 +18,7 @@ public import Nyll.SchemeTheory.Modules.Invertible.Invertible
 public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 public import Mathlib.Algebra.Category.ModuleCat.Sheaf.PullbackFree
 public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.Pasting
 
 /-!
 # The relative Picard presheaf
@@ -47,6 +50,60 @@ def baseChangeSnd {C T T' : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))
     (s : SchemeHomOver t' t) : pullback c t' ⟶ pullback c t :=
   pullback.map c t' c t (𝟙 C) s.1 (𝟙 _)
     ((Category.comp_id c).trans (Category.id_comp c).symm) ((Category.comp_id t').trans s.2.symm)
+
+/-- The fibre morphism of the scalar-extended curve over a field-valued point of the test
+scheme.
+-/
+noncomputable def fibreAt {C T : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R)) (t : T ⟶ Spec
+    (CommRingCat.of R))
+    {k : Type u} [Field k] (s : Spec (CommRingCat.of k) ⟶ T) :
+    pullback (pullback.snd c t) s ⟶ Spec (CommRingCat.of k) :=
+  pullback.snd _ _
+
+section FibreIso
+
+variable {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R)) {T : Scheme.{u}}
+    (t : T ⟶ Spec (CommRingCat.of R))
+  {k : Type u} [Field k] (s : Spec (CommRingCat.of k) ⟶ T)
+    (x : Spec (CommRingCat.of k) ⟶ Spec (CommRingCat.of R))
+  (hx : s ≫ t = x)
+
+/-- Identify the iterated fibre with the pullback along its composite base point. -/
+def fibreIso : pullback (pullback.snd c t) s ≅ pullback c x :=
+  pullbackLeftPullbackSndIso c t s ≪≫ pullback.congrHom rfl hx
+
+@[reassoc]
+theorem fibreIso_hom_snd : (fibreIso c t s x hx).hom ≫ pullback.snd c x = fibreAt c t s := by
+  subst hx
+  rw [fibreIso, Iso.trans_hom, Category.assoc, pullback.congrHom_hom,
+    pullback.lift_snd, Category.comp_id]
+  exact pullbackLeftPullbackSndIso_hom_snd c t s
+
+@[reassoc]
+theorem fibreIso_hom_fst :
+    (fibreIso c t s x hx).hom ≫ pullback.fst c x
+      = pullback.fst (pullback.snd c t) s ≫ pullback.fst c t := by
+  subst hx
+  rw [fibreIso, Iso.trans_hom, Category.assoc, pullback.congrHom_hom,
+    pullback.lift_fst, Category.comp_id]
+  exact pullbackLeftPullbackSndIso_hom_fst c t s
+
+theorem fibreIso_inv_fibreAt : (fibreIso c t s x hx).inv ≫ fibreAt c t s = pullback.snd c x := by
+  rw [← fibreIso_hom_snd c t s x hx, Iso.inv_hom_id_assoc]
+
+theorem fibreIso_hom_baseChangeSnd :
+    (fibreIso c t s x hx).hom ≫ baseChangeSnd c (⟨s, hx⟩ : SchemeHomOver x t)
+      = pullback.fst (pullback.snd c t) s := by
+  apply pullback.hom_ext
+  · rw [Category.assoc]
+    unfold baseChangeSnd
+    rw [pullback.lift_fst, ← Category.assoc, fibreIso_hom_fst, Category.assoc, Category.comp_id]
+  · rw [Category.assoc]
+    unfold baseChangeSnd
+    rw [pullback.lift_snd, ← Category.assoc, fibreIso_hom_snd, pullback.condition]
+    rfl
+
+end FibreIso
 
 /-- The section of a base change induced by the chosen section of the original family. -/
 def rigSection {C T : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))

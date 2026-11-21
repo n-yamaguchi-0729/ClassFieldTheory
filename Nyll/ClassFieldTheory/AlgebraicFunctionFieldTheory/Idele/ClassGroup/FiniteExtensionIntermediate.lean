@@ -35,20 +35,6 @@ variable {k K Ω : Type*} [Field k] [PerfectField k] [Field K] [Field Ω]
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]
     [IsScalarTower k (RatFunc k) Ω] [FunctionField k K]
 
-/-- A finite intermediate field uses the compatible ambient rational parameter. -/
-instance intermediateRatFuncTower (E : IntermediateField K Ω) :
-    IsScalarTower k (RatFunc k) E :=
-  IsScalarTower.of_algebraMap_eq fun x =>
-    Subtype.ext (IsScalarTower.algebraMap_apply k (RatFunc k) Ω x)
-
-/-- Every finite intermediate field is an ordinary one-variable function field. -/
-instance intermediateFunctionField (E : IntermediateField K Ω) [FiniteDimensional K E] :
-    FunctionField k E := Module.Finite.trans K E
-
-/-- The actual curve and principal-divisor structure of a finite intermediate field. -/
-instance intermediateIsCurveOver (E : IntermediateField K Ω) [FiniteDimensional K E] :
-    AlgebraicCurve.IsCurveOver k E := FunctionField.isCurveOver k E
-
 /-- Inclusion of any finite intermediate field into a containing finite Galois stage. -/
 def includeInStage (E : IntermediateField K Ω) [FiniteDimensional K E]
     (H : FiniteGaloisIntermediateField K Ω) (h : E ≤ H) :

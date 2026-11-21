@@ -253,7 +253,7 @@ lemma theta_hom_hom_comp {Y₀' Y₀ : C} (g : Y₀' ⟶ Y₀) (q₀ : Y₀ ⟶ 
     ph
   simp only [Functor.map_comp, Category.assoc]
   rw [h1]
-  try simp only [Category.assoc]
+  simp only [Category.assoc]
   have h2 := F.mapComp'₀₁₃_inv_app (pullback.fst f (u i)).op.toLoc (restrMap f (u i) q₀ fj
     hfj).op.toLoc
     (restrMap f q₀ q₀' g hq).op.toLoc (pullback.fst f q₀).op.toLoc
@@ -270,7 +270,7 @@ lemma theta_hom_hom_comp {Y₀' Y₀ : C} (g : Y₀' ⟶ Y₀) (q₀ : Y₀ ⟶ 
     (op_toLoc_comp _ _ (restrMap_snd f (u i) q₀ fj hfj)) (op_toLoc_comp _ _ hρr)
     (op_toLoc_comp _ _ (restrMap_snd f (u i) q₀' gfj _)) (L i)
   rw [h3]
-  try simp only [Category.assoc]
+  simp only [Category.assoc]
   have h4 := F.mapComp'₀₂₃_hom_app fj.op.toLoc (pullback.snd f q₀).op.toLoc (restrMap f q₀ q₀' g
     hq).op.toLoc
     (pullback.snd f q₀ ≫ fj).op.toLoc (pullback.snd f q₀' ≫ g).op.toLoc (pullback.snd f q₀' ≫
@@ -278,7 +278,7 @@ lemma theta_hom_hom_comp {Y₀' Y₀ : C} (g : Y₀' ⟶ Y₀) (q₀ : Y₀ ⟶ 
     (op_toLoc_comp _ _ rfl) (op_toLoc_comp _ _ (restrMap_snd f q₀ q₀' g hq))
     (op_toLoc_comp _ _ (by rw [restrMap_snd_assoc, hgfj])) (L i)
   rw [h4]
-  try simp only [Category.assoc]
+  simp only [Category.assoc]
   have h5 := F.mapComp'₀₂₃_inv_comp_mapComp'₀₁₃_hom_app fj.op.toLoc g.op.toLoc (pullback.snd f
     q₀').op.toLoc
     gfj.op.toLoc (pullback.snd f q₀' ≫ g).op.toLoc (pullback.snd f q₀' ≫ gfj).op.toLoc
@@ -868,17 +868,17 @@ theorem psiLoc_comm ⦃W : C⦄ (w : W ⟶ X) ⦃i₁ i₂ : ι⦄ (k₁ : W ⟶
           pullback.condition)).inv.toNatTrans.app L₀) ≫
       (F.mapComp' (pullback.snd f (u i₂) ≫ u i₂).op.toLoc k₂.op.toLoc (w ≫ f).op.toLoc
         (op_toLoc_comp _ _ (by rw [← Category.assoc]; exact h₂))).inv.toNatTrans.app L₀ := by
-    try dsimp only [restr, toDescentData_obj, ofObj_obj, pullFunctor_obj, pullFunctorObj_obj,
+    dsimp only [restr, toDescentData_obj, ofObj_obj, pullFunctor_obj, pullFunctorObj_obj,
       Cat.Hom.comp_toFunctor,
       Functor.comp_obj]
     rw [Nb₂, reassoc_of% cW₂]
   rw [Na₁]
-  try simp only [Category.assoc]
+  simp only [Category.assoc]
   rw [reassoc_of% cP₁, reassoc_of% cU₁, reassoc_of% Nb₁]
   rw [Na₂]
-  try simp only [Category.assoc]
+  simp only [Category.assoc]
   rw [hZ]
-  try simp only [Category.assoc]
+  simp only [Category.assoc]
   rw [reassoc_of% cC₂]
 
 end psi

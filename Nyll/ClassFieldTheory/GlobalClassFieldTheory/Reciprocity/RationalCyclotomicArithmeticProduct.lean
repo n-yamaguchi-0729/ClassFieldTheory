@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicPrincipalProduct
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Basic
@@ -52,7 +53,7 @@ noncomputable local instance
     (m : ℕ+) :
     IsAbelianGalois ℚ
       (KummerTheory.rationalCyclotomicLevel m) :=
-  rationalCyclotomicLevelIsAbelianGalois m
+  KummerTheory.rationalCyclotomicLevelIsAbelianGalois m
 
 /-- Mapping an arithmetic chosen local symbol to a cyclotomic
 coordinate only inverts the corresponding geometric coordinate.  This
@@ -225,26 +226,10 @@ theorem
     rationalCyclotomicArithmeticPrincipalFinitePlaceCharacter_eq_inv,
     rationalCyclotomicPrincipalFinitePlaceCharacter_at_prime]
 
-local instance (p : Nat.Primes) (k : ℕ) :
-    NumberField
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
-  KummerTheory.rationalCyclotomicLevel_numberField
-    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
-
-local instance (p : Nat.Primes) (k : ℕ) :
-    FiniteDimensional ℚ
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
-  rationalCyclotomicPrincipalPrimeLevelFiniteDimensional
-    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
-
-local instance (p : Nat.Primes) (k : ℕ) :
-    IsAbelianGalois ℚ
-      (KummerTheory.rationalCyclotomicLevel
-        ⟨p.1 ^ k, pow_pos p.2.pos k⟩) :=
-  rationalCyclotomicLevelIsAbelianGalois
-    ⟨p.1 ^ k, pow_pos p.2.pos k⟩
+attribute [local instance]
+  KummerTheory.rationalCyclotomicPrimePowerNumberField
+  KummerTheory.rationalCyclotomicPrimePowerFiniteDimensional
+  KummerTheory.rationalCyclotomicPrimePowerIsAbelianGalois
 
 /-- Pointwise inversion of the chosen local characters, assembled before
 the public product formula so that its proof does not unfold the full

@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceAdicLocalField
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MathlibHilbertProductFormula
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
@@ -89,15 +91,15 @@ private theorem rootsOfUnity_finiteCompletion_comp
       rootsOfUnityEquivOfPrimitiveRoots (algebraMap F D).injective hmu
     let eCD : rootsOfUnity (n : ℕ) C ≃* rootsOfUnity (n : ℕ) D :=
       rootsOfUnityEquivOfRingEquiv
-        (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
+        (finitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
     eFD z = eCD (eFC z) := by
   intro C D sharedOwner3 eFC eFD eCD
   apply Subtype.ext
   apply Units.ext
   change algebraMap F D ((z : Fˣ) : F) =
-    (relativeFinitePlaceCompletionAlgEquiv v)
+    (finitePlaceCompletionAlgEquiv v)
       (algebraMap F C ((z : Fˣ) : F))
-  exact (relativeFinitePlaceCompletionAlgEquiv v).commutes ((z : Fˣ) : F) |>.symm
+  exact (finitePlaceCompletionAlgEquiv v).commutes ((z : Fˣ) : F) |>.symm
 
 /-- The finite factor of the adic local Hilbert family is the established
 global finite-place Hilbert symbol. -/
@@ -111,7 +113,7 @@ theorem finitePlaceAdicHilbertPairingFamily_finiteFactor
         globalFinitePlaceHilbertSymbol F n hnF hmu v a b := by
   let C := (HeightOneSpectrum.adicAbv F v).Completion
   let D := v.adicCompletion F
-  let e : C ≃+* D := (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv
+  let e : C ≃+* D := (finitePlaceCompletionAlgEquiv v).toRingEquiv
   let : ValuativeRel C :=
     GlobalClassFieldTheory.Reciprocity.finitePlaceLocalArtinCompletionValuativeRel v
   let : IsNonarchimedeanLocalField C :=
@@ -141,7 +143,7 @@ theorem finitePlaceAdicHilbertPairingFamily_finiteFactor
     change e (e.symm (algebraMap F D (x : F))) =
       e (algebraMap F C (x : F))
     rw [e.apply_symm_apply]
-    exact (relativeFinitePlaceCompletionAlgEquiv v).commutes (x : F) |>.symm
+    exact (finitePlaceCompletionAlgEquiv v).commutes (x : F) |>.symm
   have hfactorD :
       eFD (GlobalHilbertPairingFamily.finiteFactor F
         (finitePlaceAdicHilbertPairingFamily F n hmu) hmu v a b) =

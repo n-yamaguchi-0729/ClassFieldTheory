@@ -162,18 +162,9 @@ open _root_.Opposite
 open _root_.TopologicalSpace
 open _root_.TensorProduct
 
-namespace Ws31X1
-open AlgebraicGeometry.Scheme.Modules
-
-/-- Restrict a trivialization on an open subset to a smaller open subset. -/
-noncomputable def restrictTriv {Z : Scheme.{u}} {N : Z.Modules} {U₀ U : Z.Opens} (h : U ≤ U₀)
-    (e : (Scheme.Modules.pullback U₀.ι).obj N ≅ 𝟙_ (U₀ : Scheme.{u}).Modules) :
-    (Scheme.Modules.pullback U.ι).obj N ≅ 𝟙_ (U : Scheme.{u}).Modules :=
-  (pullbackCongr (Z.homOfLE_ι h).symm).app N ≪≫
-    ((pullbackComp (Z.homOfLE h) U₀.ι).app N).symm ≪≫
-    (Scheme.Modules.pullback (Z.homOfLE h)).mapIso e ≪≫
-    pullbackTensorUnitObjIso (Z.homOfLE h)
-end Ws31X1
+open AlgebraicCurves.Geometry.Sheaves.Proofs
+open Scheme_Modules_isLocallyFreeOfRank_pushforward_of_isFinite_of_flat_of_locallyTrivialOver.Ws31X1
+  (restrictTriv)
 
 namespace Ws31ThetaF
 
@@ -199,7 +190,7 @@ theorem locallyTrivialOver {Z T : Scheme.{u}} (q : Z ⟶ T) [UniversallyClosed q
     intro z' hz'
     by_contra h
     exact hz' ⟨z', h, rfl⟩
-  exact ⟨W, htW, ⟨Ws31X1.restrictTriv hle eV⟩⟩
+  exact ⟨W, htW, ⟨restrictTriv hle eV⟩⟩
 
 section setting
 
@@ -345,17 +336,6 @@ variable (k : Type u) [Field k] {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of
   [IsProper c] [SmoothOfRelativeDimension 1 c]
   (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of k))) c)
   {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of k))
-
-omit [IsProper c] [SmoothOfRelativeDimension 1 c] in
-lemma rigSection_snd : rigSection c t ε ≫ pullback.snd c t = 𝟙 T := pullback.lift_snd _ _ _
-
-scoped instance smooth_snd : SmoothOfRelativeDimension 1 (pullback.snd c t) :=
-  (smoothOfRelativeDimension_isStableUnderBaseChange (n := 1)).of_isPullback
-    (IsPullback.of_hasPullback c t) (inferInstance : SmoothOfRelativeDimension 1 c)
-
-lemma isInvertible_sectionIdeal : (sectionIdeal c ε t).IsInvertible :=
-  Scheme.Hom.isInvertible_ker_of_comp_eq_id (p := pullback.snd c t)
-    (rigSection c t ε) (rigSection_snd k c ε t)
 
 theorem nonempty_pullback_rigSection_sectionTwist_iso (r : ℕ) :
     Nonempty ((Scheme.Modules.pullback (rigSection c t ε)).obj (sectionTwist c ε t r) ≅
@@ -723,33 +703,12 @@ theorem ΦGen_app_surjective (H : X.Modules) (W : X.Opens)
 
 end unitfactor
 
-private theorem _root_.Ws31ThetaF.nonempty_iso_unit_of_field {K : Type u} [Field K]
-    (L : (Spec (CommRingCat.of K)).Modules)
-    (hL : IsInvertible L) : Nonempty (L ≅ 𝟙_ (Spec (CommRingCat.of K)).Modules) :=
-  Ws31ThetaF.E6.nonempty_iso_unit_of_field L hL
-
 section setting2
 
 variable (k : Type u) [Field k] {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of k))
   [IsProper c] [SmoothOfRelativeDimension 1 c]
   (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of k))) c)
   {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of k))
-
-private theorem _root_.Ws31ThetaF.nonempty_pullback_rigSection_module_iso :
-    Nonempty ((Scheme.Modules.pullback (rigSection c t ε)).obj (sectionIdeal c ε t).module ≅
-      𝟙_ T.Modules) :=
-  Ws31ThetaF.E6.nonempty_pullback_rigSection_module_iso k c ε t
-
-
-omit [SmoothOfRelativeDimension 1 c] in
-private theorem _root_.Ws31ThetaF.nonempty_pushforward_thickening_one_iso
-    (H : (pullback c t).Modules) :
-    Nonempty ((Scheme.Modules.pushforward (pullback.snd c t)).obj
-      ((Scheme.Modules.pushforward (sectionIdeal c ε t).subschemeι).obj
-        ((Scheme.Modules.pullback (sectionIdeal c ε t).subschemeι).obj H)) ≅
-      (Scheme.Modules.pullback (rigSection c t ε)).obj H) :=
-  Ws31ThetaF.E6.nonempty_pushforward_thickening_one_iso k c ε t H
-
 
 /-- Push forward the given module sheaf restricted to the subscheme cut out by the m-th power of
 the section ideal. -/
@@ -881,7 +840,7 @@ theorem shortExact_map_pushforward_thickening [LocallyOfFiniteType t]
   refine ⟨V, hyV, fun z hz => (hVle hz).1, ?_⟩
   have hqV : IsAffineOpen (q ⁻¹ᵁ V) := hV.preimage q
   have eV : (Scheme.Modules.pullback (q ⁻¹ᵁ V).ι).obj N ≅ 𝟙_ _ :=
-    Ws31X1.restrictTriv (show q ⁻¹ᵁ V ≤ q ⁻¹ᵁ W₀ from fun z hz => (hVle hz).2) e₀
+    restrictTriv (show q ⁻¹ᵁ V ≤ q ⁻¹ᵁ W₀ from fun z hz => (hVle hz).2) e₀
   have hν : Function.Surjective ((νT k c ε t H m).app (iB ⁻¹ᵁ ((pullback.snd c t) ⁻¹ᵁ V))) :=
     Ws31ThetaF.E6.surjective_unit_app_of_isAffineOpen_of_trivial
       (kIncl k c ε t m) N (q ⁻¹ᵁ V) hqV eV

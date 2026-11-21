@@ -101,8 +101,8 @@ noncomputable instance
     IsGalois.of_fixedField_normal_subgroup S
   let e :
       Gal(M/K) ≃*
-        Abelianization G ⧸
-          H.map (Abelianization.of : G →* Abelianization G) :=
+        Group.Abelianization G ⧸
+          H.map (Group.Abelianization.of : G →* Group.Abelianization G) :=
     (IsGalois.normalAutEquivQuotient S).symm.trans
       H.quotientSupCommutatorEquivMapAbelianization
   have hcomm : IsMulCommutative Gal(M/K) :=
@@ -130,11 +130,11 @@ theorem finiteNormalClosureMaximalAbelianSubfield_greatest
     F ≤ IntermediateField.fixedField
       (H ⊔ _root_.commutator G)
   apply
-    (IntermediateField.le_iff_le
+    (IntermediateField.le_fixedField_iff_le_fixingSubgroup
       (H ⊔ _root_.commutator G) F).2
   apply sup_le
   · change E.fixingSubgroup ≤ F.fixingSubgroup
     exact IntermediateField.fixingSubgroup_le hF
   · rw [← F.restrictNormalHom_ker]
-    exact Abelianization.commutator_subset_ker
+    exact Group.Abelianization.commutator_le_ker
       (AlgEquiv.restrictNormalHom (F := K) (K₁ := N) F)

@@ -12,9 +12,10 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Morphisms.NoetherianFiniteType
 public import Mathlib.RingTheory.Spectrum.Prime.FreeLocus
 public import Mathlib.LinearAlgebra.FreeModule.PID
-public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafCoherence
 public import Mathlib.AlgebraicGeometry.Morphisms.Proper
 public import Mathlib.Data.Fintype.EquivFin
 
@@ -75,120 +76,6 @@ open _root_.AlgebraicGeometry
 
 variable {R : Type u} [CommRing R] {V : Scheme.{u}} {π : V ⟶ Spec (.of R)}
 
-section KerCoker
-
-variable {F G : OModulePresheaf π} (φ : Hom F G)
-
-theorem isCoherent_ker [IsLocallyNoetherian V] (hF : F.IsCoherent) : (ker φ).IsCoherent := fun U
-    => by
-  have := hF U
-  have : IsNoetherianRing Γ(V, U.1) := IsLocallyNoetherian.component_noetherian U
-  have : _root_.IsNoetherian Γ(V, U.1) (F.obj U.1) := isNoetherian_of_isNoetherianRing_of_finite _ _
-  exact Module.Finite.of_injective ((kerImSES φ).inc.appSections U.1) ((kerImSES φ).injective U.1)
-
-theorem isCoherent_coker (hG : G.IsCoherent) : (coker φ).IsCoherent := fun U => by
-  have := hG U
-  exact Module.Finite.of_surjective ((imCokerSES φ).proj.appSections U.1) ((imCokerSES
-    φ).surjective U.1)
-
-theorem isQuasicoherent_coker (hG : G.IsQuasicoherent) (hF : F.IsQuasicoherent) :
-    (coker φ).IsQuasicoherent := fun U f => by
-  refine ⟨fun x => x.inductionOn' fun x₀ => ?_, fun y => y.inductionOn' fun y₀ hy => ?_⟩
-  · obtain ⟨n, y, hy⟩ := (hG U f).1 x₀
-    exact ⟨n, Submodule.Quotient.mk y, congrArg Submodule.Quotient.mk hy⟩
-  · obtain ⟨z, hz⟩ := (Submodule.Quotient.mk_eq_zero _).mp hy
-    obtain ⟨n, w, hw⟩ := (hF U f).1 z
-    have h1 : G.res (V.basicOpen_le f) ((f ^ n : Γ(V, U.1)) • y₀ - φ.app U.1 w) = 0 := by
-      rw [map_sub, G.res_smul, ← hz, ← φ.app_smul, ← hw]
-      exact sub_eq_zero.mpr (φ.naturality_apply (V.basicOpen_le f) w)
-    obtain ⟨m, hm⟩ := (hG U f).2 _ h1
-    rw [smul_sub, sub_eq_zero, smul_smul, ← pow_add] at hm
-    exact ⟨m + n, (Submodule.Quotient.mk_eq_zero _).mpr
-      ⟨(f ^ m : Γ(V, U.1)) • w, (φ.app_smul U.1 _ _).trans hm.symm⟩⟩
-
-theorem isQuasicoherent_ker (hF : F.IsQuasicoherent) (hG : G.IsQuasicoherent) :
-    (ker φ).IsQuasicoherent := fun U f => by
-  refine ⟨fun x => ?_, fun y hy => ?_⟩
-  · obtain ⟨n, y', hy'⟩ := (hF U f).1 x.1
-    have h1 : G.res (V.basicOpen_le f) (φ.app U.1 y') = 0 := by
-      have hnat := φ.naturality_apply (V.basicOpen_le f) y'
-      rw [hy', φ.app_smul, LinearMap.mem_ker.mp x.2, smul_zero] at hnat
-      exact hnat.symm
-    obtain ⟨m, hm⟩ := (hG U f).2 _ h1
-    refine ⟨m + n, ⟨(f ^ m : Γ(V, U.1)) • y',
-      LinearMap.mem_ker.mpr ((φ.app_smul U.1 _ _).trans hm)⟩, Subtype.ext ?_⟩
-    change F.res (V.basicOpen_le f) ((f ^ m : Γ(V, U.1)) • y')
-      = (V.presheaf.map (homOfLE (V.basicOpen_le f)).op).hom (f ^ (m + n)) • x.1
-    rw [F.res_smul, hy', smul_smul, ← map_mul, ← pow_add]
-  · exact ((hF U f).2 y.1 (congrArg Subtype.val hy)).imp fun n hn => Subtype.ext hn
-
-end KerCoker
-
-theorem isCoherent_prod {F G : OModulePresheaf π} (hF : F.IsCoherent) (hG : G.IsCoherent) :
-    (F.prod G).IsCoherent :=
-  fun U => by have := hF U; have := hG U; exact Module.Finite.prod
-
-theorem isQuasicoherent_prod {F G : OModulePresheaf π} (hF : F.IsQuasicoherent) (hG :
-    G.IsQuasicoherent) :
-    (F.prod G).IsQuasicoherent := fun U f => by
-  refine ⟨fun x => ?_, fun y hy => ?_⟩
-  · obtain ⟨n₁, y₁, hy₁⟩ := (hF U f).1 x.1; obtain ⟨n₂, y₂, hy₂⟩ := (hG U f).1 x.2
-    exact ⟨n₁ + n₂, ((f ^ n₂ : Γ(V, U.1)) • y₁, (f ^ n₁ : Γ(V, U.1)) • y₂), Prod.ext
-      (show F.res _ ((f ^ n₂ : Γ(V, U.1)) • y₁) = _ • x.1 by
-        rw [F.res_smul, hy₁, smul_smul, ← map_mul, ← pow_add, Nat.add_comm])
-      (show G.res _ ((f ^ n₁ : Γ(V, U.1)) • y₂) = _ • x.2 by
-        rw [G.res_smul, hy₂, smul_smul, ← map_mul, ← pow_add])⟩
-  · obtain ⟨n₁, hn₁⟩ := (hF U f).2 y.1 (congrArg Prod.fst hy)
-    obtain ⟨n₂, hn₂⟩ := (hG U f).2 y.2 (congrArg Prod.snd hy)
-    exact ⟨n₁ + n₂, Prod.ext
-      (show (f ^ (n₁ + n₂) : Γ(V, U.1)) • y.1 = 0 by
-        rw [Nat.add_comm, pow_add, mul_smul, hn₁, smul_zero])
-      (show (f ^ (n₁ + n₂) : Γ(V, U.1)) • y.2 = 0 by
-        rw [pow_add, mul_smul, hn₂, smul_zero])⟩
-
-theorem isCoherent_pow {F : OModulePresheaf π} (n : ℕ) (hF : F.IsCoherent) : (F.pow n).IsCoherent :=
-  fun U => by have := hF U; exact Module.Finite.pi
-
-theorem isQuasicoherent_pow {F : OModulePresheaf π} (n : ℕ) (hF : F.IsQuasicoherent) :
-    (F.pow n).IsQuasicoherent := fun U f => by
-  refine ⟨fun x => ?_, fun y hy => ?_⟩
-  · choose m y' hy' using fun i => (hF U f).1 (x i)
-    refine ⟨∑ i, m i, fun i => (f ^ ((∑ j, m j) - m i) : Γ(V, U.1)) • y' i, funext fun i => ?_⟩
-    change F.res _ ((f ^ ((∑ j, m j) - m i) : Γ(V, U.1)) • y' i)
-      = (V.presheaf.map (homOfLE (V.basicOpen_le f)).op).hom (f ^ ∑ j, m j) • x i
-    rw [F.res_smul, hy' i, smul_smul, ← map_mul, ← pow_add,
-      Nat.sub_add_cancel (Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ i))]
-  · choose m hm using fun i => (hF U f).2 (y i) (congrFun hy i)
-    refine ⟨∑ i, m i, funext fun i => show (f ^ ∑ j, m j : Γ(V, U.1)) • y i = 0 from ?_⟩
-    rw [show (∑ j, m j) = ((∑ j, m j) - m i) + m i from (Nat.sub_add_cancel
-        (Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ i))).symm,
-      pow_add, mul_smul, hm i, smul_zero]
-
-theorem isQuasicoherent_restrOpen {F : OModulePresheaf π} (W₀ : V.Opens)
-    (haff : ∀ U : V.affineOpens, IsAffineOpen (U.1 ⊓ W₀)) (hF : F.IsQuasicoherent) :
-    (F.restrOpen W₀).IsQuasicoherent := fun U f => by
-  have hbo : V.basicOpen ((V.presheaf.map (homOfLE (inf_le_left : U.1 ⊓ W₀ ≤ U.1)).op).hom f)
-      = V.basicOpen f ⊓ W₀ := by
-    rw [Scheme.basicOpen_res, inf_right_comm, inf_eq_right.mpr (V.basicOpen_le f)]
-  obtain ⟨hs, ha⟩ := hF ⟨U.1 ⊓ W₀, haff U⟩
-    ((V.presheaf.map (homOfLE (inf_le_left : U.1 ⊓ W₀ ≤ U.1)).op).hom f)
-  refine ⟨fun x => ?_, fun y hy => ?_⟩
-  · let x₀ : F.obj (V.basicOpen f ⊓ W₀) := x
-    obtain ⟨n, y, hy⟩ := hs (F.res hbo.le x₀)
-    refine ⟨n, y, show F.res (inf_le_inf_right W₀ (V.basicOpen_le f)) y
-      = (V.presheaf.map (homOfLE (inf_le_left : V.basicOpen f ⊓ W₀ ≤ V.basicOpen f)).op).hom
-          ((V.presheaf.map (homOfLE (V.basicOpen_le f)).op).hom (f ^ n)) • x₀ from ?_⟩
-    have key := congrArg (F.res hbo.ge) hy
-    rw [F.res_res, F.res_smul, F.res_res, F.res_refl_apply] at key
-    refine key.trans (congrArg (· • x₀) ?_)
-    simp only [map_pow, ← CommRingCat.comp_apply, ← V.presheaf.map_comp, ← op_comp, homOfLE_comp]
-  · let y₀ : F.obj (U.1 ⊓ W₀) := y
-    refine (ha y₀ ?_).imp fun n hn => ?_
-    · exact (F.res_res hbo.le (inf_le_inf_right W₀ (V.basicOpen_le f)) y₀).symm.trans
-        ((congrArg (F.res hbo.le) (show F.res _ y = 0 from hy)).trans (map_zero _))
-    · change (V.presheaf.map (homOfLE (inf_le_left : U.1 ⊓ W₀ ≤ U.1)).op).hom (f ^ n) • y₀ = 0
-      rw [map_pow]; exact hn
-
 theorem eq_zero_of_res_basicOpen_eq_zero {F : OModulePresheaf π} (hF : F.IsQuasicoherent)
     (U : V.affineOpens) {ι : Type*} [Finite ι] (h : ι → Γ(V, U.1))
     (hcov : U.1 ≤ ⨆ j, V.basicOpen (h j)) (x : F.obj U.1)
@@ -209,71 +96,6 @@ theorem eq_zero_of_res_basicOpen_eq_zero {F : OModulePresheaf π} (hF : F.IsQuas
     _ = 0 := Finset.sum_eq_zero fun j _ => by
         rw [pow_succ', mul_smul, hn j, smul_zero, smul_zero]
 
-theorem isNoetherian_of_isProper [IsNoetherianRing R] (π : V ⟶ Spec (.of R)) [IsProper π] :
-    IsNoetherian V := by
-  have : LocallyOfFiniteType π := inferInstance
-  have : IsLocallyNoetherian (Spec (CommRingCat.of R)) := inferInstance
-  have : IsLocallyNoetherian V := LocallyOfFiniteType.isLocallyNoetherian π
-  have : CompactSpace V := QuasiCompact.compactSpace_of_compactSpace π
-  exact {}
-
-section PushUnit
-
-variable {Z : Scheme.{u}} (i : Z ⟶ V) [IsClosedImmersion i]
-
-theorem isCoherent_pushforwardUnit : (pushforwardUnit π i).IsCoherent := fun U => by
-  change @Module.Finite Γ(V, U.1) Γ(Z, i ⁻¹ᵁ U.1) _ _
-    (Module.compHom _ (i.appLE U.1 (i ⁻¹ᵁ U.1) le_rfl).hom)
-  let : Algebra Γ(V, U.1) Γ(Z, i ⁻¹ᵁ U.1) := (i.appLE U.1 (i ⁻¹ᵁ U.1) le_rfl).hom.toAlgebra
-  exact Module.Finite.of_surjective (Algebra.linearMap _ _) fun x =>
-    (i.app_surjective U.1 U.2 x).imp fun a ha =>
-      show (i.appLE U.1 _ le_rfl).hom a = x by rw [Scheme.Hom.appLE_eq_app]; exact ha
-
-theorem isQuasicoherent_unit (π : V ⟶ Spec (.of R)) : (unit π).IsQuasicoherent := by
-  intro U f
-  have := U.2.isLocalization_basicOpen f
-  refine ⟨fun x₀ => ?_, fun y hy => ?_⟩
-  · let x : Γ(V, V.basicOpen f) := x₀
-    obtain ⟨⟨y, _, n, rfl⟩, hxy⟩ :=
-      IsLocalization.surj (S := Γ(V, V.basicOpen f)) (.powers f) x
-    exact ⟨n, y, hxy.symm.trans (mul_comm x _)⟩
-  · obtain ⟨⟨_, n, rfl⟩, hc⟩ :=
-      (IsLocalization.map_eq_zero_iff (S := Γ(V, V.basicOpen f)) (.powers f) y).mp hy
-    exact ⟨n, hc⟩
-
-theorem isQuasicoherent_pushforwardUnit : (pushforwardUnit π i).IsQuasicoherent := fun U f => by
-  let S := unit (i ≫ π)
-  set g : Γ(Z, i ⁻¹ᵁ U.1) := (i.app U.1).hom f with hg_def
-  have hbo : i ⁻¹ᵁ V.basicOpen f = Z.basicOpen g := Scheme.preimage_basicOpen i f
-  have hU : IsAffineOpen U.1 := U.2
-  obtain ⟨hs, ha⟩ := isQuasicoherent_unit (i ≫ π) ⟨i ⁻¹ᵁ U.1, hU.preimage i⟩ g
-  have hpow : ∀ n (y : Γ(Z, i ⁻¹ᵁ U.1)),
-      (f ^ n : Γ(V, U.1)) • (show (pushforwardUnit π i).obj U.1 from y) = g ^ n * y := fun n y => by
-    change (i.appLE U.1 (i ⁻¹ᵁ U.1) le_rfl).hom (f ^ n) * y = _
-    rw [map_pow, Scheme.Hom.appLE_eq_app]
-  refine ⟨fun x => ?_, fun y hy => ?_⟩
-  · let x₀ : Γ(Z, i ⁻¹ᵁ V.basicOpen f) := x
-    obtain ⟨n, y, hny⟩ := hs (S.res hbo.ge x₀)
-    refine ⟨n, y, ?_⟩
-    have key := congrArg (S.res hbo.le) hny
-    erw [S.res_res, S.res_smul, S.res_res hbo.le hbo.ge x₀,
-      S.res_refl_apply (i ⁻¹ᵁ V.basicOpen f) x₀] at key
-    change S.res ((Opens.map i.base).monotone (V.basicOpen_le f)) y
-      = (i.appLE (V.basicOpen f) (i ⁻¹ᵁ V.basicOpen f) le_rfl).hom
-          ((V.presheaf.map (homOfLE (V.basicOpen_le f)).op).hom (f ^ n)) * x₀
-    refine key.trans ?_
-    congr 1
-    rw [← CommRingCat.comp_apply (f := V.presheaf.map _), Scheme.Hom.map_appLE,
-      ← CommRingCat.comp_apply, ← Functor.map_comp, ← op_comp, homOfLE_comp, map_pow,
-      map_pow]
-    congr 1
-  · refine (ha y ?_).imp fun n hn => (hpow n y).trans hn
-    refine (S.res_res hbo.ge ((Opens.map i.base).monotone (V.basicOpen_le f)) y).symm.trans ?_
-    exact (congrArg (S.res hbo.ge)
-      (show S.res ((Opens.map i.base).monotone (V.basicOpen_le f)) y = 0 from hy)).trans
-        (map_zero _)
-
-end PushUnit
 
 end AlgebraicGeometry.OModulePresheaf.GenericFreenessAux
 
@@ -311,7 +133,7 @@ theorem _root_.AlgebraicGeometry.OModulePresheaf.exists_basicOpen_sections_free_
   let O : OModulePresheaf π := OModulePresheaf.pushforwardUnit π iZ
   have := hint
   have : IsProper (iZ ≫ π) := inferInstance
-  have hOq : O.IsQuasicoherent := GenericFreenessAux.isQuasicoherent_pushforwardUnit iZ
+  have hOq : O.IsQuasicoherent := isQuasicoherent_pushforwardUnit iZ
   have hZ₀_ne := hZ₀
   change ∃ (U₀ : V.affineOpens) (f : Γ(V, U₀.1)),
       ((V.basicOpen f : Set V) ∩ Z₀).Nonempty ∧
@@ -335,7 +157,7 @@ theorem _root_.AlgebraicGeometry.OModulePresheaf.exists_basicOpen_sections_free_
   let A := Γ(Z₀S, iZ ⁻¹ᵁ U₀.1)
   let M := H.obj (iZ ⁻¹ᵁ U₀.1)
   have hAdom : IsDomain A := IsIntegral.component_integral _
-  have : IsNoetherian Z₀S := GenericFreenessAux.isNoetherian_of_isProper (iZ ≫ π)
+  have : IsNoetherian Z₀S := LocallyOfFiniteType.isNoetherian (iZ ≫ π)
   have : IsLocallyNoetherian Z₀S := inferInstance
   have hAnoeth : IsNoetherianRing A :=
     IsLocallyNoetherian.component_noetherian ⟨iZ ⁻¹ᵁ U₀.1, hZU₀aff⟩
@@ -556,7 +378,7 @@ theorem _root_.AlgebraicGeometry.OModulePresheaf.exists_basicOpen_sections_free_
         ψW hWU₀ ((iZ.appLE W _ le_rfl).hom b • m)
           = (iZ.appLE W _ le_rfl).hom b • ψW hWU₀ m :=
       fun b m => (Finset.sum_congr rfl fun i _ => mul_smul _ _ _).trans Finset.smul_sum.symm
-    have hOrq := GenericFreenessAux.isQuasicoherent_pow r hOq
+    have hOrq := isQuasicoherent_pow r hOq
     have step : ∀ p : t, ∃ (Np : ℕ) (m' : Fin r → Γ(Z₀S, iZ ⁻¹ᵁ W)),
         ((f'' p) ^ Np : Γ(V, W)) • x' = ψW hWU₀ m' := fun p => by
       obtain ⟨mp, hmp⟩ := (hψbasic p).2

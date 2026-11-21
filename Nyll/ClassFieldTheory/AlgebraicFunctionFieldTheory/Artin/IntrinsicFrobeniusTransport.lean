@@ -14,7 +14,7 @@ public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocit
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusClosure
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.IntrinsicFrobeniusQuotientTransport
 public import Nyll.GaloisCohomology.ProfiniteIntegers.TopologicalGeneration
-public import Nyll.ValuedFieldTheory.LocalField.GroupTheory.ContinuousQuotientEquiv
+public import Nyll.ProCGroups.Topologies.ContinuousQuotientEquiv
 
 /-!
 # Transport of function-field Frobenius quotients across separable closures
@@ -209,7 +209,7 @@ def intrinsicConstantFrobeniusQuotientEquivAmbientFixedField
           (fullConstantDegreeData k K (SeparableClosure K)).extensionInertiaWithin
             H.field T.field T.below) := by
   intro F aFS E hFE hFEgal e EI
-  exact LocalFieldTheory.QuotientGroup.continuousCongr _ _
+  exact ProCGroups.QuotientGroup.congrₜ _ _
     (intrinsicBaseContinuousEquivAmbientFixedField K H e)
     (map_intrinsicConstantExtensionInertia_eq_ambientFixedField k K H T e)
 
@@ -228,6 +228,10 @@ theorem intrinsicConstantFrobeniusQuotientEquivAmbientFixedField_degree
       let EI := finiteGaloisAbstractExtensionOfEmbedding F E (e.symm.toAlgHom.comp E.val)
       let DI := fullConstantDegreeData k F (SeparableClosure F)
       let DA := fullConstantDegreeData k K (SeparableClosure K)
+      let RI := (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI
+      let _ : (EI.field.toSubgroup.subgroupOf RI.field.toSubgroup).Normal := EI.normal
+      let _ : (T.field.toSubgroup.subgroupOf
+        (H.toFiniteResidueAbstractField DA).field.toSubgroup).Normal := T.normal
       ∀ q : (intrinsicAbstractBase F).toSubgroup ⧸
           DI.extensionInertiaWithin (intrinsicAbstractBase F) EI.field EI.below,
         DA.extensionNormalizedDegree (H.toFiniteResidueAbstractField DA)
@@ -236,7 +240,7 @@ theorem intrinsicConstantFrobeniusQuotientEquivAmbientFixedField_degree
           DI.extensionNormalizedDegree
             ((intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI)
             EI.field EI.below q := by
-  intro F aFS E hFE hFEgal e EI DI DA q
+  intro F aFS E hFE hFEgal e EI DI DA RI normalI normalA q
   refine QuotientGroup.induction_on q ?_
   intro τ
   change DA.normalizedDegree (H.toFiniteResidueAbstractField DA)
@@ -260,10 +264,14 @@ def intrinsicConstantFrobeniusElementToAmbientFixedField
       let EI := finiteGaloisAbstractExtensionOfEmbedding F E (e.symm.toAlgHom.comp E.val)
       let DI := fullConstantDegreeData k F (SeparableClosure F)
       let DA := fullConstantDegreeData k K (SeparableClosure K)
+      let RI := (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI
+      let _ : (EI.field.toSubgroup.subgroupOf RI.field.toSubgroup).Normal := EI.normal
+      let _ : (T.field.toSubgroup.subgroupOf
+        (H.toFiniteResidueAbstractField DA).field.toSubgroup).Normal := T.normal
       DI.FrobeniusElements ((intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI)
           EI.field EI.below →
         DA.FrobeniusElements (H.toFiniteResidueAbstractField DA) T.field T.below := by
-  intro F aFS E hFE hFEgal e EI DI DA σ
+  intro F aFS E hFE hFEgal e EI DI DA RI normalI normalA σ
   refine ⟨intrinsicConstantFrobeniusQuotientEquivAmbientFixedField k K H T e σ.val, ?_⟩
   rw [intrinsicConstantFrobeniusQuotientEquivAmbientFixedField_degree]
   exact σ.property
@@ -285,6 +293,9 @@ theorem intrinsicConstantFrobeniusFixedSubgroup_mem_iff
       let DI := fullConstantDegreeData k F (SeparableClosure F)
       let DA := fullConstantDegreeData k K (SeparableClosure K)
       let RI := (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI
+      let _ : (EI.field.toSubgroup.subgroupOf RI.field.toSubgroup).Normal := EI.normal
+      let _ : (T.field.toSubgroup.subgroupOf
+        (H.toFiniteResidueAbstractField DA).field.toSubgroup).Normal := T.normal
       let RA := H.toFiniteResidueAbstractField DA
       ∀ (σ : DI.FrobeniusElements RI EI.field EI.below)
         (τ : (intrinsicAbstractBase F).toSubgroup),
@@ -292,7 +303,7 @@ theorem intrinsicConstantFrobeniusFixedSubgroup_mem_iff
           intrinsicBaseEquivAmbientFixedField K H e τ ∈
             DA.frobeniusFixedSubgroupWithin RA T.field T.below
               (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ) := by
-  intro F aFS E hFE hFEgal e EI DI DA RI RA σ τ
+  intro F aFS E hFE hFEgal e EI DI DA RI normalI normalA RA σ τ
   let ξ := intrinsicConstantFrobeniusQuotientEquivAmbientFixedField k K H T e
   change QuotientGroup.mk τ ∈
       (closedSubgroupGenerated (Set.range (fun _ : Unit => σ.val))).toSubgroup ↔
@@ -324,6 +335,9 @@ theorem intrinsicConstantFrobeniusFixedField_mem_iff
       let DI := fullConstantDegreeData k F (SeparableClosure F)
       let DA := fullConstantDegreeData k K (SeparableClosure K)
       let RI := (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI
+      let _ : (EI.field.toSubgroup.subgroupOf RI.field.toSubgroup).Normal := EI.normal
+      let _ : (T.field.toSubgroup.subgroupOf
+        (H.toFiniteResidueAbstractField DA).field.toSubgroup).Normal := T.normal
       let RA := H.toFiniteResidueAbstractField DA
       ∀ σ : DI.FrobeniusElements RI EI.field EI.below,
         let σA := intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ
@@ -332,7 +346,7 @@ theorem intrinsicConstantFrobeniusFixedField_mem_iff
         ∀ x : SeparableClosure F,
           x ∈ abstractFixedField F (SeparableClosure F) SI ↔
             e x ∈ abstractFixedField K (SeparableClosure K) SA := by
-  intro F aFS E hFE hFEgal e EI DI DA RI RA σ σA SI SA x
+  intro F aFS E hFE hFEgal e EI DI DA RI normalI normalA RA σ σA SI SA x
   let ψ := intrinsicBaseEquivAmbientFixedField K H e
   have hmem := intrinsicConstantFrobeniusFixedSubgroup_mem_iff k K H T e σ
   rw [IntermediateField.mem_fixedField_iff, IntermediateField.mem_fixedField_iff]
@@ -386,6 +400,9 @@ theorem intrinsicConstantFrobeniusRestriction_eq_ambientFixedField
       let DI := fullConstantDegreeData k F (SeparableClosure F)
       let DA := fullConstantDegreeData k K (SeparableClosure K)
       let RI := (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI
+      let _ : (EI.field.toSubgroup.subgroupOf RI.field.toSubgroup).Normal := EI.normal
+      let _ : (T.field.toSubgroup.subgroupOf
+        (H.toFiniteResidueAbstractField DA).field.toSubgroup).Normal := T.normal
       let RA := H.toFiniteResidueAbstractField DA
       ∀ σ : DI.FrobeniusElements RI EI.field EI.below,
         abstractExtensionQuotientEquivGaloisGroup
@@ -394,7 +411,7 @@ theorem intrinsicConstantFrobeniusRestriction_eq_ambientFixedField
               (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ)) =
           finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding F E i
             (DI.frobeniusRestriction RI EI.field EI.below σ) := by
-  intro F aFS E hFE hFEgal e i EI DI DA RI RA σ
+  intro F aFS E hFE hFEgal e i EI DI DA RI normalI normalA RA σ
   have : Finite (H.field.toSubgroup ⧸ extensionSubgroup H.field T.field T.below) := T.finite
   let ξ := intrinsicConstantFrobeniusQuotientEquivAmbientFixedField k K H T e
   let qA := abstractExtensionQuotientEquivGaloisGroup
@@ -420,6 +437,9 @@ abbrev intrinsicFixedBaseFrobeniusElements
   let E := abstractRelativeFixedField K (SeparableClosure K) T.below
   let EI := finiteGaloisAbstractExtensionOfEmbedding F E (e.symm.toAlgHom.comp E.val)
   let DI := fullConstantDegreeData k F (SeparableClosure F)
+  let _ : (EI.field.toSubgroup.subgroupOf
+    ((intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI).field.toSubgroup).Normal :=
+    EI.normal
   DI.FrobeniusElements ((intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI)
     EI.field EI.below
 

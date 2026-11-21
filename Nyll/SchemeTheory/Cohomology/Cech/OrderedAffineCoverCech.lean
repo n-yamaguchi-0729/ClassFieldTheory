@@ -3,6 +3,7 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/Definitions/Def_AlgebraicGeometry_OrderedAffineCoverCech.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_finite_projective_sections_and_exists_linearEquiv_tensorProduct_pullbackLocalSection_of_forall_subsingleton_HSucc.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -12,6 +13,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Mathlib.AlgebraicGeometry.Cover.Open
 public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 public import Mathlib.AlgebraicGeometry.AffineScheme
 public import Mathlib.RingTheory.Finiteness.Defs
@@ -56,6 +58,16 @@ structure Scheme.OrderedAffineCover (V : Scheme.{u}) where
 attribute [instance] Scheme.OrderedAffineCover.instFintype Scheme.OrderedAffineCover.instLinearOrder
 
 namespace Scheme.OrderedAffineCover
+
+/-- A finite ordered affine cover extracted from compactness of the scheme. -/
+def ofCompact (X : Scheme.{u}) [CompactSpace X] : X.OrderedAffineCover :=
+  let 𝒰 := X.affineCover.finiteSubcover
+  { ι := 𝒰.I₀
+    instFintype := inferInstance
+    instLinearOrder := LinearOrder.lift' (Fintype.equivFin 𝒰.I₀) (Fintype.equivFin 𝒰.I₀).injective
+    U := fun i => (𝒰.f i).opensRange
+    isAffineOpen := fun i => isAffineOpen_opensRange (𝒰.f i)
+    iSup_eq_top := 𝒰.iSup_opensRange }
 
 variable {V : Scheme.{u}} (K : V.OrderedAffineCover)
 

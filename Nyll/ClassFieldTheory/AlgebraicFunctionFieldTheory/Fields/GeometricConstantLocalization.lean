@@ -36,10 +36,7 @@ variable {k K Ω : Type*} [Field k] [Field K] [Field Ω]
 
 local notation "L" => IntermediateField.adjoin K (C : Set Ω)
 
-local instance compositumConstants : Algebra C L := constantAlgebra (K := K) C
-
-local instance compositumConstantTower : IsScalarTower k C L :=
-  constantScalarTower (K := K) C
+attribute [local instance] constantAlgebra constantScalarTower
 
 /-- Arbitrarily many algebraic constants generate their actual compositum as
 an algebra, without a finite-dimensionality assumption on the constants. -/

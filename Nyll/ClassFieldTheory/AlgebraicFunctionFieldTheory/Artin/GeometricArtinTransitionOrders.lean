@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricArtinKernel
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalRayBaseChange
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayReciprocity
@@ -88,7 +90,7 @@ theorem geometricArtinStage_ord_inclusion
 preserves every integer order along the original constant-stage tower. -/
 theorem localRayFactorOrder_geometricArtinBaseChange
     (i j : GeometricArtinIndex k K Ω) (hij : i ≤ j)
-    (m : Modulus k (Stage i)) (hm : ∀ v, m v ≤ 1) :
+    (m : Modulus k (Stage i)) (_hm : ∀ v, m v ≤ 1) :
     let _ : Algebra (Stage i) (Stage j) := (IntermediateField.inclusion hij).toRingHom.toAlgebra
     have _ : IsScalarTower K (Stage i) (Stage j) :=
       IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
@@ -96,8 +98,8 @@ theorem localRayFactorOrder_geometricArtinBaseChange
       IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
     have _ : FiniteDimensional (Stage i) (Stage j) := FiniteDimensional.right K (Stage i) (Stage j)
     ∀ (w : Place k (Stage j)) (a : RayLocalFactor m (w.restrict (Stage i))),
-      localRayFactorOrder (rayModulusBaseChange (Stage j) m) w
-          (localRayBaseChange (L := Stage j) m hm w a) =
+      localRayFactorOrder (reindexAlongPlaces (Stage j) m) w
+          (localRayBaseChange (L := Stage j) m w a) =
         localRayFactorOrder m (w.restrict (Stage i)) a := by
   intro aij hKij hkij hfinite w a
   apply Multiplicative.ext
@@ -117,12 +119,12 @@ theorem geometricArtinTransition_order
       IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
     have _ : FiniteDimensional (Stage i) (Stage j) := FiniteDimensional.right K (Stage i) (Stage j)
     ∀ (w : Place k (Stage j)) (a : GeometricArtinStageKernel k K Ω m i),
-      restrictedRayOrder (rayModulusBaseChange (Stage j) m) w
+      restrictedRayOrder (reindexAlongPlaces (Stage j) m) w
           (geometricArtinTransition k K Ω m hm i j hij a).val =
-        restrictedRayOrder (rayModulusBaseChange (Stage i) m) (w.restrict (Stage i)) a.val := by
+        restrictedRayOrder (reindexAlongPlaces (Stage i) m) (w.restrict (Stage i)) a.val := by
   intro aij hKij hkij hfinite w a
   obtain ⟨x, rfl⟩ := (principalRestrictedArtinKernelEquiv
-    (rayModulusBaseChange (Stage i) m) (rayModulusBaseChange_ne_zero m hmzero)).surjective a
+    (reindexAlongPlaces (Stage i) m) (reindexAlongPlaces_ne_zero m hmzero)).surjective a
   apply Multiplicative.ext
   rw [geometricArtinTransition_principal,
     restrictedRayOrder_principalRestrictedArtinKernelEquiv,

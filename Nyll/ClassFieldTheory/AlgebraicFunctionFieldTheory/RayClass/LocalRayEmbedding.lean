@@ -11,7 +11,7 @@ public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Divisor
 public import Mathlib.Data.Finsupp.Single
 public import Mathlib.Topology.Algebra.RestrictedProduct.Basic
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotients
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteFiniteQuotients
 
 /-!
 # Local ray factors inside the original global reciprocity target

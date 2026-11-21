@@ -238,11 +238,11 @@ theorem J_monMul_stable (a : Fin (n + 1) → ℕ) :
   | empty => intro _ m hm; simpa using hm
   | insert j s hj ih =>
     intro hc m hm
-    rw [Finset.noncommProd_insert_of_notMem _ _ _ _ hj, Module.End.mul_apply]
+    rw [Finset.noncommProd_insert_of_notMem _ _ _ _ hj, mul_apply_eq_comp]
     have hih := ih (hc.mono (Finset.subset_insert _ _)) m hm
     induction a j with
     | zero => simpa using hih
-    | succ k ihk => rw [pow_succ', Module.End.mul_apply]
+    | succ k ihk => rw [pow_succ', mul_apply_eq_comp]
                     exact J_xMul_stable ι j _ ihk
 
 /-- The graded quotient map to the module defined by the closed subscheme. -/

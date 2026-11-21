@@ -5,6 +5,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Conductor
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.ConductorCounting
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.All

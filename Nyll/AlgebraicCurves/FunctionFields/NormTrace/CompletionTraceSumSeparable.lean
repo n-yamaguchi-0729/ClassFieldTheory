@@ -381,7 +381,7 @@ private theorem completionLinearCombination_surjective
       (WithZero (Multiplicative ℤ))
   rw [← Set.range_eq_univ, ← LinearMap.coe_range,
     ← (LinearMap.range (kw_ffgc_completionLinearCombination E w' b))
-        |>.closed_of_finiteDimensional.closure_eq]
+        |>.isClosed_of_finiteDimensional.closure_eq]
   exact (denseRange_completionLinearCombination E w' b).closure_range
 
 omit [HasPrincipalDivisors K E] in
@@ -817,7 +817,7 @@ private theorem inertiaDeg_completion_eq
     have hcomap : (maximalIdeal w'.adicCompletionIntegers).comap
         (algebraMap (w'.restrict E).adicCompletionIntegers w'.adicCompletionIntegers)
         = maximalIdeal (w'.restrict E).adicCompletionIntegers :=
-      ((IsLocalRing.local_hom_TFAE (algebraMap (w'.restrict E).adicCompletionIntegers
+      ((IsLocalRing.local_hom_tfae (algebraMap (w'.restrict E).adicCompletionIntegers
         w'.adicCompletionIntegers)).out 1 5).mp ‹IsLocalHom _›
     exact ⟨hcomap.symm⟩
   rw [Ideal.inertiaDeg_eq_of_isMaximal

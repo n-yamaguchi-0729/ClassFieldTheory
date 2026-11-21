@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNormCore
 public import Nyll.AlgebraicCurves.Places.Restriction.RestrictEq
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PurelyInseparableNorm
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
@@ -111,9 +112,8 @@ namespace IdeleClassGroup
 
 /-- The existing all-place idele norm descended for every finite extension of
 function fields, including its purely inseparable part. -/
-def finiteNorm : IdeleClassGroup k L →* IdeleClassGroup k K :=
-  QuotientGroup.map (IdeleGroup.principalSubgroup k L) (IdeleGroup.principalSubgroup k K)
-    (IdeleGroup.norm (K := K) (L := L))
+noncomputable abbrev finiteNorm : IdeleClassGroup k L →* IdeleClassGroup k K :=
+  normOfPrincipal (k := k) (K := K) (L := L)
     (fun _ ha => IdeleGroup.norm_mem_principalSubgroup_of_finite ha)
 
 /-- The finite-extension class norm is induced by the original idele norm. -/
@@ -121,15 +121,6 @@ def finiteNorm : IdeleClassGroup k L →* IdeleClassGroup k K :=
 theorem finiteNorm_mk (a : IdeleGroup k L) :
     finiteNorm (K := K) (L := L) (QuotientGroup.mk a) =
       QuotientGroup.mk (IdeleGroup.norm (K := K) (L := L) a) := rfl
-
-/-- On separable extensions the general finite norm is the existing class norm. -/
-theorem finiteNorm_eq_norm [Algebra.IsSeparable K L] :
-    finiteNorm (k := k) (K := K) (L := L) = norm (k := k) (K := K) (L := L) := by
-  apply MonoidHom.ext
-  intro c
-  refine QuotientGroup.induction_on c ?_
-  intro a
-  rfl
 
 end IdeleClassGroup
 

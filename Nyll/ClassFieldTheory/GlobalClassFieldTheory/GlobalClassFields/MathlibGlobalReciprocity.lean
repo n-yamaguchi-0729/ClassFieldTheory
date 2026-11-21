@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdentityComponent
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsUnramifiedOutsideModulus
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
@@ -22,7 +23,7 @@ import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayC
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldConstruction
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldOriginalField
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldConstruction
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
 
@@ -46,14 +47,7 @@ universe u v
 
 namespace ClassFieldTheory.GlobalClassFieldComparison
 
-/-- The idèle class group is commutative.  Keeping this witness public
-stabilizes normal-subgroup arguments in exported quotient statements. -/
-theorem ideleClassGroupIsMulCommutative
-    (K : Type u) [Field K] [NumberField K] :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
-attribute [local instance 2000] ideleClassGroupIsMulCommutative
 
 /-- The ramified finite primes form a finite set.  Adding every real place
 produces a public modulus outside which a number-field extension is
@@ -165,7 +159,7 @@ theorem normConductorRayClassModulus_unramifiedOutside
     rw [hs]
     exact hvram
   · intro v hv hnot
-    change (⟨v, hv⟩ : RayClassRealPlace K) ∉ Finset.univ at hnot
+    change (⟨v, hv⟩ : RayClass.RealPlace K) ∉ Finset.univ at hnot
     exact (hnot (Finset.mem_univ _)).elim
 
 /-- The norm conductor yields a public modulus outside which the extension

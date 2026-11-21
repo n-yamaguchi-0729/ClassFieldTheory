@@ -163,14 +163,6 @@ theorem finrank_H0_eq_and_finrank_H1_eq_baseChange
     Scheme.TwoAffineOpenCover.exists_sectionsOf_baseChange_equiv_of_locallyTrivial 𝒱 x M hM k'
   exact main _ _ _ _ e0 e1 e01 h0 h1
 
-theorem twoAffineOpenCover_ext {X : Scheme.{u}} {𝒱 𝒱' : X.TwoAffineOpenCover} (h0 : 𝒱.U0 = 𝒱'.U0)
-    (h1 : 𝒱.U1 = 𝒱'.U1) : 𝒱 = 𝒱' := by
-  obtain ⟨U0, U1, _, _, _, _⟩ := 𝒱
-  obtain ⟨U0', U1', _, _, _, _⟩ := 𝒱'
-  cases h0
-  cases h1
-  rfl
-
 end AlgebraicGeometry.RelPicard.ChiExt
 
 open AlgebraicGeometry.RelPicard.ChiExt
@@ -240,7 +232,8 @@ theorem
     (fibreAt c t (Scheme.TwoAffineOpenCover.specMap k K ≫ s))
     (pullback.snd (fibreAt c t s) (Scheme.TwoAffineOpenCover.specMap k K)) φ hφx
     (𝒲.pullback (fibreAt c t s) K) _ _ e
-  obtain rfl : 𝒱 = 𝒲' := twoAffineOpenCover_ext (hV0.trans hW0.symm) (hV1.trans hW1.symm)
+  obtain rfl : 𝒱 = 𝒲' :=
+    Scheme.TwoAffineOpenCover.cover_ext (hV0.trans hW0.symm) (hV1.trans hW1.symm)
   exact ⟨f0.finrank_eq.trans h0, f1.finrank_eq.trans h1⟩
 end Exists_twoAffineOpenCover_fibre_finrank_H0_eq_and_finrank_H1_eq
 end JacobianVarieties.Picard.Proofs

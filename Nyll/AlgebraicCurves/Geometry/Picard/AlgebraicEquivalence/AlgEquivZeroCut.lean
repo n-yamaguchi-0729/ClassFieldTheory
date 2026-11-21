@@ -32,15 +32,6 @@ universe u
 
 variable {R : Type u} [CommRing R]
 
-/-- The fibre morphism of the scalar-extended curve over a field-valued point of the test
-scheme.
--/
-noncomputable def fibreAt {C T : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R)) (t : T ⟶ Spec
-    (CommRingCat.of R))
-    {k : Type u} [Field k] (s : Spec (CommRingCat.of k) ⟶ T) :
-    pullback (pullback.snd c t) s ⟶ Spec (CommRingCat.of k) :=
-  pullback.snd _ _
-
 /-- A line bundle is connected to the unit by an invertible family over a geometrically
 integral parameter scheme locally of finite type.
 -/

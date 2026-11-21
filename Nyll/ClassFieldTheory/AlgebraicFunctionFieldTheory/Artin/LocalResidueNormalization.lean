@@ -104,7 +104,7 @@ theorem localDecompositionArtin_uniformizer_residue
     rfl
   let σ := localDecompositionArtin (K := K) w x
   have hσ : IdeleGroup.decompositionCompletionAut (K := K) w σ =
-      LocalClassFieldTheory.Universe.abelianLocalArtinMap
+      LocalClassFieldTheory.abelianLocalArtinMap
         (w.restrict K).adicCompletion w.adicCompletion x⁻¹ := by
     change IdeleGroup.decompositionCompletionEquiv (K := K) w
       ((IdeleGroup.decompositionCompletionEquiv (K := K) w).symm _) = _
@@ -121,7 +121,7 @@ theorem localDecompositionArtin_uniformizer_residue
     apply Subtype.ext
     calc
       (z : w.adicCompletion) =
-          LocalClassFieldTheory.Universe.abelianLocalArtinMap
+          LocalClassFieldTheory.abelianLocalArtinMap
             (w.restrict K).adicCompletion w.adicCompletion x⁻¹ (incl a : w.adicCompletion) := hz
       _ = IdeleGroup.decompositionCompletionAut (K := K) w σ
           (algebraMap L w.adicCompletion (a : L)) := by rw [hσ, hincl]

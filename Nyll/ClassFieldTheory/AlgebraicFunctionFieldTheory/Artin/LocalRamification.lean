@@ -81,7 +81,7 @@ theorem localDecompositionArtin_higherUnits_completion (w : Place k L) (n : ℕ)
   rw [hmap]
   have hfiltered := LocalClassFieldTheory.Universe.finiteAbelian_filteredLocalReciprocity
     (w.restrict K).adicCompletion w.adicCompletion (n : ℝ) (Nat.cast_nonneg n)
-  simpa only [LocalClassFieldTheory.Universe.artinPrincipalUnitStepGroup,
+  simpa only [LocalClassFieldTheory.artinPrincipalUnitStepGroup,
     RamificationTheory.natCeilStepFiltration, Nat.ceil_natCast] using hfiltered
 
 end UniverseFiltered

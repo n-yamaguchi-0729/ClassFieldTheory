@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.SchemeTheory.RingTheory.Ramification.FiniteLevelInertiaImage
 public import Nyll.EtaleFundamentalGroups.Inertia.DivisorialQuotientFieldSource
 
 /-!
@@ -72,13 +73,7 @@ instance absoluteNormalizationPrimeContraction_liesOver
     (finiteNormalizationToAbsoluteNormalization
       (A := A) (L := L) (Omega := Omega))
 
-local instance finiteNormalization_galoisAction :
-    MulSemiringAction Gal(L/K) B :=
-  IsIntegralClosure.MulSemiringAction A K L B
-
-local instance absoluteNormalization_galoisAction :
-    MulSemiringAction Gal(Omega/K) C :=
-  IsIntegralClosure.MulSemiringAction A K Omega C
+attribute [local instance] normalizationInertiaImageAction
 
 omit [FiniteDimensional K L] in
 /-- Absolute inertia restricts into inertia at the contracted prime in every

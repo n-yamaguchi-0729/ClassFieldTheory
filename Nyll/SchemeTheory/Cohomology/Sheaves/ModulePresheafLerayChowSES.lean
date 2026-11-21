@@ -16,8 +16,7 @@ public import Nyll.SchemeTheory.ProjectiveSpace.Cover
 public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafLerayBicomplex
 public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafConstructions
 public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayHomRelHPresheafZero
-public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafCoherentCoker
-public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafQuasicoherentCoker
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafCoherence
 public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayCoherentRelHPresheafChow
 public import Nyll.SchemeTheory.Cohomology.Sheaves.ModulePresheafLerayQuasicoherentRelHPresheafChow
 public import Mathlib.RingTheory.Noetherian.Basic
@@ -104,22 +103,6 @@ private theorem _root_.AlgebraicGeometry.OModulePresheaf.Hom.symmOfBijective_bij
 
 end Hom
 open _root_.AlgebraicGeometry.OModulePresheaf
-variable (π) in
-theorem isQuasicoherent_unit : (unit π).IsQuasicoherent := by
-  intro U f
-  have := U.2.isLocalization_basicOpen f
-  refine ⟨fun x => ?_, fun y hy => ?_⟩
-  · have hcore : ∀ x' : Γ(V, V.basicOpen f), ∃ (n : ℕ) (y : Γ(V, U.1)),
-        (V.presheaf.map (homOfLE (V.basicOpen_le f)).op).hom y
-          = (V.presheaf.map (homOfLE (V.basicOpen_le f)).op).hom (f ^ n) * x' := fun x' => by
-      obtain ⟨⟨y, _, n, rfl⟩, hxy⟩ :=
-        IsLocalization.surj (S := Γ(V, V.basicOpen f)) (.powers f) x'
-      exact ⟨n, y, hxy.symm.trans (mul_comm _ _)⟩
-    exact hcore x
-  · have hy' : algebraMap Γ(V, U.1) Γ(V, V.basicOpen f) y = 0 := hy
-    obtain ⟨⟨_, n, rfl⟩, hn⟩ := (IsLocalization.map_eq_zero_iff (.powers f) _ _).mp hy'
-    exact ⟨n, hn⟩
-
 end General
 
 namespace Leray

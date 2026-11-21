@@ -46,13 +46,6 @@ open Reciprocity
 
 variable {K : Type u} [Field K] [NumberField K]
 
-/-- Fix the commutative idèle-class instance path shared by the norm quotient
-and its transported literal quotient throughout this module. -/
-local instance
-    arithmeticHilbertClassFieldIdeleClassGroupIsMulCommutative
-    {F : Type*} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- Arithmetic reciprocity followed by transport between equal norm
 quotients sends a norm-residue symbol to its represented quotient class. -/
@@ -207,8 +200,7 @@ theorem
         (K := K)
         (arithmeticGlobalNormResidueMonoidHom
           K (bigHilbertClassField K)
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K) a)) =
+          (IdeleGroup.toStandardClass K a)) =
       QuotientGroup.mk'
         (RayClass.narrowDenominator (K := K)) a := by
   rw [
@@ -249,8 +241,7 @@ theorem
         (K := K)
         (arithmeticGlobalNormResidueMonoidHom
           K (smallHilbertClassField K)
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K) a)) =
+          (IdeleGroup.toStandardClass K a)) =
       IdeleGroup.idealClass a := by
   rw [
     arithmeticSmallHilbertClassFieldGaloisEquivClassGroupOverOriginal_globalNormResidue,

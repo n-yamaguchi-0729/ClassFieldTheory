@@ -11,7 +11,8 @@ public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.Finit
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilyRigidity
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilySubgroupKernel
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbelianFamilyUnramifiedCompositum
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedResidueUniqueness
 public import Nyll.ClassFieldTheory.Theorems.LocalClassFieldTheory.FiniteAbelianLocalReciprocityUnramifiedFamilyExt
 public import Mathlib.NumberTheory.LocalField.Basic
@@ -153,22 +154,22 @@ theorem finiteAbelianLocalReciprocity_family_ext
     finiteAbelianLocalReciprocity_unramified_family_ext K f g
       hfker hgker hfrob hgrob Upack hUnram π hπ
   have hfUcanonical : f Upack u =
-      LocalClassFieldTheory.Universe.abelianLocalArtinMap K U u :=
+      LocalClassFieldTheory.abelianLocalArtinMap K U u :=
     (finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow_iff
       K U π hπ _).mp (hfrob Upack hUnram π hπ)
   have hcanon :=
     LocalClassFieldTheory.finiteAbelianArtin_unramifiedRestriction_zpowers_eq_top
       K d hd Ffield le_sup_right u huval
   have hfc : rU (f Fpack u) =
-      rU (LocalClassFieldTheory.Universe.abelianLocalArtinMap K Ffield u) := by
+      rU (LocalClassFieldTheory.abelianLocalArtinMap K Ffield u) := by
     calc
       rU (f Fpack u) = f Upack u :=
         hrestrict f hfcoh Upack Fpack le_sup_right u
-      _ = LocalClassFieldTheory.Universe.abelianLocalArtinMap K U u := hfUcanonical
-      _ = rU (LocalClassFieldTheory.Universe.abelianLocalArtinMap K Ffield u) := by
+      _ = LocalClassFieldTheory.abelianLocalArtinMap K U u := hfUcanonical
+      _ = rU (LocalClassFieldTheory.abelianLocalArtinMap K Ffield u) := by
         symm
         exact DFunLike.congr_fun
-          (LocalClassFieldTheory.Universe.abelianLocalArtinMap_restrict
+          (LocalClassFieldTheory.abelianLocalArtinMap_restrict
             K U Ffield le_sup_right) u
   have hgen : Subgroup.zpowers (rU (f Fpack u)) = ⊤ := by
     rw [hfc]

@@ -3,6 +3,7 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/Definitions/Def_SheafOfModules_Monoidal.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_RelEffCartierDiv_supportedIn_of_lineBundle_iso_of_forall_zeroScheme_supportedIn.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -12,6 +13,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Modules.Sections.SectionsGluing
 public import Mathlib.CategoryTheory.Localization.Monoidal.Braided
 public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 public import Nyll.SchemeTheory.Modules.PresheafInternalHom
@@ -157,6 +159,22 @@ abbrev Scheme.Modules.dual (L : X.Modules) : X.Modules := (ihom L).obj (𝟙_ X.
 
 @[simp] theorem Scheme.Modules.tensorUnit_eq :
     𝟙_ X.Modules = SheafOfModules.unit X.ringCatSheaf := rfl
+
+/-- A nonzero global section gives a nonzero morphism from the tensor unit. -/
+theorem Scheme.Modules.exists_hom_ne_zero (M : X.Modules) (σ : Γ(M, ⊤)) (hσ : σ ≠ 0) :
+    ∃ s : 𝟙_ X.Modules ⟶ M, s ≠ 0 := by
+  let s : 𝟙_ X.Modules ⟶ M := (SheafOfModules.unitHomEquiv M).symm (M.topSection σ)
+  refine ⟨s, fun h0 => hσ ?_⟩
+  have hs : (SheafOfModules.unitHomEquiv M) s = M.topSection σ :=
+    Equiv.apply_symm_apply _ _
+  have htop : (M.topSection σ).val (Opposite.op ⊤) = σ :=
+    M.topSection_top σ
+  have happ : (M.topSection σ).val (Opposite.op ⊤) =
+      (Scheme.Modules.Hom.app s ⊤) (1 : Γ(X, ⊤)) := by
+    rw [← hs]
+    rfl
+  rw [← htop, happ, h0, Scheme.Modules.Hom.zero_app]
+  rfl
 
 variable (X) in
 /-- The sheafification functor from module presheaves to sheaves of modules on a scheme. -/

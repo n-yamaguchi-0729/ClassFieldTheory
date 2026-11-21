@@ -64,16 +64,6 @@ theorem exists_finitePlaceRayArtin_decomposition
   classical
   let m := GlobalClassFieldComparison.rayClassModulusToOriginal K D.modulus
   let e := GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K D.modulus
-  let a : RayClass.RayClassGroup m →* (L ≃ₐ[K] L) :=
-    D.artin.comp e.symm.toMonoidHom
-  have hprime :
-      ∀ (p : HeightOneSpectrum (𝓞 K))
-        (_hp : p ∉ m.finitePart.support),
-        a (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele p))) =
-          GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-            (K := K) (L := L) p := D.originalArtin_prime
   let w : ExtendingAbsoluteValue
       (NumberField.HeightOneSpectrum.adicAbv K v) L :=
     _root_.chosenFinitePlaceExtension (L := L) v
@@ -89,9 +79,7 @@ theorem exists_finitePlaceRayArtin_decomposition
       D.artin (ι x) =
           GlobalClassFieldTheory.Reciprocity.arithmeticGlobalNormResidueMonoidHom
             K L (IdeleGroup.finitePlaceIdeleClass v x) :=
-        (open GlobalClassFieldTheory.GlobalClassFields in
-          rayArtin_comp_ideleClass_eq_arithmeticGlobalNormResidue
-            m a hprime (IdeleGroup.finitePlaceIdeleClass v x))
+        D.ideleClassArtin_apply (IdeleGroup.finitePlaceIdeleClass v x)
       _ = GlobalClassFieldTheory.Reciprocity.arithmeticChosenFinitePlaceArtinMonoidHom
             K L v x := by
         exact DFunLike.congr_fun

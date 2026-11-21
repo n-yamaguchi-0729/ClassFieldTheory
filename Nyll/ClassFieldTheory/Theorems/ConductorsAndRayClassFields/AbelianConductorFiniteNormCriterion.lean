@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.IsAbelianConductor
 public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayLocalHigherUnitGroup
-public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.PublicHigherUnitComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.AbelianConductorExactness
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
@@ -89,11 +89,10 @@ theorem IsAbelianConductor.finiteExponent_le_iff_higherUnit_le_tensorNorm
       (finitePlaceLocalTensorNorm_range_eq_chosenLocalNormSubgroup
         (K := K) (L := L) v)
   rw [hcoeff, hnorm]
-  rw [rayLocalHigherUnitGroup_eq_rayClass v n]
   constructor
   · intro hn
     exact
-      (RayClass.localHigherUnitGroup_antitone v hn).trans
+      (ClassFieldTheory.rayLocalHigherUnitGroup_antitone v hn).trans
         (GlobalClassFieldTheory.GlobalClassFields.ideleClassNormLocalHigherUnitExponent_spec
           (K := K) (L := L) v)
   · intro hn

@@ -89,8 +89,8 @@ theorem finite_geometricUnits_from_artinKernels
       let _ : FunctionField k E := p.property.2
       let _ : HasPrincipalDivisors k E :=
         (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K E).toHasPrincipalDivisors
-      let e := principalRestrictedArtinKernelEquiv (rayModulusBaseChange E m)
-        (rayModulusBaseChange_ne_zero m hm)
+      let e := principalRestrictedArtinKernelEquiv (reindexAlongPlaces E m)
+        (reindexAlongPlaces_ne_zero m hm)
       let f := (Units.map (fullConstantStageGeometricInclusion k K Ω n).toMonoidHom).comp
         e.symm.toMonoidHom
       Function.Injective f ∧ ∀ x ∈ S, ∃ a, f a = x := by

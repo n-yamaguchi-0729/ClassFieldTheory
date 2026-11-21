@@ -38,16 +38,9 @@ open LocalFieldTheory.DiscreteValuationField
 
 variable {K : Type u} [Field K]
 
-noncomputable local instance standardFrobeniusActionBaseAlgebra
-    (F : LocalField.{u, v} K) :
-    Algebra F.residueField⸨X⸩
-      (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  equalCharacteristicCompletedLevelBaseAlgebra F
-
-noncomputable local instance standardFrobeniusActionLevelAlgebra
-    (F : LocalField.{u, v} K) (n : ℕ) :
-    Algebra F.residueField⸨X⸩ (equalCharacteristicCompletedLevelField F n) :=
-  equalCharacteristicCompletedLevelLaurentAlgebra F n
+attribute [local instance]
+  equalCharacteristicCompletedLevelBaseAlgebra
+  equalCharacteristicCompletedLevelLaurentAlgebra
 
 /-- The actual finite-level embedding respects every truncated bracket. -/
 theorem equalCharacteristicLubinTateLevelFieldToCompleted_bracket

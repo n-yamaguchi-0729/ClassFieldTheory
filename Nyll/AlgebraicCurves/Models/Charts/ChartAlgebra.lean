@@ -13,7 +13,8 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 module
 
 public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
-public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Valuation
 public import Mathlib.RingTheory.Localization.Integral
 public import Mathlib.RingTheory.Valuation.Integral
 public import Mathlib.RingTheory.Polynomial.ScaleRoots

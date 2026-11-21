@@ -101,13 +101,13 @@ theorem GradedModule.pi_monMul_apply (a : Fin (n + 1) → ℕ)
   | insert j s hj ih =>
     intro hc hc'
     erw [Finset.noncommProd_insert_of_notMem _ _ _ _ hj,
-      Finset.noncommProd_insert_of_notMem _ _ _ _ hj, Module.End.mul_apply, Module.End.mul_apply]
+      Finset.noncommProd_insert_of_notMem _ _ _ _ hj, mul_apply_eq_comp, mul_apply_eq_comp]
     have hih := ih (hc.mono (fun _ hi => Finset.mem_insert_of_mem hi))
       (hc'.mono (fun _ hi => Finset.mem_insert_of_mem hi))
     induction a j with
     | zero => simpa using hih
     | succ p ihp =>
-      erw [pow_succ', pow_succ', Module.End.mul_apply, Module.End.mul_apply]
+      erw [pow_succ', pow_succ', mul_apply_eq_comp, mul_apply_eq_comp]
       exact congrArg ((D k).xMul j) ihp
 
 open scoped _root_.ProjSpaceCech.GradedModule in

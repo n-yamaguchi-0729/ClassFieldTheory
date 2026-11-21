@@ -24,6 +24,8 @@ does not assert uniqueness on ramified members of the families.
 
 @[expose] public section
 
+open LocalFieldTheory (localNormSubgroup)
+
 open scoped ValuativeRel
 
 noncomputable section
@@ -84,20 +86,20 @@ theorem finiteAbelianLocalReciprocity_unramified_family_ext
       K E.1 := ⟨hUnram⟩
   have hfϖ :
       f E ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) =
-        LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1
+        LocalClassFieldTheory.abelianLocalArtinMap K E.1
           ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) :=
     (LocalClassFieldTheory.Universe.abelianLocalArtinMap_inverseUniformizer_residue_pow_iff
       K E.1 π hπ _).mp (hfrob E hUnram π hπ)
   have hgϖ :
       g E ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) =
-        LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1
+        LocalClassFieldTheory.abelianLocalArtinMap K E.1
           ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) :=
     (LocalClassFieldTheory.Universe.abelianLocalArtinMap_inverseUniformizer_residue_pow_iff
       K E.1 π hπ _).mp (hgrob E hUnram π hπ)
   have hfker' := hfker E
   have hgker' := hgker E
-  change (f E).toMonoidHom.ker = fieldNormSubgroup K E.1 at hfker'
-  change (g E).toMonoidHom.ker = fieldNormSubgroup K E.1 at hgker'
+  change (f E).toMonoidHom.ker = localNormSubgroup K E.1 at hfker'
+  change (g E).toMonoidHom.ker = localNormSubgroup K E.1 at hgker'
   exact finiteAbelianLocalReciprocity_unramified_hom_ext
     K E.1 hUnram π hπ (f E) (g E) hfker' hgker' (hfϖ.trans hgϖ.symm)
 

@@ -44,7 +44,7 @@ def normQuotientEquivOfFixedFieldPresentation
     (eF : K ≃ₐ[K] abstractFixedField K Ω H.field)
     (eE : L ≃ₐ[K] abstractFixedField K Ω T.field) :
     (IdeleClassGroup k K ⧸ (IdeleClassGroup.norm (k := k) (K := K) (L := L)).range) ≃*
-      Abelianization Gal(L/K) := by
+      Group.Abelianization Gal(L/K) := by
   let F := abstractFixedField K Ω H.field
   let E := abstractFixedField K Ω T.field
   have hKFfinite : FiniteDimensional K F := eF.toLinearEquiv.finiteDimensional

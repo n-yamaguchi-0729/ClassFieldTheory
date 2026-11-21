@@ -9,6 +9,7 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormIs
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Norm
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalRange
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalCriterion
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNormCore
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNorm
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormTopology
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormClosed
@@ -39,4 +40,5 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.Degree
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormAlgEquiv
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteClassGroupNorm
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteNormProperties
+import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.IntrinsicNorm
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FiniteBaseChange

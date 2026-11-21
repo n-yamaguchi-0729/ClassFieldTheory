@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.OrdinaryRayClassModulus
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassFieldRealization
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsSmallHilbertClassField
@@ -42,8 +43,12 @@ theorem ordinaryRayRealization_isSmallHilbertClassField
       (le_refl (ordinaryRayClassModulus K)) S R
   constructor
   · constructor
-    · intro v
-      exact R.unramifiedOutsideModulus.1 v (by simp [ordinaryRayClassModulus])
+    · apply (IsUnramifiedAtFinitePlaces.iff_forall_below K R.extension).mpr
+      intro v
+      exact R.unramifiedOutsideModulus.1 v (by
+        change v ∉ (0 : RayClass.FiniteModulus K).support
+        rw [Finsupp.support_zero]
+        exact Finset.notMem_empty _)
     · refine ⟨fun w => ?_⟩
       by_contra hw
       have hvreal : (w.comap (algebraMap K R.extension)).IsReal :=

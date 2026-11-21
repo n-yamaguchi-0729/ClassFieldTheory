@@ -52,7 +52,7 @@ theorem equalCharacteristicAbelianLocalArtin_uniformizer
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
     let : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    Universe.abelianLocalArtinMonoidHom B L
+    abelianLocalArtinMonoidHom B L
       (equalCharacteristicLaurentUniformizerUnit F) = 1 := by
   intro B L valuationOwner localFieldOwner finiteOwner
   have hnormInv :=
@@ -60,7 +60,7 @@ theorem equalCharacteristicAbelianLocalArtin_uniformizer
   have hnorm := (equalCharacteristicLubinTateNormSubgroup F n).inv_mem hnormInv
   rw [inv_inv] at hnorm
   change equalCharacteristicLaurentUniformizerUnit F ∈ localNormSubgroup B L at hnorm
-  rw [← Universe.abelianLocalArtinMonoidHom_ker, MonoidHom.mem_ker] at hnorm
+  rw [← abelianLocalArtinMonoidHom_ker, MonoidHom.mem_ker] at hnorm
   exact hnorm
 
 /-- The normalized parameter `T⁻¹` has the same trivial native Artin image.
@@ -74,7 +74,7 @@ theorem equalCharacteristicAbelianLocalArtin_normalizedUniformizer
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
     let : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    Universe.abelianLocalArtinMonoidHom B L
+    abelianLocalArtinMonoidHom B L
       (equalCharacteristicLaurentUniformizerUnit F)⁻¹ = 1 := by
   intro B L valuationOwner localFieldOwner finiteOwner
   rw [map_inv, equalCharacteristicAbelianLocalArtin_uniformizer F n, inv_one]
@@ -91,9 +91,9 @@ theorem equalCharacteristicAbelianLocalArtin_changedUniformizer
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
     let : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    Universe.abelianLocalArtinMonoidHom B L
+    abelianLocalArtinMonoidHom B L
         (equalCharacteristicChangedLaurentUniformizerUnit F a) =
-      Universe.abelianLocalArtinMonoidHom B L
+      abelianLocalArtinMonoidHom B L
         (equalCharacteristicPowerSeriesUnitToLaurentFieldUnit F a) := by
   intro B L valuationOwner localFieldOwner finiteOwner
   rw [equalCharacteristicChangedLaurentUniformizerUnit_eq_unit_mul, map_mul,
@@ -112,8 +112,8 @@ theorem equalCharacteristicAbelianLocalArtin_eq_uniformizerUnitFactor
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
     let : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    Universe.abelianLocalArtinMonoidHom B L x =
-      Universe.abelianLocalArtinMonoidHom B L
+    abelianLocalArtinMonoidHom B L x =
+      abelianLocalArtinMonoidHom B L
         (integerUnitsToFieldUnits B
           (uniformizerUnitFactor B (equalCharacteristicLaurentUniformizerUnit F)⁻¹
             (equalCharacteristicLaurentUniformizerUnit_inv_valuationMap F) x)) := by

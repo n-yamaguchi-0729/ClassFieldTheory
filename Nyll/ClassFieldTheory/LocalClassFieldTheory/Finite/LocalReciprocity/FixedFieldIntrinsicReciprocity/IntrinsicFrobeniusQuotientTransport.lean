@@ -8,7 +8,7 @@ module
 
 public import Mathlib.FieldTheory.Galois.Basic
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FixedFieldIntrinsicReciprocity.EmbeddedFrobeniusTransport
-public import Nyll.ValuedFieldTheory.LocalField.GroupTheory.ContinuousQuotientEquiv
+public import Nyll.ProCGroups.Topologies.ContinuousQuotientEquiv
 
 /-!
 # Intrinsic Frobenius quotient transport
@@ -60,7 +60,7 @@ noncomputable def
 quotients by the corresponding extension-inertia subgroups. -/
 noncomputable def
     intrinsicFrobeniusQuotientContinuousEquivAmbientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -128,7 +128,7 @@ noncomputable def
         H.field J hJH).Normal :=
     inferInstance
   exact
-    LocalFieldTheory.QuotientGroup.continuousCongr
+    ProCGroups.QuotientGroup.congrₜ
       ((localResidueDatum F).extensionInertiaWithin
         (intrinsicAbstractBase F) EI.field EI.below)
       ((localResidueDatum K).extensionInertiaWithin
@@ -142,7 +142,7 @@ quotient of a finite fixed field to the corresponding quotient inside the
 ambient absolute Galois group, induced by the chosen equivalence of separable
 closures. -/
 noncomputable def intrinsicFrobeniusQuotientEquivAmbientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -190,7 +190,7 @@ noncomputable def intrinsicFrobeniusQuotientEquivAmbientFixedField
 automorphism to the class of the corresponding ambient automorphism. -/
 @[simp]
 theorem intrinsicFrobeniusQuotientEquivAmbientFixedField_mk
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -210,13 +210,13 @@ theorem intrinsicFrobeniusQuotientEquivAmbientFixedField_mk
         (intrinsicBaseEquivAmbientFixedField K H e τ) := by
   dsimp only
   rintro e τ
-  exact LocalFieldTheory.QuotientGroup.continuousCongr_mk _ _ _ _ _
+  exact ProCGroups.QuotientGroup.congrₜ_mk _ _ _ _ _
 
 /-- The intrinsic-to-ambient Frobenius quotient equivalence preserves the
 normalized extension degree of every quotient class. -/
 theorem
     intrinsicFrobeniusQuotientEquivAmbientFixedField_normalizedDegree
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -255,6 +255,7 @@ theorem
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     let RH :=
       H.toFiniteResidueAbstractField (localResidueDatum K)
     (localResidueDatum K).extensionNormalizedDegree
@@ -263,7 +264,7 @@ theorem
           K H J hJH e q) =
       (localResidueDatum F).extensionNormalizedDegree
         RF EI.field EI.below q := by
-  intro F closureAlgebra e E finiteKF normF valuationF localFieldF finiteFE galoisFE i EI q RF RH
+  intro F closureAlgebra e E finiteKF normF valuationF localFieldF finiteFE galoisFE i EI q RF _ RH
   refine Quotient.inductionOn' q ?_
   intro τ
   have hψτ :
@@ -299,7 +300,7 @@ theorem
 /-- Intrinsic extension-inertia quotient classes whose normalized degree is a
 strictly positive power of the canonical Frobenius degree. -/
 abbrev intrinsicFixedFieldFrobeniusElements
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -334,6 +335,7 @@ abbrev intrinsicFixedFieldFrobeniusElements
   let RF :=
     (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
       (localResidueDatum F)
+  let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
   {q :
       (intrinsicAbstractBase F).toSubgroup ⧸
         (localResidueDatum F).extensionInertiaWithin
@@ -346,7 +348,7 @@ abbrev intrinsicFixedFieldFrobeniusElements
 /-- The ambient fixed subgroup modulo the extension-inertia subgroup attached
 to the given finite Galois extension. -/
 abbrev ambientFixedFieldFrobeniusQuotient
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -360,7 +362,7 @@ abbrev ambientFixedFieldFrobeniusQuotient
 /-- The property that an ambient quotient class has normalized degree equal to
 a strictly positive power of the canonical Frobenius degree. -/
 abbrev ambientFixedFieldFrobeniusProperty
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -377,7 +379,7 @@ abbrev ambientFixedFieldFrobeniusProperty
 /-- Ambient extension-inertia quotient classes satisfying the positive
 Frobenius-degree property. -/
 abbrev ambientFixedFieldFrobeniusElements
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -391,7 +393,7 @@ abbrev ambientFixedFieldFrobeniusElements
 preserves its positive Frobenius-degree property. -/
 theorem
     intrinsicFrobeniusElementToAmbientFixedField_property
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -421,7 +423,7 @@ extension-inertia quotient, together with its positive Frobenius-degree
 property. -/
 noncomputable def
     intrinsicFrobeniusElementToAmbientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -443,7 +445,7 @@ noncomputable def
 the image under the intrinsic-to-ambient quotient equivalence. -/
 @[simp]
 theorem intrinsicFrobeniusElementToAmbientFixedField_val
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))

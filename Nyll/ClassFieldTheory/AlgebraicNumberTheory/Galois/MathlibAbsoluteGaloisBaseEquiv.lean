@@ -6,9 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.TopologicalAbelianizationCongr
+public import Nyll.ClassFieldTheory.Algebra.IntermediateFieldRingEquivOrderIso
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Nyll.GaloisCohomology.Topology.GaloisConjugation
 public import Mathlib.FieldTheory.AbsoluteGaloisGroup
-public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
 
 /-!
 # Absolute Galois groups under an equivalence of base fields
@@ -84,15 +85,46 @@ def semilinearGaloisContinuousEquiv (e : K ≃+* M) (E : Ω ≃+* Ψ)
         (semilinear_symm_algebraMap e E hE)).toMonoidHom (by intro σ; rfl)
 
 
+/-- Compatible field equivalences take the fixed field to the fixed field of
+its actual conjugated subgroup, using the original image subfield. -/
+theorem intermediateFieldMapRingEquiv_fixedField
+    {K : Type u} {Ω : Type w} {M : Type v} {Ψ : Type z}
+    [Field K] [Field Ω] [Field M] [Field Ψ] [Algebra K Ω] [Algebra M Ψ]
+    (e : K ≃+* M) (c : Ω ≃+* Ψ)
+    (hc : ∀ a : K, c (algebraMap K Ω a) = algebraMap M Ψ (e a))
+    (S : Subgroup Gal(Ω/K)) :
+    intermediateFieldMapRingEquiv e c hc (IntermediateField.fixedField S) =
+      IntermediateField.fixedField
+        (S.map (semilinearGaloisEquiv e c hc).toMonoidHom) := by
+  ext y
+  change (∃ z, z ∈ IntermediateField.fixedField S ∧ c z = y) ↔ _
+  constructor
+  · rintro ⟨z, hz, rfl⟩
+    apply (IntermediateField.mem_fixedField_iff _ _).mpr
+    rintro σ ⟨τ, hτ, rfl⟩
+    change c (τ (c.symm (c z))) = c z
+    rw [c.symm_apply_apply, (IntermediateField.mem_fixedField_iff S z).mp hz τ hτ]
+  · intro hy
+    refine ⟨c.symm y, ?_, c.apply_symm_apply y⟩
+    apply (IntermediateField.mem_fixedField_iff _ _).mpr
+    intro σ hσ
+    apply c.injective
+    have h := (IntermediateField.mem_fixedField_iff _ y).mp hy
+      (semilinearGaloisEquiv e c hc σ)
+      (Subgroup.mem_map_of_mem (semilinearGaloisEquiv e c hc).toMonoidHom hσ)
+    change c (σ (c.symm y)) = y at h
+    exact h.trans (c.apply_symm_apply y).symm
+
+
 /-- Changing the compatible ambient-field equivalence changes conjugation by
 an inner automorphism, which disappears in topological abelianization. -/
 theorem semilinearGaloisAbelianizationEquiv_independent
     (e : K ≃+* M) (E F : Ω ≃+* Ψ)
     (hE : ∀ x : K, E (algebraMap K Ω x) = algebraMap M Ψ (e x))
     (hF : ∀ x : K, F (algebraMap K Ω x) = algebraMap M Ψ (e x)) :
-    LocalClassFieldTheory.topologicalAbelianizationCongr
+    ProCGroups.Abelian.TopologicalAbelianization.congr
         (semilinearGaloisContinuousEquiv e E hE) =
-      LocalClassFieldTheory.topologicalAbelianizationCongr
+      ProCGroups.Abelian.TopologicalAbelianization.congr
         (semilinearGaloisContinuousEquiv e F hF) := by
   let δ : Gal(Ψ/M) :=
     { toRingEquiv := E.symm.trans F
@@ -134,7 +166,7 @@ noncomputable def absoluteGaloisGroupAbelianizationEquivOfRingEquiv
     (e : K ≃+* M) :
     Field.absoluteGaloisGroupAbelianization K ≃ₜ*
       Field.absoluteGaloisGroupAbelianization M :=
-  LocalClassFieldTheory.topologicalAbelianizationCongr
+  ProCGroups.Abelian.TopologicalAbelianization.congr
     (absoluteGaloisGroupEquivOfRingEquiv e)
 
 end ClassFieldTheory

@@ -158,7 +158,7 @@ def fixedFieldNormQuotientEquiv (H : FiniteAbstractField Gal(Ω/K))
       (IdeleClassGroup.norm (k := k)
         (K := abstractFixedField K Ω H.field) (L := abstractRelativeFixedField K Ω
           L.below)).range) ≃*
-      Abelianization Gal((abstractRelativeFixedField K Ω L.below)/(abstractFixedField K Ω
+      Group.Abelianization Gal((abstractRelativeFixedField K Ω L.below)/(abstractFixedField K Ω
         H.field)) := by
   intro hkFΩ hrelfinite hupper hFfinite hEfinite hKFE hkFE hFEfinite hFEgal hkKE hEprincipal
   exact (QuotientGroup.quotientMulEquivOfEq (fixedFieldArtin_ker k K Ω H L).symm).trans

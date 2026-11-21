@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.ClassGroupNormCore
 public import Mathlib.Topology.Algebra.ContinuousMonoidHom
 public import Mathlib.Topology.Algebra.Group.Neighborhood
 public import Mathlib.Topology.Algebra.Group.Quotient
@@ -129,19 +130,35 @@ namespace FunctionField.IdeleClassGroup
 
 variable {k K L : Type*} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
-    [FiniteDimensional K L] [Algebra.IsSeparable K L]
+    [FiniteDimensional K L]
     [AlgebraicCurve.HasPrincipalDivisors k K] [AlgebraicCurve.HasPrincipalDivisors k L]
 
-/-- The descended norm is continuous for the existing quotient topology. -/
-theorem continuous_norm : Continuous (norm (k := k) (K := K) (L := L)) := by
+/-- Continuity of the common quotient norm uses only the continuity of the actual idele norm. -/
+theorem continuous_normOfPrincipal
+    (hprincipal : IdeleGroup.principalSubgroup k L ≤
+      (IdeleGroup.principalSubgroup k K).comap (IdeleGroup.norm (K := K) (L := L))) :
+    Continuous (normOfPrincipal hprincipal) := by
   apply continuous_coinduced_dom.2
   exact QuotientGroup.continuous_mk.comp
     (IdeleGroup.continuous_norm (k := k) (K := K) (L := L))
 
+/-- The continuous bundle of the same descended idele norm. -/
+noncomputable def normOfPrincipalContinuous
+    (hprincipal : IdeleGroup.principalSubgroup k L ≤
+      (IdeleGroup.principalSubgroup k K).comap (IdeleGroup.norm (K := K) (L := L))) :
+    IdeleClassGroup k L →ₜ* IdeleClassGroup k K where
+  __ := normOfPrincipal hprincipal
+  continuous_toFun := continuous_normOfPrincipal hprincipal
+
+variable [Algebra.IsSeparable K L]
+
+/-- The descended norm is continuous for the existing quotient topology. -/
+theorem continuous_norm : Continuous (norm (k := k) (K := K) (L := L)) :=
+  continuous_normOfPrincipal (fun _ ha => IdeleGroup.norm_mem_principalSubgroup ha)
+
 /-- The norm on idele classes as a continuous group homomorphism. -/
-def normContinuous : IdeleClassGroup k L →ₜ* IdeleClassGroup k K where
-  __ := norm (k := k) (K := K) (L := L)
-  continuous_toFun := continuous_norm
+noncomputable abbrev normContinuous : IdeleClassGroup k L →ₜ* IdeleClassGroup k K :=
+  normOfPrincipalContinuous (fun _ ha => IdeleGroup.norm_mem_principalSubgroup ha)
 
 @[simp]
 theorem normContinuous_apply (c : IdeleClassGroup k L) :

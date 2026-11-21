@@ -98,14 +98,15 @@ theorem abelianFiniteArtin_constantGenerated_constant
     k K E Ω H T eF eE hu a
   have he := congrArg (fun f :
       (IdeleClassGroup k K ⧸ (IdeleClassGroup.norm (k := k) (K := K) (L := E)).range) ≃*
-        Abelianization Gal(E/K) => f (QuotientGroup.mk a))
+        Group.Abelianization Gal(E/K) => f (QuotientGroup.mk a))
     (finiteNormQuotientEquivOfEmbedding_eq_intrinsic k K E i)
   have hArtin : abelianFiniteArtin k K E a = φ ^ n := by
-    apply (Abelianization.equivOfComm (H := Gal(E/K))).injective
-    change Abelianization.of (abelianFiniteArtin k K E a) = Abelianization.of (φ ^ n)
+    apply (Group.Abelianization.equivOfComm (H := Gal(E/K))).injective
+    change Group.Abelianization.of (abelianFiniteArtin k K E a) = Group.Abelianization.of (φ ^ n)
     rw [abelianFiniteArtin_of]
     have hs' : finiteArtin k K E a =
-        Abelianization.of (φ ^ (IdeleClassGroup.normalizedDegree (k := k) (K := K) a).toAdd) := by
+        Group.Abelianization.of
+          (φ ^ (IdeleClassGroup.normalizedDegree (k := k) (K := K) a).toAdd) := by
       apply he.symm.trans
       dsimp only [finiteNormQuotientEquivOfEmbedding]
       with_reducible exact hs

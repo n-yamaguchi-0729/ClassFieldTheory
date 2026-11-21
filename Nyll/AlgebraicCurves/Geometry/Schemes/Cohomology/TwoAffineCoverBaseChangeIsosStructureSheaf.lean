@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Modules.Functoriality.AffinePullbackSections
 public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 public import Mathlib.LinearAlgebra.TensorProduct.Prod
 public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
@@ -34,205 +35,6 @@ universe u
 
 open CategoryTheory CategoryTheory.Limits Opposite TensorProduct
 
-namespace AlgebraicGeometry
-open _root_.AlgebraicGeometry
-namespace Scheme
-open _root_.AlgebraicGeometry.Scheme
-namespace TwoAffineOpenCover
-open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
-open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
-open _root_.AlgebraicGeometry.Scheme
-open _root_.AlgebraicGeometry
-
-namespace AffineBaseChange
-
-variable {R : Type u} [CommRing R] {X : Scheme.{u}} (c : X ⟶ Spec (.of R))
-variable (A : Type u) [CommRing A] [Algebra R A]
-
-/-- The scalar extension of the scheme along the affine base map. -/
-abbrev XA : Scheme.{u} := Limits.pullback c (specMap R A)
-
-/-- The base-change projection to the original scheme. -/
-abbrev fst : XA c A
-    ⟶ X := Limits.pullback.fst c (specMap R A)
-
-/-- The base-change projection to the spectrum of the new coefficient algebra. -/
-abbrev snd : XA c A
-    ⟶ Spec (.of A) := Limits.pullback.snd c (specMap R A)
-
-variable (U : X.Opens) (hU : IsAffineOpen U)
-
-theorem specMap_algebraMap_eq :
-    let := algebraOfHom c U
-    Spec.map (CommRingCat.ofHom (algebraMap R Γ(X, U))) = hU.fromSpec ≫ c := by
-  intro sharedOwner1
-  have halg : (algebraMap R Γ(X, U)) = ((Scheme.ΓSpecIso (.of R)).inv ≫ c.appLE ⊤ U le_top).hom
-    := rfl
-  rw [halg, CommRingCat.ofHom_hom, Spec.map_comp, ← Scheme.isoSpec_Spec_inv, ←
-    IsAffineOpen.fromSpec_top,
-    IsAffineOpen.SpecMap_appLE_fromSpec c (isAffineOpen_top (Spec (.of R))) hU (le_top : U ≤ c
-      ⁻¹ᵁ ⊤)]
-
-/-- The affine pullback chart identified with the spectrum of its tensor-product section ring. -/
-def pullbackAffineOpenIsoSpecTensor :
-    letI := algebraOfHom c U
-    ((fst c A) ⁻¹ᵁ U).toScheme ≅ Spec (.of (Γ(X, U) ⊗[R] A)) :=
-  letI := algebraOfHom c U
-  (pullbackRestrictIsoRestrict (fst c A) U).symm
-    ≪≫ pullbackSymmetry _ _
-    ≪≫ pullbackRightPullbackFstIso c (specMap R A) U.ι
-    ≪≫ asIso (pullback.map (U.ι ≫ c) (specMap R A)
-        (Spec.map (CommRingCat.ofHom (algebraMap R Γ(X, U)))) (specMap R A)
-        hU.isoSpec.hom (𝟙 _) (𝟙 _)
-        (by rw [Category.comp_id, specMap_algebraMap_eq c U hU, ← hU.isoSpec_inv_ι_assoc,
-          Iso.hom_inv_id_assoc])
-        (by rw [Category.id_comp, Category.comp_id]))
-    ≪≫ pullbackSpecIso R Γ(X, U) A
-
-/-- The ring equivalence from the tensor-product section ring to sections on the pullback
-chart.
--/
-def sigma :
-    letI := algebraOfHom c U
-    (Γ(X, U) ⊗[R] A) ≃+* Γ(XA c A, (fst c A) ⁻¹ᵁ U) :=
-  letI := algebraOfHom c U
-  ((Scheme.ΓSpecIso (.of (Γ(X, U) ⊗[R] A))).symm
-    ≪≫ Scheme.Γ.mapIso (pullbackAffineOpenIsoSpecTensor c A U hU).op
-    ≪≫ ((fst c A) ⁻¹ᵁ U).topIso).commRingCatIsoToRingEquiv
-
-theorem sigma_apply (x : letI := algebraOfHom c U; Γ(X, U) ⊗[R] A) :
-    letI := algebraOfHom c U
-    sigma c A U hU x = ((Scheme.ΓSpecIso (.of (Γ(X, U) ⊗[R] A))).inv
-      ≫ (pullbackAffineOpenIsoSpecTensor c A U hU).hom.appTop ≫ ((fst c A) ⁻¹ᵁ
-        U).topIso.hom).hom x :=
-  rfl
-
-theorem iso_hom_comp_sndLeg :
-    let := algebraOfHom c U
-    ((fst c A) ⁻¹ᵁ U).ι ≫ snd c A
-      = (pullbackAffineOpenIsoSpecTensor c A U hU).hom
-        ≫ Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.includeRight : A →ₐ[R] Γ(X, U) ⊗[R]
-          A)) := by
-  intro sharedOwner1
-  rw [pullbackAffineOpenIsoSpecTensor, ← pullbackSpecIso_inv_snd R Γ(X, U) A]
-  simp only [Iso.trans_hom, Iso.symm_hom, asIso_hom, Category.assoc, Iso.hom_inv_id_assoc,
-    pullback.lift_snd, Category.comp_id, pullbackRightPullbackFstIso_hom_snd,
-    pullbackSymmetry_hom_comp_snd_assoc, pullbackRestrictIsoRestrict_inv_fst_assoc]
-
-theorem iso_hom_comp_fstLeg :
-    let := algebraOfHom c U
-    (pullbackAffineOpenIsoSpecTensor c A U hU).hom
-        ≫ Spec.map (CommRingCat.ofHom (Algebra.TensorProduct.includeLeftRingHom : Γ(X, U) →+*
-          Γ(X, U) ⊗[R] A))
-      = ((fst c A) ∣_ U) ≫ hU.isoSpec.hom := by
-  intro sharedOwner1
-  rw [pullbackAffineOpenIsoSpecTensor, ← pullbackSpecIso_inv_fst R Γ(X, U) A]
-  simp only [Iso.trans_hom, Iso.symm_hom, asIso_hom, Category.assoc, Iso.hom_inv_id_assoc,
-    pullback.lift_fst, pullbackRightPullbackFstIso_hom_fst_assoc,
-      pullbackSymmetry_hom_comp_fst_assoc]
-  rfl
-
-omit [CommRing R] in
-theorem opens_ι_appTop_topIso_hom {Y : Scheme.{u}} (V : Y.Opens) :
-    V.ι.appTop ≫ V.topIso.hom = Y.presheaf.map (homOfLE (le_top : V ≤ ⊤)).op := by
-  rw [Scheme.Opens.ι_appTop, Scheme.Opens.topIso_hom]
-  exact (Y.presheaf.map_comp _ _).symm.trans (congrArg Y.presheaf.map (Subsingleton.elim _ _))
-
-omit [CommRing R] in
-theorem topIso_morphismRestrict_appTop_topIso {Y Z : Scheme.{u}} (g : Y ⟶ Z) (W : Z.Opens) :
-    W.topIso.inv ≫ (g ∣_ W).appTop ≫ (g ⁻¹ᵁ W).topIso.hom = g.app W := by
-  let v : Γ(W.toScheme, ⊤) ⟶ Γ((g ⁻¹ᵁ W).toScheme, ⊤) := (g ∣_ W).appTop
-  have hv : v = W.topIso.hom ≫ g.appLE W (g ⁻¹ᵁ W) le_rfl ≫
-      (g ⁻¹ᵁ W).topIso.inv := by
-    change (g ∣_ W).appTop = _
-    rw [← Scheme.Hom.resLE_eq_morphismRestrict g (U := W)]
-    exact Scheme.Hom.resLE_app_top g (U := W) (V := g ⁻¹ᵁ W) le_rfl
-  change W.topIso.inv ≫ v ≫ (g ⁻¹ᵁ W).topIso.hom = g.app W
-  rw [hv]
-  simp only [Category.assoc, Iso.inv_hom_id_assoc, Iso.inv_hom_id, Category.comp_id]
-  exact (Scheme.Hom.app_eq_appLE g).symm
-
-theorem sigma_tmul_one (s : Γ(X, U)) :
-    let := algebraOfHom c U
-    sigma c A U hU (s ⊗ₜ[R] (1 : A)) = ((fst c A).app U).hom s := by
-  intro sharedOwner1
-  rw [sigma_apply]
-  have hiL : s ⊗ₜ[R] (1 : A)
-      = (CommRingCat.ofHom (Algebra.TensorProduct.includeLeftRingHom : Γ(X, U) →+* Γ(X, U) ⊗[R]
-        A)).hom s := rfl
-  rw [hiL, ← CommRingCat.comp_apply, ← Category.assoc, Scheme.ΓSpecIso_inv_naturality,
-    Category.assoc,
-    ← Category.assoc _ _ (((fst c A) ⁻¹ᵁ U).topIso.hom), ← Scheme.Hom.comp_appTop,
-    iso_hom_comp_fstLeg c A U hU, Scheme.Hom.comp_appTop, IsAffineOpen.isoSpec_hom_appTop]
-  have hΓ : (Scheme.ΓSpecIso (CommRingCat.of Γ(X, U))).inv ≫ (Scheme.ΓSpecIso Γ(X, U)).hom = 𝟙 _ :=
-    Iso.inv_hom_id _
-  simp only [← Category.assoc]
-  rw [hΓ, Category.id_comp, Category.assoc, topIso_morphismRestrict_appTop_topIso]
-
-theorem sigma_one_tmul (a : A) :
-    let := algebraOfHom c U
-    sigma c A U hU ((1 : Γ(X, U)) ⊗ₜ[R] a)
-      = ((XA c A).presheaf.map (homOfLE (le_top : (fst c A) ⁻¹ᵁ U ≤ ⊤)).op).hom
-          (((Scheme.ΓSpecIso (.of A)).inv ≫ (snd c A).appTop).hom a) := by
-  intro sharedOwner1
-  rw [sigma_apply]
-  have hiR : (1 : Γ(X, U)) ⊗ₜ[R] a
-      = (CommRingCat.ofHom (R := A) (S := Γ(X, U) ⊗[R] A)
-          (Algebra.TensorProduct.includeRight : A →ₐ[R] Γ(X, U) ⊗[R] A)).hom a := rfl
-  rw [hiR, ← CommRingCat.comp_apply, ← Category.assoc, Scheme.ΓSpecIso_inv_naturality,
-    Category.assoc,
-    ← Category.assoc _ _ (((fst c A) ⁻¹ᵁ U).topIso.hom), ← Scheme.Hom.comp_appTop,
-    ← iso_hom_comp_sndLeg c A U hU, Scheme.Hom.comp_appTop, Category.assoc,
-    opens_ι_appTop_topIso_hom ((fst c A) ⁻¹ᵁ U)]
-  rfl
-
-theorem algebraMap_sndAlgebra (a : A) :
-    (algebraOfHom (snd c A) ((fst c A) ⁻¹ᵁ U)).algebraMap a
-      = ((XA c A).presheaf.map (homOfLE (le_top : (fst c A) ⁻¹ᵁ U ≤ ⊤)).op).hom
-          (((Scheme.ΓSpecIso (.of A)).inv ≫ (snd c A).appTop).hom a) := by
-  rw [algebraMap_algebraOfHom]
-  change ((Scheme.ΓSpecIso (.of A)).inv ≫ ((snd c A).app ⊤ ≫
-    (XA c A).presheaf.map (homOfLE (le_top : (fst c A) ⁻¹ᵁ U ≤ ⊤)).op)).hom a = _
-  rfl
-
-/-- The base-algebra equivalence between the tensor-product section ring and the pullback
-chart sections.
--/
-def algEquiv :
-    letI := algebraOfHom c U; letI := algebraOfHom (snd c A) ((fst c A) ⁻¹ᵁ U)
-    (A ⊗[R] Γ(X, U)) ≃ₐ[A] Γ(XA c A, (fst c A) ⁻¹ᵁ U) :=
-  letI := algebraOfHom c U; letI := algebraOfHom (snd c A) ((fst c A) ⁻¹ᵁ U)
-  AlgEquiv.ofRingEquiv (f := (Algebra.TensorProduct.comm R A Γ(X, U)).toRingEquiv.trans (sigma c
-    A U hU))
-    (fun a => by
-      change sigma c A U hU ((Algebra.TensorProduct.comm R A Γ(X, U)) (algebraMap A (A ⊗[R] Γ(X,
-        U)) a)) = _
-      rw [Algebra.TensorProduct.algebraMap_apply, show algebraMap A A a = a from rfl,
-        Algebra.TensorProduct.comm_tmul, sigma_one_tmul, algebraMap_sndAlgebra])
-
-theorem algEquiv_one_tmul (s : Γ(X, U)) :
-    letI := algebraOfHom c U; letI := algebraOfHom (snd c A) ((fst c A) ⁻¹ᵁ U)
-    algEquiv c A U hU ((1 : A) ⊗ₜ[R] s) = ((fst c A).app U).hom s := by
-  let := algebraOfHom c U; let := algebraOfHom (snd c A) ((fst c A) ⁻¹ᵁ U)
-  change sigma c A U hU ((Algebra.TensorProduct.comm R A Γ(X, U)) ((1 : A) ⊗ₜ[R] s)) = _
-  rw [Algebra.TensorProduct.comm_tmul, sigma_tmul_one]
-
-end AffineBaseChange
-
-open AffineBaseChange in
-theorem exists_algEquiv_sections_baseChange {R : Type u} [CommRing R] {X : Scheme.{u}}
-    (c : X ⟶ Spec (.of R)) (U : X.Opens) (hU : IsAffineOpen U) (A : Type u) [CommRing A]
-      [Algebra R A] :
-    letI := algebraOfHom c U
-    letI := algebraOfHom (Limits.pullback.snd c (specMap R A)) ((Limits.pullback.fst c (specMap
-      R A)) ⁻¹ᵁ U)
-    ∃ e : (A ⊗[R] Γ(X, U)) ≃ₐ[A]
-        Γ(Limits.pullback c (specMap R A), (Limits.pullback.fst c (specMap R A)) ⁻¹ᵁ U),
-      ∀ s : Γ(X, U), e ((1 : A) ⊗ₜ[R] s) = ((Limits.pullback.fst c (specMap R A)).app U).hom s :=
-  ⟨algEquiv c A U hU, algEquiv_one_tmul c A U hU⟩
-
-end AlgebraicGeometry.Scheme.TwoAffineOpenCover
-
 open CategoryTheory CategoryTheory.Limits Opposite TensorProduct
 
 namespace AlgebraicGeometry
@@ -250,17 +52,7 @@ namespace CechBaseChange
 variable {R : Type u} [CommRing R] {X : Scheme.{u}} (c : X ⟶ Spec (.of R))
 variable (A : Type u) [CommRing A] [Algebra R A]
 
-/-- The scalar extension of the scheme along the affine base map. -/
-abbrev XA : Scheme.{u} := Limits.pullback c (specMap R A)
-
-/-- The base-change projection to the original scheme. -/
-abbrev fst : XA c A ⟶
-    X := Limits.pullback.fst c (specMap R A)
-
-/-- The base-change projection to the spectrum of the new coefficient algebra. -/
-abbrev snd : XA c A ⟶
-    Spec (.of A) := Limits.pullback.snd c (specMap R A)
-
+open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.AffineBaseChange (XA fst snd)
 
 theorem restrict_compat {U V : X.Opens} (hVU : V ≤ U)
     (eU : letI := algebraOfHom c U; letI := algebraOfHom (snd c A) ((fst c A) ⁻¹ᵁ U)
@@ -454,6 +246,8 @@ open _root_.AlgebraicGeometry
 open _root_.TensorProduct
 open _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover
 
+open _root_.AlgebraicGeometry.Scheme
+  (exists_algEquiv_tensor_sections_pullback_fst_preimage_of_isAffineOpen) in
 theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.exists_baseChangeIsos_structureSheaf
     {R : Type u} [CommRing R] {X : Scheme.{u}} (𝒱 : X.TwoAffineOpenCover) (c : X ⟶ Spec (.of R))
     (A : Type u) [CommRing A] [Algebra R A] :
@@ -480,14 +274,14 @@ theorem _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.exists_baseChangeIsos
           e1 (TensorProduct.prodRight R A A _ _ x.1).2)) ∧
       (∀ y, eH1 (Submodule.Quotient.mk y) = Submodule.Quotient.mk (e01 y)) := by
   obtain ⟨e0, he0⟩ :=
-    AlgebraicGeometry.Scheme.TwoAffineOpenCover.exists_algEquiv_sections_baseChange c 𝒱.U0
-      𝒱.isAffineOpen_U0 A
+    exists_algEquiv_tensor_sections_pullback_fst_preimage_of_isAffineOpen
+      c 𝒱.U0 𝒱.isAffineOpen_U0 A
   obtain ⟨e1, he1⟩ :=
-    AlgebraicGeometry.Scheme.TwoAffineOpenCover.exists_algEquiv_sections_baseChange c 𝒱.U1
-      𝒱.isAffineOpen_U1 A
+    exists_algEquiv_tensor_sections_pullback_fst_preimage_of_isAffineOpen
+      c 𝒱.U1 𝒱.isAffineOpen_U1 A
   obtain ⟨e01, he01⟩ :=
-    AlgebraicGeometry.Scheme.TwoAffineOpenCover.exists_algEquiv_sections_baseChange c (𝒱.U0 ⊓
-      𝒱.U1) 𝒱.isAffineOpen_inf A
+    exists_algEquiv_tensor_sections_pullback_fst_preimage_of_isAffineOpen
+      c (𝒱.U0 ⊓ 𝒱.U1) 𝒱.isAffineOpen_inf A
   let E : AlgebraicGeometry.Scheme.TwoAffineOpenCover.CechBaseChange.BaseChangeIsos c A 𝒱 :=
     { e0 := e0, e1 := e1, e01 := e01, he0 := he0, he1 := he1, he01 := he01 }
   exact ⟨e0, e1, e01, E.kerEquivH0, E.cokerEquivH1, he0, he1, he01, fun x => rfl, fun y => rfl⟩

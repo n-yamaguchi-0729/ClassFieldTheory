@@ -7,11 +7,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotients
+public import Nyll.GaloisCohomology.Topology.GaloisConjugation
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteAbelianization
 public import Nyll.GaloisCohomology.Topology.GaloisRestrictionScalars
 public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
 public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
-public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
 
 /-!
 # Absolute Galois groups under a degree-one field inclusion
@@ -27,7 +27,7 @@ noncomputable section
 
 namespace FunctionField
 
-open LocalClassFieldTheory ProCGroups.Abelian
+open ProCGroups.Abelian
 
 universe u v
 
@@ -73,13 +73,14 @@ theorem degreeOneAbsoluteGaloisEquiv_symm_apply
 
 /-- The induced comparison of the two original absolute abelian groups. -/
 def degreeOneAbsoluteAbelianEquiv :
-    localAbsoluteAbelianProfinite F ≃ₜ* localAbsoluteAbelianProfinite K :=
+    TopologicalAbelianization Gal(SeparableClosure F/F) ≃ₜ*
+      TopologicalAbelianization Gal(SeparableClosure K/K) :=
   TopologicalAbelianization.congr (degreeOneAbsoluteGaloisEquiv K F hKF eΩ)
 
 /-- The abelian comparison retains the original Galois representative. -/
 theorem degreeOneAbsoluteAbelianEquiv_mk (σ : Gal(SeparableClosure F/F)) :
     degreeOneAbsoluteAbelianEquiv K F hKF eΩ
-        (QuotientGroup.mk σ : localAbsoluteAbelianProfinite F) =
+        (QuotientGroup.mk σ : TopologicalAbelianization Gal(SeparableClosure F/F)) =
       QuotientGroup.mk (degreeOneAbsoluteGaloisEquiv K F hKF eΩ σ) := rfl
 
 end AbsoluteGroups

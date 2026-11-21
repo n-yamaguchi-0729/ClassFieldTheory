@@ -98,6 +98,22 @@ theorem exists_finite_invariant_submodule_of_annihilator [Module.Finite ℤ R]
     exact hm (w : X)
   exact ⟨W, hsW, Module.finite_of_fg_torsion W ht, hW⟩
 
+/-- Finite subsets of discrete torsion coefficients over a ring finite
+as an integer module lie in finite invariant submodules. -/
+theorem exists_finite_invariant_submodule_of_torsion [Module.Finite ℤ R]
+    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2))
+    (ht : Module.IsTorsion ℤ X) (s : Set X) (hs : s.Finite) :
+    ∃ W : Submodule R X, s ⊆ W ∧ Finite W ∧
+      ∀ g : G, W ≤ W.comap (X.ρ g).toLinearMap := by
+  obtain ⟨W, hsW, hfg, hW⟩ := exists_fg_invariant_submodule R G X hX s hs
+  have : Module.Finite R W := Module.Finite.iff_fg.mpr hfg
+  have : Module.Finite ℤ W := Module.Finite.trans R W
+  have hWt : Module.IsTorsion ℤ W := by
+    intro w
+    obtain ⟨m, hm⟩ := ht (x := w.val)
+    exact ⟨m, Subtype.ext hm⟩
+  exact ⟨W, hsW, Module.finite_of_fg_torsion W hWt, hW⟩
+
 /-- Continuous cochains from a compact parameter space have their entire
 image in one finite invariant coefficient submodule. -/
 theorem exists_finite_invariant_submodule_containing_range [Finite R]
@@ -184,7 +200,7 @@ theorem exists_openSubgroup_primeToIndex_pGroup_image
       P.toSubgroup.index_comap_of_surjective ρ.asGroupHom.rangeRestrict_surjective
     rw [hidx]
     exact P.not_dvd_index
-  · have hP : IsPGroup p (P.toSubgroup.map Q.subtype) := P.isPGroup'.map Q.subtype
+  · have hP : IsPGroup p (P.toSubgroup.map Q.subtype) := P.isPGroup.map Q.subtype
     have hle :
         (Representation.asGroupHom (ρ.comp H.toSubgroup.subtype)).range ≤
           P.toSubgroup.map Q.subtype := by

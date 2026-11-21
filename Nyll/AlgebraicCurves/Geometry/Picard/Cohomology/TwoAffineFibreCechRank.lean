@@ -162,10 +162,6 @@ theorem finrank_ker_coker_baseChange_eq (d : C0 →ₗ[R] C1) (K K' : Type*) [Fi
 
 end FieldExt
 
-theorem cover_ext {X : Scheme.{u}} {𝒱 𝒱' : X.TwoAffineOpenCover}
-    (h0 : 𝒱.U0 = 𝒱'.U0) (h1 : 𝒱.U1 = 𝒱'.U1) : 𝒱 = 𝒱' := by
-  cases 𝒱; cases 𝒱'; cases h0; cases h1; rfl
-
 end ChiFibre
 
 open ChiFibre in
@@ -261,7 +257,9 @@ theorem exists_twoAffineOpenCover_fibre_finrank_eq_finrank_cechDiff_baseChange_r
     Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso (fibreAt c t (s' ≫ j))
       (pullback.snd πA sp)
       Φ.symm hΦinv_snd (𝒱.pullback πA k) _ _ (eM M)
-  obtain rfl : 𝒲 = 𝒲₀ := cover_ext (h0.trans h00.symm) (h1.trans h01.symm)
+  obtain rfl : 𝒲 = 𝒲₀ :=
+    _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.cover_ext
+      (h0.trans h00.symm) (h1.trans h01.symm)
   rw [f0.finrank_eq, f1.finrank_eq]
   have hMA : Scheme.Modules.IsInvertible ((Scheme.Modules.pullback g').obj M) := hM.pullback g'
   obtain ⟨⟨eH1⟩, ⟨eH0⟩, -⟩ :=

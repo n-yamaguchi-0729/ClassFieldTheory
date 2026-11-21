@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricConstantKernelComparison
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricConstantArtinKernels
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayTower
@@ -104,34 +106,34 @@ local instance stagePrincipalDivisors (i : GeometricArtinIndex k K Ω) :
 
 /-- The kernel of the original absolute Artin map at a finite constant stage. -/
 abbrev GeometricArtinStageKernel (m : Modulus k K) (i : GeometricArtinIndex k K Ω) : Type w :=
-  ↥((restrictedProductAbsoluteArtin (rayModulusBaseChange (E i) m)).ker)
+  ↥((restrictedProductAbsoluteArtin (reindexAlongPlaces (E i) m)).ker)
 
 /-- Inclusion of a native kernel into the actual geometric function units. -/
 def geometricArtinStageToUnits (m : Modulus k K) (hmzero : m ≠ 0)
     (i : GeometricArtinIndex k K Ω) :
     GeometricArtinStageKernel k K Ω m i →* (geometricConstantExtension k K Ω)ˣ :=
   (Units.map (fullConstantStageGeometricInclusion k K Ω i.degree).toMonoidHom).comp
-    (principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E i) m)
-      (rayModulusBaseChange_ne_zero m hmzero)).symm.toMonoidHom
+    (principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E i) m)
+      (reindexAlongPlaces_ne_zero m hmzero)).symm.toMonoidHom
 
 /-- The map on each stage retains the literal function-field inclusion. -/
 theorem geometricArtinStageToUnits_principal (m : Modulus k K) (hmzero : m ≠ 0)
     (i : GeometricArtinIndex k K Ω) (x : (E i)ˣ) :
     geometricArtinStageToUnits k K Ω m hmzero i
-        (principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E i) m)
-          (rayModulusBaseChange_ne_zero m hmzero) x) =
+        (principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E i) m)
+          (reindexAlongPlaces_ne_zero m hmzero) x) =
       Units.map (fullConstantStageGeometricInclusion k K Ω i.degree).toMonoidHom x :=
   congrArg (Units.map (fullConstantStageGeometricInclusion k K Ω i.degree).toMonoidHom)
-    ((principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E i) m)
-      (rayModulusBaseChange_ne_zero m hmzero)).symm_apply_apply x)
+    ((principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E i) m)
+      (reindexAlongPlaces_ne_zero m hmzero)).symm_apply_apply x)
 
 /-- A finite-stage kernel embeds in the actual geometric units. -/
 theorem geometricArtinStageToUnits_injective (m : Modulus k K) (hmzero : m ≠ 0)
     (i : GeometricArtinIndex k K Ω) :
     Function.Injective (geometricArtinStageToUnits k K Ω m hmzero i) :=
   (Units.map_injective (fullConstantStageGeometricInclusion k K Ω i.degree).injective).comp
-    (principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E i) m)
-      (rayModulusBaseChange_ne_zero m hmzero)).symm.injective
+    (principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E i) m)
+      (reindexAlongPlaces_ne_zero m hmzero)).symm.injective
 
 /-- The stage algebra is induced by the literal inclusion of the intermediate fields. -/
 @[instance_reducible]
@@ -151,7 +153,7 @@ private theorem stageInclusion_units (i j : GeometricArtinIndex k K Ω) (hij : i
 
 /-- The actual restricted-ray transition on kernels, with only the equality of
 the iterated and direct boundary pullbacks applied afterwards. -/
-def geometricArtinTransition (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+def geometricArtinTransition (m : Modulus k K) (_hm : ∀ v, m v ≤ 1)
     (i j : GeometricArtinIndex k K Ω) (hij : i ≤ j) :
     GeometricArtinStageKernel k K Ω m i →* GeometricArtinStageKernel k K Ω m j := by
   let _ : Algebra (E i) (E j) := stageInclusionAlgebra k K Ω i j hij
@@ -161,9 +163,8 @@ def geometricArtinTransition (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
     IsScalarTower.of_algebraMap_eq fun _ => Subtype.ext rfl
   have _ : FiniteDimensional (E i) (E j) := FiniteDimensional.right K (E i) (E j)
   exact (principalArtinKernelCongr
-    (rayModulusBaseChange_trans (L := E i) (M := E j) m)).toMonoidHom.comp
-      (principalArtinKernelBaseChange (L := E j) (rayModulusBaseChange (E i) m)
-        (rayModulusBaseChange_reduced m hm))
+    (reindexAlongPlaces_trans (L := E i) (M := E j) m)).toMonoidHom.comp
+      (principalArtinKernelBaseChange (L := E j) (reindexAlongPlaces (E i) m))
 
 /-- The native transition takes a principal representative to the same function
 under the literal intermediate-field inclusion. -/
@@ -171,10 +172,10 @@ theorem geometricArtinTransition_principal (m : Modulus k K)
     (hm : ∀ v, m v ≤ 1) (hmzero : m ≠ 0)
     (i j : GeometricArtinIndex k K Ω) (hij : i ≤ j) (x : (E i)ˣ) :
     geometricArtinTransition k K Ω m hm i j hij
-        (principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E i) m)
-          (rayModulusBaseChange_ne_zero m hmzero) x) =
-      principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E j) m)
-        (rayModulusBaseChange_ne_zero m hmzero)
+        (principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E i) m)
+          (reindexAlongPlaces_ne_zero m hmzero) x) =
+      principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E j) m)
+        (reindexAlongPlaces_ne_zero m hmzero)
         (Units.map (IntermediateField.inclusion hij).toMonoidHom x) := by
   let _ : Algebra (E i) (E j) := stageInclusionAlgebra k K Ω i j hij
   have _ : IsScalarTower K (E i) (E j) :=
@@ -186,8 +187,8 @@ theorem geometricArtinTransition_principal (m : Modulus k K)
     (k := k) (K := K) («E» := E i) (H := E j) m hm hmzero x
   have hu := stageInclusion_units k K Ω i j hij x
   have hfinal := ht.trans
-    (congrArg (principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E j) m)
-      (rayModulusBaseChange_ne_zero m hmzero)) hu)
+    (congrArg (principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E j) m)
+      (reindexAlongPlaces_ne_zero m hmzero)) hu)
   simpa only [geometricArtinTransition, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom]
     using hfinal
 
@@ -199,10 +200,10 @@ theorem geometricArtinStageToUnits_transition (m : Modulus k K)
     geometricArtinStageToUnits k K Ω m hmzero j
         (geometricArtinTransition k K Ω m hm i j hij a) =
       geometricArtinStageToUnits k K Ω m hmzero i a := by
-  let eI := principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E i) m)
-    (rayModulusBaseChange_ne_zero m hmzero)
-  let eJ := principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E j) m)
-    (rayModulusBaseChange_ne_zero m hmzero)
+  let eI := principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E i) m)
+    (reindexAlongPlaces_ne_zero m hmzero)
+  let eJ := principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E j) m)
+    (reindexAlongPlaces_ne_zero m hmzero)
   let uI := Units.map (fullConstantStageGeometricInclusion k K Ω i.degree).toMonoidHom
   let uJ := Units.map (fullConstantStageGeometricInclusion k K Ω j.degree).toMonoidHom
   let uIJ := Units.map (IntermediateField.inclusion hij).toMonoidHom
@@ -291,8 +292,8 @@ theorem geometricArtinKernelToUnits_surjective (m : Modulus k K)
     apply Subtype.ext
     exact congrArg (fun z : E i => (z : Ω)) hzero
   let u : (E i)ˣ := Units.mk0 y hy
-  refine ⟨⟦⟨i, principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E i) m)
-    (rayModulusBaseChange_ne_zero m hmzero) u⟩⟧, ?_⟩
+  refine ⟨⟦⟨i, principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E i) m)
+    (reindexAlongPlaces_ne_zero m hmzero) u⟩⟧, ?_⟩
   rw [geometricArtinKernelToUnits_mk, geometricArtinStageToUnits_principal]
   apply Units.ext
   apply Subtype.ext
@@ -312,8 +313,8 @@ theorem geometricArtinKernelEquiv_principal (m : Modulus k K)
     (hm : ∀ v, m v ≤ 1) (hmzero : m ≠ 0)
     (i : GeometricArtinIndex k K Ω) (x : (E i)ˣ) :
     geometricArtinKernelEquiv k K Ω m hm hmzero
-        ⟦⟨i, principalRestrictedArtinKernelEquiv (rayModulusBaseChange (E i) m)
-          (rayModulusBaseChange_ne_zero m hmzero) x⟩⟧ =
+        ⟦⟨i, principalRestrictedArtinKernelEquiv (reindexAlongPlaces (E i) m)
+          (reindexAlongPlaces_ne_zero m hmzero) x⟩⟧ =
       Units.map (fullConstantStageGeometricInclusion k K Ω i.degree).toMonoidHom x :=
   geometricArtinStageToUnits_principal k K Ω m hmzero i x
 

@@ -4,21 +4,32 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.BaseChange
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.EmbeddingNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisDescent
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleClassBaseChange
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.InfiniteOnePlaceBaseNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalComponent
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormProperties
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.OnePlaceBaseNorm
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.BaseChange
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassEmbeddingBaseChange
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.EmbeddingNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.FieldEquivNaturality
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisDescent
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdealClass
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleClassBaseChange
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNormComponents
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.InfiniteOnePlaceBaseNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalComponent
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.LocalNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormLocalOrder
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.NormProperties
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.OnePlaceBaseNorm
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.StandardFieldInclusion
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.StandardGaloisDescent
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.StandardClassComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.RelativeNormComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.GaloisClassNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.StandardGaloisNorm
 
 /-!
 # Ideles in finite extensions of number fields

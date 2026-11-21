@@ -20,7 +20,7 @@ public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
 public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
 public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
 public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
 
 public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
 public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPresheaf

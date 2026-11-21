@@ -47,7 +47,9 @@ theorem bijective_comp_quotient_of_henselian_target
     Function.Bijective
       ((Ideal.Quotient.mkₐ A I).comp : (B →ₐ[A] S) → B →ₐ[A] S ⧸ I) := by
   refine ⟨Algebra.FormallyUnramified.comp_injective_of_le_jacobson
-    (R := A) (A := B) (B := S) I (HenselianRing.jac (R := S) (I := I)), ?_⟩
+    (R := A) (A := B) (B := S) I (by
+      simpa only [Ideal.jacobson_bot] using
+        (HenselianRing.jac (R := S) (I := I))), ?_⟩
   intro q
   let T := S ⊗[A] B
   have : Algebra.Etale S T := inferInstance

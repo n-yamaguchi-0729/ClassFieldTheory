@@ -17,7 +17,7 @@ public import Nyll.GaloisCohomology.ProP.TrivialZModP
 /-!
 # Finite coefficients with p-group action image
 
-Vanishing in degree two for the actual trivial mod-p coefficient object
+Vanishing in a fixed degree for the actual trivial mod-p coefficient object
 extends to every finite module killed by p whose action image is a p-group.
 The proof uses an actual invariant line, its actual coefficient quotient,
 and the long exact sequence. No p-group assumption is made on the abstract
@@ -35,17 +35,23 @@ namespace TopRep
 variable (G : Type u) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   [LocallyCompactSpace G] (p : ℕ) [Fact p.Prime]
 
-/-- Degree-two vanishing for trivial mod-p coefficients extends to actual
-finite p-torsion coefficients with p-group action image. -/
-theorem continuousModuleH2_isZero_of_pGroup_image
-    (htriv : IsZero (((continuousModuleComplexFunctor G).obj
-      (ClassFieldTower.Cohomology.trivialIntegralZModPLifted p G)).homology 2))
+omit [IsTopologicalGroup G] [LocallyCompactSpace G] in
+/-- A finite prime-annihilated coefficient with p-group action image has
+a filtration by actual trivial coefficient lines. -/
+theorem finiteCoefficient_of_pGroup_image (P : TopRep.{u} ℤ G → Prop)
+    (hzero : ∀ (A : TopRep.{u} ℤ G) [Subsingleton A], P A)
+    (hstep : ∀ (A B : TopRep.{u} ℤ G) [Finite A] [Finite B]
+      [DiscreteTopology A] [DiscreteTopology B] (f : A ⟶ B),
+      Function.Injective f → Continuous (fun ga : G × A => A.ρ ga.1 ga.2) →
+      Continuous (fun gb : G × B => B.ρ gb.1 gb.2) →
+      P A → P (coefficientRangeShortComplex ℤ G A B f).X₃ → P B)
+    (htriv : P (ClassFieldTower.Cohomology.trivialIntegralZModPLifted p G))
     (X : TopRep.{u} ℤ G) [Finite X] [DiscreteTopology X]
     (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2))
     (hp : ∀ x : X, p • x = 0)
     (hρ : let _ : Module ℤ X := X.hV2;
       IsPGroup p X.ρ.toRepresentation.asGroupHom.range) :
-    IsZero (((continuousModuleComplexFunctor G).obj X).homology 2) := by
+    P X := by
   classical
   suffices step : ∀ n : ℕ, ∀ (Y : TopRep.{u} ℤ G) [Finite Y] [DiscreteTopology Y],
       Nat.card Y = n →
@@ -53,19 +59,16 @@ theorem continuousModuleH2_isZero_of_pGroup_image
       (∀ y : Y, p • y = 0) →
       (let _ : Module ℤ Y := Y.hV2;
         IsPGroup p Y.ρ.toRepresentation.asGroupHom.range) →
-      IsZero (((continuousModuleComplexFunctor G).obj Y).homology 2) by
+      P Y by
     exact step (Nat.card X) X rfl hX hp hρ
   intro n
   induction n using Nat.strong_induction_on with
-  | h n ih =>
+  | ind n ih =>
     intro Y hfin hdisc hcard hY hpY hρY
     cases subsingleton_or_nontrivial Y with
     | inl hsub =>
       have : Subsingleton Y := hsub
-      apply continuousModuleComplex_isZero_of_cohomology_eq_zero G Y 2
-      exact TrivialDegreeTwoCocycles.continuousH2_eq_zero_of_primitive Y
-        (fun _ _ => Subsingleton.elim _ _)
-        (fun _ _ => ⟨0, fun _ _ => Subsingleton.elim _ _⟩)
+      exact hzero Y
     | inr hnontriv =>
       have : Nontrivial Y := hnontriv
       let : Module ℤ Y := Y.hV2
@@ -73,6 +76,8 @@ theorem continuousModuleH2_isZero_of_pGroup_image
         Representation.exists_nonzero_fixed_of_image_isPGroup_int
           Y.ρ.toRepresentation hρY hpY
       let T := ClassFieldTower.Cohomology.trivialIntegralZModPLifted p G
+      have : Finite T := inferInstanceAs (Finite (ULift.{u} (ZMod p)))
+      have : DiscreteTopology T := inferInstanceAs (DiscreteTopology (ULift.{u} (ZMod p)))
       let φ : T ⟶ Y := trivialIntegralCoefficientLineHom G Y p v (hpY v) hfix
       have hφ : Function.Injective φ :=
         trivialIntegralCoefficientLineHom_injective G Y p v (hpY v) hfix hv
@@ -114,8 +119,36 @@ theorem continuousModuleH2_isZero_of_pGroup_image
             (Nat.card_pos : 0 < Nat.card (Y ⧸ W))
       have hQ := ih (Nat.card Q) (hcard ▸ hlt) Q rfl hQcont hpQ hρQ
       have hTcont : Continuous (fun gt : G × T => T.ρ gt.1 gt.2) := continuous_snd
-      have hS := coefficientRangeContinuousModule_shortExact G T Y φ hφ hTcont hY
-      exact (hS.homology_exact₂ 2).isZero_X₂
-        (htriv.eq_of_src _ _) (hQ.eq_of_tgt _ _)
+      exact hstep T Y φ hφ hTcont hY htriv hQ
+
+/-- Fixed-degree vanishing for trivial mod-p coefficients extends to actual
+finite p-torsion coefficients with p-group action image. -/
+theorem continuousModuleHomology_isZero_of_pGroup_image (d : ℕ)
+    (htriv : IsZero (((continuousModuleComplexFunctor G).obj
+      (ClassFieldTower.Cohomology.trivialIntegralZModPLifted p G)).homology d))
+    (X : TopRep.{u} ℤ G) [Finite X] [DiscreteTopology X]
+    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2))
+    (hp : ∀ x : X, p • x = 0)
+    (hρ : let _ : Module ℤ X := X.hV2;
+      IsPGroup p X.ρ.toRepresentation.asGroupHom.range) :
+    IsZero (((continuousModuleComplexFunctor G).obj X).homology d) := by
+  refine finiteCoefficient_of_pGroup_image G p
+    (fun A => IsZero (((continuousModuleComplexFunctor G).obj A).homology d))
+    (fun A _ => continuousModuleHomology_isZero_of_subsingleton G A d) ?_ htriv X hX hp hρ
+  intro A B _ _ _ _ f hf hA hB hI hQ
+  have hS := coefficientRangeContinuousModule_shortExact G A B f hf hA hB
+  exact (hS.homology_exact₂ d).isZero_X₂ (hI.eq_of_src _ _) (hQ.eq_of_tgt _ _)
+
+/-- Degree-two vanishing for the actual finite coefficients with p-group image. -/
+theorem continuousModuleH2_isZero_of_pGroup_image
+    (htriv : IsZero (((continuousModuleComplexFunctor G).obj
+      (ClassFieldTower.Cohomology.trivialIntegralZModPLifted p G)).homology 2))
+    (X : TopRep.{u} ℤ G) [Finite X] [DiscreteTopology X]
+    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2))
+    (hp : ∀ x : X, p • x = 0)
+    (hρ : let _ : Module ℤ X := X.hV2;
+      IsPGroup p X.ρ.toRepresentation.asGroupHom.range) :
+    IsZero (((continuousModuleComplexFunctor G).obj X).homology 2) :=
+  continuousModuleHomology_isZero_of_pGroup_image G p 2 htriv X hX hp hρ
 
 end TopRep

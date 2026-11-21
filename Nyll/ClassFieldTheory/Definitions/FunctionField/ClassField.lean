@@ -9,6 +9,7 @@ module
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.Classification
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
 public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
+public import Nyll.ProCGroups.Topologies.OpenFiniteIndexSubgroup
 public import Mathlib.Topology.Algebra.OpenSubgroup
 public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
@@ -41,7 +42,7 @@ variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K] [Algebra k K]
 abbrev OpenFiniteIndexSubgroup : Type v :=
   let _ : AlgebraicCurve.HasPrincipalDivisors k K :=
     (_root_.FunctionField.isCurveOver k K).toHasPrincipalDivisors
-  {H : OpenSubgroup (_root_.FunctionField.IdeleClassGroup k K) // H.toSubgroup.FiniteIndex}
+  OpenFiniteIndexGroupSubgroup (_root_.FunctionField.IdeleClassGroup k K)
 
 /-- The actual class norm, with its ordinary openness and finite index. -/
 def finiteAbelianNormSubgroup (E : FiniteAbelianExtension K) :

@@ -93,26 +93,26 @@ theorem standardLubinTateNormSubgroup_map_artin_eq_restrictKer
     let : IsAbelianGalois K L :=
       standardLubinTateLevelField_isAbelianGalois F hπ n
     (standardLubinTateNormSubgroup hπ m).map
-        (Universe.abelianLocalArtinMonoidHom K L) =
+        (abelianLocalArtinMonoidHom K L) =
       (intermediateFieldRestrictNormalHom E L
         (standardLubinTateLevelField_mono hπ hmn)).ker := by
   intro F E L sharedOwner4 sharedOwner5 sharedOwner6 sharedOwner7
   let hEL : E ≤ L := standardLubinTateLevelField_mono hπ hmn
-  let φ := Universe.abelianLocalArtinMonoidHom K L
+  let φ := abelianLocalArtinMonoidHom K L
   let ψ := intermediateFieldRestrictNormalHom E L hEL
   have hrestrict :
-      ψ.comp φ = Universe.abelianLocalArtinMonoidHom K E :=
+      ψ.comp φ = abelianLocalArtinMonoidHom K E :=
     Universe.abelianLocalArtinMonoidHom_restrict K E L hEL
   have hker :
       (ψ.comp φ).ker = standardLubinTateNormSubgroup hπ m := by
-    rw [hrestrict, Universe.abelianLocalArtinMonoidHom_ker]
+    rw [hrestrict, abelianLocalArtinMonoidHom_ker]
     rfl
   calc
     (standardLubinTateNormSubgroup hπ m).map φ =
         (ψ.comp φ).ker.map φ := by rw [hker]
     _ = ψ.ker :=
       map_composite_ker_eq_ker_of_surjective
-        φ ψ (Universe.abelianLocalArtinMonoidHom_surjective K L)
+        φ ψ (abelianLocalArtinMonoidHom_surjective K L)
 
 /-- Every integral power of the chosen standard base uniformizer lies in
 the kernel of the standard finite Artin map. -/
@@ -129,9 +129,9 @@ theorem standardLubinTateBaseUniformizerUnit_zpowers_le_artinKer
     let : IsAbelianGalois K L :=
       standardLubinTateLevelField_isAbelianGalois F hπ n
     Subgroup.zpowers (standardLubinTateBaseUniformizerUnit hπ) ≤
-      (Universe.abelianLocalArtinMonoidHom K L).ker := by
+      (abelianLocalArtinMonoidHom K L).ker := by
   intro F L sharedOwner3 sharedOwner4
-  rw [Universe.abelianLocalArtinMonoidHom_ker]
+  rw [abelianLocalArtinMonoidHom_ker]
   change
     Subgroup.zpowers (standardLubinTateBaseUniformizerUnit hπ) ≤
       standardLubinTateNormSubgroup hπ n
@@ -160,11 +160,11 @@ theorem
     let : IsAbelianGalois K L :=
       standardLubinTateLevelField_isAbelianGalois F hπ n
     (LocalFieldTheory.fieldPrincipalUnits K (m + 1)).map
-        (Universe.abelianLocalArtinMonoidHom K L) =
+        (abelianLocalArtinMonoidHom K L) =
       (intermediateFieldRestrictNormalHom E L
         (standardLubinTateLevelField_mono hπ hmn)).ker := by
   intro F hπ E L sharedOwner5 sharedOwner6 sharedOwner7 sharedOwner8
-  let φ := Universe.abelianLocalArtinMonoidHom K L
+  let φ := abelianLocalArtinMonoidHom K L
   let Z := Subgroup.zpowers (standardLubinTateBaseUniformizerUnit hπ)
   let U := LocalFieldTheory.fieldPrincipalUnits K (m + 1)
   have hZ : Z ≤ φ.ker := by
@@ -414,8 +414,8 @@ theorem
       standardLubinTateCanonicalBaseUniformizerUnit_inv_valuationMap K
   have hpiKer :
       Subgroup.zpowers pi ≤
-        (Universe.abelianLocalArtinMonoidHom K L).ker := by
-    rw [Universe.abelianLocalArtinMonoidHom_ker]
+        (abelianLocalArtinMonoidHom K L).ker := by
+    rw [abelianLocalArtinMonoidHom_ker]
     change
       Subgroup.zpowers pi ≤
         standardLubinTateNormSubgroup hπ n
@@ -425,15 +425,15 @@ theorem
   apply top_unique
   intro σ _hσ
   obtain ⟨x, hx⟩ :=
-    Universe.abelianLocalArtinMonoidHom_surjective K L σ
+    abelianLocalArtinMonoidHom_surjective K L σ
   obtain ⟨u, hdecomp⟩ :=
     exists_integerUnit_mul_uniformizer_zpow K pi hpi x
   have hpowKer :
       pi ^ valuationMap K (Additive.ofMul x) ∈
-        (Universe.abelianLocalArtinMonoidHom K L).ker :=
+        (abelianLocalArtinMonoidHom K L).ker :=
     hpiKer (Subgroup.zpow_mem_zpowers pi _)
   have hpow :
-      Universe.abelianLocalArtinMonoidHom K L
+      abelianLocalArtinMonoidHom K L
           (pi ^ valuationMap K (Additive.ofMul x)) = 1 :=
     MonoidHom.mem_ker.mp hpowKer
   refine ⟨integerUnitsToFieldUnits K u, ?_, ?_⟩

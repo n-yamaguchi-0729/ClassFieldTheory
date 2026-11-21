@@ -101,6 +101,9 @@ theorem fixedFieldFrobenius_constant_action
     (H : FiniteAbstractField Gal(Ω/K)) (T : FiniteGaloisSubextension H.field) :
     let _ : Algebra (abstractFixedField K Ω H.field) (abstractFixedField K Ω T.field) :=
       (IntermediateField.inclusion (abstractFixedField_le K Ω T.below)).toRingHom.toAlgebra
+    let _ : (T.field.toSubgroup.subgroupOf
+      (H.toFiniteResidueAbstractField (fullConstantDegreeData k K Ω)).field.toSubgroup).Normal :=
+      T.normal
     ∀ x : abstractFixedField K Ω T.field,
       IsSeparable (algebraicClosure k K) (x : Ω) →
       ((abstractExtensionQuotientEquivGaloisGroup K Ω H.field T.field T.below T.normal
@@ -109,7 +112,7 @@ theorem fixedFieldFrobenius_constant_action
             (H.toFiniteResidueAbstractField (fullConstantDegreeData k K Ω))
             T.field T.below)) x : abstractFixedField K Ω T.field) : Ω) =
         (x : Ω) ^ Nat.card (algebraicClosure k (abstractFixedField K Ω H.field)) := by
-  intro aFE x hx
+  intro aFE hnormal x hx
   let F := abstractFixedField K Ω H.field
   let C := algebraicClosure k K
   let D := fullConstantDegreeData k K Ω

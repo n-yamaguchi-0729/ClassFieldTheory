@@ -48,14 +48,14 @@ theorem artinSchreier_localConductorExponent_le
   have hupper : localUpperRamificationGroup K L (p * n : ℕ) = ⊥ :=
     RamificationTheory.HilbertRamification.Higher.upperRamificationGroup_artinSchreier_eq_bot
       (localCompleteDVF K) (chosenLocalExtensionCompleteDVF K L) p π hπ n a ha β hβ hgen
-  have hnorm : (Universe.abelianLocalArtinMonoidHom K L).ker = localNormSubgroup K L :=
-    Universe.abelianLocalArtinMap_ker K L
+  have hnorm : (abelianLocalArtinMonoidHom K L).ker = localNormSubgroup K L :=
+    abelianLocalArtinMonoidHom_ker K L
   apply (localConductorExponent_le_iff K L (p * n)).mpr
   rw [← hnorm, ← Subgroup.map_eq_bot_iff]
   have hfiltered := Universe.finiteAbelian_filteredLocalReciprocity
     K L (p * n : ℕ) (Nat.cast_nonneg _)
   change (fieldPrincipalUnits K ⌈((p * n : ℕ) : ℝ)⌉₊).map
-    (Universe.abelianLocalArtinMonoidHom K L) =
+    (abelianLocalArtinMonoidHom K L) =
       localUpperRamificationGroup K L (p * n : ℕ) at hfiltered
   rw [Nat.ceil_natCast, hupper] at hfiltered
   exact hfiltered

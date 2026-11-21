@@ -31,12 +31,8 @@ section CyclotomicExtension
 variable {p k : ℕ} [Fact p.Prime]
 variable {L : Type u} [Field L] [Algebra ℚ_[p] L]
 
-local instance padicCyclotomicTotallyRamifiedEisensteinRelationAlgebraPadicInt : Algebra ℤ_[p] L :=
-  ((algebraMap ℚ_[p] L).comp (algebraMap ℤ_[p] ℚ_[p])).toAlgebra
-
-local instance padicCyclotomicTotallyRamifiedEisensteinRelationScalarTowerPadicInt :
-    IsScalarTower ℤ_[p] ℚ_[p] L :=
-  IsScalarTower.of_algebraMap_eq' rfl
+attribute [local instance] padicCyclotomicTotallyRamifiedAlgebraPadicInt
+  padicCyclotomicTotallyRamifiedScalarTowerPadicInt
 
 /-- The Eisenstein relation behind total ramification: in
 `ℤ_[p][ζ - 1]`, the base prime times a unit is the field generator raised

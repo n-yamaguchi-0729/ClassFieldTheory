@@ -53,12 +53,6 @@ theorem mem_comap_range_iff {F : OModulePresheaf π} {i : ℕ} (x : LinearMap.ke
       ↔ ∃ c, F.d K i c = x.1 := by
   simp only [Submodule.mem_comap, Submodule.subtype_apply, LinearMap.mem_range]
 
-omit [IsSeparated π] in
-theorem d_d_apply (F : OModulePresheaf π) (i : ℕ) (c : F.cochain K i) : F.d K (i + 1) (F.d K i c)
-    = 0 := by
-  have h := LinearMap.congr_fun (F.d_comp_d K i) c
-  rwa [LinearMap.comp_apply, LinearMap.zero_apply] at h
-
 theorem cochain_ses (i : ℕ) :
     Function.Injective (ιC i) ∧ Function.Surjective (πC i) ∧ LinearMap.range (ιC i) =
       LinearMap.ker (πC i) := by
@@ -115,7 +109,7 @@ theorem ker_HSuccMap_le_range (i : ℕ) :
   have hgc : g ∈ LinearMap.ker (F₁.d K (i + 1)) :=
     LinearMap.mem_ker.mpr <| (cochain_ses K S (i + 2)).1 <| by
       rw [← LinearMap.comp_apply, AffHom.cochainMap_comp_d, LinearMap.comp_apply, hg,
-        map_sub, LinearMap.mem_ker.mp f.2, d_d_apply, sub_zero, map_zero]
+        map_sub, LinearMap.mem_ker.mp f.2, OModulePresheaf.d_comp_d_apply, sub_zero, map_zero]
   refine ⟨Submodule.Quotient.mk ⟨g, hgc⟩, ?_⟩
   rw [AffHom.HSuccMap_mk]
   refine (Submodule.Quotient.eq _).mpr ((mem_comap_range_iff K _).mpr ⟨-w', ?_⟩)

@@ -53,7 +53,7 @@ theorem finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow_iff
         (z : L) = σ (x : L) ∧
           IsLocalRing.residue 𝒪[L] z =
             (IsLocalRing.residue 𝒪[L] x) ^ Nat.card 𝓀[K]) ↔
-      σ = LocalClassFieldTheory.Universe.abelianLocalArtinMap K L
+      σ = LocalClassFieldTheory.abelianLocalArtinMap K L
         ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) := by
   let u : Kˣ := (Units.mk0 (π : K) hπ.ne_zero)⁻¹
   have hvalUnit :
@@ -95,16 +95,16 @@ theorem finiteAbelianLocalArtinMap_inverseUniformizer_residue_pow_iff
         K L σ x).trans hzσ.symm
     have hza' :
         LocalFieldTheory.galoisGroupIntegerRingEquivOfIsIntegralClosure
-          K L (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L u) x = za := by
+          K L (LocalClassFieldTheory.abelianLocalArtinMap K L u) x = za := by
       apply Subtype.ext
       exact (LocalFieldTheory.galoisGroupIntegerRingEquivOfIsIntegralClosure_apply
-        K L (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L u) x).trans hza.symm
+        K L (LocalClassFieldTheory.abelianLocalArtinMap K L u) x).trans hza.symm
     change IsLocalRing.residue 𝒪[L]
         (LocalFieldTheory.galoisGroupIntegerRingEquivOfIsIntegralClosure
           K L σ x) =
       IsLocalRing.residue 𝒪[L]
         (LocalFieldTheory.galoisGroupIntegerRingEquivOfIsIntegralClosure
-          K L (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L u) x)
+          K L (LocalClassFieldTheory.abelianLocalArtinMap K L u) x)
     rw [hzσ', hza']
     exact hresσ.trans hresa.symm
   · intro hσ

@@ -65,7 +65,7 @@ theorem principalNormSubgroup_eq_fieldNormSubgroup_fullConstantDegreeStage
     (n : ℕ) [NeZero n] :
     NormObstruction.principalNormSubgroup (k := k) (K := K)
         (L := fullConstantDegreeStage k K Ω n) =
-      NormObstruction.fieldNormSubgroup (K := K) (L := fullConstantDegreeStage k K Ω n) := by
+      LocalFieldTheory.localNormSubgroup K (fullConstantDegreeStage k K Ω n) := by
   have hplace : Nonempty (Place k K) := FunctionField.nonempty_place k K
   have hcyclic : IsCyclic
       (fullConstantDegreeStage k K Ω n ≃ₐ[K] fullConstantDegreeStage k K Ω n) :=

@@ -47,7 +47,7 @@ theorem fixedFieldArtin_unramified_zpow (H : FiniteAbstractField Gal(Ω/K))
       (IntermediateField.inclusion (abstractFixedField_le K Ω L.below)).toRingHom.toAlgebra
     let _ := L.finite
     ∀ c : IdeleClassGroup k (abstractFixedField K Ω H.field),
-      fixedFieldArtin k K Ω H L c = Abelianization.of
+      fixedFieldArtin k K Ω H L c = Group.Abelianization.of
         ((abstractExtensionQuotientEquivGaloisGroup K Ω H.field L.field L.below L.normal
           (L.extensionQuotientMulEquiv.symm
             ((fullConstantDegreeData k K Ω).unramifiedFrobenius
@@ -72,8 +72,8 @@ theorem fixedFieldArtin_unramified_zpow (H : FiniteAbstractField Gal(Ω/K))
   change eG.abelianizationCongr
       ((D.normResidueSymbol A v hcf H L)
         (finiteNormClass A H.field L.field L.below a)).toMul =
-    Abelianization.of ((eG (L.extensionQuotientMulEquiv.symm
+    Group.Abelianization.of ((eG (L.extensionQuotientMulEquiv.symm
       (D.unramifiedFrobenius (H.toFiniteResidueAbstractField D) L.field L.below))) ^ z)
-  rw [hs, abelianizationCongr_of, map_zpow]
+  rw [hs, Group.abelianizationCongr_of, map_zpow]
 
 end FunctionField

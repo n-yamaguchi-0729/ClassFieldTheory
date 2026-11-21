@@ -28,10 +28,10 @@ abbrev RayClassGroup
     (m : RayClassModulus K) :=
   rayClassPrimeToIdeals m ⧸ rayPrincipalIdealSubgroupInPrimeTo m
 
-/-- Ray class groups are multiplicatively commutative. -/
-instance instIsMulCommutativeRayClassGroup
-    {K : Type u} [Field K] [NumberField K]
-    (m : RayClassModulus K) : IsMulCommutative (RayClassGroup m) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
+/-- The ideal ray class group inherits multiplication from its commutative quotient. -/
+instance rayClassGroup_commGroup
+    {K : Type u} [Field K] [NumberField K] (m : RayClassModulus K) :
+    CommGroup (RayClassGroup m) :=
+  QuotientGroup.Quotient.commGroup (rayPrincipalIdealSubgroupInPrimeTo m)
 
 end ClassFieldTheory

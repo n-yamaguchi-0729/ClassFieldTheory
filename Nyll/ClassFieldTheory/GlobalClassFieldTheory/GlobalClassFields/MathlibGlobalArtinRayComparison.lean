@@ -38,23 +38,14 @@ variable {K : Type u} {L : Type v}
 /-- For any supplied finite reciprocity datum and its actual finite-field
 embedding, the ray value is the inverse of the named absolute Artin restriction. -/
 theorem ideleClassArtin_eq_inv_mathlibGlobalArtin_restrict
-    (D : FiniteAbelianReciprocityData K L) (x : IdeleClassGroup K) :
+    (D : FiniteAbelianReciprocityData K L) (x : NumberField.IdeleClassGroup (𝓞 K) K) :
     D.ideleClassArtin x =
       (AlgEquiv.restrictNormalHom L
         (mathlibAbelianizationToMaximal K
-          (mathlibGlobalArtin K
-            (IdeleGroup.ideleClassGroupContinuousMulEquivMathlib K x))))⁻¹ := by
-  have hfinite := mathlibGlobalArtin_finiteProjection_of_scalarTower
-    (K := K) L (IdeleGroup.ideleClassGroupContinuousMulEquivMathlib K x)
-  have hgeo : AlgEquiv.restrictNormalHom L
-      (mathlibAbelianizationToMaximal K
-        (mathlibGlobalArtin K
-          (IdeleGroup.ideleClassGroupContinuousMulEquivMathlib K x))) =
-      globalNormResidueMonoidHom K L x := by
-    simpa only [ContinuousMulEquiv.symm_apply_apply,
-      globalIdeleClassArtinMonoidHom_eq_globalNormResidueMonoidHom] using hfinite
-  exact (D.ideleClassArtin_apply x).trans
-    ((arithmeticGlobalNormResidueMonoidHom_apply K L x).trans
-      (congrArg (fun σ : L ≃ₐ[K] L => σ⁻¹) hgeo.symm))
+          (mathlibGlobalArtin K x)))⁻¹ := by
+  have hfinite := mathlibGlobalArtin_finiteProjection_standard_of_scalarTower
+    (K := K) L x
+  rw [hfinite, D.ideleClassArtin_apply, arithmeticGlobalNormResidueMonoidHom_apply]
+  rfl
 
 end ClassFieldTheory.FiniteAbelianReciprocityData

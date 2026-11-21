@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
 
@@ -33,11 +35,6 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance
-    finiteNormClassIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
 local instance
     finiteNormClassIdeleClassSubgroupNormal
@@ -74,14 +71,14 @@ theorem rationalFiniteNormTransferFiniteNormClass_eq_abstractRepresentative
     [hHLfinite : Finite
       (H.toSubgroup ⧸ extensionSubgroup H L hLH)]
     (a : KummerTheory.ambientFixedAddSubgroup
-      rationalIdeleClassRepresentation K) :
+      (ideleClassRepresentation ℚ) K) :
     rationalFiniteNormQuotientEquivIdeleClassNormQuotient
         H L hLH hLHnormal
-        (finiteNormClass rationalIdeleClassRepresentation H L hLH
-          (fixedFieldInclusion rationalIdeleClassRepresentation
+        (finiteNormClass (ideleClassRepresentation ℚ) H L hLH
+          (fixedFieldInclusion (ideleClassRepresentation ℚ)
             K H hHK a)) =
       rationalFiniteNormTransferQuotientMap
-        H L hLH hLHnormal
+        H L hLH
         (rationalFiniteNormTransferAbstractRepresentative
           K H hHK a) := by
   let q :
@@ -89,7 +86,7 @@ theorem rationalFiniteNormTransferFiniteNormClass_eq_abstractRepresentative
           (hKfinite := hHfinite) H →
         rationalFiniteNormTransferQuotientTarget
           (hKfinite := hHfinite) (hfinite := hHLfinite)
-          H L hLH hLHnormal :=
+          H L hLH :=
     fun c => Additive.ofMul (QuotientGroup.mk c)
   let abstractRepresentative :
       rationalFiniteNormTransferBaseIdeleClass
@@ -100,14 +97,14 @@ theorem rationalFiniteNormTransferFiniteNormClass_eq_abstractRepresentative
   have hclass :
       rationalFiniteNormQuotientEquivIdeleClassNormQuotient
           H L hLH hLHnormal
-          (finiteNormClass rationalIdeleClassRepresentation H L hLH
-            (fixedFieldInclusion rationalIdeleClassRepresentation
+          (finiteNormClass (ideleClassRepresentation ℚ) H L hLH
+            (fixedFieldInclusion (ideleClassRepresentation ℚ)
               K H hHK a)) =
         q abstractRepresentative :=
     rationalFiniteNormTransferFiniteNormClass_spec
       (hKfinite := hHfinite) (hfinite := hHLfinite)
       H L hLH hLHnormal
-      (fixedFieldInclusion rationalIdeleClassRepresentation
+      (fixedFieldInclusion (ideleClassRepresentation ℚ)
         K H hHK a)
   exact hclass
 

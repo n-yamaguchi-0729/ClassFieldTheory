@@ -5,6 +5,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.All
+import Nyll.ClassFieldTheory.Definitions.FiniteAbelianExtension
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.All
 import Nyll.ClassFieldTheory.Definitions.FunctionField.All
 import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.All

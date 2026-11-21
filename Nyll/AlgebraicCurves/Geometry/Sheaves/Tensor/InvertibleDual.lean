@@ -3,6 +3,7 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_IsInvertible_dual.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_IsInvertible_exists_tensor_inverse.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -13,6 +14,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 module
 
 public import Nyll.SchemeTheory.Modules.Frames.FrameBridge
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
 public import Mathlib.Algebra.Category.ModuleCat.ChangeOfRings
 public import Mathlib.Algebra.Category.ModuleCat.Presheaf
 public import Mathlib.Algebra.Category.ModuleCat.Presheaf.ChangeOfRings
@@ -238,94 +240,29 @@ open PresheafOfModules.InvertibleDual
 
 variable {X : Scheme.{u}}
 
-/-- Restricts a pullback trivialization along an inclusion of open subsets. -/
-noncomputable def trivializationOfLE {U V : X.Opens} (h : V ≤ U) (L : X.Modules)
-    (e : (Modules.pullback U.ι).obj L ≅ SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf) :
-    (Modules.pullback V.ι).obj L ≅ SheafOfModules.unit (V : Scheme.{u}).ringCatSheaf :=
-  (Modules.pullbackCongr (X.homOfLE_ι h).symm).app L ≪≫
-    ((Modules.pullbackComp (X.homOfLE h) U.ι).symm).app L ≪≫
-    (Modules.pullback (X.homOfLE h)).mapIso e ≪≫
-    Scheme.Modules.pullbackUnitIso (X.homOfLE h)
-
 /-- The sheaf of natural linear families from a module to the structure sheaf. -/
 noncomputable def dualSheaf (L : X.Modules) : X.Modules where
   val := PresheafOfModules.InvertibleDual.dual L.val
   isSheaf := PresheafOfModules.isSheaf_ihomObj L.val _ (SheafOfModules.unit X.ringCatSheaf).isSheaf
 
-variable (U : X.Opens)
-
-/-- The identity map of ring sheaves viewed through the pushforward on an open subset. -/
-noncomputable def restrictRingCatSheafHom : (U : Scheme.{u}).ringCatSheaf ⟶
-    (U.ι.opensFunctor.sheafPushforwardContinuous RingCat.{u}
-      (Opens.grothendieckTopology (U : Scheme.{u})) (Opens.grothendieckTopology X)).obj
-        X.ringCatSheaf :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictRingCatSheafHom U
-
-/-- Restricts module sheaves using the identity map on the restricted ring sheaf. -/
-noncomputable def restrictFunctor' : X.Modules ⥤ (U : Scheme.{u}).Modules :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor' U
-
-lemma restrictFunctor'_eq : restrictFunctor' U = Modules.restrictFunctor U.ι :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor'_eq U
-
-/-- Identifies the explicit restriction functor with pullback along the open immersion. -/
-noncomputable def restrictFunctor'IsoPullback : restrictFunctor' U ≅ Modules.pullback U.ι :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.restrictFunctor'IsoPullback U
-
-variable {U} (L : X.Modules)
-
-lemma image_preimage_of_le {V : X.Opens} (h : V ≤ U) : U.ι ''ᵁ (U.ι ⁻¹ᵁ V) = V :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.image_preimage_of_le (U := U) h
-
-section
-
-variable (e : (restrictFunctor' U).obj L ≅ SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf)
-
-/-- The section obtained by sending one through the inverse of a restriction trivialization. -/
-noncomputable def gen₀ (W : (U : Scheme.{u}).Opens) : L.val.obj (op (U.ι ''ᵁ W)) :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.gen₀ L e W
-
-lemma gen₀_spec (W : (U : Scheme.{u}).Opens) (b : Γ(X, U.ι ''ᵁ W)) :
-    (e.inv.val.app (op W)).hom b = b • (show Γ(L, U.ι ''ᵁ W) from gen₀ L e W) :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.gen₀_spec L e W b
-
-lemma gen₀_bijective (W : (U : Scheme.{u}).Opens) :
-    Function.Bijective
-      (fun b : Γ(X, U.ι ''ᵁ W) => b • (show Γ(L, U.ι ''ᵁ W) from gen₀ L e W)) :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.gen₀_bijective L e W
-
-lemma gen₀_map {W W' : (U : Scheme.{u}).Opens} (i : W' ⟶ W) :
-    L.val.map (U.ι.opensFunctor.map i).op (gen₀ L e W) = gen₀ L e W' :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.gen₀_map L e i
-
-omit e in
-lemma bijective_smul_map_eqToHom {A B : X.Opens} (q : A = B) (t : L.val.obj (op A))
-    (h : Function.Bijective (fun b : Γ(X, A) => b • (show Γ(L, A) from t))) :
-    Function.Bijective (fun a : Γ(X, B) =>
-      a • (show Γ(L, B) from L.val.map (eqToHom q.symm : B ⟶ A).op t)) :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.bijective_smul_map_eqToHom L q t h
-
-/-- The compatible generators and unique scalar coordinates induced by a restriction
-trivialization. -/
-noncomputable def trivializationBelow : TrivializationBelow L.val (op U) :=
-  _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge.trivializationBelow L e
-
-end
+open _root_.AlgebraicGeometry.Scheme.Modules.FrameBridge
+  (restrictFunctor'IsoPullback trivializationBelow)
 
 /-- The sieve of open subsets on which the module admits a compatible generator. -/
-def trivSieve (V : X.Opens) : Sieve V where
+def trivSieve (L : X.Modules) (V : X.Opens) : Sieve V where
   arrows W _ := Nonempty (TrivializationBelow L.val (op W))
   downward_closed {W W'} f hf g := by
     obtain ⟨D⟩ := hf
     exact ⟨D.restrictTo g.op⟩
 
-lemma trivSieve_mem (hL : Scheme.Modules.IsInvertible L) (V : X.Opens) :
+lemma trivSieve_mem (L : X.Modules) (hL : Scheme.Modules.IsInvertible L) (V : X.Opens) :
     trivSieve L V ∈ Opens.grothendieckTopology X V := by
   intro x hx
   obtain ⟨U, hxU, ⟨eU⟩⟩ := hL.1 x
   refine ⟨V ⊓ U, homOfLE inf_le_left, ?_, ⟨hx, hxU⟩⟩
   let e' : (Modules.pullback (V ⊓ U).ι).obj L ≅ SheafOfModules.unit ((V ⊓ U : X.Opens) :
-      Scheme.{u}).ringCatSheaf := trivializationOfLE inf_le_right L eU
+      Scheme.{u}).ringCatSheaf := _root_.AlgebraicGeometry.Scheme.Modules.trivializationOfLE
+        inf_le_right L eU
   exact ⟨trivializationBelow L ((restrictFunctor'IsoPullback (V ⊓ U)).app L ≪≫ e')⟩
 
 scoped instance isIso_sheafify_map_ev (L : X.Modules) [Fact (Scheme.Modules.IsInvertible L)] :
@@ -529,6 +466,17 @@ theorem _root_.AlgebraicGeometry.Scheme.Modules.IsInvertible.dual
   ⟨isInvertible_dual L, ⟨tensorDualIso L⟩⟩
 end AlgebraicCurves.Geometry.Sheaves.Proofs.Scheme_Modules_IsInvertible_dual
 end ProofImplementation
+
+universe u
+
+open CategoryTheory CategoryTheory.MonoidalCategory in
+/-- The categorical dual gives an invertible tensor inverse. -/
+theorem AlgebraicGeometry.Scheme.Modules.IsInvertible.exists_tensor_inverse
+    {X : AlgebraicGeometry.Scheme.{u}} {L : X.Modules}
+    (hL : AlgebraicGeometry.Scheme.Modules.IsInvertible L) :
+    ∃ M : X.Modules, AlgebraicGeometry.Scheme.Modules.IsInvertible M ∧
+      Nonempty (L ⊗ M ≅ 𝟙_ X.Modules) :=
+  ⟨AlgebraicGeometry.Scheme.Modules.dual L, hL.dual⟩
 
 namespace PresheafOfModules.PullbackMonoidal
 

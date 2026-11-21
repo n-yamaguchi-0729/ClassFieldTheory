@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.NumberFieldFractionalIdealGroup
 public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
-public import Mathlib.RingTheory.DedekindDomain.Factorization
+public import Nyll.ClassFieldTheory.Algebra.FractionalIdealFactorization
 
 /-!
 # Fractional ideal represented by a finite prime
@@ -32,8 +32,6 @@ def finitePrimeFractionalIdeal
     {K : Type u} [Field K] [NumberField K]
     (v : HeightOneSpectrum (𝓞 K)) :
     NumberFieldFractionalIdealGroup K :=
-  Units.mk0
-    (v.asIdeal : FractionalIdeal (nonZeroDivisors (𝓞 K)) K)
-    (FractionalIdeal.coeIdeal_ne_zero.mpr v.ne_bot)
+  ClassFieldTheory.FractionalIdealFactorization.prime (F := K) v
 
 end ClassFieldTheory

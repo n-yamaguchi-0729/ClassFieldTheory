@@ -9,10 +9,10 @@ module
 public import Nyll.ClassFieldTheory.LocalFieldTheory.Padic.Cyclotomic.Unramified.CanonicalExtension
 public import Nyll.ValuedFieldTheory.LocalField.Padic.PrincipalUnits
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ValuedTopology
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Basic
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Trace
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.Lift
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedPrincipalUnits.NormSide
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedPrincipalUnits.Basic
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedPrincipalUnits.Trace
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedPrincipalUnits.Lift
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.ResidueNorm
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Uniformizer

@@ -51,7 +51,7 @@ private theorem exists_finiteAbelian_norm_le_of_open_sameUniverse
       (IdeleClassGroup.norm (k := k) (K := K) (L := A)).range ≤ H) := by
   classical
   induction hn : H.index using Nat.strong_induction_on generalizing K Ω with
-  | h n ih =>
+  | ind n ih =>
     by_cases htop : H = ⊤
     · have hindex : H.index = 1 := Subgroup.index_eq_one.mpr htop
       have hne : NeZero (H.index : k) := ⟨by rw [hindex, Nat.cast_one]; exact one_ne_zero⟩

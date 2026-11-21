@@ -375,7 +375,7 @@ theorem hilbertClassFieldImage_mono
   intro H₀ H₁ aKH₁ hKLH₁ i₀ i₁
   obtain ⟨j⟩ := nonempty_hilbertClassField_baseChangeEmbedding S hS T hT hTS
   have hrange : i₀.fieldRange = ((i₁.restrictScalars K).comp j).fieldRange :=
-    ClassFieldTheory.fieldRange_eq_of_normal i₀ ((i₁.restrictScalars K).comp j)
+    AlgHom.fieldRange_eq_of_normal i₀ ((i₁.restrictScalars K).comp j)
   rw [hrange]
   rintro x ⟨a, rfl⟩
   exact ⟨j a, rfl⟩

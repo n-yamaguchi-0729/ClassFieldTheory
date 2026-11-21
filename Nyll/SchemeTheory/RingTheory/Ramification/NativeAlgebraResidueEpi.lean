@@ -66,7 +66,7 @@ private theorem fixedSet_continuousSMul
     {G X : Type v} [Group G] [MulAction G X]
     [TopologicalSpace G] [IsTopologicalGroup G]
     [TopologicalSpace X] [DiscreteTopology X]
-    (hopen : ∀ x : X, IsOpen (fun g : G => g • x = x)) : ContinuousSMul G X :=
+    (hopen : ∀ x : X, IsOpen {g : G | g • x = x}) : ContinuousSMul G X :=
   continuousSMul_iff_stabilizer_isOpen.mpr hopen
 
 /-- The actual contraction along the stored native coefficient map. -/
@@ -108,7 +108,7 @@ theorem nativeAlgebraResidueMorphism_epi
       (commAlgCoefficientMap R) = commAlgCoefficientMap R)
     (hinv : ∀ b : R, (∀ g : G, g • b = b) →
       ∃ a : A, (commAlgCoefficientMap R).toFun a = b)
-    (hopen : ∀ b : R, IsOpen (fun g : G => g • b = b)) :
+    (hopen : ∀ b : R, IsOpen {g : G | g • b = b}) :
     Epi (C := GrpCat.{v}) (X := nativeResidueStabilizer R G q)
       (Y := nativeAlgebraResidueAutomorphisms R q)
       (nativeAlgebraResidueMorphism R G q hbase) := by

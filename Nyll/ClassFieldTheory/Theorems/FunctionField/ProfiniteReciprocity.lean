@@ -11,7 +11,7 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteArtin
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteRestriction
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteReciprocity
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteDegree
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletion
+import Nyll.ProCGroups.Completion.Topological
 import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteFiniteCoordinates

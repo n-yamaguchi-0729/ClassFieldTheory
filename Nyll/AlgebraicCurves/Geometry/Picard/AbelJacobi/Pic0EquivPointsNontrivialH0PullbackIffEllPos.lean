@@ -294,40 +294,6 @@ namespace PtsCoreGlue
 open _root_.AlgebraicGeometry.RelPicard
 open _root_.AlgebraicGeometry
 
-theorem twoAffineOpenCover_ext {Y : Scheme.{u}} {𝒲 𝒲' : Y.TwoAffineOpenCover}
-    (h0 : 𝒲.U0 = 𝒲'.U0) (h1 : 𝒲.U1 = 𝒲'.U1) : 𝒲 = 𝒲' := by
-  obtain ⟨U0, U1, _, _, _, _⟩ := 𝒲
-  obtain ⟨U0', U1', _, _, _, _⟩ := 𝒲'
-  dsimp only at h0 h1
-  subst h0
-  subst h1
-  rfl
-
-theorem preimage_id_opens {Y : Scheme.{u}} (U : Y.Opens) : (𝟙 Y) ⁻¹ᵁ U = U := rfl
-
-
-theorem nonempty_linearEquiv_of_iso {k : Type u} [Field k] {Y : Scheme.{u}}
-    (y : Y ⟶ Spec (CommRingCat.of k))
-    (𝒲 : Y.TwoAffineOpenCover) {M M' : Y.Modules} (e : M ≅ M') :
-    Nonempty ((𝒲.sectionsOf y M).H0 ≃ₗ[k] (𝒲.sectionsOf y M').H0) ∧
-      Nonempty ((𝒲.sectionsOf y M).H1 ≃ₗ[k] (𝒲.sectionsOf y M').H1) := by
-  obtain ⟨𝒲', h0, h1, ⟨e0⟩, ⟨e1⟩⟩ :=
-    Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso y y (Iso.refl Y)
-      (Category.id_comp y)
-      𝒲 M' M (e ≪≫ ((Scheme.Modules.pullbackId Y).app M').symm)
-  have h𝒲 : 𝒲' = 𝒲 :=
-    twoAffineOpenCover_ext (h0.trans (preimage_id_opens _)) (h1.trans (preimage_id_opens _))
-  subst h𝒲
-  exact ⟨⟨e0⟩, ⟨e1⟩⟩
-
-theorem eulerChar_congr {k : Type u} [Field k] {Y : Scheme.{u}} (y : Y ⟶ Spec (CommRingCat.of k))
-    (𝒲 : Y.TwoAffineOpenCover) {M M' : Y.Modules} (e : M ≅ M') :
-    (Module.finrank k (𝒲.sectionsOf y M).H0 : ℤ) - Module.finrank k (𝒲.sectionsOf y M).H1
-      = (Module.finrank k (𝒲.sectionsOf y M').H0 : ℤ) - Module.finrank k (𝒲.sectionsOf y M').H1 :=
-        by
-  obtain ⟨⟨e0⟩, ⟨e1⟩⟩ := nonempty_linearEquiv_of_iso y 𝒲 e
-  rw [e0.finrank_eq, e1.finrank_eq]
-
 
 /-- The pullback comparison associated to an equality of composite morphisms. -/
 def pullbackCompCompIso {X Y Z W : Scheme.{u}} (f : X ⟶ Y) (s : Y ⟶ Z) (q : Z ⟶ W) (g : X ⟶ W)
@@ -729,7 +695,7 @@ theorem
     obtain ⟨-, -, -, hχ⟩ := hcl_num 𝒱M (Lmod a) (hLinv a) D hD
     have hcc := IsAlgEquivZero.eulerChar_sectionsOf_tensor_eq M.toBase 𝒱M (Lmod a) (𝟙_ _) (hLinv a)
       (Scheme.Modules.isInvertible_unit _) (halgM a)
-    have hcongr := eulerChar_congr M.toBase 𝒱M (ρ_ (Lmod a))
+    have hcongr := Scheme.TwoAffineOpenCover.eulerChar_sectionsOf_congr M.toBase 𝒱M (ρ_ (Lmod a))
     linarith
   let Φ' : (Over.mk (𝟙 (Spec (CommRingCat.of k))) ⟶ Over.mk J.toBase) → Pic0 k F := fun a =>
     Pic0.mk ⟨(Φ a).out, Divisor.mem_degZero.mpr (hdeg0 a _ (QuotientAddGroup.out_eq' (Φ a)))⟩

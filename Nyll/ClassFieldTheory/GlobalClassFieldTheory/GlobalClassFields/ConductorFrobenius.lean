@@ -6,8 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealArtinMap
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicRayClassMaximality
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassPrimeIdele
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.IdealFrobenius
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
@@ -57,6 +60,13 @@ variable
 attribute [local instance]
   IdealClassFieldTheory.ideleClassSubgroupNormal
 
+local notation "StandardNormQuotient" =>
+  _root_.IdeleClassGroup K ⧸ MonoidHom.range (_root_.ideleClassNorm K L)
+
+local notation "normRayInjectiveIff" =>
+  narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
+    (K := K) (L := L)
+
 /-- The class of the normalized one-place prime idèle in the ray class
 group at the exact narrow finite conductor of the actual norm subgroup. -/
 def narrowFiniteConductorRayPrimeClass
@@ -68,21 +78,12 @@ def narrowFiniteConductorRayPrimeClass
     (RayClass.Modulus.congruenceSubgroup
       (RayClass.Modulus.narrowOfFinite
         (ideleClassNormNarrowFiniteConductor (K := K) (L := L))))
-    (QuotientGroup.mk'
-      (IdeleGroup.principalSubgroup K)
-      (finitePrimeIdele v))
+    (IdeleGroup.toStandardClass K (finitePrimeIdele v))
 
-/-- The class of the normalized one-place prime idèle in the actual
-idele-class norm quotient. -/
-def ideleClassNormFrobeniusClass
-    (v : HeightOneSpectrum (𝓞 K)) :
-    IdeleClassGroup K ⧸
-      (_root_.ideleClassNorm K L).range :=
-  QuotientGroup.mk'
-    ((_root_.ideleClassNorm K L).range)
-    (QuotientGroup.mk'
-      (IdeleGroup.principalSubgroup K)
-      (finitePrimeIdele v))
+/-- The normalized prime at `v` in the quotient by the standard determinant norm. -/
+def ideleClassNormFrobeniusClass (v : HeightOneSpectrum (𝓞 K)) : StandardNormQuotient :=
+  QuotientGroup.mk' (_root_.ideleClassNorm K L).range
+    (IdeleGroup.toStandardClass K (finitePrimeIdele v))
 
 /-- At a prime outside the exact narrow finite norm conductor, the ideal-theoretic
 Frobenius class agrees with the class of the normalized one-place idèle
@@ -96,53 +97,15 @@ theorem
     IdealClassFieldTheory.idealFrobeniusClass
         (RayClass.Modulus.narrowOfFinite
           (ideleClassNormNarrowFiniteConductor (K := K) (L := L)))
-        ((_root_.ideleClassNorm K L).range)
-        (ideleClassNorm_narrowFiniteConductor_isDefiningModulus
-          (K := K) (L := L))
-        v hv =
-      ideleClassNormFrobeniusClass
-        (K := K) (L := L) v := by
+        (_root_.ideleClassNorm K L).range
+        (ideleClassNorm_narrowFiniteConductor_isDefiningModulus (K := K) (L := L)) v hv =
+      ideleClassNormFrobeniusClass (K := K) (L := L) v := by
   let m : RayClass.Modulus K :=
-    RayClass.Modulus.narrowOfFinite
-      (ideleClassNormNarrowFiniteConductor (K := K) (L := L))
+    RayClass.Modulus.narrowOfFinite (ideleClassNormNarrowFiniteConductor (K := K) (L := L))
   let N := (_root_.ideleClassNorm K L).range
   let hm : RayClass.Modulus.congruenceSubgroup m ≤ N :=
-    ideleClassNorm_narrowFiniteConductor_isDefiningModulus
-      (K := K) (L := L)
-  let a : RayClass.idelePrimeToModulusSubgroup m :=
-    ⟨finitePrimeIdele v,
-      finitePrimeIdele_mem_idelePrimeToModulusSubgroup m v hv⟩
-  have hIdeal :
-      RayClass.primeToIdealMap m a =
-        RayClass.primeToModulusIdeal m v hv :=
-    primeToIdealMap_finitePrimeIdele m v hv
-  have hArtin :
-      IdealClassFieldTheory.idealArtinMap m N hm
-          (RayClass.primeToIdealMap m a) =
-        QuotientGroup.mk' N
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (a : IdeleGroup K)) :=
-    idealArtinMap_primeToIdealMap m N hm a
-  change
-    IdealClassFieldTheory.idealArtinMap m N hm
-        (RayClass.primeToModulusIdeal m v hv) =
-      QuotientGroup.mk' N
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
-          (finitePrimeIdele v))
-  calc
-    _ = IdealClassFieldTheory.idealArtinMap m N hm
-          (RayClass.primeToIdealMap m a) :=
-      congrArg (IdealClassFieldTheory.idealArtinMap m N hm) hIdeal.symm
-    _ = QuotientGroup.mk' N
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (a : IdeleGroup K)) := hArtin
-    _ = QuotientGroup.mk' N
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (finitePrimeIdele v)) := rfl
+    ideleClassNorm_narrowFiniteConductor_isDefiningModulus (K := K) (L := L)
+  exact idealFrobeniusClass_eq_finitePrimeIdeleClass m N hm v hv
 
 /-- The order of a Frobenius class in the actual norm quotient is the
 order of its prime ideal modulo the ideal Artin kernel at the exact narrow
@@ -168,11 +131,9 @@ theorem
             (RayClass.Modulus.narrowOfFinite
               (ideleClassNormNarrowFiniteConductor (K := K) (L := L)))
             v hv)) := by
-  rw [←
-    narrowFiniteConductorIdealFrobeniusClass_eq_ideleClassNormFrobeniusClass
-      (K := K) (L := L) v hv]
-  exact
-    IdealClassFieldTheory.orderOf_idealFrobeniusClass
+  rw [← narrowFiniteConductorIdealFrobeniusClass_eq_ideleClassNormFrobeniusClass
+    (K := K) (L := L) v hv]
+  exact IdealClassFieldTheory.orderOf_idealFrobeniusClass
       (RayClass.Modulus.narrowOfFinite
         (ideleClassNormNarrowFiniteConductor (K := K) (L := L)))
       ((_root_.ideleClassNorm K L).range)
@@ -202,24 +163,17 @@ theorem
           ((_root_.ideleClassNorm K L).range)
           (ideleClassNorm_narrowFiniteConductor_isDefiningModulus
             (K := K) (L := L)) := by
-  rw [←
-    narrowFiniteConductorIdealFrobeniusClass_eq_ideleClassNormFrobeniusClass
-      (K := K) (L := L) v hv]
+  rw [← narrowFiniteConductorIdealFrobeniusClass_eq_ideleClassNormFrobeniusClass
+    (K := K) (L := L) v hv]
   rfl
 
-/-- The canonical narrow-finite-conductor ray-class map sends the narrow
-finite conductor ray prime class to the corresponding actual norm-quotient
-Frobenius class. -/
+/-- A narrow-conductor ray prime maps to its standard Frobenius class. -/
 @[simp]
-theorem
-    narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_rayPrimeClass
+theorem narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_rayPrimeClass
     (v : HeightOneSpectrum (𝓞 K)) :
-    narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
-        (K := K) (L := L)
-        (narrowFiniteConductorRayPrimeClass
-          (K := K) (L := L) v) =
-      ideleClassNormFrobeniusClass
-        (K := K) (L := L) v :=
+    narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient (K := K) (L := L)
+        (narrowFiniteConductorRayPrimeClass (K := K) (L := L) v) =
+      ideleClassNormFrobeniusClass (K := K) (L := L) v :=
   rfl
 
 /-- The order of the actual norm-quotient Frobenius class divides the order
@@ -253,9 +207,7 @@ theorem
           (RayClass.RayClassGroup
             (RayClass.Modulus.narrowOfFinite
               (ideleClassNormNarrowFiniteConductor (K := K) (L := L)))) =
-        Nat.card
-          (IdeleClassGroup K ⧸
-            (_root_.ideleClassNorm K L).range))
+        Nat.card StandardNormQuotient)
     (v : HeightOneSpectrum (𝓞 K)) :
     narrowFiniteConductorRayPrimeClass
         (K := K) (L := L) v = 1 ↔
@@ -265,9 +217,7 @@ theorem
     narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
       (K := K) (L := L)
   have hfInjective : Function.Injective f :=
-    (
-  narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
-      (K := K) (L := L)).2 hcard
+    Iff.mpr normRayInjectiveIff hcard
   constructor
   · intro hprime
     calc
@@ -296,9 +246,7 @@ theorem
           (RayClass.RayClassGroup
             (RayClass.Modulus.narrowOfFinite
               (ideleClassNormNarrowFiniteConductor (K := K) (L := L)))) =
-        Nat.card
-          (IdeleClassGroup K ⧸
-            (_root_.ideleClassNorm K L).range))
+        Nat.card StandardNormQuotient)
     (v : HeightOneSpectrum (𝓞 K)) :
     orderOf
         (narrowFiniteConductorRayPrimeClass
@@ -310,9 +258,7 @@ theorem
     narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
       (K := K) (L := L)
   have hfInjective : Function.Injective f :=
-    (
-  narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_normQuotient_card
-      (K := K) (L := L)).2 hcard
+    Iff.mpr normRayInjectiveIff hcard
   have horder :=
     orderOf_injective f hfInjective
       (narrowFiniteConductorRayPrimeClass
@@ -332,9 +278,7 @@ theorem
           (RayClass.RayClassGroup
             (RayClass.Modulus.narrowOfFinite
               (ideleClassNormNarrowFiniteConductor (K := K) (L := L)))) =
-        Nat.card
-          (IdeleClassGroup K ⧸
-            (_root_.ideleClassNorm K L).range))
+        Nat.card StandardNormQuotient)
     (v : HeightOneSpectrum (𝓞 K))
     (hv :
       v ∉
@@ -368,16 +312,11 @@ theorem
         (K := K) (L := L) v) :
     ideleClassNormFrobeniusClass
         (K := K) (L := L) v = 1 := by
-  apply (QuotientGroup.eq_one_iff _).2
-  change
-    IdeleGroup.finitePlaceIdeleClass v
-        (FiniteIdeleGroup.chosenLocalOrderSection v 1) ∈
-      (_root_.ideleClassNorm K L).range
-  apply
+  let a := FiniteIdeleGroup.chosenLocalOrderSection v 1
+  have h : IdeleGroup.finitePlaceIdeleClass v a ∈ (_root_.ideleClassNorm K L).range :=
     finitePlaceIdeleClass_range_le_ideleClassNorm_range_of_splitsCompletely
-      (K := K) (L := L) v hsplit
-  exact
-    ⟨FiniteIdeleGroup.chosenLocalOrderSection v 1, rfl⟩
+      (K := K) (L := L) v hsplit ⟨a, rfl⟩
+  exact (QuotientGroup.eq_one_iff _).2 h
 
 /-- Complete splitting at a finite place makes its ideal Frobenius class at
 the exact narrow finite norm conductor trivial. -/
@@ -397,10 +336,12 @@ theorem
         (not_mem_ideleClassNorm_narrowFiniteConductor_support_of_splitsCompletely
           (K := K) (L := L) v hsplit) =
       1 := by
-  rw [
-    narrowFiniteConductorIdealFrobeniusClass_eq_ideleClassNormFrobeniusClass,
-    finitePlaceSplitsCompletely_imp_ideleClassNormFrobeniusClass_eq_one
-      (K := K) (L := L) v hsplit]
+  have hv := not_mem_ideleClassNorm_narrowFiniteConductor_support_of_splitsCompletely
+    (K := K) (L := L) v hsplit
+  rw [narrowFiniteConductorIdealFrobeniusClass_eq_ideleClassNormFrobeniusClass
+    (K := K) (L := L) v hv]
+  exact finitePlaceSplitsCompletely_imp_ideleClassNormFrobeniusClass_eq_one
+    (K := K) (L := L) v hsplit
 
 /-- A finite prime which splits completely belongs to the ideal Artin kernel
 at the exact narrow finite norm conductor. -/
@@ -435,6 +376,10 @@ section Cyclic
 
 variable [IsCyclic (L ≃ₐ[K] L)]
 
+private theorem standardNormQuotient_card : Nat.card StandardNormQuotient = Module.finrank K L := by
+  rw [← Subgroup.index_eq_card]
+  exact ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L
+
 /-- For a finite cyclic extension, the order of every actual
 norm-quotient Frobenius class divides the extension degree. -/
 theorem orderOf_ideleClassNormFrobeniusClass_dvd_extensionDegree
@@ -443,12 +388,8 @@ theorem orderOf_ideleClassNormFrobeniusClass_dvd_extensionDegree
         (ideleClassNormFrobeniusClass
           (K := K) (L := L) v) ∣
       Module.finrank K L := by
-  simpa only [
-    ← Subgroup.index_eq_card,
-    ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L] using
-      orderOf_dvd_natCard
-        (ideleClassNormFrobeniusClass
-          (K := K) (L := L) v)
+  rw [← standardNormQuotient_card (K := K) (L := L)]
+  exact orderOf_dvd_natCard (ideleClassNormFrobeniusClass (K := K) (L := L) v)
 
 /-- For a finite cyclic extension, the order of every ideal Frobenius class
 outside the exact narrow finite norm conductor divides the extension degree. -/
@@ -467,11 +408,9 @@ theorem
             (K := K) (L := L))
           v hv) ∣
       Module.finrank K L := by
-  rw [
-    narrowFiniteConductorIdealFrobeniusClass_eq_ideleClassNormFrobeniusClass]
-  exact
-    orderOf_ideleClassNormFrobeniusClass_dvd_extensionDegree
-      (K := K) (L := L) v
+  rw [narrowFiniteConductorIdealFrobeniusClass_eq_ideleClassNormFrobeniusClass
+      (K := K) (L := L) v hv]
+  exact orderOf_ideleClassNormFrobeniusClass_dvd_extensionDegree (K := K) (L := L) v
 
 /-- For a finite cyclic extension, the order of the prime ideal class modulo
 the ideal Artin kernel at the exact narrow finite conductor divides the
@@ -530,14 +469,7 @@ theorem
           ((_root_.ideleClassNorm K L).range)
           (ideleClassNorm_narrowFiniteConductor_isDefiningModulus
             (K := K) (L := L)) := by
-  have hNormCard :
-      Nat.card
-          (IdeleClassGroup K ⧸
-            (_root_.ideleClassNorm K L).range) =
-        Module.finrank K L := by
-    rw [← Subgroup.index_eq_card]
-    exact
-      ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K L
+  have hNormCard := standardNormQuotient_card (K := K) (L := L)
   exact
     (
   narrowFiniteConductorRayPrimeClass_eq_one_iff_narrowFiniteConductorPrimeIdeal_mem_idealArtinKernel
@@ -561,13 +493,9 @@ finitePlaceSplitsCompletely_imp_narrowFiniteConductorRayPrimeClass_eq_one_of_car
         (K := K) (L := L) v) :
     narrowFiniteConductorRayPrimeClass
         (K := K) (L := L) v = 1 := by
-  have hfInjective :
-      Function.Injective
-        (narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
-          (K := K) (L := L)) :=
-    (
-    narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_injective_iff_card_eq_extensionDegree
-      (K := K) (L := L)).2 hcard
+  have hNormCard := standardNormQuotient_card (K := K) (L := L)
+  have hfInjective :=
+    Iff.mpr normRayInjectiveIff (hcard.trans hNormCard.symm)
   apply hfInjective
   rw [
     narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient_rayPrimeClass,

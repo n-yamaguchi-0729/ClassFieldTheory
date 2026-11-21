@@ -17,7 +17,8 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 module
 
 public import Nyll.AlgebraicCurves.Places.Basic
-public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Completion
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation.Valuation
 public import Mathlib.RingTheory.Valuation.Discrete.Basic
 public import Mathlib.RingTheory.Valuation.Discrete.IsDiscreteValuationRing
 public import Mathlib.RingTheory.LocalRing.ResidueField.Basic

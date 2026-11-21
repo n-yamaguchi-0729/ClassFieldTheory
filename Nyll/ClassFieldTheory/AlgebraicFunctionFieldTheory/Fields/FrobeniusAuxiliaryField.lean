@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.FrobeniusField
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 
 /-!
 # Actual Frobenius auxiliary fields
@@ -26,11 +26,17 @@ noncomputable section
 
 namespace FunctionField
 
-open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
+open ClassFormation LocalClassFieldTheory
 
 variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
     [FunctionField k K] [Algebra K Ω] [IsGalois K Ω] [IsSepClosed Ω]
+
+local instance auxiliaryFrobenius_normal
+    (H : FiniteAbstractField Gal(Ω/K)) (T : FiniteGaloisSubextension H.field) :
+    (T.field.toSubgroup.subgroupOf
+      (H.toFiniteResidueAbstractField (fullConstantDegreeData k K Ω)).field.toSubgroup).Normal :=
+  T.normal
 
 /-- The actual auxiliary field over the original base of a positive Frobenius element. -/
 abbrev intrinsicFrobeniusAuxiliaryField

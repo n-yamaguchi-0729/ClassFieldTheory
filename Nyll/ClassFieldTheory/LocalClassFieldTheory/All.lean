@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Brauer.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.ClassFormation.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.All
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.All

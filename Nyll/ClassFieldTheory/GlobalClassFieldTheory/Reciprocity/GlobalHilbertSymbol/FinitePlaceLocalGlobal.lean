@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceComparison
 
 /-!
@@ -90,7 +92,7 @@ theorem finitePlaceLocalArtinInput_globalUnit
           finitePlaceCompletionRingEquiv v
             (algebraMap K (finitePlaceKummerBaseCompletion K v) (a : K))
       rw [finitePlaceCompletionRingEquiv_eq_relative]
-      exact (relativeFinitePlaceCompletionAlgEquiv v).commutes (a : K) |>.symm
+      exact (finitePlaceCompletionAlgEquiv v).commutes (a : K) |>.symm
 
 /-- The named finite-dimensional certificate for the Kummer extension
 chosen directly over the completion. -/

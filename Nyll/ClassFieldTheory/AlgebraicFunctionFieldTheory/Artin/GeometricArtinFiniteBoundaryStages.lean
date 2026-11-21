@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricArtinBoundaryStages
 
 /-!
@@ -36,7 +38,7 @@ local notation "G" => geometricConstantExtension k K Ω
 local notation "C" => separableClosure k Ω
 
 attribute [local instance]
-  geometricBoundaryConstants geometricBoundaryConstantTower
+  constantAlgebra constantScalarTower
 
 private theorem exists_stage_separating_pairs
     (i : GeometricArtinIndex k K Ω) (s : Finset (Place C G × Place C G)) :
@@ -104,10 +106,10 @@ theorem exists_geometricArtinStage_separating_boundary_finite
     ∃ j : GeometricArtinIndex k K Ω, i ≤ j ∧
       ∀ l : GeometricArtinIndex k K Ω, j ≤ l →
         Function.Injective (fun t => geometricArtinPlaceAtStage k K Ω l (W t)) ∧
-        (∀ t, rayModulusBaseChange (E l) m
+        (∀ t, reindexAlongPlaces (E l) m
           (geometricArtinPlaceAtStage k K Ω l (W t)) = 1) ∧
         ∀ v : Place k (E l), ∃ w : Place k (E l),
-          w ≠ v ∧ rayModulusBaseChange (E l) m w ≠ 0 := by
+          w ≠ v ∧ reindexAlongPlaces (E l) m w ≠ 0 := by
   obtain ⟨j, hij, hsep⟩ := exists_geometricArtinStage_separating_finite k K Ω W hW i
   have ha : m (algebraicConstantPlaceRestrict (K := K) C K (W a)) ≠ 0 := by
     rw [hboundary a]

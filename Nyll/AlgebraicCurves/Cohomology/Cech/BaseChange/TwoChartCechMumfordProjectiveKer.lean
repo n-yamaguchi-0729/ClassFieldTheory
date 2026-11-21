@@ -14,7 +14,7 @@ module
 
 public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 public import Mathlib.RingTheory.Finiteness.Nakayama
-public import Nyll.AlgebraicCurves.Geometry.Schemes.Covers.MumfordTruncation
+public import Nyll.SchemeTheory.RingTheory.MumfordTruncation
 public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordProjectiveK0
 public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveKerMapBaseChange
 public import Nyll.AlgebraicCurves.Cohomology.Cech.BaseChange.TwoChartCechMumfordBijectiveCokerMapBaseChange

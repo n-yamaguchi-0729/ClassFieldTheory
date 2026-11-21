@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteNormCoordinates
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddedAbsoluteRestriction
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GlobalFiniteNormSquare
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteReciprocity
@@ -34,85 +35,12 @@ namespace FunctionField
 
 open LocalClassFieldTheory ProCGroups.Abelian
 
-section GaloisMaps
-
-variable {K : Type v} {F : Type w} [Field K] [Field F]
-
-/-- The original continuous cross-closure Galois map on the native absolute
-topological abelianizations. It is constructed without reciprocity. -/
-noncomputable def nativeAbsoluteAbelianMap (f : K →+* F) :
-    localAbsoluteAbelianProfinite F →ₜ* localAbsoluteAbelianProfinite K :=
-  TopologicalAbelianization.map (Field.absoluteGaloisGroup.separableMap f)
-
-/-- On representatives, the native map is the actual separable Galois map. -/
-theorem nativeAbsoluteAbelianMap_mk (f : K →+* F) (σ : Gal(SeparableClosure F/F)) :
-    nativeAbsoluteAbelianMap f (QuotientGroup.mk σ : localAbsoluteAbelianProfinite F) =
-      (QuotientGroup.mk (Field.absoluteGaloisGroup.separableMap f σ) :
-        localAbsoluteAbelianProfinite K) := rfl
-
-end GaloisMaps
-
 section FiniteCoordinate
 
 variable (K : Type v) (F : Type w) (E : Type x)
     [Field K] [Field F] [Field E] [Algebra K F] [Algebra K E]
     [FiniteDimensional K E] [IsAbelianGalois K E]
     (i : E →ₐ[K] SeparableClosure K)
-
-private noncomputable def normCoordinateKernel :
-    OpenNormalSubgroup (localAbsoluteAbelianProfinite F) where
-  toOpenSubgroup :=
-    { toSubgroup := ((absoluteRestrictionOfEmbedding K E i).comp
-        (nativeAbsoluteAbelianMap (algebraMap K F))).toMonoidHom.ker
-      isOpen' := (isOpen_discrete {1}).preimage
-        ((absoluteRestrictionOfEmbedding K E i).comp
-          (nativeAbsoluteAbelianMap (algebraMap K F))).continuous_toFun }
-  isNormal' := by infer_instance
-
-private noncomputable abbrev normCoordinateField :=
-  absoluteFiniteQuotientField F (normCoordinateKernel K F E i)
-
-/-- The original lower embedding lands in the actual field fixed by the
-kernel of its pulled-back finite Galois restriction. -/
-private noncomputable def normCoordinateEmbedding : E →+* normCoordinateField K F E i :=
-  ((Field.absoluteGaloisGroup.separableClosureLift (algebraMap K F)).comp i.toRingHom).codRestrict
-    (normCoordinateField K F E i) (by
-      intro a
-      apply (IntermediateField.mem_fixedField_iff _ _).mpr
-      intro σ hσ
-      have hr : embeddedFiniteRestriction K E i
-          (Field.absoluteGaloisGroup.separableMap (algebraMap K F) σ) = 1 := hσ
-      have hfix := embeddedFiniteRestriction_commutes K E i
-        (Field.absoluteGaloisGroup.separableMap (algebraMap K F) σ) a
-      rw [hr] at hfix
-      change i a = Field.absoluteGaloisGroup.separableMap (algebraMap K F) σ (i a) at hfix
-      exact (Field.absoluteGaloisGroup.separableMap_commutes (algebraMap K F) σ (i a)).symm.trans
-        (congrArg (Field.absoluteGaloisGroup.separableClosureLift (algebraMap K F)) hfix.symm))
-
-private theorem normCoordinateEmbedding_algebraMap (a : K) :
-    normCoordinateEmbedding K F E i (algebraMap K E a) =
-      algebraMap F (normCoordinateField K F E i) (algebraMap K F a) := by
-  apply Subtype.ext
-  change Field.absoluteGaloisGroup.separableClosureLift (algebraMap K F)
-      (i (algebraMap K E a)) = _
-  rw [i.commutes]
-  exact Field.absoluteGaloisGroup.separableClosureLift_algebraMap (algebraMap K F) a
-
-private theorem normCoordinateEmbedding_restrict
-    (σ : Gal(SeparableClosure F/F)) (a : E) :
-    normCoordinateEmbedding K F E i
-        (embeddedFiniteRestriction K E i
-          (Field.absoluteGaloisGroup.separableMap (algebraMap K F) σ) a) =
-      AlgEquiv.restrictNormalHom (normCoordinateField K F E i) σ
-        (normCoordinateEmbedding K F E i a) := by
-  apply Subtype.ext
-  rw [AlgEquiv.restrictNormalHom_apply]
-  change Field.absoluteGaloisGroup.separableClosureLift (algebraMap K F)
-      (i (embeddedFiniteRestriction K E i
-        (Field.absoluteGaloisGroup.separableMap (algebraMap K F) σ) a)) =
-    σ (Field.absoluteGaloisGroup.separableClosureLift (algebraMap K F) (i a))
-  rw [embeddedFiniteRestriction_commutes]
-  exact Field.absoluteGaloisGroup.separableMap_commutes (algebraMap K F) σ (i a)
 
 variable (k : Type u) [Field k] [Finite k]
     [Algebra k K] [Algebra k F] [Algebra k E]
@@ -227,7 +155,6 @@ separable class norm, with no change to the native Galois map. -/
 theorem absoluteArtin_norm [Algebra.IsSeparable K F] (c : IdeleClassGroup k F) :
     nativeAbsoluteAbelianMap (algebraMap K F) (absoluteArtin k F c) =
       absoluteArtin k K (IdeleClassGroup.norm (k := k) (K := K) (L := F) c) := by
-  rw [← IdeleClassGroup.finiteNorm_eq_norm]
   exact absoluteArtin_finiteNorm k K F c
 
 /-- Completion of the actual norm intertwines profinite reciprocity with
@@ -268,13 +195,6 @@ theorem profiniteReciprocity_norm [Algebra.IsSeparable K F] :
       (ContinuousMonoidHom.toContinuousMonoidHom (profiniteReciprocity k K)).comp
         (topologicalProfiniteCompletionMapHom
           (IdeleClassGroup.normContinuous (k := k) (K := K) (L := F))) := by
-  have hnorm : IdeleClassGroup.finiteNormContinuous (k := k) (K := K) (L := F) =
-      IdeleClassGroup.normContinuous (k := k) (K := K) (L := F) := by
-    apply ContinuousMonoidHom.ext
-    intro c
-    exact DFunLike.congr_fun
-      (IdeleClassGroup.finiteNorm_eq_norm (k := k) (K := K) (L := F)) c
-  rw [← hnorm]
   exact profiniteReciprocity_finiteNorm k K F
 
 /-- Every finite projection of the completed norm square is the extension

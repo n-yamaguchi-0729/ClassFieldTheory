@@ -30,6 +30,8 @@ comparison identifies it with the original map on fields in `Type 0`.
 
 @[expose] public section
 
+open LocalFieldTheory (localNormSubgroup)
+
 noncomputable section
 
 namespace ClassFieldTheory
@@ -47,11 +49,11 @@ theorem finiteAbelianLocalReciprocity
     ∃ artin : Kˣ →ₜ* (L ≃ₐ[K] L),
       Function.Surjective artin ∧
       ∀ x : Kˣ, artin x = 1 ↔ IsFieldNorm K L x := by
-  refine ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L,
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L, ?_⟩
+  refine ⟨LocalClassFieldTheory.abelianLocalArtinMap K L,
+    LocalClassFieldTheory.abelianLocalArtinMap_surjective K L, ?_⟩
   intro x
-  change x ∈ (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L).toMonoidHom.ker ↔
-    x ∈ fieldNormSubgroup K L
-  rw [LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker]
+  change x ∈ (LocalClassFieldTheory.abelianLocalArtinMap K L).toMonoidHom.ker ↔
+    x ∈ localNormSubgroup K L
+  rw [LocalClassFieldTheory.abelianLocalArtinMap_ker]
 
 end ClassFieldTheory

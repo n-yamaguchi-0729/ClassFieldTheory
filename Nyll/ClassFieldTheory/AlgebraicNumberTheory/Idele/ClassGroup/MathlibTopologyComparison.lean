@@ -6,16 +6,15 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibComparison
-public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FiniteMathlibTopologyComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Topology
 public import Mathlib.Topology.Algebra.Group.Quotient
 
 /-!
-# Continuity of the comparison with Mathlib's idèle class group
+# Quotient topology on the standard idèle class group
 
-The algebraic equivalence from the restricted-product idèle class group to
-Mathlib's adele-unit quotient is continuous. This is the quotient descent of
-the continuous map on idèles.
+The standard quotient topology is induced by raw idèle representatives and
+supports descent of continuous homomorphisms.
 -/
 
 @[expose] public section
@@ -29,31 +28,40 @@ namespace IdeleGroup
 
 variable (K : Type*) [Field K] [NumberField K]
 
-/-- The idèle-class comparison is continuous in the forward direction. -/
-theorem continuous_ideleClassGroupEquivMathlib :
-    Continuous (ideleClassGroupEquivMathlib K) := by
-  apply (QuotientGroup.isQuotientMap_mk (principalSubgroup K)).continuous_iff.mpr
-  have h : Continuous (fun a : IdeleGroup K =>
-      QuotientGroup.mk' (NumberField.IdeleGroup.principalSubgroup (𝓞 K) K)
-        (equivAdeleRingUnits a)) :=
-    QuotientGroup.continuous_mk.comp (continuous_equivAdeleRingUnits K)
-  exact h.congr (fun _ => rfl)
+/-- The raw-to-standard class projection is an open quotient map. -/
+theorem isOpenQuotientMap_toStandardClass : IsOpenQuotientMap (toStandardClass K) :=
+  QuotientGroup.isOpenQuotientMap_mk (N := principalSubgroup K)
 
-/-- The restricted-product and adele-unit presentations of the idèle class
-group are canonically isomorphic as topological groups. -/
-noncomputable def ideleClassGroupContinuousMulEquivMathlib :
-    IdeleClassGroup K ≃ₜ* NumberField.IdeleClassGroup (𝓞 K) K := by
-  refine
-    { toMulEquiv := ideleClassGroupEquivMathlib K
-      continuous_toFun := continuous_ideleClassGroupEquivMathlib K
-      continuous_invFun := ?_ }
-  apply (QuotientGroup.isQuotientMap_mk
-    (NumberField.IdeleGroup.principalSubgroup (𝓞 K) K)).continuous_iff.mpr
-  have h : Continuous (fun a : NumberField.IdeleGroup (𝓞 K) K =>
-      QuotientGroup.mk' (principalSubgroup K)
-        ((equivAdeleRingUnitsContinuousMulEquiv K).symm a)) :=
-    QuotientGroup.continuous_mk.comp
-      (equivAdeleRingUnitsContinuousMulEquiv K).symm.continuous
-  exact h.congr (fun _ => rfl)
+/-- The raw-to-standard class projection induces the standard quotient topology. -/
+theorem isQuotientMap_toStandardClass : Topology.IsQuotientMap (toStandardClass K) :=
+  (isOpenQuotientMap_toStandardClass K).isQuotientMap
+
+/-- The image of an open set of raw ideles is open in the standard class group. -/
+theorem isOpenMap_toStandardClass : IsOpenMap (toStandardClass K) :=
+  (isOpenQuotientMap_toStandardClass K).isOpenMap
+
+/-- The raw-to-standard class projection is continuous. -/
+theorem continuous_toStandardClass : Continuous (toStandardClass K) :=
+  (isQuotientMap_toStandardClass K).continuous
+
+section Lift
+
+variable {G : Type*} [Monoid G] [TopologicalSpace G]
+
+/-- Descend a continuous homomorphism from raw ideles that kills principal ideles. -/
+noncomputable def liftContinuousToStandardClass (f : IdeleGroup K →ₜ* G)
+    (h : principalSubgroup K ≤ f.toMonoidHom.ker) : IdeleClassGroup K →ₜ* G where
+  toMonoidHom := liftToStandardClass K f.toMonoidHom h
+  continuous_toFun := (isQuotientMap_toStandardClass K).continuous_iff.mpr
+    (f.continuous.congr fun a => (liftToStandardClass_toStandardClass K f.toMonoidHom h a).symm)
+
+/-- The continuous lift agrees with the original homomorphism on every representative. -/
+@[simp]
+theorem liftContinuousToStandardClass_toStandardClass (f : IdeleGroup K →ₜ* G)
+    (h : principalSubgroup K ≤ f.toMonoidHom.ker) (a : IdeleGroup K) :
+    liftContinuousToStandardClass K f h (toStandardClass K a) = f a :=
+  liftToStandardClass_toStandardClass K f.toMonoidHom h a
+
+end Lift
 
 end IdeleGroup

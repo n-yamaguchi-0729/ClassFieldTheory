@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
 public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.KummerAlgebraNormSubgroup
-public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.CanonicalKummerNorm
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
@@ -26,6 +26,8 @@ particular choice of a radical in their types.
 -/
 
 @[expose] public section
+
+open LocalFieldTheory (localNormSubgroup)
 
 noncomputable section
 
@@ -47,7 +49,7 @@ theorem kummerAlgebraNormSubgroup_index_eq_chosenRadicalDegree
     KummerTheory.chosenSimpleKummerExtension_finiteDimensional K n hnK a
   let : IsAbelianGalois K E :=
     KummerTheory.chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu a
-  have hnorm : kummerAlgebraNormSubgroup K n a = fieldNormSubgroup K E := by
+  have hnorm : kummerAlgebraNormSubgroup K n a = localNormSubgroup K E := by
     apply Subgroup.ext
     intro b
     change
@@ -196,7 +198,7 @@ theorem chosenSimpleKummerExtension_finrank_eq_powerClassOrder
         Polynomial.natDegree_le_of_dvd
           (minpoly.dvd K (β : E) hpolyroot)
           (Polynomial.X_pow_sub_C_ne_zero hdpos c)
-      _ = d := Polynomial.natDegree_X_pow_sub_C
+      _ = d := Polynomial.natDegree_X_pow_sub_C _
   let χ := KummerTheory.chosenSimpleKummerRootCharacter K n hnK hmu a
   have hcard : Nat.card Gal(E/K) = e :=
     IsGalois.card_aut_eq_finrank K E

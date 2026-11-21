@@ -10,7 +10,9 @@ public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.IsLocalHilbertPai
 public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.PowerClass
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.MathlibHilbertPairing
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.SmallHilbertPairingTransport
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseSemilinearNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SemilinearNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 public import Mathlib.FieldTheory.Galois.Basic
 public import Mathlib.Topology.Algebra.ContinuousMonoidHom
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
@@ -47,18 +49,22 @@ theorem localHilbertPairing_artin_action
     let : IsAbelianGalois K E :=
       KummerTheory.chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu a
     ∀ (β : Eˣ), β ^ (n : ℕ) = Units.map (algebraMap K E).toMonoidHom a →
-      LocalClassFieldTheory.Universe.abelianLocalArtinMap K E b (β : E) =
+      LocalClassFieldTheory.abelianLocalArtinMap K E b (β : E) =
         algebraMap K E
           ((localHilbertPairing K n hnK hmu
             (powerClass K n b) (powerClass K n a)).1 : K) * (β : E) := by
   intro E sharedFinite sharedGalois β hβ
-  let σ := LocalClassFieldTheory.Universe.abelianLocalArtinMap K E b
+  let σ := LocalClassFieldTheory.abelianLocalArtinMap K E b
   have hroot := localHilbertPairing_artin_rootQuotient_of_same_pow
     K n hnK hmu a b β hβ
+  let τ := LocalClassFieldTheory.abelianLocalArtinMonoidHom K E b
+  have hστ : σ = τ := DFunLike.congr_fun
+    (LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom K E) b
   change Units.map (algebraMap K E).toMonoidHom
       (localHilbertPairing K n hnK hmu
         (powerClass K n b) (powerClass K n a)).1 =
-    KummerTheory.rootQuotient (K := K) (L := E) β σ at hroot
+    KummerTheory.rootQuotient (K := K) (L := E) β τ at hroot
+  rw [← hστ] at hroot
   have hact : Units.map σ.toMonoidHom β =
       Units.map (algebraMap K E).toMonoidHom
         (localHilbertPairing K n hnK hmu
@@ -80,7 +86,7 @@ theorem localHilbertPairing_artin_action_of_algEquiv
     let E := KummerTheory.chosenSimpleKummerExtension K n hnK a
     ∀ (e : E ≃ₐ[K] F) (β : Eˣ),
       β ^ (n : ℕ) = Units.map (algebraMap K E).toMonoidHom a →
-      LocalClassFieldTheory.Universe.abelianLocalArtinMap K F b (e (β : E)) =
+      LocalClassFieldTheory.abelianLocalArtinMap K F b (e (β : E)) =
         algebraMap K F
           ((localHilbertPairing K n hnK hmu
             (powerClass K n b) (powerClass K n a)).1 : K) * e (β : E) := by
@@ -90,11 +96,12 @@ theorem localHilbertPairing_artin_action_of_algEquiv
   let : IsAbelianGalois K E :=
     KummerTheory.chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu a
   have hnat := DFunLike.congr_fun
-    (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_autCongr K E F e) b
+    (LocalClassFieldTheory.abelianLocalArtinMonoidHom_autCongr K E F e) b
+  simp only [← LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom] at hnat
   have heval := congrArg (fun σ : Gal(F/K) => σ (e (β : E))) hnat
-  change e (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E b
+  change e (LocalClassFieldTheory.abelianLocalArtinMap K E b
       (e.symm (e (β : E)))) =
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap K F b (e (β : E)) at heval
+    LocalClassFieldTheory.abelianLocalArtinMap K F b (e (β : E)) at heval
   rw [e.symm_apply_apply] at heval
   rw [← heval, localHilbertPairing_artin_action K n hnK hmu a b β hβ,
     map_mul, e.commutes]
@@ -142,10 +149,11 @@ theorem localHilbertPairing_value_semilinear
     exact hcomm (a : K)
   have hsource := congrArg eL (localHilbertPairing_artin_action K n hnK hmu a b β hβ)
   have htarget := localHilbertPairing_artin_action K' n hnK' hmu' a' b' β' hβ'
-  have hnat := LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_semilinear_action
+  have hnat := LocalClassFieldTheory.abelianLocalArtinMonoidHom_semilinear_action
     K K' E E' eK eL hcomm hExt b (β : E)
-  change eL (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E b (β : E)) =
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap K' E' b' (β' : E') at hnat
+  simp only [← LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom] at hnat
+  change eL (LocalClassFieldTheory.abelianLocalArtinMap K E b (β : E)) =
+    LocalClassFieldTheory.abelianLocalArtinMap K' E' b' (β' : E') at hnat
   rw [hnat, htarget, map_mul, hcomm] at hsource
   have hvalue := mul_right_cancel₀ (show eL (β : E) ≠ 0 from
     (map_ne_zero eL).2 β.ne_zero) hsource
@@ -171,7 +179,7 @@ theorem localHilbertPairing_artin_action_radical_first
     let : IsAbelianGalois K E :=
       KummerTheory.chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu a
     ∀ (β : Eˣ), β ^ (n : ℕ) = Units.map (algebraMap K E).toMonoidHom a →
-      LocalClassFieldTheory.Universe.abelianLocalArtinMap K E b (β : E) =
+      LocalClassFieldTheory.abelianLocalArtinMap K E b (β : E) =
         algebraMap K E
           (((localHilbertPairing K n hnK hmu
             (powerClass K n a) (powerClass K n b))⁻¹).1 : K) * (β : E) := by
@@ -219,9 +227,9 @@ theorem exists_localHilbertPairing_artinNormalization
   let : IsAbelianGalois K E :=
     KummerTheory.chosenSimpleKummerExtension_isAbelianGalois K n hnK hmu a
   let artin : Kˣ →ₜ* (E ≃ₐ[K] E) :=
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap K E
+    LocalClassFieldTheory.abelianLocalArtinMap K E
   refine ⟨artin,
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K E, ?_⟩
+    LocalClassFieldTheory.abelianLocalArtinMap_surjective K E, ?_⟩
   intro b
   exact localHilbertPairing_artin_action K n hnK hmu a b
     (KummerTheory.chosenSimpleKummerRootUnit K n hnK a)

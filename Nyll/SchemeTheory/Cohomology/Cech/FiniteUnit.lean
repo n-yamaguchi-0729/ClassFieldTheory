@@ -14,6 +14,7 @@ module
 
 public import Nyll.SchemeTheory.Cohomology.Cech.OrderedAffineCoverCech
 public import Nyll.SchemeTheory.Cohomology.Cech.ModulePresheafCechFiniteProper
+public import Nyll.SchemeTheory.Cohomology.Sheaves.OModulePresheafCoherence
 public import Mathlib.AlgebraicGeometry.Morphisms.Proper
 public import Mathlib.RingTheory.Noetherian.Basic
 
@@ -101,41 +102,12 @@ universe u
 open _root_.CategoryTheory
 open _root_.AlgebraicGeometry
 
-namespace AlgebraicGeometry
-open _root_.AlgebraicGeometry
-namespace OModulePresheaf
-open _root_.AlgebraicGeometry.OModulePresheaf
-open _root_.AlgebraicGeometry.OModulePresheaf
-open _root_.AlgebraicGeometry
-
-variable {R : Type u} [CommRing R] {V : Scheme.{u}} (π : V ⟶ Spec (.of R))
-
-theorem isCoherent_unit : (OModulePresheaf.unit π).IsCoherent :=
-  fun U => Module.Finite.self Γ(V, U.1)
-
-theorem isQuasicoherent_unit : (OModulePresheaf.unit π).IsQuasicoherent := by
-  intro U f
-  have := U.2.isLocalization_basicOpen f
-  refine ⟨fun x => ?_, fun y hy => ?_⟩
-  · change ↑Γ(V, V.basicOpen f) at x
-    obtain ⟨⟨y, ⟨_, n, rfl⟩⟩, h⟩ := IsLocalization.surj (Submonoid.powers f) x
-    refine ⟨n, y, ?_⟩
-    change (V.presheaf.map (homOfLE (V.basicOpen_le f)).op).hom y
-      = (V.presheaf.map (homOfLE (V.basicOpen_le f)).op).hom (f ^ n) * x
-    rw [mul_comm]
-    exact h.symm
-  · obtain ⟨⟨_, n, rfl⟩, hn⟩ := (IsLocalization.map_eq_zero_iff (Submonoid.powers f) Γ(V,
-    V.basicOpen f) y).mp hy
-    exact ⟨n, hn⟩
-
-end AlgebraicGeometry.OModulePresheaf
-
 theorem _root_.AlgebraicGeometry.OModulePresheaf.cechFinite_unit_of_isProper
     {R : Type u} [CommRing R] [IsNoetherianRing R] {V : Scheme.{u}} (π : V ⟶ Spec (.of R))
       [IsProper π]
     (K : V.OrderedAffineCover) : (OModulePresheaf.unit π).CechFinite K :=
   AlgebraicGeometry.OModulePresheaf.cechFinite_of_isProper _
-    (AlgebraicGeometry.OModulePresheaf.isCoherent_unit π)
-    (AlgebraicGeometry.OModulePresheaf.isQuasicoherent_unit π) K
+    (_root_.AlgebraicGeometry.OModulePresheaf.isCoherent_unit π)
+    (_root_.AlgebraicGeometry.OModulePresheaf.isQuasicoherent_unit π) K
 end AlgebraicCurves.Cohomology.Cech.Proofs.OModulePresheaf_cechFinite_unit_of_isProper
 end ProofImplementation

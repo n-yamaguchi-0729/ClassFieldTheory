@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.Algebra.DegreeOneAbsoluteGalois
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.DegreeOneRayNaturality
 public import Nyll.GaloisCohomology.Kummer.NativeSemilinearConjugation
@@ -181,7 +183,7 @@ def fieldIsoRayModulus (m : Modulus k K) : Modulus k F := by
   let e := fieldIsoAsAlgEquiv τ.toRingEquiv
   have : FiniteDimensional K F :=
     FiniteDimensional.of_surjective e.toLinearMap e.surjective
-  exact rayModulusBaseChange F m
+  exact reindexAlongPlaces F m
 
 /-- The isomorphism modulus has precisely its original pulled-back coefficient. -/
 theorem fieldIsoRayModulus_apply (m : Modulus k K) (w : Place k F) :
@@ -199,13 +201,13 @@ def fieldIsoRestrictedRayHom : RayRestrictedProduct m →* RayRestrictedProduct 
   let e := fieldIsoAsAlgEquiv τ.toRingEquiv
   have : FiniteDimensional K F :=
     FiniteDimensional.of_surjective e.toLinearMap e.surjective
-  exact (rayModulusCongr hn).toMonoidHom.comp (restrictedRayBaseChange (L := F) m hm)
+  exact (rayModulusCongr hn).toMonoidHom.comp (restrictedRayBaseChange (L := F) m)
 
 variable [HasPrincipalDivisors k K] [HasPrincipalDivisors k F]
 
 /-- Every original principal function has its specified actual field image. -/
 theorem fieldIsoRestrictedRayHom_principal (x : Kˣ) :
-    fieldIsoRestrictedRayHom τ m n hm hn (principalToRayRestrictedProduct m x) =
+    fieldIsoRestrictedRayHom τ m n hn (principalToRayRestrictedProduct m x) =
       principalToRayRestrictedProduct n (Units.map τ.toRingHom x) := by
   let : Algebra K F := τ.toRingHom.toAlgebra
   have : IsScalarTower k K F :=
@@ -214,12 +216,12 @@ theorem fieldIsoRestrictedRayHom_principal (x : Kˣ) :
   have : FiniteDimensional K F :=
     FiniteDimensional.of_surjective e.toLinearMap e.surjective
   change rayModulusCongr hn
-    (restrictedRayBaseChange (L := F) m hm (principalToRayRestrictedProduct m x)) = _
+    (restrictedRayBaseChange (L := F) m (principalToRayRestrictedProduct m x)) = _
   let y : Fˣ := Units.map τ.toRingHom x
   have hBase :
-      restrictedRayBaseChange (L := F) m hm (principalToRayRestrictedProduct m x) =
+      restrictedRayBaseChange (L := F) m (principalToRayRestrictedProduct m x) =
         principalToRayRestrictedProduct (fieldIsoRayModulus τ m) y :=
-    restrictedRayBaseChange_principal m hm x
+    restrictedRayBaseChange_principal m x
   exact (congrArg (rayModulusCongr hn) hBase).trans
     (rayModulusCongr_principal hn y)
 
@@ -260,7 +262,7 @@ theorem fieldIsoNativeRayHom_mk (z : localAbsoluteAbelianProfinite K) :
 /-- The original native ray map and the actual completion-induced field
 map satisfy the same reciprocity square. -/
 theorem fieldIsoNativeRayHom_artin (x : RayRestrictedProduct m) :
-    restrictedProductAbsoluteArtin n (fieldIsoRestrictedRayHom τ m n hm hn x) =
+    restrictedProductAbsoluteArtin n (fieldIsoRestrictedRayHom τ m n hn x) =
       fieldIsoNativeRayHom τ m n hm hn a ha (restrictedProductAbsoluteArtin m x) := by
   let : Algebra K F := τ.toRingHom.toAlgebra
   have : IsScalarTower k K F :=
@@ -303,8 +305,8 @@ theorem fieldIsoPlaceRestrict_restrict_of_fixed (w : Place k L) :
 /-- Pulling back an original modulus to an actual finite cover makes it
 invariant under every genuine automorphism of that cover. -/
 theorem fieldIsoRayModulus_baseChange_of_fixed (m : Modulus k K) :
-    fieldIsoRayModulus (τ.restrictScalars k) (rayModulusBaseChange L m) =
-      rayModulusBaseChange L m := by
+    fieldIsoRayModulus (τ.restrictScalars k) (reindexAlongPlaces L m) =
+      reindexAlongPlaces L m := by
   apply Finsupp.ext
   intro w
   rw [fieldIsoRayModulus_apply]

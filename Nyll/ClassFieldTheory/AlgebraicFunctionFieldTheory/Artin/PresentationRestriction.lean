@@ -50,7 +50,7 @@ theorem normQuotientEquivOfFixedFieldPresentation_restrictNormal
     (hcomm : ∀ x : L, eM (algebraMap L M x) =
       IntermediateField.inclusion (abstractFixedField_le K Ω hST) (eL x))
     (c : IdeleClassGroup k K) :
-    Abelianization.map (AlgEquiv.restrictNormalHom L)
+    Group.Abelianization.map (AlgEquiv.restrictNormalHom L)
         (normQuotientEquivOfFixedFieldPresentation k K M Ω H S eF eM (QuotientGroup.mk c)) =
       normQuotientEquivOfFixedFieldPresentation k K L Ω H T eF eL (QuotientGroup.mk c) := by
   let F := abstractFixedField K Ω H.field
@@ -80,20 +80,20 @@ theorem normQuotientEquivOfFixedFieldPresentation_restrictNormal
   let rL : Gal(M/K) →* Gal(L/K) := AlgEquiv.restrictNormalHom L
   let rE : Gal(U/F) →* Gal(E/F) := AlgEquiv.restrictNormalHom E
   let d : IdeleClassGroup k F := IdeleClassGroup.baseChange (k := k) (K := K) (L := F) c
-  let zS : Abelianization Gal(U/F) := fixedFieldArtin k K Ω H S d
-  let zT : Abelianization Gal(E/F) := fixedFieldArtin k K Ω H T d
+  let zS : Group.Abelianization Gal(U/F) := fixedFieldArtin k K Ω H S d
+  let zT : Group.Abelianization Gal(E/F) := fixedFieldArtin k K Ω H T d
   have hM := normQuotientEquivOfFixedFieldPresentation_mk k K M Ω H S eF eM c
   have hL := normQuotientEquivOfFixedFieldPresentation_mk k K L Ω H T eF eL c
   have htransport := ClassFieldTheory.abelianization_restrictNormal_transport
     (K := K) (F := F) (E := E) (U := U) hFdegree eL eM hcomm zS
   have hambient := fixedFieldArtin_restrictNormal k K Ω H T S hST d
   calc
-    Abelianization.map rL
+    Group.Abelianization.map rL
         (normQuotientEquivOfFixedFieldPresentation k K M Ω H S eF eM
           (QuotientGroup.mk c)) =
-        Abelianization.map rL (eGM.abelianizationCongr zS) :=
-      congrArg (Abelianization.map rL) hM
-    _ = eGL.abelianizationCongr (Abelianization.map rE zS) := htransport
+        Group.Abelianization.map rL (eGM.abelianizationCongr zS) :=
+      congrArg (Group.Abelianization.map rL) hM
+    _ = eGL.abelianizationCongr (Group.Abelianization.map rE zS) := htransport
     _ = eGL.abelianizationCongr zT := congrArg eGL.abelianizationCongr hambient
     _ = normQuotientEquivOfFixedFieldPresentation k K L Ω H T eF eL
         (QuotientGroup.mk c) := hL.symm

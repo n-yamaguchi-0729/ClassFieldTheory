@@ -6,6 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
+public import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusOrder
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticHilbertClassFieldReciprocity
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.ExtensionIndex
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.IntegerRingComparison
@@ -14,7 +18,9 @@ public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.SUnit.GaloisAction
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Core
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.BigHilbertClassFieldOverOriginalBase
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldConstruction
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorFrobenius
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldMaximalSubextension
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldPrimeSplitting
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
@@ -244,73 +250,7 @@ theorem arithmeticPrimeArtin_eq_one_iff_splitsCompletely
 
 end PrimeArtin
 
-section ArithmeticFrobenius
 
-open scoped Pointwise
-
-/-- Mathlib's arithmetic Frobenius has order equal to the residue degree
-at an unramified prime.  The proof compares its residue action with the
-finite-field Frobenius and uses the decomposition-group cardinality. -/
-theorem orderOf_arithmeticFrobeniusAt_eq_inertiaDegree
-    {K : Type u} {L : Type v}
-    [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L]
-    [IsAbelianGalois K L]
-    (v : HeightOneSpectrum (𝓞 K))
-    (w : HeightOneSpectrum (𝓞 L))
-    (hw : w.asIdeal.LiesOver v.asIdeal)
-    (hunram : Algebra.IsUnramifiedAt (𝓞 K) w.asIdeal) :
-    orderOf (arithmeticFrobeniusAt (K := K) w) =
-      w.asIdeal.inertiaDeg (𝓞 K) := by
-  classical
-  let P : Ideal (𝓞 K) := v.asIdeal
-  let Q : Ideal (𝓞 L) := w.asIdeal
-  let G := L ≃ₐ[K] L
-  let g : G := arithmeticFrobeniusAt (K := K) w
-  let : Q.LiesOver P := hw
-  let : Algebra.IsUnramifiedAt (𝓞 K) Q := hunram
-  let : Field ((𝓞 K) ⧸ P) := Ideal.Quotient.field P
-  let : Field ((𝓞 L) ⧸ Q) := Ideal.Quotient.field Q
-  let : Finite ((𝓞 K) ⧸ P) := Ring.HasFiniteQuotients.finiteQuotient v.ne_bot
-  let : Finite ((𝓞 L) ⧸ Q) := Ring.HasFiniteQuotients.finiteQuotient w.ne_bot
-  let : Fintype ((𝓞 K) ⧸ P) := Fintype.ofFinite _
-  have hF : IsArithFrobAt (𝓞 K) g Q := by
-    change IsArithFrobAt (𝓞 K) (arithFrobAt (𝓞 K) G Q) Q
-    exact IsArithFrobAt.arithFrobAt (𝓞 K) G Q
-  let gs : MulAction.stabilizer G Q := ⟨g, hF.mem_stabilizer⟩
-  have hImage :
-      Ideal.Quotient.stabilizerHom Q P G gs =
-        FiniteField.frobeniusAlgEquivOfAlgebraic ((𝓞 K) ⧸ P) ((𝓞 L) ⧸ Q) := by
-    apply AlgEquiv.ext
-    intro x
-    obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
-    rw [Ideal.Quotient.stabilizerHom_apply]
-    simp only [FiniteField.coe_frobeniusAlgEquivOfAlgebraic]
-    have h := hF.mk_apply y
-    have hQP : Q.under (𝓞 K) = P := hw.over.symm
-    rw [hQP, Nat.card_eq_fintype_card] at h
-    exact h
-  have hImageOrder :
-      orderOf (Ideal.Quotient.stabilizerHom Q P G gs) =
-        Q.inertiaDeg (𝓞 K) := by
-    rw [hImage, FiniteField.orderOf_frobeniusAlgEquivOfAlgebraic]
-    exact (Ideal.inertiaDeg_eq_of_isMaximal P Q).symm
-  have hCard : Nat.card (MulAction.stabilizer G Q) =
-      Q.inertiaDeg (𝓞 K) := by
-    rw [Ideal.card_stabilizer_eq (G := G) P Q,
-      Ideal.ramificationIdxIn_eq_ramificationIdx P Q G,
-      Ideal.inertiaDegIn_eq_inertiaDeg P Q G,
-      Ideal.ramificationIdx_eq_one Q (𝓞 K), one_mul]
-  have hUpper : orderOf gs ∣ Q.inertiaDeg (𝓞 K) := by
-    rw [← hCard]
-    exact orderOf_dvd_natCard gs
-  have hLower : Q.inertiaDeg (𝓞 K) ∣ orderOf gs := by
-    rw [← hImageOrder]
-    exact orderOf_map_dvd (Ideal.Quotient.stabilizerHom Q P G) gs
-  change orderOf g = Q.inertiaDeg (𝓞 K)
-  exact (Subgroup.orderOf_coe gs).trans (Nat.dvd_antisymm hUpper hLower)
-
-end ArithmeticFrobenius
 
 /-- In an abelian extension, Mathlib's chosen arithmetic Frobenius is
 independent of the prime above a fixed base prime.  Mathlib chooses
@@ -531,46 +471,40 @@ section HilbertClassFields
 
 variable (K : Type u) [Field K] [NumberField K]
 
-/-- Embed the selected big Hilbert class field in the separable closure of
-its original base field. -/
-private noncomputable def bigHilbertClassFieldEmbedding :
-    GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K →ₐ[K]
-      SeparableClosure K :=
-  IsSepClosed.lift
+open _root_.GlobalClassFieldTheory.GlobalClassFields
 
-/-- The selected big Hilbert class field, represented in the public type of
-finite abelian subextensions of the separable closure. -/
-private noncomputable def bigHilbertClassFieldFiniteAbelianExtension :
-    FiniteAbelianExtension K := by
-  let j := bigHilbertClassFieldEmbedding K
-  exact ⟨j.fieldRange,
-    j.equivFieldRange.toLinearEquiv.finiteDimensional,
-    IsAbelianGalois.of_algHom j.equivFieldRange.symm.toAlgHom⟩
+/-- The big Hilbert norm subgroup selects a field in the original separable closure. -/
+private noncomputable def bigHilbertClassFieldFiniteAbelianExtension : FiniteAbelianExtension K :=
+  ⟨closedFiniteIndexClassField (bigHilbertClassFieldNormSubgroup (K := K))
+    (bigHilbertClassFieldNormSubgroup_isClosed (K := K)), inferInstance, inferInstance⟩
 
-/-- The original selected field and its public separable-closure
-realization are equivalent over the base. -/
+/-- Compare the big Hilbert realization with the field selected over the original base. -/
 private noncomputable def bigHilbertClassFieldEquiv :
     GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K ≃ₐ[K]
       bigHilbertClassFieldFiniteAbelianExtension K :=
-  (bigHilbertClassFieldEmbedding K).equivFieldRange
+  Classical.choice ((nonempty_algEquiv_iff_ideleClassNorm_range_eq
+    (K := K) (GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K)
+    (bigHilbertClassFieldFiniteAbelianExtension K)).2
+    ((bigHilbertClassField_ideleClassNorm_range_over_original (K := K)).trans
+      (closedFiniteIndexClassField_ideleClassNorm_range (bigHilbertClassFieldNormSubgroup (K := K))
+        (bigHilbertClassFieldNormSubgroup_isClosed (K := K))).symm))
 
-/-- The selected small Hilbert class field in the separable closure. -/
-private noncomputable def smallHilbertClassFieldEmbedding :
-    GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K →ₐ[K]
-      SeparableClosure K :=
-  IsSepClosed.lift
+/-- The small Hilbert norm subgroup selects a field in the original separable closure. -/
+private noncomputable def smallHilbertClassFieldFiniteAbelianExtension : FiniteAbelianExtension K :=
+  ⟨closedFiniteIndexClassField (smallHilbertClassFieldNormSubgroup (K := K))
+    (smallHilbertClassFieldNormSubgroup_isClosed (K := K)), inferInstance, inferInstance⟩
 
-private noncomputable def smallHilbertClassFieldFiniteAbelianExtension :
-    FiniteAbelianExtension K := by
-  let j := smallHilbertClassFieldEmbedding K
-  exact ⟨j.fieldRange,
-    j.equivFieldRange.toLinearEquiv.finiteDimensional,
-    IsAbelianGalois.of_algHom j.equivFieldRange.symm.toAlgHom⟩
-
+/-- Compare the small Hilbert realization with the field selected over the original base. -/
 private noncomputable def smallHilbertClassFieldEquiv :
     GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K ≃ₐ[K]
       smallHilbertClassFieldFiniteAbelianExtension K :=
-  (smallHilbertClassFieldEmbedding K).equivFieldRange
+  Classical.choice ((nonempty_algEquiv_iff_ideleClassNorm_range_eq
+    (K := K) (GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K)
+    (smallHilbertClassFieldFiniteAbelianExtension K)).2
+    ((smallHilbertClassField_ideleClassNorm_range_over_original (K := K)).trans
+      (closedFiniteIndexClassField_ideleClassNorm_range
+        (smallHilbertClassFieldNormSubgroup (K := K))
+        (smallHilbertClassFieldNormSubgroup_isClosed (K := K))).symm))
 
 open _root_.GlobalClassFieldTheory.GlobalClassFields
   (bigHilbertClassField_finrank_over_original_eq_narrowClassGroup_card) in
@@ -597,7 +531,7 @@ theorem smallHilbertClassField_degree_eq_classNumber :
 /-- The selected big Hilbert class field is unramified at every finite
 place. -/
 theorem bigHilbertClassField_unramifiedAtFinitePlaces :
-    _root_.IsUnramifiedAtFinitePlaces K
+    ClassFieldTheory.IsUnramifiedAtFinitePlaces K
       (GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K) :=
   GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField_isUnramifiedAtFinitePlaces
     K
@@ -613,7 +547,7 @@ private theorem nonempty_algHom_to_selectedBigHilbertClassField
       GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K) := by
   obtain ⟨f⟩ :=
     finiteUnramifiedAbelianExtension_nonempty_algHom_bigHilbertClassField
-      K F ((isUnramifiedAtFinitePlaces_iff_original K F).mp hF)
+      K F hF
   exact ⟨f⟩
 
 /-- The intrinsic big Hilbert class field exists inside the chosen
@@ -627,9 +561,7 @@ theorem exists_bigHilbertClassField :
   · exact
       (isUnramifiedAtFinitePlaces_iff_of_algEquiv K
         (GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K) E e).mp
-        ((isUnramifiedAtFinitePlaces_iff_original K
-          (GlobalClassFieldTheory.GlobalClassFields.bigHilbertClassField K)).mpr
-          (bigHilbertClassField_unramifiedAtFinitePlaces K))
+        (bigHilbertClassField_unramifiedAtFinitePlaces K)
   · intro F hF
     obtain ⟨f⟩ := nonempty_algHom_to_selectedBigHilbertClassField K F hF
     exact ⟨e.toAlgHom.comp f⟩
@@ -645,8 +577,7 @@ theorem bigHilbertClassField_degree_eq_narrowClassGroup_card_of_isBig
   let e : H ≃ₐ[K] F := bigHilbertClassFieldEquiv K
   have hF : IsUnramifiedAtFinitePlaces K F :=
     (isUnramifiedAtFinitePlaces_iff_of_algEquiv K H F e).mp
-      ((isUnramifiedAtFinitePlaces_iff_original K H).mpr
-        (bigHilbertClassField_unramifiedAtFinitePlaces K))
+      (bigHilbertClassField_unramifiedAtFinitePlaces K)
   obtain ⟨f⟩ := nonempty_algHom_to_selectedBigHilbertClassField K E hE.1
   obtain ⟨g⟩ := hE.2 F hF
   have hEH : Module.finrank K E ≤ Module.finrank K H :=
@@ -664,7 +595,7 @@ theorem bigHilbertClassField_degree_eq_narrowClassGroup_card_of_isBig
 /-- The selected small Hilbert class field is unramified at all finite and
 infinite places. -/
 theorem smallHilbertClassField_everywhereUnramified :
-    _root_.IsEverywhereUnramified K
+    ClassFieldTheory.IsEverywhereUnramified K
       (GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K) :=
   GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField_isEverywhereUnramified
     K
@@ -678,8 +609,8 @@ theorem nonempty_algHom_to_selectedSmallHilbertClassField
     (hF : IsEverywhereUnramified K F) :
     Nonempty (F →ₐ[K]
       GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K) := by
-  have hFinite : _root_.IsUnramifiedAtFinitePlaces K F :=
-    (isUnramifiedAtFinitePlaces_iff_original K F).mp hF.1
+  have hFinite : ClassFieldTheory.IsUnramifiedAtFinitePlaces K F :=
+    hF.1
   have hRamifiedEmpty :
       _root_.ramifiedBaseFinitePlaces (K := K) (L := F) = ∅ := by
     apply Finset.eq_empty_iff_forall_notMem.mpr
@@ -687,7 +618,7 @@ theorem nonempty_algHom_to_selectedSmallHilbertClassField
     obtain ⟨P, _hP, hP⟩ :=
       (_root_.mem_ramifiedBaseFinitePlaces_iff
         (K := K) (L := F) v).1 hv
-    exact hP (hFinite P)
+    exact hP (hFinite.atPrime P)
   exact
     @finiteAbelianExtension_nonempty_algHom_to_smallHilbertClassField_of_everywhereUnramified
       K F inferInstance inferInstance inferInstance inferInstance
@@ -704,9 +635,7 @@ theorem exists_smallHilbertClassField :
   · exact
       (isEverywhereUnramified_iff_of_algEquiv K
         (GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K) E e).mp
-        ((isEverywhereUnramified_iff_original K
-          (GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K)).mpr
-          (smallHilbertClassField_everywhereUnramified K))
+        (smallHilbertClassField_everywhereUnramified K)
   · intro F hF
     obtain ⟨f⟩ := nonempty_algHom_to_selectedSmallHilbertClassField K F hF
     exact ⟨e.toAlgHom.comp f⟩
@@ -722,8 +651,7 @@ theorem smallHilbertClassField_degree_eq_classNumber_of_isSmall
   let e : H ≃ₐ[K] F := smallHilbertClassFieldEquiv K
   have hF : IsEverywhereUnramified K F :=
     (isEverywhereUnramified_iff_of_algEquiv K H F e).mp
-      ((isEverywhereUnramified_iff_original K H).mpr
-        (smallHilbertClassField_everywhereUnramified K))
+      (smallHilbertClassField_everywhereUnramified K)
   obtain ⟨f⟩ := nonempty_algHom_to_selectedSmallHilbertClassField K E hE.1
   obtain ⟨g⟩ := hE.2 F hF
   have hEH : Module.finrank K E ≤ Module.finrank K H :=
@@ -766,7 +694,7 @@ theorem finitePrime_splitsCompletelyInSmallHilbertClassField_iff_principal
           (K := K)
           (L := GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassField K)
           v ↔
-      FractionalIdealGroup.prime v ∈
+      finitePrimeFractionalIdeal v ∈
         (toPrincipalIdeal (𝓞 K) K).range :=
   finitePlaceSplitsCompletelyInSmallHilbertClassField_iff_principal
     (K := K) v

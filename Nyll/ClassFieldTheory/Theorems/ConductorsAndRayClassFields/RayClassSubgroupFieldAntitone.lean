@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
-import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgroupEmbedding
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
+public import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgroupEmbedding
 
 /-!
 # Inclusion of ray-class subgroup class fields
@@ -13,6 +15,8 @@ import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassSubgro
 The fields are intermediate fields of one fixed separable closure, so the
 conclusion is literal inclusion rather than merely an abstract embedding.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

@@ -115,7 +115,7 @@ theorem germToFunctionField_algebraMap' (U : X.Opens) [Nonempty U] (r : K) :
   dsimp only [Scheme.Hom.appLE]
   rw [Category.assoc]
   erw [TopCat.Presheaf.germ_res]
-  try rfl
+  rfl
 
 /--
 The linear equivalence from module sections to the divisor space specified by the injective

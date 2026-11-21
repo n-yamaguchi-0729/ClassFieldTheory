@@ -51,7 +51,8 @@ open _root_.AlgebraicGeometry.Scheme
 open _root_.AlgebraicGeometry
 
 /-- Pull a trivialization of `L` back from `U` to the smaller open `V`. -/
-noncomputable def trivializationOfLE {X : Scheme.{u}} {U V : X.Opens} (h : V ≤ U) (L : X.Modules)
+noncomputable def _root_.AlgebraicGeometry.Scheme.Modules.trivializationOfLE
+    {X : Scheme.{u}} {U V : X.Opens} (h : V ≤ U) (L : X.Modules)
     (e : (Modules.pullback U.ι).obj L ≅ SheafOfModules.unit (U : Scheme.{u}).ringCatSheaf) :
     (Modules.pullback V.ι).obj L ≅ SheafOfModules.unit (V : Scheme.{u}).ringCatSheaf :=
   (Modules.pullbackCongr (X.homOfLE_ι h).symm).app L ≪≫

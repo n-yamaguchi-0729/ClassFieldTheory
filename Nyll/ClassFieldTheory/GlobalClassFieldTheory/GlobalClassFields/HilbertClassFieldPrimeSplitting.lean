@@ -43,15 +43,9 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
+open ClassFieldTheory
 open NumberField IsDedekindDomain IdeleGroup
 
-/-- The canonical idèle-class multiplication makes every subgroup normal. -/
-theorem hilbertPrimeSplittingClassGroupIsMulCommutative
-    (F : Type*) [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
-
-attribute [local instance] hilbertPrimeSplittingClassGroupIsMulCommutative
 
 variable
     {K : Type u} {L : Type v}
@@ -110,7 +104,7 @@ private def primeHasTotallyPositiveGenerator
         (RayClass.Modulus.narrowOfFinite
           (0 : RayClass.FiniteModulus K)) ∧
     toPrincipalIdeal (𝓞 K) K x =
-      FractionalIdealGroup.prime v
+      finitePrimeFractionalIdeal v
 
 private theorem
     finitePrimeIdele_mem_narrowDenominator_imp_primeHasTotallyPositiveGenerator
@@ -128,27 +122,18 @@ private theorem
   obtain ⟨x, rfl⟩ := hp
   refine ⟨x, ?_, ?_⟩
   · refine ⟨?_, ?_⟩
-    · have hproduct :
-          c.1 * (IdeleGroup.principalIdele K x).1 = 1 := by
-        calc
-          c.1 * (IdeleGroup.principalIdele K x).1 =
-              (c * IdeleGroup.principalIdele K x).1 :=
-            rfl
-          _ = (finitePrimeIdele v).1 :=
-            congrArg Prod.fst hcp
-          _ = 1 := rfl
-      have hinfinite :
-          (IdeleGroup.principalIdele K x).1 = c.1⁻¹ :=
-        eq_inv_of_mul_eq_one_right hproduct
+    · have hproduct : IdeleGroup.infinitePart c *
+          IdeleGroup.infinitePart (IdeleGroup.principalIdele K x) = 1 := by
+        have h := congrArg (IdeleGroup.infinitePart (K := K)) hcp
+        rw [map_mul, IdeleGroup.infinitePart_finitePrimeIdele] at h
+        exact h
+      have hinfinite : IdeleGroup.infinitePart (IdeleGroup.principalIdele K x) =
+          (IdeleGroup.infinitePart c)⁻¹ := eq_inv_of_mul_eq_one_right hproduct
+      change IdeleGroup.infinitePart (IdeleGroup.principalIdele K x) ∈
+        (RayClass.Modulus.narrowOfFinite (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup
       rw [hinfinite]
-      change
-        c.1⁻¹ ∈
-          (RayClass.Modulus.narrowOfFinite
-            (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup
-      exact
-        ((RayClass.Modulus.narrowOfFinite
-          (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup).inv_mem
-          hc.1
+      exact ((RayClass.Modulus.narrowOfFinite
+        (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup).inv_mem hc.1
     · intro w hw
       exact ((Finsupp.mem_support_iff.mp hw) rfl).elim
   · have hcIdeal :
@@ -173,7 +158,7 @@ private theorem
         rw [map_mul]
       _ = IdeleGroup.fractionalIdeal (finitePrimeIdele v) :=
         congrArg (IdeleGroup.fractionalIdeal (K := K)) hcp
-      _ = FractionalIdealGroup.prime v :=
+      _ = finitePrimeFractionalIdeal v :=
         fractionalIdeal_finitePrimeIdele v
 
 private theorem
@@ -204,19 +189,12 @@ private theorem
           (RayClass.Modulus.narrowOfFinite
             (0 : RayClass.FiniteModulus K)) := by
     refine ⟨?_, ?_⟩
-    · change
-        (finitePrimeIdele v).1 *
-            ((IdeleGroup.principalIdele K x).1)⁻¹ ∈
-          (RayClass.Modulus.narrowOfFinite
-            (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup
-      change
-        1 * ((IdeleGroup.principalIdele K x).1)⁻¹ ∈
-          (RayClass.Modulus.narrowOfFinite
-            (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup
-      simpa only [one_mul] using
-        ((RayClass.Modulus.narrowOfFinite
-          (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup).inv_mem
-          hxPositive.1
+    · change IdeleGroup.infinitePart c ∈
+        (RayClass.Modulus.narrowOfFinite (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup
+      dsimp only [c]
+      rw [map_mul, map_inv, IdeleGroup.infinitePart_finitePrimeIdele, one_mul]
+      exact ((RayClass.Modulus.narrowOfFinite
+        (0 : RayClass.FiniteModulus K)).infiniteCongruenceSubgroup).inv_mem hxPositive.1
     · rw [RayClass.Modulus.finitePart_narrowOfFinite,
         RayClass.finiteCongruenceSubgroup_zero]
       exact hcIntegral
@@ -256,7 +234,7 @@ theorem
             (RayClass.Modulus.narrowOfFinite
               (0 : RayClass.FiniteModulus K)) ∧
         toPrincipalIdeal (𝓞 K) K x =
-          FractionalIdealGroup.prime v := by
+          finitePrimeFractionalIdeal v := by
   exact
     (mulEquiv_symm_apply_eq_one_iff
       (bigHilbertClassFieldQuotientEquivNarrowClassGroup
@@ -303,8 +281,7 @@ theorem
         (K := K) (L := L) hunramified hdegree v =
       QuotientGroup.mk'
         ((_root_.ideleClassNorm K L).range)
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (finitePrimeIdele v)) := by
   apply
     (maximalFiniteUnramifiedCyclicNormQuotientEquivNarrowClassGroup
@@ -319,8 +296,7 @@ theorem
           (K := K)
           (QuotientGroup.mk'
             (bigHilbertClassFieldNormSubgroup (K := K))
-            (QuotientGroup.mk'
-              (IdeleGroup.principalSubgroup K)
+            (IdeleGroup.toStandardClass K
               (finitePrimeIdele v))) :=
       (bigHilbertClassFieldQuotientEquivNarrowClassGroup_mk
         (K := K) (finitePrimeIdele v)).symm
@@ -328,8 +304,7 @@ theorem
           (K := K) (L := L) hunramified hdegree
           (QuotientGroup.mk'
             ((_root_.ideleClassNorm K L).range)
-            (QuotientGroup.mk'
-              (IdeleGroup.principalSubgroup K)
+            (IdeleGroup.toStandardClass K
               (finitePrimeIdele v))) :=
       (quotientMulEquivOfEq_trans_apply_mk
         ((_root_.ideleClassNorm K L).range)
@@ -339,8 +314,7 @@ theorem
           (K := K) (L := L) hunramified).2 hdegree)
         (bigHilbertClassFieldQuotientEquivNarrowClassGroup
           (K := K))
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (finitePrimeIdele v))).symm
 
 omit [IsUnramifiedAtInfinitePlaces K L] in
@@ -389,7 +363,7 @@ theorem
             (RayClass.Modulus.narrowOfFinite
               (0 : RayClass.FiniteModulus K)) ∧
         toPrincipalIdeal (𝓞 K) K x =
-          FractionalIdealGroup.prime v := by
+          finitePrimeFractionalIdeal v := by
   exact
     (mulEquiv_symm_apply_eq_one_iff
       (maximalFiniteUnramifiedCyclicNormQuotientEquivNarrowClassGroup
@@ -409,8 +383,7 @@ private theorem finitePrimeIdeleClass_eq_one_of_splitsCompletely
         (K := K) (L := L) v) :
     QuotientGroup.mk'
         ((_root_.ideleClassNorm K L).range)
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (finitePrimeIdele v)) = 1 := by
   apply (QuotientGroup.eq_one_iff _).2
   change
@@ -468,7 +441,7 @@ theorem
           (RayClass.Modulus.narrowOfFinite
             (0 : RayClass.FiniteModulus K)) ∧
       toPrincipalIdeal (𝓞 K) K x =
-        FractionalIdealGroup.prime v :=
+        finitePrimeFractionalIdeal v :=
   (maximalFiniteUnramifiedCyclicFrobeniusClass_eq_one_iff_exists_totallyPositiveGenerator
     (K := K) (L := L) hunramified hdegree v).1
     (finitePlaceSplitsCompletely_imp_maximalFiniteUnramifiedCyclicFrobeniusClass_eq_one
@@ -505,7 +478,7 @@ def maximalEverywhereUnramifiedCyclicFrobeniusClass
       (_root_.ideleClassNorm K L).range :=
   (maximalEverywhereUnramifiedCyclicNormQuotientEquivClassGroup
       (K := K) (L := L) hunramifiedFinite hdegree).symm
-    (ClassGroup.mk K (FractionalIdealGroup.prime v))
+    (ClassGroup.mk K (finitePrimeFractionalIdeal v))
 
 /-- The actual maximal norm-quotient Frobenius class corresponds to the
 small-Hilbert Frobenius class. -/
@@ -528,7 +501,7 @@ theorem
       (maximalEverywhereUnramifiedCyclicNormQuotientEquivSmallHilbertQuotient
         (K := K) (L := L) hunramifiedFinite hdegree)
       (smallHilbertClassFieldQuotientEquivClassGroup (K := K))
-      (ClassGroup.mk K (FractionalIdealGroup.prime v))
+      (ClassGroup.mk K (finitePrimeFractionalIdeal v))
 
 /-- The maximal norm-quotient Frobenius class is represented by the
 one-place prime idèle class. -/
@@ -545,14 +518,13 @@ theorem
         (K := K) (L := L) hunramifiedFinite hdegree v =
       QuotientGroup.mk'
         ((_root_.ideleClassNorm K L).range)
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (finitePrimeIdele v)) := by
   apply
     (maximalEverywhereUnramifiedCyclicNormQuotientEquivClassGroup
       (K := K) (L := L) hunramifiedFinite hdegree).injective
   calc
-    _ = ClassGroup.mk K (FractionalIdealGroup.prime v) :=
+    _ = ClassGroup.mk K (finitePrimeFractionalIdeal v) :=
       (maximalEverywhereUnramifiedCyclicNormQuotientEquivClassGroup
         (K := K) (L := L) hunramifiedFinite hdegree).apply_symm_apply _
     _ = IdeleGroup.idealClass (finitePrimeIdele v) :=
@@ -561,8 +533,7 @@ theorem
           (K := K)
           (QuotientGroup.mk'
             (smallHilbertClassFieldNormSubgroup (K := K))
-            (QuotientGroup.mk'
-              (IdeleGroup.principalSubgroup K)
+            (IdeleGroup.toStandardClass K
               (finitePrimeIdele v))) :=
       (smallHilbertClassFieldQuotientEquivClassGroup_mk
         (K := K) (finitePrimeIdele v)).symm
@@ -570,8 +541,7 @@ theorem
           (K := K) (L := L) hunramifiedFinite hdegree
           (QuotientGroup.mk'
             ((_root_.ideleClassNorm K L).range)
-            (QuotientGroup.mk'
-              (IdeleGroup.principalSubgroup K)
+            (IdeleGroup.toStandardClass K
               (finitePrimeIdele v))) :=
       (quotientMulEquivOfEq_trans_apply_mk
         ((_root_.ideleClassNorm K L).range)
@@ -580,8 +550,7 @@ theorem
           (K := K) (L := L) hunramifiedFinite).2 hdegree)
         (smallHilbertClassFieldQuotientEquivClassGroup
           (K := K))
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (finitePrimeIdele v))).symm
 
 /-- The order of the actual norm-quotient Frobenius class is the order
@@ -598,11 +567,11 @@ theorem orderOf_maximalEverywhereUnramifiedCyclicFrobeniusClass
         (maximalEverywhereUnramifiedCyclicFrobeniusClass
           (K := K) (L := L) hunramifiedFinite hdegree v) =
       orderOf
-        (ClassGroup.mk K (FractionalIdealGroup.prime v)) := by
+        (ClassGroup.mk K (finitePrimeFractionalIdeal v)) := by
   exact
     (maximalEverywhereUnramifiedCyclicNormQuotientEquivClassGroup
       (K := K) (L := L) hunramifiedFinite hdegree).symm.orderOf_eq
-      (ClassGroup.mk K (FractionalIdealGroup.prime v))
+      (ClassGroup.mk K (finitePrimeFractionalIdeal v))
 
 /-- Under the canonical quotient identification, complete splitting in
 the small Hilbert class field is equivalent to triviality of the
@@ -656,7 +625,7 @@ theorem
     (v : HeightOneSpectrum (𝓞 K)) :
     maximalEverywhereUnramifiedCyclicFrobeniusClass
         (K := K) (L := L) hunramifiedFinite hdegree v = 1 ↔
-      FractionalIdealGroup.prime v ∈
+      finitePrimeFractionalIdeal v ∈
         (toPrincipalIdeal (𝓞 K) K).range := by
   exact
     (
@@ -680,7 +649,7 @@ theorem
         (K := K) (L := L) hunramifiedFinite hdegree v = 1 ↔
       ∃ x : Kˣ,
         toPrincipalIdeal (𝓞 K) K x =
-          FractionalIdealGroup.prime v := by
+          finitePrimeFractionalIdeal v := by
   exact
     (maximalEverywhereUnramifiedCyclicFrobeniusClass_eq_one_iff_principal
       (K := K) (L := L) hunramifiedFinite hdegree v).trans Iff.rfl
@@ -722,7 +691,7 @@ theorem
     (hsplit :
       _root_.FinitePlaceSplitsCompletely
         (K := K) (L := L) v) :
-    FractionalIdealGroup.prime v ∈
+    finitePrimeFractionalIdeal v ∈
       (toPrincipalIdeal (𝓞 K) K).range :=
   (maximalEverywhereUnramifiedCyclicFrobeniusClass_eq_one_iff_principal
     (K := K) (L := L) hunramifiedFinite hdegree v).1
@@ -741,7 +710,7 @@ theorem
         NumberField.classNumber K)
     (v : HeightOneSpectrum (𝓞 K))
     (hprincipal :
-      FractionalIdealGroup.prime v ∉
+      finitePrimeFractionalIdeal v ∉
         (toPrincipalIdeal (𝓞 K) K).range) :
     ¬ _root_.FinitePlaceSplitsCompletely
         (K := K) (L := L) v := by

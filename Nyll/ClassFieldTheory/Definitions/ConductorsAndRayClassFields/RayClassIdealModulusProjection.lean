@@ -30,68 +30,6 @@ namespace ClassFieldTheory
 
 universe u
 
-private def rayLocalIntegralValue
-    {K : Type u} [Field K] [NumberField K]
-    (v : HeightOneSpectrum (𝓞 K))
-    (y : (v.adicCompletionIntegers K).units) :
-    v.adicCompletionIntegers K :=
-  ((v.adicCompletionIntegers K).toSubmonoid.unitsEquivUnitsType y :
-    (v.adicCompletionIntegers K)ˣ).1
-
-private theorem rayLocalHigherUnitMap_eq_one_iff
-    {K : Type u} [Field K] [NumberField K]
-    (v : HeightOneSpectrum (𝓞 K)) (n : ℕ)
-    (y : (v.adicCompletionIntegers K).units) :
-    rayLocalHigherUnitMap v n y = 1 ↔
-      rayLocalIntegralValue v y - 1 ∈
-        (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ n := by
-  let I := (IsLocalRing.maximalIdeal (v.adicCompletionIntegers K)) ^ n
-  change Units.map (Ideal.Quotient.mk I).toMonoidHom
-      ((v.adicCompletionIntegers K).toSubmonoid.unitsEquivUnitsType y) =
-        1 ↔ _
-  rw [Units.ext_iff]
-  change Ideal.Quotient.mk I (rayLocalIntegralValue v y) =
-      Ideal.Quotient.mk I 1 ↔ _
-  exact Ideal.Quotient.mk_eq_mk_iff_sub_mem
-    (I := I) (rayLocalIntegralValue v y)
-      (1 : v.adicCompletionIntegers K)
-
-private theorem rayLocalHigherUnitGroup_antitone
-    {K : Type u} [Field K] [NumberField K]
-    (v : HeightOneSpectrum (𝓞 K))
-    {m n : ℕ} (hmn : m ≤ n) :
-    rayLocalHigherUnitGroup v n ≤ rayLocalHigherUnitGroup v m := by
-  intro x hx
-  change x ∈ Subgroup.map
-    (v.adicCompletionIntegers K).units.subtype
-    (rayLocalHigherUnitMap v n).ker at hx
-  change x ∈ Subgroup.map
-    (v.adicCompletionIntegers K).units.subtype
-    (rayLocalHigherUnitMap v m).ker
-  rw [Subgroup.mem_map] at hx ⊢
-  obtain ⟨y, hy, rfl⟩ := hx
-  refine ⟨y, ?_, rfl⟩
-  change rayLocalHigherUnitMap v n y = 1 at hy
-  change rayLocalHigherUnitMap v m y = 1
-  rw [rayLocalHigherUnitMap_eq_one_iff] at hy ⊢
-  exact Ideal.pow_le_pow_right hmn hy
-
-private theorem rayCongruent_of_le
-    {K : Type u} [Field K] [NumberField K]
-    {m n : RayClassModulus K} (hmn : m ≤ n)
-    {x : Kˣ} (hx : IsRayCongruent n x) :
-    IsRayCongruent m x := by
-  constructor
-  · intro v hv
-    have hvn : v ∈ n.finitePart.support := by
-      apply Finsupp.mem_support_iff.mpr
-      have hpos : 0 < m.finitePart v :=
-        Nat.pos_of_ne_zero (Finsupp.mem_support_iff.mp hv)
-      exact Nat.ne_of_gt (lt_of_lt_of_le hpos (hmn.1 v))
-    exact rayLocalHigherUnitGroup_antitone v (hmn.1 v) (hx.1 v hvn)
-  · intro v hv
-    exact hx.2 v (hmn.2 hv)
-
 /-- Enlarging the modulus shrinks the subgroup of ideals prime to it. -/
 theorem rayPrimeToIdeals_antitone
     {K : Type u} [Field K] [NumberField K]
@@ -107,7 +45,7 @@ theorem rayPrincipalIdeals_antitone
     rayPrincipalIdealSubgroup n ≤ rayPrincipalIdealSubgroup m := by
   apply Subgroup.closure_mono
   rintro I ⟨x, hx, hIx⟩
-  exact ⟨x, rayCongruent_of_le hmn hx, hIx⟩
+  exact ⟨x, IsRayCongruent.of_le hmn hx, hIx⟩
 
 /-- The ideal-theoretic ray class group modulo a larger modulus projects to
 the ray class group modulo a smaller modulus. -/

@@ -32,12 +32,8 @@ section CyclotomicExtension
 variable {p k : ℕ} [Fact p.Prime]
 variable {L : Type u} [Field L] [Algebra ℚ_[p] L]
 
-local instance padicCyclotomicTotallyRamifiedValuationRingEquivAlgebraPadicInt : Algebra ℤ_[p] L :=
-  ((algebraMap ℚ_[p] L).comp (algebraMap ℤ_[p] ℚ_[p])).toAlgebra
-
-local instance padicCyclotomicTotallyRamifiedValuationRingEquivScalarTowerPadicInt :
-    IsScalarTower ℤ_[p] ℚ_[p] L :=
-  IsScalarTower.of_algebraMap_eq' rfl
+attribute [local instance] padicCyclotomicTotallyRamifiedAlgebraPadicInt
+  padicCyclotomicTotallyRamifiedScalarTowerPadicInt
 
 /-- The concrete ring `ℤ_[p][ζ - 1]` is canonically equivalent to the
 valuation subring in the actual-integral-closure complete-DVF model, and the

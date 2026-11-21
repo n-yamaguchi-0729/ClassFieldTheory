@@ -159,8 +159,28 @@ theorem commZ₀_formal {X₀ X₁ X₂ S : Scheme.{u}} (p₁ : X₀ ⟶ X₁) (
     eqToHom_app, eqToHom_trans_assoc, reassoc_of% c0] at cs ⊢
   exact cs
 
-theorem gluedIso_hom (k : ι) : (gluedIso U D k).hom =
-    (restrictFunctorIsoPullback (incl U k)).inv.app (glued U D) ≫ restrictGluedHom U D k := rfl
+theorem gluedIso_hom (k : ι) :
+    @Eq (_root_.AlgebraicGeometry.Scheme.Modules.Hom (X := (U k : Scheme.{u}))
+      ((Modules.pullback (incl U k)).obj (glued U D)) (Dobj U D k))
+      (gluedIso U D k).hom
+      ((restrictFunctorIsoPullback (incl U k)).inv.app (glued U D) ≫
+        restrictGluedHom U D k) :=
+  Iso.trans_hom ((restrictFunctorIsoPullback (incl U k)).app (glued U D)).symm
+    (@asIso _ _ _ _ (restrictGluedHom U D k) (isIso_restrictGluedHom U D k))
+
+/-- Compatibility of the fiber isomorphisms with the two overlap transitions. -/
+def overlapSquareCommutes {κ : Type u} {S Z : Scheme.{u}}
+    {X : κ → Scheme.{u}} (f : ∀ k, X k ⟶ S) (E : MOD.DescentData f)
+    (i j : κ) (q : Z ⟶ S) (a : Z ⟶ X i) (b : Z ⟶ X j)
+    (wa : a ≫ f i = q) (wb : b ≫ f j = q) (G : S.Modules)
+    (ei : (Modules.pullback (f i)).obj G ≅ E.obj i)
+    (ej : (Modules.pullback (f j)).obj G ≅ E.obj j) : Prop :=
+    @Eq (_root_.AlgebraicGeometry.Scheme.Modules.Hom (X := Z)
+      ((Modules.pullback a).obj ((Modules.pullback (f i)).obj G))
+      ((Modules.pullback b).obj (E.obj j)))
+      ((MOD.map a.op.toLoc).toFunctor.map ei.hom ≫ E.hom q a b wa wb)
+      (((MOD.toDescentData f).obj G).hom q a b wa wb ≫
+        (MOD.map b.op.toLoc).toFunctor.map ej.hom)
 
 -- Transport the restriction square before specializing its schemes to covering opens.
 private theorem comm_of_restriction_square {κ : Type u} {S Z : Scheme.{u}}
@@ -180,12 +200,8 @@ private theorem comm_of_restriction_square {κ : Type u} {S Z : Scheme.{u}}
       E.hom q a b wa wb ≫ (restrictFunctorIsoPullback b).inv.app (E.obj j) = rho)
     (cs : castComp a (f i) q wa G ≫ (restrictFunctor a).map ri ≫ rho =
       castComp b (f j) q wb G ≫ (restrictFunctor b).map rj) :
-    @Eq (_root_.AlgebraicGeometry.Scheme.Modules.Hom (X := Z)
-      ((Modules.pullback a).obj ((Modules.pullback (f i)).obj G))
-      ((Modules.pullback b).obj (E.obj j)))
-      ((MOD.map a.op.toLoc).toFunctor.map ei.hom ≫ E.hom q a b wa wb)
-      (((MOD.toDescentData f).obj G).hom q a b wa wb ≫
-        (MOD.map b.op.toLoc).toFunctor.map ej.hom) := by
+    overlapSquareCommutes f E i j q a b wa wb G ei ej := by
+  unfold overlapSquareCommutes
   let transition : (Modules.pullback a).obj (E.obj i) ⟶
       (Modules.pullback b).obj (E.obj j) := E.hom q a b wa wb
   let canonical : (Modules.pullback a).obj ((Modules.pullback (f i)).obj G) ⟶
@@ -232,26 +248,37 @@ private theorem comm_of_restriction_square {κ : Type u} {S Z : Scheme.{u}}
     rfl
   exact hMap₁.trans (hFormal.trans (hCanonical.trans hMap₂).symm)
 
-theorem commZ₀ (i j : ι) :
-    @Eq (_root_.AlgebraicGeometry.Scheme.Modules.Hom
-      (X := ((U i ⊓ U j : Y.Opens) : Scheme.{u}))
-      ((Modules.pullback (p₁ U i j)).obj
-        ((Modules.pullback (incl U i)).obj (glued U D)))
-      ((Modules.pullback (p₂ U i j)).obj (Dobj U D j)))
-      ((MOD.map (p₁ U i j).op.toLoc).toFunctor.map (gluedIso U D i).hom ≫
-        D.hom (U i ⊓ U j).ι (p₁ U i j) (p₂ U i j)
-          (Y.homOfLE_ι inf_le_left) (Y.homOfLE_ι inf_le_right))
-      (((MOD.toDescentData (incl U)).obj (glued U D)).hom
-          (U i ⊓ U j).ι (p₁ U i j) (p₂ U i j)
-          (Y.homOfLE_ι inf_le_left) (Y.homOfLE_ι inf_le_right) ≫
-        (MOD.map (p₂ U i j).op.toLoc).toFunctor.map (gluedIso U D j).hom) := by
-  exact comm_of_restriction_square (incl U) D i j (U i ⊓ U j).ι
+private theorem comm_of_cover_overlap (i j : ι) (G : Y.Modules)
+    (ei : (Modules.pullback (incl U i)).obj G ≅ D.obj i)
+    (ej : (Modules.pullback (incl U j)).obj G ≅ D.obj j)
+    (ri : (restrictFunctor (incl U i)).obj G ⟶ D.obj i)
+    (rj : (restrictFunctor (incl U j)).obj G ⟶ D.obj j)
+    (hei : ei.hom = (restrictFunctorIsoPullback (incl U i)).inv.app G ≫ ri)
+    (hej : ej.hom = (restrictFunctorIsoPullback (incl U j)).inv.app G ≫ rj)
+    (cs :
+      castComp (p₁ U i j) (incl U i) (U i ⊓ U j).ι (Y.homOfLE_ι inf_le_left) G ≫
+        (restrictFunctor (p₁ U i j)).map ri ≫ (ρ U D i j).hom =
+      castComp (p₂ U i j) (incl U j) (U i ⊓ U j).ι (Y.homOfLE_ι inf_le_right) G ≫
+        (restrictFunctor (p₂ U i j)).map rj) :
+    overlapSquareCommutes (incl U) D i j (U i ⊓ U j).ι
+      (p₁ U i j) (p₂ U i j) (Y.homOfLE_ι inf_le_left) (Y.homOfLE_ι inf_le_right) G ei ej := by
+  have h := comm_of_restriction_square (S := Y)
+    (Z := ((U i ⊓ U j : Y.Opens) : Scheme.{u})) (X := fun k => (U k : Scheme.{u}))
+    (incl U) D i j (U i ⊓ U j).ι
     (p₁ U i j) (p₂ U i j) (Y.homOfLE_ι inf_le_left) (Y.homOfLE_ι inf_le_right)
-    (glued U D) (gluedIso U D i) (gluedIso U D j)
-    (restrictGluedHom U D i) (restrictGluedHom U D j)
-    (gluedIso_hom U D i) (gluedIso_hom U D j) (ρ U D i j).hom
-    (τ_hom_eq U D i j (U i ⊓ U j) inf_le_left inf_le_right).symm
+    G ei ej ri rj hei hej (ρ U D i j).hom
+    (τ_hom_eq U D i j (U i ⊓ U j) inf_le_left inf_le_right).symm cs
+  exact h
+
+
+theorem commZ₀ (i j : ι) :
+    overlapSquareCommutes (incl U) D i j (U i ⊓ U j).ι
+      (p₁ U i j) (p₂ U i j) (Y.homOfLE_ι inf_le_left) (Y.homOfLE_ι inf_le_right)
+      (glued U D) (gluedIso U D i) (gluedIso U D j) :=
+  comm_of_cover_overlap U D i j (glued U D) (gluedIso U D i) (gluedIso U D j)
+    (restrictGluedHom U D i) (restrictGluedHom U D j) (gluedIso_hom U D i) (gluedIso_hom U D j)
     (comm_sections U D i j)
+
 
 theorem gluedIso_comm ⦃Z : Scheme.{u}⦄ (q : Z ⟶ Y) ⦃i j : ι⦄ (f₁ : Z ⟶ (U i : Scheme.{u})) (f₂ : Z
     ⟶ (U j : Scheme.{u}))

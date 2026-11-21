@@ -36,7 +36,7 @@ private theorem finiteIndexNormalAddSubgroup_eq_zmultiples_index
     H.toAddSubgroup =
       AddSubgroup.zmultiples (H.toAddSubgroup.index : ℤ) := by
   obtain ⟨d, hd⟩ :=
-    H.toAddSubgroup.isAddCyclic_iff_exists_zmultiples_eq_top.mp inferInstance
+    H.toAddSubgroup.isAddCyclic_iff_exists_zmultiples_eq.mp inferInstance
   have hH : H.toAddSubgroup = AddSubgroup.zmultiples d := hd.symm
   have hindex : H.toAddSubgroup.index = d.natAbs := by
     rw [hH, Int.index_zmultiples]

@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Over
 public import Nyll.GaloisCohomology.Kummer.FiniteGaloisUnitsH2TowerNaturality
 
@@ -47,9 +49,12 @@ theorem completionUnitsH2Map_inflation_eq_zero_iff
   let w := u.restrict L
   let v := w.restrict K
   have huv : u.restrict K = v := (restrict_restrict (F := K) (E := L) u).symm
-  let avw : Algebra v.adicCompletion w.adicCompletion := (completionMapOver v w rfl).toAlgebra
-  let awu : Algebra w.adicCompletion u.adicCompletion := (completionMapOver w u rfl).toAlgebra
-  let avu : Algebra v.adicCompletion u.adicCompletion := (completionMapOver v u huv).toAlgebra
+  let avw : Algebra v.adicCompletion w.adicCompletion :=
+    (AlgebraicCurve.Place.completionMapOver v w rfl).toAlgebra
+  let awu : Algebra w.adicCompletion u.adicCompletion :=
+    (AlgebraicCurve.Place.completionMapOver w u rfl).toAlgebra
+  let avu : Algebra v.adicCompletion u.adicCompletion :=
+    (AlgebraicCurve.Place.completionMapOver v u huv).toAlgebra
   let aKw : Algebra K w.adicCompletion :=
     ((algebraMap L w.adicCompletion).comp (algebraMap K L)).toAlgebra
   let aKu : Algebra K u.adicCompletion :=
@@ -66,21 +71,25 @@ theorem completionUnitsH2Map_inflation_eq_zero_iff
     IsScalarTower.of_algebraMap_eq (fun x =>
       congrArg (algebraMap M u.adicCompletion) (IsScalarTower.algebraMap_apply K L M x))
   have hKvw : IsScalarTower K v.adicCompletion w.adicCompletion :=
-    IsScalarTower.of_algebraMap_eq (fun x => (completionMapOver_algebraMap v w rfl x).symm)
+    IsScalarTower.of_algebraMap_eq
+      (fun x => (AlgebraicCurve.Place.completionMapOver_algebraMap v w rfl x).symm)
   have hKvu : IsScalarTower K v.adicCompletion u.adicCompletion :=
-    IsScalarTower.of_algebraMap_eq (fun x => (completionMapOver_algebraMap v u huv x).symm)
+    IsScalarTower.of_algebraMap_eq
+      (fun x => (AlgebraicCurve.Place.completionMapOver_algebraMap v u huv x).symm)
   have hLwu : IsScalarTower L w.adicCompletion u.adicCompletion :=
-    IsScalarTower.of_algebraMap_eq (fun x => (completionMapOver_algebraMap w u rfl x).symm)
+    IsScalarTower.of_algebraMap_eq
+      (fun x => (AlgebraicCurve.Place.completionMapOver_algebraMap w u rfl x).symm)
   have hKwu : IsScalarTower K w.adicCompletion u.adicCompletion := by
     apply IsScalarTower.of_algebraMap_eq
     intro x
     change algebraMap M u.adicCompletion (algebraMap K M x) =
-      completionMapOver w u rfl (algebraMap L w.adicCompletion (algebraMap K L x))
-    rw [completionMapOver_algebraMap, ← IsScalarTower.algebraMap_apply K L M]
+      AlgebraicCurve.Place.completionMapOver w u rfl
+        (algebraMap L w.adicCompletion (algebraMap K L x))
+    rw [AlgebraicCurve.Place.completionMapOver_algebraMap, ← IsScalarTower.algebraMap_apply K L M]
   have hvwu : IsScalarTower v.adicCompletion w.adicCompletion u.adicCompletion :=
     IsScalarTower.of_algebraMap_eq (fun x =>
       (congrArg (fun f : v.adicCompletion →+* u.adicCompletion => f x)
-        (completionMapOver_trans v w u rfl rfl huv)).symm)
+        (AlgebraicCurve.Place.completionMapOver_trans v w u rfl rfl huv)).symm)
   have hfinite : FiniteDimensional v.adicCompletion u.adicCompletion :=
     (completionFiniteGaloisOver v u huv).1
   have hgalois : IsGalois v.adicCompletion u.adicCompletion :=

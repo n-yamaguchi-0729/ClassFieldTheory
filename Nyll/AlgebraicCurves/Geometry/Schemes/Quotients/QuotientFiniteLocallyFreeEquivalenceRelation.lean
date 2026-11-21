@@ -3,6 +3,8 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_Scheme_exists_quotient_of_finiteLocallyFree_equivalenceRelation.lean
+Original singleton neighborhood source (pinned comparison revision):
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_Scheme_exists_invariant_isAffineOpen_of_finiteLocallyFree_equivalenceRelation.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -13,7 +15,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 module
 
 public import Nyll.SchemeTheory.Descent.AffineFiniteLocallyFreeQuotient
-public import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.InvariantIsAffineOpenFiniteLocallyFreeEquivalenceRelation
+public import Nyll.SchemeTheory.Descent.FiniteQuotients
 public import Nyll.AlgebraicCurves.Geometry.Schemes.Quotients.QuotientQuotientRestrict
 
 /-!
@@ -44,9 +46,17 @@ theorem exists_invariant_affine_cover
     ∃ W : X → X.Opens, (∀ x, IsAffineOpen (W x)) ∧ (∀ x, x ∈ W x) ∧ (∀ x, s ⁻¹ᵁ W x = t ⁻¹ᵁ W x) :=
       by
   choose U hU hxU using haff
-  choose W hW hxW _ hinv using fun x =>
-    exists_invariant_isAffineOpen_of_finiteLocallyFree_equivalenceRelation
-      s t hequiv (hU x) (hxU x)
+  have hneighborhood (x : X) :
+      ∃ W : X.Opens, IsAffineOpen W ∧ x ∈ W ∧ s ⁻¹ᵁ W = t ⁻¹ᵁ W := by
+    obtain ⟨W, hW, hxW, _, hinv⟩ :=
+      exists_invariant_isAffineOpen_of_finite_of_finiteLocallyFree_equivalenceRelation
+        s t hequiv (Set.finite_singleton x) (hU x) (by
+          intro y hy r hr
+          have h : y = x := Set.mem_singleton_iff.mp hy
+          subst y
+          exact hxU x r hr)
+    exact ⟨W, hW, hxW (Set.mem_singleton x), hinv⟩
+  choose W hW hxW hinv using hneighborhood
   exact ⟨W, hW, hxW, hinv⟩
 
 section restrict

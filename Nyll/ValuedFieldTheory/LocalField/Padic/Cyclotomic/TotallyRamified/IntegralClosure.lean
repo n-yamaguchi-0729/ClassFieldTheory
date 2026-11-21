@@ -33,12 +33,8 @@ section CyclotomicExtension
 variable {p k : ℕ} [Fact p.Prime]
 variable {L : Type u} [Field L] [Algebra ℚ_[p] L]
 
-local instance padicCyclotomicTotallyRamifiedIntegralClosureAlgebraPadicInt : Algebra ℤ_[p] L :=
-  ((algebraMap ℚ_[p] L).comp (algebraMap ℤ_[p] ℚ_[p])).toAlgebra
-
-local instance padicCyclotomicTotallyRamifiedIntegralClosureScalarTowerPadicInt :
-    IsScalarTower ℤ_[p] ℚ_[p] L :=
-  IsScalarTower.of_algebraMap_eq' rfl
+attribute [local instance] padicCyclotomicTotallyRamifiedAlgebraPadicInt
+  padicCyclotomicTotallyRamifiedScalarTowerPadicInt
 
 /-- the totally ramified cyclotomic theorem(iii): `ℤ_[p][ζ]` is the integral closure of `ℤ_[p]`
 in `ℚ_[p](ζ)`.  Since the base is complete, the integral closure is the

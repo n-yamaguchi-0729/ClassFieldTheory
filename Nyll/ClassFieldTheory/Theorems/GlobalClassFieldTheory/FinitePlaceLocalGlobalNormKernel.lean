@@ -6,7 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibComparison
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.FinitePlaceTensorNorm
 public import Nyll.ClassFieldTheory.Definitions.GlobalClassFieldTheory.FinitePlaceTensorNormSubgroup
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.LocalGlobalArtinCompatibility.Factorization
@@ -15,7 +16,6 @@ public import Mathlib.NumberTheory.NumberField.AdeleRing
 public import Mathlib.NumberTheory.NumberField.Completion.FinitePlace
 public import Mathlib.RingTheory.Norm.Basic
 public import Mathlib.RingTheory.TensorProduct.Basic
-public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidue
 
@@ -57,25 +57,12 @@ theorem exists_finiteAbelianGlobalArtin_finitePlaceNormKernel
         (x : (v.adicCompletion K)ˣ),
         artin (NumberField.IdeleClassGroup.ofAdicCompletion (𝓞 K) K v x) = 1 ↔
           x ∈ finitePlaceTensorNormSubgroup K L v := by
-  let e := IdeleGroup.ideleClassGroupEquivMathlib K
   let artin : NumberField.IdeleClassGroup (𝓞 K) K →* (L ≃ₐ[K] L) :=
-    (GlobalClassFieldTheory.Reciprocity.globalNormResidueMonoidHom K L).comp
-      e.symm.toMonoidHom
+    GlobalClassFieldTheory.Reciprocity.globalNormResidueMonoidHom K L
   refine ⟨artin, ?_, ?_⟩
-  · exact (GlobalClassFieldTheory.Reciprocity.globalNormResidueMonoidHom_surjective
-      K L).comp e.symm.surjective
+  · exact GlobalClassFieldTheory.Reciprocity.globalNormResidueMonoidHom_surjective K L
   · intro v x
-    have hclass :
-        e.symm (NumberField.IdeleClassGroup.ofAdicCompletion (𝓞 K) K v x) =
-          IdeleGroup.finitePlaceIdeleClass v x := by
-      apply e.injective
-      rw [e.apply_symm_apply]
-      exact (IdeleGroup.ideleClassGroupEquivMathlib_finitePlaceIdeleClass
-        K v x).symm
-    change GlobalClassFieldTheory.Reciprocity.globalNormResidueMonoidHom K L
-        (e.symm (NumberField.IdeleClassGroup.ofAdicCompletion (𝓞 K) K v x)) =
-          1 ↔ _
-    rw [hclass]
+    change artin (IdeleGroup.finitePlaceIdeleClass v x) = 1 ↔ _
     have hcompat :
         GlobalClassFieldTheory.Reciprocity.globalNormResidueMonoidHom K L
             (IdeleGroup.finitePlaceIdeleClass v x) =

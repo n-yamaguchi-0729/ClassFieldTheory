@@ -124,25 +124,25 @@ theorem commutatorIntermediateTransfer_eq_one
     MulEquiv.subgroupCongr hH
   change
     e.symm.abelianizationCongr.toMonoidHom.comp
-        (Abelianization.lift
+        (Group.Abelianization.lift
           (MonoidHom.transfer
-            (Abelianization.of : H →*
-              Abelianization H))) =
+            (Group.Abelianization.of : H →*
+              Group.Abelianization H))) =
       1
   have hresult :
       e.symm.abelianizationCongr.toMonoidHom.comp
-        (Abelianization.lift
+        (Group.Abelianization.lift
           (MonoidHom.transfer
-            (Abelianization.of : H →* Abelianization H))) =
+            (Group.Abelianization.of : H →* Group.Abelianization H))) =
         1 := by
     have hcongr :
         c.abelianizationCongr.toMonoidHom.comp
-            (Abelianization.lift
+            (Group.Abelianization.lift
               (MonoidHom.transfer
-                (Abelianization.of : H →* Abelianization H))) =
-          Abelianization.lift
+                (Group.Abelianization.of : H →* Group.Abelianization H))) =
+          Group.Abelianization.lift
             (MonoidHom.transfer
-              (Abelianization.of : S →* Abelianization S)) := by
+              (Group.Abelianization.of : S →* Group.Abelianization S)) := by
       exact @abelianization_transfer_congr_subgroup
         M.extensionQuotient inferInstance H S hH
         hHFiniteIndex hSFiniteIndex
@@ -150,36 +150,36 @@ theorem commutatorIntermediateTransfer_eq_one
     intro a
     change
       e.symm.abelianizationCongr
-          (Abelianization.lift
+          (Group.Abelianization.lift
             (MonoidHom.transfer
-              (Abelianization.of : H →*
-                Abelianization H)) a) =
+              (Group.Abelianization.of : H →*
+                Group.Abelianization H)) a) =
         1
-    rw [← abelianizationCongr_symm]
+    rw [← Group.abelianizationCongr_symm]
     apply e.abelianizationCongr.injective
     simp only [e.abelianizationCongr.apply_symm_apply, map_one]
     apply c.abelianizationCongr.injective
     simp only [map_one]
     calc
       c.abelianizationCongr
-          (Abelianization.lift
+          (Group.Abelianization.lift
             (MonoidHom.transfer
-              (Abelianization.of : H →*
-                Abelianization H)) a) =
-        Abelianization.lift
+              (Group.Abelianization.of : H →*
+                Group.Abelianization H)) a) =
+        Group.Abelianization.lift
             (MonoidHom.transfer
-              (Abelianization.of :
-                S →* Abelianization S)) a := by
+              (Group.Abelianization.of :
+                S →* Group.Abelianization S)) a := by
           change
             c.abelianizationCongr.toMonoidHom
-                (Abelianization.lift
+                (Group.Abelianization.lift
                   (MonoidHom.transfer
-                    (Abelianization.of : H →*
-                      Abelianization H)) a) =
-              Abelianization.lift
+                    (Group.Abelianization.of : H →*
+                      Group.Abelianization H)) a) =
+              Group.Abelianization.lift
                 (MonoidHom.transfer
-                  (Abelianization.of :
-                    S →* Abelianization S)) a
+                  (Group.Abelianization.of :
+                    S →* Group.Abelianization S)) a
           exact DFunLike.congr_fun hcongr a
       _ =
           GroupTheory.Transfer.Witt.commutatorTransfer
@@ -252,8 +252,11 @@ theorem intermediateNormQuotientInclusion_commutator_eq_zero
   let : (extensionSubgroup T.field.field M.field hLM).Normal := by
     change (extensionSubgroup (M.intermediateField S) M.field hLM).Normal
     exact M.extensionSubgroup_over_intermediate_normal S
+  let hBaseNormal : (extensionSubgroup T.base.field M.field (hLM.trans T.below)).Normal := by
+    change (extensionSubgroup K.field M.field M.below).Normal
+    exact M.normal
   let E : FiniteGaloisSubextension T.base.field :=
-    ⟨M.field, hLM.trans T.below, inferInstance, inferInstance⟩
+    ⟨M.field, hLM.trans T.below, hBaseNormal, inferInstance⟩
   let : Finite
       (T.field.field.toSubgroup ⧸
         extensionSubgroup T.field.field M.field hLM) := by

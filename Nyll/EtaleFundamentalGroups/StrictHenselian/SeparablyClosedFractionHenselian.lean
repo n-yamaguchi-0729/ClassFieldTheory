@@ -61,7 +61,7 @@ theorem exists_root_lift_of_isSepClosed_fractionRing
   classical
   generalize hn : f.natDegree = n
   induction n using Nat.strong_induction_on generalizing f with
-  | h n ih =>
+  | ind n ih =>
       have hfne1 : f ≠ 1 := by
         intro heq
         have hmem : (1 : R) ∈ IsLocalRing.maximalIdeal R := by

@@ -6,7 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UnramifiedNormComparison
 public import Mathlib.FieldTheory.Galois.Abelian
 public import Mathlib.NumberTheory.LocalField.Basic
@@ -32,6 +32,8 @@ maps for ramified extensions.
 
 @[expose] public section
 
+open LocalFieldTheory (localNormSubgroup)
+
 open scoped ValuativeRel
 open LocalFieldTheory.IsNonarchimedeanLocalField
 
@@ -56,8 +58,8 @@ theorem finiteAbelianLocalReciprocity_unramified_hom_ext
     (π : 𝒪[K])
     (hπ : (ValuativeRel.valuation K).IsUniformizer (π : K))
     (f g : Kˣ →ₜ* (L ≃ₐ[K] L))
-    (hfker : f.toMonoidHom.ker = fieldNormSubgroup K L)
-    (hgker : g.toMonoidHom.ker = fieldNormSubgroup K L)
+    (hfker : f.toMonoidHom.ker = localNormSubgroup K L)
+    (hgker : g.toMonoidHom.ker = localNormSubgroup K L)
     (hϖ : f ((Units.mk0 (π : K) hπ.ne_zero)⁻¹) =
       g ((Units.mk0 (π : K) hπ.ne_zero)⁻¹)) :
     f = g := by
@@ -83,9 +85,7 @@ theorem finiteAbelianLocalReciprocity_unramified_hom_ext
         rw [hπval]
         norm_num
   have hNorm (u : 𝒪[K]ˣ) :
-      integerUnitsToFieldUnits K u ∈ fieldNormSubgroup K L := by
-    change integerUnitsToFieldUnits K u ∈
-      LocalFieldTheory.localNormSubgroup K L
+      integerUnitsToFieldUnits K u ∈ localNormSubgroup K L := by
     rw [LocalClassFieldTheory.normSubgroup_eq_unramifiedNormSubgroup_of_isIntegralClosure
       K L]
     apply (LocalClassFieldTheory.mem_unramifiedNormSubgroup_iff K

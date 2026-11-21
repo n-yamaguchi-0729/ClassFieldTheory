@@ -43,11 +43,9 @@ theorem rayClassGroup_hom_ext_finitePrime
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (_ : v ∉ m.finitePart.support),
         f (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v))) =
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) =
           g (QuotientGroup.mk' m.congruenceSubgroup
-            (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-              (IdeleGroup.finitePrimeIdele v)))) :
+            (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v)))) :
     f = g := by
   let e := RayClass.rayClassGroupEquivIdealRayClassGroup m
   let q : RayClass.primeToModulusIdeals m →*
@@ -57,8 +55,7 @@ theorem rayClassGroup_hom_ext_finitePrime
       (hv : v ∉ m.finitePart.support) :
       e.symm (q (RayClass.primeToModulusIdeal m v hv)) =
         QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v)) := by
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v)) := by
     apply e.injective
     rw [e.apply_symm_apply]
     calc
@@ -68,9 +65,8 @@ theorem rayClassGroup_hom_ext_finitePrime
               finitePrimeIdele_mem_idelePrimeToModulusSubgroup m v hv⟩ :=
         (idealRayProjection_finitePrimeIdele m v hv).symm
       _ = e (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v))) :=
-        (rayClassGroupEquivIdealRayClassGroup_mk_primeTo m
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) :=
+        (RayClass.rayClassGroupEquivIdealRayClassGroup_mk_primeTo m
           ⟨IdeleGroup.finitePrimeIdele v,
             finitePrimeIdele_mem_idelePrimeToModulusSubgroup m v hv⟩).symm
   have hcomp :

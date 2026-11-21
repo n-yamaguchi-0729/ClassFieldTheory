@@ -31,12 +31,8 @@ section CyclotomicExtension
 variable {p k : ℕ} [Fact p.Prime]
 variable {L : Type u} [Field L] [Algebra ℚ_[p] L]
 
-local instance padicCyclotomicTotallyRamifiedPrimeElementAlgebraPadicInt : Algebra ℤ_[p] L :=
-  ((algebraMap ℚ_[p] L).comp (algebraMap ℤ_[p] ℚ_[p])).toAlgebra
-
-local instance padicCyclotomicTotallyRamifiedPrimeElementScalarTowerPadicInt :
-    IsScalarTower ℤ_[p] ℚ_[p] L :=
-  IsScalarTower.of_algebraMap_eq' rfl
+attribute [local instance] padicCyclotomicTotallyRamifiedAlgebraPadicInt
+  padicCyclotomicTotallyRamifiedScalarTowerPadicInt
 
 /-- The element `1 - ζ`, viewed in the explicit integer ring `ℤ_[p][ζ]`. -/
 def padicCyclotomicTotallyRamifiedOneSubPrimitiveRootInteger (ζ : L) :

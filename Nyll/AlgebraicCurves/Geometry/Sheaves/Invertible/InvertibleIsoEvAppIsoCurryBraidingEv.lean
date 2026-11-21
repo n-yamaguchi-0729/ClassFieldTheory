@@ -18,7 +18,7 @@ public import Nyll.SchemeTheory.Modules.PresheafInternalHom
 public import Nyll.SchemeTheory.Modules.Tensor.SheafificationMonoidal
 public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
 public import Nyll.SchemeTheory.CategoryTheory.MonoidalClosedIsoEvAppIsoCurryBraidingEv
-public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
 
 /-!
 # Evaluation isomorphisms for invertible scheme modules

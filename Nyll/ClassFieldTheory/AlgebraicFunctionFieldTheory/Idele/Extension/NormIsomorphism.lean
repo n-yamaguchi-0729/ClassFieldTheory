@@ -65,9 +65,7 @@ theorem norm_range_map_baseChange_of_vertical_finrank_one
     exact ⟨norm (k := k) (K := K) (L := L) c, ⟨c, rfl⟩,
       norm_baseChange_of_vertical_finrank_one hF hE c⟩
 
--- The quotient group carries a bundled commutative structure; mathlib deliberately
--- does not infer its unbundled commutativity property from that structure.
-local instance : IsMulCommutative (IdeleClassGroup k K) := ⟨⟨fun a b => mul_comm a b⟩⟩
+attribute [local instance] IdeleClassGroup.isMulCommutative
 
 /-- Degree-one changes of field presentation induce the actual norm-quotient isomorphism. -/
 def normQuotientCongrOfVerticalFinrankOne

@@ -54,12 +54,6 @@ theorem mem_comap_range_iff {F : OModulePresheaf π} {i : ℕ} (x : LinearMap.ke
       ↔ ∃ c, F.d K i c = x.1 := by
   simp only [Submodule.mem_comap, Submodule.subtype_apply, LinearMap.mem_range]
 
-omit [IsSeparated π] in
-theorem d_d_apply (F : OModulePresheaf π) (i : ℕ) (c : F.cochain K i) : F.d K (i + 1) (F.d K i c)
-    = 0 := by
-  have h := LinearMap.congr_fun (F.d_comp_d K i) c
-  rwa [LinearMap.comp_apply, LinearMap.zero_apply] at h
-
 theorem cochain_ses (i : ℕ) :
     Function.Injective (ιC i) ∧ Function.Surjective (πC i) ∧ LinearMap.range (ιC i) =
       LinearMap.ker (πC i) := by

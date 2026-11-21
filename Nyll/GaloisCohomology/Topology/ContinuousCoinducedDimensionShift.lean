@@ -83,20 +83,19 @@ def coinducedContinuousDimensionShift
     (coinducedContinuousModule_isZero G X n)
     (coinducedContinuousModule_isZero G X (n + 1))
 
-/-- A uniform degree-two vanishing theorem for discrete coefficients killed
-by an integer implies vanishing in all degrees at least two. The degree-two
-hypothesis is explicit; this criterion does not supply geometric vanishing. -/
-theorem continuousModule_isZero_of_degreeTwo
-    (m : ℤ)
-    (h₂ : ∀ (Y : TopRep.{u} ℤ G) [DiscreteTopology Y],
+/-- Uniform vanishing for bounded-torsion coefficients in a fixed positive
+degree implies vanishing in every higher degree, by the actual coinduced shift. -/
+theorem continuousModule_isZero_of_fixed_positive_degree
+    (d : ℕ) (m : ℤ)
+    (hd : ∀ (Y : TopRep.{u} ℤ G) [DiscreteTopology Y],
       Continuous (fun gy : G × Y => Y.ρ gy.1 gy.2) →
       (∀ y : Y, m • y = 0) →
-      IsZero (((continuousModuleComplexFunctor G).obj Y).homology 2))
+      IsZero (((continuousModuleComplexFunctor G).obj Y).homology (d + 1)))
     (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2))
     (hm : ∀ x : X, m • x = 0) (n : ℕ) :
-    IsZero (((continuousModuleComplexFunctor G).obj X).homology (n + 2)) := by
+    IsZero (((continuousModuleComplexFunctor G).obj X).homology (d + n + 1)) := by
   induction n generalizing X with
-  | zero => exact h₂ X hX hm
+  | zero => exact hd X hX hm
   | succ n ih =>
     have : DiscreteTopology X.coind₁ := coinduced_discreteTopology G X
     let Q := coinducedQuotient ℤ G X
@@ -109,6 +108,19 @@ theorem continuousModule_isZero_of_degreeTwo
         (coinducedQuotient_smul_eq_zero ℤ G X m
           (fun x => (int_smul_eq_zsmul X.hV2 m x).trans (hm x)) q)
     exact IsZero.of_iso (ih Q hQ hmQ)
-      (coinducedContinuousDimensionShift G X hX (n + 1)).symm
+      (coinducedContinuousDimensionShift G X hX (d + n)).symm
+
+/-- The original degree-two instance of the coinduced shift criterion. -/
+theorem continuousModule_isZero_of_degreeTwo
+    (m : ℤ)
+    (h₂ : ∀ (Y : TopRep.{u} ℤ G) [DiscreteTopology Y],
+      Continuous (fun gy : G × Y => Y.ρ gy.1 gy.2) →
+      (∀ y : Y, m • y = 0) →
+      IsZero (((continuousModuleComplexFunctor G).obj Y).homology 2))
+    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2))
+    (hm : ∀ x : X, m • x = 0) (n : ℕ) :
+    IsZero (((continuousModuleComplexFunctor G).obj X).homology (n + 2)) := by
+  have h : 1 + n + 1 = n + 2 := by omega
+  simpa only [h] using continuousModule_isZero_of_fixed_positive_degree G X 1 m h₂ hX hm n
 
 end TopRep

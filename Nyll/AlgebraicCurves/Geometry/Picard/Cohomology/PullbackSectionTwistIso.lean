@@ -83,14 +83,6 @@ theorem stwE5_comap_pow {X Y : Scheme.{u}} (I : Y.IdealSheafData) (f : X ⟶ Y) 
 
 variable {R : Type u} [CommRing R] {C : Scheme.{u}}
 
-theorem stwE5_sectionIdeal_comap (c : C ⟶ Spec (CommRingCat.of R)) [IsSeparated c]
-    (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c) {T T' : Scheme.{u}}
-    {t : T ⟶ Spec (CommRingCat.of R)} {t' : T' ⟶ Spec (CommRingCat.of R)}
-    (ψ : SchemeHomOver t' t) :
-    (RelPicard.sectionIdeal c ε t).comap (RelPicard.baseChangeSnd c ψ) =
-      RelPicard.sectionIdeal c ε t' :=
-  _root_.AlgebraicGeometry.RelPicard.sectionIdeal_comap c ε ψ
-
 theorem stwE5_isInvertible_sectionIdeal (c : C ⟶ Spec (CommRingCat.of R))
     [IsSeparated c] [SmoothOfRelativeDimension 1 c]
     (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c) {T : Scheme.{u}} (t : T ⟶ Spec
@@ -128,7 +120,7 @@ theorem _root_.AlgebraicGeometry.RelPicard.nonempty_pullback_sectionTwist_iso
   have hcomap : ((sectionIdeal c ε t) ^ r).comap (baseChangeSnd c ψ) = (sectionIdeal c ε t') ^ r
     := by
     rw [stwE5_comap_pow]
-    exact congrArg (· ^ r) (stwE5_sectionIdeal_comap c ε ψ)
+    exact congrArg (· ^ r) (_root_.AlgebraicGeometry.RelPicard.sectionIdeal_comap c ε ψ)
   obtain ⟨e⟩ := Scheme.IdealSheafData.IsInvertible.nonempty_pullback_invModule_iso
     (baseChangeSnd c ψ)
     (hJ.pow r) (hcomap ▸ hJ'.pow r)

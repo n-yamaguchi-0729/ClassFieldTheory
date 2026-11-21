@@ -73,7 +73,7 @@ theorem _root_.AlgebraicGeometry.Scheme.Modules.whiskerLeft_app_tensorSections
       AlgebraicGeometry.Scheme.Modules.tensorSections s (ψ.app U t) := by
   rw [← MonoidalCategory.id_tensorHom,
     AlgebraicGeometry.Scheme.Modules.tensorHom_app_tensorSections]
-  all_goals rfl
+  rfl
 end AlgebraicCurves.Geometry.Sheaves.Proofs.Scheme_Modules_whiskerLeft_app_tensorSections
 end ProofImplementation
 
@@ -105,7 +105,7 @@ theorem _root_.AlgebraicGeometry.Scheme.Modules.whiskerRight_app_tensorSections
       AlgebraicGeometry.Scheme.Modules.tensorSections (φ.app U s) t := by
   rw [← MonoidalCategory.tensorHom_id,
       AlgebraicGeometry.Scheme.Modules.tensorHom_app_tensorSections]
-  all_goals rfl
+  rfl
 end AlgebraicCurves.Geometry.Sheaves.Proofs.Scheme_Modules_whiskerRight_app_tensorSections
 end ProofImplementation
 
@@ -193,7 +193,7 @@ lemma unitTensorIso_hom_comp_leftUnitor_hom :
   rw [Functor.Monoidal.map_leftUnitor F, MonoidalCategory.tensorHom_def]
   simp only [Category.assoc]
   erw [← MonoidalCategory.leftUnitor_naturality ((adj X).counit.app N)]
-  all_goals rfl
+  rfl
 
 theorem leftUnitor_hom_app_tensorSections {U : X.Opens} (g : Γ(X, U)) (n : Γ(N, U)) :
     (λ_ N).hom.app U (Modules.tensorSections (L := 𝟙_ X.Modules) (M := N) g n) = g • n := by
@@ -264,7 +264,7 @@ theorem _root_.AlgebraicGeometry.Scheme.Modules.tensorPowSection_smul {X :
     rw [tensorPowSection_succ, tensorPowSection_succ, ih, tensorSections_smul_left,
       tensorSections_smul_right,
       smul_smul, ← pow_succ]
-    try rfl
+    rfl
 
 open AlgebraicGeometry.Scheme.Modules in
 /-- Compatibility with the former alternate monoidal presentation. -/

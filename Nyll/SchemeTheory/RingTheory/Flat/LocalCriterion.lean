@@ -599,7 +599,7 @@ theorem flat_of_torVanish_pow [IsNoetherianRing R] [IsNoetherianRing S] [Module.
       | add y _ z _ ihy ihz => exact Submodule.add_mem _ ihy ihz
     exact key x (hmem m)
   have hKrull := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M ⊗[R] 𝔞)
-    (I.map (algebraMap R S)) hIS
+    (I.map (algebraMap R S)) (by simpa only [Ideal.jacobson_bot] using hIS)
   have : x ∈ (⨅ i : ℕ, (I.map (algebraMap R S)) ^ i • ⊤ : Submodule S (M ⊗[R] 𝔞)) :=
     (Submodule.mem_iInf _).mpr hmemS
   rw [hKrull] at this

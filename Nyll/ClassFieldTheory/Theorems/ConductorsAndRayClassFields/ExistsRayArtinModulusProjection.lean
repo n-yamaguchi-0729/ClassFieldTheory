@@ -33,29 +33,6 @@ universe u
 
 namespace ClassFieldTheory
 
-private theorem rayArtin_prime_eq_arithmeticPrimeArtin
-    {K : Type u} [Field K] [NumberField K]
-    {m : RayClassModulus K} (R : RayClassFieldRealization K m)
-    (v : HeightOneSpectrum (𝓞 K))
-    (hv : v ∉ m.finitePart.support) :
-    R.rayArtin (rayClassOfFinitePrime m v hv) =
-      GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-        (K := K) (L := R.extension) v := by
-  let w₀ := _root_.chosenFinitePlaceExtension (L := R.extension) v
-  let w := _root_.finitePlaceExtensionCentre (K := K) (L := R.extension) v w₀
-  have hw : w.asIdeal.LiesOver v.asIdeal :=
-    _root_.finitePlaceExtensionCentre_liesOver
-      (K := K) (L := R.extension) v w₀
-  have hunram : Algebra.IsUnramifiedAt (𝓞 K) w.asIdeal :=
-    (R.unramifiedOutsideModulus.1 v hv) w.asIdeal inferInstance hw
-  calc
-    R.rayArtin (rayClassOfFinitePrime m v hv) =
-        arithmeticFrobeniusAt (K := K) w := R.artin_frobenius v hv w hw
-    _ = GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-          (K := K) (L := R.extension) v :=
-      (GlobalClassFieldComparison.arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
-        (K := K) (L := R.extension) v w hw hunram).symm
-
 private theorem rayClassFieldRealization_norm_range
     {K : Type u} [Field K] [NumberField K]
     {m : RayClassModulus K} (R : RayClassFieldRealization K m) :
@@ -72,13 +49,13 @@ private theorem rayClassFieldRealization_norm_range
   have hvm : v ∉ m.finitePart.support := hv
   calc
     e (QuotientGroup.mk' m'.congruenceSubgroup
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (IdeleGroup.finitePrimeIdele v))) =
         R.rayArtin (rayClassOfFinitePrime m v hvm) := by
       change R.artinEquiv
         ((GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K m).symm
           (QuotientGroup.mk' m'.congruenceSubgroup
-            (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+            (IdeleGroup.toStandardClass K
               (IdeleGroup.finitePrimeIdele v)))) = _
       rw [← GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele_prime K m v hvm]
       exact congrArg R.artinEquiv

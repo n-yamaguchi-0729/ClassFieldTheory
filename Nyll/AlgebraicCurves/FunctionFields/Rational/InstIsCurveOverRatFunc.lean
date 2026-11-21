@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.KaehlerRankOneTranscendental
 public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
 public import Nyll.AlgebraicCurves.Places.Rational.Basic
 public import Nyll.AlgebraicCurves.Places.Rational.Infinity
@@ -169,24 +170,8 @@ open _root_.AlgebraicCurve
 
 variable (K : Type*) [Field K]
 
-/-- The single differential basis for a polynomial ring, transported from its standard module. -/
-def kaehlerPolynomialBasis : Basis Unit K[X] Ω[K[X]⁄K] :=
-  (Basis.singleton Unit K[X]).map (KaehlerDifferential.polynomialEquiv K).symm
-
-scoped instance instFormallyEtalePolynomialRatFunc : Algebra.FormallyEtale K[X] (RatFunc K) :=
-  Algebra.FormallyEtale.of_isLocalization (nonZeroDivisors K[X])
-
-/-- The polynomial differential basis transported to the rational function field. -/
-def kaehlerRatFuncBasis : Basis Unit (RatFunc K) Ω[(RatFunc K)⁄K] :=
-  ((kaehlerPolynomialBasis K).baseChange (RatFunc K)).map
-    (KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale K K[X] (RatFunc K))
-
-theorem kaehlerRankOne_ratFunc : KaehlerRankOne K (RatFunc K) :=
-  ⟨Module.Free.of_basis (kaehlerRatFuncBasis K),
-    (Module.finrank_eq_card_basis (kaehlerRatFuncBasis K)).trans Fintype.card_unit⟩
-
 scoped instance instIsCurveOverRatFunc : IsCurveOver K (RatFunc K) :=
-  RationalFunctionField.isCurveOver_of_kaehlerRankOne K (kaehlerRankOne_ratFunc K)
+  RationalFunctionField.isCurveOver_of_kaehlerRankOne K (KaehlerDifferential.rankOne_ratFunc K)
 
 variable {F : Type*} [Field F] [Algebra K F]
 variable {K}

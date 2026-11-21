@@ -49,8 +49,12 @@ namespace PthPowerIndex
 
 open IntermediateField Polynomial
 
-private def frobeniusSubfield (M : Type*) [Field M] (p : ℕ) [ExpChar M p] : Subfield M :=
+/-- The subfield of `p`-th powers in exponential characteristic `p`. -/
+def _root_.AlgebraicCurve.frobeniusSubfield
+    (M : Type*) [Field M] (p : ℕ) [ExpChar M p] : Subfield M :=
   (frobenius M p).fieldRange
+
+open _root_.AlgebraicCurve (frobeniusSubfield)
 
 private theorem mem_frobeniusSubfield_iff {M : Type*} [Field M] (p : ℕ) [ExpChar M p] {a : M} :
     a ∈ frobeniusSubfield M p ↔ ∃ b : M, b ^ p = a := by
@@ -161,7 +165,7 @@ private theorem pDigits_linearIndependent {t : M} (htp : ∀ a : M, a ^ p ≠ t)
     simpa only [frobenius_def] using hcp'
   have hirr : Irreducible (X ^ p - C (⟨t ^ p, pow_mem_frobeniusSubfield p t⟩ :
       frobeniusSubfield M p)) :=
-    X_pow_sub_C_irreducible_of_prime hp.out htp'
+    irreducible_X_pow_sub_C_of_prime hp.out htp'
   have hroot : (aeval (R := ↥(frobeniusSubfield M p)) t)
       (X ^ p - C (⟨t ^ p, pow_mem_frobeniusSubfield p t⟩ : frobeniusSubfield M p)) = 0 := by
     simp only [map_sub, map_pow, aeval_X, aeval_C]
@@ -303,7 +307,7 @@ private theorem finrank_frobeniusSubfield_adjoin_transcendental [PerfectField K]
         Polynomial.natDegree_le_of_dvd (minpoly.dvd _ _ (by
           simp only [map_sub, map_pow, aeval_X, aeval_C]; exact sub_eq_zero.mpr rfl))
           (monic_X_pow_sub_C _ hp.out.ne_zero).ne_zero
-    _ = p := natDegree_X_pow_sub_C
+    _ = p := natDegree_X_pow_sub_C tp
 
 end AdjoinIndex
 
@@ -359,7 +363,7 @@ theorem _root_.AlgebraicCurve.finrank_frobeniusSubfield_eq
     [FiniteDimensional (frobenius E p).fieldRange E] :
     Module.finrank (frobenius M p).fieldRange M =
       Module.finrank (frobenius E p).fieldRange E := by
-  let : FiniteDimensional (AlgebraicCurve.PthPowerIndex.frobeniusSubfield E p) E := by
+  let : FiniteDimensional (AlgebraicCurve.frobeniusSubfield E p) E := by
     change FiniteDimensional (frobenius E p).fieldRange E
     infer_instance
   exact AlgebraicCurve.PthPowerIndex.finrank_frobeniusSubfield_eq p

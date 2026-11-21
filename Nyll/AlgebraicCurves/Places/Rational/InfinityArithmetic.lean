@@ -64,7 +64,7 @@ theorem ord_eq_neg_intDegree_of_forall_ne_ofHeightOneSpectrum {K : Type*} [Field
   rw [v.ord_eq_neg_log_of_valuationSubring_eq (RatFunc.inftyValuation K)
       (AlgebraicCurve.RationalFunctionField.toValuationSubring_eq_of_forall_ne_ofHeightOneSpectrum
         v hv).symm hπ hf,
-    RatFunc.inftyValuation_apply, RatFunc.inftyValuation_of_nonzero K hf, log_exp]
+    RatFunc.inftyValuation_apply, RatFunc.inftyValuation_of_ne_zero K hf, log_exp]
 end RationalFunctionField_ord_eq_neg_intDegree_of_forall_ne_ofHeightOneSpectrum
 end AlgebraicCurves.Places.Rational.Proofs
 end ProofImplementation
@@ -212,7 +212,7 @@ theorem exists_sub_algebraMap_intDegree_neg {x : RatFunc K}
   rcases eq_or_ne x 0 with rfl | hx0
   · exact ⟨0, Or.inl (by rw [map_zero, sub_self])⟩
   have hdeg : x.intDegree ≤ 0 := by
-    rw [RatFunc.inftyValuation_apply, RatFunc.inftyValuation_of_nonzero K hx0,
+    rw [RatFunc.inftyValuation_apply, RatFunc.inftyValuation_of_ne_zero K hx0,
       show (1 : ℤᵐ⁰) = exp 0 from rfl, exp_le_exp] at hx
     exact hx
   have hnum0 : x.num ≠ 0 := RatFunc.num_ne_zero hx0

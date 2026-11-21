@@ -74,7 +74,7 @@ noncomputable def finiteAbelianGaloisDiagram :
   obj N := ProfiniteGrp.of
     (Gal(absoluteFiniteQuotientField K N / K))
   map {N M} f := ProfiniteGrp.ofHom <|
-    intermediateFieldRestrictContinuous K
+    RamificationTheory.intermediateFieldRestrictContinuous K
       (absoluteFiniteQuotientField K M)
       (absoluteFiniteQuotientField K N)
       (absoluteFiniteQuotientField_antitone (leOfHom f))

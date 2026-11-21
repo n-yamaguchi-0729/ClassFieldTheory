@@ -39,7 +39,7 @@ theorem map_eq_of_isPGroup_of_index_not_dvd
   let T : Sylow p H := S.mapSurjective hf
   have hQT : Q ≤ (T : Subgroup H) := hQ.le_sylow_of_normal T
   have hTQ : (T : Subgroup H) = Q :=
-    (hQ.toSylow hQindex).is_maximal' T.isPGroup' hQT
+    (hQ.toSylow hQindex).maximal_isPGroup.eq_of_ge T.isPGroup hQT
   exact hTQ
 
 end EtaleFundamentalGroups.Inertia

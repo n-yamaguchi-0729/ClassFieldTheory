@@ -303,19 +303,6 @@ theorem chi_additive (S : ShortComplex X.Modules) (hS : S.ShortExact)
     (app01_comp_cechDiff x 𝒱 S.f) (app01_comp_cechDiff x 𝒱 S.g)
   exact h.2.2
 
-theorem nonempty_linearEquiv_of_iso {M M' : X.Modules} (e : M ≅ M') :
-    Nonempty ((𝒱.sectionsOf x M).H0 ≃ₗ[k] (𝒱.sectionsOf x M').H0) ∧
-      Nonempty ((𝒱.sectionsOf x M).H1 ≃ₗ[k] (𝒱.sectionsOf x M').H1) := by
-  obtain ⟨𝒱₀, h0, h1, ⟨f0⟩, ⟨f1⟩⟩ :=
-    Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso x x (Iso.refl X)
-      (Category.id_comp x)
-      𝒱 M' M (e ≪≫ ((Scheme.Modules.pullbackId X).app M').symm)
-  obtain ⟨U0, U1, a0, a1, hsup, hinf⟩ := 𝒱₀
-  obtain ⟨V0, V1, b0, b1, hsup', hinf'⟩ := 𝒱
-  simp only [Iso.refl_hom, Scheme.Hom.id_preimage] at h0 h1
-  subst h0 h1
-  exact ⟨⟨f0⟩, ⟨f1⟩⟩
-
 /-- Identify the kernel ideal module of the subscheme inclusion with the original ideal module. -/
 noncomputable def kerModuleIso (I : X.IdealSheafData) : I.subschemeι.ker.module ≅ I.module :=
   eqToIso (by rw [Scheme.IdealSheafData.ker_subschemeι])
@@ -373,9 +360,9 @@ theorem eulerChar_sectionsOf_tensor_invModule_eq
     (OModulePresheaf.cechFinite_toOrderedAffineCover_iff (OModulePresheaf.ofModules x L) 𝒱).mp
       (OModulePresheaf.cechFinite_ofModules_of_locallyTrivial x L hL.exists_trivialization
         𝒱.toOrderedAffineCover)
-  obtain ⟨⟨t1₀⟩, ⟨t1₁⟩⟩ := Ws31ChiA.nonempty_linearEquiv_of_iso x 𝒱 e₁'
-  obtain ⟨⟨t2₀⟩, ⟨t2₁⟩⟩ := Ws31ChiA.nonempty_linearEquiv_of_iso x 𝒱 e₂
-  obtain ⟨⟨t3₀⟩, ⟨t3₁⟩⟩ := Ws31ChiA.nonempty_linearEquiv_of_iso x 𝒱 e₃
+  obtain ⟨⟨t1₀⟩, ⟨t1₁⟩⟩ := Scheme.TwoAffineOpenCover.sectionsOf_linearEquiv_of_moduleIso x 𝒱 e₁'
+  obtain ⟨⟨t2₀⟩, ⟨t2₁⟩⟩ := Scheme.TwoAffineOpenCover.sectionsOf_linearEquiv_of_moduleIso x 𝒱 e₂
+  obtain ⟨⟨t3₀⟩, ⟨t3₁⟩⟩ := Scheme.TwoAffineOpenCover.sectionsOf_linearEquiv_of_moduleIso x 𝒱 e₃
   have : FiniteDimensional k (𝒱.sectionsOf x S.X₁).H0 :=
     have := hfinL.1; Module.Finite.equiv t1₀.symm
   have : FiniteDimensional k (𝒱.sectionsOf x S.X₁).H1 :=

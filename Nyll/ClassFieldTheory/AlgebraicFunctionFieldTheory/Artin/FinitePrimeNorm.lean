@@ -60,6 +60,7 @@ theorem normQuotientEquivOfFixedFieldPresentation_primeNorm
     let _ : Finite (H.field.toSubgroup ⧸ extensionSubgroup H.field T.field T.below) := T.finite
     let D := fullConstantDegreeData k K Ω
     let R := H.toFiniteResidueAbstractField D
+    let _ : (extensionSubgroup R.field T.field T.below).Normal := T.normal
     ∀ σ : D.FrobeniusElements R T.field T.below,
       let S := D.frobeniusFixedField R T.field T.below σ
       let A : IntermediateField K Ω := intrinsicFrobeniusAuxiliaryField k K Ω H T σ
@@ -71,10 +72,10 @@ theorem normQuotientEquivOfFixedFieldPresentation_primeNorm
         normQuotientEquivOfFixedFieldPresentation k K L Ω H T eF eE
             (QuotientGroup.mk (IdeleClassGroup.norm (k := k) (K := K)
               (L := A) c)) =
-          Abelianization.of ((AlgEquiv.autCongr eE).symm
+          Group.Abelianization.of ((AlgEquiv.autCongr eE).symm
             ((abstractExtensionQuotientEquivGaloisGroup K Ω H.field T.field T.below T.normal
               (D.frobeniusRestriction R T.field T.below σ)).restrictScalars K)) := by
-  intro hTfinite D R σ S A hSfinite hKS c hc
+  intro hTfinite D R hTnormal σ S A hSfinite hKS c hc
   let F := abstractFixedField K Ω H.field
   let E := abstractFixedField K Ω T.field
   let aFE : Algebra F E := (abstractRelativeFixedField K Ω T.below).algebra
@@ -105,7 +106,7 @@ theorem normQuotientEquivOfFixedFieldPresentation_primeNorm
   let eQ := abstractExtensionQuotientEquivGaloisGroup K Ω H.field T.field T.below T.normal
   have hprime : fixedFieldArtin k K Ω H T
       (IdeleClassGroup.norm (k := k) (K := F) (L := A) c) =
-        Abelianization.of (eQ q) :=
+        Group.Abelianization.of (eQ q) :=
     fixedFieldArtin_frobenius_primeNorm k K Ω H T σ c hc
   have hsymbol := normQuotientEquivOfFixedFieldPresentation_mk k K L Ω H T eF eE
     (IdeleClassGroup.norm (k := k) (K := K) (L := A) c)
@@ -115,9 +116,9 @@ theorem normQuotientEquivOfFixedFieldPresentation_primeNorm
           (IdeleClassGroup.norm (k := k) (K := K) (L := A) c))) := hsymbol
     _ = eG.abelianizationCongr (fixedFieldArtin k K Ω H T
         (IdeleClassGroup.norm (k := k) (K := F) (L := A) c)) := by rw [hnorm]
-    _ = Abelianization.of (eG (eQ q)) :=
-      (congrArg eG.abelianizationCongr hprime).trans (abelianizationCongr_of eG (eQ q))
-    _ = _ := congrArg Abelianization.of
+    _ = Group.Abelianization.of (eG (eQ q)) :=
+      (congrArg eG.abelianizationCongr hprime).trans (Group.abelianizationCongr_of eG (eQ q))
+    _ = _ := congrArg Group.Abelianization.of
       (congrArg (AlgEquiv.autCongr eE).symm
         (ClassFieldTheory.galoisRestrictScalarsEquivOfFinrankOne_apply hF (eQ q)))
 

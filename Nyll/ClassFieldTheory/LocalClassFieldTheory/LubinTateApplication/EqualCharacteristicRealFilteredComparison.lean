@@ -135,7 +135,7 @@ theorem
     letI : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
     (LocalFieldTheory.fieldPrincipalUnits B 0).map
-        (Universe.abelianLocalArtinMonoidHom B L) = ⊤ := by
+        (abelianLocalArtinMonoidHom B L) = ⊤ := by
   intro B L
   let pi : Bˣ := (equalCharacteristicLaurentUniformizerUnit F)⁻¹
   let : ValuativeRel B := equalCharacteristicLaurentValuativeRel F
@@ -148,8 +148,8 @@ theorem
     simpa only [B, pi] using
       equalCharacteristicLaurentUniformizerUnit_inv_valuationMap F
   have hpiKer :
-      Subgroup.zpowers pi ≤ (Universe.abelianLocalArtinMonoidHom B L).ker := by
-    rw [Universe.abelianLocalArtinMonoidHom_ker]
+      Subgroup.zpowers pi ≤ (abelianLocalArtinMonoidHom B L).ker := by
+    rw [abelianLocalArtinMonoidHom_ker]
     change Subgroup.zpowers pi ≤
       equalCharacteristicLubinTateNormSubgroup F n
     rw [
@@ -158,15 +158,15 @@ theorem
   apply top_unique
   intro sigma _
   obtain ⟨x, hx⟩ :=
-    Universe.abelianLocalArtinMonoidHom_surjective B L sigma
+    abelianLocalArtinMonoidHom_surjective B L sigma
   obtain ⟨u, hdecomp⟩ :=
     exists_integerUnit_mul_uniformizer_zpow B pi hpi x
   have hpowKer :
       pi ^ valuationMap B (Additive.ofMul x) ∈
-        (Universe.abelianLocalArtinMonoidHom B L).ker :=
+        (abelianLocalArtinMonoidHom B L).ker :=
     hpiKer (Subgroup.zpow_mem_zpowers pi _)
   have hpow :
-      Universe.abelianLocalArtinMonoidHom B L
+      abelianLocalArtinMonoidHom B L
           (pi ^ valuationMap B (Additive.ofMul x)) = 1 :=
     MonoidHom.mem_ker.mp hpowKer
   refine ⟨integerUnitsToFieldUnits B u, ?_, ?_⟩
@@ -253,7 +253,7 @@ theorem
   intro B L sharedOwner3 sharedOwner4 sharedOwner5
   change
     (LocalFieldTheory.fieldPrincipalUnits B (n + 1)).map
-        (Universe.abelianLocalArtinMonoidHom B L) = ⊥
+        (abelianLocalArtinMonoidHom B L) = ⊥
   exact
     (equalCharacteristicLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
       F n (n + 1) (by omega) (by omega)).trans
@@ -380,7 +380,7 @@ theorem
               F n (k : ℝ)
       change
         (LocalFieldTheory.fieldPrincipalUnits B k).map
-            (Universe.abelianLocalArtinMonoidHom B L) =
+            (abelianLocalArtinMonoidHom B L) =
           localUpperRamificationGroup B L t
       exact
         (equalCharacteristicLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup

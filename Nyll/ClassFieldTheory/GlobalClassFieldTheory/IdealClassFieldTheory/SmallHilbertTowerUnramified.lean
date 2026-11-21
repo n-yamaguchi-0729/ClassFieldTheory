@@ -27,6 +27,8 @@ unramifiedness at both finite and infinite places.
 
 @[expose] public section
 
+open ClassFieldTheory
+
 universe u
 
 open scoped NumberField

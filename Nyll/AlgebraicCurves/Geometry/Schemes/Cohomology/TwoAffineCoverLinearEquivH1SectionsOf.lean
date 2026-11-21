@@ -31,7 +31,7 @@ public import Nyll.AlgebraicCurves.Geometry.Picard.Functor.Functor
 public import Nyll.SchemeTheory.Modules.OpenImmersionUnit
 public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Complexes.KerDSuccLeRangeD
 public import Nyll.AlgebraicCurves.Cohomology.Sheaves.Coherent.QuasicoherentModules
-public import Nyll.AlgebraicCurves.Geometry.Sheaves.Frames.InvertibleModuleFrames
+public import Nyll.SchemeTheory.Modules.Frames.FrameFromTrivialization
 public import Nyll.SchemeTheory.Modules.Frames.IsFrameOnPullbackIsoUnit
 public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 

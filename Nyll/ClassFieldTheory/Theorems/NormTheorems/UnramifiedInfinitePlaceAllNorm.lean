@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
-public import Mathlib.NumberTheory.NumberField.Completion.LiesOverInstances
+public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 
 /-!
 # Norms at an unramified infinite place
@@ -20,7 +20,7 @@ unramified in the extension.
 
 @[expose] public section
 
-open scoped NumberField TensorProduct NumberField.LiesOver
+open scoped NumberField TensorProduct
 open NumberField
 
 noncomputable section
@@ -44,6 +44,8 @@ theorem isNormAtInfinitePlace_of_unramified
       rw [← hw, InfinitePlace.isUnramifiedIn_comap]
     exact h.mp hv
   let : w.1.LiesOver v.1 := ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
+  let : Algebra v.Completion w.Completion :=
+    AbsoluteValue.Completion.algebraOfLiesOver v.1 w.1
   have htop : infiniteTensorNormSubgroup (K := K) (L := L) v = ⊤ := by
     rw [infiniteTensorNormSubgroup_eq_localNormSubgroup (K := K) (L := L) v w hw]
     apply top_unique

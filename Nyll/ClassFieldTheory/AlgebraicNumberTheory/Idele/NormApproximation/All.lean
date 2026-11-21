@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.FinitePlaces
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormApproximation.InfinitePlaces
 
 /-! # Norm approximation at finite and infinite places -/

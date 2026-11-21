@@ -66,7 +66,7 @@ theorem finiteGaloisRestrictionGroupMap_surjective [IsGalois K L]
 theorem finiteGaloisRestrictionGroupMap_fixes_kernel
     (E : FiniteGaloisIntermediateField K L) :
     ∀ g : (galoisGroupObject K L).carrier,
-      E.toIntermediateField.fixingSubgroup.carrier g →
+      g ∈ E.toIntermediateField.fixingSubgroup →
       (finiteGaloisRestrictionGroupMap K L E).hom'.toFun g = 1 := by
   intro g hg
   exact (IntermediateField.restrictNormalHom_ker E.toIntermediateField).ge hg
@@ -100,7 +100,7 @@ theorem finiteGaloisFixingTopology_isTopologicalGroup
 intermediate field, before any integral closure is introduced. -/
 private theorem finiteField_mem_of_fixed [IsGalois K L]
     (E : FiniteGaloisIntermediateField K L) (x : L)
-    (h : ∀ g : Gal(L/K), E.toIntermediateField.fixingSubgroup.carrier g →
+    (h : ∀ g : Gal(L/K), g ∈ E.toIntermediateField.fixingSubgroup →
       g.toRingHom.toFun x = x) : x ∈ E.toIntermediateField := by
   rw [← InfiniteGalois.fixedField_fixingSubgroup E.toIntermediateField]
   exact (IntermediateField.mem_fixedField_iff E.toIntermediateField.fixingSubgroup x).mpr h
@@ -114,7 +114,7 @@ variable {A : Type u} {L : Type w} [CommRing A] [CommRing L] [Algebra A L]
 /-- A coefficient already in the literal subalgebra has an integral
 preimage in its literal normalization. No fraction field is involved. -/
 private theorem subalgebraNormalization_preimage_of_mem
-    (S : Subalgebra A L) (b : integralClosure A L) (hb : S.carrier b.val) :
+    (S : Subalgebra A L) (b : integralClosure A L) (hb : b.val ∈ S) :
     ∃ c : (subalgebraNormalizationCommAlgCat S).carrier,
       (subalgebraNormalizationRingMap S).toFun c = b := by
   let x : S := ⟨b.val, hb⟩
@@ -188,8 +188,8 @@ theorem finiteNormalizationOriginalAction_ringHom
 theorem finiteNormalizationActionDiagram_contraction
     (E : FiniteGaloisIntermediateField K L) (Q : Ideal (integralClosure A L)) :
     ∀ a : (finiteNormalizationActionDiagram A K L E).lowerRing.carrier,
-      (finiteAbsoluteNormalizationPrime A K L Q E).carrier a ↔
-        Q.carrier ((finiteNormalizationActionDiagram A K L E).ringMap.toFun a) := by
+      a ∈ finiteAbsoluteNormalizationPrime A K L Q E ↔
+        (finiteNormalizationActionDiagram A K L E).ringMap.toFun a ∈ Q := by
   intro a
   rfl
 
@@ -260,14 +260,14 @@ theorem actualNormalizationInertia_exists_finiteNative_restriction
     (Q : Ideal (integralClosure A L)) [hQ : Q.IsPrime]
     (E : FiniteGaloisIntermediateField K L)
     (τ : { g : (finiteGaloisGroupObject K L E).carrier //
-      ((finiteNormalizationActionDiagram A K L E).lowerInertia
-        (finiteAbsoluteNormalizationPrime A K L Q E)).carrier g }) :
+      g ∈ (finiteNormalizationActionDiagram A K L E).lowerInertia
+        (finiteAbsoluteNormalizationPrime A K L Q E) }) :
     ∃ σ : (actualNormalizationInertiaGroup A K L Q).carrier,
       (finiteGaloisRestrictionGroupMap K L E).hom'.toFun
           (actualNormalizationInertiaElement A K L Q σ) = τ.val := by
   have hmap := (finiteNormalizationActionDiagram_images A K L Q E (hQ := hQ)).2
-  have hτ : (((finiteNormalizationActionDiagram A K L E).upperInertia Q).map
-      (finiteNormalizationActionDiagram A K L E).groupMap).carrier τ.val := by
+  have hτ : τ.val ∈ ((finiteNormalizationActionDiagram A K L E).upperInertia Q).map
+      (finiteNormalizationActionDiagram A K L E).groupMap := by
     rw [hmap]
     exact τ.property
   obtain ⟨g, hg, hrestrict⟩ := hτ

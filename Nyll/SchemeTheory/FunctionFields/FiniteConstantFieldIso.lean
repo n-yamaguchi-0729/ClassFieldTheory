@@ -50,7 +50,7 @@ theorem mem_base_iff_pow_natCard
     [Algebra k F] (x : F) :
     x ∈ (algebraMap k F).range ↔ x ^ Nat.card k = x := by
   let _ : Fintype k := Fintype.ofFinite k
-  rw [← Fintype.card_eq_nat_card]
+  rw [Nat.card_eq_fintype_card]
   constructor
   · rintro ⟨a, rfl⟩
     rw [← map_pow, FiniteField.pow_card]
@@ -58,9 +58,9 @@ theorem mem_base_iff_pow_natCard
     have hs : (Polynomial.X ^ Fintype.card k - Polynomial.X : Polynomial k).Splits := by
       rw [Polynomial.splits_iff_card_roots, FiniteField.roots_X_pow_card_sub_X,
         ← Finset.card_def, Finset.card_univ,
-        FiniteField.X_pow_card_sub_X_natDegree_eq k Fintype.one_lt_card]
+        Polynomial.natDegree_X_pow_sub_X Fintype.one_lt_card]
     apply hs.mem_range_of_isRoot
-      (FiniteField.X_pow_card_sub_X_ne_zero k Fintype.one_lt_card)
+      (Polynomial.X_pow_sub_X_ne_zero Fintype.one_lt_card)
     simpa only [Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_X,
       Polynomial.IsRoot.def, Polynomial.eval_sub, Polynomial.eval_pow,
       Polynomial.eval_X, sub_eq_zero] using hx

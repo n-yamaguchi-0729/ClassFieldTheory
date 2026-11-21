@@ -6,8 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
-public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.Construction.MainNaturality
 
 /-!
 # Actual Galois restriction between fixed fields
@@ -124,24 +124,24 @@ theorem abstractFixedField_restrictNormal_abelianization
       IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
     let _ : IsGalois (abstractFixedField K Ω H) (abstractFixedField K Ω J) :=
       abstractRelativeFixedField_isGalois K Ω H J hJH hJnormal
-    ∀ z : Abelianization (H.toSubgroup ⧸ extensionSubgroup H U hUH),
-      Abelianization.map
+    ∀ z : Group.Abelianization (H.toSubgroup ⧸ extensionSubgroup H U hUH),
+      Group.Abelianization.map
           (AlgEquiv.restrictNormalHom (F := abstractFixedField K Ω H)
           (K₁ := abstractFixedField K Ω U) (abstractFixedField K Ω J))
           ((abstractExtensionQuotientEquivGaloisGroup K Ω H U hUH hUnormal).abelianizationCongr z) =
         (abstractExtensionQuotientEquivGaloisGroup K Ω H J hJH hJnormal).abelianizationCongr
-          (Abelianization.map
+          (Group.Abelianization.map
             (finiteReciprocityNaturalityRestriction H H J U hJH hUH le_rfl hUJ) z) := by
   intro hnJ hnU aFJ aFU aJU hFJU hgal z
   refine QuotientGroup.induction_on z ?_
   intro q
-  change Abelianization.of
+  change Group.Abelianization.of
       ((AlgEquiv.restrictNormalHom (F := abstractFixedField K Ω H)
           (K₁ := abstractFixedField K Ω U) (abstractFixedField K Ω J))
         (abstractExtensionQuotientEquivGaloisGroup K Ω H U hUH hUnormal q)) =
-    Abelianization.of (abstractExtensionQuotientEquivGaloisGroup K Ω H J hJH hJnormal
+    Group.Abelianization.of (abstractExtensionQuotientEquivGaloisGroup K Ω H J hJH hJnormal
       (finiteReciprocityNaturalityRestriction H H J U hJH hUH le_rfl hUJ q))
-  exact congrArg Abelianization.of
+  exact congrArg Group.Abelianization.of
     (abstractFixedField_restrictNormal_quotient K Ω H J U
       hJH hUH hUJ hJnormal hUnormal q)
 

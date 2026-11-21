@@ -18,6 +18,7 @@ public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquiv
 public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.Designation
 
 public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.Pullback
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
 
 /-!
 # Pullback on representing Picard schemes
@@ -57,7 +58,7 @@ theorem postComp_pullbackHom_classify {T : Scheme.{u}} (t : T ⟶ Spec (CommRing
     postComp (pullbackHom f hf hε h h') (h.classify t M hM) =
       h'.classify t (M.pullbackCurve f hf hε) (FibrewiseAlgEquivZero.pullbackCurve f hf hε hM) := by
   refine h'.classify_unique t _ _ _ ⟨?_⟩
-  exact (h'.poincare.pullbackAlongPullbackAlongIso' _ _).symm ≪≫
+  exact (h'.poincare.pullbackAlongPullbackAlongIso _ _).symm ≪≫
     (Scheme.Modules.pullback _).mapIso (h'.classify_spec D.toBase _ _).some ≪≫
     (h.poincare.pullbackCurvePullbackAlongIso f hf hε _) ≪≫
     (Scheme.Modules.pullback _).mapIso (h.classify_spec t M hM).some
@@ -84,7 +85,7 @@ theorem zeroSection_pullbackHom :
     (postComp (pullbackHom f hf hε h h') ⟨D.zeroSection, D.zeroSection_toBase⟩)
     ⟨D'.zeroSection, D'.zeroSection_toBase⟩ ⟨?_⟩
   · exact congrArg Subtype.val key
-  · exact (h'.poincare.pullbackAlongPullbackAlongIso' _ _).symm ≪≫
+  · exact (h'.poincare.pullbackAlongPullbackAlongIso _ _).symm ≪≫
       (Scheme.Modules.pullback _).mapIso (h'.classify_spec D.toBase _ _).some ≪≫
       (h.poincare.pullbackCurvePullbackAlongIso f hf hε _) ≪≫
       (Scheme.Modules.pullback _).mapIso h.zero.some ≪≫

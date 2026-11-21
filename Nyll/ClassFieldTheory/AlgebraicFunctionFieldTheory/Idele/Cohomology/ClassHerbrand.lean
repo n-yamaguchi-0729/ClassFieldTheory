@@ -79,7 +79,7 @@ theorem herbrandQuotient_eq_card (σ : L ≃ₐ[K] L)
         (Nat.card (L ≃ₐ[K] L) : ℚ) := by
   classical
   -- Share the canonical quotient structure when elaborating the two exact-sequence maps.
-  let : CommGroup (IdeleClassGroup k L) := inferInstance
+  let : CommGroup (IdeleClassGroup k L) := IdeleClassGroup.commGroup k L
   let hClassAction : MulDistribMulAction (L ≃ₐ[K] L) (IdeleClassGroup k L) :=
     galoisMulDistribMulAction (k := k) (K := K) (L := L)
   let : SMul (L ≃ₐ[K] L) (IdeleClassGroup k L) := hClassAction.toMulAction.toSMul

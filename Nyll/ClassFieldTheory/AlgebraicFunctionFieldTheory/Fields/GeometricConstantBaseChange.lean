@@ -128,12 +128,7 @@ local notation "C" => separableClosure k Ω
 local notation "G" => geometricConstantExtension k F Ω
 local notation "Y" => pullback c (specMap k C)
 
-/-- The geometric extension carries its canonical constant-field algebra. -/
-local instance geometricBaseChangeConstants : Algebra C G :=
-  constantAlgebra (K := F) C
-
-private local instance geometricBaseChangeConstantsTower : IsScalarTower k C G :=
-  constantScalarTower (K := F) C
+attribute [local instance] constantAlgebra constantScalarTower
 
 /-- The base-changed function field uses the scalar map from the base projection. -/
 local instance geometricBaseChangeFunctionFieldConstants : Algebra C (Y).functionField :=
@@ -209,8 +204,7 @@ theorem exists_geometricConstantBaseChangeAlgEquiv :
 
 variable [Finite k] [IsSepClosed Ω] [IsProper c] [SmoothOfRelativeDimension 1 c]
 
-private local instance geometricBaseChangeAlgebraicallyClosedConstants : IsAlgClosed C :=
-  IsAlgClosure.isAlgClosed (R := k) (K := C)
+attribute [local instance] geometricConstantField_isAlgClosed
 
 attribute [local instance] CurveModel.isIntegral CurveModel.isProper CurveModel.smooth
 

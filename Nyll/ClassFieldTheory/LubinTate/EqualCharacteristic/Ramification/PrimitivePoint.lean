@@ -275,7 +275,7 @@ theorem equalCharacteristicLubinTateBaseUniformizerInteger_irreducible
     (F : LocalField.{u, v} K₀) :
     Irreducible (equalCharacteristicLubinTateBaseUniformizerInteger F) := by
   exact
-    PowerSeries.X_irreducible.map
+    PowerSeries.irreducible_X.map
       (equalCharacteristicPowerSeriesEquivLubinTateBaseValuationSubring F)
 
 /-- The integral primitive division polynomial, with its coefficients

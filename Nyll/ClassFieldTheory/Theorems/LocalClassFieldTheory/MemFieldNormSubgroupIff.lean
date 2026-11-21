@@ -18,6 +18,8 @@ No Galois, local-field, or topological assumption is required.
 
 noncomputable section
 
+open LocalFieldTheory (normUnits)
+
 namespace ClassFieldTheory
 
 universe u v
@@ -30,7 +32,7 @@ theorem mem_fieldNormSubgroup_iff
     (x : Kˣ) :
     IsFieldNorm K L x ↔
       ∃ y : Lˣ, Algebra.norm K (y : L) = (x : K) := by
-  change (∃ y : Lˣ, fieldNormHom K L y = x) ↔
+  change (∃ y : Lˣ, normUnits K L y = x) ↔
     ∃ y : Lˣ, Algebra.norm K (y : L) = (x : K)
   constructor
   · rintro ⟨y, hy⟩

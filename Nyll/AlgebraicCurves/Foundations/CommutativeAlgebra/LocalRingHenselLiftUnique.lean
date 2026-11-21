@@ -361,7 +361,7 @@ theorem isClosed_intermediateField_of_finiteDimensional
   let := kw_ffgc_rankOne_adicCompletion (W.restrict F)
   let : NontriviallyNormedField (W.restrict F).adicCompletion :=
     Valued.toNontriviallyNormedField (W.restrict F).adicCompletion ℤᵐ⁰
-  exact E.toSubalgebra.toSubmodule.closed_of_finiteDimensional
+  exact E.toSubalgebra.toSubmodule.isClosed_of_finiteDimensional
 
 theorem adjoin_adicCompletion_eq_top_of_denseSubset {ζ : W.adicCompletion}
     (hint : IsIntegral (W.restrict F).adicCompletion ζ)
@@ -427,7 +427,7 @@ theorem finrank_adicCompletion_le_global_degree [FiniteDimensional F F'] :
   have hsurj : Function.Surjective (kw_ffgc_completionLinearCombination F W b) := by
     rw [← Set.range_eq_univ, ← LinearMap.coe_range,
       ← (LinearMap.range
-          (kw_ffgc_completionLinearCombination F W b)).closed_of_finiteDimensional.closure_eq]
+          (kw_ffgc_completionLinearCombination F W b)).isClosed_of_finiteDimensional.closure_eq]
     exact (denseRange_completionLinearCombination F W b).closure_range
   calc Module.finrank (W.restrict F).adicCompletion W.adicCompletion
       ≤ Module.finrank (W.restrict F).adicCompletion

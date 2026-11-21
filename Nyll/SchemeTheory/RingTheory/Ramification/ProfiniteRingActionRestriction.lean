@@ -85,7 +85,7 @@ lower coefficient map. This is a hypothesis to prove, never stored data. -/
 def HasFixedPreimages (D : RingActionRestriction) : Prop :=
   let : MulSemiringAction D.upperGroup.carrier D.upperRing.carrier := D.upperAction
   ∀ b : D.upperRing.carrier,
-    (∀ g : D.upperGroup.carrier, D.kernelGroup.carrier g → g • b = b) →
+    (∀ g : D.upperGroup.carrier, g ∈ D.kernelGroup → g • b = b) →
     ∃ a : D.lowerRing.carrier, D.ringMap.toFun a = b
 
 /-- The actual action square, stated before introducing any ring algebra. -/
@@ -101,7 +101,7 @@ def IsEquivariant (D : RingActionRestriction) : Prop :=
 def HasOpenFixedSets (D : RingActionRestriction) : Prop :=
   let : MulSemiringAction D.upperGroup.carrier D.upperRing.carrier := D.upperAction
   let : TopologicalSpace D.kernelGroup := D.kernelTopology
-  ∀ b : D.upperRing.carrier, IsOpen (fun g : D.kernelGroup => (g : D.upperGroup.carrier) • b = b)
+  ∀ b : D.upperRing.carrier, IsOpen {g : D.kernelGroup | (g : D.upperGroup.carrier) • b = b}
 
 /-- The literal ring-map algebra has precisely the supplied fixed preimages. -/
 private theorem isInvariant_of_fixedPreimages (D : RingActionRestriction)
@@ -117,7 +117,7 @@ private theorem isInvariant_of_fixedPreimages (D : RingActionRestriction)
 /-- The literal ring-map algebra realizes the supplied contraction. -/
 private theorem liesOver_of_contraction (D : RingActionRestriction)
     (p : Ideal D.lowerRing.carrier) (q : Ideal D.upperRing.carrier)
-    (hcontract : ∀ a : D.lowerRing.carrier, p.carrier a ↔ q.carrier (D.ringMap.toFun a)) :
+    (hcontract : ∀ a : D.lowerRing.carrier, a ∈ p ↔ D.ringMap.toFun a ∈ q) :
     let : Algebra D.lowerRing.carrier D.upperRing.carrier := D.ringMap.toAlgebra
     q.LiesOver p := by
   intro ringAlgebra
@@ -146,10 +146,10 @@ theorem images_of_profinite (D : RingActionRestriction)
     let : TopologicalSpace D.kernelGroup := D.kernelTopology
     CompactSpace D.kernelGroup → TotallyDisconnectedSpace D.kernelGroup →
     IsTopologicalGroup D.kernelGroup →
-    (∀ a : D.lowerRing.carrier, p.carrier a ↔ q.carrier (D.ringMap.toFun a)) →
+    (∀ a : D.lowerRing.carrier, a ∈ p ↔ D.ringMap.toFun a ∈ q) →
     D.HasFixedPreimages → D.HasOpenFixedSets →
     Function.Surjective D.groupMap.toFun →
-    (∀ g : D.upperGroup.carrier, D.kernelGroup.carrier g → D.groupMap.toFun g = 1) →
+    (∀ g : D.upperGroup.carrier, g ∈ D.kernelGroup → D.groupMap.toFun g = 1) →
     D.IsEquivariant →
     (D.upperDecomposition q).map D.groupMap = D.lowerDecomposition p ∧
       (D.upperInertia q).map D.groupMap = D.lowerInertia p := by

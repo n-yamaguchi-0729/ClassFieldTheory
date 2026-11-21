@@ -11,10 +11,11 @@ public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.ClassFieldAxiom.Idele
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.EmbeddedAbelianSubextension
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertClassFieldUnramifiedMaximality
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
-public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicIdeleClassValuation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicDegreeOnNumberField
 public import Mathlib.NumberTheory.NumberField.Basic
 public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.MathlibUnramifiedInterface
 public import Nyll.GaloisCohomology.Cyclic.NormKernelVanishing
 
 /-!
@@ -33,6 +34,8 @@ big Hilbert class field by the order-reversing finite classification.
 
 @[expose] public section
 
+open ClassFieldTheory
+
 universe u v w
 
 open scoped NumberField
@@ -45,29 +48,6 @@ namespace GlobalClassFields
 open ClassFormation KummerTheory
 open LocalClassFieldTheory NumberField Reciprocity
 
-private structure BigHilbertTransportedAddSubgroupData
-    {A : Type*} {B : Type*} [AddGroup A] [AddGroup B]
-    (e : A ≃+ B) (H : AddSubgroup A) where
-  subgroup : AddSubgroup B
-  map_symm : subgroup.map e.symm.toAddMonoidHom = H
-  mem_iff (x : B) : x ∈ subgroup ↔ e.symm x ∈ H
-
-private def bigHilbertTransportedAddSubgroupData
-    {A : Type*} {B : Type*} [AddGroup A] [AddGroup B]
-    (e : A ≃+ B) (H : AddSubgroup A) :
-    BigHilbertTransportedAddSubgroupData e H where
-  subgroup := H.map e.toAddMonoidHom
-  map_symm :=
-    (AddSubgroup.map_symm_eq_iff_map_eq
-      (K := H) (H := H.map e.toAddMonoidHom) (e := e)).2 rfl
-  mem_iff := by
-    intro x
-    constructor
-    · rintro ⟨y, hy, rfl⟩
-      simpa using hy
-    · intro hx
-      exact ⟨e.symm x, hx, e.apply_symm_apply x⟩
-
 /-- The intrinsic big-Hilbert norm subgroup of an actual rational fixed
 field, transported into the rational absolute idele-class formation. -/
 noncomputable def bigHilbertNormSubgroupInRationalClassFormation
@@ -75,7 +55,7 @@ noncomputable def bigHilbertNormSubgroupInRationalClassFormation
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)) :
     AddSubgroup
       (ambientFixedAddSubgroup
-        rationalIdeleClassRepresentation K.field) :=
+        (ideleClassRepresentation ℚ) K.field) :=
   (bigHilbertClassFieldNormSubgroup
     (K := abstractFixedField
       ℚ (SeparableClosure ℚ) K.field)).toAddSubgroup.map
@@ -92,31 +72,21 @@ private noncomputable def finiteAbstractBigHilbertIntrinsicNormSubgroup
   (bigHilbertClassFieldNormSubgroup
     (K := abstractFixedField ℚ (SeparableClosure ℚ) K.field)).toAddSubgroup
 
-private noncomputable def finiteAbstractBigHilbertTransportData
-    (K : FiniteAbstractField
-      (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)) :
-    BigHilbertTransportedAddSubgroupData
-      (rationalAbstractFixedFieldIdeleClassEquivFixed K.field)
-      (finiteAbstractBigHilbertIntrinsicNormSubgroup K) :=
-  bigHilbertTransportedAddSubgroupData
-    (rationalAbstractFixedFieldIdeleClassEquivFixed K.field)
-    (finiteAbstractBigHilbertIntrinsicNormSubgroup K)
-
 private theorem bigHilbertNormSubgroupInRationalClassFormation_mem_iff
     (K : FiniteAbstractField
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
-    (x : ambientFixedAddSubgroup rationalIdeleClassRepresentation K.field) :
+    (x : ambientFixedAddSubgroup (ideleClassRepresentation ℚ) K.field) :
     x ∈ bigHilbertNormSubgroupInRationalClassFormation K ↔
       (rationalAbstractFixedFieldIdeleClassEquivFixed K.field).symm x ∈
         finiteAbstractBigHilbertIntrinsicNormSubgroup K :=
-  (finiteAbstractBigHilbertTransportData K).mem_iff x
+  AddSubgroup.mem_map_equiv
 
 /-- The fixed-field idele-class equivalence at the selected big-Hilbert
 base, named once so later subgroup comparisons do not reconstruct it. -/
 private noncomputable def bigHilbertClassFieldMaximalIdeleClassEquiv
     (K : Type u) [Field K] [NumberField K] :
     Additive (IdeleClassGroup (bigHilbertClassFieldBase K)) ≃+
-      ambientFixedAddSubgroup rationalIdeleClassRepresentation
+      ambientFixedAddSubgroup (ideleClassRepresentation ℚ)
         (bigHilbertClassFieldBaseSubgroup K) :=
   rationalAbstractFixedFieldIdeleClassEquivFixed
     (bigHilbertClassFieldBaseSubgroup K)
@@ -134,36 +104,28 @@ fixed once in the declaration type. -/
 private noncomputable def bigHilbertClassFieldMaximalActualNormEndpoint
     (K : Type u) [Field K] [NumberField K] :
     AddSubgroup
-      (ambientFixedAddSubgroup rationalIdeleClassRepresentation
+      (ambientFixedAddSubgroup (ideleClassRepresentation ℚ)
         (bigHilbertClassFieldBaseSubgroup K)) :=
   (bigHilbertClassFieldSubextension K).normSubgroup
-    rationalIdeleClassRepresentation
-
-private noncomputable def bigHilbertClassFieldMaximalTransportData
-    (K : Type u) [Field K] [NumberField K] :
-    BigHilbertTransportedAddSubgroupData
-      (bigHilbertClassFieldMaximalIdeleClassEquiv K)
-      (bigHilbertClassFieldMaximalIntrinsicNormSubgroup K) :=
-  bigHilbertTransportedAddSubgroupData
-    (bigHilbertClassFieldMaximalIdeleClassEquiv K)
-    (bigHilbertClassFieldMaximalIntrinsicNormSubgroup K)
+    (ideleClassRepresentation ℚ)
 
 /-- A short typed name for the transported intrinsic subgroup used below. -/
 private noncomputable def bigHilbertClassFieldMaximalNormEndpoint
     (K : Type u) [Field K] [NumberField K] :
     AddSubgroup
-      (ambientFixedAddSubgroup rationalIdeleClassRepresentation
+      (ambientFixedAddSubgroup (ideleClassRepresentation ℚ)
         (bigHilbertClassFieldBaseSubgroup K)) :=
-  (bigHilbertClassFieldMaximalTransportData K).subgroup
+  (bigHilbertClassFieldMaximalIntrinsicNormSubgroup K).map
+    (bigHilbertClassFieldMaximalIdeleClassEquiv K).toAddMonoidHom
 
 private theorem bigHilbertClassFieldMaximalNormEndpoint_mem_iff
     (K : Type u) [Field K] [NumberField K]
-    (x : ambientFixedAddSubgroup rationalIdeleClassRepresentation
+    (x : ambientFixedAddSubgroup (ideleClassRepresentation ℚ)
       (bigHilbertClassFieldBaseSubgroup K)) :
     x ∈ bigHilbertClassFieldMaximalNormEndpoint K ↔
       (bigHilbertClassFieldMaximalIdeleClassEquiv K).symm x ∈
         bigHilbertClassFieldMaximalIntrinsicNormSubgroup K :=
-  (bigHilbertClassFieldMaximalTransportData K).mem_iff x
+  AddSubgroup.mem_map_equiv
 
 private theorem bigHilbertClassFieldMaximalNormEndpoint_eq_public
     (K : Type u) [Field K] [NumberField K] :
@@ -194,12 +156,12 @@ private theorem bigHilbertClassFieldMaximalNormSubgroup_map_symm
           L.field L.below) :=
     L.finite
   calc
-    (L.normSubgroup rationalIdeleClassRepresentation).map
+    (L.normSubgroup (ideleClassRepresentation ℚ)).map
         e.symm.toAddMonoidHom =
       (_root_.ideleClassNorm
         F (bigHilbertClassField K)).range.toAddSubgroup := by
       change
-        (finiteNormSubgroup rationalIdeleClassRepresentation
+        (finiteNormSubgroup (ideleClassRepresentation ℚ)
             (bigHilbertClassFieldBaseSubgroup K)
             L.field L.below).map
             e.symm.toAddMonoidHom =
@@ -223,7 +185,7 @@ private theorem bigHilbertClassFieldMaximalNormSubgroup_map_symm
 applying the named inverse fixed-field equivalence. -/
 private theorem bigHilbertClassFieldMaximalActualNormEndpoint_mem_iff
     (K : Type u) [Field K] [NumberField K] :
-    ∀ x : ambientFixedAddSubgroup rationalIdeleClassRepresentation
+    ∀ x : ambientFixedAddSubgroup (ideleClassRepresentation ℚ)
         (bigHilbertClassFieldBaseSubgroup K),
       x ∈ bigHilbertClassFieldMaximalActualNormEndpoint K ↔
         (bigHilbertClassFieldMaximalIdeleClassEquiv K).symm x ∈
@@ -261,13 +223,13 @@ formation. -/
 theorem bigHilbertClassFieldSubextension_normSubgroup
     (K : Type u) [Field K] [NumberField K] :
     (bigHilbertClassFieldSubextension K).normSubgroup
-        rationalIdeleClassRepresentation =
+        (ideleClassRepresentation ℚ) =
       bigHilbertNormSubgroupInRationalClassFormation
         (numberFieldTowerFiniteAbstractField K
           (bigHilbertClassFieldNormAmbient K)) := by
   calc
     (bigHilbertClassFieldSubextension K).normSubgroup
-        rationalIdeleClassRepresentation =
+        (ideleClassRepresentation ℚ) =
       bigHilbertClassFieldMaximalActualNormEndpoint K := by
         rfl
     _ =
@@ -363,7 +325,7 @@ def bigHilbertNormSubgroupContainedInRationalClassFormation
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (P : FiniteAbelianSubextension K.field) : Prop :=
   bigHilbertNormSubgroupInRationalClassFormation K ≤
-    P.normSubgroup rationalIdeleClassRepresentation
+    P.normSubgroup (ideleClassRepresentation ℚ)
 
 /-- The actual fixed-field extension represented by a finite abelian
 subextension is unramified at every finite place. -/
@@ -397,11 +359,11 @@ theorem
   let e :=
     rationalAbstractFixedFieldIdeleClassEquivFixed K.field
   have hnormMap :
-      (P.normSubgroup rationalIdeleClassRepresentation).map
+      (P.normSubgroup (ideleClassRepresentation ℚ)).map
           e.symm.toAddMonoidHom =
         (_root_.ideleClassNorm F E).range.toAddSubgroup := by
     change
-      (finiteNormSubgroup rationalIdeleClassRepresentation
+      (finiteNormSubgroup (ideleClassRepresentation ℚ)
           K.field P.field P.below).map
           e.symm.toAddMonoidHom =
         (_root_.ideleClassNorm F E).range.toAddSubgroup
@@ -415,7 +377,7 @@ theorem
     intro v hv
     rw [_root_.mem_ramifiedBaseFinitePlaces_iff] at hv
     obtain ⟨Q, _hQ, hQramified⟩ := hv
-    exact hQramified (hunramified Q)
+    exact hQramified (hunramified.atPrime Q)
   have hordinary :
       bigHilbertClassFieldNormSubgroup (K := F) ≤
         (_root_.ideleClassNorm F E).range :=
@@ -520,12 +482,12 @@ theorem
       (bigHilbertClassFieldNormAmbient K)
   apply
     (FiniteAbelianSubextension.le_iff_normSubgroup_le
-      rationalCyclotomicIdeleClassValuationData
-      rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+      (numberFieldCyclotomicIdeleClassValuationData ℚ)
+      (ideleClassRepresentation_satisfiesClassFieldAxiom ℚ)
       KF P (bigHilbertClassFieldSubextension K)).2
   have hSelected :
       (bigHilbertClassFieldSubextension K).normSubgroup
-          rationalIdeleClassRepresentation =
+          (ideleClassRepresentation ℚ) =
         bigHilbertNormSubgroupInRationalClassFormation KF :=
     bigHilbertClassFieldSubextension_normSubgroup K
   have hOther :
@@ -538,9 +500,9 @@ theorem
   unfold bigHilbertNormSubgroupContainedInRationalClassFormation at hOther
   calc
     (bigHilbertClassFieldSubextension K).normSubgroup
-        rationalIdeleClassRepresentation =
+        (ideleClassRepresentation ℚ) =
       bigHilbertNormSubgroupInRationalClassFormation KF := hSelected
-    _ ≤ P.normSubgroup rationalIdeleClassRepresentation := hOther
+    _ ≤ P.normSubgroup (ideleClassRepresentation ℚ) := hOther
 
 end FixedFieldMaximalityInstances
 
@@ -699,38 +661,6 @@ theorem bigHilbertClassFieldEmbeddedAbelianSubextension_field
       (bigHilbertClassFieldBaseSubgroup K)
       (bigHilbertClassFieldCompatibleEmbedding_baseSubgroup K E)
 
-/-- Finite-prime unramifiedness is preserved when the top number field
-is replaced by an equivalent `K`-algebra. -/
-theorem finitePlaceUnramifiedness_congrTop
-    {K : Type u} {L : Type v} {M : Type w}
-    [Field K] [NumberField K]
-    [Field L] [NumberField L]
-    [Field M] [NumberField M]
-    [Algebra K L] [Algebra K M]
-    (e : L ≃ₐ[K] M)
-    (h : IsUnramifiedAtFinitePlaces K L) :
-    IsUnramifiedAtFinitePlaces K M := by
-  let hAlgebra : Algebra L M :=
-    e.toRingHom.toAlgebra
-  let hScalarTower : IsScalarTower K L M :=
-    IsScalarTower.of_algebraMap_eq' (by
-      apply RingHom.ext
-      intro x
-      exact (e.commutes x).symm)
-  let eLM : L ≃ₐ[L] M :=
-    AlgEquiv.ofRingEquiv (f := e.toRingEquiv) (fun _ => rfl)
-  let eOLM : (𝓞 L) ≃ₐ[𝓞 L] (𝓞 M) :=
-    NumberField.RingOfIntegers.mapAlgEquiv eLM
-  let hFormallyUnramified :
-      Algebra.FormallyUnramified (𝓞 L) (𝓞 M) :=
-    Algebra.FormallyUnramified.of_equiv eOLM
-  have hLM :
-      IsUnramifiedAtFinitePlaces L M := by
-    intro P
-    infer_instance
-  exact
-    IsUnramifiedAtFinitePlaces.trans h hLM
-
 /-- Any actual finite unramified abelian extension of `K` embeds over
 `K` into the selected big Hilbert class field. -/
 noncomputable def
@@ -801,7 +731,8 @@ noncomputable def
     NumberField.of_module_finite K A
   have hKA :
       IsUnramifiedAtFinitePlaces K A :=
-    finitePlaceUnramifiedness_congrTop eTop hunramified
+    (ClassFieldTheory.isUnramifiedAtFinitePlaces_iff_of_algEquiv K E A eTop).mp
+      hunramified
   have hFA :
       IsUnramifiedAtFinitePlaces F A :=
     IsUnramifiedAtFinitePlaces.top

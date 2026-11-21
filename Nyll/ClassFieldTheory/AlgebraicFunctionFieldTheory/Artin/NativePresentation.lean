@@ -101,7 +101,7 @@ private theorem finiteGaloisAbstractExtension_eq_of_fixedFieldEquiv
         (RamificationTheory.closedFixingSubgroup K Ω) hi.symm
       _ = RamificationTheory.closedFixingSubgroup K Ω j.fieldRange := congrArg
         (RamificationTheory.closedFixingSubgroup K Ω)
-        (ClassFieldTheory.fieldRange_eq_of_normal i j)
+        (AlgHom.fieldRange_eq_of_normal i j)
       _ = _ := rfl
   have hext : ∀ A B : FiniteGaloisSubextension (intrinsicFiniteAbstractBase K).field,
       A.field = B.field → A = B := by
@@ -156,7 +156,7 @@ theorem finiteArtin_eq_fixedFieldPresentation
   have h := congrArg
     (fun f : (IdeleClassGroup k K ⧸
         (IdeleClassGroup.norm (k := k) (K := K) (L := L)).range) ≃*
-          Abelianization Gal(L/K) => f (QuotientGroup.mk c))
+          Group.Abelianization Gal(L/K) => f (QuotientGroup.mk c))
     (normQuotientEquivOfFixedFieldPresentation_eq k K L Ω H T eF eF eC eE)
   change finiteNormQuotientEquiv k K L (QuotientGroup.mk c) = _
   dsimp only [finiteNormQuotientEquiv, finiteNormQuotientEquivOfEmbedding]
@@ -203,7 +203,7 @@ theorem finiteArtin_eq_intrinsicFixedField_restrict
       (finiteGaloisBaseFixedFieldEquiv K).toLinearEquiv.finiteDimensional
     ∀ c : IdeleClassGroup k K,
       finiteArtin k K (abstractFixedField K (SeparableClosure K) S) c =
-        Abelianization.map
+        Group.Abelianization.map
           (AlgEquiv.restrictScalarsHom
             (S := abstractFixedField K (SeparableClosure K) (intrinsicFiniteAbstractBase K).field)
             (A := abstractFixedField K (SeparableClosure K) S) K :
@@ -237,12 +237,12 @@ theorem finiteArtin_eq_intrinsicFixedField_restrict
   dsimp (config := { instances := true }) only [Ω, B, T, eF0]
     at nativeEvaluation presentationEvaluation
   let ρ : Gal(E/F0) →* Gal(E/K) := AlgEquiv.restrictScalarsHom K
-  have hvalue (z : Abelianization Gal(E/F0)) :
-      eG.abelianizationCongr z = Abelianization.map ρ z := by
+  have hvalue (z : Group.Abelianization Gal(E/F0)) :
+      eG.abelianizationCongr z = Group.Abelianization.map ρ z := by
     refine QuotientGroup.induction_on z ?_
     intro σ
-    change Abelianization.of (eG σ) = Abelianization.of (σ.restrictScalars K)
-    apply congrArg Abelianization.of
+    change Group.Abelianization.of (eG σ) = Group.Abelianization.of (σ.restrictScalars K)
+    apply congrArg Group.Abelianization.of
     apply AlgEquiv.ext
     intro x
     rfl

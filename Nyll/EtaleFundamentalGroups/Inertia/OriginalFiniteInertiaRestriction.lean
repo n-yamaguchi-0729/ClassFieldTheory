@@ -35,9 +35,9 @@ theorem originalInertia_finiteNormalization_difference
     (Q : Ideal (integralClosure A L)) (E : FiniteGaloisIntermediateField K L)
     (σ : actualNormalizationInertiaGroup A K L Q) :
     ∀ b : finiteAbsoluteNormalizationAlgebra A K L E,
-      (finiteAbsoluteNormalizationPrime A K L Q E).carrier
-        ((actualFiniteNormalizationRestrictionRingHom A K L E
-          (actualNormalizationInertiaElement A K L Q σ)).toFun b - b) :=
+      (actualFiniteNormalizationRestrictionRingHom A K L E
+          (actualNormalizationInertiaElement A K L Q σ)).toFun b - b ∈
+        finiteAbsoluteNormalizationPrime A K L Q E :=
   actualFiniteNormalizationRestriction_inertia_difference A K L Q E
     (actualNormalizationInertiaElement A K L Q σ)
     (actualNormalizationInertia_difference A K L Q σ)

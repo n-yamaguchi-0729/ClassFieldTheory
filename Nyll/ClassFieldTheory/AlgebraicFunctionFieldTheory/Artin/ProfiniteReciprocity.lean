@@ -11,7 +11,7 @@ public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteR
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.GlobalClassFields.NormCofinality
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.FiniteAbelianQuotientKernels
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.ProfiniteCompletionCriteria
+public import Nyll.ProCGroups.Completion.TopologicalCriteria
 public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
 

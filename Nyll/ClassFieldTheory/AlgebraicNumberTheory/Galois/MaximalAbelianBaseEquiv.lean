@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
 public import Mathlib.FieldTheory.Galois.Infinite
 public import Nyll.ClassFieldTheory.Algebra.IntermediateFieldRingEquivOrderIso
 public import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
@@ -72,11 +73,11 @@ theorem separableClosureEquivOfSemilinear_commutes
 private theorem abelianIntermediateField_le_maximalAbelianExtension
     (E : IntermediateField K (SeparableClosure K)) [IsAbelianGalois K E] :
     E ≤ maximalAbelianExtension K := by
-  rw [maximalAbelianExtension, IntermediateField.le_iff_le]
+  rw [maximalAbelianExtension, IntermediateField.le_fixedField_iff_le_fixingSubgroup]
   change (commutator Gal(SeparableClosure K/K)).topologicalClosure ≤ E.fixingSubgroup
   apply Subgroup.topologicalClosure_minimal
   · rw [← E.restrictNormalHom_ker]
-    exact Abelianization.commutator_subset_ker
+    exact Group.Abelianization.commutator_le_ker
       (AlgEquiv.restrictNormalHom (F := K) (K₁ := SeparableClosure K) E)
   · exact InfiniteGalois.fixingSubgroup_isClosed E
 
@@ -149,7 +150,7 @@ theorem mathlibAbelianizationToMaximal_semilinear
     let m := maximalAbelianExtensionEquivOfSemilinear e s hs
     let hm := maximalAbelianExtensionEquivOfSemilinear_commutes e s hs
     mathlibAbelianizationToMaximal M
-        (LocalClassFieldTheory.topologicalAbelianizationCongr
+        (ProCGroups.Abelian.TopologicalAbelianization.congr
           (semilinearGaloisContinuousEquiv e c hc) q) =
       semilinearGaloisEquiv e m hm (mathlibAbelianizationToMaximal K q) := by
   intro s hs m hm

@@ -22,6 +22,8 @@ noncomputable section
 
 namespace LocalClassFieldTheory
 
+universe u
+
 open LocalFieldTheory RamificationTheory CyclicCohomology KummerTheory
 open ClassFormation
 open scoped ValuativeRel
@@ -29,7 +31,7 @@ open scoped ValuativeRel
 /-- Intrinsic Frobenius-fixed elements map to ambient Frobenius-fixed
 elements under the fixed-field Galois-group equivalence. -/
 theorem intrinsicFrobeniusFixedSubgroup_le_ambientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -65,6 +67,7 @@ theorem intrinsicFrobeniusFixedSubgroup_le_ambientFixedField
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     let RH :=
       H.toFiniteResidueAbstractField (localResidueDatum K)
     let σH :=
@@ -86,7 +89,7 @@ theorem intrinsicFrobeniusFixedSubgroup_le_ambientFixedField
         ψτRH ∈ (localResidueDatum K).frobeniusFixedSubgroupWithin
           RH J hJH σH := by
   intro F reusedStructure2 E reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
-      reusedStructure8 reusedStructure9 i EI RF RH σH τ τRF ψ ψτRH hτ
+      reusedStructure8 reusedStructure9 i EI RF _ RH σH τ τRF ψ ψτRH hτ
   have hτclosureRF :
       QuotientGroup.mk τRF ∈
         ((localResidueDatum F).frobeniusClosure
@@ -135,7 +138,7 @@ theorem intrinsicFrobeniusFixedSubgroup_le_ambientFixedField
 /-- Ambient Frobenius-fixed elements pull back to intrinsic Frobenius-fixed
 elements under the fixed-field Galois-group equivalence. -/
 theorem ambientFixedFieldFrobeniusFixedSubgroup_le_intrinsic
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -171,6 +174,7 @@ theorem ambientFixedFieldFrobeniusFixedSubgroup_le_intrinsic
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     let RH :=
       H.toFiniteResidueAbstractField (localResidueDatum K)
     let σH :=
@@ -192,7 +196,7 @@ theorem ambientFixedFieldFrobeniusFixedSubgroup_le_intrinsic
         τRF ∈ (localResidueDatum F).frobeniusFixedSubgroupWithin
           RF EI.field EI.below σ := by
   intro F reusedStructure2 E reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
-      reusedStructure8 reusedStructure9 i EI RF RH σH τ τRF ψ ψτRH hψτ
+      reusedStructure8 reusedStructure9 i EI RF _ RH σH τ τRF ψ ψτRH hψτ
   have hψclosureRH :
       QuotientGroup.mk ψτRH ∈
         ((localResidueDatum K).frobeniusClosure
@@ -248,7 +252,7 @@ theorem ambientFixedFieldFrobeniusFixedSubgroup_le_intrinsic
 /-- The image of the intrinsic Frobenius fixed field is contained in the
 ambient Frobenius fixed field. -/
 theorem map_intrinsicFrobeniusFixedField_le_ambientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -284,6 +288,7 @@ theorem map_intrinsicFrobeniusFixedField_le_ambientFixedField
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     let RH :=
       H.toFiniteResidueAbstractField (localResidueDatum K)
     let σH :=
@@ -303,7 +308,7 @@ theorem map_intrinsicFrobeniusFixedField_le_ambientFixedField
     (abstractFixedField F (SeparableClosure F) SF).map e.toAlgHom ≤
       abstractRelativeFixedField K (SeparableClosure K) hSHH := by
   intro F reusedStructure2 E reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
-    reusedStructure8 reusedStructure9 i EI RF RH σH SF SH hSHH
+    reusedStructure8 reusedStructure9 i EI RF _ RH σH SF SH hSHH
   let ψ := intrinsicBaseEquivAmbientFixedField K H e
   intro x hx
   rw [IntermediateField.mem_map] at hx
@@ -376,7 +381,7 @@ theorem map_intrinsicFrobeniusFixedField_le_ambientFixedField
 /-- The ambient Frobenius fixed field is contained in the image of the
 intrinsic Frobenius fixed field. -/
 theorem ambientFixedField_le_map_intrinsicFrobeniusFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -412,6 +417,7 @@ theorem ambientFixedField_le_map_intrinsicFrobeniusFixedField
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     let RH :=
       H.toFiniteResidueAbstractField (localResidueDatum K)
     let σH :=
@@ -431,7 +437,7 @@ theorem ambientFixedField_le_map_intrinsicFrobeniusFixedField
     abstractRelativeFixedField K (SeparableClosure K) hSHH ≤
       (abstractFixedField F (SeparableClosure F) SF).map e.toAlgHom := by
   intro F reusedStructure2 E reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
-    reusedStructure8 reusedStructure9 i EI RF RH σH SF SH hSHH
+    reusedStructure8 reusedStructure9 i EI RF _ RH σH SF SH hSHH
   let ψ := intrinsicBaseEquivAmbientFixedField K H e
   intro x hx
   change
@@ -498,7 +504,7 @@ theorem ambientFixedField_le_map_intrinsicFrobeniusFixedField
 /-- The image of the intrinsic Frobenius fixed field is exactly the ambient
 Frobenius fixed field. -/
 theorem map_intrinsicFrobeniusFixedField_eq_ambientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -534,6 +540,7 @@ theorem map_intrinsicFrobeniusFixedField_eq_ambientFixedField
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     let RH :=
       H.toFiniteResidueAbstractField (localResidueDatum K)
     let σH :=
@@ -562,7 +569,7 @@ theorem map_intrinsicFrobeniusFixedField_eq_ambientFixedField
 intrinsic base field, to the corresponding ambient Frobenius fixed field. -/
 noncomputable def
     intrinsicFrobeniusFixedFieldEquivAmbientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -598,6 +605,7 @@ noncomputable def
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     let RH :=
       H.toFiniteResidueAbstractField (localResidueDatum K)
     let σH :=
@@ -621,7 +629,7 @@ noncomputable def
       (abstractFixedField F (SeparableClosure F) SF).algebra
       (abstractRelativeFixedField K (SeparableClosure K) hSHH).algebra := by
   intro F reusedStructure2 E reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
-    reusedStructure8 reusedStructure9 i EI RF RH σH SF SH hSHH
+    reusedStructure8 reusedStructure9 i EI RF _ RH σH SF SH hSHH
   let SFI := abstractFixedField F (SeparableClosure F) SF
   let SHI := abstractRelativeFixedField K (SeparableClosure K) hSHH
   let eSF :
@@ -647,7 +655,7 @@ is the restriction of the chosen separable-closure equivalence. -/
 @[simp]
 theorem
     intrinsicFrobeniusFixedFieldEquivAmbientFixedField_apply_val
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -684,6 +692,7 @@ theorem
       let RF :=
         (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
           (localResidueDatum F)
+      let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
       let SF :=
         (localResidueDatum F).frobeniusFixedField
           RF EI.field EI.below σ
@@ -713,6 +722,7 @@ theorem
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     let RH :=
       H.toFiniteResidueAbstractField (localResidueDatum K)
     let σH :=

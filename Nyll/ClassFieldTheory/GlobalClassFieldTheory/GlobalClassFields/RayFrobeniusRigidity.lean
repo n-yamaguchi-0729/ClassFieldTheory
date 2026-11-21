@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ConductorInfinitePart
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayPrimeGeneration
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
@@ -38,13 +39,6 @@ universe u v
 
 namespace GlobalClassFieldTheory.GlobalClassFields
 
-private theorem rayRigidity_ideleClassGroupIsMulCommutative
-    {F : Type u} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-attribute [local instance] rayRigidity_ideleClassGroupIsMulCommutative
-
 /-- Frobenius normalization on all primes away from a modulus forces that
 modulus to define the genuine norm subgroup of a finite abelian extension. -/
 theorem rayModulus_isDefining_of_arithmeticPrimeArtinEquiv
@@ -56,11 +50,10 @@ theorem rayModulus_isDefining_of_arithmeticPrimeArtinEquiv
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (_ : v ∉ m.finitePart.support),
         e (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v))) =
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) =
           arithmeticFinitePlacePrimeArtin (K := K) (L := L) v) :
     m.congruenceSubgroup ≤ (_root_.ideleClassNorm K L).range := by
-  let H := ideleClassNormConductorialSubgroup_universe K L
+  let H := ideleClassNormConductorialSubgroup (K := K) (L := L)
   let c := H.fullConductor
   let n := c ⊔ m
   have hcn : c ≤ n := le_sup_left
@@ -72,14 +65,14 @@ theorem rayModulus_isDefining_of_arithmeticPrimeArtinEquiv
   have hnm : n.congruenceSubgroup ≤ m.congruenceSubgroup :=
     RayClass.Modulus.congruenceSubgroup_antitone hmn
   let qNorm : RayClass.RayClassGroup n →*
-      IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range :=
+      NumberField.IdeleClassGroup (𝓞 K) K ⧸ (_root_.ideleClassNorm K L).range :=
     QuotientGroup.map n.congruenceSubgroup
       ((_root_.ideleClassNorm K L).range)
-      (MonoidHom.id (IdeleClassGroup K))
+      (MonoidHom.id (NumberField.IdeleClassGroup (𝓞 K) K))
       (fun _ hx => hnNorm hx)
   let qRay : RayClass.RayClassGroup n →* RayClass.RayClassGroup m :=
     QuotientGroup.map n.congruenceSubgroup m.congruenceSubgroup
-      (MonoidHom.id (IdeleClassGroup K))
+      (MonoidHom.id (NumberField.IdeleClassGroup (𝓞 K) K))
       (fun _ hx => hnm hx)
   let genuine : RayClass.RayClassGroup n →* (L ≃ₐ[K] L) :=
     (Reciprocity.arithmeticGlobalNormResidueContinuousMulEquiv K L).toMulEquiv.toMonoidHom.comp
@@ -93,19 +86,12 @@ theorem rayModulus_isDefining_of_arithmeticPrimeArtinEquiv
       intro hv
       exact hvn ((Finsupp.support_mono hmn.1) hv)
     change Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-          (IdeleGroup.finitePrimeIdele v)) =
+        (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v)) =
       e (QuotientGroup.mk' m.congruenceSubgroup
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-          (IdeleGroup.finitePrimeIdele v)))
+        (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v)))
     rw [hprime v hvm]
-    change Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
-        (IdeleGroup.finitePlaceIdeleClass v (FiniteIdeleGroup.chosenLocalOrderSection v 1)) =
-      arithmeticFinitePlacePrimeArtin (K := K) (L := L) v
-    rw [arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin]
-    exact DFunLike.congr_fun
-      (Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass K L v)
-      (FiniteIdeleGroup.chosenLocalOrderSection v 1)
+    exact (arithmeticFinitePlacePrimeArtin_eq_arithmeticGlobalNormResidue
+      (K := K) (L := L) v).symm
   intro x hx
   have hRay : qRay (QuotientGroup.mk' n.congruenceSubgroup x) = 1 := by
     change QuotientGroup.mk' m.congruenceSubgroup x = 1
@@ -135,18 +121,17 @@ theorem rayModulus_normSubgroup_eq_of_arithmeticPrimeArtinEquiv
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (_ : v ∉ m.finitePart.support),
         e (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v))) =
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) =
           arithmeticFinitePlacePrimeArtin (K := K) (L := L) v) :
     (_root_.ideleClassNorm K L).range = m.congruenceSubgroup := by
   have hle : m.congruenceSubgroup ≤
       (_root_.ideleClassNorm K L).range :=
     rayModulus_isDefining_of_arithmeticPrimeArtinEquiv m e hprime
   let q : RayClass.RayClassGroup m →*
-      IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range :=
+      NumberField.IdeleClassGroup (𝓞 K) K ⧸ (_root_.ideleClassNorm K L).range :=
     QuotientGroup.map m.congruenceSubgroup
       ((_root_.ideleClassNorm K L).range)
-      (MonoidHom.id (IdeleClassGroup K))
+      (MonoidHom.id (NumberField.IdeleClassGroup (𝓞 K) K))
       (fun _ hx => hle hx)
   have hqSurj : Function.Surjective q := by
     intro y
@@ -154,7 +139,7 @@ theorem rayModulus_normSubgroup_eq_of_arithmeticPrimeArtinEquiv
       QuotientGroup.mk'_surjective ((_root_.ideleClassNorm K L).range) y
     exact ⟨QuotientGroup.mk' m.congruenceSubgroup x, rfl⟩
   have hcard : Nat.card (RayClass.RayClassGroup m) =
-      Nat.card (IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range) :=
+      Nat.card (NumberField.IdeleClassGroup (𝓞 K) K ⧸ (_root_.ideleClassNorm K L).range) :=
     (Nat.card_congr e.toEquiv).trans
       (Nat.card_congr
         (Reciprocity.arithmeticGlobalNormResidueContinuousMulEquiv K L).toEquiv.symm)
@@ -184,13 +169,12 @@ theorem rayArtin_comp_ideleClass_eq_arithmeticGlobalNormResidue
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (_ : v ∉ m.finitePart.support),
         artin (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v))) =
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) =
           arithmeticFinitePlacePrimeArtin (K := K) (L := L) v)
-    (x : IdeleClassGroup K) :
+    (x : NumberField.IdeleClassGroup (𝓞 K) K) :
     artin (QuotientGroup.mk' m.congruenceSubgroup x) =
       Reciprocity.arithmeticGlobalNormResidueMonoidHom K L x := by
-  let H := ideleClassNormConductorialSubgroup_universe K L
+  let H := ideleClassNormConductorialSubgroup (K := K) (L := L)
   let c := H.fullConductor
   let n := c ⊔ m
   have hcn : c ≤ n := le_sup_left
@@ -202,14 +186,14 @@ theorem rayArtin_comp_ideleClass_eq_arithmeticGlobalNormResidue
   have hnm : n.congruenceSubgroup ≤ m.congruenceSubgroup :=
     RayClass.Modulus.congruenceSubgroup_antitone hmn
   let qNorm : RayClass.RayClassGroup n →*
-      IdeleClassGroup K ⧸ (_root_.ideleClassNorm K L).range :=
+      NumberField.IdeleClassGroup (𝓞 K) K ⧸ (_root_.ideleClassNorm K L).range :=
     QuotientGroup.map n.congruenceSubgroup
       ((_root_.ideleClassNorm K L).range)
-      (MonoidHom.id (IdeleClassGroup K))
+      (MonoidHom.id (NumberField.IdeleClassGroup (𝓞 K) K))
       (fun _ hx => hnNorm hx)
   let qRay : RayClass.RayClassGroup n →* RayClass.RayClassGroup m :=
     QuotientGroup.map n.congruenceSubgroup m.congruenceSubgroup
-      (MonoidHom.id (IdeleClassGroup K))
+      (MonoidHom.id (NumberField.IdeleClassGroup (𝓞 K) K))
       (fun _ hx => hnm hx)
   let genuine : RayClass.RayClassGroup n →* (L ≃ₐ[K] L) :=
     (Reciprocity.arithmeticGlobalNormResidueContinuousMulEquiv K L).toMulEquiv.toMonoidHom.comp
@@ -223,19 +207,12 @@ theorem rayArtin_comp_ideleClass_eq_arithmeticGlobalNormResidue
       intro hv
       exact hvn ((Finsupp.support_mono hmn.1) hv)
     change Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-          (IdeleGroup.finitePrimeIdele v)) =
+        (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v)) =
       artin (QuotientGroup.mk' m.congruenceSubgroup
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-          (IdeleGroup.finitePrimeIdele v)))
+        (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v)))
     rw [hprime v hvm]
-    change Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
-        (IdeleGroup.finitePlaceIdeleClass v (FiniteIdeleGroup.chosenLocalOrderSection v 1)) =
-      arithmeticFinitePlacePrimeArtin (K := K) (L := L) v
-    rw [arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin]
-    exact DFunLike.congr_fun
-      (Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass K L v)
-      (FiniteIdeleGroup.chosenLocalOrderSection v 1)
+    exact (arithmeticFinitePlacePrimeArtin_eq_arithmeticGlobalNormResidue
+      (K := K) (L := L) v).symm
   have hx := DFunLike.congr_fun hEq
     (QuotientGroup.mk' n.congruenceSubgroup x)
   change Reciprocity.arithmeticGlobalNormResidueMonoidHom K L x =
@@ -254,8 +231,7 @@ theorem rayModulus_normSubgroup_eq_artinKer_preimage
     (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (_ : v ∉ m.finitePart.support),
         artin (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v))) =
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) =
           arithmeticFinitePlacePrimeArtin (K := K) (L := L) v) :
     (_root_.ideleClassNorm K L).range =
       artin.ker.comap (QuotientGroup.mk' m.congruenceSubgroup) := by

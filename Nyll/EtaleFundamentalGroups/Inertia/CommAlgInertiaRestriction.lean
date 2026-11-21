@@ -35,7 +35,7 @@ def commAlgInertiaHomOfDifference
     (A : Type u) [CommRing A] (B : CommAlgCat.{v} A) (G : GrpCat.{v})
     (Q : Ideal B) (f : GrpCat.Hom G (commAlgAutomorphismGroup A B))
     (hf : ∀ g : G, ∀ b : B,
-      Q.carrier ((commAlgAutomorphismRingHom A B (f.hom'.toFun g)).toFun b - b)) :
+      (commAlgAutomorphismRingHom A B (f.hom'.toFun g)).toFun b - b ∈ Q) :
     GrpCat.Hom G (commAlgIdealInertiaGroup A B Q) where
   hom' :=
     { toFun := fun g => ⟨f.hom'.toFun g, hf g⟩

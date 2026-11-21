@@ -38,8 +38,7 @@ namespace PthPowerIndex
 
 open IntermediateField Polynomial
 
-private def frobeniusSubfield (M : Type*) [Field M] (p : ℕ) [ExpChar M p] : Subfield M :=
-  (frobenius M p).fieldRange
+open _root_.AlgebraicCurve (frobeniusSubfield)
 
 open _root_.AlgebraicCurve (frobeniusRingEquivRange frobeniusRingEquivRange_apply
   finrank_frobeniusSubfield_eq_of_transcendental pDigits_exists_of_finrank_eq)

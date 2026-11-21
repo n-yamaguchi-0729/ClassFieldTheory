@@ -6,7 +6,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UniverseNormConductor
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalNormResidueAbelianization
 public import Mathlib.FieldTheory.KrullTopology
 public import Mathlib.Topology.Algebra.Group.Quotient
@@ -46,39 +50,23 @@ variable
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
 
-/-- Keep quotient normality out of every exported declaration type. -/
-local instance
-    topologicalGlobalNormResidueAbelianization_ideleClassGroupIsMulCommutative :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- `Abelianization` is an opaque quotient alias, so install its native
 quotient topology explicitly before asking for topological properties. -/
 local instance
     topologicalGlobalNormResidueAbelianization_galoisAbelianizationTopology :
-    TopologicalSpace (Abelianization (Gal(L / K))) := by
+    TopologicalSpace (Group.Abelianization (Gal(L / K))) := by
   change
     TopologicalSpace
       (Gal(L / K) ⧸ commutator (Gal(L / K)))
   infer_instance
-
-/-- The native topology on the actual idele-class norm quotient is
-discrete.  The openness used here is the genuine ordinary norm-range
-theorem for the given finite Galois extension. -/
-theorem ideleClassNormAbelianizationQuotient_discreteTopology :
-    DiscreteTopology
-      (IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K L).range) := by
-  apply QuotientGroup.discreteTopology
-  exact
-    GlobalClassFields.ideleClassNorm_range_isOpen_universe K L
 
 omit [NumberField K] [NumberField L] [IsGalois K L] in
 /-- The abelianization of a finite Krull Galois group carries the
 discrete quotient topology. -/
 theorem finiteGaloisAbelianization_discreteTopology :
     DiscreteTopology
-      (Abelianization (Gal(L / K))) := by
+      (Group.Abelianization (Gal(L / K))) := by
   change
     DiscreteTopology
       (Gal(L / K) ⧸
@@ -91,11 +79,11 @@ local instance
     DiscreteTopology
       (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) :=
-  ideleClassNormAbelianizationQuotient_discreteTopology K L
+  GlobalClassFields.ideleClassNormQuotient_discreteTopology (K := K) (L := L)
 
 local instance
     topologicalGlobalNormResidueAbelianization_galoisAbelianizationDiscreteTopology :
-    DiscreteTopology (Abelianization (Gal(L / K))) :=
+    DiscreteTopology (Group.Abelianization (Gal(L / K))) :=
   finiteGaloisAbelianization_discreteTopology K L
 
 /-- The full finite-Galois norm-residue isomorphism with its native
@@ -105,11 +93,11 @@ topologies:
 noncomputable def globalNormResidueAbelianizationContinuousMulEquiv :
     (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) ≃ₜ*
-      Abelianization (Gal(L / K)) := by
+      Group.Abelianization (Gal(L / K)) := by
   let e :
       (IdeleClassGroup K ⧸
           (_root_.ideleClassNorm K L).range) ≃*
-        Abelianization (Gal(L / K)) :=
+        Group.Abelianization (Gal(L / K)) :=
     AddEquiv.toMultiplicative
       (globalNormResidueAbelianizationEquiv K L)
   exact
@@ -136,7 +124,7 @@ used by the class-field correspondence:
 
 `Gal(L / K)ᵃᵇ ≃ₜ* C_K / N_{L/K}(C_L)`. -/
 noncomputable def globalReciprocityAbelianizationContinuousMulEquiv :
-    Abelianization (Gal(L / K)) ≃ₜ*
+    Group.Abelianization (Gal(L / K)) ≃ₜ*
       (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) :=
   (globalNormResidueAbelianizationContinuousMulEquiv K L).symm
@@ -145,23 +133,12 @@ noncomputable def globalReciprocityAbelianizationContinuousMulEquiv :
 actual finite-Galois norm-residue map. -/
 @[simp]
 theorem globalReciprocityAbelianizationContinuousMulEquiv_apply
-    (σ : Abelianization (Gal(L/K))) :
+    (σ : Group.Abelianization (Gal(L/K))) :
     globalReciprocityAbelianizationContinuousMulEquiv K L σ =
       Additive.toMul
         ((globalNormResidueAbelianizationEquiv K L).symm
           (Additive.ofMul σ)) := by
   rfl
-
-/-- The native quotient projection
-`C_K → C_K / N_{L/K}(C_L)` as a continuous homomorphism. -/
-noncomputable def
-    ideleClassNormAbelianizationQuotientContinuousMonoidHom :
-    IdeleClassGroup K →ₜ*
-      (IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K L).range) :=
-  { QuotientGroup.mk'
-      (_root_.ideleClassNorm K L).range with
-    continuous_toFun := QuotientGroup.continuous_mk }
 
 /-- The global norm-residue symbol
 `C_K → Gal(L / K)ᵃᵇ` as a continuous homomorphism in the natural
@@ -169,10 +146,10 @@ idele-class and finite Krull quotient topologies. -/
 noncomputable def
     globalNormResidueAbelianizationContinuousMonoidHom :
     IdeleClassGroup K →ₜ*
-      Abelianization (Gal(L / K)) :=
+      Group.Abelianization (Gal(L / K)) :=
   (ContinuousMonoidHom.toContinuousMonoidHom
       (globalNormResidueAbelianizationContinuousMulEquiv K L)).comp
-    (ideleClassNormAbelianizationQuotientContinuousMonoidHom K L)
+    (_root_.ideleClassNormQuotientContinuousMonoidHom K L)
 
 /-- Forgetting continuity from the topological finite-Galois
 norm-residue map recovers the previously constructed actual symbol. -/

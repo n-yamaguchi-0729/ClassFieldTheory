@@ -46,9 +46,8 @@ theorem exists_open_prime_index_overgroup
     ∃ (p : ℕ) (U : Subgroup (IdeleClassGroup k K)),
       p.Prime ∧ H ≤ U ∧ IsOpen (U : Set (IdeleClassGroup k K)) ∧ U.index = p := by
   -- Both successive quotients use the canonical quotient commutative group.
-  let classGroup : CommGroup (IdeleClassGroup k K) :=
-    QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup k K)
-  let quotientGroup : CommGroup (IdeleClassGroup k K ⧸ H) :=
+  let : CommGroup (IdeleClassGroup k K) := IdeleClassGroup.commGroup k K
+  let : CommGroup (IdeleClassGroup k K ⧸ H) :=
     QuotientGroup.Quotient.commGroup H
   have hn : H.index ≠ 1 := fun h => hne (Subgroup.index_eq_one.mp h)
   obtain ⟨p, hp, hpdvd⟩ := Nat.ne_one_iff_exists_prime_dvd.mp hn

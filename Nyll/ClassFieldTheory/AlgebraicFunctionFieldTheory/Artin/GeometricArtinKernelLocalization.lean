@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricArtinKernel
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.GeometricConstantLocalization
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RayPrincipalUnitValues
@@ -39,11 +41,7 @@ local notation "E" => geometricArtinStageField k K Ω
 local notation "G" => geometricConstantExtension k K Ω
 local notation "C" => separableClosure k Ω
 
-local instance geometricLocalizationConstants : Algebra C G :=
-  constantAlgebra (K := K) C
-
-local instance geometricLocalizationConstantTower : IsScalarTower k C G :=
-  constantScalarTower (K := K) C
+attribute [local instance] constantAlgebra constantScalarTower
 
 local instance geometricLocalizationStageAlgebra (i : GeometricArtinIndex k K Ω) :
     Algebra (E i) G :=
@@ -57,21 +55,8 @@ local instance geometricLocalizationBaseStageTower (i : GeometricArtinIndex k K 
     IsScalarTower k (E i) G :=
   IsScalarTower.of_algebraMap_eq fun _ => Subtype.ext rfl
 
-local instance geometricLocalizationRatFuncAlgebra (i : GeometricArtinIndex k K Ω) :
-    Algebra (RatFunc k) (E i) :=
-  (ClassFieldTheory.FunctionField.finiteExtensionRatFuncAlgebra k K (E i)).val
-
-local instance geometricLocalizationRatFuncTower (i : GeometricArtinIndex k K Ω) :
-    IsScalarTower k (RatFunc k) (E i) :=
-  (ClassFieldTheory.FunctionField.finiteExtensionRatFuncAlgebra k K (E i)).property.1
-
-local instance geometricLocalizationFunctionField (i : GeometricArtinIndex k K Ω) :
-    FunctionField k (E i) :=
-  (ClassFieldTheory.FunctionField.finiteExtensionRatFuncAlgebra k K (E i)).property.2
-
-local instance geometricLocalizationPrincipalDivisors (i : GeometricArtinIndex k K Ω) :
-    HasPrincipalDivisors k (E i) :=
-  (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K (E i)).toHasPrincipalDivisors
+attribute [local instance]
+  stageRatFuncAlgebra stageRatFuncTower stageFunctionField stagePrincipalDivisors
 
 /-- The actual place of the finite constant stage below the given geometric
 place. No chosen residue-field isomorphism enters this restriction. -/
@@ -90,9 +75,9 @@ theorem geometricArtinPlaceAtStage_order
 boundary exponent at the original place below the same geometric point. -/
 theorem geometricArtinPlaceAtStage_modulus
     (m : Modulus k K) (i : GeometricArtinIndex k K Ω) (W : Place C G) :
-    rayModulusBaseChange (E i) m (geometricArtinPlaceAtStage k K Ω i W) =
+    reindexAlongPlaces (E i) m (geometricArtinPlaceAtStage k K Ω i W) =
       m (algebraicConstantPlaceRestrict (K := K) C K W) := by
-  rw [rayModulusBaseChange_apply]
+  rw [reindexAlongPlaces_apply]
   exact congrArg (fun v : Place k K => m v)
     (algebraicConstantPlaceRestrict_restrict (K := K) C (E i) W)
 
@@ -103,10 +88,10 @@ theorem geometricArtinKernelEquiv_mk_order
     (i : GeometricArtinIndex k K Ω) (a : GeometricArtinStageKernel k K Ω m i)
     (W : Place C G) :
     W.ord (geometricArtinKernelEquiv k K Ω m hm hmzero ⟦⟨i, a⟩⟧ : G) =
-      (restrictedRayOrder (rayModulusBaseChange (E i) m)
+      (restrictedRayOrder (reindexAlongPlaces (E i) m)
         (geometricArtinPlaceAtStage k K Ω i W) a.val).toAdd := by
   obtain ⟨x, rfl⟩ := (principalRestrictedArtinKernelEquiv
-    (rayModulusBaseChange (E i) m) (rayModulusBaseChange_ne_zero m hmzero)).surjective a
+    (reindexAlongPlaces (E i) m) (reindexAlongPlaces_ne_zero m hmzero)).surjective a
   rw [geometricArtinKernelEquiv_principal,
     restrictedRayOrder_principalRestrictedArtinKernelEquiv]
   exact geometricArtinPlaceAtStage_order k K Ω i W (x : E i)
@@ -121,8 +106,8 @@ theorem geometricArtinKernelEquiv_mk_boundary
     a.val (geometricArtinPlaceAtStage k K Ω i W) = 1 ↔
       W.HasValue (geometricArtinKernelEquiv k K Ω m hm hmzero ⟦⟨i, a⟩⟧ : G) 1 := by
   obtain ⟨x, rfl⟩ := (principalRestrictedArtinKernelEquiv
-    (rayModulusBaseChange (E i) m) (rayModulusBaseChange_ne_zero m hmzero)).surjective a
-  have hi : rayModulusBaseChange (E i) m (geometricArtinPlaceAtStage k K Ω i W) = 1 :=
+    (reindexAlongPlaces (E i) m) (reindexAlongPlaces_ne_zero m hmzero)).surjective a
+  have hi : reindexAlongPlaces (E i) m (geometricArtinPlaceAtStage k K Ω i W) = 1 :=
     (geometricArtinPlaceAtStage_modulus k K Ω m i W).trans hW
   rw [principalRestrictedArtinKernelEquiv_boundary _ _ _ _ hi,
     completion_mem_localHigherUnitGroup_one_iff_hasValue,
@@ -142,9 +127,9 @@ theorem geometricArtinKernel_order_independent
     (b : GeometricArtinStageKernel k K Ω m j)
     (h : (⟦⟨i, a⟩⟧ : GeometricArtinKernel k K Ω m hm hmzero) = ⟦⟨j, b⟩⟧)
     (W : Place C G) :
-    (restrictedRayOrder (rayModulusBaseChange (E i) m)
+    (restrictedRayOrder (reindexAlongPlaces (E i) m)
       (geometricArtinPlaceAtStage k K Ω i W) a.val).toAdd =
-      (restrictedRayOrder (rayModulusBaseChange (E j) m)
+      (restrictedRayOrder (reindexAlongPlaces (E j) m)
         (geometricArtinPlaceAtStage k K Ω j W) b.val).toAdd := by
   rw [← geometricArtinKernelEquiv_mk_order k K Ω m hm hmzero i a W,
     ← geometricArtinKernelEquiv_mk_order k K Ω m hm hmzero j b W, h]

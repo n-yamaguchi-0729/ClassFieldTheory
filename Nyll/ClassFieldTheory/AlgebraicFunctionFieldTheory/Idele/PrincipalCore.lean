@@ -117,4 +117,16 @@ end IdeleGroup
 abbrev IdeleClassGroup [AlgebraicCurve.HasPrincipalDivisors k K] :=
   IdeleGroup k K ⧸ IdeleGroup.principalSubgroup k K
 
+variable [AlgebraicCurve.HasPrincipalDivisors k K]
+
+/-- The canonical commutative group structure on the principal-idele quotient. -/
+@[instance_reducible]
+def IdeleClassGroup.commGroup : CommGroup (IdeleClassGroup k K) :=
+  QuotientGroup.Quotient.commGroup (G := IdeleGroup k K) (IdeleGroup.principalSubgroup k K)
+
+/-- Commutativity of the principal-idele quotient for local instance scopes. -/
+theorem IdeleClassGroup.isMulCommutative : IsMulCommutative (IdeleClassGroup k K) := by
+  let : CommGroup (IdeleClassGroup k K) := IdeleClassGroup.commGroup k K
+  exact IsMulCommutative.of_comm (fun a b => mul_comm a b)
+
 end FunctionField

@@ -9,10 +9,8 @@ module
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galois
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.DecompositionHilbert90
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.ClassFormation.CohomologyBridge
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.ClassFormation.LocalizedCompletionCohomology.CompMulEquiv
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.UnramifiedConductor
-public import Nyll.GaloisCohomology.Cyclic.TateH0.Main
 public import Nyll.GaloisCohomology.Cyclic.Herbrand.Permutation.Module
 public import Nyll.GaloisCohomology.Cyclic.Herbrand.FieldUnits
 public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
@@ -41,7 +39,7 @@ open scoped AlgebraicCurve.Place
 
 section NativeComparison
 
-variable {k K L : Type} [Field k] [Field K] [Field L]
+variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
     [FiniteDimensional K L] [IsGalois K L]
     [HasPrincipalDivisors k K] [HasPrincipalDivisors k L]
@@ -52,9 +50,8 @@ def decompositionHerbrandH0EquivNormQuotient (w : Place k L) :
       LocalFieldTheory.NormQuotient (w.restrict K).adicCompletion w.adicCompletion :=
   (herbrandH0CompMulEquiv (A := w.adicCompletionˣ)
       (decompositionCompletionEquiv (K := K) w)).toEquiv.trans
-    ((herbrandH0EquivTateCohomologyZero (w.restrict K).adicCompletion w.adicCompletion).trans
-      (H0TateUnitsIsoNormQuotient (w.restrict K).adicCompletion
-        w.adicCompletion).toLinearEquiv.toEquiv)
+    (herbrandH0UnitsEquivNormQuotient (w.restrict K).adicCompletion
+      w.adicCompletion).toEquiv
 
 end NativeComparison
 
@@ -76,11 +73,6 @@ theorem decomposition_herbrandH0_card (w : Place k L) :
     placeCompletion_isNonarchimedeanLocalField (w.restrict K)
   have : IsAbelianGalois (w.restrict K).adicCompletion w.adicCompletion :=
     { toIsGalois := inferInstance, toIsMulCommutative := inferInstance }
-  let eH : HerbrandH0 (decompositionGroup (K := K) w) w.adicCompletionˣ ≃*
-      LocalFieldTheory.NormQuotient (w.restrict K).adicCompletion w.adicCompletion :=
-    (herbrandH0CompMulEquiv (A := w.adicCompletionˣ)
-      (decompositionCompletionEquiv (K := K) w)).trans
-        (herbrandH0UnitsEquivNormQuotient (w.restrict K).adicCompletion w.adicCompletion)
   obtain ⟨eArtin, _, _⟩ :=
     LocalClassFieldTheory.Universe.quotientEquiv_existsUnique
       (w.restrict K).adicCompletion w.adicCompletion
@@ -90,7 +82,7 @@ theorem decomposition_herbrandH0_card (w : Place k L) :
     change Nat.card (ClassFieldTheory.FieldNormQuotient
       (w.restrict K).adicCompletion w.adicCompletion) = _
     exact Nat.card_congr eArtin.toMulEquiv.toEquiv
-  exact (Nat.card_congr eH.toEquiv).trans
+  exact (Nat.card_congr (decompositionHerbrandH0EquivNormQuotient (K := K) w)).trans
     (hNorm.trans (Nat.card_congr (decompositionCompletionEquiv (K := K) w).symm.toEquiv))
 
 /-- The local decomposition-group degree-zero Tate quotient is finite. -/

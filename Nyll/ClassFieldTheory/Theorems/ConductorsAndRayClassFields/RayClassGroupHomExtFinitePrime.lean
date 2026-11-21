@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayPrimeGeneration
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayPrimeGeneration
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 
 /-!
 # Prime classes determine maps out of a ray class group
@@ -16,6 +18,8 @@ import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 Finite primes away from the modulus generate enough of the ideal-theoretic
 ray class group to determine any homomorphism into a monoid.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -45,10 +49,10 @@ theorem rayClassGroup_hom_ext_finitePrime
     intro v hv
     have hv' : v ∉ m.finitePart.support := hv
     change f (e.symm (QuotientGroup.mk' m'.congruenceSubgroup
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (IdeleGroup.finitePrimeIdele v)))) =
       g (e.symm (QuotientGroup.mk' m'.congruenceSubgroup
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (IdeleGroup.finitePrimeIdele v))))
     rw [← GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele_prime
       K m v hv']

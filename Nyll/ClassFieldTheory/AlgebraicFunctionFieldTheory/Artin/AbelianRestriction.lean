@@ -36,18 +36,18 @@ theorem abelianFixedFieldArtin_of (H : FiniteAbstractField Gal(Ω/K))
     let _ : Algebra (abstractFixedField K Ω H.field) (abstractFixedField K Ω L.field) :=
       (IntermediateField.inclusion (abstractFixedField_le K Ω L.below)).toRingHom.toAlgebra
     ∀ c : IdeleClassGroup k (abstractFixedField K Ω H.field),
-      Abelianization.of (abelianFixedFieldArtin k K Ω H L c) =
+      Group.Abelianization.of (abelianFixedFieldArtin k K Ω H L c) =
         fixedFieldArtin k K Ω H L.toFiniteGaloisExtension c := by
   intro hFfinite aFL c
   let eG : L.extensionQuotient ≃*
       Gal((abstractFixedField K Ω L.field)/(abstractFixedField K Ω H.field)) :=
     abstractExtensionQuotientEquivGaloisGroup K Ω H.field L.field L.below L.normal
-  let e := Abelianization.equivOfComm (H := L.extensionQuotient)
-  let z : Abelianization
+  let e := Group.Abelianization.equivOfComm (H := L.extensionQuotient)
+  let z : Group.Abelianization
       Gal((abstractFixedField K Ω L.field)/(abstractFixedField K Ω H.field)) :=
     fixedFieldArtin k K Ω H L.toFiniteGaloisExtension c
-  change Abelianization.of (eG (e.symm (eG.abelianizationCongr.symm z))) = z
-  rw [← abelianizationCongr_of]
+  change Group.Abelianization.of (eG (e.symm (eG.abelianizationCongr.symm z))) = z
+  rw [← Group.abelianizationCongr_of]
   change eG.abelianizationCongr (e (e.symm (eG.abelianizationCongr.symm z))) = z
   rw [MulEquiv.apply_symm_apply, MulEquiv.apply_symm_apply]
 
@@ -77,15 +77,15 @@ theorem abelianFixedFieldArtin_restrictNormal
       Gal((abstractFixedField K Ω L.field)/(abstractFixedField K Ω H.field)) :=
     abstractExtensionQuotientEquivGaloisGroup K Ω H.field L.field L.below L.normal
   apply eG.symm.injective
-  apply (Abelianization.equivOfComm (H := L.extensionQuotient)).injective
+  apply (Group.Abelianization.equivOfComm (H := L.extensionQuotient)).injective
   apply eG.abelianizationCongr.injective
-  change Abelianization.of
+  change Group.Abelianization.of
       (eG (eG.symm ((AlgEquiv.restrictNormalHom (F := abstractFixedField K Ω H.field)
         (K₁ := abstractFixedField K Ω M.field) (abstractFixedField K Ω L.field))
           (abelianFixedFieldArtin k K Ω H M c)))) =
-    Abelianization.of (eG (eG.symm (abelianFixedFieldArtin k K Ω H L c)))
+    Group.Abelianization.of (eG (eG.symm (abelianFixedFieldArtin k K Ω H L c)))
   rw [MulEquiv.apply_symm_apply, MulEquiv.apply_symm_apply,
-    ← Abelianization.map_of, abelianFixedFieldArtin_of, abelianFixedFieldArtin_of]
+    ← Group.Abelianization.map_of, abelianFixedFieldArtin_of, abelianFixedFieldArtin_of]
   exact fixedFieldArtin_restrictNormal k K Ω H
     L.toFiniteGaloisExtension M.toFiniteGaloisExtension hML c
 

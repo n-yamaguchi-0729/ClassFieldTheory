@@ -53,8 +53,8 @@ variable {G : Type*} [Group G]
 abelianization. -/
 noncomputable instance finiteAbelianizationOfFiniteIndex
     [FiniteIndex (commutator G)] :
-    Finite (Abelianization G) := by
-  let : Fintype (Abelianization G) :=
+    Finite (Group.Abelianization G) := by
+  let : Fintype (Group.Abelianization G) :=
     (commutator G).fintypeQuotientOfFiniteIndex
   exact Finite.of_fintype _
 
@@ -62,19 +62,19 @@ noncomputable instance finiteAbelianizationOfFiniteIndex
 `G / G'` and `G' / G''`. -/
 noncomputable def commutatorTransfer
     [FiniteIndex (commutator G)] :
-    Abelianization G →* Abelianization (commutator G) :=
-  Abelianization.lift
+    Group.Abelianization G →* Group.Abelianization (commutator G) :=
+  Group.Abelianization.lift
     (MonoidHom.transfer
-      (Abelianization.of :
-        commutator G →* Abelianization (commutator G)))
+      (Group.Abelianization.of :
+        commutator G →* Group.Abelianization (commutator G)))
 
 @[simp]
 theorem commutatorTransfer_of
     [FiniteIndex (commutator G)] (g : G) :
-    commutatorTransfer (G := G) (Abelianization.of g) =
+    commutatorTransfer (G := G) (Group.Abelianization.of g) =
       MonoidHom.transfer
-        (Abelianization.of :
-          commutator G →* Abelianization (commutator G)) g :=
+        (Group.Abelianization.of :
+          commutator G →* Group.Abelianization (commutator G)) g :=
   rfl
 
 /-- The integral group-ring element `[g] - 1`. -/
@@ -161,7 +161,7 @@ theorem augmentation_groupRingDelta (g : G) :
 /-- The exponent-sum vector of a free word. -/
 def wordExponent {X : Type*} (w : FreeGroup X) : X →₀ ℤ :=
   FreeAbelianGroup.toFinsupp
-    (Additive.ofMul (Abelianization.of w))
+    (Additive.ofMul (Group.Abelianization.of w))
 
 @[simp]
 theorem wordExponent_one {X : Type*} :
@@ -179,9 +179,9 @@ theorem wordExponent_inv {X : Type*} (w : FreeGroup X) :
     wordExponent w⁻¹ = -wordExponent w := by
   change
     FreeAbelianGroup.toFinsupp
-        (-Additive.ofMul (Abelianization.of w)) =
+        (-Additive.ofMul (Group.Abelianization.of w)) =
       -FreeAbelianGroup.toFinsupp
-        (Additive.ofMul (Abelianization.of w))
+        (Additive.ofMul (Group.Abelianization.of w))
   exact map_neg FreeAbelianGroup.toFinsupp _
 
 @[simp]
@@ -190,12 +190,12 @@ theorem wordExponent_mul {X : Type*} (u v : FreeGroup X) :
       wordExponent u + wordExponent v := by
   change
     FreeAbelianGroup.toFinsupp
-        (Additive.ofMul (Abelianization.of u) +
-          Additive.ofMul (Abelianization.of v)) =
+        (Additive.ofMul (Group.Abelianization.of u) +
+          Additive.ofMul (Group.Abelianization.of v)) =
       FreeAbelianGroup.toFinsupp
-          (Additive.ofMul (Abelianization.of u)) +
+          (Additive.ofMul (Group.Abelianization.of u)) +
         FreeAbelianGroup.toFinsupp
-          (Additive.ofMul (Abelianization.of v))
+          (Additive.ofMul (Group.Abelianization.of v))
   exact map_add FreeAbelianGroup.toFinsupp _ _
 
 /-- A right Fox expansion of a free word, together with the fact that the
@@ -282,15 +282,15 @@ theorem exists_rightFoxExpansion
 def presentationMap
     {X : Type*} (φ : FreeGroup X →* G) :
     FreeAbelianGroup X →+
-      Additive (Abelianization G) :=
-  (Abelianization.map φ).toAdditive
+      Additive (Group.Abelianization G) :=
+  (Group.Abelianization.map φ).toAdditive
 
 @[simp]
 theorem presentationMap_of
     {X : Type*} (φ : FreeGroup X →* G) (x : X) :
     presentationMap φ (FreeAbelianGroup.of x) =
       Additive.ofMul
-        (Abelianization.of (φ (FreeGroup.of x))) :=
+        (Group.Abelianization.of (φ (FreeGroup.of x))) :=
   rfl
 
 theorem presentationMap_surjective
@@ -298,7 +298,7 @@ theorem presentationMap_surjective
     (hφ : Function.Surjective φ) :
     Function.Surjective (presentationMap φ) := by
   change
-    ∀ a : Abelianization G,
+    ∀ a : Group.Abelianization G,
       ∃ b : FreeAbelianGroup X,
         presentationMap φ b = Additive.ofMul a
   intro a
@@ -306,13 +306,13 @@ theorem presentationMap_surjective
   intro g
   obtain ⟨w, rfl⟩ := hφ g
   exact
-    ⟨Additive.ofMul (Abelianization.of w), rfl⟩
+    ⟨Additive.ofMul (Group.Abelianization.of w), rfl⟩
 
 /-- The same presentation map, regarded as a `ℤ`-linear map. -/
 def presentationLinearMap
     {X : Type*} (φ : FreeGroup X →* G) :
     FreeAbelianGroup X →ₗ[ℤ]
-      Additive (Abelianization G) :=
+      Additive (Group.Abelianization G) :=
   (presentationMap φ).toIntLinearMap
 
 @[simp]
@@ -331,14 +331,14 @@ theorem presentationKernel_finrank_eq
     [FiniteIndex (commutator G)] :
     Module.finrank ℤ (presentationLinearMap φ).ker =
       Module.finrank ℤ (FreeAbelianGroup X) := by
-  let : Fintype (Abelianization G) :=
+  let : Fintype (Group.Abelianization G) :=
     (commutator G).fintypeQuotientOfFiniteIndex
   let f := presentationLinearMap φ
   let e := f.quotKerEquivRange
   let : Finite f.range :=
     Finite.of_injective
       ((↑) : f.range →
-        Additive (Abelianization G))
+        Additive (Group.Abelianization G))
       Subtype.coe_injective
   have ht :
       Module.IsTorsion ℤ f.range :=
@@ -387,31 +387,31 @@ theorem exists_relationWord
     (m : (presentationLinearMap φ).ker) :
     ∃ r : FreeGroup X,
       φ r = 1 ∧
-      Additive.ofMul (Abelianization.of r) =
+      Additive.ofMul (Group.Abelianization.of r) =
         (m : FreeAbelianGroup X) := by
   obtain ⟨w, hw⟩ :=
     QuotientGroup.mk'_surjective
       (commutator (FreeGroup X))
       (Additive.toMul (m : FreeAbelianGroup X))
   have hw' :
-      Additive.ofMul (Abelianization.of w) =
+      Additive.ofMul (Group.Abelianization.of w) =
         (m : FreeAbelianGroup X) :=
     congrArg Additive.ofMul hw
   have habAdd :
       Additive.ofMul
-          (Abelianization.of (φ w)) = 0 := by
+          (Group.Abelianization.of (φ w)) = 0 := by
     calc
       Additive.ofMul
-          (Abelianization.of (φ w)) =
+          (Group.Abelianization.of (φ w)) =
           presentationLinearMap φ
             (Additive.ofMul
-              (Abelianization.of w)) := rfl
+              (Group.Abelianization.of w)) := rfl
       _ = presentationLinearMap φ
             (m : FreeAbelianGroup X) := by
               rw [hw']
       _ = 0 := m.property
   have hab :
-      Abelianization.of (φ w) = 1 := by
+      Group.Abelianization.of (φ w) = 1 := by
     exact congrArg Additive.toMul habAdd
   have hφw :
       φ w ∈ commutator G :=
@@ -429,7 +429,7 @@ theorem exists_relationWord
     exact (commutator G).inv_mem hφw
   obtain ⟨c, hc, hcφ⟩ := hinv
   have hcAb :
-      Abelianization.of c = 1 :=
+      Group.Abelianization.of c = 1 :=
     (QuotientGroup.eq_one_iff c).mpr hc
   refine ⟨w * c, ?_, ?_⟩
   · rw [map_mul, hcφ]
@@ -440,28 +440,28 @@ theorem exists_relationWord
 /-- The group-ring map induced by abelianization. -/
 def abelianizationRingMap :
     IntegralGroupRing G →+*
-      IntegralGroupRing (Abelianization G) :=
-  MonoidAlgebra.mapDomainRingHom ℤ Abelianization.of
+      IntegralGroupRing (Group.Abelianization G) :=
+  MonoidAlgebra.mapDomainRingHom ℤ Group.Abelianization.of
 
 @[simp]
 theorem abelianizationRingMap_single
     (g : G) (n : ℤ) :
     abelianizationRingMap
         (MonoidAlgebra.single g n) =
-      MonoidAlgebra.single (Abelianization.of g) n :=
-  MonoidAlgebra.mapDomain_single (f := Abelianization.of) (a := g) (r := n)
+      MonoidAlgebra.single (Group.Abelianization.of g) n :=
+  MonoidAlgebra.mapDomain_single (f := Group.Abelianization.of) (a := g) (r := n)
 
 @[simp]
 theorem abelianizationRingMap_groupRingDelta
     (g : G) :
     abelianizationRingMap (groupRingDelta g) =
-      groupRingDelta (Abelianization.of g) := by
+      groupRingDelta (Group.Abelianization.of g) := by
   simp only [groupRingDelta, map_sub, abelianizationRingMap_single, map_one]
 
 @[simp]
 theorem augmentation_abelianizationRingMap
     (x : IntegralGroupRing G) :
-    augmentation (Abelianization G)
+    augmentation (Group.Abelianization G)
         (abelianizationRingMap x) =
       augmentation G x := by
   induction x using MonoidAlgebra.induction_on with
@@ -475,25 +475,25 @@ theorem augmentation_abelianizationRingMap
 /-- An additive section of the group-ring abelianization map, obtained
 by choosing the quotient representative of every abelianization class. -/
 def abelianizationRingSection :
-    IntegralGroupRing (Abelianization G) →+
+    IntegralGroupRing (Group.Abelianization G) →+
       IntegralGroupRing G where
   toFun :=
     MonoidAlgebra.mapDomain
-      (fun a : Abelianization G => a.out)
+      (fun a : Group.Abelianization G => a.out)
   map_zero' := MonoidAlgebra.mapDomain_zero _
   map_add' := MonoidAlgebra.mapDomain_add _
 
 @[simp]
 theorem abelianizationRingSection_single
-    (a : Abelianization G) (n : ℤ) :
+    (a : Group.Abelianization G) (n : ℤ) :
     abelianizationRingSection
         (MonoidAlgebra.single a n) =
       MonoidAlgebra.single a.out n :=
-  MonoidAlgebra.mapDomain_single (f := fun a : Abelianization G => a.out) (a := a) (r := n)
+  MonoidAlgebra.mapDomain_single (f := fun a : Group.Abelianization G => a.out) (a := a) (r := n)
 
 @[simp]
 theorem abelianizationRingMap_section
-    (z : IntegralGroupRing (Abelianization G)) :
+    (z : IntegralGroupRing (Group.Abelianization G)) :
     abelianizationRingMap
         (abelianizationRingSection z) = z := by
   induction z using MonoidAlgebra.induction_on with
@@ -527,19 +527,19 @@ theorem ideal_mul_mem_mixed_of_abelianizationRingMap_eq_zero
     intro z
     induction z using MonoidAlgebra.induction_on with
     | of g =>
-        let q : Abelianization G :=
-          Abelianization.of g
+        let q : Group.Abelianization G :=
+          Group.Abelianization.of g
         let r : G := q.out
-        have hrq : Abelianization.of r = q := by
+        have hrq : Group.Abelianization.of r = q := by
           exact Quotient.out_eq q
         have hh :
             r⁻¹ * g ∈ commutator G := by
           apply
             (QuotientGroup.eq_one_iff
               (r⁻¹ * g)).mp
-          change Abelianization.of (r⁻¹ * g) = 1
+          change Group.Abelianization.of (r⁻¹ * g) = 1
           rw [map_mul, map_inv, hrq]
-          exact inv_mul_cancel (Abelianization.of g)
+          exact inv_mul_cancel (Group.Abelianization.of g)
         let h : commutator G := ⟨r⁻¹ * g, hh⟩
         have hfactor :
             (MonoidAlgebra.of ℤ G g -
@@ -653,7 +653,7 @@ theorem relationWord_map (j : X) :
 omit [DecidableEq X] in
 theorem relationWord_abelianization (j : X) :
     Additive.ofMul
-        (Abelianization.of (relationWord φ hφ j)) =
+        (Group.Abelianization.of (relationWord φ hφ j)) =
       ((relationBasis φ j :
         (presentationLinearMap φ).ker) :
           FreeAbelianGroup X) :=
@@ -707,7 +707,7 @@ theorem augmentation_foxCoefficient_eq_repr
 the finite abelianization. -/
 noncomputable def foxMatrix :
     Matrix X X
-      (IntegralGroupRing (Abelianization G)) :=
+      (IntegralGroupRing (Group.Abelianization G)) :=
   fun i j =>
     abelianizationRingMap
       (foxCoefficient φ hφ i j)
@@ -858,7 +858,7 @@ theorem delta_vecMul_foxMatrix :
     Matrix.vecMul
         (fun i : X =>
           groupRingDelta
-            (Abelianization.of
+            (Group.Abelianization.of
               (φ (FreeGroup.of i))))
         (foxMatrix φ hφ) =
       0 := by
@@ -871,7 +871,7 @@ theorem delta_vecMul_foxMatrix :
 
 theorem delta_generator_mul_foxMatrix_det (i : X) :
     groupRingDelta
-          (Abelianization.of
+          (Group.Abelianization.of
             (φ (FreeGroup.of i))) *
         (foxMatrix φ hφ).det =
       0 :=
@@ -879,14 +879,14 @@ theorem delta_generator_mul_foxMatrix_det (i : X) :
     (foxMatrix φ hφ)
     (fun k : X =>
       groupRingDelta
-        (Abelianization.of
+        (Group.Abelianization.of
           (φ (FreeGroup.of k))))
     (delta_vecMul_foxMatrix φ hφ) i
 
 theorem delta_word_mul_foxMatrix_det
     (w : FreeGroup X) :
     groupRingDelta
-          (Abelianization.of (φ w)) *
+          (Group.Abelianization.of (φ w)) *
         (foxMatrix φ hφ).det =
       0 := by
   induction w using FreeGroup.induction_on with
@@ -898,18 +898,18 @@ theorem delta_word_mul_foxMatrix_det
       rw [map_inv, map_inv, groupRingDelta_inv]
       calc
         groupRingDelta
-              (Abelianization.of
+              (Group.Abelianization.of
                 (φ (FreeGroup.of i))) *
             (-MonoidAlgebra.single
-              (Abelianization.of
+              (Group.Abelianization.of
                 (φ (FreeGroup.of i)))⁻¹ 1) *
             (foxMatrix φ hφ).det =
             (groupRingDelta
-                (Abelianization.of
+                (Group.Abelianization.of
                   (φ (FreeGroup.of i))) *
               (foxMatrix φ hφ).det) *
               (-MonoidAlgebra.single
-                (Abelianization.of
+                (Group.Abelianization.of
                   (φ (FreeGroup.of i)))⁻¹ 1) := by
                   ac_rfl
         _ = 0 := by rw [hi, zero_mul]
@@ -918,27 +918,27 @@ theorem delta_word_mul_foxMatrix_det
         add_mul]
       calc
         (groupRingDelta
-              (Abelianization.of (φ u)) *
+              (Group.Abelianization.of (φ u)) *
               MonoidAlgebra.single
-                (Abelianization.of (φ v)) 1) *
+                (Group.Abelianization.of (φ v)) 1) *
               (foxMatrix φ hφ).det +
             groupRingDelta
-                (Abelianization.of (φ v)) *
+                (Group.Abelianization.of (φ v)) *
               (foxMatrix φ hφ).det =
             (groupRingDelta
-                (Abelianization.of (φ u)) *
+                (Group.Abelianization.of (φ u)) *
               (foxMatrix φ hφ).det) *
                 MonoidAlgebra.single
-                  (Abelianization.of (φ v)) 1 +
+                  (Group.Abelianization.of (φ v)) 1 +
               groupRingDelta
-                  (Abelianization.of (φ v)) *
+                  (Group.Abelianization.of (φ v)) *
                 (foxMatrix φ hφ).det := by
                   congr 1
                   ac_rfl
         _ = 0 := by rw [hu, hv, zero_mul, zero_add]
 
 theorem delta_mul_foxMatrix_det
-    (a : Abelianization G) :
+    (a : Group.Abelianization G) :
     groupRingDelta a * (foxMatrix φ hφ).det =
       0 := by
   refine QuotientGroup.induction_on a ?_
@@ -947,7 +947,7 @@ theorem delta_mul_foxMatrix_det
   exact delta_word_mul_foxMatrix_det φ hφ w
 
 theorem single_mul_foxMatrix_det
-    (a : Abelianization G) :
+    (a : Group.Abelianization G) :
     MonoidAlgebra.single a 1 *
         (foxMatrix φ hφ).det =
       (foxMatrix φ hφ).det := by
@@ -957,7 +957,7 @@ theorem single_mul_foxMatrix_det
   exact sub_eq_zero.mp h
 
 theorem augmentation_foxMatrix_det :
-    augmentation (Abelianization G)
+    augmentation (Group.Abelianization G)
         (foxMatrix φ hφ).det =
       (FreeAbelianGroup.basis X).det
         (fun j : X =>
@@ -965,13 +965,13 @@ theorem augmentation_foxMatrix_det :
             (presentationLinearMap φ).ker) :
               FreeAbelianGroup X))) := by
   calc
-    augmentation (Abelianization G)
+    augmentation (Group.Abelianization G)
         (foxMatrix φ hφ).det =
         (RingHom.mapMatrix
-          (augmentation (Abelianization G))
+          (augmentation (Group.Abelianization G))
           (foxMatrix φ hφ)).det :=
       RingHom.map_det
-        (augmentation (Abelianization G))
+        (augmentation (Group.Abelianization G))
         (foxMatrix φ hφ)
     _ = (FreeAbelianGroup.basis X).det
         (fun j : X =>
@@ -986,9 +986,9 @@ theorem augmentation_foxMatrix_det :
 
 theorem natAbs_augmentation_foxMatrix_det :
     Int.natAbs
-        (augmentation (Abelianization G)
+        (augmentation (Group.Abelianization G)
           (foxMatrix φ hφ).det) =
-      Nat.card (Abelianization G) := by
+      Nat.card (Group.Abelianization G) := by
   rw [augmentation_foxMatrix_det]
   calc
     Int.natAbs
@@ -1005,11 +1005,11 @@ theorem natAbs_augmentation_foxMatrix_det :
         (presentationLinearMap φ).ker
         (relationBasis φ)
     _ = Nat.card
-          (Additive (Abelianization G)) := by
+          (Additive (Group.Abelianization G)) := by
       exact Nat.card_congr
         ((presentationLinearMap φ).quotKerEquivOfSurjective
           (presentationMap_surjective φ hφ)).toEquiv
-    _ = Nat.card (Abelianization G) := rfl
+    _ = Nat.card (Group.Abelianization G) := rfl
 
 end Presentation
 
@@ -1035,7 +1035,7 @@ theorem abelianizationRingMap_transversalNormElement
     (T : (commutator G).LeftTransversal) :
     abelianizationRingMap
         (transversalNormElement (commutator G) T) =
-      groupNormElement (Abelianization G) := by
+      groupNormElement (Group.Abelianization G) := by
   let := (commutator G).fintypeQuotientOfFiniteIndex
   unfold transversalNormElement groupNormElement
   rw [map_sum]
@@ -1079,49 +1079,49 @@ theorem exists_unit_foxMatrix_det_eq_smul_norm :
     ∃ u : ℤˣ,
       (foxMatrix φ hφ).det =
         (u : ℤ) •
-          groupNormElement (Abelianization G) := by
-  let : Fintype (Abelianization G) :=
+          groupNormElement (Group.Abelianization G) := by
+  let : Fintype (Group.Abelianization G) :=
     (commutator G).fintypeQuotientOfFiniteIndex
   let d := (foxMatrix φ hφ).det
   let c := d.coeff 1
   have hd :
-      d = c • groupNormElement (Abelianization G) :=
+      d = c • groupNormElement (Group.Abelianization G) :=
     eq_coeff_one_smul_groupNormElement d
       (single_mul_foxMatrix_det φ hφ)
   have haug :
-      augmentation (Abelianization G) d =
+      augmentation (Group.Abelianization G) d =
         c * (Fintype.card
-          (Abelianization G) : ℤ) := by
+          (Group.Abelianization G) : ℤ) := by
     have h := congrArg
-      (augmentation (Abelianization G)) hd
+      (augmentation (Group.Abelianization G)) hd
     simpa [c] using h
   have hnat :
       Int.natAbs
-          (augmentation (Abelianization G) d) =
-        Fintype.card (Abelianization G) := by
+          (augmentation (Group.Abelianization G) d) =
+        Fintype.card (Group.Abelianization G) := by
     simpa [d, Nat.card_eq_fintype_card] using
       natAbs_augmentation_foxMatrix_det φ hφ
   have hcprod :
       Int.natAbs c *
-          Fintype.card (Abelianization G) =
-        Fintype.card (Abelianization G) := by
+          Fintype.card (Group.Abelianization G) =
+        Fintype.card (Group.Abelianization G) := by
     calc
       Int.natAbs c *
-          Fintype.card (Abelianization G) =
+          Fintype.card (Group.Abelianization G) =
           Int.natAbs
             (c * (Fintype.card
-              (Abelianization G) : ℤ)) := by
+              (Group.Abelianization G) : ℤ)) := by
                 simpa only [Int.natAbs_natCast] using
                   (Int.natAbs_mul c
                     (Fintype.card
-                      (Abelianization G) : ℤ)).symm
+                      (Group.Abelianization G) : ℤ)).symm
       _ = Int.natAbs
-          (augmentation (Abelianization G) d) := by
+          (augmentation (Group.Abelianization G) d) := by
             rw [haug]
-      _ = Fintype.card (Abelianization G) :=
+      _ = Fintype.card (Group.Abelianization G) :=
         hnat
   have hcard :
-      0 < Fintype.card (Abelianization G) :=
+      0 < Fintype.card (Group.Abelianization G) :=
     Fintype.card_pos
   have hcabs : Int.natAbs c = 1 := by
     apply Nat.eq_of_mul_eq_mul_right hcard
@@ -1136,7 +1136,7 @@ theorem exists_unit_foxDeterminantLift_eq_smul_section_norm :
       foxDeterminantLift φ hφ =
         (u : ℤ) •
           abelianizationRingSection
-            (groupNormElement (Abelianization G)) := by
+            (groupNormElement (Group.Abelianization G)) := by
   obtain ⟨u, hu⟩ :=
     exists_unit_foxMatrix_det_eq_smul_norm φ hφ
   refine ⟨u, ?_⟩
@@ -1149,7 +1149,7 @@ theorem generator_mul_section_norm_mem_mixed [Finite X]
     (k : X) :
     groupRingDelta (φ (FreeGroup.of k)) *
         abelianizationRingSection
-          (groupNormElement (Abelianization G)) ∈
+          (groupNormElement (Group.Abelianization G)) ∈
       mixedAugmentationProduct (commutator G) := by
   classical
   let : Fintype X := Fintype.ofFinite X
@@ -1158,7 +1158,7 @@ theorem generator_mul_section_norm_mem_mixed [Finite X]
       φ hφ
   let S : IntegralGroupRing G :=
     abelianizationRingSection
-      (groupNormElement (Abelianization G))
+      (groupNormElement (Group.Abelianization G))
   change
     groupRingDelta (φ (FreeGroup.of k)) * S ∈
       mixedAugmentationProduct (commutator G)
@@ -1202,11 +1202,11 @@ theorem word_mul_section_norm_mem_mixed [Finite X]
     (w : FreeGroup X) :
     groupRingDelta (φ w) *
         abelianizationRingSection
-          (groupNormElement (Abelianization G)) ∈
+          (groupNormElement (Group.Abelianization G)) ∈
       mixedAugmentationProduct (commutator G) := by
   let S : IntegralGroupRing G :=
     abelianizationRingSection
-      (groupNormElement (Abelianization G))
+      (groupNormElement (Group.Abelianization G))
   change
     groupRingDelta (φ w) * S ∈
       mixedAugmentationProduct (commutator G)
@@ -1241,7 +1241,7 @@ theorem delta_mul_section_norm_mem_mixed [Finite X]
     (g : G) :
     groupRingDelta g *
         abelianizationRingSection
-          (groupNormElement (Abelianization G)) ∈
+          (groupNormElement (Group.Abelianization G)) ∈
       mixedAugmentationProduct (commutator G) := by
   obtain ⟨w, rfl⟩ := hφ g
   exact word_mul_section_norm_mem_mixed φ hφ w
@@ -1255,7 +1255,7 @@ theorem delta_mul_transversalNormElement_mem_mixed [Finite X]
       mixedAugmentationProduct (commutator G) := by
   let S : IntegralGroupRing G :=
     abelianizationRingSection
-      (groupNormElement (Abelianization G))
+      (groupNormElement (Group.Abelianization G))
   let N : IntegralGroupRing G :=
     transversalNormElement (commutator G) T
   have hδ : groupRingDelta g ∈ ideal G := by
@@ -1306,7 +1306,7 @@ theorem commutatorTransfer_eq_one_of_finite_abelianization
   refine QuotientGroup.induction_on a ?_
   intro g
   change
-    commutatorTransfer (G := G) (Abelianization.of g) = 1
+    commutatorTransfer (G := G) (Group.Abelianization.of g) = 1
   rw [commutatorTransfer_of]
   apply relativeDeltaAbelianization_injective
     (commutator G)

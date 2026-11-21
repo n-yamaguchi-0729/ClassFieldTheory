@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Cohomology.Cech.OrderedFaceMaps
 public import Mathlib.Data.Fintype.Card
 public import Mathlib.Data.Fintype.Sets
 public import Mathlib.Data.Fintype.Pi
@@ -36,16 +37,6 @@ universe u
 open Finset Function
 
 namespace ProjSpaceCech
-
-theorem Idx.succAbove_comp_succAbove {n : ℕ} {i j : Fin (n + 2)} (H : i ≤ j) :
-    Fin.succAbove j.succ ∘ Fin.succAbove i
-      = Fin.succAbove i.castSucc ∘ Fin.succAbove j := by
-  ext k
-  simp only [Function.comp_apply, Fin.succAbove]
-  rcases i with ⟨i, hi⟩; rcases j with ⟨j, hj⟩; rcases k with ⟨k, hk⟩
-  simp only [Fin.le_def] at H
-  simp only [Fin.lt_def, Fin.castSucc_mk, Fin.succ_mk, Fin.val_castSucc]
-  split_ifs <;> simp_all only [Fin.val_succ, Fin.val_castSucc] <;> omega
 
 section Setup
 

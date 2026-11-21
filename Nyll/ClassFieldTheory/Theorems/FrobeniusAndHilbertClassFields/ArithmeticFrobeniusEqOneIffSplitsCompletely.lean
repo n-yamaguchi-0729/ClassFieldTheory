@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
-import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusOrder
+module
+
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
+public import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusOrder
 
 /-!
 # Trivial arithmetic Frobenius and complete splitting
@@ -15,6 +17,8 @@ In a finite abelian extension, the Frobenius at an unramified prime is the
 identity exactly when the base prime splits completely.  Complete splitting
 is expressed only with Mathlib's ramification indices and residue degrees.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

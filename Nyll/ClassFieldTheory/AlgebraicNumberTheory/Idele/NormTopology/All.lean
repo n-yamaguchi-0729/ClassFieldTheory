@@ -4,11 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.Continuity
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ExtensionBehavior
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.FiniteNormArithmetic
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.IdeleClassNorm
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.NormOne
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ArchimedeanNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.Continuity
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.ExtensionBehavior
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.FiniteNormArithmetic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.IdeleClassNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.NormOne
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.NormTopology.StandardNorm
 
 /-! # Topological properties of idele norms -/

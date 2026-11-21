@@ -347,22 +347,6 @@ noncomputable section
 
 namespace Pic0Locus
 
-theorem cover_ext {X : Scheme.{u}} {𝒱 𝒱' : X.TwoAffineOpenCover}
-    (h0 : 𝒱.U0 = 𝒱'.U0) (h1 : 𝒱.U1 = 𝒱'.U1) : 𝒱 = 𝒱' := by
-  cases 𝒱; cases 𝒱'; cases h0; cases h1; rfl
-
-theorem finrank_H0_H1_congr {k : Type u} [Field k] {X : Scheme.{u}}
-    (x : X ⟶ Spec (CommRingCat.of k))
-    (𝒱 : X.TwoAffineOpenCover) {M M' : X.Modules} (e : M ≅ M') :
-    Module.finrank k (𝒱.sectionsOf x M).H0 = Module.finrank k (𝒱.sectionsOf x M').H0 ∧
-      Module.finrank k (𝒱.sectionsOf x M).H1 = Module.finrank k (𝒱.sectionsOf x M').H1 := by
-  obtain ⟨𝒱₂, h0, h1, ⟨e0⟩, ⟨e1⟩⟩ :=
-    Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso x x (Iso.refl X)
-      (Category.id_comp x)
-      𝒱 M' M (e ≪≫ ((Scheme.Modules.pullbackId X).app M').symm)
-  obtain rfl : 𝒱₂ = 𝒱 := cover_ext h0 h1
-  exact ⟨e0.finrank_eq, e1.finrank_eq⟩
-
 theorem specMap_residueField_base {A : Type u} [CommRing A] (𝔭 : PrimeSpectrum A)
     (p : Spec (CommRingCat.of 𝔭.asIdeal.ResidueField)) :
     (Scheme.TwoAffineOpenCover.specMap A 𝔭.asIdeal.ResidueField).base p = 𝔭 := by
@@ -414,7 +398,7 @@ theorem Pic0Locus.main
         Module.finrank k (𝒲.sectionsOf (fibreAt c t s)
           (SheafOfModules.unit (pullback (pullback.snd c t) s).ringCatSheaf
               : (pullback (pullback.snd c t) s).Modules)).H1 :=
-    fun s 𝒲 => finrank_H0_H1_congr (fibreAt c t s) 𝒲
+    fun s 𝒲 => 𝒲.finrank_sectionsOf_H0_H1_congr (fibreAt c t s)
       (Scheme.Modules.pullbackTensorUnitObjIso (pullback.fst (pullback.snd c t) s))
   rw [isOpen_iff_forall_mem_open]
   intro x hx

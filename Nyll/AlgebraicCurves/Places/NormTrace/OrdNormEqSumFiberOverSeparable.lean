@@ -68,74 +68,7 @@ section ValuationDictionary
 
 variable {v : Place K F} {w : Place K F'}
 
-private theorem neg_log_valuation_fiberCenter_eq_ord (hw : w.restrict F = v) {x : F'} (hx : x ≠ 0) :
-    -log ((fiberCenter F' v hw).valuation F' x) = w.ord x :=
-  _root_.AlgebraicCurve.Place.neg_log_valuation_fiberCenter_eq_ord hw hx
-
-private theorem le_ord_iff_mem_pow_fiberCenter (hw : w.restrict F = v)
-    {c : integralClosureAt F' v} (hc : c ≠ 0) (n : ℕ) :
-    (n : ℤ) ≤ w.ord (algebraMap (integralClosureAt F' v) F' c) ↔
-      c ∈ (fiberCenter F' v hw).asIdeal ^ n :=
-  _root_.AlgebraicCurve.Place.le_ord_iff_mem_pow_fiberCenter hw hc n
-
 end ValuationDictionary
-
-section ResidueDictionary
-
-variable {v : Place K F} {w : Place K F'}
-
-private def toValuationSubringOfRestrictEq (hw : w.restrict F = v) :
-    integralClosureAt F' v →+* w.toValuationSubring :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.toValuationSubringOfRestrictEq hw
-
-omit [FiniteDimensional F F'] in
-@[scoped simp]
-private theorem coe_toValuationSubringOfRestrictEq (hw : w.restrict F = v)
-    (c : integralClosureAt F' v) :
-    (toValuationSubringOfRestrictEq hw c : F')
-      = algebraMap (integralClosureAt F' v) F' c :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.coe_toValuationSubringOfRestrictEq hw c
-
-private def residueOfCenter (hw : w.restrict F = v) :
-    integralClosureAt F' v →+* w.ResidueField :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.residueOfCenter hw
-
-omit [FiniteDimensional F F'] in
-private theorem residueOfCenter_apply (hw : w.restrict F = v) (c : integralClosureAt F' v) :
-    residueOfCenter hw c = IsLocalRing.residue w.toValuationSubring
-      (toValuationSubringOfRestrictEq hw c) :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.residueOfCenter_apply hw c
-
-private theorem ker_residueOfCenter (hw : w.restrict F = v) :
-    RingHom.ker (residueOfCenter hw) = (fiberCenter F' v hw).asIdeal :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.ker_residueOfCenter hw
-
-private theorem surjective_residueOfCenter (hw : w.restrict F = v) :
-    Function.Surjective (residueOfCenter hw) :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.surjective_residueOfCenter hw
-
-private def residueFieldEquivQuotientCenter (hw : w.restrict F = v) :
-    integralClosureAt F' v ⧸ (fiberCenter F' v hw).asIdeal ≃+* w.ResidueField :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.residueFieldEquivQuotientCenter hw
-
-private def placeCongrEquiv {u u' : Place K F} (h : u = u') :
-    u.toValuationSubring ≃+* u'.toValuationSubring :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.placeCongrEquiv h
-@[scoped simp]
-private theorem coe_placeCongrEquiv {u u' : Place K F} (h : u = u') (x : u.toValuationSubring) :
-    (placeCongrEquiv h x : F) = (x : F) :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.coe_placeCongrEquiv h x
-
-private def restrictResidueFieldEquiv (hw : w.restrict F = v) :
-    (w.restrict F).ResidueField ≃+* IsLocalRing.ResidueField v.toValuationSubring :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.restrictResidueFieldEquiv hw
-
-private theorem inertiaDeg_eq_inertiaDeg_fiberCenter (hw : w.restrict F = v) :
-    w.inertiaDeg F =
-      (fiberCenter F' v hw).asIdeal.inertiaDeg v.toValuationSubring :=
-  _root_.AlgebraicCurve.Place.FiberCenterResidueComparison.inertiaDeg_eq_inertiaDeg_fiberCenter hw
-
-end ResidueDictionary
 
 end Place
 
@@ -203,7 +136,8 @@ theorem _root_.AlgebraicCurve.Place.relNorm_fiberCenter (hw : w.restrict F = v) 
   have : (fiberCenter F' v hw).asIdeal.LiesOver
       (IsLocalRing.maximalIdeal v.toValuationSubring) := fiberCenter_liesOver hw
   rw [AlgebraicCurve.relNorm_eq_pow_of_isMaximal_of_isSeparable F F' (fiberCenter F' v hw).asIdeal
-    (IsLocalRing.maximalIdeal v.toValuationSubring), inertiaDeg_eq_inertiaDeg_fiberCenter hw]
+    (IsLocalRing.maximalIdeal v.toValuationSubring),
+    _root_.AlgebraicCurve.Place.inertiaDeg_eq_inertiaDeg_fiberCenter _ hw]
 
 private theorem count_normalizedFactors_span_singleton
     (hw : w.restrict F = v) {c : integralClosureAt F' v} (hc : c ≠ 0) :
@@ -252,7 +186,8 @@ private theorem relNorm_span_singleton {c : integralClosureAt F' v}
           ^ (Q.inertiaDeg v.toValuationSubring * S.count Q) := by
           refine Finset.prod_congr rfl fun Q hQ => ?_
           obtain ⟨w', hw', rfl⟩ := hfactor Q hQ
-          rw [relNorm_fiberCenter hw', ← pow_mul, inertiaDeg_eq_inertiaDeg_fiberCenter hw']
+          rw [relNorm_fiberCenter hw', ← pow_mul,
+            _root_.AlgebraicCurve.Place.inertiaDeg_eq_inertiaDeg_fiberCenter _ hw']
     _ = IsLocalRing.maximalIdeal v.toValuationSubring
           ^ (∑ Q ∈ S.toFinset,
               Q.inertiaDeg v.toValuationSubring * S.count Q) :=
@@ -280,7 +215,8 @@ private theorem relNorm_span_singleton {c : integralClosureAt F' v}
             _ = ∑ w' ∈ (v.fiberOver F').attach, (w'.1.inertiaDeg F
                   * (w'.1.ord (algebraMap (integralClosureAt F' v) F' c)).toNat) := by
                   refine Finset.sum_congr rfl fun w' _ => ?_
-                  rw [← inertiaDeg_eq_inertiaDeg_fiberCenter ((mem_fiberOver v).mp w'.2),
+                  rw [← _root_.AlgebraicCurve.Place.inertiaDeg_eq_inertiaDeg_fiberCenter _
+                    ((mem_fiberOver v).mp w'.2),
                     count_normalizedFactors_span_singleton ((mem_fiberOver v).mp w'.2) hc]
             _ = ∑ w ∈ v.fiberOver F',
                   w.inertiaDeg F

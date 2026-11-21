@@ -45,7 +45,7 @@ theorem exists_eval_ne_zero_fin :
       have hp : p ≠ 0 := EmbeddingLike.map_ne_zero_iff.2 hF
       obtain ⟨i, hi⟩ : ∃ i : ℕ, p.coeff i ≠ 0 := by
         contrapose! hp
-        exact Polynomial.ext hp
+        exact AddMonoidAlgebra.ext (DFunLike.ext _ _ hp)
       obtain ⟨r, hr⟩ := exists_eval_ne_zero_fin hi
       let q : K[X] := p.map (eval r)
       have hq : q ≠ 0 := by

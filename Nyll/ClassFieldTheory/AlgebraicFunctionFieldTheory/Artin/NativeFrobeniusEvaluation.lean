@@ -7,18 +7,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteSymbol
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FrobeniusNormWitness
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativePrimeNorm
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativeFrobeniusNorm
 
 /-!
-# Native reciprocity on the intrinsic Frobenius auxiliary field
+# Common Frobenius value on the original fixed base
 -/
 
 @[expose] public section
@@ -31,15 +23,16 @@ namespace FunctionField
 
 open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
 
-variable (k : Type u) (K : Type v) [Field k] [Finite k] [Field K]
-    [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
-    [FunctionField k K] [Algebra k (SeparableClosure K)]
-    [IsScalarTower k K (SeparableClosure K)]
+variable (k : Type u) (K : Type v) [kField : Field k] [kFinite : Finite k] [KField : Field K]
+    [kK : Algebra k K] [kRatK : Algebra (RatFunc k) K] [kRatKTower : IsScalarTower k (RatFunc k) K]
+    [kFunctionField : FunctionField k K] [kClosure : Algebra k (SeparableClosure K)]
+    [kClosureTower : IsScalarTower k K (SeparableClosure K)]
     (H : FiniteAbstractField Gal(SeparableClosure K/K))
     [fixedBaseRatFuncAlgebra :
       Algebra (RatFunc k) (abstractFixedField K (SeparableClosure K) H.field)]
-    [IsScalarTower k (RatFunc k) (abstractFixedField K (SeparableClosure K) H.field)]
-    [FunctionField k (abstractFixedField K (SeparableClosure K) H.field)]
+    [fixedBaseRatFuncTower :
+      IsScalarTower k (RatFunc k) (abstractFixedField K (SeparableClosure K) H.field)]
+    [fixedBaseFunctionField : FunctionField k (abstractFixedField K (SeparableClosure K) H.field)]
 
 attribute [local instance]
   fixedBaseCommSemiring
@@ -66,78 +59,134 @@ attribute [local instance]
   fixedBaseFrobeniusAuxiliaryConstantAlgebra
   ambientFrobeniusAuxiliaryConstantAlgebra
 
+attribute [local instance] nativeFrobeniusExtensionNormal
+
 section IntrinsicLiftValue
 
 variable
-    [Algebra k (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
-    [Algebra (RatFunc k)
-      (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
+    [intrinsicClosureAlgebra :
+      Algebra k (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
+    [intrinsicClosureRatFuncAlgebra :
+      Algebra (RatFunc k) (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
     [fixedBaseClosureConstantTower :
       IsScalarTower k (abstractFixedField K (SeparableClosure K) H.field)
         (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
-    [IsScalarTower (RatFunc k) (abstractFixedField K (SeparableClosure K) H.field)
-      (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
-    [IsScalarTower k (RatFunc k)
-      (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
+    [intrinsicClosureRatFuncTower :
+      IsScalarTower (RatFunc k) (abstractFixedField K (SeparableClosure K) H.field)
+        (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
+    [intrinsicClosureConstantRatFuncTower :
+      IsScalarTower k (RatFunc k)
+        (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
 
-/-- The intrinsic norm evaluates to the Frobenius transported to the original closure. -/
-theorem native_frobenius_norm_eq_ambient
+
+variable
+    [ambientClosureRatFuncAlgebra : Algebra (RatFunc k) (SeparableClosure K)]
+    [ambientClosureRatFuncTower : IsScalarTower (RatFunc k) K (SeparableClosure K)]
+    [ambientClosureConstantRatFuncTower : IsScalarTower k (RatFunc k) (SeparableClosure K)]
+
+omit kRatK kRatKTower kFunctionField intrinsicClosureRatFuncAlgebra intrinsicClosureRatFuncTower
+    intrinsicClosureConstantRatFuncTower ambientClosureRatFuncAlgebra ambientClosureRatFuncTower
+    ambientClosureConstantRatFuncTower in
+private theorem intrinsicFrobeniusAuxiliaryProperties
+    (T : FiniteGaloisSubextension H.field)
+    (e : SeparableClosure (abstractFixedField K (SeparableClosure K) H.field)
+      ≃ₐ[abstractFixedField K (SeparableClosure K) H.field] SeparableClosure K)
+    (σ : intrinsicFixedBaseFrobeniusElements k K H T e) :
+    let F := abstractFixedField K (SeparableClosure K) H.field
+    let LI := fixedBaseFrobeniusAuxiliaryField k K H T e σ
+    IsScalarTower k F LI ∧ FiniteDimensional F LI ∧ Algebra.IsSeparable F LI := by
+  intro F LI
+  let E := abstractRelativeFixedField K (SeparableClosure K) T.below
+  let TI := finiteGaloisAbstractExtensionOfEmbedding F E (e.symm.toAlgHom.comp E.val)
+  have ht : IsScalarTower k F LI := IsScalarTower.of_algebraMap_eq
+    (R := k) (S := F) (A := LI)
+    (fun x => Subtype.ext (IsScalarTower.algebraMap_apply k F (SeparableClosure F) x))
+  have hf : FiniteDimensional F LI :=
+    frobeniusFixedField_finiteDimensional F (SeparableClosure F)
+      (fullConstantDegreeData k F (SeparableClosure F)) (intrinsicFiniteAbstractBase F) TI σ
+  exact ⟨ht, hf, IntermediateField.isSeparable_tower_bot F (K := SeparableClosure F) LI⟩
+
+/-- An actual degree-one norm supplies the same Frobenius value in the two
+finite reciprocity maps on the fixed base. -/
+theorem exists_common_frobenius_value_of_intrinsicLift
     (T : FiniteGaloisSubextension H.field) [IsMulCommutative T.extensionQuotient]
     (e : SeparableClosure (abstractFixedField K (SeparableClosure K) H.field)
       ≃ₐ[abstractFixedField K (SeparableClosure K) H.field] SeparableClosure K)
-    (σ : intrinsicFixedBaseFrobeniusElements k K H T e)
-    [FiniteDimensional (abstractFixedField K (SeparableClosure K) H.field)
-      (fixedBaseFrobeniusAuxiliaryField k K H T e σ)]
-    [Algebra.IsSeparable (abstractFixedField K (SeparableClosure K) H.field)
-      (fixedBaseFrobeniusAuxiliaryField k K H T e σ)]
-    [IsScalarTower k (abstractFixedField K (SeparableClosure K) H.field)
-      (fixedBaseFrobeniusAuxiliaryField k K H T e σ)]
-    [auxiliaryPrincipalDivisors :
-      AlgebraicCurve.HasPrincipalDivisors k (fixedBaseFrobeniusAuxiliaryField k K H T e σ)]
-    (c : IdeleClassGroup k (fixedBaseFrobeniusAuxiliaryField k K H T e σ))
-    (hc : (IdeleClassGroup.normalizedDegree (k := k)
-      (K := fixedBaseFrobeniusAuxiliaryField k K H T e σ) c).toAdd = 1) :
-    finiteArtin k (abstractFixedField K (SeparableClosure K) H.field)
-      (abstractRelativeFixedField K (SeparableClosure K) T.below)
-      (IdeleClassGroup.norm (k := k)
-        (K := abstractFixedField K (SeparableClosure K) H.field)
-        (L := fixedBaseFrobeniusAuxiliaryField k K H T e σ) c) =
-      Abelianization.of
-        (abstractExtensionQuotientEquivGaloisGroup K (SeparableClosure K)
-          H.field T.field T.below T.normal
-          ((fullConstantDegreeData k K (SeparableClosure K)).frobeniusRestriction
-            (H.toFiniteResidueAbstractField
-              (fullConstantDegreeData k K (SeparableClosure K))) T.field T.below
-              (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ))) := by
-  let F : IntermediateField K (SeparableClosure K) :=
-    abstractFixedField K (SeparableClosure K) H.field
-  let E : IntermediateField F (SeparableClosure K) :=
-    abstractRelativeFixedField K (SeparableClosure K) T.below
-  let i : E →ₐ[F] SeparableClosure F := e.symm.toAlgHom.comp E.val
-  let EI := finiteGaloisAbstractExtensionOfEmbedding F E i
-  let qI : EI.extensionQuotient ≃* Gal(E/F) :=
-    finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding F E i
-  let qA : T.extensionQuotient ≃* Gal(E/F) :=
-    abstractExtensionQuotientEquivGaloisGroup
-      K (SeparableClosure K) H.field T.field T.below T.normal
-  have hEcomm : IsMulCommutative Gal(E/F) :=
-    qA.surjective.isMulCommutative
-  have hEIcomm : IsMulCommutative EI.extensionQuotient :=
-    qI.symm.surjective.isMulCommutative
-  have hEI : Finite EI.extensionQuotient := EI.finite
-  let DI := fullConstantDegreeData k F (SeparableClosure F)
-  let RI := (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI
-  have hn :
-      finiteArtin k F E
-          (IdeleClassGroup.norm (k := k) (K := F)
-            (L := fixedBaseFrobeniusAuxiliaryField k K H T e σ) c) =
-        Abelianization.of (qI (DI.frobeniusRestriction RI EI.field EI.below σ)) := by
-    with_reducible_and_instances
-      exact finiteArtin_frobenius_primeNorm_of_embedding k F E i σ c hc
-  have hrestriction := intrinsicConstantFrobeniusRestriction_eq_ambientFixedField k K H T e σ
-  with_reducible_and_instances
-    exact hn.trans (congrArg
-      (Abelianization.of : Gal(E/F) → Abelianization Gal(E/F)) hrestriction).symm
+    (σ : intrinsicFixedBaseFrobeniusElements k K H T e) :
+    let F := abstractFixedField K (SeparableClosure K) H.field
+    let σA := intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ
+    let ambient := fixedFieldArtin k K (SeparableClosure K) H T
+    let native := finiteArtin k F (abstractRelativeFixedField K (SeparableClosure K) T.below)
+    let z := Group.Abelianization.of
+      (abstractExtensionQuotientEquivGaloisGroup K (SeparableClosure K)
+        H.field T.field T.below T.normal
+        ((fullConstantDegreeData k K (SeparableClosure K)).frobeniusRestriction
+          (H.toFiniteResidueAbstractField
+            (fullConstantDegreeData k K (SeparableClosure K))) T.field T.below σA))
+    ∃ c : IdeleClassGroup k F, ambient c = z ∧ native c = ambient c := by
+  intro F σA ambient native z
+  let D := fullConstantDegreeData k K (SeparableClosure K)
+  let HR := H.toFiniteResidueAbstractField D
+  let : (extensionSubgroup HR.field T.field T.below).Normal := T.normal
+  let LI := fixedBaseFrobeniusAuxiliaryField k K H T e σ
+  let LA := ambientFrobeniusAuxiliaryField k K (SeparableClosure K) H T σA
+  let φ : LI ≃ₐ[F] LA := intrinsicConstantFrobeniusFixedFieldEquivAmbientFixedField k K H T e σ
+  have hI := intrinsicFrobeniusAuxiliaryProperties k K H T e σ
+  let towerI : IsScalarTower k F LI := hI.1
+  let finiteI : FiniteDimensional F LI := hI.2.1
+  let sepI : Algebra.IsSeparable F LI := hI.2.2
+  let towerA : IsScalarTower k F LA :=
+    relativeFixedField_constantTower k K (SeparableClosure K) H.field
+      (D.frobeniusFixedField HR T.field T.below σA)
+      (D.frobeniusFixedField_le HR T.field T.below σA)
+  let : FiniteDimensional F LA := φ.toLinearEquiv.finiteDimensional
+  let : Algebra.IsSeparable F LA := AlgEquiv.Algebra.isSeparable φ
+  let principalI : AlgebraicCurve.HasPrincipalDivisors k LI :=
+    (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k F LI).toHasPrincipalDivisors
+  let : AlgebraicCurve.HasPrincipalDivisors k LA :=
+    (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k F LA).toHasPrincipalDivisors
+  let fieldF : Field F := inferInstance
+  let fieldI : Field LI := inferInstance
+  let fieldA : Field LA := inferInstance
+  let algkF : Algebra k F := inferInstance
+  let algkI : Algebra k LI := fixedBaseFrobeniusAuxiliaryConstantAlgebra k K H T e σ
+  let algkA : Algebra k LA := inferInstance
+  let algFI : Algebra F LI := inferInstance
+  let algFA : Algebra F LA := inferInstance
+  let hW := @IdeleClassGroup.exists_normalizedDegree_one_norm_eq_of_algEquiv k F LI LA
+    ‹Field k› ‹Finite k› fieldF fieldI fieldA algkF algkI algkA algFI algFA towerI towerA
+    ‹Algebra (RatFunc k) F› ‹IsScalarTower k (RatFunc k) F› ‹FunctionField k F› finiteI sepI φ
+  obtain ⟨cI, cA, hDegI, hDegA, hNorm⟩ := hW
+  let nativeEval := @native_frobenius_norm_eq_ambient k K kField kFinite KField kK
+    kRatK kRatKTower kFunctionField kClosure kClosureTower H
+    fixedBaseRatFuncAlgebra fixedBaseRatFuncTower fixedBaseFunctionField
+    intrinsicClosureAlgebra intrinsicClosureRatFuncAlgebra fixedBaseClosureConstantTower
+    intrinsicClosureRatFuncTower intrinsicClosureConstantRatFuncTower
+    T ‹IsMulCommutative T.extensionQuotient› e σ finiteI sepI towerI principalI
+  have hNative := nativeEval cI hDegI
+  let Ω := SeparableClosure K
+  let fieldΩ : Field Ω := inferInstance
+  let algebraΩ : Algebra K Ω := inferInstance
+  let galoisΩ : IsGalois K Ω := inferInstance
+  let closedΩ : IsSepClosed Ω := inferInstance
+  let ambientEval := @fixedFieldArtin_frobenius_primeNorm k K Ω kField kFinite KField fieldΩ
+    kK kRatK kRatKTower kFunctionField algebraΩ kClosure ambientClosureRatFuncAlgebra
+    kClosureTower ambientClosureRatFuncTower ambientClosureConstantRatFuncTower galoisΩ closedΩ
+    H T ‹IsMulCommutative T.extensionQuotient› σA
+  have hA := ambientEval cA hDegA
+  let principalF : AlgebraicCurve.HasPrincipalDivisors k F :=
+    (isCurveOver k F).toHasPrincipalDivisors
+  let x := (@IdeleClassGroup.norm k F LI kField fieldF fieldI
+    algkF algkI algFI towerI finiteI sepI principalI principalF) cI
+  let y := (IdeleClassGroup.norm (k := k) (K := F) (L := LA)) cA
+  have hxy : x = y := hNorm
+  have hx : native x = z := by
+    with_reducible_and_instances exact hNative
+  have hy : ambient y = z := by
+    with_reducible_and_instances exact hA
+  have hz : ambient x = z := (congrArg (fun t : IdeleClassGroup k F => ambient t) hxy).trans hy
+  exact ⟨x, hz, hx.trans hz.symm⟩
+
 
 end IntrinsicLiftValue
 

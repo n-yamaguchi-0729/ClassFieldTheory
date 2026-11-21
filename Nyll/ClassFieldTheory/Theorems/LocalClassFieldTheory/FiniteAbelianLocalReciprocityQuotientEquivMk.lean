@@ -24,6 +24,8 @@ uniquely by its values on classes of nonzero field elements.
 
 @[expose] public section
 
+open LocalFieldTheory (localNormSubgroup)
+
 noncomputable section
 
 namespace ClassFieldTheory
@@ -40,12 +42,12 @@ theorem finiteAbelianLocalReciprocity_quotientEquiv_mk
     [IsNonarchimedeanLocalField K] :
     ∃ artin : Kˣ →ₜ* (L ≃ₐ[K] L),
       Function.Surjective artin ∧
-      artin.ker = fieldNormSubgroup K L ∧
+      artin.ker = localNormSubgroup K L ∧
       ∃! e : FieldNormQuotient K L ≃ₜ* (L ≃ₐ[K] L),
-        ∀ x : Kˣ, e (QuotientGroup.mk' (fieldNormSubgroup K L) x) = artin x := by
-  exact ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L,
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L,
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K L,
+        ∀ x : Kˣ, e (QuotientGroup.mk' (localNormSubgroup K L) x) = artin x := by
+  exact ⟨LocalClassFieldTheory.abelianLocalArtinMap K L,
+    LocalClassFieldTheory.abelianLocalArtinMap_surjective K L,
+    LocalClassFieldTheory.abelianLocalArtinMap_ker K L,
     LocalClassFieldTheory.Universe.quotientEquiv_existsUnique K L⟩
 
 end ClassFieldTheory

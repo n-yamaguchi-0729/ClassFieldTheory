@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormGalois
 
 /-!
@@ -88,7 +89,8 @@ private theorem completionCast_completionMapOver {u w : Place k L} (h : u = w)
     (v : Place k K) (hu : u.restrict K = v) (hw : w.restrict K = v)
     (x : v.adicCompletion) :
     RingEquiv.cast (R := fun z : Place k L => z.adicCompletion) h
-      (completionMapOver v u hu x) = completionMapOver v w hw x := by
+      (AlgebraicCurve.Place.completionMapOver v u hu x) =
+      AlgebraicCurve.Place.completionMapOver v w hw x := by
   subst w
   rfl
 
@@ -102,13 +104,13 @@ def decompositionCompletionAlgEquiv (w : Place k L) (σ : decompositionGroup (K 
     change RingEquiv.cast (R := fun z : Place k L => z.adicCompletion)
       (decompositionGroup_smul_eq w σ)
       (placeCompletionRingEquiv (SemilinearAut.ofAlgAut (σ.1.restrictScalars k)) w
-        (completionMapOver (w.restrict K) w rfl x)) =
-      completionMapOver (w.restrict K) w rfl x
+        (AlgebraicCurve.Place.completionMapOver (w.restrict K) w rfl x)) =
+      AlgebraicCurve.Place.completionMapOver (w.restrict K) w rfl x
     have h := DFunLike.congr_fun
       (completionMapOver_algAut σ.1 (w.restrict K) w rfl) x
     change placeCompletionRingEquiv (SemilinearAut.ofAlgAut (σ.1.restrictScalars k)) w
-        (completionMapOver (w.restrict K) w rfl x) =
-      completionMapOver (w.restrict K)
+        (AlgebraicCurve.Place.completionMapOver (w.restrict K) w rfl x) =
+      AlgebraicCurve.Place.completionMapOver (w.restrict K)
         (SemilinearAut.ofAlgAut (σ.1.restrictScalars k) • w)
         ((Place.restrict_ofAlgAut_smul σ.1 w).trans rfl) x at h
     rw [h, completionCast_completionMapOver]

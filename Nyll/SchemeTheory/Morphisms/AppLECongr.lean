@@ -30,4 +30,15 @@ theorem appLE_congr_hom {X Y : Scheme.{u}} {f g : X ⟶ Y} (hfg : f = g)
   subst g
   rfl
 
+/-- Every source open lies in the inverse image of the whole target. -/
+theorem le_preimage_top {X Y : Scheme.{u}} (f : X ⟶ Y) (U : X.Opens) :
+    U ≤ f ⁻¹ᵁ ⊤ :=
+  (le_top : U ≤ ⊤).trans f.preimage_top.ge
+
+/-- Restricting a scheme morphism from the top open to the top open gives its
+usual map on global sections. -/
+theorem appLE_top_eq_appTop {X Y : Scheme.{u}} (f : X ⟶ Y) :
+    f.appLE ⊤ ⊤ (le_preimage_top f ⊤) = f.appTop :=
+  f.appLE_eq_app
+
 end AlgebraicGeometry.Scheme.Hom

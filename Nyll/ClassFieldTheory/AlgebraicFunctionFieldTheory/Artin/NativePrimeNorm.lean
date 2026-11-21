@@ -61,6 +61,7 @@ theorem finiteArtin_frobenius_primeNorm_of_presentation
     let _ : Finite (H.field.toSubgroup ⧸ extensionSubgroup H.field T.field T.below) := T.finite
     let D := fullConstantDegreeData k K Ω
     let R := H.toFiniteResidueAbstractField D
+    let _ : (extensionSubgroup R.field T.field T.below).Normal := T.normal
     ∀ σ : D.FrobeniusElements R T.field T.below,
       let S := D.frobeniusFixedField R T.field T.below σ
       let A : IntermediateField K Ω := intrinsicFrobeniusAuxiliaryField k K Ω H T σ
@@ -71,13 +72,13 @@ theorem finiteArtin_frobenius_primeNorm_of_presentation
         (IdeleClassGroup.normalizedDegree (k := k) (K := A) c).toAdd = 1 →
         finiteArtin k K L
             (IdeleClassGroup.norm (k := k) (K := K) (L := A) c) =
-          Abelianization.of ((AlgEquiv.autCongr eE).symm
+          Group.Abelianization.of ((AlgEquiv.autCongr eE).symm
             ((abstractExtensionQuotientEquivGaloisGroup K Ω H.field T.field T.below T.normal
               (D.frobeniusRestriction R T.field T.below σ)).restrictScalars K)) := by
   intro Ω H
   have nativeEvaluation := finiteArtin_eq_fixedFieldPresentation
     (akΩ := akΩ) (aRΩ := aRΩ) k K L T eE
-  intro hTfinite D R σ S A hSfinite hKS c hc
+  intro hTfinite D R hTnormal σ S A hSfinite hKS c hc
   let eF := finiteGaloisBaseFixedFieldEquiv K
   let b := IdeleClassGroup.norm (k := k) (K := K) (L := A) c
   have hp := normQuotientEquivOfFixedFieldPresentation_primeNorm
@@ -101,6 +102,7 @@ theorem finiteArtin_frobenius_primeNorm_of_embedding
     let _ : Finite (H.field.toSubgroup ⧸ extensionSubgroup H.field T.field T.below) := T.finite
     let D := fullConstantDegreeData k K (SeparableClosure K)
     let R := H.toFiniteResidueAbstractField D
+    let _ : (extensionSubgroup R.field T.field T.below).Normal := T.normal
     ∀ σ : D.FrobeniusElements R T.field T.below,
       let S := D.frobeniusFixedField R T.field T.below σ
       let A : IntermediateField K (SeparableClosure K) :=
@@ -112,15 +114,15 @@ theorem finiteArtin_frobenius_primeNorm_of_embedding
         (IdeleClassGroup.normalizedDegree (k := k) (K := A) c).toAdd = 1 →
         finiteArtin k K L
             (IdeleClassGroup.norm (k := k) (K := K) (L := A) c) =
-          Abelianization.of (finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L i
+          Group.Abelianization.of (finiteGaloisAbstractQuotientEquivGaloisGroupOfEmbedding K L i
             (D.frobeniusRestriction R T.field T.below σ)) := by
   intro H T hTfinite
   let eE := finiteGaloisEmbeddedFixedFieldEquiv K L i
   have presentationValue := finiteArtin_frobenius_primeNorm_of_presentation k K L T eE
   have quotientAction := presentedGaloisQuotientOfEmbedding K L i
-  intro D R σ S A hSfinite hKS c hc
+  intro D R hTnormal σ S A hSfinite hKS c hc
   have hp := presentationValue σ c hc
   have hq := quotientAction (D.frobeniusRestriction R T.field T.below σ)
-  exact hp.trans (congrArg Abelianization.of hq)
+  exact hp.trans (congrArg Group.Abelianization.of hq)
 
 end FunctionField

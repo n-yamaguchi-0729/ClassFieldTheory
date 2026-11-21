@@ -86,21 +86,6 @@ noncomputable def kroneckerWeberPadicExtension
     (p : ℕ) [Fact p.Prime] :
   AbsoluteValueExtension (Rat.AbsoluteValue.padic p) L := by
   let vK := Rat.AbsoluteValue.padic p
-  letI : Algebra ℚ ℚ := Algebra.id ℚ
-  let hWith : Algebra ℚ (WithAbs vK) :=
-    WithAbs.instAlgebra _
-  let hUniform : UniformContinuousConstSMul ℚ (WithAbs vK) :=
-    WithAbs.instUniformContinuousConstSMulReal _
-  let hBase : Algebra ℚ vK.Completion :=
-    @UniformSpace.Completion.algebra
-      (WithAbs vK) _ _ _ _ ℚ _ hWith hUniform
-  let hClosure : Algebra ℚ
-      (absoluteValueExtension_algebraicCompletionClosure vK) :=
-    @AlgebraicClosure.instAlgebra vK.Completion _ ℚ _ hBase
-  let : Algebra ℚ vK.Completion := hBase
-  let : Algebra ℚ
-      (absoluteValueExtension_algebraicCompletionClosure vK) :=
-    hClosure
   exact pullbackAbsoluteValueExtension
     vK
     (padicAbsoluteValue_isNontrivial p)

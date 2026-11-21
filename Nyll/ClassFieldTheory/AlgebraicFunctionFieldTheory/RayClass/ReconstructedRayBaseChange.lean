@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChangeCoherence
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalRayReconstruction
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayReconstruction
@@ -53,8 +55,8 @@ variable {k₁ : Type u₁} {K₁ : Type v₁} {L₁ : Type w₁}
     (m₁ : Modulus k₁ K₁) (m₂ : Modulus k₂ K₂)
     (n₁ : Modulus k₁ L₁) (n₂ : Modulus k₂ L₂)
     (hm₁ : ∀ v, m₁ v ≤ 1) (hm₂ : ∀ v, m₂ v ≤ 1)
-    (hn₁ : rayModulusBaseChange L₁ m₁ = n₁)
-    (hn₂ : rayModulusBaseChange L₂ m₂ = n₂)
+    (hn₁ : reindexAlongPlaces L₁ m₁ = n₁)
+    (hn₂ : reindexAlongPlaces L₂ m₂ = n₂)
     (e : Place k₁ K₁ ≃ Place k₂ K₂)
     (eL : Place k₁ L₁ ≃ Place k₂ L₂)
     (γ : (localAbsoluteAbelianProfinite K₁ ⧸ artinRaySubgroup m₁) ≃*
@@ -83,9 +85,9 @@ local notation "η" => reconstructedRayKernelEquiv m₁ m₂ e γ
 local notation "ηL" => reconstructedRayKernelEquiv n₁ n₂ eL Γ
   hclosureL hdegreeL hboundaryL₁ hboundaryL₂
 local notation "b₁" => MonoidHom.comp (MulEquiv.toMonoidHom (rayModulusCongr hn₁))
-  (restrictedRayBaseChange (L := L₁) m₁ hm₁)
+  (restrictedRayBaseChange (L := L₁) m₁)
 local notation "b₂" => MonoidHom.comp (MulEquiv.toMonoidHom (rayModulusCongr hn₂))
-  (restrictedRayBaseChange (L := L₂) m₂ hm₂)
+  (restrictedRayBaseChange (L := L₂) m₂)
 
 variable
     (hplaces : ∀ w : Place k₁ L₁, (eL w).restrict K₂ = e (w.restrict K₁))
@@ -95,14 +97,14 @@ variable
         ((reconstructedRestrictedRayEquiv n₁ n₂ eL Γ
           hclosureL hdegreeL hboundaryL₁ hboundaryL₂).toMonoidHom.comp
           ((rayModulusCongr hn₁).toMonoidHom.comp
-            (restrictedRayBaseChange (L := L₁) m₁ hm₁))) =
+            (restrictedRayBaseChange (L := L₁) m₁))) =
       (restrictedProductAbsoluteArtin n₂).comp
         (((rayModulusCongr hn₂).toMonoidHom.comp
-          (restrictedRayBaseChange (L := L₂) m₂ hm₂)).comp
+          (restrictedRayBaseChange (L := L₂) m₂)).comp
           (reconstructedRestrictedRayEquiv m₁ m₂ e γ
             hclosure hdegree hboundary₁ hboundary₂).toMonoidHom))
 
-include hplaces hindex hartin
+include hm₁ hm₂ hplaces hindex hartin
 
 /-- Original reciprocity and the actual place-restriction square force
 coherence of the reconstructed local maps on the entire restricted product. -/
@@ -126,8 +128,8 @@ theorem reconstructedRestrictedRayEquiv_baseChange_of_modulus_eq :
 transitions as a consequence of the proved restricted-product square. -/
 theorem reconstructedRayKernelEquiv_baseChange_of_modulus_eq
     (a : (restrictedProductAbsoluteArtin m₁).ker) :
-    ηL (principalArtinKernelCongr hn₁ (principalArtinKernelBaseChange (L := L₁) m₁ hm₁ a)) =
-      principalArtinKernelCongr hn₂ (principalArtinKernelBaseChange (L := L₂) m₂ hm₂ (η a)) := by
+    ηL (principalArtinKernelCongr hn₁ (principalArtinKernelBaseChange (L := L₁) m₁ a)) =
+      principalArtinKernelCongr hn₂ (principalArtinKernelBaseChange (L := L₂) m₂ (η a)) := by
   have h := reconstructedRestrictedRayEquiv_baseChange_of_modulus_eq
     m₁ m₂ n₁ n₂ hm₁ hm₂ hn₁ hn₂ e eL γ Γ hclosure hdegree hclosureL hdegreeL
     hboundary₁ hboundary₂ hboundaryL₁ hboundaryL₂ hplaces hindex hartin
@@ -139,9 +141,9 @@ theorem reconstructedRayKernelEquiv_baseChange_of_modulus_eq
 variable (hz₁ : m₁ ≠ 0) (hz₂ : m₂ ≠ 0)
 
 local notation "hzL₁" => Eq.mp (congrArg (fun m => m ≠ 0) hn₁)
-  (rayModulusBaseChange_ne_zero (L := L₁) m₁ hz₁)
+  (reindexAlongPlaces_ne_zero (L := L₁) m₁ hz₁)
 local notation "hzL₂" => Eq.mp (congrArg (fun m => m ≠ 0) hn₂)
-  (rayModulusBaseChange_ne_zero (L := L₂) m₂ hz₂)
+  (reindexAlongPlaces_ne_zero (L := L₂) m₂ hz₂)
 local notation "φ" => reconstructedRayFunctionUnits m₁ m₂ e γ
   hclosure hdegree hboundary₁ hboundary₂ hz₁ hz₂
 local notation "φL" => reconstructedRayFunctionUnits n₁ n₂ eL Γ
@@ -165,13 +167,13 @@ theorem reconstructedRayFunctionUnits_baseChange_of_modulus_eq (x : K₁ˣ) :
   have hbase₁ (y : K₁ˣ) : b₁ (principalToRayRestrictedProduct m₁ y) =
       principalToRayRestrictedProduct n₁ (Units.map (algebraMap K₁ L₁).toMonoidHom y) := by
     change rayModulusCongr hn₁
-      (restrictedRayBaseChange (L := L₁) m₁ hm₁ (principalToRayRestrictedProduct m₁ y)) = _
+      (restrictedRayBaseChange (L := L₁) m₁ (principalToRayRestrictedProduct m₁ y)) = _
     rw [restrictedRayBaseChange_principal, rayModulusCongr_principal]
     rfl
   have hbase₂ (y : K₂ˣ) : b₂ (principalToRayRestrictedProduct m₂ y) =
       principalToRayRestrictedProduct n₂ (Units.map (algebraMap K₂ L₂).toMonoidHom y) := by
     change rayModulusCongr hn₂
-      (restrictedRayBaseChange (L := L₂) m₂ hm₂ (principalToRayRestrictedProduct m₂ y)) = _
+      (restrictedRayBaseChange (L := L₂) m₂ (principalToRayRestrictedProduct m₂ y)) = _
     rw [restrictedRayBaseChange_principal, rayModulusCongr_principal]
     rfl
   apply (principalRestrictedArtinKernelEquiv n₂ hzL₂).injective

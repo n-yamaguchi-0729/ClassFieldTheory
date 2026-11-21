@@ -30,16 +30,13 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
-universe u v w z
+universe u
 
 namespace ClassFieldTheory
 
-private local instance rayClassGroupCommGroup
-    {K : Type u} [Field K] [NumberField K]
-    (m : RayClassModulus K) : CommGroup (RayClassGroup m) :=
-  { (inferInstance : Group (RayClassGroup m)) with mul_comm := mul_comm' }
-
-private theorem rayArtin_prime_eq_arithmeticPrimeArtin
+/-- The Artin map of a ray class field sends a prime outside the modulus
+to the arithmetic Artin element of its normalized prime idèle. -/
+theorem rayArtin_prime_eq_arithmeticPrimeArtin
     {K : Type u} [Field K] [NumberField K]
     {m : RayClassModulus K} (R : RayClassFieldRealization K m)
     (v : HeightOneSpectrum (𝓞 K))
@@ -62,42 +59,6 @@ private theorem rayArtin_prime_eq_arithmeticPrimeArtin
       (GlobalClassFieldComparison.arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
         (K := K) (L := R.extension) v w hw hunram).symm
 
-private theorem arithmeticPrimeArtin_restrict_tower
-    {K : Type u} {E : Type v} {L : Type w}
-    [Field K] [NumberField K]
-    [Field E] [NumberField E]
-    [Field L] [NumberField L]
-    [Algebra K E] [Algebra E L] [Algebra K L] [IsScalarTower K E L]
-    [IsAbelianGalois K E] [IsAbelianGalois K L]
-    (v : HeightOneSpectrum (𝓞 K)) :
-    AlgEquiv.restrictNormalHom E
-        (GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-          (K := K) (L := L) v) =
-      GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-        (K := K) (L := E) v := by
-  open GlobalClassFieldTheory.GlobalClassFields in
-  rw [arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := L) v,
-    arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := E) v, map_inv]
-  simpa only [GlobalClassFieldTheory.GlobalClassFields.finitePlacePrimeArtin,
-    MonoidHom.comp_apply] using
-    congrArg Inv.inv
-      (DFunLike.congr_fun
-        (GlobalClassFieldTheory.Reciprocity.globalArtinMonoidHom_restrict_tower
-          (K := K) (L := L) (E := E))
-        (IdeleGroup.finitePrimeIdele v))
-
-private theorem rayClassGroup_hom_ext_of_prime
-    {K : Type u} [Field K] [NumberField K]
-    {G : Type z} [Monoid G]
-    (n : RayClassModulus K)
-    (f g : RayClassGroup n →* G)
-    (hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
-      (hv : v ∉ n.finitePart.support),
-        f (rayClassOfFinitePrime n v hv) =
-          g (rayClassOfFinitePrime n v hv)) :
-    f = g :=
-  rayClassGroup_hom_ext_finitePrime K n f g hprime
-
 /-- Artin reciprocity commutes with reduction of the modulus along any
 embedding of the corresponding ray class field realizations. -/
 theorem rayArtin_modulusProjection
@@ -118,7 +79,7 @@ theorem rayArtin_modulusProjection
   have hnat :
       (AlgEquiv.restrictNormalHom Rm.extension).comp Rn.rayArtin =
         Rm.rayArtin.comp (rayClassIdealModulusProjection K hmn) := by
-    apply rayClassGroup_hom_ext_of_prime n
+    apply rayClassGroup_hom_ext_finitePrime K n
     intro v hvn
     have hvm : v ∉ m.finitePart.support := by
       intro hv
@@ -131,7 +92,8 @@ theorem rayArtin_modulusProjection
     rw [rayClassIdealModulusProjection_prime K hmn v hvn,
       rayArtin_prime_eq_arithmeticPrimeArtin Rn v hvn,
       rayArtin_prime_eq_arithmeticPrimeArtin Rm v hvm]
-    exact arithmeticPrimeArtin_restrict_tower v
+    exact
+      GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin_restrict_tower v
   have hx := DFunLike.congr_fun hnat x
   change AlgEquiv.restrictNormalHom Rm.extension (Rn.rayArtin x) =
     Rm.rayArtin (rayClassIdealModulusProjection K hmn x) at hx

@@ -195,9 +195,10 @@ open Classical in
 /-- The repartition equal to zero on the chart and one outside it. -/
 def offChartIndicator (S : Set (Place K F)) : ↥(repartitions K F) :=
   ⟨fun v => if v ∈ S then 0 else 1, mem_repartitions_of_finite (by
-    convert Set.finite_empty
-    ext v
-    simp only [Set.mem_ofPred_eq, Set.mem_empty_iff_false, iff_false, not_not]
+    refine Set.finite_empty.subset ?_
+    intro v hv
+    change ¬ v.adicValuation (if v ∈ S then (0 : F) else 1) ≤ 1 at hv
+    refine (hv ?_).elim
     split_ifs
     · rw [map_zero]
       exact zero_le

@@ -59,7 +59,7 @@ theorem rayModulusCongr_principal {m n : Modulus k K} (h : m = n) (x : Kˣ) :
   rfl
 
 /-- Pullback through the identity extension leaves the actual modulus unchanged. -/
-theorem rayModulusBaseChange_self (m : Modulus k K) : rayModulusBaseChange K m = m := by
+theorem reindexAlongPlaces_self (m : Modulus k K) : reindexAlongPlaces K m = m := by
   apply Finsupp.ext
   intro v
   change m (v.restrict K) = m v
@@ -69,10 +69,10 @@ theorem rayModulusBaseChange_self (m : Modulus k K) : rayModulusBaseChange K m =
   exact ValuationSubring.ext _ _ fun _ => Iff.rfl
 
 /-- The actual restricted-ray inclusion of the identity field extension is identity. -/
-theorem restrictedRayBaseChange_self (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem restrictedRayBaseChange_self (m : Modulus k K)
     (a : RayRestrictedProduct m) :
-    rayModulusCongr (rayModulusBaseChange_self m)
-      (restrictedRayBaseChange (L := K) m hm a) = a := by
+    rayModulusCongr (reindexAlongPlaces_self m)
+      (restrictedRayBaseChange (L := K) m a) = a := by
   obtain ⟨b, rfl⟩ := ideleToRayRestrictedProduct_surjective m a
   rw [restrictedRayBaseChange_idele, rayModulusCongr_idele, IdeleGroup.baseChange_self]
 
@@ -90,29 +90,29 @@ variable {k K L M : Type*} [Field k] [Field K] [Field L] [Field M]
     [FiniteDimensional K L] [FiniteDimensional L M] [FiniteDimensional K M]
 
 /-- Pullback retains the reduced exponents with their literal modulus type. -/
-theorem rayModulusBaseChange_reduced (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
-    (w : Place k L) : rayModulusBaseChange L m w ≤ 1 :=
+theorem reindexAlongPlaces_reduced (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+    (w : Place k L) : reindexAlongPlaces L m w ≤ 1 :=
   hm (w.restrict K)
 
 /-- Iterated pullback has exactly the same exponents as direct pullback. -/
-theorem rayModulusBaseChange_trans (m : Modulus k K) :
-    rayModulusBaseChange M (rayModulusBaseChange L m) = rayModulusBaseChange M m := by
+theorem reindexAlongPlaces_trans (m : Modulus k K) :
+    reindexAlongPlaces M (reindexAlongPlaces L m) = reindexAlongPlaces M m := by
   apply Finsupp.ext
   intro w
   change m ((w.restrict L).restrict K) = m (w.restrict K)
   exact congrArg m (restrict_restrict (F := K) (E := L) w)
 
 /-- The original completion-induced maps compose after the literal boundary equality. -/
-theorem restrictedRayBaseChange_trans (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem restrictedRayBaseChange_trans (m : Modulus k K)
     (a : RayRestrictedProduct m) :
-    rayModulusCongr (rayModulusBaseChange_trans (L := L) (M := M) m)
-        (restrictedRayBaseChange (L := M) (rayModulusBaseChange L m)
-          (rayModulusBaseChange_reduced m hm) (restrictedRayBaseChange (L := L) m hm a)) =
-      restrictedRayBaseChange (L := M) m hm a := by
+    rayModulusCongr (reindexAlongPlaces_trans (L := L) (M := M) m)
+        (restrictedRayBaseChange (L := M) (reindexAlongPlaces L m)
+          (restrictedRayBaseChange (L := L) m a)) =
+      restrictedRayBaseChange (L := M) m a := by
   obtain ⟨b, rfl⟩ := ideleToRayRestrictedProduct_surjective m a
-  have hinner := restrictedRayBaseChange_idele (L := L) m hm b
-  have houter := restrictedRayBaseChange_idele (L := M) (rayModulusBaseChange L m)
-    (rayModulusBaseChange_reduced m hm) (IdeleGroup.baseChange (K := K) (L := L) b)
+  have hinner := restrictedRayBaseChange_idele (L := L) m b
+  have houter := restrictedRayBaseChange_idele (L := M) (reindexAlongPlaces L m)
+    (IdeleGroup.baseChange (K := K) (L := L) b)
   rw [hinner, houter, rayModulusCongr_idele, IdeleGroup.baseChange_trans,
     restrictedRayBaseChange_idele]
 
@@ -138,13 +138,13 @@ theorem principalArtinKernelCongr_coe {m n : Modulus k K} (h : m = n)
   rfl
 
 /-- The native kernel inclusion of the identity extension fixes every kernel element. -/
-theorem principalArtinKernelBaseChange_self (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem principalArtinKernelBaseChange_self (m : Modulus k K)
     (a : (restrictedProductAbsoluteArtin m).ker) :
-    principalArtinKernelCongr (rayModulusBaseChange_self m)
-      (principalArtinKernelBaseChange (L := K) m hm a) = a := by
+    principalArtinKernelCongr (reindexAlongPlaces_self m)
+      (principalArtinKernelBaseChange (L := K) m a) = a := by
   apply Subtype.ext
   rw [principalArtinKernelCongr_coe]
-  exact restrictedRayBaseChange_self m hm a.val
+  exact restrictedRayBaseChange_self m a.val
 
 end KernelCongruence
 
@@ -163,15 +163,15 @@ variable {k : Type u} {K : Type v} {L : Type w} {M : Type x}
     [Algebra (RatFunc k) M] [IsScalarTower k (RatFunc k) M] [FunctionField k M]
 
 /-- Native Artin-kernel transitions compose through every actual finite field tower. -/
-theorem principalArtinKernelBaseChange_trans (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem principalArtinKernelBaseChange_trans (m : Modulus k K)
     (a : (restrictedProductAbsoluteArtin m).ker) :
-    principalArtinKernelCongr (rayModulusBaseChange_trans (L := L) (M := M) m)
-        (principalArtinKernelBaseChange (L := M) (rayModulusBaseChange L m)
-          (rayModulusBaseChange_reduced m hm) (principalArtinKernelBaseChange (L := L) m hm a)) =
-      principalArtinKernelBaseChange (L := M) m hm a := by
+    principalArtinKernelCongr (reindexAlongPlaces_trans (L := L) (M := M) m)
+        (principalArtinKernelBaseChange (L := M) (reindexAlongPlaces L m)
+          (principalArtinKernelBaseChange (L := L) m a)) =
+      principalArtinKernelBaseChange (L := M) m a := by
   apply Subtype.ext
   rw [principalArtinKernelCongr_coe]
-  exact restrictedRayBaseChange_trans (L := L) (M := M) m hm a.val
+  exact restrictedRayBaseChange_trans (L := L) (M := M) m a.val
 
 end KernelTower
 

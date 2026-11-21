@@ -55,27 +55,6 @@ noncomputable def infinitePlaceKummerRootCharacter
       (chosenSimpleKummerRootCharacter K n hnK hmu b
         (chosenInfinitePlaceArtinMonoidHom (K := K) (L := L) v a_v))
 
-omit [NumberField K] in
-private theorem chosenInfinitePlaceArtinMonoidHom_eq_one_of_isComplex
-    {L : Type} [Field L] [NumberField L] [Algebra K L] [IsGalois K L]
-    (v : InfinitePlace K) (hv : v.IsComplex) (x : v.Completionˣ) :
-    chosenInfinitePlaceArtinMonoidHom (K := K) (L := L) v x = 1 := by
-  let w := chosenInfinitePlaceAbove (L := L) v
-  have hw : w.comap (algebraMap K L) = v :=
-    chosenInfinitePlaceAbove_comap (L := L) v
-  have hwUnramified : w.IsUnramified K := by
-    apply InfinitePlace.isUnramified_iff.mpr
-    apply Or.inr
-    rw [hw]
-    exact hv
-  have hwUnramified' :
-      (chosenInfinitePlaceAbove (L := L) v).IsUnramified K := by
-    simpa only [w] using hwUnramified
-  unfold chosenInfinitePlaceArtinMonoidHom
-  unfold infinitePlaceArtinMonoidHomOfPlace
-  rw [dite_eq_left hwUnramified']
-  rfl
-
 /-- At a complex place the infinite-place Kummer root character is
 trivial. -/
 @[simp]
@@ -95,7 +74,7 @@ theorem infinitePlaceKummerRootCharacter_eq_one_of_isComplex
   have hArtin :
       chosenInfinitePlaceArtinMonoidHom (K := K) (L := L) v
           a_v = 1 :=
-    chosenInfinitePlaceArtinMonoidHom_eq_one_of_isComplex K v hv a_v
+    chosenInfinitePlaceArtinMonoidHom_eq_one_of_isComplex (K := K) (L := L) v hv a_v
   change
     (nthRootsSubgroupEquivOfPrimitiveRoots K L n hmu).symm
         (chosenSimpleKummerRootCharacter K n hnK hmu b

@@ -42,9 +42,7 @@ theorem chosenRayClassSubgroupSubfield_antitone
         GlobalClassFieldTheory.GlobalClassFields.rayClassSubgroupFixedField
           (K := K) m' (H.map e.toMonoidHom) := by
     exact IntermediateField.fixedField_le (Subgroup.map_mono hmap)
-  exact
-    IntermediateField.map_mono
-      (GlobalClassFieldTheory.GlobalClassFields.rayClassFieldEmbedding K m')
-      hfixed
+  let eField := (GlobalClassFieldTheory.GlobalClassFields.rayClassField K m').val
+  exact IntermediateField.map_mono eField hfixed
 
 end ClassFieldTheory

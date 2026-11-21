@@ -13,6 +13,7 @@ public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.ClassGrou
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.StandardOpenSubgroups
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnitTopology
 public import Nyll.AlgebraicCurves.Places.Basic
+public import Nyll.AlgebraicCurves.Divisors.Modulus.Modulus
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Basic
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.PrincipalUnits
 
@@ -35,7 +36,7 @@ variable {k K : Type*} [Field k] [Field K] [Algebra k K]
 
 /-- An effective ray modulus on the complete curve. -/
 abbrev Modulus (k K : Type*) [Field k] [Field K] [Algebra k K] :=
-  AlgebraicCurve.Place k K →₀ ℕ
+  AlgebraicCurve.Modulus k K
 
 /-- Local higher units, using the canonical valuation relation of the actual completion. -/
 abbrev localHigherUnitGroup (v : AlgebraicCurve.Place k K) (n : ℕ) :

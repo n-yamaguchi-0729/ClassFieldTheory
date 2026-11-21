@@ -90,7 +90,7 @@ lemma tensorUnitIso_hom_comp_rightUnitor_hom :
   rw [Functor.Monoidal.map_rightUnitor F, MonoidalCategory.tensorHom_def']
   simp only [Category.assoc]
   erw [← MonoidalCategory.rightUnitor_naturality ((adj X).counit.app N)]
-  all_goals rfl
+  rfl
 
 theorem rightUnitor_hom_app_tensorSections {U : X.Opens} (n : Γ(N, U)) (g : Γ(X, U)) :
     (ρ_ N).hom.app U (Modules.tensorSections (L := N) (M := 𝟙_ X.Modules) n g) = g • n := by

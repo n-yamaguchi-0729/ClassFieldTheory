@@ -100,7 +100,7 @@ this field-only scope. -/
 private theorem galois_fixedSet_isOpen
     (K : Type v) (L : Type w) [Field K] [Field L] [Algebra K L]
     [Algebra.IsAlgebraic K L] (x : L) :
-    IsOpen (fun σ : Gal(L/K) => σ.toRingHom.toFun x = x) := by
+    IsOpen {σ : Gal(L/K) | σ.toRingHom.toFun x = x} := by
   change IsOpen (MulAction.stabilizer Gal(L/K) x : Set Gal(L/K))
   exact stabilizer_isOpen_of_isIntegral x
 
@@ -108,7 +108,7 @@ private theorem continuousSMul_of_open_fixedSets
     {G X : Type w} [Group G] [MulAction G X]
     [TopologicalSpace G] [IsTopologicalGroup G]
     [TopologicalSpace X] [DiscreteTopology X]
-    (hopen : ∀ x : X, IsOpen (fun g : G => g • x = x)) : ContinuousSMul G X :=
+    (hopen : ∀ x : X, IsOpen {g : G | g • x = x}) : ContinuousSMul G X :=
   continuousSMul_iff_stabilizer_isOpen.mpr hopen
 
 section RawNormalizationAction
@@ -118,9 +118,12 @@ variable (A : Type u) (K : Type v) (L : Type w)
     [Algebra A K] [IsFractionRing A K]
     [Algebra K L] [Algebra A L] [IsScalarTower A K L]
 
-local instance normalizationInertiaImageAction [Algebra.IsAlgebraic K L] :
+/-- The canonical action of the field automorphisms on its integral normalization. -/
+abbrev normalizationInertiaImageAction [Algebra.IsAlgebraic K L] :
     MulSemiringAction Gal(L/K) (integralClosure A L) :=
   IsIntegralClosure.MulSemiringAction A K L (integralClosure A L)
+
+attribute [local instance] normalizationInertiaImageAction
 
 local instance normalizationInertiaImageTower (E : IntermediateField K L) :
     IsScalarTower A E L :=
@@ -155,10 +158,11 @@ private theorem normalizationInertiaImageAction_fixed_iff [Algebra.IsAlgebraic K
 /-- The actual normalization stabilizer is open before a topology on the
 normalization carrier is introduced. -/
 theorem integralClosure_fixedSet_isOpen_krull [Algebra.IsAlgebraic K L]
-    (b : integralClosure A L) : IsOpen (fun σ : Gal(L/K) => σ • b = b) := by
-  have heq : (fun σ : Gal(L/K) => σ • b = b) =
-      (fun σ : Gal(L/K) => σ.toRingHom.toFun (b : L) = (b : L)) :=
-    funext (fun σ => propext (normalizationInertiaImageAction_fixed_iff A K L σ b))
+    (b : integralClosure A L) : IsOpen {σ : Gal(L/K) | σ • b = b} := by
+  have heq : {σ : Gal(L/K) | σ • b = b} =
+      {σ : Gal(L/K) | σ.toRingHom.toFun (b : L) = (b : L)} := by
+    ext σ
+    exact normalizationInertiaImageAction_fixed_iff A K L σ b
   rw [heq]
   exact galois_fixedSet_isOpen K L (b : L)
 

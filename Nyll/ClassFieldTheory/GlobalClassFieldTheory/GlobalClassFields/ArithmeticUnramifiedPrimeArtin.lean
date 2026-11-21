@@ -9,6 +9,7 @@ module
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.ChosenLocalization
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.UnramifiedNormalization
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.IdealMap
@@ -30,7 +31,7 @@ open scoped NumberField
 
 noncomputable section
 
-universe u v
+universe u v w
 
 namespace GlobalClassFieldTheory
 namespace GlobalClassFields
@@ -68,9 +69,10 @@ theorem arithmeticFinitePlacePrimeArtin_eq_arithmeticGlobalNormResidue
     (v : HeightOneSpectrum (𝓞 K)) :
     arithmeticFinitePlacePrimeArtin (K := K) (L := L) v =
       Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (finitePrimeIdele v)) := by
-  rw [arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin]
+  rw [arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin,
+    finitePrimeIdele, IdeleGroup.toStandardClass_finitePlaceIdele]
   exact (DFunLike.congr_fun
     (Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass
       K L v) (FiniteIdeleGroup.chosenLocalOrderSection v 1)).symm
@@ -85,6 +87,28 @@ theorem arithmeticFinitePlacePrimeArtin_eq_inv
   rw [arithmeticFinitePlacePrimeArtin,
     Reciprocity.arithmeticGlobalArtinMonoidHom_apply,
     finitePlacePrimeArtin]
+
+/-- Restricting the arithmetic Artin element of a prime idèle along a
+tower gives the arithmetic Artin element for the same prime downstairs. -/
+theorem arithmeticFinitePlacePrimeArtin_restrict_tower
+    {K : Type u} {E : Type v} {L : Type w}
+    [Field K] [NumberField K]
+    [Field E] [NumberField E]
+    [Field L] [NumberField L]
+    [Algebra K E] [Algebra E L] [Algebra K L] [IsScalarTower K E L]
+    [IsAbelianGalois K E] [IsAbelianGalois K L]
+    (v : HeightOneSpectrum (𝓞 K)) :
+    AlgEquiv.restrictNormalHom E
+        (arithmeticFinitePlacePrimeArtin (K := K) (L := L) v) =
+      arithmeticFinitePlacePrimeArtin (K := K) (L := E) v := by
+  rw [arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := L) v,
+    arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := E) v, map_inv]
+  simpa only [finitePlacePrimeArtin, MonoidHom.comp_apply] using
+    congrArg Inv.inv
+      (DFunLike.congr_fun
+        (Reciprocity.globalArtinMonoidHom_restrict_tower
+          (K := K) (L := L) (E := E))
+        (IdeleGroup.finitePrimeIdele v))
 
 /-- The arithmetic Frobenius of the actual chosen completed extension,
 transported through its decomposition group into the global Galois group.

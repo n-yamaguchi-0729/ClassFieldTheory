@@ -35,7 +35,7 @@ namespace FunctionField.RayClass
 
 attribute [local instance]
   stageRatFuncAlgebra stageRatFuncTower stageFunctionField stagePrincipalDivisors
-  geometricLocalizationConstants geometricLocalizationConstantTower
+  constantAlgebra constantScalarTower
 
 variable (k K Ω : Type*) [Field k] [Finite k] [Field K] [Field Ω]
     [Algebra k K] [Algebra (RatFunc k) K] [IsScalarTower k (RatFunc k) K]
@@ -172,7 +172,7 @@ end FunctionField.RayClass
 namespace FunctionField.RayClass
 
 attribute [local instance]
-  geometricLocalizationConstants geometricLocalizationConstantTower
+  constantAlgebra constantScalarTower
 
 variable (k₁ K₁ Ω₁ k₂ K₂ Ω₂ : Type*)
     [Field k₁] [Finite k₁] [Field K₁] [Field Ω₁]

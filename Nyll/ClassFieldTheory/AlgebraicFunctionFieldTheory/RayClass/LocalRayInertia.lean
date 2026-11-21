@@ -58,25 +58,8 @@ variable {k K L : Type*} [Field k] [Field K] [Field L]
     [FiniteDimensional K L] [Algebra.IsSeparable K L]
     (v : Place k K)
 
-local instance finitePrimeValuationAlgebra
-    (P : HeightOneSpectrum (Place.integralClosureAt L v)) :
-    Algebra (Place.integralClosureAt L v) (Place.placeOfPrime P).toValuationSubring := by
-  change Algebra (Place.integralClosureAt L v)
-    (HeightOneSpectrum.valuationSubringAtPrime L P)
-  infer_instance
-
-private local instance finitePrimeValuationTower
-    (P : HeightOneSpectrum (Place.integralClosureAt L v)) :
-    IsScalarTower (Place.integralClosureAt L v) (Place.placeOfPrime P).toValuationSubring L := by
-  change IsScalarTower (Place.integralClosureAt L v)
-    (HeightOneSpectrum.valuationSubringAtPrime L P) L
-  infer_instance
-
-private local instance finitePrimeValuationLocalization
-    (P : HeightOneSpectrum (Place.integralClosureAt L v)) :
-    IsLocalization.AtPrime (Place.placeOfPrime P).toValuationSubring P.asIdeal := by
-  change IsLocalization.AtPrime (HeightOneSpectrum.valuationSubringAtPrime L P) P.asIdeal
-  infer_instance
+attribute [local instance] Place.placeOfPrimeAlgebra Place.placeOfPrimeIsScalarTower
+  Place.placeOfPrimeIsLocalization
 
 /-- The original decomposition action on the place valuation ring
 extends the original normalization action through its actual inclusion. -/
@@ -86,7 +69,7 @@ theorem decompositionValuationEquiv_normalization_algebraMap
     (b : Place.integralClosureAt L v) :
     let _ : Algebra (Place.integralClosureAt L v)
         (Place.placeOfPrime P).toValuationSubring :=
-      finitePrimeValuationAlgebra (k := k) (K := K) (L := L) v P
+      Place.placeOfPrimeAlgebra v P
     decompositionValuationEquiv (Place.placeOfPrime P) σ
         (algebraMap (Place.integralClosureAt L v) (Place.placeOfPrime P).toValuationSubring b) =
       algebraMap (Place.integralClosureAt L v) (Place.placeOfPrime P).toValuationSubring
@@ -95,7 +78,7 @@ theorem decompositionValuationEquiv_normalization_algebraMap
   let B := Place.integralClosureAt L v
   let R := (Place.placeOfPrime P).toValuationSubring
   have : IsScalarTower B R L :=
-    finitePrimeValuationTower (k := k) (K := K) (L := L) v P
+    Place.placeOfPrimeIsScalarTower v P
   apply Subtype.ext
   rw [decompositionValuationEquiv_coe]
   change σ.val (algebraMap R L (algebraMap B R b)) =
@@ -114,11 +97,11 @@ theorem decompositionResidueAut_mem_ker_iff_normalizationInertia
   let B := Place.integralClosureAt L v
   let R := (Place.placeOfPrime P).toValuationSubring
   let _ : Algebra B R :=
-    finitePrimeValuationAlgebra (k := k) (K := K) (L := L) v P
+    Place.placeOfPrimeAlgebra v P
   have : IsScalarTower B R L :=
-    finitePrimeValuationTower (k := k) (K := K) (L := L) v P
+    Place.placeOfPrimeIsScalarTower v P
   have : IsLocalization.AtPrime R P.asIdeal :=
-    finitePrimeValuationLocalization (k := k) (K := K) (L := L) v P
+    Place.placeOfPrimeIsLocalization v P
   constructor
   · intro hσ b
     have hres := DFunLike.congr_fun (MonoidHom.mem_ker.mp hσ)

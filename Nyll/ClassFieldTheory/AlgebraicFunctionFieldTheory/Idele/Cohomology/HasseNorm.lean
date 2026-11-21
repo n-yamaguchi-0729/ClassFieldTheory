@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.Algebra.NormalEmbeddingRange
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Cohomology.CyclicStageNorm
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalRange
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormLocalCriterion
@@ -43,7 +44,7 @@ variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Finite k] [Field K] [
 /-- Every principal idele norm in a finite cyclic extension is an actual field norm. -/
 theorem principalNormSubgroup_eq_fieldNormSubgroup [IsCyclic Gal(L/K)] :
     principalNormSubgroup (k := k) (K := K) (L := L) =
-      fieldNormSubgroup (K := K) (L := L) := by
+      LocalFieldTheory.localNormSubgroup K L := by
   let Ω := SeparableClosure K
   let akΩ : Algebra k Ω := ((algebraMap K Ω).comp (algebraMap k K)).toAlgebra
   let aRΩ : Algebra (RatFunc k) Ω :=
@@ -54,14 +55,12 @@ theorem principalNormSubgroup_eq_fieldNormSubgroup [IsCyclic Gal(L/K)] :
     congrArg (algebraMap K Ω) (IsScalarTower.algebraMap_apply k (RatFunc k) K x))
   let i : L →ₐ[K] Ω := IsSepClosed.lift
   let E : FiniteGaloisIntermediateField K Ω :=
-    { toIntermediateField := i.fieldRange
-      finiteDimensional := i.equivFieldRange.toLinearEquiv.finiteDimensional
-      isGalois := IsGalois.of_algEquiv i.equivFieldRange }
+    i.finiteGaloisFieldRange
   let e : L ≃ₐ[K] E := i.equivFieldRange
   have hKEfin : FiniteDimensional K E := E.finiteDimensional
   have hKEgal : IsGalois K E := E.isGalois
   have hEcurve : IsCurveOver k E :=
-    IdeleClassGroup.FiniteExtensionSystem.stageIsCurveOver E
+    IdeleClassGroup.FiniteExtensionSystem.intermediateIsCurveOver E.toIntermediateField
   let aLE : Algebra L E := e.toAlgHom.toAlgebra
   have hKLE : IsScalarTower K L E :=
     IsScalarTower.of_algebraMap_eq (fun x => (e.commutes x).symm)
@@ -108,7 +107,7 @@ theorem exists_norm_iff_forall_completion_norm [IsCyclic Gal(L/K)]
       intro hz
       apply a.ne_zero
       rw [← hx, hz, Algebra.norm_zero]
-    have hfield : a ∈ fieldNormSubgroup (K := K) (L := L) :=
+    have hfield : a ∈ LocalFieldTheory.localNormSubgroup K L :=
       ⟨Units.mk0 x hx0, Units.ext hx⟩
     obtain ⟨b, hb⟩ := fieldNormSubgroup_le_principalNormSubgroup (k := k) hfield
     obtain ⟨y, hy⟩ := IdeleGroup.exists_localNorm_preimage_of_principal_norm a b hb w

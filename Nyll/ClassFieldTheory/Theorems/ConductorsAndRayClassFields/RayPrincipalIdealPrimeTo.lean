@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayPrincipalIdealSubgroup
 import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayPrincipalIdealMembership
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
@@ -39,15 +40,16 @@ theorem rayPrincipalIdealSubgroup_le_primeToIdeals
   intro v hv
   rw [← hIx, ← IdeleGroup.fractionalIdeal_principalIdele]
   change FractionalIdeal.count K v
-      (((FractionalIdealGroup.factorization (K := K))
-        (FiniteIdeleGroup.valuationVector
-          (IdeleGroup.principalIdele K x).2) : FractionalIdealGroup K) :
+      (((NumberFieldFractionalIdealGroup.factorization (K := K))
+        (FiniteAdeleRing.valuationVector
+          (NumberField.IdeleGroup.finitePart (IdeleGroup.principalIdele K x))) :
+            NumberFieldFractionalIdealGroup K) :
         FractionalIdeal (nonZeroDivisors (𝓞 K)) K) = 0
-  rw [FractionalIdealGroup.count_factorization,
-    FiniteIdeleGroup.valuationVector_apply]
+  rw [NumberFieldFractionalIdealGroup.count_factorization,
+    FiniteAdeleRing.valuationVector_apply]
   apply (FiniteIdeleGroup.localOrder_eq_zero_iff v
-    ((IdeleGroup.principalIdele K x).2 v)).2
-  apply RayClass.localHigherUnitGroup_le_integralUnits v (m.finitePart v)
+    (IdeleGroup.finiteComponent v (IdeleGroup.principalIdele K x))).2
+  apply ClassFieldTheory.rayLocalHigherUnitGroup_le_integralUnits v (m.finitePart v)
   exact hx.1 v hv
 
 end ClassFieldTheory

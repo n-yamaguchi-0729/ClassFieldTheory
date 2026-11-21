@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Modules.Frames.FrameGeneration
 public import Mathlib.Util.WithWeakNamespace
 public import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 public import Nyll.AlgebraicCurves.Models.Construction.Basic
@@ -41,7 +42,15 @@ whose orders relate the presenting divisor to local generators of the ideal.
 
 @[expose] public section
 
+open _root_.AlgebraicGeometry.Scheme.Modules.LocalTrivialization (rM rO rM_rM rO_rO rM_self rO_self
+  rM_smul hat_eq le_hat hat_le eApp eInv eInv_eApp eApp_eInv eApp_zero eApp_injective
+  restrict_smul_eq eApp_smul eApp_res ψ ψinv rM_roundtrip rM_roundtrip' rO_roundtrip rO_roundtrip'
+  ψ_ψinv ψinv_ψ ψ_injective ψ_zero ψ_smul ψ_res)
+
 section ProofImplementation
+
+open _root_.AlgebraicGeometry.Scheme.Modules.LocalTrivialization
+  (frame ψ_frame ψ_rM_frame eq_smul_frame IsGeneratorAt isGeneratorAt_frame isGeneratorAt_rM)
 
 namespace AlgebraicCurves.Geometry.Sheaves.Proofs
 namespace Scheme_IdealSheafData_IsInvertible_exists_divisor_range_module_eq_lSpaceOn
@@ -76,35 +85,6 @@ open _root_.AlgebraicGeometry
 
 variable {X : Scheme.{u}} (M : X.Modules)
 
-/-- Restriction of module sections along an inclusion of opens. -/
-noncomputable abbrev rM {V W : X.Opens} (h : V ≤ W) : Γ(M, W) → Γ(M, V) := fun y => M.presheaf.map
-    (homOfLE h).op y
-
-/-- Restriction of regular functions along an inclusion of opens. -/
-noncomputable abbrev rO {V W : X.Opens} (h : V ≤ W) : Γ(X, W) → Γ(X, V) := fun g => X.presheaf.map
-    (homOfLE h).op g
-
-theorem rM_rM {V₁ V₂ V₃ : X.Opens} (h₂₁ : V₂ ≤ V₁) (h₃₂ : V₃ ≤ V₂) (y : Γ(M, V₁)) :
-    rM M h₃₂ (rM M h₂₁ y) = rM M (h₃₂.trans h₂₁) y := by
-  change (M.presheaf.map (homOfLE h₂₁).op ≫ M.presheaf.map (homOfLE h₃₂).op) y = _
-  rw [← Functor.map_comp]; rfl
-omit M in
-theorem rO_rO {V₁ V₂ V₃ : X.Opens} (h₂₁ : V₂ ≤ V₁) (h₃₂ : V₃ ≤ V₂) (g : Γ(X, V₁)) :
-    rO h₃₂ (rO h₂₁ g) = rO (h₃₂.trans h₂₁) g := by
-  change (X.presheaf.map (homOfLE h₂₁).op ≫ X.presheaf.map (homOfLE h₃₂).op).hom g = _
-  rw [← Functor.map_comp]; rfl
-
-theorem rM_self {V : X.Opens} (h : V ≤ V) (y : Γ(M, V)) : rM M h y = y := by
-  change (M.presheaf.map (homOfLE h).op) y = y
-  rw [Subsingleton.elim (homOfLE h) (𝟙 V), op_id, M.presheaf.map_id]; rfl
-omit M in
-theorem rO_self {V : X.Opens} (h : V ≤ V) (g : Γ(X, V)) : rO h g = g := by
-  change (X.presheaf.map (homOfLE h).op).hom g = g
-  rw [Subsingleton.elim (homOfLE h) (𝟙 V), op_id, X.presheaf.map_id]; rfl
-
-theorem rM_smul {V W : X.Opens} (h : V ≤ W) (g : Γ(X, W)) (y : Γ(M, W)) :
-    rM M h (g • y) = rO h g • rM M h y := M.map_smul _ _ _
-
 theorem rM_add {V W : X.Opens} (h : V ≤ W) (y y' : Γ(M, W)) :
     rM M h (y + y') = rM M h y + rM M h y' := map_add _ _ _
 
@@ -124,108 +104,9 @@ section Transport
 
 variable (V : X.Opens) (e : M.restrict V.ι ≅ SheafOfModules.unit V.toScheme.ringCatSheaf)
 
-theorem hat_eq {W : X.Opens} (hWV : W ≤ V) : V.ι ''ᵁ V.ι ⁻¹ᵁ W = W := by
-  rw [Scheme.Hom.image_preimage_eq_opensRange_inf, Scheme.Opens.opensRange_ι, inf_eq_right.mpr hWV]
-
-theorem le_hat {W : X.Opens} (hWV : W ≤ V) : W ≤ V.ι ''ᵁ V.ι ⁻¹ᵁ W := (hat_eq V hWV).ge
-theorem hat_le {W : X.Opens} (hWV : W ≤ V) : V.ι ''ᵁ V.ι ⁻¹ᵁ W ≤ W := (hat_eq V hWV).le
-
-/-- The chosen trivialisation evaluated on a preimage open. -/
-noncomputable def eApp (W : X.Opens) (m : Γ(M, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) : Γ(X, V.ι ''ᵁ V.ι ⁻¹ᵁ W) :=
-  (e.hom.app (V.ι ⁻¹ᵁ W)).hom m
-
-/-- The inverse trivialisation evaluated on a preimage open. -/
-noncomputable def eInv (W : X.Opens) (a : Γ(X, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) : Γ(M, V.ι ''ᵁ V.ι ⁻¹ᵁ W) :=
-  (e.inv.app (V.ι ⁻¹ᵁ W)).hom a
-
-theorem eInv_eApp (W : X.Opens) (m : Γ(M, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) : eInv M V e W (eApp M V e W m) = m :=
-    by
-  change (e.hom.app (V.ι ⁻¹ᵁ W) ≫ e.inv.app (V.ι ⁻¹ᵁ W)).hom m = m
-  erw [← _root_.AlgebraicGeometry.Scheme.Modules.Hom.comp_app, e.hom_inv_id,
-    _root_.AlgebraicGeometry.Scheme.Modules.Hom.id_app]; rfl
-
-theorem eApp_eInv (W : X.Opens) (a : Γ(X, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) : eApp M V e W (eInv M V e W a) = a :=
-    by
-  change (e.inv.app (V.ι ⁻¹ᵁ W) ≫ e.hom.app (V.ι ⁻¹ᵁ W)).hom a = a
-  erw [← _root_.AlgebraicGeometry.Scheme.Modules.Hom.comp_app, e.inv_hom_id,
-    _root_.AlgebraicGeometry.Scheme.Modules.Hom.id_app]; rfl
-
-theorem eApp_zero (W : X.Opens) : eApp M V e W 0 = 0 := (e.hom.app (V.ι ⁻¹ᵁ W)).hom.map_zero
-
 theorem eApp_add (W : X.Opens) (m m' : Γ(M, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) :
     eApp M V e W (m + m') = eApp M V e W m + eApp M V e W m' := (e.hom.app (V.ι ⁻¹ᵁ W)).hom.map_add
         m m'
-
-theorem eApp_injective (W : X.Opens) : Function.Injective (eApp M V e W) :=
-  Function.LeftInverse.injective (eInv_eApp M V e W)
-
-theorem restrict_smul_eq (W' : V.toScheme.Opens) (b : Γ(V.toScheme, W')) (m : Γ(M.restrict V.ι, W'))
-    :
-    (HSMul.hSMul (α := Γ(V.toScheme, W')) (β := Γ(M.restrict V.ι, W')) b m : Γ(M, V.ι ''ᵁ W'))
-      = HSMul.hSMul (α := Γ(X, V.ι ''ᵁ W')) (β := Γ(M, V.ι ''ᵁ W')) ((Scheme.Hom.appIso V.ι W').inv
-          b) m := rfl
-
-theorem eApp_smul (W : X.Opens) (a : Γ(X, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) (m : Γ(M, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) :
-    eApp M V e W (a • m) = a * eApp M V e W m := by
-  have hinv : (Scheme.Hom.appIso V.ι (V.ι ⁻¹ᵁ W)).inv a = a := by
-    rw [Scheme.Opens.ι_appIso]; rfl
-  have h := Hom.app_smul e.hom (U := V.ι ⁻¹ᵁ W) a m
-  have hl := restrict_smul_eq M V (V.ι ⁻¹ᵁ W) a m
-  rw [hinv] at hl
-  unfold eApp
-  rw [← hl]
-  exact h.trans rfl
-
-theorem eApp_res {W₁ W₂ : X.Opens} (h : W₂ ≤ W₁) (m : Γ(M, V.ι ''ᵁ V.ι ⁻¹ᵁ W₁)) :
-    eApp M V e W₂ (rM M (Scheme.Hom.image_mono V.ι (Scheme.Hom.preimage_mono V.ι h)) m)
-      = rO (Scheme.Hom.image_mono V.ι (Scheme.Hom.preimage_mono V.ι h)) (eApp M V e W₁ m) := by
-  have hnat := e.hom.mapPresheaf.naturality (homOfLE (Scheme.Hom.preimage_mono V.ι h)).op
-  have hx := ConcreteCategory.congr_hom hnat m
-  erw [ConcreteCategory.comp_apply, mapPresheaf_app] at hx
-  have e1 : (Scheme.Hom.opensFunctor V.ι).map (homOfLE (Scheme.Hom.preimage_mono V.ι h))
-      = homOfLE (Scheme.Hom.image_mono V.ι (Scheme.Hom.preimage_mono V.ι h)) := Subsingleton.elim _
-          _
-  rw [restrict_map, e1] at hx
-  exact hx
-
-/-- Coordinates of a module section under the chosen local trivialisation. -/
-noncomputable def ψ {W : X.Opens} (hWV : W ≤ V) (m : Γ(M, W)) : Γ(X, W) :=
-  rO (le_hat V hWV) (eApp M V e W (rM M (hat_le V hWV) m))
-
-/-- A module section reconstructed from its local coordinate. -/
-noncomputable def ψinv {W : X.Opens} (hWV : W ≤ V) (a : Γ(X, W)) : Γ(M, W) :=
-  rM M (le_hat V hWV) (eInv M V e W (rO (hat_le V hWV) a))
-
-theorem rM_roundtrip {W : X.Opens} (hWV : W ≤ V) (m : Γ(M, W)) : rM M (le_hat V hWV) (rM M (hat_le V
-    hWV) m) = m := by
-  rw [rM_rM, rM_self]
-theorem rM_roundtrip' {W : X.Opens} (hWV : W ≤ V) (m : Γ(M, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) :
-    rM M (hat_le V hWV) (rM M (le_hat V hWV) m) = m := by
-  rw [rM_rM, rM_self]
-omit M e in
-theorem rO_roundtrip {W : X.Opens} (hWV : W ≤ V) (a : Γ(X, W)) : rO (le_hat V hWV) (rO (hat_le V
-    hWV) a) = a := by
-  rw [rO_rO, rO_self]
-omit M e in
-theorem rO_roundtrip' {W : X.Opens} (hWV : W ≤ V) (a : Γ(X, V.ι ''ᵁ V.ι ⁻¹ᵁ W)) :
-    rO (hat_le V hWV) (rO (le_hat V hWV) a) = a := by
-  rw [rO_rO, rO_self]
-
-theorem ψ_ψinv {W : X.Opens} (hWV : W ≤ V) (a : Γ(X, W)) : ψ M V e hWV (ψinv M V e hWV a) = a := by
-  simp only [ψ, ψinv]
-  rw [rM_roundtrip' M V hWV, eApp_eInv, rO_roundtrip V hWV]
-
-theorem ψinv_ψ {W : X.Opens} (hWV : W ≤ V) (m : Γ(M, W)) : ψinv M V e hWV (ψ M V e hWV m) = m := by
-  simp only [ψ, ψinv]
-  rw [rO_roundtrip' V hWV, eInv_eApp, rM_roundtrip M V hWV]
-
-theorem ψ_injective {W : X.Opens} (hWV : W ≤ V) : Function.Injective (ψ M V e hWV) :=
-  Function.LeftInverse.injective (ψinv_ψ M V e hWV)
-
-theorem ψ_zero {W : X.Opens} (hWV : W ≤ V) : ψ M V e hWV 0 = 0 := by
-  simp only [ψ]
-  change rO (le_hat V hWV) (eApp M V e W ((M.presheaf.map _) 0)) = 0
-  rw [map_zero, eApp_zero]; exact map_zero _
 
 theorem ψ_add {W : X.Opens} (hWV : W ≤ V) (m m' : Γ(M, W)) :
     ψ M V e hWV (m + m') = ψ M V e hWV m + ψ M V e hWV m' := by
@@ -233,38 +114,6 @@ theorem ψ_add {W : X.Opens} (hWV : W ≤ V) (m m' : Γ(M, W)) :
   rw [rM_add, eApp_add]
   exact map_add _ _ _
 
-theorem ψ_smul {W : X.Opens} (hWV : W ≤ V) (a : Γ(X, W)) (m : Γ(M, W)) :
-    ψ M V e hWV (a • m) = a * ψ M V e hWV m := by
-  simp only [ψ]
-  rw [rM_smul, eApp_smul]
-  change (X.presheaf.map _).hom (_ * _) = a * _
-  rw [map_mul]
-  congr 1
-  exact rO_roundtrip V hWV a
-
-theorem ψ_res {W₁ W₂ : X.Opens} (h₁ : W₁ ≤ V) (h : W₂ ≤ W₁) (m : Γ(M, W₁)) :
-    ψ M V e (h.trans h₁) (rM M h m) = rO h (ψ M V e h₁ m) := by
-  simp only [ψ]
-  have lhs : rM M (hat_le V (h.trans h₁)) (rM M h m)
-      = rM M (Scheme.Hom.image_mono V.ι (Scheme.Hom.preimage_mono V.ι h)) (rM M (hat_le V h₁) m) :=
-          by
-    rw [rM_rM, rM_rM]
-  rw [lhs, eApp_res M V e h, rO_rO, rO_rO]
-
-/-- The local frame obtained from the coordinate one. -/
-noncomputable def frame : Γ(M, V) := ψinv M V e le_rfl 1
-
-theorem ψ_frame : ψ M V e le_rfl (frame M V e) = 1 := ψ_ψinv M V e le_rfl 1
-
-theorem ψ_rM_frame {W : X.Opens} (hWV : W ≤ V) : ψ M V e hWV (rM M hWV (frame M V e)) = 1 := by
-  have h := ψ_res M V e le_rfl hWV (frame M V e)
-  rw [ψ_frame, rO_one] at h
-  exact h
-
-theorem eq_smul_frame {W : X.Opens} (hWV : W ≤ V) (m : Γ(M, W)) :
-    m = ψ M V e hWV m • rM M hWV (frame M V e) := by
-  apply ψ_injective M V e hWV
-  rw [ψ_smul, ψ_rM_frame, mul_one]
 
 end Transport
 
@@ -340,21 +189,6 @@ theorem adicValuation_alg_le_one (W : X.Opens) (y : X) (hyW : y ∈ W) (hy : IsC
   have h3 := (Subring.mem_iInf.mp h2) ⟨y, hyW', hy, hv⟩
   exact h3
 
-/-- A section generates every sufficiently restricted section at the given point. -/
-def IsGeneratorAt (U : X.Opens) (s : Γ(M, U)) (y : X) : Prop :=
-  ∀ (W : X.Opens) (h : W ≤ U), y ∈ W → ∀ m : Γ(M, W), ∃ a : Γ(X, W), m = a • rM M h s
-omit x [IsIntegral X] in
-theorem isGeneratorAt_frame (V : X.Opens) (e : M.restrict V.ι ≅ SheafOfModules.unit
-    V.toScheme.ringCatSheaf)
-    (y : X) : IsGeneratorAt M V (frame M V e) y :=
-  fun _ h _ m => ⟨ψ M V e h m, eq_smul_frame M V e h m⟩
-omit x [IsIntegral X] in
-theorem isGeneratorAt_rM {U W : X.Opens} (h : W ≤ U) (s : Γ(M, U)) (y : X) (hs : IsGeneratorAt M U s
-    y) :
-    IsGeneratorAt M W (rM M h s) y := by
-  intro W' h' hyW' m
-  obtain ⟨a, ha⟩ := hs W' (h'.trans h) hyW' m
-  exact ⟨a, by rw [rM_rM]; exact ha⟩
 
 end Places
 

@@ -95,14 +95,14 @@ theorem actualNormalizationWildGroup_t2Space :
     T2Space (actualNormalizationWildGroup A K L Q).carrier :=
   inferInstanceAs (T2Space
     {σ : (actualNormalizationInertiaGroup A K L Q).carrier //
-      (actualNormalizationWildSubgroup A K L Q).carrier σ})
+      σ ∈ actualNormalizationWildSubgroup A K L Q})
 
 /-- The SAME independent wild group is totally disconnected in that topology. -/
 theorem actualNormalizationWildGroup_totallyDisconnectedSpace :
     TotallyDisconnectedSpace (actualNormalizationWildGroup A K L Q).carrier :=
   inferInstanceAs (TotallyDisconnectedSpace
     {σ : (actualNormalizationInertiaGroup A K L Q).carrier //
-      (actualNormalizationWildSubgroup A K L Q).carrier σ})
+      σ ∈ actualNormalizationWildSubgroup A K L Q})
 
 end EtaleFundamentalGroups.Inertia
 

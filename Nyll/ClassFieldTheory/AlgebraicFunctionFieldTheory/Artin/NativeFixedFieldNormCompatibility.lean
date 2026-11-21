@@ -102,7 +102,7 @@ theorem finiteArtin_norm_restrictScalars_of_fixedField
       finiteArtin k K (abstractFixedField K (SeparableClosure K) T.field)
           (IdeleClassGroup.norm (k := k) (K := K)
             (L := abstractFixedField K (SeparableClosure K) H.field) c) =
-        Abelianization.map
+        Group.Abelianization.map
           (AlgEquiv.restrictScalarsHom
             (S := abstractFixedField K (SeparableClosure K) H.field)
             (A := abstractFixedField K (SeparableClosure K) T.field) K :
@@ -123,12 +123,12 @@ theorem finiteArtin_norm_restrictScalars_of_fixedField
       finiteArtin k K (abstractFixedField K (SeparableClosure K) T.field)
           (IdeleClassGroup.norm (k := k) (K := K)
             (L := abstractFixedField K (SeparableClosure K) H.field) c) =
-        Abelianization.map r (fixedFieldArtin k K (SeparableClosure K) H T c) := by
+        Group.Abelianization.map r (fixedFieldArtin k K (SeparableClosure K) H T c) := by
     with_reducible_and_instances
       exact finiteArtin_norm_eq_ambientFixedFieldArtin k K H T c
   have hUpperRestricted :
-      Abelianization.map r (fixedFieldArtin k K (SeparableClosure K) H T c) =
-        Abelianization.map r
+      Group.Abelianization.map r (fixedFieldArtin k K (SeparableClosure K) H T c) =
+        Group.Abelianization.map r
           (finiteArtin k (abstractFixedField K (SeparableClosure K) H.field)
             (abstractFixedField K (SeparableClosure K) T.field) c) := by
     have hUpper :
@@ -136,7 +136,7 @@ theorem finiteArtin_norm_restrictScalars_of_fixedField
             (abstractFixedField K (SeparableClosure K) T.field) c =
           fixedFieldArtin k K (SeparableClosure K) H T c := by
       exact finiteArtin_eq_fixedFieldArtin k K H T c
-    exact congrArg (Abelianization.map r) hUpper.symm
+    exact congrArg (Group.Abelianization.map r) hUpper.symm
   with_reducible_and_instances exact Eq.trans hLower hUpperRestricted
 
 end FunctionField

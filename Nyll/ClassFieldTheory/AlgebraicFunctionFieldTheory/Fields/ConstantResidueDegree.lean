@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantRestrictionFixedField
 public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Frobenius
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 public import Nyll.GaloisCohomology.FieldTheory.FiniteAlgebraicConstants
 
 /-!
@@ -65,6 +65,7 @@ theorem fullConstants_finrank_eq_mul_residueDegree (H : FiniteAbstractField Gal(
       Subtype.ext (IsScalarTower.algebraMap_apply k K Ω x))
   have hclosure : algebraicClosure k E = (algebraicClosure c E).restrictScalars k :=
     algebraicClosure.eq_restrictScalars_of_isAlgebraic k c E
+  let : Module.Free c (algebraicClosure c E) := Module.Free.of_divisionRing c (algebraicClosure c E)
   rw [residueDegree_eq_finrank_fullConstants]
   calc
     Module.finrank k (algebraicClosure k E) =

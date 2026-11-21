@@ -4,14 +4,28 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.Coordinates
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralLocalFactor
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.All
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.LocalComponents
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedAction
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedProduct
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.BaseChange
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.ComponentHom
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.Coordinates
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.Equiv
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.FiniteLocalFactor
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.FinitePlaceTensorBlock
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.FiniteRestrictedProductBaseChange
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.InfinitePlaceTensorBlock
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralLocalFactor
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.All
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.JointComponents
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.LocalComponents
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.Norm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.RelativeBasic
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.RelativeNorm
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.RelativeSupport
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedAction
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedProduct
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.RestrictedRing
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.FieldInclusion
 
 /-! # Adelic coordinates and restricted products -/

@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
 
 /-!
@@ -32,11 +34,6 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance
-    quotientIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
 local instance
     quotientIdeleClassSubgroupNormal
@@ -50,7 +47,6 @@ noncomputable def rationalFiniteNormTransferQuotientMap
     (K L : ClosedSubgroup
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hLK : L.toSubgroup ≤ K.toSubgroup)
-    (hnormal : (extensionSubgroup K L hLK).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -62,7 +58,7 @@ noncomputable def rationalFiniteNormTransferQuotientMap
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)] :
     rationalFiniteNormTransferBaseIdeleClass K →
       rationalFiniteNormTransferQuotientTarget
-        K L hLK hnormal := by
+        K L hLK := by
   let F := abstractFixedField ℚ (SeparableClosure ℚ) K
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
   letI : FiniteDimensional ℚ F :=
@@ -84,47 +80,6 @@ noncomputable def rationalFiniteNormTransferQuotientMap
   exact fun c : IdeleClassGroup F =>
     Additive.ofMul (QuotientGroup.mk c)
 
-/-- Membership in the ordinary norm range represented by the rational
-finite-norm quotient. -/
-noncomputable def rationalFiniteNormTransferNormMembership
-    (K L : ClosedSubgroup
-      (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
-    (hLK : L.toSubgroup ≤ K.toSubgroup)
-    (hnormal : (extensionSubgroup K L hLK).Normal)
-    [hKfinite : Finite
-      ((baseField
-        (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
-        extensionSubgroup
-          (baseField
-            (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
-          K (le_baseField K))]
-    [hfinite : Finite
-      (K.toSubgroup ⧸ extensionSubgroup K L hLK)]
-    (c : rationalFiniteNormTransferBaseIdeleClass
-      (hKfinite := hKfinite) K) : Prop :=
-  let F := abstractFixedField ℚ (SeparableClosure ℚ) K
-  let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLK
-  letI : FiniteDimensional ℚ F :=
-    RationalFiniteNormTransferInternal.fixedFiniteDimensional K
-  letI : FiniteDimensional F E :=
-    RationalFiniteNormTransferInternal.relativeFiniteDimensional
-      K L hLK
-  letI : IsScalarTower ℚ F E :=
-    RationalFiniteNormTransferInternal.relativeScalarTower
-      K L hLK
-  letI : FiniteDimensional ℚ E :=
-    RationalFiniteNormTransferInternal.relativeAbsoluteFiniteDimensional
-      K L hLK
-  letI : NumberField F :=
-    RationalFiniteNormTransferInternal.fixedNumberField K
-  letI : NumberField E :=
-    RationalFiniteNormTransferInternal.relativeNumberField
-      K L hLK
-  letI : IsGalois F E :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      K L hLK hnormal
-  c ∈ (_root_.ideleClassNorm F E).range
-
 /-- A rational finite norm class is sent to the canonical quotient class of
 its ordinary idele-class representative. -/
 theorem rationalFiniteNormTransferFiniteNormClass_spec
@@ -142,12 +97,12 @@ theorem rationalFiniteNormTransferFiniteNormClass_spec
     [hfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)]
     (b : KummerTheory.ambientFixedAddSubgroup
-      rationalIdeleClassRepresentation K) :
+      (ideleClassRepresentation ℚ) K) :
     rationalFiniteNormQuotientEquivIdeleClassNormQuotient
         K L hLK hnormal
-        (finiteNormClass rationalIdeleClassRepresentation K L hLK b) =
+        (finiteNormClass (ideleClassRepresentation ℚ) K L hLK b) =
       rationalFiniteNormTransferQuotientMap
-        K L hLK hnormal
+        K L hLK
         (Additive.toMul
           ((rationalAbstractFixedFieldIdeleClassEquivFixed K).symm b)) := by
   have h :=
@@ -173,9 +128,9 @@ noncomputable def rationalFiniteNormTransferCanonicalFiniteNormClassZero
       (H.toSubgroup ⧸ extensionSubgroup H L hLH)]
     (c : rationalFiniteNormTransferBaseIdeleClass
       (hKfinite := hKfinite) K) : Prop :=
-  (0 : FiniteNormQuotient rationalIdeleClassRepresentation H L hLH) =
-    finiteNormClass rationalIdeleClassRepresentation H L hLH
-      (fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
+  (0 : FiniteNormQuotient (ideleClassRepresentation ℚ) H L hLH) =
+    finiteNormClass (ideleClassRepresentation ℚ) H L hLH
+      (fixedFieldInclusion (ideleClassRepresentation ℚ) K H hHK
         (rationalAbstractFixedFieldIdeleClassEquivFixed K
           (Additive.ofMul c)))
 

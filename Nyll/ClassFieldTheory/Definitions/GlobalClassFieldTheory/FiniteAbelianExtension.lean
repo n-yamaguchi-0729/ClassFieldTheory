@@ -6,60 +6,25 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Mathlib.FieldTheory.Galois.Abelian
-public import Mathlib.FieldTheory.IsSepClosed
+public import Nyll.ClassFieldTheory.Definitions.FiniteAbelianExtension
 public import Mathlib.NumberTheory.NumberField.Basic
 
 /-!
-# Finite abelian extensions of number fields
+# Number-field structure on finite abelian extensions
 
-This module packages finite abelian extensions inside Mathlib's chosen
-separable closure.  It contains no class-field-theory implementation.
+The finite abelian carrier and its algebraic instances are shared with local
+and function-field class field theory. This module adds only the number-field
+structure on an extension of a number field.
 -/
-
-
 
 @[expose] public section
 
-noncomputable section
-
-namespace ClassFieldTheory
+namespace ClassFieldTheory.FiniteAbelianExtension
 
 universe u
-
-/-- A finite abelian extension of a number field inside Mathlib's chosen
-separable closure.  The inherited order is inclusion of intermediate fields. -/
-abbrev FiniteAbelianExtension
-    (K : Type u) [Field K] [NumberField K] :=
-  { E : IntermediateField K (SeparableClosure K) //
-      FiniteDimensional K E ∧ IsAbelianGalois K E }
-
-namespace FiniteAbelianExtension
-
-instance {K : Type u} [Field K] [NumberField K] :
-    CoeSort (FiniteAbelianExtension K) (Type u) where
-  coe E := E.1
-
-instance {K : Type u} [Field K] [NumberField K]
-    (E : FiniteAbelianExtension K) : Field E :=
-  inferInstance
-
-instance {K : Type u} [Field K] [NumberField K]
-    (E : FiniteAbelianExtension K) : FiniteDimensional K E :=
-  E.2.1
-
-instance {K : Type u} [Field K] [NumberField K]
-    (E : FiniteAbelianExtension K) : Algebra K E :=
-  inferInstance
 
 instance {K : Type u} [Field K] [NumberField K]
     (E : FiniteAbelianExtension K) : NumberField E :=
   NumberField.of_module_finite K E
 
-instance {K : Type u} [Field K] [NumberField K]
-    (E : FiniteAbelianExtension K) : IsAbelianGalois K E :=
-  E.2.2
-
-end FiniteAbelianExtension
-
-end ClassFieldTheory
+end ClassFieldTheory.FiniteAbelianExtension

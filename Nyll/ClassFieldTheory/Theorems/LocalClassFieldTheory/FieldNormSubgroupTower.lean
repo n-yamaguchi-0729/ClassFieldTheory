@@ -6,7 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 public import Mathlib.RingTheory.Norm.Transitivity
 
 /-!
@@ -18,6 +18,8 @@ norms in the base field. No local-field or Galois assumption is needed.
 -/
 
 @[expose] public section
+
+open LocalFieldTheory (localNormSubgroup)
 
 noncomputable section
 
@@ -33,10 +35,7 @@ theorem fieldNormSubgroup_le_of_tower
     [Algebra K M] [Algebra M L] [Algebra K L]
     [IsScalarTower K M L]
     [FiniteDimensional K M] [FiniteDimensional M L] [FiniteDimensional K L] :
-    fieldNormSubgroup K L ≤ fieldNormSubgroup K M := by
-  rintro x ⟨y, rfl⟩
-  refine ⟨fieldNormHom M L y, ?_⟩
-  apply Units.ext
-  exact Algebra.norm_norm
+    localNormSubgroup K L ≤ localNormSubgroup K M :=
+  LocalFieldTheory.localNormSubgroup_le_of_tower K M L
 
 end ClassFieldTheory

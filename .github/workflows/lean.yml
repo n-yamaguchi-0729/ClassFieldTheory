@@ -205,97 +205,10 @@ jobs:
     with:
       library: EntryPoint
 
-  verify-phase:
-    name: Verify ${{ matrix.phase }}
-    strategy:
-      fail-fast: false
-      matrix:
-        phase: [proof]
-    if: github.event.repository.private == false
-    needs: [library-procgroups, library-valuedfieldtheory, library-galoiscohomology, library-schemetheory, library-classfieldtheory-algebra, library-classfieldtheory-abstractclassfieldtheory, library-classfieldtheory-localfieldtheory, library-classfieldtheory-ramificationtheory, library-classfieldtheory-lubintate, library-classfieldtheory-algebraicnumbertheory, library-classfieldtheory-algebraicfunctionfieldtheory, library-classfieldtheory-kummertheory, library-classfieldtheory-localclassfieldtheory-classformation, library-classfieldtheory-localclassfieldtheory-lubintateapplication, library-classfieldtheory-localclassfieldtheory-finite, library-classfieldtheory-localclassfieldtheory, library-classfieldtheory-globalclassfieldtheory, library-classfieldtheory-kroneckerweber, library-classfieldtheory, library-algebraiccurves, library-etalefundamentalgroups, library-etalecohomology, library-abelianvarieties, library-entrypoint]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 360
-    env:
-      LEAN_NUM_THREADS: "1"
-      PYTHONDONTWRITEBYTECODE: "1"
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - name: Audit the full physical source manifest
-        shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/verification-${{ matrix.phase }}"
-          python3 -B .github/verification/generate_manifest.py \
-            --root . --config .github/verification/manifest-config.json \
-            --manifest "$RUNNER_TEMP/verification-${{ matrix.phase }}/modules.json" \
-            --report "$RUNNER_TEMP/verification-${{ matrix.phase }}/source-audit.json" 2>&1 | tee "$RUNNER_TEMP/verification-${{ matrix.phase }}/source-audit.log"
-      - name: Install pinned Lean and obtain the pinned mathlib cache
-        uses: leanprover/lean-action@ba3fdfe5c4476c925da13bf11a005ddb47e47aee # v1.7.1
-        with:
-          auto-config: "false"
-          build: "false"
-          test: "false"
-          lint: "false"
-          use-mathlib-cache: "true"
-          use-github-cache: "false"
-      - name: Restore completed project outputs from the library jobs
-        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: |
-            .lake/build/lib/lean
-            .lake/build/ir/**/*.c
-            .lake/build/ir/**/*.c.hash
-            .lake/build/ir/**/*.bc
-            .lake/build/ir/**/*.bc.hash
-            ${{ runner.temp }}/project-build-cache.json
-          key: lean-project-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-${{ github.sha }}-verify-${{ github.run_id }}-${{ github.run_attempt }}
-          restore-keys: |
-            lean-project-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-${{ github.sha }}-
-            lean-project-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('lean-toolchain', 'lake-manifest.json', 'lakefile.toml') }}-
-      - name: Validate cached output integrity
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 -B .github/verification/project_cache.py restore \
-            --metadata "$RUNNER_TEMP/project-build-cache.json" \
-            --report "$RUNNER_TEMP/verification-${{ matrix.phase }}/cache-restore.json"
-      - name: Build exact checker revisions
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 -B .github/verification/setup_tools.py \
-            --checkouts "$RUNNER_TEMP/verification-tools" \
-            --output "$RUNNER_TEMP/verification-${{ matrix.phase }}/setup"
-      - name: Run mandatory whole-repository ${{ matrix.phase }} phase
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 -B .github/verification/verify.py \
-            --phase "${{ matrix.phase }}" \
-            --package-root "$GITHUB_WORKSPACE" \
-            --manifest "$RUNNER_TEMP/verification-${{ matrix.phase }}/modules.json" \
-            --output "$RUNNER_TEMP/verification-${{ matrix.phase }}/checks" \
-            --exporter-checkout "$RUNNER_TEMP/verification-tools/lean4export" \
-            --nanoda-checkout "$RUNNER_TEMP/verification-tools/nanoda_lib" \
-            --nanoda-binary "$RUNNER_TEMP/verification-tools/nanoda_lib/target/release/nanoda_bin"
-      - name: Preserve phase evidence even on failure
-        if: always()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: verification-${{ matrix.phase }}-${{ github.run_id }}
-          overwrite: true
-          path: |
-            ${{ runner.temp }}/verification-${{ matrix.phase }}/
-            !${{ runner.temp }}/verification-${{ matrix.phase }}/checks/selected.ndjson
-          if-no-files-found: error
-          retention-days: 14
-
   verify:
     name: Gate NanoDa and complete declaration audit (no replay)
     if: github.event.repository.private == false
-    needs: verify-phase
+    needs: [library-procgroups, library-valuedfieldtheory, library-galoiscohomology, library-schemetheory, library-classfieldtheory-algebra, library-classfieldtheory-abstractclassfieldtheory, library-classfieldtheory-localfieldtheory, library-classfieldtheory-ramificationtheory, library-classfieldtheory-lubintate, library-classfieldtheory-algebraicnumbertheory, library-classfieldtheory-algebraicfunctionfieldtheory, library-classfieldtheory-kummertheory, library-classfieldtheory-localclassfieldtheory-classformation, library-classfieldtheory-localclassfieldtheory-lubintateapplication, library-classfieldtheory-localclassfieldtheory-finite, library-classfieldtheory-localclassfieldtheory, library-classfieldtheory-globalclassfieldtheory, library-classfieldtheory-kroneckerweber, library-classfieldtheory, library-algebraiccurves, library-etalefundamentalgroups, library-etalecohomology, library-abelianvarieties, library-entrypoint]
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:

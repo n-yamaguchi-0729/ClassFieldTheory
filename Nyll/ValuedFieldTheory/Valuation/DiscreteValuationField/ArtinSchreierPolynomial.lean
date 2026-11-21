@@ -95,7 +95,7 @@ theorem artinSchreierPolynomial_splits_of_root
     (artinSchreierPolynomial p a).Splits := by
   have hbase : (X ^ p - X : K[X]).Splits := by
     simpa only [Polynomial.map_sub, Polynomial.map_pow, map_X] using
-      (GaloisField.splits_zmod_X_pow_sub_X p).map
+      (Polynomial.splits_X_pow_char_sub_X (ZMod p) p).map
         (ZMod.castHom (m := p) dvd_rfl K)
   have htranslate : (X ^ p - X : K[X]).comp (X - C α) =
       artinSchreierPolynomial p a := by

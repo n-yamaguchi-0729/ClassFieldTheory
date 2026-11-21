@@ -7,17 +7,19 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.FixedIdeles
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.ConstantExtensionUnramified
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalRayDegree
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.HigherUnitBaseChange
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
 
 /-!
 # Original local ray inclusions in finite extension towers
 
-The literal completion inclusion preserves and reflects the ordinary units
-and the full first principal units. It therefore gives an injective map on
-each reduced local ray factor. Every coordinate of the original restricted
-ray base change is this local map, so the whole restricted ray transition
-is injective before passage to the principal kernel.
+The literal completion inclusion preserves every principal-unit level.
+It reflects reduced levels, all levels when unramified, and every
+ramification-weighted divisor-pullback level. These local statements also
+give injectivity of the corresponding restricted products before taking
+a quotient by principal representatives.
 
 The normalized order scales by the original ramification index. In the
 actual finite constant stages the index is one, and the local transition
@@ -56,28 +58,28 @@ theorem localBaseChange_mem_reducedHigherUnit_iff
     rw [hone]
     exact localBaseChange_mem_firstHigherUnit_iff w x
 
-/-- The original completion inclusion on the actual reduced local ray factors. -/
-def localRayBaseChange (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (w : Place k L) :
+/-- The original completion inclusion on local ray factors at every multiplicity. -/
+def localRayBaseChange (m : Modulus k K) (w : Place k L) :
     RayLocalFactor m (w.restrict K) →*
-      RayLocalFactor (rayModulusBaseChange L m) w :=
+      RayLocalFactor (reindexAlongPlaces L m) w :=
   QuotientGroup.map (localHigherUnitGroup (w.restrict K) (m (w.restrict K)))
-    (localHigherUnitGroup w (rayModulusBaseChange L m w))
+    (localHigherUnitGroup w (reindexAlongPlaces L m w))
     (IdeleGroup.localBaseChange (K := K) w)
     (fun x hx =>
-      (localBaseChange_mem_reducedHigherUnit_iff w (m (w.restrict K)) (hm _) x).mpr hx)
+      localBaseChange_mem_higherUnit w (m (w.restrict K)) x hx)
 
 /-- Representatives are sent through the original completion inclusion. -/
-theorem localRayBaseChange_mk (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem localRayBaseChange_mk (m : Modulus k K)
     (w : Place k L) (x : (w.restrict K).adicCompletionˣ) :
-    localRayBaseChange (L := L) m hm w
+    localRayBaseChange (L := L) m w
         (QuotientGroup.mk' (localHigherUnitGroup (w.restrict K) (m (w.restrict K))) x) =
-      QuotientGroup.mk' (localHigherUnitGroup w (rayModulusBaseChange L m w))
+      QuotientGroup.mk' (localHigherUnitGroup w (reindexAlongPlaces L m w))
         (IdeleGroup.localBaseChange (K := K) w x) := rfl
 
 /-- No reduced local ray class is lost under actual finite extension. -/
 theorem localRayBaseChange_injective (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
-    (w : Place k L) : Function.Injective (localRayBaseChange (L := L) m hm w) := by
-  apply (injective_iff_map_eq_one (localRayBaseChange (L := L) m hm w)).mpr
+    (w : Place k L) : Function.Injective (localRayBaseChange (L := L) m w) := by
+  apply (injective_iff_map_eq_one (localRayBaseChange (L := L) m w)).mpr
   intro a ha
   obtain ⟨x, rfl⟩ :=
     QuotientGroup.mk'_surjective (localHigherUnitGroup (w.restrict K) (m (w.restrict K))) a
@@ -87,10 +89,10 @@ theorem localRayBaseChange_injective (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
   exact (QuotientGroup.eq_one_iff (IdeleGroup.localBaseChange (K := K) w x)).mp ha
 
 /-- The actual local order changes by its original ramification index. -/
-theorem localRayFactorOrder_baseChange (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem localRayFactorOrder_baseChange (m : Modulus k K)
     (w : Place k L) (a : RayLocalFactor m (w.restrict K)) :
-    (localRayFactorOrder (rayModulusBaseChange L m) w
-        (localRayBaseChange (L := L) m hm w a)).toAdd =
+    (localRayFactorOrder (reindexAlongPlaces L m) w
+        (localRayBaseChange (L := L) m w a)).toAdd =
       (w.ramificationIndex K : ℤ) * (localRayFactorOrder m (w.restrict K) a).toAdd := by
   obtain ⟨x, rfl⟩ :=
     QuotientGroup.mk'_surjective (localHigherUnitGroup (w.restrict K) (m (w.restrict K))) a
@@ -99,20 +101,20 @@ theorem localRayFactorOrder_baseChange (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
 
 /-- The local unit classes are preserved and reflected at every finite stage. -/
 theorem localRayBaseChange_mem_units_iff
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+    (m : Modulus k K)
     (w : Place k L) (a : RayLocalFactor m (w.restrict K)) :
-    localRayBaseChange (L := L) m hm w a ∈
-        localRayFactorUnits (rayModulusBaseChange L m) w ↔
+    localRayBaseChange (L := L) m w a ∈
+        localRayFactorUnits (reindexAlongPlaces L m) w ↔
       a ∈ localRayFactorUnits m (w.restrict K) := by
-  rw [← localRayFactorOrder_eq_one_iff (rayModulusBaseChange L m) w
-      (localRayBaseChange (L := L) m hm w a),
+  rw [← localRayFactorOrder_eq_one_iff (reindexAlongPlaces L m) w
+      (localRayBaseChange (L := L) m w a),
     ← localRayFactorOrder_eq_one_iff m (w.restrict K) a]
   constructor
   · intro h
     apply Multiplicative.ext
     have hzero : (w.ramificationIndex K : ℤ) *
         (localRayFactorOrder m (w.restrict K) a).toAdd = 0 := by
-      rw [← localRayFactorOrder_baseChange m hm w a, h]
+      rw [← localRayFactorOrder_baseChange m w a, h]
       rfl
     exact (mul_eq_zero.mp hzero).resolve_left
       (Int.natCast_ne_zero.mpr (w.ramificationIndex_pos (F := K)).ne')
@@ -122,25 +124,92 @@ theorem localRayBaseChange_mem_units_iff
     exact mul_zero _
 
 /-- Every restricted-ray coordinate is the corresponding original local transition. -/
-theorem restrictedRayBaseChange_apply (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
+theorem restrictedRayBaseChange_apply (m : Modulus k K)
     (a : RayRestrictedProduct m) (w : Place k L) :
-    restrictedRayBaseChange (L := L) m hm a w =
-      localRayBaseChange (L := L) m hm w (a (w.restrict K)) := by
+    restrictedRayBaseChange (L := L) m a w =
+      localRayBaseChange (L := L) m w (a (w.restrict K)) := by
   obtain ⟨b, rfl⟩ := ideleToRayRestrictedProduct_surjective m a
   rw [restrictedRayBaseChange_idele_apply]
   rfl
 
 /-- The original reduced restricted-ray transition is injective on all families. -/
 theorem restrictedRayBaseChange_injective (m : Modulus k K) (hm : ∀ v, m v ≤ 1) :
-    Function.Injective (restrictedRayBaseChange (L := L) m hm) := by
+    Function.Injective (restrictedRayBaseChange (L := L) m) := by
   intro a b hab
   apply RestrictedProduct.ext
   intro v
   obtain ⟨w, rfl⟩ := Place.exists_restrict_eq (M := L) v
   apply localRayBaseChange_injective m hm w
-  have h := congrArg (fun c : RayRestrictedProduct (rayModulusBaseChange L m) => c w) hab
-  exact (restrictedRayBaseChange_apply m hm a w).symm.trans
-    (h.trans (restrictedRayBaseChange_apply m hm b w))
+  have h := congrArg (fun c : RayRestrictedProduct (reindexAlongPlaces L m) => c w) hab
+  exact (restrictedRayBaseChange_apply m a w).symm.trans
+    (h.trans (restrictedRayBaseChange_apply m b w))
+
+/-- The completion inclusion is injective on every local ray factor when
+its ramification index is one. -/
+theorem localRayBaseChange_injective_of_unramified (m : Modulus k K)
+    (w : Place k L) (he : w.ramificationIndex K = 1) :
+    Function.Injective (localRayBaseChange (L := L) m w) := by
+  apply (injective_iff_map_eq_one (localRayBaseChange (L := L) m w)).mpr
+  intro a ha
+  obtain ⟨x, rfl⟩ :=
+    QuotientGroup.mk'_surjective (localHigherUnitGroup (w.restrict K) (m (w.restrict K))) a
+  apply (QuotientGroup.eq_one_iff x).mpr
+  apply (localBaseChange_mem_higherUnit_iff_of_unramified w he (m (w.restrict K)) x).mp
+  exact (QuotientGroup.eq_one_iff (IdeleGroup.localBaseChange (K := K) w x)).mp ha
+
+/-- The full restricted-ray transition is injective at an everywhere
+unramified extension, with arbitrary boundary multiplicities. -/
+theorem restrictedRayBaseChange_injective_of_unramified (m : Modulus k K)
+    (he : ∀ w : Place k L, w.ramificationIndex K = 1) :
+    Function.Injective (restrictedRayBaseChange (L := L) m) := by
+  intro a b hab
+  apply RestrictedProduct.ext
+  intro v
+  obtain ⟨w, rfl⟩ := Place.exists_restrict_eq (M := L) v
+  apply localRayBaseChange_injective_of_unramified m w (he w)
+  have h := congrArg (fun c : RayRestrictedProduct (reindexAlongPlaces L m) => c w) hab
+  exact (restrictedRayBaseChange_apply m a w).symm.trans
+    (h.trans (restrictedRayBaseChange_apply m b w))
+
+/-- Divisor pullback uses the ramification-weighted target depth on the same
+actual completion map. -/
+def localRayPullbackDivisor (m : Modulus k K) (w : Place k L) :
+    RayLocalFactor m (w.restrict K) →* RayLocalFactor (pullbackDivisor L m) w :=
+  QuotientGroup.map (localHigherUnitGroup (w.restrict K) (m (w.restrict K)))
+    (localHigherUnitGroup w (pullbackDivisor L m w))
+    (IdeleGroup.localBaseChange (K := K) w)
+    (fun x hx => (localBaseChange_mem_mulHigherUnit_iff w (m (w.restrict K)) x).mpr hx)
+
+/-- The divisor-pullback map sends each representative through the same completion inclusion. -/
+theorem localRayPullbackDivisor_mk (m : Modulus k K) (w : Place k L)
+    (x : (w.restrict K).adicCompletionˣ) :
+    localRayPullbackDivisor (L := L) m w
+        (QuotientGroup.mk' (localHigherUnitGroup (w.restrict K) (m (w.restrict K))) x) =
+      QuotientGroup.mk' (localHigherUnitGroup w (pullbackDivisor L m w))
+        (IdeleGroup.localBaseChange (K := K) w x) := rfl
+
+/-- Local ray classes inject into the ramification-weighted divisor-pullback
+quotient, without any reducedness assumption. -/
+theorem localRayPullbackDivisor_injective (m : Modulus k K) (w : Place k L) :
+    Function.Injective (localRayPullbackDivisor (L := L) m w) := by
+  apply (injective_iff_map_eq_one (localRayPullbackDivisor (L := L) m w)).mpr
+  intro a ha
+  obtain ⟨x, rfl⟩ :=
+    QuotientGroup.mk'_surjective (localHigherUnitGroup (w.restrict K) (m (w.restrict K))) a
+  apply (QuotientGroup.eq_one_iff x).mpr
+  apply (localBaseChange_mem_mulHigherUnit_iff w (m (w.restrict K)) x).mp
+  exact (QuotientGroup.eq_one_iff (IdeleGroup.localBaseChange (K := K) w x)).mp ha
+
+/-- Divisor-pullback local orders scale by the same ramification index. -/
+theorem localRayFactorOrder_pullbackDivisor (m : Modulus k K)
+    (w : Place k L) (a : RayLocalFactor m (w.restrict K)) :
+    (localRayFactorOrder (pullbackDivisor L m) w
+        (localRayPullbackDivisor (L := L) m w a)).toAdd =
+      (w.ramificationIndex K : ℤ) * (localRayFactorOrder m (w.restrict K) a).toAdd := by
+  obtain ⟨x, rfl⟩ :=
+    QuotientGroup.mk'_surjective (localHigherUnitGroup (w.restrict K) (m (w.restrict K))) a
+  rw [localRayPullbackDivisor_mk, localRayFactorOrder_mk, localRayFactorOrder_mk]
+  exact IdeleGroup.localOrder_completionMap w x
 
 end FiniteExtension
 
@@ -156,16 +225,26 @@ omit [HasPrincipalDivisors k K] in
 /-- The actual finite constant stages preserve normalized local ray order
 before restricting to the original principal kernel. -/
 theorem localRayFactorOrder_fullConstant_baseChange
-    (n : ℕ) [NeZero n] (m : Modulus k K) (hm : ∀ v, m v ≤ 1) :
+    (n : ℕ) [NeZero n] (m : Modulus k K) :
     let E := fullConstantDegreeStage k K Ω n
     ∀ (w : Place k E) (a : RayLocalFactor m (w.restrict K)),
-      localRayFactorOrder (rayModulusBaseChange E m) w
-          (localRayBaseChange (L := E) m hm w a) =
+      localRayFactorOrder (reindexAlongPlaces E m) w
+          (localRayBaseChange (L := E) m w a) =
         localRayFactorOrder m (w.restrict K) a := by
   intro E w a
   apply Multiplicative.ext
   rw [localRayFactorOrder_baseChange,
     ramificationIndex_fullConstantDegreeStage k K Ω n w, Nat.cast_one, one_mul]
+
+omit [HasPrincipalDivisors k K] in
+/-- Finite constant extension preserves all restricted-ray multiplicities
+and is injective before quotienting by principal representatives. -/
+theorem restrictedRayBaseChange_fullConstant_injective
+    (n : ℕ) [NeZero n] (m : Modulus k K) :
+    Function.Injective
+      (restrictedRayBaseChange (L := fullConstantDegreeStage k K Ω n) m) :=
+  restrictedRayBaseChange_injective_of_unramified m
+    (ramificationIndex_fullConstantDegreeStage k K Ω n)
 
 end ConstantExtension
 

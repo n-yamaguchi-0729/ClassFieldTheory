@@ -72,8 +72,7 @@ theorem abelianFiniteArtin_baseChange_of_finrank_one
     apply AlgEquiv.ext
     intro x
     exact AlgEquiv.restrictNormal_commutes (σ.restrictScalars K) E x
-  rw [hself, IdeleClassGroup.finiteNorm_eq_norm,
-    IdeleClassGroup.norm_baseChange, hKF, pow_one] at h
+  rw [hself, IdeleClassGroup.norm_baseChange, hKF, pow_one] at h
   exact h
 
 end FiniteArtin
@@ -124,11 +123,25 @@ theorem absoluteArtin_baseChange_of_finrank_one (c : IdeleClassGroup k K) :
     (Algebra.finrank_eq_one_iff_bijective_algebraMap.mp hKF)
   apply inv_mul_eq_one.mp
   apply ProCGroups.ProfiniteGrp.eq_one_of_mem_all_openNormalSubgroups
-  intro N
+  intro N₀
+  let N : OpenNormalSubgroup (localAbsoluteAbelianProfinite K) := N₀
+  let : N.toSubgroup.Normal := N.isNormal'
+  let : Group (localAbsoluteAbelianProfinite K ⧸ N.toSubgroup) := QuotientGroup.Quotient.group _
+  let eN : localAbsoluteAbelianProfinite K ⧸ N.toSubgroup ≃ₜ*
+      Gal(absoluteFiniteQuotientField K N / K) := absoluteFiniteQuotientEquiv K N
   apply QuotientGroup.eq.mp
-  apply (absoluteFiniteQuotientEquiv K N).injective
-  rw [← absoluteAbelianRestriction_finiteQuotient,
-    ← absoluteAbelianRestriction_finiteQuotient]
+  apply eN.injective
+  let lhs : localAbsoluteAbelianProfinite K :=
+    degreeOneAbsoluteAbelianEquiv K F hKF eΩ
+      (absoluteArtin k F (IdeleClassGroup.baseChange (k := k) (K := K) (L := F) c))
+  let rhs : localAbsoluteAbelianProfinite K := absoluteArtin k K c
+  change eN (QuotientGroup.mk lhs) = eN (QuotientGroup.mk rhs)
+  refine (absoluteAbelianRestriction_finiteQuotient K N lhs).symm.trans
+    (?_ : absoluteAbelianRestriction K (absoluteFiniteQuotientField K N) lhs =
+      eN (QuotientGroup.mk rhs))
+  refine Eq.trans (?_ : absoluteAbelianRestriction K (absoluteFiniteQuotientField K N) lhs =
+    absoluteAbelianRestriction K (absoluteFiniteQuotientField K N) rhs)
+    (absoluteAbelianRestriction_finiteQuotient K N rhs)
   let E := absoluteFiniteQuotientField K N
   have hEprincipal : HasPrincipalDivisors k E :=
     (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K E).toHasPrincipalDivisors
@@ -171,9 +184,11 @@ theorem absoluteArtin_baseChange_of_finrank_one (c : IdeleClassGroup k K) :
       _ = algebraMap E (SeparableClosure K)
           ((embeddedFiniteRestriction F E i σ).restrictScalars K x) :=
         eΩ.apply_symm_apply _
-  rw [hcoordinate, absoluteArtin_restrictionOfEmbedding,
-    absoluteArtin_restriction]
-  exact abelianFiniteArtin_baseChange_of_finrank_one hKF c
+  exact (hcoordinate _).trans
+    ((congrArg (fun σ : Gal(E/F) => σ.restrictScalars K)
+      (absoluteArtin_restrictionOfEmbedding k F E i _)).trans
+      ((abelianFiniteArtin_baseChange_of_finrank_one hKF c).trans
+        (absoluteArtin_restriction k K E c).symm))
 
 end AbsoluteArtin
 

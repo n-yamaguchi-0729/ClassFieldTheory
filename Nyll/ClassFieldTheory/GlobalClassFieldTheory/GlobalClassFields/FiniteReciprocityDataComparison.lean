@@ -45,14 +45,14 @@ theorem originalArtin_prime (p : HeightOneSpectrum (𝓞 K))
     (D.artin.comp (rayClassGroupEquivOriginalIdele K D.modulus).symm.toMonoidHom)
         (QuotientGroup.mk'
           (rayClassModulusToOriginal K D.modulus).congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+          (IdeleGroup.toStandardClass K
             (IdeleGroup.finitePrimeIdele p))) =
       GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
         (K := K) (L := L) p := by
   let e := rayClassGroupEquivOriginalIdele K D.modulus
   change D.artin (e.symm (QuotientGroup.mk'
     (rayClassModulusToOriginal K D.modulus).congruenceSubgroup
-    (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+    (IdeleGroup.toStandardClass K
       (IdeleGroup.finitePrimeIdele p)))) = _
   rw [← rayClassGroupEquivOriginalIdele_prime K D.modulus p hp]
   have hFrob : D.artin (rayClassOfFinitePrime D.modulus p hp) =

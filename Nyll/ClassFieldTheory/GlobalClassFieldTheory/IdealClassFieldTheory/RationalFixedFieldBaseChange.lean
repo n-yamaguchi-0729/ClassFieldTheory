@@ -7,6 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalAbstractExtensionToOrdinary
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtensionNorm
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.ClassGroup
 
 /-!
@@ -74,10 +75,10 @@ theorem rationalFixedFieldInclusion_baseChange_eq_ideleClassExtension
         (rationalAbstractExtensionIdeleClassEquiv
           K L hLK hnormal
           ((extensionFixedRepresentationEquiv
-            rationalIdeleClassRepresentation
+            (ideleClassRepresentation ℚ)
               K L hLK hnormal).symm
             (fixedFieldInclusion
-              rationalIdeleClassRepresentation K L hLK
+              (ideleClassRepresentation ℚ) K L hLK
               (rationalAbstractFixedFieldIdeleClassEquivFixed K
                 (Additive.ofMul
                   (_root_.relativeIdeleClassBaseChangeMulEquiv
@@ -98,10 +99,10 @@ theorem rationalFixedFieldInclusion_baseChange_eq_ideleClassExtension
     rationalAbstractExtensionIdeleClassEquiv
         K L hLK hnormal
         ((extensionFixedRepresentationEquiv
-          rationalIdeleClassRepresentation
+          (ideleClassRepresentation ℚ)
             K L hLK hnormal).symm
           (fixedFieldInclusion
-            rationalIdeleClassRepresentation K L hLK
+            (ideleClassRepresentation ℚ) K L hLK
             (rationalAbstractFixedFieldIdeleClassEquivFixed K
               (Additive.ofMul q)))) =
       Additive.ofMul
@@ -119,10 +120,10 @@ theorem rationalFixedFieldInclusion_baseChange_eq_ideleClassExtension
         (rationalAbstractExtensionIdeleClassEquiv
           K L hLK hnormal
           ((extensionFixedRepresentationEquiv
-            rationalIdeleClassRepresentation
+            (ideleClassRepresentation ℚ)
               K L hLK hnormal).symm
             (fixedFieldInclusion
-              rationalIdeleClassRepresentation K L hLK
+              (ideleClassRepresentation ℚ) K L hLK
               (rationalAbstractFixedFieldIdeleClassEquivFixed K
                 (Additive.ofMul q))))) =
       Additive.ofMul
@@ -146,10 +147,10 @@ theorem rationalFixedFieldInclusion_baseChange_eq_ideleClassExtension
         (rationalAbstractExtensionIdeleClassEquiv
           K L hLK hnormal
           ((extensionFixedRepresentationEquiv
-            rationalIdeleClassRepresentation
+            (ideleClassRepresentation ℚ)
               K L hLK hnormal).symm
             (fixedFieldInclusion
-              rationalIdeleClassRepresentation K L hLK
+              (ideleClassRepresentation ℚ) K L hLK
               (rationalAbstractFixedFieldIdeleClassEquivFixed K
                 (Additive.ofMul q))))) =
       Additive.ofMul (ideleClassExtension F E q)

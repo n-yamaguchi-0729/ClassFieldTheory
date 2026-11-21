@@ -8,7 +8,7 @@ module
 
 public import Nyll.ClassFieldTheory.Algebra.IntermediateFieldRingEquivOrderIso
 public import Nyll.ClassFieldTheory.Algebra.AbelianGaloisEquiv
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
+public import Nyll.ValuedFieldTheory.LocalField.NormUnitsBaseChange
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkLocalClassification
 public import Mathlib.Topology.Algebra.Group.Units
 
@@ -72,12 +72,10 @@ theorem mapBaseEquiv_normSubgroup (e : K ≃+* M)
     (E : FiniteAbelianLocalExtension K) :
     E.normSubgroup.map (Units.mapEquiv e.toMulEquiv).toMonoidHom =
       (mapBaseEquiv e c hc E).normSubgroup := by
-  let : FiniteDimensional M (intermediateFieldMapRingEquiv e c hc E.1) :=
-    (mapBaseEquiv e c hc E).2.1
-  change (fieldNormSubgroup K E.1).map
+  change (LocalFieldTheory.localNormSubgroup K E.1).map
       (Units.mapEquiv e.toMulEquiv).toMonoidHom =
-    fieldNormSubgroup M (intermediateFieldMapRingEquiv e c hc E.1)
-  exact fieldNormSubgroup_map_ringEquiv e
+    LocalFieldTheory.localNormSubgroup M (intermediateFieldMapRingEquiv e c hc E.1)
+  exact LocalFieldTheory.localNormSubgroup_map_ringEquiv e
     (intermediateFieldMapRingEquivEquiv e c hc E.1)
     (intermediateFieldMapRingEquivEquiv_commutes e c hc E.1)
 
@@ -91,11 +89,11 @@ variable [TopologicalSpace K] [TopologicalSpace M]
 isomorphism of unit groups. -/
 def mapContinuousMulEquiv (e : Kˣ ≃ₜ* Mˣ)
     (H : OpenFiniteIndexSubgroup K) : OpenFiniteIndexSubgroup M :=
-  ⟨H.1.map e.toMonoidHom, by
+  ⟨⟨H.1.toSubgroup.map e.toMonoidHom, by
     change IsOpen (e '' (H.1 : Set Kˣ))
-    exact e.toHomeomorph.isOpenMap _ H.2.1, by
-    let : H.1.FiniteIndex := H.2.2
-    exact Subgroup.FiniteIndex.map_of_surjective H.1 e.surjective⟩
+    exact e.toHomeomorph.isOpenMap _ H.1.isOpen'⟩, by
+    let : H.1.toSubgroup.FiniteIndex := H.2
+    exact Subgroup.FiniteIndex.map_of_surjective H.1.toSubgroup e.surjective⟩
 
 end OpenFiniteIndexSubgroup
 
@@ -130,9 +128,10 @@ theorem shrinkFiniteAbelianFieldNormSubgroupOrderIso_mapBaseEquiv
         (OrderDual.ofDual (shrinkFiniteAbelianFieldNormSubgroupOrderIso K E))) := by
   intro eu
   apply Subtype.ext
+  apply OpenSubgroup.toSubgroup_injective
   change (OrderDual.ofDual (shrinkFiniteAbelianFieldNormSubgroupOrderIso M
-      (FiniteAbelianLocalExtension.mapBaseEquiv e c hc E))).1 =
-    (OrderDual.ofDual (shrinkFiniteAbelianFieldNormSubgroupOrderIso K E)).1.map
+      (FiniteAbelianLocalExtension.mapBaseEquiv e c hc E))).1.toSubgroup =
+    (OrderDual.ofDual (shrinkFiniteAbelianFieldNormSubgroupOrderIso K E)).1.toSubgroup.map
       (Units.mapEquiv e.toMulEquiv).toMonoidHom
   rw [shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply,
     shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply]
@@ -178,10 +177,11 @@ theorem finiteAbelianLocalExtension_mapBaseEquiv_independent
       FiniteAbelianLocalExtension.mapBaseEquiv e d hd E := by
   apply (shrinkFiniteAbelianFieldNormSubgroupOrderIso M).injective
   apply Subtype.ext
+  apply OpenSubgroup.toSubgroup_injective
   change (OrderDual.ofDual (shrinkFiniteAbelianFieldNormSubgroupOrderIso M
-      (FiniteAbelianLocalExtension.mapBaseEquiv e c hc E))).1 =
+      (FiniteAbelianLocalExtension.mapBaseEquiv e c hc E))).1.toSubgroup =
     (OrderDual.ofDual (shrinkFiniteAbelianFieldNormSubgroupOrderIso M
-      (FiniteAbelianLocalExtension.mapBaseEquiv e d hd E))).1
+      (FiniteAbelianLocalExtension.mapBaseEquiv e d hd E))).1.toSubgroup
   rw [shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply,
     shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply]
   exact (FiniteAbelianLocalExtension.mapBaseEquiv_normSubgroup e c hc E).symm.trans

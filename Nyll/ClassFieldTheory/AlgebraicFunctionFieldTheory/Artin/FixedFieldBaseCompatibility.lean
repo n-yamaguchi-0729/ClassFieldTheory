@@ -19,7 +19,7 @@ public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.Intrinsic
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
 import
   Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.ConcreteReciprocityTransport
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 
 /-!
@@ -76,6 +76,8 @@ attribute [local instance]
   fixedBaseFrobeniusAuxiliaryConstantAlgebra
   ambientFrobeniusAuxiliaryConstantAlgebra
 
+attribute [local instance] nativeFrobeniusExtensionNormal
+
 section IntrinsicLiftValue
 
 variable
@@ -89,44 +91,6 @@ variable
     [IsScalarTower k (RatFunc k)
       (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
 
-private theorem exists_common_frobenius_value_of_intrinsicLift
-    (T : FiniteGaloisSubextension H.field) [IsMulCommutative T.extensionQuotient]
-    (e : SeparableClosure (abstractFixedField K (SeparableClosure K) H.field)
-      ≃ₐ[abstractFixedField K (SeparableClosure K) H.field] SeparableClosure K)
-    (σ : intrinsicFixedBaseFrobeniusElements k K H T e) :
-    ∃ c : IdeleClassGroup k (abstractFixedField K (SeparableClosure K) H.field),
-      fixedFieldArtin k K (SeparableClosure K) H T c = Abelianization.of
-        (abstractExtensionQuotientEquivGaloisGroup K (SeparableClosure K)
-          H.field T.field T.below T.normal
-          ((fullConstantDegreeData k K (SeparableClosure K)).frobeniusRestriction
-            (H.toFiniteResidueAbstractField
-              (fullConstantDegreeData k K (SeparableClosure K))) T.field T.below
-              (intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ))) ∧
-      finiteArtin k (abstractFixedField K (SeparableClosure K) H.field)
-        (abstractRelativeFixedField K (SeparableClosure K) T.below) c =
-          fixedFieldArtin k K (SeparableClosure K) H T c := by
-  let ambient := fixedFieldArtin k K (SeparableClosure K) H T
-  have ambientPrimeValue := fixedFieldArtin_frobenius_primeNorm
-    k K (SeparableClosure K) H T
-  let σA := intrinsicConstantFrobeniusElementToAmbientFixedField k K H T e σ
-  have hWitness := exists_common_frobenius_norm k K H T e σ
-  extract_lets (config := { descend := false, merge := false }) at hWitness
-  dsimp (config := { instances := true, zetaDelta := false }) only
-    [fixedBaseFrobeniusAuxiliaryAlgebra, fixedBaseFrobeniusAuxiliaryConstantAlgebra,
-      fixedBaseFrobeniusAuxiliaryCommSemiring, fixedBaseFrobeniusAuxiliarySMul,
-      fixedBaseFrobeniusAuxiliaryModule, fixedBaseFrobeniusAuxiliaryField,
-      fixedBaseClosureAlgebra, fixedBaseClosureSMul, fixedBaseClosureModule] at hWitness
-  obtain ⟨cI, cA, hcI, hcA, hnorm⟩ := hWitness
-  let b : IdeleClassGroup k (abstractFixedField K (SeparableClosure K) H.field) :=
-    IdeleClassGroup.norm (k := k)
-      (K := abstractFixedField K (SeparableClosure K) H.field)
-      (L := fixedBaseFrobeniusAuxiliaryField k K H T e σ) cI
-  have hn := native_frobenius_norm_eq_ambient k K H T e σ cI hcI
-  have ambientAtLift := ambientPrimeValue σA
-  have hA := ambientAtLift cA hcA
-  refine ⟨b, ?_, ?_⟩
-  · exact (congrArg ambient hnorm).trans hA
-  · exact hn.trans ((congrArg ambient hnorm).trans hA).symm
 
 end IntrinsicLiftValue
 
@@ -136,7 +100,7 @@ private theorem exists_common_frobenius_value_of_lift
       (H.toFiniteResidueAbstractField (fullConstantDegreeData k K (SeparableClosure K)))
       T.field T.below) :
     ∃ c : IdeleClassGroup k (abstractFixedField K (SeparableClosure K) H.field),
-      fixedFieldArtin k K (SeparableClosure K) H T c = Abelianization.of
+      fixedFieldArtin k K (SeparableClosure K) H T c = Group.Abelianization.of
         (abstractExtensionQuotientEquivGaloisGroup K (SeparableClosure K)
           H.field T.field T.below T.normal
           ((fullConstantDegreeData k K (SeparableClosure K)).frobeniusRestriction
@@ -179,7 +143,7 @@ private theorem exists_common_frobenius_value_of_lift
     (fun σA : (fullConstantDegreeData k K (SeparableClosure K)).FrobeniusElements
         (H.toFiniteResidueAbstractField (fullConstantDegreeData k K (SeparableClosure K)))
         T.field T.below =>
-      Abelianization.of
+      Group.Abelianization.of
         (abstractExtensionQuotientEquivGaloisGroup K (SeparableClosure K)
           H.field T.field T.below T.normal
           ((fullConstantDegreeData k K (SeparableClosure K)).frobeniusRestriction
@@ -193,8 +157,8 @@ private theorem exists_common_frobenius_value
       (SeparableClosure K) T.below)/(abstractFixedField K (SeparableClosure K) H.field))) :
     ∃ c : IdeleClassGroup k (abstractFixedField K (SeparableClosure K) H.field),
       finiteArtin k (abstractFixedField K (SeparableClosure K) H.field)
-        (abstractRelativeFixedField K (SeparableClosure K) T.below) c = Abelianization.of τ ∧
-      fixedFieldArtin k K (SeparableClosure K) H T c = Abelianization.of τ := by
+        (abstractRelativeFixedField K (SeparableClosure K) T.below) c = Group.Abelianization.of τ ∧
+      fixedFieldArtin k K (SeparableClosure K) H T c = Group.Abelianization.of τ := by
   let F : IntermediateField K (SeparableClosure K) :=
     abstractFixedField K (SeparableClosure K) H.field
   let E : IntermediateField F (SeparableClosure K) :=
@@ -216,7 +180,7 @@ private theorem exists_common_frobenius_value
   have hCommon := exists_common_frobenius_value_of_lift k K H T σA
   let b := Classical.choose hCommon
   have hb := Classical.choose_spec hCommon
-  have htarget := congrArg Abelianization.of hστ
+  have htarget := congrArg Group.Abelianization.of hστ
   exact ⟨b, hb.2.trans (hb.1.trans htarget), hb.1.trans htarget⟩
 
 /-- Native reciprocity over a finite fixed base agrees with the reciprocity
@@ -228,12 +192,12 @@ theorem finiteArtin_eq_fixedFieldArtin
       (abstractRelativeFixedField K (SeparableClosure K) T.below) c =
         fixedFieldArtin k K (SeparableClosure K) H T c := by
   let native : IdeleClassGroup k (abstractFixedField K (SeparableClosure K) H.field) →*
-      Abelianization Gal((abstractRelativeFixedField K (SeparableClosure K) T.below)/
+      Group.Abelianization Gal((abstractRelativeFixedField K (SeparableClosure K) T.below)/
         (abstractFixedField K (SeparableClosure K) H.field)) :=
     finiteArtin k (abstractFixedField K (SeparableClosure K) H.field)
       (abstractRelativeFixedField K (SeparableClosure K) T.below)
   let ambient : IdeleClassGroup k (abstractFixedField K (SeparableClosure K) H.field) →*
-      Abelianization Gal((abstractRelativeFixedField K (SeparableClosure K) T.below)/
+      Group.Abelianization Gal((abstractRelativeFixedField K (SeparableClosure K) T.below)/
         (abstractFixedField K (SeparableClosure K) H.field)) :=
     fixedFieldArtin k K (SeparableClosure K) H T
   change native c = ambient c
@@ -246,7 +210,7 @@ theorem finiteArtin_eq_fixedFieldArtin
   let E : IntermediateField F (SeparableClosure K) :=
     abstractRelativeFixedField K (SeparableClosure K) T.below
   have hRepresentative := (show Function.Surjective
-    (Abelianization.of : Gal(E/F) →* Abelianization Gal(E/F)) from
+    (Group.Abelianization.of : Gal(E/F) →* Group.Abelianization Gal(E/F)) from
       QuotientGroup.mk_surjective) (native c)
   let τ : Gal(E/F) := Classical.choose hRepresentative
   have hτ := Classical.choose_spec hRepresentative

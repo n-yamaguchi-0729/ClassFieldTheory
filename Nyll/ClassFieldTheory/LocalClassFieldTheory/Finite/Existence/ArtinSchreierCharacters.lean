@@ -44,13 +44,14 @@ theorem exists_artinSchreier_extension_of_character (p : ℕ) [Fact p.Prime] [Ch
   have hopen : IsOpen (χ.toMonoidHom.ker : Set Kˣ) :=
     (isOpen_discrete ({1} : Set (Multiplicative (ZMod p)))).preimage χ.continuous
   let H : ClassFieldTheory.OpenFiniteIndexSubgroup K :=
-    ⟨χ.toMonoidHom.ker, hopen, inferInstance⟩
+    ⟨⟨χ.toMonoidHom.ker, hopen⟩, inferInstance⟩
   let classFields := finiteAbelianFieldNormSubgroupOrderIso K
   let E : ClassFieldTheory.FiniteAbelianLocalExtension K := classFields.symm H
   have hNorm : localNormSubgroup K E.val = χ.toMonoidHom.ker := by
-    change E.normSubgroup = H.val
+    change E.normSubgroup = H.val.toSubgroup
     rw [← finiteAbelianFieldNormSubgroupOrderIso_apply K E]
-    exact congrArg Subtype.val (classFields.apply_symm_apply H)
+    exact congrArg (fun J : ClassFieldTheory.OpenFiniteIndexSubgroup K =>
+      J.1.toSubgroup) (classFields.apply_symm_apply H)
   let π : Kˣ →* Gal(E.val/K) := abelianLocalArtinMonoidHom K E.val
   have hπ : Function.Surjective π := abelianLocalArtinMonoidHom_surjective K E.val
   have hker : π.ker = χ.toMonoidHom.ker :=

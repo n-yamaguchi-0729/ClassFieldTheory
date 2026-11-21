@@ -6,15 +6,15 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LiftedUnitsH2
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.UnitsH2Over
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 public import Nyll.GaloisCohomology.Kummer.LiftedFiniteGaloisTowerUnitsH2
 
 /-!
 # Lifted unit H² over the specified actual base place
 
-The original completionMapOver supplies every algebra structure. Only the
+The original AlgebraicCurve.Place.completionMapOver supplies every algebra structure. Only the
 coefficient scalar ring used to form the cohomology objects is transported.
 -/
 
@@ -37,30 +37,36 @@ variable {k : Type u} {K : Type v} {L : Type w} [Field k] [Field K] [Field L]
 
 /-- The actual unit localization map with the base place identified by its restriction. -/
 def liftedCompletionUnitsH2MapOver (v : Place k K) (w : Place k L) (hw : w.restrict K = v) :
-    let _ : Algebra v.adicCompletion w.adicCompletion := (completionMapOver v w hw).toAlgebra
+    let _ : Algebra v.adicCompletion w.adicCompletion :=
+      (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
     groupCohomology (liftedGaloisUnitsRep K L) 2 ⟶
       groupCohomology (liftedGaloisUnitsRep v.adicCompletion w.adicCompletion) 2 := by
   subst v
   exact liftedCompletionUnitsH2Map (K := K) w
 
+omit [FiniteDimensional K L] in
 /-- Transporting only the base place preserves the vanishing of an actual localized class. -/
 theorem liftedCompletionUnitsH2MapOver_eq_zero_iff (v : Place k K) (w : Place k L)
     (hw : w.restrict K = v) (c : groupCohomology (liftedGaloisUnitsRep K L) 2) :
-    let _ : Algebra v.adicCompletion w.adicCompletion := (completionMapOver v w hw).toAlgebra
+    let _ : Algebra v.adicCompletion w.adicCompletion :=
+      (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
     liftedCompletionUnitsH2MapOver v w hw c = 0 ↔ liftedCompletionUnitsH2Map (K := K) w c = 0 := by
   subst v
   exact Iff.rfl
 
+omit [FiniteDimensional K L] in
 /-- The transported localization is still the actual inclusion followed by relative restriction. -/
 theorem liftedCompletionUnitsH2MapOver_eq_inflation_restriction
     (v : Place k K) (w : Place k L) (hw : w.restrict K = v) :
-    let _ : Algebra v.adicCompletion w.adicCompletion := (completionMapOver v w hw).toAlgebra
+    let _ : Algebra v.adicCompletion w.adicCompletion :=
+      (AlgebraicCurve.Place.completionMapOver v w hw).toAlgebra
     let _ : Algebra K w.adicCompletion :=
       ((algebraMap L w.adicCompletion).comp (algebraMap K L)).toAlgebra
     let _ : IsScalarTower K L w.adicCompletion :=
       IsScalarTower.of_algebraMap_eq (fun _ => rfl)
     let _ : IsScalarTower K v.adicCompletion w.adicCompletion :=
-      IsScalarTower.of_algebraMap_eq (fun x => (completionMapOver_algebraMap v w hw x).symm)
+      IsScalarTower.of_algebraMap_eq
+        (fun x => (AlgebraicCurve.Place.completionMapOver_algebraMap v w hw x).symm)
     liftedCompletionUnitsH2MapOver v w hw =
       liftedFiniteGaloisTowerUnitsH2Inflation K L w.adicCompletion ≫
         liftedFiniteGaloisTowerUnitsH2Restriction K v.adicCompletion w.adicCompletion := by

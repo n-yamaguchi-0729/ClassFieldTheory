@@ -4,8 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+import Nyll.ValuedFieldTheory.LocalField.NormUnits
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
+import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.NormQuotient
 
 /-!
@@ -18,6 +19,8 @@ single compatible construction in the implementation layer.
 -/
 
 noncomputable section
+
+open LocalFieldTheory (localNormSubgroup)
 
 universe u v w
 
@@ -39,23 +42,19 @@ theorem finiteAbelianLocalReciprocity_tower
       ∃ artinE : Kˣ →ₜ* (E ≃ₐ[K] E),
         Function.Surjective artinL ∧
         Function.Surjective artinE ∧
-        artinL.ker = fieldNormSubgroup K L ∧
-        artinE.ker = fieldNormSubgroup K E ∧
+        artinL.ker = localNormSubgroup K L ∧
+        artinE.ker = localNormSubgroup K E ∧
         (AlgEquiv.restrictNormalHom E).comp artinL.toMonoidHom =
           artinE.toMonoidHom := by
-  refine ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L,
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap K E,
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L,
-    LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K E,
+  refine ⟨LocalClassFieldTheory.abelianLocalArtinMap K L,
+    LocalClassFieldTheory.abelianLocalArtinMap K E,
+    LocalClassFieldTheory.abelianLocalArtinMap_surjective K L,
+    LocalClassFieldTheory.abelianLocalArtinMap_surjective K E,
     ?_, ?_, ?_⟩
-  · change (LocalClassFieldTheory.Universe.abelianLocalArtinMap K L).toMonoidHom.ker =
-      LocalFieldTheory.localNormSubgroup K L
-    exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K L
-  · change (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E).toMonoidHom.ker =
-      LocalFieldTheory.localNormSubgroup K E
-    exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K E
-  · rw [LocalClassFieldTheory.Universe.abelianLocalArtinMap_toMonoidHom K L,
-      LocalClassFieldTheory.Universe.abelianLocalArtinMap_toMonoidHom K E]
-    exact LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_restrict_tower K E L
+  · exact LocalClassFieldTheory.abelianLocalArtinMap_ker K L
+  · exact LocalClassFieldTheory.abelianLocalArtinMap_ker K E
+  · rw [LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom K L,
+      LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom K E]
+    exact LocalClassFieldTheory.abelianLocalArtinMonoidHom_restrict_tower K E L
 
 end ClassFieldTheory

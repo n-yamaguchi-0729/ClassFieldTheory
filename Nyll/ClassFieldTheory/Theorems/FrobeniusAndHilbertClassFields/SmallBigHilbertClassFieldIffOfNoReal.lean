@@ -28,7 +28,7 @@ universe u
 class field predicates on a fixed finite abelian extension coincide. -/
 theorem isSmallHilbertClassField_iff_isBig_of_noReal
     (K : Type u) [Field K] [NumberField K]
-    [IsEmpty (RayClassRealPlace K)]
+    [IsEmpty (RayClass.RealPlace K)]
     (E : FiniteAbelianExtension K) :
     IsSmallHilbertClassField E ↔ IsBigHilbertClassField E := by
   classical
@@ -40,7 +40,7 @@ theorem isSmallHilbertClassField_iff_isBig_of_noReal
     have hreal : (w.comap (algebraMap K L)).IsReal :=
       (NumberField.InfinitePlace.not_isUnramified_iff.mp hram).2
     exact isEmptyElim
-      (⟨w.comap (algebraMap K L), hreal⟩ : RayClassRealPlace K)
+      (⟨w.comap (algebraMap K L), hreal⟩ : RayClass.RealPlace K)
   have hFinite (L : FiniteAbelianExtension K) :
       IsUnramifiedAtFinitePlaces K L ↔ IsEverywhereUnramified K L := by
     constructor

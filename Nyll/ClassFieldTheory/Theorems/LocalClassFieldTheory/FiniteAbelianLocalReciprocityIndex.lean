@@ -6,7 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 public import Mathlib.FieldTheory.Galois.Abelian
 public import Mathlib.NumberTheory.LocalField.Basic
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
@@ -20,6 +20,8 @@ extension.  This is the numerical form of the reciprocity isomorphism.
 
 @[expose] public section
 
+open LocalFieldTheory (localNormSubgroup)
+
 namespace ClassFieldTheory
 
 universe u v
@@ -31,7 +33,7 @@ theorem fieldNormSubgroup_index_eq_finrank
     [FiniteDimensional K L] [IsAbelianGalois K L]
     [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] :
-    (fieldNormSubgroup K L).index = Module.finrank K L := by
+    (localNormSubgroup K L).index = Module.finrank K L := by
   let e := Classical.choose
     (LocalClassFieldTheory.Universe.quotientEquiv_existsUnique K L).exists
   rw [Subgroup.index_eq_card]

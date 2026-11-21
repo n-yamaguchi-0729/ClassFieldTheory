@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.CyclicRayClassMaximality
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
@@ -27,13 +28,6 @@ namespace GlobalClassFieldTheory
 namespace GlobalClassFields
 
 open NumberField
-
-private theorem cyclicConductorUniquenessIdeleClassIsMulCommutative
-    {F : Type*} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-attribute [local instance] cyclicConductorUniquenessIdeleClassIsMulCommutative
 
 variable
     {K : Type u} {L : Type v} {M : Type w}
@@ -103,9 +97,9 @@ def cyclicNormQuotientEquivOfNarrowFiniteConductorsEqOfRayClassGroupCardsEqExten
             (RayClass.Modulus.narrowOfFinite
               (ideleClassNormNarrowFiniteConductor (K := K) (L := M)))) =
         Module.finrank K M) :
-    (IdeleClassGroup K ⧸
+    (NumberField.IdeleClassGroup (𝓞 K) K ⧸
         (_root_.ideleClassNorm K L).range) ≃*
-      (IdeleClassGroup K ⧸
+      (NumberField.IdeleClassGroup (𝓞 K) K ⧸
         (_root_.ideleClassNorm K M).range) :=
   QuotientGroup.quotientMulEquivOfEq
     (cyclicIdeleClassNorm_ranges_eq_of_narrowFiniteConductors_eq_of_rayClassCards_eq_degrees
@@ -132,7 +126,7 @@ theorem
             (RayClass.Modulus.narrowOfFinite
               (ideleClassNormNarrowFiniteConductor (K := K) (L := M)))) =
         Module.finrank K M)
-    (c : IdeleClassGroup K) :
+    (c : NumberField.IdeleClassGroup (𝓞 K) K) :
     cyclicNormQuotientEquivOfNarrowFiniteConductorsEqOfRayClassGroupCardsEqExtensionDegrees
         (K := K) (L := L) (M := M)
         hconductor hLcard hMcard
@@ -182,7 +176,7 @@ theorem
           K L).symm
       _ = (_root_.ideleClassNorm K M).range.index :=
         congrArg
-          (fun H : Subgroup (IdeleClassGroup K) => H.index)
+          (fun H : Subgroup (NumberField.IdeleClassGroup (𝓞 K) K) => H.index)
           hnorm
       _ = Module.finrank K M :=
         ClassFieldAxiom.ideleClassNorm_index_eq_finrank_cyclic K M

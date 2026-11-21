@@ -6,10 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Naturality
+
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.StandardFilteredArtinComparison
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.StandardLubinTate
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseSemilinearNaturality
 public import Nyll.ValuedFieldTheory.Ramification.Filtration
 
 /-!
@@ -39,22 +39,6 @@ open LubinTate
 
 variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
-
-/-- Mapping the Artin principal-unit step group through a base-linear
-equivalence gives the corresponding group on the equivalent extension. -/
-theorem artinPrincipalUnitStepGroup_map_standardFixedFieldEquiv
-    (L : Type v) (M : Type w) [Field L] [Field M]
-    [Algebra K L] [Algebra K M]
-    [FiniteDimensional K L] [FiniteDimensional K M]
-    [IsAbelianGalois K L] [IsAbelianGalois K M]
-    (e : L ≃ₐ[K] M) (t : ℝ) :
-    Subgroup.map (AlgEquiv.autCongr e).toMonoidHom
-        (artinPrincipalUnitStepGroup K L t) =
-      artinPrincipalUnitStepGroup K M t := by
-  unfold artinPrincipalUnitStepGroup RamificationTheory.natCeilStepFiltration
-    artinPrincipalUnitGroup
-  rw [Subgroup.map_map]
-  rw [Universe.abelianLocalArtinMonoidHom_autCongr K L M e]
 
 /-- Real filtered local reciprocity for the named fixed field represented
 by canonical standard Lubin--Tate level `m`. -/
@@ -95,7 +79,7 @@ theorem standardLubinTateFiniteAbelianSubextension_filteredLocalReciprocity
       Subgroup.map q.toMonoidHom
           (artinPrincipalUnitStepGroup K E t) =
         artinPrincipalUnitStepGroup K M t :=
-    artinPrincipalUnitStepGroup_map_standardFixedFieldEquiv
+    artinPrincipalUnitStepGroup_map_autCongr
       K E M e t
   have hUpper :
       Subgroup.map q.toMonoidHom

@@ -123,26 +123,26 @@ theorem _root_.Module.Projective.exists_baseChange_quotient_iso_of_squareZero
   let η : Module.End R (Fin n → R) := e' * e' - e'
   have hη_ker : ∀ v, q (η v) = 0 := fun v => by
     have : q (e' (e' v)) - q (e' v) = 0 := by
-      rw [he'_reduce, he'_reduce, ← Module.End.mul_apply, he_idem, sub_self]
-    simpa only [η, Module.End.mul_apply, LinearMap.sub_apply, map_sub] using this
+      rw [he'_reduce, he'_reduce, ← mul_apply_eq_comp, he_idem, sub_self]
+    simpa only [η, mul_apply_eq_comp, LinearMap.sub_apply, map_sub] using this
   have hη_I : ∀ v i, η v i ∈ I := fun v i => (hq_ker _).mp (hη_ker v) i
   have hbasis : ∀ (w : Fin n → R), w = ∑ j, (w j) • Pi.single j (1 : R) := fun w => by
     ext k; simp only [Finset.sum_apply, Pi.smul_apply, Pi.single_apply,
       smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
       Finset.mem_univ, ite_true]
   have hηη : η * η = 0 := LinearMap.ext fun v => funext fun i => by
-    simp only [Module.End.mul_apply, LinearMap.zero_apply, Pi.zero_apply]
+    simp only [mul_apply_eq_comp, LinearMap.zero_apply, Pi.zero_apply]
     conv_lhs => rw [hbasis (η v), map_sum]
     simp only [map_smul, Finset.sum_apply, Pi.smul_apply, smul_eq_mul]
     exact Finset.sum_eq_zero fun j _ => hII (η v j) (hη_I v j) _ (hη_I _ i)
   let e'' : Module.End R (Fin n → R) := 3 • (e' * e') - 2 • (e' * e' * e')
   have he''_reduce : ∀ v, q (e'' v) = e (q v) := fun v => by
     have h1 : q (e' (e' v)) = e (q v) := by
-      rw [he'_reduce, he'_reduce, ← Module.End.mul_apply, he_idem]
+      rw [he'_reduce, he'_reduce, ← mul_apply_eq_comp, he_idem]
     have h2 : q (e' (e' (e' v))) = e (q v) := by
-      rw [he'_reduce, he'_reduce, he'_reduce, ← Module.End.mul_apply,
-        ← Module.End.mul_apply, he_idem, he_idem]
-    simp only [e'', LinearMap.sub_apply, LinearMap.smul_apply, Module.End.mul_apply,
+      rw [he'_reduce, he'_reduce, he'_reduce, ← mul_apply_eq_comp,
+        ← mul_apply_eq_comp, he_idem, he_idem]
+    simp only [e'', LinearMap.sub_apply, LinearMap.smul_apply, mul_apply_eq_comp,
       map_sub, map_nsmul, h1, h2]
     abel
   have he''_idem : e'' * e'' = e'' := by
@@ -161,7 +161,7 @@ theorem _root_.Module.Projective.exists_baseChange_quotient_iso_of_squareZero
       show η^2 = η*η from sq η, hηη, zero_mul, sub_eq_zero] at key
     exact key
   have he''_fix : ∀ v ∈ LinearMap.range e'', e'' v = v := fun v ⟨y, hy⟩ => by
-    rw [← hy, ← Module.End.mul_apply, he''_idem]
+    rw [← hy, ← mul_apply_eq_comp, he''_idem]
   refine ⟨LinearMap.range e'', inferInstance, inferInstance, ?_, ?_, ?_⟩
   · refine Module.Projective.of_split (LinearMap.range e'').subtype e''.rangeRestrict ?_
     exact LinearMap.ext fun p' => Subtype.ext (he''_fix p'.val p'.property)
@@ -239,7 +239,7 @@ private lemma le_jacobson_bot_of_sq_eq_bot_aux
     {R : Type u} [CommRing R] (I : Ideal R) (hI : I ^ 2 = ⊥) :
     I ≤ (⊥ : Ideal R).jacobson := by
   intro x hx
-  rw [Ideal.mem_jacobson_bot]
+  rw [Ideal.jacobson_bot, Ring.mem_jacobson_iff]
   intro y
   have hxx : x * x = 0 := by
     have hmem : x * x ∈ I ^ 2 := by
@@ -260,7 +260,8 @@ private lemma surjective_of_one_tmul_aux
     (hf : ∀ m : M, ∃ n : N, (1 : R ⧸ I) ⊗ₜ[R] f n = (1 : R ⧸ I) ⊗ₜ[R] m) :
     Function.Surjective f := by
   rw [← LinearMap.range_eq_top, eq_top_iff]
-  refine Submodule.le_of_le_smul_of_le_jacobson_bot Module.Finite.fg_top hI ?_
+  have hI' : I ≤ Ring.jacobson R := by simpa only [Ideal.jacobson_bot] using hI
+  refine Submodule.le_of_le_smul_of_le_jacobson Module.Finite.fg_top hI' ?_
   intro m _
   obtain ⟨n, hn⟩ := hf m
   have key : ∀ x : M, quotTensorEquivQuotSMul M I ((1 : R ⧸ I) ⊗ₜ[R] x) =
@@ -387,7 +388,8 @@ theorem _root_.Module.Projective.nonempty_linearEquiv_of_baseChange_quotient_of_
       (N : Submodule R P), N ⊔ I • ⊤ = ⊤ → N = ⊤ := by
     intro P _ _ _ N h
     refine le_antisymm le_top ?_
-    exact Submodule.le_of_le_smul_of_le_jacobson_bot Module.Finite.fg_top hIjac
+    have hI' : I ≤ Ring.jacobson R := by simpa only [Ideal.jacobson_bot] using hIjac
+    exact Submodule.le_of_le_smul_of_le_jacobson Module.Finite.fg_top hI'
       (le_of_eq h.symm)
   have hff'_surj : Function.Surjective (f'.comp f) := by
     rw [← LinearMap.range_eq_top]

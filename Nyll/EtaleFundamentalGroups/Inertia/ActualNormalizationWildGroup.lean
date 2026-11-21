@@ -39,10 +39,8 @@ variable (A : Type u) (K : Type v) (L : Type w)
   (Q : Ideal (normalizationCommAlgCat A L).carrier) [Q.IsMaximal]
 
 /-- The SAME independent original wild subgroup as a native group object. -/
-def actualNormalizationWildGroup : GrpCat.{w} := by
-  let gP : Group (Subtype (actualNormalizationWildSubgroup A K L Q).carrier) :=
-    Subgroup.toGroup (actualNormalizationWildSubgroup A K L Q)
-  exact GrpCat.of (Subtype (actualNormalizationWildSubgroup A K L Q).carrier)
+def actualNormalizationWildGroup : GrpCat.{w} :=
+  GrpCat.of ↥(actualNormalizationWildSubgroup A K L Q)
 
 /-- The actual finite wild group with its proved finiteness. -/
 def actualFiniteWildFiniteGroup (E : FiniteGaloisIntermediateField K L) : FiniteGrp.{w} := by

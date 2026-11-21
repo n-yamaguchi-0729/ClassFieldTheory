@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
 public import Nyll.GaloisCohomology.GroupTheory.H2FiniteIndexTrace
 public import Nyll.GaloisCohomology.Topology.ContinuousSubgroupPrimitiveExtension
 public import Nyll.GaloisCohomology.Topology.ContinuousCohomologyRepresentatives
@@ -38,11 +39,11 @@ omit [CompactSpace G] in
 private theorem restricted_degreeTwo_value
     (z : cocycles X 2) (a b c : ↥(H : Subgroup G)) :
     (((homogeneousCochains (TopRep.res H.toSubgroup.subtype X)).iCycles 2).hom
-        (cocyclesMap (⟨H.toSubgroup.subtype, continuous_subtype_val⟩ :
+        (cocyclesMap (ProCGroups.ContinuousMonoidHom.subtype H.toSubgroup :
           ↥(H : Subgroup G) →ₜ* G) (𝟙 _) 2 z)).1 a b c =
       (((homogeneousCochains X).iCycles 2).hom z).1 a b c := by
   let ι : ↥(H : Subgroup G) →ₜ* G :=
-    ⟨H.toSubgroup.subtype, continuous_subtype_val⟩
+    ProCGroups.ContinuousMonoidHom.subtype H.toSubgroup
   have h := ConcreteCategory.congr_hom
     (HomologicalComplex.cyclesMap_i (cochainsMap ι (𝟙 _)) 2) z
   exact congrArg
@@ -57,7 +58,7 @@ theorem index_nsmul_H2_eq_zero_of_open_restriction
   have : H.toSubgroup.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
   let Y := TopRep.res H.toSubgroup.subtype X
   let ι : ↥(H : Subgroup G) →ₜ* G :=
-    ⟨H.toSubgroup.subtype, continuous_subtype_val⟩
+    ProCGroups.ContinuousMonoidHom.subtype H.toSubgroup
   let C := homogeneousCochains X
   let D := homogeneousCochains Y
   obtain ⟨z, rfl⟩ := π_surjective X 2 v

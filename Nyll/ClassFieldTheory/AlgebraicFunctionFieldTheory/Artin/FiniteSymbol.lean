@@ -32,7 +32,7 @@ variable (k : Type u) (K : Type v) (L : Type w)
     [AlgebraicCurve.HasPrincipalDivisors k K] [AlgebraicCurve.HasPrincipalDivisors k L]
 
 /-- The finite Artin homomorphism for the chosen separable-closure realization. -/
-def finiteArtin : IdeleClassGroup k K →* Abelianization Gal(L/K) :=
+def finiteArtin : IdeleClassGroup k K →* Group.Abelianization Gal(L/K) :=
   (finiteNormQuotientEquiv k K L).toMonoidHom.comp
     (QuotientGroup.mk' (IdeleClassGroup.norm (k := k) (K := K) (L := L)).range)
 

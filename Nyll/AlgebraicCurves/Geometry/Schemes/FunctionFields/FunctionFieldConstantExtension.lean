@@ -6,8 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.SchemeTheory.Modules.Functoriality.AffinePullbackSections
+public import Nyll.SchemeTheory.FunctionFields.StructureMorphism
 public import Nyll.SchemeTheory.FunctionFields.TensorFractionGeneration
-public import Nyll.AlgebraicCurves.Models.Points.UniquePointOrdEqOrdEqZero
+public import Nyll.SchemeTheory.Cohomology.Cech.TwoAffineOpenCover
 public import Mathlib.AlgebraicGeometry.Morphisms.Affine
 public import Nyll.AlgebraicCurves.Geometry.Schemes.FunctionFields.RingHomFunctionFieldGermEq
 public import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.GenericPointMemPreimageCompPullbackFst
@@ -29,7 +31,6 @@ noncomputable section
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry AlgebraicCurve
 open Scheme.TwoAffineOpenCover
-open AlgebraicCurves.Models.Proofs.UniquePointPullbackOrder.AlgebraicGeometry
 open scoped TensorProduct
 
 namespace AlgebraicGeometry
@@ -80,7 +81,8 @@ theorem adjoin_range_functionField_baseChange
         c K' U hU).hom
   have hfrac : IsFractionRing Γ(Y, V) Y.functionField :=
     functionField_isFractionRing_of_isAffineOpen Y V hV
-  obtain ⟨e, he⟩ := exists_algEquiv_tensorProduct_sections_preimage K' c U hU
+  obtain ⟨e, he⟩ := Scheme.exists_algEquiv_tensor_sections_pullback_fst_preimage_of_isAffineOpen
+    c U hU K'
   apply IntermediateField.adjoin_range_eq_top_of_tensor_fraction e
     (X.germToFunctionField U).hom φ
   intro a

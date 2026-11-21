@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.NormConductor
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
@@ -34,14 +36,6 @@ namespace GlobalClassFields
 
 open NumberField
 
-/-- Canonical class-group commutativity supplies normality for the quotient. -/
-theorem normRayClassMaximalityClassGroupIsMulCommutative
-    (F : Type*) [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
-
-attribute [local instance] normRayClassMaximalityClassGroupIsMulCommutative
-
 variable
     {K : Type u} {L : Type v}
     [Field K] [NumberField K]
@@ -63,7 +57,7 @@ theorem
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := L)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K L).range) := by
   constructor
   · intro hnorm
@@ -82,7 +76,7 @@ theorem
         rw [← hnorm]
       _ =
           Nat.card
-            (IdeleClassGroup K ⧸
+            (NumberField.IdeleClassGroup (𝓞 K) K ⧸
               (_root_.ideleClassNorm K L).range) :=
         Subgroup.index_eq_card _
   · intro hcard
@@ -95,7 +89,7 @@ theorem
     have hstrict := Subgroup.index_strictAnti hlt
     have hstrict' :
         Nat.card
-            (IdeleClassGroup K ⧸
+            (NumberField.IdeleClassGroup (𝓞 K) K ⧸
               (_root_.ideleClassNorm K L).range) <
           Nat.card
             (RayClass.RayClassGroup
@@ -121,7 +115,7 @@ theorem
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := L)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K L).range) := by
   let f :=
     narrowFiniteConductorRayClassGroupToIdeleClassNormQuotient
@@ -151,9 +145,9 @@ def normQuotientEquivNarrowFiniteConductorRayClassGroup
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := L)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K L).range)) :
-    (IdeleClassGroup K ⧸
+    (NumberField.IdeleClassGroup (𝓞 K) K ⧸
         (_root_.ideleClassNorm K L).range) ≃*
       RayClass.RayClassGroup
         (RayClass.Modulus.narrowOfFinite
@@ -180,7 +174,7 @@ theorem
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := L)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K L).range))
     (hMcard :
       Nat.card
@@ -189,7 +183,7 @@ theorem
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := M)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K M).range)) :
     (_root_.ideleClassNorm K L).range =
       (_root_.ideleClassNorm K M).range := by
@@ -229,7 +223,7 @@ def normQuotientEquivOfNarrowFiniteConductorsEqOfRayClassGroupCardsEqNormQuotien
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := L)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K L).range))
     (hMcard :
       Nat.card
@@ -238,11 +232,11 @@ def normQuotientEquivOfNarrowFiniteConductorsEqOfRayClassGroupCardsEqNormQuotien
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := M)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K M).range)) :
-    (IdeleClassGroup K ⧸
+    (NumberField.IdeleClassGroup (𝓞 K) K ⧸
         (_root_.ideleClassNorm K L).range) ≃*
-      (IdeleClassGroup K ⧸
+      (NumberField.IdeleClassGroup (𝓞 K) K ⧸
         (_root_.ideleClassNorm K M).range) :=
   QuotientGroup.quotientMulEquivOfEq
     (
@@ -268,7 +262,7 @@ theorem
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := L)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K L).range))
     (hMcard :
       Nat.card
@@ -277,9 +271,9 @@ theorem
               (ideleClassNormNarrowFiniteConductor
                 (K := K) (L := M)))) =
         Nat.card
-          (IdeleClassGroup K ⧸
+          (NumberField.IdeleClassGroup (𝓞 K) K ⧸
             (_root_.ideleClassNorm K M).range))
-    (c : IdeleClassGroup K) :
+    (c : NumberField.IdeleClassGroup (𝓞 K) K) :
     normQuotientEquivOfNarrowFiniteConductorsEqOfRayClassGroupCardsEqNormQuotientCards
         (K := K) (L := L) (M := M)
         hconductor hLcard hMcard

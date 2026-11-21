@@ -135,7 +135,7 @@ lemma homEquiv_conjugate {C D : Type*} [Category C] [Category D] {L₁ L₂ : C 
   have h1 := unit_conjugateEquiv adj₁ adj₂ α c
   have h2 := (conjugateEquiv adj₁ adj₂ α).naturality f
   erw [← reassoc_of% h1, ← h2]
-  try simp only [Category.assoc]
+  simp only [Category.assoc]
 
 lemma conjugateEquiv_pullbackComp_hom (f : X ⟶ Y) (g : Y ⟶ Z) :
     conjugateEquiv (Scheme.Modules.pullbackPushforwardAdjunction (f ≫ g))

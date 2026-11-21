@@ -249,32 +249,6 @@ theorem pullbackSection_ne_zero {X Y : Scheme.{u}} (p : X ⟶ Y) [IsIso p] {M : 
       ((Scheme.Modules.pullback p).map s)).symm.trans
     ((congrArg ((Scheme.Modules.pullbackUnitIso p).hom ≫ ·) h).trans comp_zero)
 
-theorem twoAffineOpenCover_ext {Y : Scheme.{u}} {𝒲 𝒲' : Y.TwoAffineOpenCover}
-    (h0 : 𝒲.U0 = 𝒲'.U0) (h1 : 𝒲.U1 = 𝒲'.U1) : 𝒲 = 𝒲' := by
-  obtain ⟨U0, U1, _, _, _, _⟩ := 𝒲
-  obtain ⟨U0', U1', _, _, _, _⟩ := 𝒲'
-  dsimp only at h0 h1
-  subst h0
-  subst h1
-  rfl
-
-theorem preimage_id_opens {Y : Scheme.{u}} (U : Y.Opens) : (𝟙 Y) ⁻¹ᵁ U = U := rfl
-
-theorem eulerChar_congr {k : Type u} [Field k] {Y : Scheme.{u}} (y : Y ⟶ Spec (CommRingCat.of k))
-    (𝒲 : Y.TwoAffineOpenCover) {M M' : Y.Modules} (e : M ≅ M') :
-    (Module.finrank k (𝒲.sectionsOf y M).H0 : ℤ) - Module.finrank k (𝒲.sectionsOf y M).H1
-      = (Module.finrank k (𝒲.sectionsOf y M').H0 : ℤ)
-          - Module.finrank k (𝒲.sectionsOf y M').H1 := by
-  obtain ⟨𝒲', h0, h1, ⟨e0⟩, ⟨e1⟩⟩ :=
-    Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso y y (Iso.refl Y)
-      (Category.id_comp y)
-      𝒲 M' M (e ≪≫ ((Scheme.Modules.pullbackId Y).app M').symm)
-  have h𝒲 : 𝒲' = 𝒲 :=
-    twoAffineOpenCover_ext (h0.trans (preimage_id_opens _)) (h1.trans (preimage_id_opens _))
-  subst h𝒲
-  exact congrArg₂ (fun m n : ℕ => (m : ℤ) - (n : ℤ)) e0.finrank_eq e1.finrank_eq
-
-
 theorem nonempty_iso_tensorUnit_fibre {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} [IsProper f]
     [SmoothOfRelativeDimension 1 f] [GeometricallyIrreducible f]
     {k : Type u} [Field k] (x : Spec (CommRingCat.of k) ⟶ S)
@@ -286,7 +260,7 @@ theorem nonempty_iso_tensorUnit_fibre {𝒞 S : Scheme.{u}} {f : 𝒞 ⟶ S} [Is
     (Scheme.Modules.isInvertible_unit _) h0
   obtain ⟨D, -, e, -⟩ := RelEffCartierDiv.exists_I_eq_zeroSchemeIdeal_of_eulerChar_eq x hM s hs 𝒱 0
     (by rw [Nat.cast_zero, add_zero]; exact
-      (eulerChar_congr (pullback.snd f x) 𝒱 (ρ_ M).symm).trans hχ)
+      (𝒱.eulerChar_sectionsOf_congr (pullback.snd f x) (ρ_ M).symm).trans hχ)
   obtain ⟨e0⟩ := nonempty_lineBundle_iso_of_degree_zero D
   exact ⟨e ≪≫ e0⟩
 

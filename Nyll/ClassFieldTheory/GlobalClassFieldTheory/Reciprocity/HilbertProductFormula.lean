@@ -124,9 +124,9 @@ theorem globalHilbertProduct_principal
             v.Completionˣ) : v.Completion) =
             ((a : K) : v.Completion) :=
           IdeleGroup.infiniteComponent_principalIdele a v
-        _ = algebraMap K v.Completion (a : K) :=
-          (NumberField.InfinitePlace.Completion.algebraMap_apply
-            v (a : K)).symm
+        _ = algebraMap K v.Completion (a : K) := by
+          rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+            Algebra.algebraMap_self_apply]
     rw [hcomponent]
     calc
       chi
@@ -169,11 +169,10 @@ theorem globalHilbertProduct_principal
           (chosenFinitePlaceArtinMonoidHom (K := K) (L := L) v
             (Units.map (algebraMap K (v.adicCompletion K)).toMonoidHom a)) =
           finitePlaceKummerRootCharacter K n hnK hmu v a b := by
-        change finitePlaceKummerRootCharacterOfExtension K n hnK hmu v a b
-          (chosenFinitePlaceExtension (L := L) v) =
-            finitePlaceKummerRootCharacter K n hnK hmu v a b
-        exact finitePlaceKummerRootCharacterOfExtension_eq K n hnK hmu v a b
-          (chosenFinitePlaceExtension (L := L) v)
+        dsimp (config := { instances := true, zetaDelta := true }) only
+          [chi, L, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom,
+            finitePlaceKummerRootCharacter, finitePlaceKummerRootCharacterOfExtension,
+            chosenFinitePlaceArtinMonoidHom]
       _ = finitePlaceHilbertSymbol K n hnK hmu v a b :=
         finitePlaceKummerRootCharacter_localGlobal
           K n hnK hmu v a b

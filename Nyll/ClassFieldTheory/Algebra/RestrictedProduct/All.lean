@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.ValuationTopology
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Compact
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Cohomology
-import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.FiniteSupportDensity
+module
+
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Valuation
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.ValuationTopology
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Compact
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.Cohomology
+public import Nyll.ClassFieldTheory.Algebra.RestrictedProduct.FiniteSupportDensity

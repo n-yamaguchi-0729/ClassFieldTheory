@@ -13,6 +13,8 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 module
 
 public import Mathlib.AlgebraicGeometry.Modules.Sheaf
+public import Mathlib.CategoryTheory.Sites.Descent.DescentDataPrime
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Descent.InvertibleIsoToDescentDataIsAffineHom
 public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.ChosenPullback
 public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 public import Nyll.AlgebraicCurves.Geometry.Picard.BaseChange.IsPullbackBaseChangeSnd
@@ -743,5 +745,269 @@ end comp
 end Datum
 
 end Rigidification
+
+namespace ModuleDescent
+
+/-- The pseudofunctor of scheme modules restricted from adjunctions to scheme morphisms. -/
+abbrev MOD : Pseudofunctor (LocallyDiscrete Scheme.{u}ᵒᵖ) Cat :=
+  (Scheme.Modules.pseudofunctor.{u}).comp Bicategory.Adj.forget₁
+
+section Bridge
+variable {X Y Z : Scheme.{u}} (f : X ⟶ Y) (g : Y ⟶ Z)
+
+theorem MOD_mapComp'_eq_mapComp_app {a b d : LocallyDiscrete Scheme.{u}ᵒᵖ} (u : a ⟶ b) (v : b ⟶ d)
+    (M : MOD.obj a) :
+    (MOD.mapComp' u v (u ≫ v) rfl).hom.toNatTrans.app M
+        = (MOD.mapComp u v).hom.toNatTrans.app M := by
+  rw [Pseudofunctor.mapComp'_eq_mapComp]
+
+theorem MOD_mapComp'_eq_mapComp_inv_app {a b d : LocallyDiscrete Scheme.{u}ᵒᵖ}
+    (u : a ⟶ b) (v : b ⟶ d)
+    (M : MOD.obj a) :
+    (MOD.mapComp' u v (u ≫ v) rfl).inv.toNatTrans.app M
+        = (MOD.mapComp u v).inv.toNatTrans.app M := by
+  rw [Pseudofunctor.mapComp'_eq_mapComp]
+
+theorem MOD_mapComp'_hom_app (fg : X ⟶ Z) (h : f ≫ g = fg) (L : Z.Modules) :
+    (MOD.mapComp' g.op.toLoc f.op.toLoc fg.op.toLoc (by rw [← h]; rfl)).hom.toNatTrans.app L =
+      (τ f g fg h).inv.app L := by
+  subst h
+  rw [τ_inv_app]
+  simp only [eqToHom_refl, Category.id_comp]
+  exact MOD_mapComp'_eq_mapComp_app g.op.toLoc f.op.toLoc L
+
+theorem MOD_mapComp'_inv_app (fg : X ⟶ Z) (h : f ≫ g = fg) (L : Z.Modules) :
+    (MOD.mapComp' g.op.toLoc f.op.toLoc fg.op.toLoc (by rw [← h]; rfl)).inv.toNatTrans.app L =
+      (τ f g fg h).hom.app L := by
+  subst h
+  rw [τ_hom_app]
+  simp only [eqToHom_refl, Category.comp_id]
+  exact MOD_mapComp'_eq_mapComp_inv_app g.op.toLoc f.op.toLoc L
+
+end Bridge
+
+open CategoryTheory.Pseudofunctor.LocallyDiscreteOpToCat in
+theorem pullHom_MOD {X₁ X₂ Y Y' : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules}
+    {f₁ : Y ⟶ X₁} {f₂ : Y ⟶ X₂}
+    (φ : (Scheme.Modules.pullback f₁).obj M₁ ⟶ (Scheme.Modules.pullback f₂).obj M₂)
+    (g : Y' ⟶ Y) (gf₁ : Y' ⟶ X₁) (gf₂ : Y' ⟶ X₂) (hgf₁ : g ≫ f₁ = gf₁) (hgf₂ : g ≫ f₂ = gf₂) :
+    pullHom (F := MOD) (M₁ := M₁) (M₂ := M₂) φ g gf₁ gf₂ hgf₁ hgf₂ =
+      ((τ g f₁ gf₁ hgf₁).inv.app M₁ ≫ (Scheme.Modules.pullback g).map φ ≫
+          (τ g f₂ gf₂ hgf₂).hom.app M₂ :) :=
+  congrArg₂ (fun a b => a ≫ (Scheme.Modules.pullback g).map φ ≫ b)
+    (MOD_mapComp'_hom_app g f₁ gf₁ hgf₁ M₁) (MOD_mapComp'_inv_app g f₂ gf₂ hgf₂ M₂)
+
+open CategoryTheory.Pseudofunctor.LocallyDiscreteOpToCat in
+theorem pullHomIso_hom {X₁ X₂ Y Y' : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules}
+    {f₁ : Y ⟶ X₁} {f₂ : Y ⟶ X₂}
+    (Φ : (Scheme.Modules.pullback f₁).obj M₁ ≅ (Scheme.Modules.pullback f₂).obj M₂)
+    (g : Y' ⟶ Y) (gf₁ : Y' ⟶ X₁) (gf₂ : Y' ⟶ X₂) (hgf₁ : g ≫ f₁ = gf₁) (hgf₂ : g ≫ f₂ = gf₂) :
+    (pullHomIso Φ g gf₁ gf₂ hgf₁ hgf₂).hom =
+      pullHom (F := MOD) (M₁ := M₁) (M₂ := M₂) Φ.hom g gf₁ gf₂ hgf₁ hgf₂ :=
+  (pullHom_MOD Φ.hom g gf₁ gf₂ hgf₁ hgf₂).symm
+
+/-- Pull back a module morphism and identify the composite pullbacks with chosen maps. -/
+def pullHomMap {X₁ X₂ Y Y' : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules}
+    {f₁ : Y ⟶ X₁} {f₂ : Y ⟶ X₂}
+    (φ : (Scheme.Modules.pullback f₁).obj M₁ ⟶ (Scheme.Modules.pullback f₂).obj M₂)
+    (g : Y' ⟶ Y) (gf₁ : Y' ⟶ X₁) (gf₂ : Y' ⟶ X₂) (hgf₁ : g ≫ f₁ = gf₁) (hgf₂ : g ≫ f₂ = gf₂) :
+    (Scheme.Modules.pullback gf₁).obj M₁ ⟶ (Scheme.Modules.pullback gf₂).obj M₂ :=
+  (τ g f₁ gf₁ hgf₁).inv.app M₁ ≫ (Scheme.Modules.pullback g).map φ ≫ (τ g f₂ gf₂ hgf₂).hom.app M₂
+
+theorem pullHomIso_hom_eq_pullHomMap {X₁ X₂ Y Y' : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules}
+    {f₁ : Y ⟶ X₁} {f₂ : Y ⟶ X₂}
+    (Φ : (Scheme.Modules.pullback f₁).obj M₁ ≅ (Scheme.Modules.pullback f₂).obj M₂)
+    (g : Y' ⟶ Y) (gf₁ : Y' ⟶ X₁) (gf₂ : Y' ⟶ X₂) (hgf₁ : g ≫ f₁ = gf₁) (hgf₂ : g ≫ f₂ = gf₂) :
+    (pullHomIso Φ g gf₁ gf₂ hgf₁ hgf₂).hom = pullHomMap Φ.hom g gf₁ gf₂ hgf₁ hgf₂ :=
+  rfl
+
+/-- View a morphism of pulled-back modules as a morphism in the module pseudofunctor. -/
+def toMOD {X₁ X₂ Y : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules} (f₁ : Y ⟶ X₁) (f₂ : Y ⟶ X₂)
+    (φ : (Scheme.Modules.pullback f₁).obj M₁ ⟶ (Scheme.Modules.pullback f₂).obj M₂) :
+    (MOD.map f₁.op.toLoc).toFunctor.obj M₁ ⟶ (MOD.map f₂.op.toLoc).toFunctor.obj M₂ := φ
+
+theorem toMOD_eq {X₁ X₂ Y : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules}
+    (f₁ : Y ⟶ X₁) (f₂ : Y ⟶ X₂)
+    (φ : (Scheme.Modules.pullback f₁).obj M₁ ⟶ (Scheme.Modules.pullback f₂).obj M₂) :
+    toMOD f₁ f₂ φ = φ := rfl
+
+open CategoryTheory.Pseudofunctor.LocallyDiscreteOpToCat in
+theorem pullHom_toMOD {X₁ X₂ Y Y' : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules}
+    {f₁ : Y ⟶ X₁} {f₂ : Y ⟶ X₂}
+    (φ : (Scheme.Modules.pullback f₁).obj M₁ ⟶ (Scheme.Modules.pullback f₂).obj M₂)
+    (g : Y' ⟶ Y) (gf₁ : Y' ⟶ X₁) (gf₂ : Y' ⟶ X₂) (hgf₁ : g ≫ f₁ = gf₁) (hgf₂ : g ≫ f₂ = gf₂) :
+    pullHom (F := MOD) (M₁ := M₁) (M₂ := M₂) (toMOD f₁ f₂ φ) g gf₁ gf₂ hgf₁ hgf₂ =
+      toMOD gf₁ gf₂ (pullHomMap φ g gf₁ gf₂ hgf₁ hgf₂) :=
+  pullHom_MOD φ g gf₁ gf₂ hgf₁ hgf₂
+
+theorem toMOD_comp {X₁ X₂ X₃ Y : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules} {M₃ : X₃.Modules}
+    (f₁ : Y ⟶ X₁) (f₂ : Y ⟶ X₂) (f₃ : Y ⟶ X₃)
+    (φ : (Scheme.Modules.pullback f₁).obj M₁ ⟶ (Scheme.Modules.pullback f₂).obj M₂)
+    (ψ : (Scheme.Modules.pullback f₂).obj M₂ ⟶ (Scheme.Modules.pullback f₃).obj M₃) :
+    toMOD f₁ f₂ φ ≫ toMOD f₂ f₃ ψ = toMOD f₁ f₃ (φ ≫ ψ) :=
+  rfl
+
+theorem toMOD_congr {X₁ X₂ Y : Scheme.{u}} {M₁ : X₁.Modules} {M₂ : X₂.Modules}
+    (f₁ : Y ⟶ X₁) (f₂ : Y ⟶ X₂)
+    {φ ψ : (Scheme.Modules.pullback f₁).obj M₁ ⟶ (Scheme.Modules.pullback f₂).obj M₂} (h : φ = ψ) :
+    toMOD f₁ f₂ φ = toMOD f₁ f₂ ψ :=
+  congrArg _ h
+
+theorem toMOD_id {X₁ Y : Scheme.{u}} {M₁ : X₁.Modules} (f₁ : Y ⟶ X₁) :
+    toMOD f₁ f₁ (𝟙 ((Scheme.Modules.pullback f₁).obj M₁)) = 𝟙 _ :=
+  rfl
+
+/-- View an isomorphism in the module pseudofunctor as an isomorphism of scheme modules. -/
+def isoOfMOD {X Y : Scheme.{u}} {g : X ⟶ Y} {L : Y.Modules} {N : X.Modules}
+    (e : @Iso (MOD.obj (.mk (op X))) _ ((MOD.map g.op.toLoc).toFunctor.obj L) N) :
+    (Scheme.Modules.pullback g).obj L ≅ N := e
+
+open CategoryTheory.Pseudofunctor.LocallyDiscreteOpToCat in
+theorem MOD_pullHom_eq_id_of_iso {X₁ Y W : Scheme.{u}} {M₁ : X₁.Modules} {a₁ a₂ : Y ⟶ X₁}
+    (Φ : (Scheme.Modules.pullback a₁).obj M₁ ≅ (Scheme.Modules.pullback a₂).obj M₁)
+    (p : W ⟶ Y) (q : W ⟶ X₁)
+    (h₁ : p ≫ a₁ = q) (h₂ : p ≫ a₂ = q) (H : pullHomIso Φ p q q h₁ h₂ = Iso.refl _) :
+    pullHom (F := MOD) (M₁ := M₁) (M₂ := M₁) Φ.hom p q q h₁ h₂ = 𝟙 _ := by
+  have E' := congrArg Iso.hom H
+  rw [pullHomIso_hom] at E'
+  exact E'
+
+section PlainDescent
+open CategoryTheory.Pseudofunctor CategoryTheory.Pseudofunctor.LocallyDiscreteOpToCat
+
+theorem pullHomMap_comp_of {X₁ X₂ X₃ Y₁₂ Y₂₃ Y₁₃ W : Scheme.{u}}
+    {M₁ : X₁.Modules} {M₂ : X₂.Modules} {M₃ : X₃.Modules}
+    {a₁ : Y₁₂ ⟶ X₁} {a₂ : Y₁₂ ⟶ X₂} {b₂ : Y₂₃ ⟶ X₂} {b₃ : Y₂₃ ⟶ X₃} {c₁ : Y₁₃ ⟶ X₁} {c₃ : Y₁₃ ⟶ X₃}
+    (Φ₁₂ : (Scheme.Modules.pullback a₁).obj M₁ ≅ (Scheme.Modules.pullback a₂).obj M₂)
+    (Φ₂₃ : (Scheme.Modules.pullback b₂).obj M₂ ≅ (Scheme.Modules.pullback b₃).obj M₃)
+    (Φ₁₃ : (Scheme.Modules.pullback c₁).obj M₁ ≅ (Scheme.Modules.pullback c₃).obj M₃)
+    (p₁₂ : W ⟶ Y₁₂) (p₂₃ : W ⟶ Y₂₃) (p₁₃ : W ⟶ Y₁₃) (q₁ : W ⟶ X₁) (q₂ : W ⟶ X₂) (q₃ : W ⟶ X₃)
+    (h₁ : p₁₂ ≫ a₁ = q₁) (h₂ : p₁₂ ≫ a₂ = q₂) (h₃ : p₂₃ ≫ b₂ = q₂) (h₄ : p₂₃ ≫ b₃ = q₃)
+    (h₅ : p₁₃ ≫ c₁ = q₁) (h₆ : p₁₃ ≫ c₃ = q₃)
+    (hc : pullHomIso Φ₁₂ p₁₂ q₁ q₂ h₁ h₂ ≪≫ pullHomIso Φ₂₃ p₂₃ q₂ q₃ h₃ h₄
+        = pullHomIso Φ₁₃ p₁₃ q₁ q₃ h₅ h₆) :
+    pullHomMap Φ₁₂.hom p₁₂ q₁ q₂ h₁ h₂ ≫ pullHomMap Φ₂₃.hom p₂₃ q₂ q₃ h₃ h₄
+        = pullHomMap Φ₁₃.hom p₁₃ q₁ q₃ h₅ h₆ := by
+  have H := congrArg Iso.hom hc
+  rw [Iso.trans_hom, pullHomIso_hom_eq_pullHomMap, pullHomIso_hom_eq_pullHomMap,
+    pullHomIso_hom_eq_pullHomMap] at H
+  exact H
+
+variable {ι : Type w} {S : Scheme.{u}} {X : ι → Scheme.{u}} (g : ∀ i, X i ⟶ S)
+  (sq : ∀ i j, ChosenPullback (g i) (g j))
+  (sq₃ : ∀ i j k, ChosenPullback₃ (sq i j) (sq j k) (sq i k))
+  (obj : ∀ i, (X i).Modules)
+  (φ : ∀ i j, (Scheme.Modules.pullback (sq i j).p₁).obj (obj i)
+      ≅ (Scheme.Modules.pullback (sq i j).p₂).obj (obj j))
+
+/-- The transition morphism of the module pseudofunctor induced by the given gluing isomorphism. -/
+def homG (i j : ι) :
+    (MOD.map (sq i j).p₁.op.toLoc).toFunctor.obj (obj i)
+        ⟶ (MOD.map (sq i j).p₂.op.toLoc).toFunctor.obj (obj j) :=
+  toMOD (sq i j).p₁ (sq i j).p₂ (φ i j).hom
+
+open CategoryTheory.Pseudofunctor.LocallyDiscreteOpToCat in
+theorem pullHom_homG (i j : ι) {W : Scheme.{u}} (p : W ⟶ (sq i j).pullback)
+    (q₁ : W ⟶ X i) (q₂ : W ⟶ X j)
+    (h₁ : p ≫ (sq i j).p₁ = q₁) (h₂ : p ≫ (sq i j).p₂ = q₂) :
+    pullHom (F := MOD) (homG g sq obj φ i j) p q₁ q₂ h₁ h₂ =
+      toMOD q₁ q₂ (pullHomMap (φ i j).hom p q₁ q₂ h₁ h₂) :=
+  pullHom_toMOD (φ i j).hom p q₁ q₂ h₁ h₂
+
+variable (δ : ∀ i, X i ⟶ (sq i i).pullback)
+    (hδ₁ : ∀ i, δ i ≫ (sq i i).p₁ = 𝟙 _) (hδ₂ : ∀ i, δ i ≫ (sq i i).p₂ = 𝟙 _)
+  (hself : ∀ i (h₁ : δ i ≫ (sq i i).p₁ = 𝟙 _) (h₂ : δ i ≫ (sq i i).p₂ = 𝟙 _),
+    pullHomIso (φ i i) (δ i) (𝟙 _) (𝟙 _) h₁ h₂ = Iso.refl _)
+  (hcomp : ∀ i j k (h₁ : (sq₃ i j k).p₁₂ ≫ (sq i j).p₁ = (sq₃ i j k).p₁)
+    (h₂ : (sq₃ i j k).p₁₂ ≫ (sq i j).p₂ = (sq₃ i j k).p₂)
+    (h₃ : (sq₃ i j k).p₂₃ ≫ (sq j k).p₁ = (sq₃ i j k).p₂)
+    (h₄ : (sq₃ i j k).p₂₃ ≫ (sq j k).p₂ = (sq₃ i j k).p₃)
+    (h₅ : (sq₃ i j k).p₁₃ ≫ (sq i k).p₁ = (sq₃ i j k).p₁)
+    (h₆ : (sq₃ i j k).p₁₃ ≫ (sq i k).p₂ = (sq₃ i j k).p₃),
+    pullHomIso (φ i j) (sq₃ i j k).p₁₂ (sq₃ i j k).p₁ (sq₃ i j k).p₂ h₁ h₂ ≪≫
+      pullHomIso (φ j k) (sq₃ i j k).p₂₃ (sq₃ i j k).p₂ (sq₃ i j k).p₃ h₃ h₄ =
+    pullHomIso (φ i k) (sq₃ i j k).p₁₃ (sq₃ i j k).p₁ (sq₃ i j k).p₃ h₅ h₆)
+
+/-- The module descent datum determined by the transition isomorphisms and cocycle equations. -/
+def dataG : MOD.DescentData' (f := g) sq sq₃ where
+  obj := obj
+  hom := homG g sq obj φ
+  pullHom'_hom_self i := by
+    rw [DescentData'.pullHom'_eq_pullHom (F := MOD) (f := g) (sq := sq) (obj := obj) (obj' := obj)
+        (homG g sq obj φ)
+      (g i) (𝟙 (X i)) (𝟙 (X i)) (δ i) _ _ (hδ₁ i) (hδ₂ i)]
+    exact MOD_pullHom_eq_id_of_iso (φ i i) (δ i) (𝟙 _) _ _ (hself i _ _)
+  pullHom'_hom_comp i j k := by
+    rw [DescentData'.pullHom'₁₂_eq_pullHom_of_chosenPullback₃ (sq₃ := sq₃)
+        (hom := homG g sq obj φ) i j k,
+      DescentData'.pullHom'₂₃_eq_pullHom_of_chosenPullback₃ (sq₃ := sq₃)
+        (hom := homG g sq obj φ) i j k,
+      DescentData'.pullHom'₁₃_eq_pullHom_of_chosenPullback₃ (sq₃ := sq₃)
+        (hom := homG g sq obj φ) i j k,
+      pullHom_homG, pullHom_homG, pullHom_homG, toMOD_comp]
+    exact congrArg (toMOD (sq₃ i j k).p₁ (sq₃ i j k).p₃)
+      (pullHomMap_comp_of (φ i j) (φ j k) (φ i k) (sq₃ i j k).p₁₂ (sq₃ i j k).p₂₃ (sq₃ i j k).p₁₃
+        (sq₃ i j k).p₁ (sq₃ i j k).p₂ (sq₃ i j k).p₃ _ _ _ _ _ _ (hcomp i j k _ _ _ _ _ _))
+
+theorem dataG_obj (i : ι) : (dataG g sq sq₃ obj φ δ hδ₁ hδ₂ hself hcomp).obj i = obj i := rfl
+
+include δ hδ₁ hδ₂ hself hcomp in
+theorem exists_iso_of_plainDescent [(MOD.toDescentData g).IsEquivalence] :
+    ∃ L : S.Modules, ∀ i, Nonempty ((Scheme.Modules.pullback (g i)).obj L ≅ obj i) := by
+  obtain ⟨L, ⟨e⟩⟩ : ∃ L : S.Modules, Nonempty ((MOD.toDescentData g).obj L ≅
+      (DescentData'.toDescentDataFunctor MOD sq sq₃).obj
+        (dataG g sq sq₃ obj φ δ hδ₁ hδ₂ hself hcomp)) :=
+    ⟨_, ⟨(MOD.toDescentData g).objObjPreimageIso _⟩⟩
+  refine ⟨L, fun i => ⟨isoOfMOD (X := X i) (Y := S) (g := g i) (L := L) (N := obj i)
+    ⟨e.hom.hom i, e.inv.hom i,
+      (DescentData.comp_hom e.hom e.inv i).symm.trans
+        ((congrArg (fun ψ => DescentData.Hom.hom ψ i) e.hom_inv_id).trans (DescentData.id_hom _ i)),
+      (DescentData.comp_hom e.inv e.hom i).symm.trans
+        ((congrArg (fun ψ => DescentData.Hom.hom ψ i) e.inv_hom_id).trans
+            (DescentData.id_hom _ i))⟩⟩⟩
+
+end PlainDescent
+
+section PlainDescentFF
+open CategoryTheory.Pseudofunctor
+
+theorem exists_iso_of_plainDescent_ff {Y Y' : Scheme.{u}}
+    (q : Y' ⟶ Y) [IsAffineHom q] [Flat q] [Surjective q]
+    (sq : ∀ _ _ : Unit, ChosenPullback q q)
+    (sq₃ : ∀ i j k : Unit, ChosenPullback₃ (sq i j) (sq j k) (sq i k))
+    (obj : Unit → Y'.Modules) (hobj : ∀ i, Scheme.Modules.IsInvertible (obj i))
+    (φ : ∀ i j, (Scheme.Modules.pullback (sq i j).p₁).obj (obj i)
+        ≅ (Scheme.Modules.pullback (sq i j).p₂).obj (obj j))
+    (δ : ∀ i, Y' ⟶ (sq i i).pullback)
+    (hδ₁ : ∀ i, δ i ≫ (sq i i).p₁ = 𝟙 _) (hδ₂ : ∀ i, δ i ≫ (sq i i).p₂ = 𝟙 _)
+    (hself : ∀ i (h₁ : δ i ≫ (sq i i).p₁ = 𝟙 _) (h₂ : δ i ≫ (sq i i).p₂ = 𝟙 _),
+      pullHomIso (φ i i) (δ i) (𝟙 _) (𝟙 _) h₁ h₂ = Iso.refl _)
+    (hcomp : ∀ i j k (h₁ : (sq₃ i j k).p₁₂ ≫ (sq i j).p₁ = (sq₃ i j k).p₁)
+      (h₂ : (sq₃ i j k).p₁₂ ≫ (sq i j).p₂ = (sq₃ i j k).p₂)
+      (h₃ : (sq₃ i j k).p₂₃ ≫ (sq j k).p₁ = (sq₃ i j k).p₂)
+      (h₄ : (sq₃ i j k).p₂₃ ≫ (sq j k).p₂ = (sq₃ i j k).p₃)
+      (h₅ : (sq₃ i j k).p₁₃ ≫ (sq i k).p₁ = (sq₃ i j k).p₁)
+      (h₆ : (sq₃ i j k).p₁₃ ≫ (sq i k).p₂ = (sq₃ i j k).p₃),
+      pullHomIso (φ i j) (sq₃ i j k).p₁₂ (sq₃ i j k).p₁ (sq₃ i j k).p₂ h₁ h₂ ≪≫
+        pullHomIso (φ j k) (sq₃ i j k).p₂₃ (sq₃ i j k).p₂ (sq₃ i j k).p₃ h₃ h₄ =
+      pullHomIso (φ i k) (sq₃ i j k).p₁₃ (sq₃ i j k).p₁ (sq₃ i j k).p₃ h₅ h₆) :
+    ∃ L : Y.Modules, Scheme.Modules.IsInvertible L ∧
+      ∀ i, Nonempty ((Scheme.Modules.pullback q).obj L ≅ obj i) := by
+  obtain ⟨L, hL, ⟨e⟩⟩ :=
+    Scheme.Modules.IsInvertible.exists_iso_toDescentData_of_isAffineHom_of_flat_of_surjective q
+      ((DescentData'.toDescentDataFunctor MOD sq sq₃).obj
+        (dataG (fun _ : Unit => q) sq sq₃ obj φ δ hδ₁ hδ₂ hself hcomp))
+      (fun i => hobj i)
+  refine ⟨L, hL, fun i => ⟨isoOfMOD (X := Y') (Y := Y) (g := q) (L := L) (N := obj i)
+    ⟨e.hom.hom i, e.inv.hom i,
+      (DescentData.comp_hom e.hom e.inv i).symm.trans
+        ((congrArg (fun ψ => DescentData.Hom.hom ψ i) e.hom_inv_id).trans (DescentData.id_hom _ i)),
+      (DescentData.comp_hom e.inv e.hom i).symm.trans
+        ((congrArg (fun ψ => DescentData.Hom.hom ψ i) e.inv_hom_id).trans
+            (DescentData.id_hom _ i))⟩⟩⟩
+
+end PlainDescentFF
+
+end ModuleDescent
 
 end AlgebraicGeometry.RelPicard.RigidifiedDescent

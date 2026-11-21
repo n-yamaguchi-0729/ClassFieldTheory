@@ -75,12 +75,7 @@ private theorem finiteIndex_of_finite_degreeKernel
 variable {k : Type u} {K : Type v} [Field k] [Field K] [Algebra k K]
     [AlgebraicCurve.HasPrincipalDivisors k K]
 
--- Match the canonical quotient dictionary used by the existing ray-power theorem.
-local instance : CommGroup (IdeleClassGroup k K) :=
-  QuotientGroup.Quotient.commGroup (G := IdeleGroup k K) (IdeleGroup.principalSubgroup k K)
-
-local instance : IsMulCommutative (IdeleClassGroup k K) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+attribute [local instance] IdeleClassGroup.commGroup IdeleClassGroup.isMulCommutative
 
 /-- The ray subgroup together with all local multiplicative groups at the
 places required to split completely. -/

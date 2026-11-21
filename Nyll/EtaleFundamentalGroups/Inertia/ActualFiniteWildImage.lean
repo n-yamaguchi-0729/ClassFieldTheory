@@ -62,9 +62,9 @@ theorem actualFiniteWildSubgroup_map_of_baseResidue_charP
     actualFiniteInertiaTowerRestriction_surjective A K L Q E F hEF
   have finiteSource : Finite I_F.carrier := actualFiniteStageInertiaGroup_finite A K L Q F
   have normalTarget : P_E.Normal := actualFiniteWildSubgroup_normal A K L Q E
-  have cardSource : ∃ r : ℕ, Nat.card (Subtype P_F.carrier) = p ^ r :=
+  have cardSource : ∃ r : ℕ, Nat.card ↥P_F = p ^ r :=
     actualFiniteWildSubgroup_card_exists_pow_of_baseResidue_charP A K L Q F p
-  have cardTarget : ∃ r : ℕ, Nat.card (Subtype P_E.carrier) = p ^ r :=
+  have cardTarget : ∃ r : ℕ, Nat.card ↥P_E = p ^ r :=
     actualFiniteWildSubgroup_card_exists_pow_of_baseResidue_charP A K L Q E p
   have indexSource : ¬ p ∣ P_F.index :=
     actualFiniteWildSubgroup_index_not_dvd_of_baseResidue_charP A K L Q F p

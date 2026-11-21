@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Compatibility
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.MembershipTypes
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
@@ -35,11 +37,6 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance
-    zeroTransportIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
 local instance
     zeroTransportIdeleClassSubgroupNormal
@@ -79,8 +76,8 @@ rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_finiteNormReprese
   let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
   let b : KummerTheory.ambientFixedAddSubgroup
-      rationalIdeleClassRepresentation H :=
-    fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
+      (ideleClassRepresentation ℚ) H :=
+    fixedFieldInclusion (ideleClassRepresentation ℚ) K H hHK
       (rationalAbstractFixedFieldIdeleClassEquivFixed K
         (Additive.ofMul c))
   have htransport :=
@@ -122,17 +119,17 @@ private noncomputable def
     RationalFiniteNormTransferCanonicalFiniteNormRepresentativeTargetZeroData
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)
       (hHLfinite := hHLfinite)
-      K H L hHK hLH hLHnormal c := by
+      K H L hHK hLH c := by
   refine ⟨?_⟩
   let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
   let : Zero
       (rationalFiniteNormTransferQuotientTarget
         (hKfinite := hHfinite) (hfinite := hHLfinite)
-        H L hLH hLHnormal) :=
+        H L hLH) :=
     RationalFiniteNormTransferInternal.quotientTargetZero
       (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal
+      H L hLH
   have hquotientZero :=
     (
 rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_finiteNormRepresentativeQuotientZero
@@ -146,9 +143,9 @@ rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_finiteNormReprese
   let q :=
     rationalFiniteNormTransferQuotientMap
       (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal
+      H L hLH
   let b :=
-    fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
+    fixedFieldInclusion (ideleClassRepresentation ℚ) K H hHK
       (rationalAbstractFixedFieldIdeleClassEquivFixed K
         (Additive.ofMul c))
   let finiteNormRepresentative :
@@ -188,7 +185,7 @@ private noncomputable def
     RationalFiniteNormTransferCanonicalFiniteNormRepresentativeMembershipData
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)
       (hHLfinite := hHLfinite)
-      K H L hHK hLH hLHnormal c := by
+      K H L hHK hLH c := by
   refine ⟨?_⟩
   let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
@@ -210,11 +207,8 @@ private noncomputable def
   let : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       H L hLH
-  let : IsGalois F U :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      H L hLH hLHnormal
   let b :=
-    fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
+    fixedFieldInclusion (ideleClassRepresentation ℚ) K H hHK
       (rationalAbstractFixedFieldIdeleClassEquivFixed K
         (Additive.ofMul c))
   let finiteNormRepresentative : IdeleClassGroup F :=
@@ -223,14 +217,14 @@ private noncomputable def
   let q :=
     rationalFiniteNormTransferQuotientMap
       (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal
+      H L hLH
   let : Zero
       (rationalFiniteNormTransferQuotientTarget
         (hKfinite := hHfinite) (hfinite := hHLfinite)
-        H L hLH hLHnormal) :=
+        H L hLH) :=
     RationalFiniteNormTransferInternal.quotientTargetZero
       (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal
+      H L hLH
   have htargetZero :=
     rationalFiniteNormTransferFiniteNormRepresentativeQuotientZero_implies_targetZero
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)
@@ -274,7 +268,7 @@ private noncomputable def
     RationalFiniteNormTransferCanonicalAbsoluteNormMembershipData
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)
       (hHLfinite := hHLfinite)
-      K H L hHK hLH hHKnormal hLHnormal c := by
+      K H L hHK hLH c := by
   refine ⟨?_⟩
   let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
@@ -296,9 +290,6 @@ private noncomputable def
   let : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       H L hLH
-  let : IsGalois F U :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      H L hLH hLHnormal
   have hmembership :=
     rationalFiniteNormTransferFiniteNormRepresentativeTargetZero_implies_membership
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)
@@ -310,10 +301,10 @@ private noncomputable def
   change
     rationalFiniteNormTransferCanonicalFixedRepresentative K H hHK c =
       rationalFiniteNormTransferOrdinaryExtensionRepresentative
-        K H hHK hHKnormal c at hfixedToExtension
+        K H hHK c at hfixedToExtension
   change
     rationalFiniteNormTransferOrdinaryExtensionRepresentative
-        K H hHK hHKnormal c ∈
+        K H hHK c ∈
       (_root_.ideleClassNorm F U).range
   rw [← hfixedToExtension]
   exact hmembership.membership
@@ -345,7 +336,7 @@ private theorem
       rationalFiniteNormTransferCanonicalFiniteNormClassZero
         K H L hHK hLH c) :
     rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
-      K H L hHK hLH hHKnormal hLHnormal c := by
+      K H L hHK hLH c := by
   let hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
   let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hHK
@@ -382,11 +373,6 @@ private theorem
       (abstractFixedField ℚ (SeparableClosure ℚ) H) U
     exact RationalFiniteNormTransferInternal.relativeScalarTower
       H L hLH
-  let : IsGalois E U := by
-    change IsGalois
-      (abstractFixedField ℚ (SeparableClosure ℚ) H) U
-    exact RationalFiniteNormTransferInternal.relativeIsGalois
-      H L hLH hLHnormal
   have habsoluteData :=
     rationalFiniteNormTransferFiniteNormRepresentativeMembership_implies_canonicalAbsoluteMembership
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)
@@ -395,13 +381,13 @@ private theorem
   have habsolute := habsoluteData.membership
   change
     rationalFiniteNormTransferOrdinaryExtensionRepresentative
-        K H hHK hHKnormal c ∈
+        K H hHK c ∈
     (_root_.ideleClassNorm E U).range at habsolute
   unfold
     rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
   change
     rationalFiniteNormTransferOrdinaryExtensionRepresentative
-        K H hHK hHKnormal c ∈
+        K H hHK c ∈
       (_root_.ideleClassNorm E U).range
   exact habsolute
 
@@ -432,7 +418,7 @@ theorem
       rationalFiniteNormTransferCanonicalFiniteNormClassZero
         K H L hHK hLH c) :
     rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
-      K H L hHK hLH hHKnormal hLHnormal c := by
+      K H L hHK hLH c := by
   exact
     rationalFiniteNormTransferCanonicalAbsoluteMembership_implies_relativeMembership
       (hKfinite := hKfinite) (hKHfinite := hKHfinite)

@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.AlgebraicCurves.Differentials.Kaehler.KaehlerRankOneTranscendental
 public import Nyll.AlgebraicCurves.Places.ValuationRings.OrdEqNegLogValuationSubringEq
 public import Nyll.AlgebraicCurves.Places.Basic
 public import Nyll.AlgebraicCurves.FunctionFields.Transcendence.CurveOver
@@ -121,7 +122,7 @@ theorem exists_sub_algebraMap_intDegree_neg {x : RatFunc K}
   rcases eq_or_ne x 0 with rfl | hx0
   · exact ⟨0, Or.inl (by rw [map_zero, sub_self])⟩
   have hdeg : x.intDegree ≤ 0 := by
-    rw [RatFunc.inftyValuation_apply, RatFunc.inftyValuation_of_nonzero K hx0,
+    rw [RatFunc.inftyValuation_apply, RatFunc.inftyValuation_of_ne_zero K hx0,
       show (1 : ℤᵐ⁰) = exp 0 from rfl, exp_le_exp] at hx
     exact hx
   have hnum0 : x.num ≠ 0 := RatFunc.num_ne_zero hx0
@@ -265,7 +266,7 @@ theorem ord_placeInfty {f : RatFunc K} (hf : f ≠ 0) :
     exact (exp_neg (1 : ℤ)).symm
   rw [(placeInfty K).ord_eq_neg_log_of_valuationSubring_eq (RatFunc.inftyValuation K) rfl hπ
       hf,
-    RatFunc.inftyValuation_apply, RatFunc.inftyValuation_of_nonzero K hf, log_exp]
+    RatFunc.inftyValuation_apply, RatFunc.inftyValuation_of_ne_zero K hf, log_exp]
 
 theorem ord_placeInfty_algebraMap {q : K[X]} (hq : q ≠ 0) :
     (placeInfty K).ord (algebraMap K[X] (RatFunc K) q) = -(q.natDegree : ℤ) := by
@@ -481,37 +482,6 @@ end RationalFunctionField
 
 end AlgebraicCurve
 
-section Kaehler
-
-open Polynomial TensorProduct Module
-
-namespace AlgebraicCurve
-open _root_.AlgebraicCurve
-open _root_.AlgebraicCurve
-
-variable (K : Type*) [Field K]
-
-/-- The basis of polynomial differentials given by the differential of the variable. -/
-def kaehlerPolynomialBasis : Basis Unit K[X] Ω[K[X]⁄K] :=
-  (Basis.singleton Unit K[X]).map (KaehlerDifferential.polynomialEquiv K).symm
-
-scoped instance instFormallyEtalePolynomialRatFunc : Algebra.FormallyEtale K[X] (RatFunc K) :=
-  Algebra.FormallyEtale.of_isLocalization (nonZeroDivisors K[X])
-
-/-- The differential basis transported from polynomials to the rational function field. -/
-def kaehlerRatFuncBasis : Basis Unit (RatFunc K) Ω[(RatFunc K)⁄K] :=
-  ((kaehlerPolynomialBasis K).baseChange (RatFunc K)).map
-    (KaehlerDifferential.tensorKaehlerEquivOfFormallyEtale K K[X] (RatFunc K))
-
-theorem kaehler_free_rank_one_ratFunc :
-    Module.Free (RatFunc K) Ω[(RatFunc K)⁄K] ∧ Module.finrank (RatFunc K) Ω[(RatFunc K)⁄K] = 1 :=
-  ⟨Module.Free.of_basis (kaehlerRatFuncBasis K),
-    (Module.finrank_eq_card_basis (kaehlerRatFuncBasis K)).trans Fintype.card_unit⟩
-
-end AlgebraicCurve
-
-end Kaehler
-
 end
 
 open _root_.AlgebraicCurve
@@ -520,7 +490,7 @@ theorem _root_.AlgebraicCurve.isCurveOver_ratFunc (K : Type*) [Field K] : IsCurv
   K) :=
   { toHasPrincipalDivisors := RationalFunctionField.instHasPrincipalDivisors
     finiteResidue := fun v => (RationalFunctionField.instFiniteResidue v).finite
-    kaehler_free_rank_one := kaehler_free_rank_one_ratFunc K }
+    kaehler_free_rank_one := KaehlerDifferential.rankOne_ratFunc K }
 end AlgebraicCurves.FunctionFields.Proofs.IsCurveOverRatFunc
 end ProofImplementation
 

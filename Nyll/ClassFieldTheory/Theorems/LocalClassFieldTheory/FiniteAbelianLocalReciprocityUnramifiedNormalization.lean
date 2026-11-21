@@ -6,7 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFrobenius
 public import Mathlib.FieldTheory.Galois.Abelian
 public import Mathlib.NumberTheory.LocalField.Basic
@@ -25,6 +25,8 @@ and public Definitions vocabulary; the implementation is used in the proof.
 -/
 
 @[expose] public section
+
+open LocalFieldTheory (localNormSubgroup)
 
 open scoped ValuativeRel
 
@@ -49,7 +51,7 @@ theorem finiteAbelianLocalReciprocity_unramifiedNormalization
     (hUnram : (𝓂[L] : Ideal 𝒪[L]).ramificationIdx 𝒪[K] = 1) :
     ∃ artin : Kˣ →ₜ* (L ≃ₐ[K] L),
       Function.Surjective artin ∧
-        artin.toMonoidHom.ker = fieldNormSubgroup K L ∧
+        artin.toMonoidHom.ker = localNormSubgroup K L ∧
         ∀ (π : 𝒪[K])
           (hπ : (ValuativeRel.valuation K).IsUniformizer (π : K))
           (x : 𝒪[L]),
@@ -60,9 +62,9 @@ theorem finiteAbelianLocalReciprocity_unramifiedNormalization
                 (IsLocalRing.residue 𝒪[L] x) ^ Nat.card 𝓀[K] := by
   have : LocalFieldTheory.IsNonarchimedeanLocalField.IsUnramifiedValuedExtension
       K L := ⟨hUnram⟩
-  refine ⟨LocalClassFieldTheory.Universe.abelianLocalArtinMap K L, ?_, ?_, ?_⟩
-  · exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_surjective K L
-  · exact LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K L
+  refine ⟨LocalClassFieldTheory.abelianLocalArtinMap K L, ?_, ?_, ?_⟩
+  · exact LocalClassFieldTheory.abelianLocalArtinMap_surjective K L
+  · exact LocalClassFieldTheory.abelianLocalArtinMap_ker K L
   · intro π hπ x
     let u : Kˣ := Units.mk0 (π : K) hπ.ne_zero
     have hvalUnit :

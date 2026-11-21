@@ -36,16 +36,9 @@ open LocalFieldTheory.DiscreteValuationField
 
 variable {K : Type u} [Field K]
 
-noncomputable local instance standardChangedGaloisBaseAlgebra
-    (F : LocalField.{u, v} K) :
-    Algebra F.residueField⸨X⸩
-      (equalCharacteristicCompletedUnramifiedField F.residueField) :=
-  equalCharacteristicCompletedLevelBaseAlgebra F
-
-noncomputable local instance standardChangedGaloisLevelAlgebra
-    (F : LocalField.{u, v} K) (n : ℕ) :
-    Algebra F.residueField⸨X⸩ (equalCharacteristicCompletedLevelField F n) :=
-  equalCharacteristicCompletedLevelLaurentAlgebra F n
+attribute [local instance]
+  equalCharacteristicCompletedLevelBaseAlgebra
+  equalCharacteristicCompletedLevelLaurentAlgebra
 
 /-- The original finite image remains separable over the Laurent base. -/
 instance equalCharacteristicCompletedStandardLevelField_isSeparable

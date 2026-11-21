@@ -15,7 +15,7 @@ public import Mathlib.RingTheory.Valuation.Integers
 public import Nyll.ClassFieldTheory.Algebra.ShrinkFiniteExtension
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.ShrinkOpenSubgroups
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelian
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.FiniteAbelianNative
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkResidueTransport
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.ShrinkTransport
@@ -106,12 +106,12 @@ variable (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
   [FiniteDimensional K L] [IsAbelianGalois K L]
 
 /-- The image of the actual principal-unit group under the specified Artin map. -/
-def artinPrincipalUnitGroup (n : ℕ) : Subgroup Gal(L/K) :=
-  (fieldPrincipalUnits K n).map (abelianLocalArtinMonoidHom K L)
+abbrev artinPrincipalUnitGroup (n : ℕ) : Subgroup Gal(L/K) :=
+  _root_.LocalClassFieldTheory.artinPrincipalUnitGroup K L n
 
 /-- The real step filtration of the same actual Artin principal-unit images. -/
-def artinPrincipalUnitStepGroup (t : ℝ) : Subgroup Gal(L/K) :=
-  natCeilStepFiltration (artinPrincipalUnitGroup K L) t
+abbrev artinPrincipalUnitStepGroup (t : ℝ) : Subgroup Gal(L/K) :=
+  _root_.LocalClassFieldTheory.artinPrincipalUnitStepGroup K L t
 
 /-- Filtered reciprocity for the original fields and their actual chosen upper filtration. -/
 theorem finiteAbelian_filteredLocalReciprocity (t : ℝ) (ht : 0 ≤ t) :
@@ -133,15 +133,7 @@ theorem finiteAbelian_filteredLocalReciprocity (t : ℝ) (ht : 0 ≤ t) :
         (Shrink.{0} K) (Shrink.{0} L)) := by
     apply MonoidHom.ext
     intro a
-    rw [← _root_.LocalClassFieldTheory.abelianLocalArtinMap_toMonoidHom]
-    apply AlgEquiv.ext
-    intro x
-    obtain ⟨z, rfl⟩ := (Shrink.ringEquiv L).surjective x
-    change abelianLocalArtinMap K L (eU a) (Shrink.ringEquiv L z) =
-      HasseArf.shrinkGalEquiv K L (_root_.LocalClassFieldTheory.abelianLocalArtinMap
-        (Shrink.{0} K) (Shrink.{0} L) a) (Shrink.ringEquiv L z)
-    rw [abelianLocalArtinMap_apply_shrink, ContinuousMulEquiv.symm_apply_apply,
-      HasseArf.shrinkGalEquiv_apply]
+    exact abelianLocalArtinMonoidHom_apply_shrink K L a
   have hunits : (fieldPrincipalUnits (Shrink.{0} K) ⌈t⌉₊).map
       eU.toMulEquiv.toMonoidHom = fieldPrincipalUnits K ⌈t⌉₊ :=
     fieldPrincipalUnits_map_shrink K ⌈t⌉₊

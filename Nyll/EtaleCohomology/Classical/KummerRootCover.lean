@@ -114,7 +114,7 @@ theorem kummerRootCover_finrank {R : Type u} [CommRing R]
   have : Module.Finite R (kummerRootAlgebra n a) := hm.finite_adjoinRoot
   have : Module.Free R (kummerRootAlgebra n a) := hm.free_adjoinRoot
   have hr : Module.finrank R (kummerRootAlgebra n a) = n :=
-    (AdjoinRoot.powerBasis' hm).finrank.trans Polynomial.natDegree_X_pow_sub_C
+    (AdjoinRoot.powerBasis' hm).finrank.trans (Polynomial.natDegree_X_pow_sub_C _)
   exact (Scheme.Hom.finrank_SpecMap_algebraMap R (kummerRootAlgebra n a) x).trans
     ((congrFun (Module.rankAtStalk_eq_finrank_of_free
       (R := R) (M := kummerRootAlgebra n a)) x).trans hr)

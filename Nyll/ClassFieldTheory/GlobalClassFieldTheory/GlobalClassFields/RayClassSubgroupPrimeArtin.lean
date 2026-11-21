@@ -35,27 +35,9 @@ namespace GlobalClassFields
 
 open NumberField IsDedekindDomain IdeleGroup Reciprocity
 
-private theorem arithmeticFinitePlacePrimeArtin_restrict_tower
-    (K : Type u) (L : Type v) (E : Type w) [Field K] [Field L] [Field E]
-    [NumberField K] [NumberField L] [NumberField E]
-    [Algebra K L] [Algebra K E] [Algebra E L] [IsScalarTower K E L]
-    [IsAbelianGalois K L] [IsAbelianGalois K E]
-    (v : HeightOneSpectrum (𝓞 K)) :
-    AlgEquiv.restrictNormalHom E
-        (arithmeticFinitePlacePrimeArtin (K := K) (L := L) v) =
-      arithmeticFinitePlacePrimeArtin (K := K) (L := E) v := by
-  rw [arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := L) v,
-    arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := E) v, map_inv]
-  simpa only [finitePlacePrimeArtin, MonoidHom.comp_apply] using
-    congrArg Inv.inv
-      (DFunLike.congr_fun
-        (Reciprocity.globalArtinMonoidHom_restrict_tower
-          (K := K) (L := L) (E := E))
-        (IdeleGroup.finitePrimeIdele v))
-
 private theorem rayClassFieldGaloisEquivRayClassGroup_symm_mk
     {K : Type u} [Field K] [NumberField K]
-    (m : RayClass.Modulus K) (c : IdeleClassGroup K) :
+    (m : RayClass.Modulus K) (c : NumberField.IdeleClassGroup (𝓞 K) K) :
     (rayClassFieldGaloisEquivRayClassGroup (K := K) m).symm
         (QuotientGroup.mk' m.congruenceSubgroup c) =
       globalNormResidueMonoidHom K (rayClassField K m) c := by
@@ -69,21 +51,18 @@ private theorem rayClassField_arithmeticFinitePlacePrimeArtin
     (v : HeightOneSpectrum (𝓞 K)) :
     (rayClassFieldGaloisEquivRayClassGroup (K := K) m).symm
         ((QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+          (IdeleGroup.toStandardClass K
             (IdeleGroup.finitePrimeIdele v)))⁻¹) =
       arithmeticFinitePlacePrimeArtin (K := K) (L := rayClassField K m) v := by
-  let c : IdeleClassGroup K :=
-    QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+  let c : NumberField.IdeleClassGroup (𝓞 K) K :=
+    IdeleGroup.toStandardClass K
       (IdeleGroup.finitePrimeIdele v)
   have hgeo := rayClassFieldGaloisEquivRayClassGroup_symm_mk m c
   have hnormprime :
       Reciprocity.arithmeticGlobalNormResidueMonoidHom K (rayClassField K m) c =
-        arithmeticFinitePlacePrimeArtin (K := K) (L := rayClassField K m) v := by
-    rw [arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin]
-    exact DFunLike.congr_fun
-      (Reciprocity.arithmeticGlobalNormResidueMonoidHom_comp_finitePlaceIdeleClass
-        K (rayClassField K m) v)
-      (FiniteIdeleGroup.chosenLocalOrderSection v 1)
+        arithmeticFinitePlacePrimeArtin (K := K) (L := rayClassField K m) v :=
+    (arithmeticFinitePlacePrimeArtin_eq_arithmeticGlobalNormResidue
+      (K := K) (L := rayClassField K m) v).symm
   change (rayClassFieldGaloisEquivRayClassGroup (K := K) m).symm
       ((QuotientGroup.mk' m.congruenceSubgroup c)⁻¹) = _
   rw [map_inv, hgeo]
@@ -98,7 +77,7 @@ private theorem rayClassSubgroup_restrict_transport
     let F := rayClassSubgroupFixedField (K := K) m H
     let E := rayClassSubgroupSubextension (K := K) m H
     let α : F ≃ₐ[K] E :=
-      IntermediateField.equivMap F (rayClassFieldEmbedding K m)
+      IntermediateField.equivMap F ((rayClassField K m).val)
     let f : E →ₐ[K] rayClassField K m :=
       (IntermediateField.val F).comp α.symm.toAlgHom
     let _ : Algebra E (rayClassField K m) := f.toRingHom.toAlgebra
@@ -110,7 +89,7 @@ private theorem rayClassSubgroup_restrict_transport
   let L := rayClassField K m
   let E := rayClassSubgroupSubextension (K := K) m H
   let α : F ≃ₐ[K] E :=
-    IntermediateField.equivMap F (rayClassFieldEmbedding K m)
+    IntermediateField.equivMap F ((rayClassField K m).val)
   let f : E →ₐ[K] L :=
     (IntermediateField.val F).comp α.symm.toAlgHom
   let : Algebra E L := f.toRingHom.toAlgebra
@@ -141,18 +120,17 @@ theorem rayClassSubgroupArtin_finitePrimeIdele
     (v : HeightOneSpectrum (𝓞 K)) :
     rayClassSubgroupArtin (K := K) m H
         (QuotientGroup.mk' m.congruenceSubgroup
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
-            (IdeleGroup.finitePrimeIdele v))) =
+          (IdeleGroup.toStandardClass K (IdeleGroup.finitePrimeIdele v))) =
       arithmeticFinitePlacePrimeArtin (K := K)
         (L := rayClassSubgroupSubextension (K := K) m H) v := by
   let F := rayClassSubgroupFixedField (K := K) m H
   let L := rayClassField K m
   let E := rayClassSubgroupSubextension (K := K) m H
   let α : F ≃ₐ[K] E :=
-    IntermediateField.equivMap F (rayClassFieldEmbedding K m)
+    IntermediateField.equivMap F ((rayClassField K m).val)
   let e := rayClassFieldGaloisEquivRayClassGroup (K := K) m
-  let c : IdeleClassGroup K :=
-    QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+  let c : NumberField.IdeleClassGroup (𝓞 K) K :=
+    IdeleGroup.toStandardClass K
       (IdeleGroup.finitePrimeIdele v)
   let q : RayClass.RayClassGroup m :=
     QuotientGroup.mk' m.congruenceSubgroup c
@@ -181,7 +159,7 @@ theorem rayClassSubgroupArtin_finitePrimeIdele
       rayClassSubgroup_restrict_transport m H
         (arithmeticFinitePlacePrimeArtin (K := K) (L := L) v)
     _ = arithmeticFinitePlacePrimeArtin (K := K) (L := E) v :=
-      arithmeticFinitePlacePrimeArtin_restrict_tower K L E v
+      arithmeticFinitePlacePrimeArtin_restrict_tower v
 
 end GlobalClassFields
 end GlobalClassFieldTheory

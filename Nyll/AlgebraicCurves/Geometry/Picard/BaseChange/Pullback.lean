@@ -84,15 +84,6 @@ def RigidifiedLineBundle.pullbackCurvePullbackAlongIso {T T' : Scheme.{u}} {t : 
     (Scheme.Modules.pullbackCongr (curveChange_baseChangeSnd f hf ψ).symm).app M.L ≪≫
     ((Scheme.Modules.pullbackComp _ _).app M.L).symm
 
-/-- The comparison between successive pullbacks and pullback along the composite base morphism. -/
-def RigidifiedLineBundle.pullbackAlongPullbackAlongIso' {T T' T'' : Scheme.{u}} {t : T ⟶ Spec
-  (CommRingCat.of R)}
-    {t' : T' ⟶ Spec (CommRingCat.of R)} {t'' : T'' ⟶ Spec (CommRingCat.of R)}
-    (M : RigidifiedLineBundle c ε t) (ψ : SchemeHomOver t' t) (φ : SchemeHomOver t'' t') :
-    ((M.pullbackAlong ψ).pullbackAlong φ).L ≅ (M.pullbackAlong (postComp ψ φ)).L :=
-  (Scheme.Modules.pullbackComp _ _).app M.L ≪≫
-    (Scheme.Modules.pullbackCongr (baseChangeSnd_comp c ψ φ)).app M.L
-
 /-- The canonical identification of the pulled-back unit line bundle with the unit line bundle. -/
 def RigidifiedLineBundle.unitPullbackCurveIso {T : Scheme.{u}} (t : T ⟶ Spec (CommRingCat.of R)) :
     ((RigidifiedLineBundle.unit (c := c) (ε := ε) t).pullbackCurve f hf hε).L ≅

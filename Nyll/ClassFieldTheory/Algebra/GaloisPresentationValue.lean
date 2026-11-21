@@ -7,7 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 module
 
 public import Nyll.ClassFieldTheory.Algebra.GaloisRestrictionFinrankOne
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.AbstractFixedFieldUnits
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 
 /-!
 # Values of Galois transport through fixed-field presentations
@@ -24,7 +24,7 @@ noncomputable section
 
 namespace ClassFieldTheory
 
-open ClassFormation LocalClassFieldTheory KummerTheory CyclicCohomology
+open ClassFormation LocalClassFieldTheory
 
 variable (K : Type u) (L : Type v) (Ω : Type w) [Field K] [Field L] [Field Ω]
     [Algebra K L] [Algebra K Ω] [IsGalois K Ω]
@@ -32,7 +32,7 @@ variable (K : Type u) (L : Type v) (Ω : Type w) [Field K] [Field L] [Field Ω]
 /-- The transported quotient automorphism acts through the given ambient embedding. -/
 theorem galoisPresentation_mk_apply_val
     (H T : ClosedSubgroup Gal(Ω/K)) (hTH : T.toSubgroup ≤ H.toSubgroup)
-    (hn : (extensionSubgroup H T hTH).Normal)
+    (hn : (T.toSubgroup.subgroupOf H.toSubgroup).Normal)
     (eE : L ≃ₐ[K] abstractFixedField K Ω T) :
     let _ : Algebra (abstractFixedField K Ω H) (abstractFixedField K Ω T) :=
       (IntermediateField.inclusion (abstractFixedField_le K Ω hTH)).toRingHom.toAlgebra
@@ -44,12 +44,12 @@ theorem galoisPresentation_mk_apply_val
         (K := K) (F := abstractFixedField K Ω H) (E := abstractFixedField K Ω T) hF).trans
         (AlgEquiv.autCongr eE).symm)
           (abstractExtensionQuotientEquivGaloisGroup K Ω H T hTH hn
-            (QuotientGroup.mk' (extensionSubgroup H T hTH) σ)) x) : Ω) =
+            (QuotientGroup.mk' (T.toSubgroup.subgroupOf H.toSubgroup) σ)) x) : Ω) =
         σ.val (eE x : Ω) := by
   intro aHT hKHT hF σ x
   let τ : Gal((abstractFixedField K Ω T)/(abstractFixedField K Ω H)) :=
     abstractExtensionQuotientEquivGaloisGroup K Ω H T hTH hn
-      (QuotientGroup.mk' (extensionSubgroup H T hTH) σ)
+      (QuotientGroup.mk' (T.toSubgroup.subgroupOf H.toSubgroup) σ)
   have he := congrArg (fun y : abstractFixedField K Ω T => (y : Ω))
     (eE.apply_symm_apply (τ (eE x)))
   exact he.trans (abstractExtensionQuotientEquivGaloisGroup_mk_apply_val

@@ -37,9 +37,6 @@ namespace ClassFieldTheory.SmallHilbertClassFieldComparison
 
 variable {K : Type u} [Field K] [NumberField K]
 
-local instance smallHilbertArtinIdeleClassGroupIsMulCommutative :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 /-- All intrinsic small Hilbert class fields have the selected field's
 actual idèle-class norm subgroup. -/
@@ -144,7 +141,7 @@ theorem arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_prime
         (K := K) (L := E) v) =
       ClassGroup.mk K (finitePrimeFractionalIdeal v) := by
   let c : IdeleClassGroup K :=
-    QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+    IdeleGroup.toStandardClass K
       (IdeleGroup.finitePrimeIdele v)
   have hArtin :
       GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
@@ -158,6 +155,5 @@ theorem arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_prime
   rw [arithmeticSmallHilbertClassFieldGaloisEquivClassGroup_globalNormResidue]
   rw [GlobalClassFieldTheory.GlobalClassFields.smallHilbertClassFieldQuotientEquivClassGroup_mk]
   rw [IdeleGroup.idealClass_finitePrimeIdele]
-  rfl
 
 end ClassFieldTheory.SmallHilbertClassFieldComparison

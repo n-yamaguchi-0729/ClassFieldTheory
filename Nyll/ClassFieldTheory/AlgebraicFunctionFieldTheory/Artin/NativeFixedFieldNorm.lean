@@ -83,7 +83,7 @@ theorem finiteArtin_norm_eq_ambientFixedFieldArtin
     finiteArtin k K (abstractFixedField K (SeparableClosure K) T.field)
         (IdeleClassGroup.norm (k := k) (K := K)
           (L := abstractFixedField K (SeparableClosure K) H.field) c) =
-      Abelianization.map
+      Group.Abelianization.map
         (AlgEquiv.restrictScalarsHom
           (S := abstractFixedField K (SeparableClosure K) H.field)
           (A := abstractFixedField K (SeparableClosure K) T.field) K :
@@ -121,7 +121,7 @@ theorem finiteArtin_norm_eq_ambientFixedFieldArtin
   have hnative := finiteArtin_eq_intrinsicFixedField_restrict k K T.field hUB n
   have hvalue :
       finiteArtin k K (abstractFixedField K (SeparableClosure K) T.field) n =
-        Abelianization.map
+        Group.Abelianization.map
           (AlgEquiv.restrictScalarsHom
             (S := abstractFixedField K (SeparableClosure K) H.field)
             (A := abstractFixedField K (SeparableClosure K) T.field) K :

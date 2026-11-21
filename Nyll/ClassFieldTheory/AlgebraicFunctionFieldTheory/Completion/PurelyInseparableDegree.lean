@@ -6,13 +6,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Ramification.SumRamificationIndexMulInertiaDegExchange
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Mathlib.Algebra.CharP.Reduced
 public import Mathlib.FieldTheory.KummerPolynomial
 public import Mathlib.FieldTheory.PurelyInseparable.Exponent
 public import Mathlib.LinearAlgebra.Dimension.Constructions
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.PrimePowerDescent
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteExtensionCurve
-public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.BaseChangeTower
 
 /-!
 # Completion preserves purely inseparable function-field degrees
@@ -49,7 +50,7 @@ theorem finrank_adicCompletion_le
   have hsurj : Function.Surjective (Place.kw_ffgc_completionLinearCombination K w b) := by
     rw [← Set.range_eq_univ, ← LinearMap.coe_range,
       ← (LinearMap.range
-        (Place.kw_ffgc_completionLinearCombination K w b)).closed_of_finiteDimensional.closure_eq]
+        (Place.kw_ffgc_completionLinearCombination K w b)).isClosed_of_finiteDimensional.closure_eq]
     exact (Place.denseRange_completionLinearCombination K w b).closure_range
   have h := LinearMap.finrank_le_finrank_of_surjective hsurj
   simpa only [Module.finrank_fin_fun] using h
@@ -69,7 +70,7 @@ private theorem finrank_adicCompletion_eq_prime_of_root
     obtain ⟨c, hc⟩ := exists_pow_eq_of_completion_pow_eq (w.restrict K) p a b hb
     exact ha c hc
   have hirr : Irreducible (X ^ p - C (algebraMap K (w.restrict K).adicCompletion a)) :=
-    X_pow_sub_C_irreducible_of_prime (Fact.out : p.Prime) hnot
+    irreducible_X_pow_sub_C_of_prime (Fact.out : p.Prime) hnot
   have hroot : aeval (algebraMap L w.adicCompletion β)
       (X ^ p - C (algebraMap K (w.restrict K).adicCompletion a)) = 0 := by
     rw [map_sub, map_pow, aeval_X, aeval_C, ← map_pow, hβ,
@@ -118,7 +119,7 @@ private theorem exists_prime_adjoin_of_isPurelyInseparable
     change (algebraMap K L b) ^ p = β ^ p
     rw [← map_pow, hb, hβ]
   have hirr : Irreducible (X ^ p - C a) :=
-    X_pow_sub_C_irreducible_of_prime (Fact.out : p.Prime) ha
+    irreducible_X_pow_sub_C_of_prime (Fact.out : p.Prime) ha
   have heval : aeval β (X ^ p - C a) = 0 := by
     rw [map_sub, map_pow, aeval_X, aeval_C, hβ, sub_self]
   have hmin := minpoly.eq_of_irreducible_of_monic hirr heval
@@ -176,7 +177,7 @@ private theorem finrank_adicCompletion_eq_of_isPurelyInseparable_step
   have hw : (w.restrict M).restrict K = w.restrict K :=
     restrict_restrict (F := K) (E := M) w
   let aVM : Algebra (w.restrict K).adicCompletion (w.restrict M).adicCompletion :=
-    (IdeleGroup.completionMapOver (w.restrict K) (w.restrict M) hw).toAlgebra
+    (AlgebraicCurve.Place.completionMapOver (w.restrict K) (w.restrict M) hw).toAlgebra
   have hVM : FiniteDimensional (w.restrict K).adicCompletion
       (w.restrict M).adicCompletion := by
     cases hw
@@ -189,7 +190,7 @@ private theorem finrank_adicCompletion_eq_of_isPurelyInseparable_step
       (w.restrict M).adicCompletion w.adicCompletion :=
     IsScalarTower.of_algebraMap_eq fun x =>
       (congrArg (fun f : (w.restrict K).adicCompletion →+* w.adicCompletion => f x)
-        (IdeleGroup.completionMapOver_trans (w.restrict K) (w.restrict M) w
+        (AlgebraicCurve.Place.completionMapOver_trans (w.restrict K) (w.restrict M) w
           hw rfl rfl)).symm
   calc
     Module.finrank (w.restrict K).adicCompletion w.adicCompletion =

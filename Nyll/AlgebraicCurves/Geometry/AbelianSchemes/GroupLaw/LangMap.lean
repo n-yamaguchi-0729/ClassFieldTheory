@@ -103,7 +103,7 @@ theorem etale_langMap_of_map_maximalIdeal_le_sq
         IsLocalRing.maximalIdeal (A.presheaf.stalk x) ^ 2) :
     Etale (L.langMap hc π).1 := by
   apply L.etale_endAeval_of_map_maximalIdeal_le_sq hc hA π hdπ
-  simpa only [Polynomial.coeff_sub, Polynomial.coeff_X_zero, Polynomial.coeff_one_zero,
+  simpa only [Polynomial.coeff_sub, Polynomial.coeff_X_zero, AddMonoidAlgebra.coeff_one_zero,
     zero_sub, Int.cast_neg, Int.cast_one] using (neg_ne_zero.mpr (one_ne_zero : (1 : K) ≠ 0))
 
 include hA in
@@ -114,7 +114,7 @@ theorem surjective_langMap_of_map_maximalIdeal_le_sq
         IsLocalRing.maximalIdeal (A.presheaf.stalk x) ^ 2) :
     Surjective (L.langMap hc π).1 := by
   apply L.surjective_endAeval_of_map_maximalIdeal_le_sq hc hA π hdπ
-  simpa only [Polynomial.coeff_sub, Polynomial.coeff_X_zero, Polynomial.coeff_one_zero,
+  simpa only [Polynomial.coeff_sub, Polynomial.coeff_X_zero, AddMonoidAlgebra.coeff_one_zero,
     zero_sub, Int.cast_neg, Int.cast_one] using (neg_ne_zero.mpr (one_ne_zero : (1 : K) ≠ 0))
 
 include hA in

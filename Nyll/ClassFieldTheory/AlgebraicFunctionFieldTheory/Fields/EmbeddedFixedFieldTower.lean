@@ -5,7 +5,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 module
 
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Mathlib.FieldTheory.IsSepClosed
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GaloisExtensionQuotient
 public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
 

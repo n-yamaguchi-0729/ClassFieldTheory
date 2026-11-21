@@ -3,6 +3,7 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_Scheme_Modules_exists_iso_pullback_of_isPullback.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicGeometry_RelPicard_exists_chart_subsingleton_H1_fibre.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -46,3 +47,19 @@ theorem _root_.AlgebraicGeometry.Scheme.Modules.exists_iso_pullback_of_isPullbac
   refine ⟨φ, hφ₂, hφ₁, fun G => ⟨?_⟩⟩
   exact (pullbackCongr hφ₁.symm).app G ≪≫ (pullbackComp _ _).symm.app G ≪≫
     (Scheme.Modules.pullback φ.hom).mapIso ((pullbackComp _ _).symm.app G)
+
+namespace AlgebraicGeometry.Scheme.Modules
+
+noncomputable section
+
+/-- Transport a pullback isomorphism across the inverse scheme isomorphism. -/
+def isoPullbackInvOfIso {X Y : Scheme.{u}} (φ : X ≅ Y) {M : X.Modules} {N : Y.Modules}
+    (e : M ≅ (Scheme.Modules.pullback φ.hom).obj N) : N ≅ (Scheme.Modules.pullback φ.inv).obj M :=
+  ((Scheme.Modules.pullbackId Y).app N).symm ≪≫
+    (Scheme.Modules.pullbackCongr φ.inv_hom_id.symm).app N ≪≫
+    ((Scheme.Modules.pullbackComp φ.inv φ.hom).app N).symm ≪≫
+    (Scheme.Modules.pullback φ.inv).mapIso e.symm
+
+end
+
+end AlgebraicGeometry.Scheme.Modules

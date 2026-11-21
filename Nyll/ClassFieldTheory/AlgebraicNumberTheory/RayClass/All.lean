@@ -6,14 +6,19 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Approximation
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.CharacterNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Characters
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Ideal
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.IdealNormCore
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.LocalConductor
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.LocalNormBound
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Narrow
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Norm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.NormLift
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.OrdinaryClassGroupComparison
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.PrimeGeneration
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.PublicHigherUnitComparison
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
 

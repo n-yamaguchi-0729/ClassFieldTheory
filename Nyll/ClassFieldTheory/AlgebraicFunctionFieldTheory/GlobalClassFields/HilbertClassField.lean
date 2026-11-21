@@ -66,7 +66,7 @@ theorem splitRaySubgroup_zero_le_norm_iff (S : Finset (Place k K))
         w.ramificationIndex K = 1 ∧ w.inertiaDeg K = 1) := by
   intro akΩ aRΩ hkKΩ hRKΩ hkRΩ
   have hfunctionE : FunctionField k E.val :=
-    IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+    IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
       (k := k) (K := K) (Ω := SeparableClosure K) E.val
   have hEprincipal : HasPrincipalDivisors k E.val :=
     (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K E.val).toHasPrincipalDivisors

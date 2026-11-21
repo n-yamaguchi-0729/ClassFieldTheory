@@ -1,4 +1,4 @@
-# ClassFieldTheory (Lean 4.35.0)
+# ClassFieldTheory (Lean 4.36.0)
 
 [![Lean](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ClassFieldTheory/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
@@ -17,7 +17,7 @@ Let K be a nonarchimedean local field.
 
 | Result | Mathematical content |
 | --- | --- |
-| [Finite abelian reciprocity](Nyll/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalReciprocity.lean#L41) | For each finite abelian extension L/K, a continuous surjective Artin map Kˣ → Gal(L/K) has kernel N(Lˣ). |
+| [Finite abelian reciprocity](Nyll/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalReciprocity.lean#L43) | For each finite abelian extension L/K, a continuous surjective Artin map Kˣ → Gal(L/K) has kernel N(Lˣ). |
 | [Existence and classification](Nyll/ClassFieldTheory/Theorems/LocalClassFieldTheory/FiniteAbelianLocalExistenceOrderIso.lean#L38) | Finite abelian extensions in a fixed separable closure correspond, with reversed inclusion, to open finite-index subgroups of Kˣ via norms. |
 
 ### Global class field theory: number fields
@@ -38,7 +38,6 @@ Let K be a function field in one variable over a finite field k.
 | [Finite abelian reciprocity](Nyll/ClassFieldTheory/Theorems/FunctionField/FiniteReciprocity.lean#L75) | For each finite abelian extension L/K, the Artin map identifies C_K / N(C_L) with Gal(L/K), where C denotes the idèle class group. |
 | [Class-field existence and uniqueness](Nyll/ClassFieldTheory/Theorems/FunctionField/ClassField.lean#L66) | Every open finite-index subgroup of C_K in its usual topology is the norm subgroup of a unique finite abelian extension in a fixed separable closure. |
 <!-- nyll-publication:cft-main-results:end -->
-
 
 ## Choose an entry point
 
@@ -90,10 +89,9 @@ has passed the repository's verification workflow. Check the repository's
 for published versions; this README does not imply that a release tag already
 exists.
 
-
 ## Public API
 
-Use [leanprover/lean4:v4.35.0](lean-toolchain) and the Mathlib revision pinned in
+Use [leanprover/lean4:v4.36.0](lean-toolchain) and the Mathlib revision pinned in
 [lake-manifest.json](lake-manifest.json). Add this dependency to your project’s
 lakefile.toml:
 

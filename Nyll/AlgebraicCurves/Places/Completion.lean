@@ -44,6 +44,7 @@ public import Mathlib.RingTheory.Henselian
 public import Mathlib.RingTheory.SimpleRing.Principal
 public import Mathlib.Topology.Algebra.Module.FiniteDimension
 public import Mathlib.Topology.Algebra.Valued.NormedValued
+public import Mathlib.Topology.DenseEmbedding
 public import Mathlib.Topology.UniformSpace.Uniformizable
 public import Nyll.AlgebraicCurves.Divisors.Maps.Maps
 public import Nyll.ValuedFieldTheory.Valuation.Completion.AdicCompletion
@@ -404,7 +405,7 @@ instance kw_ffgc_finiteDimensional_adicCompletion [FiniteDimensional F F'] :
   exact Module.Finite.of_surjective (kw_ffgc_completionLinearCombination F W b) (by
     rw [← Set.range_eq_univ, ← LinearMap.coe_range,
       ← (LinearMap.range
-          (kw_ffgc_completionLinearCombination F W b)).closed_of_finiteDimensional.closure_eq]
+          (kw_ffgc_completionLinearCombination F W b)).isClosed_of_finiteDimensional.closure_eq]
     exact (denseRange_completionLinearCombination F W b).closure_range)
 
 end FiniteDimensional
@@ -431,6 +432,81 @@ def completionTraceF' [FiniteDimensional F F'] : F' →ₗ[F] (W.restrict F).adi
       rfl }
 
 end CompletionTrace
+
+section CompletionMaps
+
+variable {k K L : Type*} [Field k] [Field K] [Field L]
+    [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L]
+    [Algebra.IsIntegral K L]
+
+/-- The existing completion map, transported only by the equality of base places. -/
+def completionMapOver (v : AlgebraicCurve.Place k K)
+    (w : AlgebraicCurve.Place k L) (hw : w.restrict K = v) :
+    v.adicCompletion →+* w.adicCompletion :=
+  hw ▸ AlgebraicCurve.Place.kw_ffgc_adicCompletionComap K w
+
+/-- The canonical map between the completions is continuous. -/
+theorem continuous_completionMapOver (v : AlgebraicCurve.Place k K)
+    (w : AlgebraicCurve.Place k L) (hw : w.restrict K = v) :
+    Continuous (completionMapOver v w hw) := by
+  subst v
+  exact AlgebraicCurve.Place.continuous_adicCompletionComap K w
+
+/-- On the original field, the completion map is the extension embedding. -/
+theorem completionMapOver_algebraMap (v : AlgebraicCurve.Place k K)
+    (w : AlgebraicCurve.Place k L) (hw : w.restrict K = v) (x : K) :
+    completionMapOver v w hw (algebraMap K v.adicCompletion x) =
+      algebraMap L w.adicCompletion (algebraMap K L x) := by
+  subst v
+  exact (AlgebraicCurve.Place.adicCompletionComap_algebraMap_algebraMap K w x).symm
+
+end CompletionMaps
+
+section CompletionMapTower
+
+variable {k K L M : Type*} [Field k] [Field K] [Field L] [Field M]
+    [Algebra k K] [Algebra k L] [Algebra k M]
+    [Algebra K L] [Algebra L M] [Algebra K M]
+    [IsScalarTower k K L] [IsScalarTower k L M] [IsScalarTower k K M]
+    [IsScalarTower K L M]
+    [Algebra.IsIntegral K L] [Algebra.IsIntegral L M] [Algebra.IsIntegral K M]
+
+/-- The completion maps compose along an integral field tower. The equalities
+record only the restrictions of the three places. -/
+theorem completionMapOver_trans (v : AlgebraicCurve.Place k K)
+    (w : AlgebraicCurve.Place k L) (u : AlgebraicCurve.Place k M)
+    (hw : w.restrict K = v) (hu : u.restrict L = w) (huv : u.restrict K = v) :
+    (completionMapOver w u hu).comp (completionMapOver v w hw) =
+      completionMapOver v u huv := by
+  have hdense : DenseRange (algebraMap K v.adicCompletion) :=
+    IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap K v.heightOneSpectrum
+  have hfun : (fun x => completionMapOver w u hu (completionMapOver v w hw x)) =
+      completionMapOver v u huv :=
+    hdense.equalizer
+      ((continuous_completionMapOver w u hu).comp (continuous_completionMapOver v w hw))
+      (continuous_completionMapOver v u huv) (by
+        funext x
+        simp only [Function.comp_apply, completionMapOver_algebraMap]
+        rw [← IsScalarTower.algebraMap_apply K L M])
+  exact RingHom.ext (fun x => congrFun hfun x)
+
+end CompletionMapTower
+
+/-- The completion map for the identity extension is the identity homomorphism. -/
+theorem completionMapOver_self
+    {k K : Type*} [Field k] [Field K] [Algebra k K]
+    (v : AlgebraicCurve.Place k K) (hv : v.restrict K = v) :
+    completionMapOver v v hv = RingHom.id v.adicCompletion := by
+  have hdense : DenseRange (algebraMap K v.adicCompletion) :=
+    IsDedekindDomain.HeightOneSpectrum.denseRange_algebraMap K v.heightOneSpectrum
+  have hfun : (completionMapOver v v hv : v.adicCompletion → v.adicCompletion) = _root_.id :=
+    hdense.equalizer (continuous_completionMapOver v v hv) continuous_id (by
+      funext x
+      change completionMapOver v v hv (algebraMap K v.adicCompletion x) =
+        algebraMap K v.adicCompletion x
+      rw [completionMapOver_algebraMap]
+      rfl)
+  exact RingHom.ext (fun x => congrFun hfun x)
 
 end AlgebraicCurve.Place
 

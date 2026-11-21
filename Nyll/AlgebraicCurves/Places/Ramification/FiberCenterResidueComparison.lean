@@ -185,7 +185,8 @@ theorem restrictResidueFieldEquiv_residue (hw : w.restrict F = v)
     IsLocalRing.ResidueField.map_residue, RingEquiv.coe_toRingHom]
 
 /-- The place and its fibre centre have the same inertia degree. -/
-theorem inertiaDeg_eq_inertiaDeg_fiberCenter (hw : w.restrict F = v) :
+theorem _root_.AlgebraicCurve.Place.inertiaDeg_eq_inertiaDeg_fiberCenter
+    (v : Place K F) (hw : w.restrict F = v) :
     w.inertiaDeg F =
       (fiberCenter F' v hw).asIdeal.inertiaDeg v.toValuationSubring := by
   have := fiberCenter_liesOver hw

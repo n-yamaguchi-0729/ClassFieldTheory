@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.PresentedRayArtinTransfer
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.FiniteGaloisPresentation
 
@@ -47,7 +49,7 @@ local notation "F" => abstractFixedField K (SeparableClosure K) (FiniteAbstractF
 local notation "η" => finiteGaloisEmbeddedFixedFieldEquiv K L i
 
 attribute [local instance]
-  presentedFixedFieldSeparableClosureAlgebra presentedFixedFieldSeparableClosureSMul
+  finiteFixedFieldSeparableClosureAlgebra finiteFixedFieldSeparableClosureSMul
 
 /-- The embedded Galois field has a normal absolute fixing subgroup. -/
 local instance embeddedTransferNormal : (H).field.toSubgroup.Normal := by
@@ -213,7 +215,7 @@ namespace RayClass
 fields, constructed from the explicit finite extension embedding. -/
 def nativeRayTransferOfEmbedding (m : Modulus k K) (hm : ∀ v, m v ≤ 1) :
     (localAbsoluteAbelianProfinite K ⧸ artinRaySubgroup m) →ₜ*
-      (localAbsoluteAbelianProfinite L ⧸ artinRaySubgroup (rayModulusBaseChange L m)) :=
+      (localAbsoluteAbelianProfinite L ⧸ artinRaySubgroup (reindexAlongPlaces L m)) :=
   nativeRayTransferOfDegreeOnePresentation k K L H
     (embeddedTransferPresentation_finrank K L i)
     (fixedFieldSeparableClosureEquiv K (SeparableClosure K) H)
@@ -224,15 +226,15 @@ theorem nativeRayTransferOfEmbedding_mk
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (a : localAbsoluteAbelianProfinite K) :
     nativeRayTransferOfEmbedding K L i k m hm
         (QuotientGroup.mk' (artinRaySubgroup m) a) =
-      QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange L m))
+      QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces L m))
         (nativeAbsoluteTransferOfEmbedding K L i a) := rfl
 
 /-- The actual restricted-product inclusion square for any actual finite
 Galois extension and its original embedding into the lower separable closure. -/
 theorem restrictedProductAbsoluteArtin_baseChange_transferOfEmbedding
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (a : RayRestrictedProduct m) :
-    restrictedProductAbsoluteArtin (rayModulusBaseChange L m)
-        (restrictedRayBaseChange (L := L) m hm a) =
+    restrictedProductAbsoluteArtin (reindexAlongPlaces L m)
+        (restrictedRayBaseChange (L := L) m a) =
       nativeRayTransferOfEmbedding K L i k m hm (restrictedProductAbsoluteArtin m a) :=
   restrictedProductAbsoluteArtin_baseChange_presentedTransfer k K L H
     (embeddedTransferPresentation_finrank K L i)

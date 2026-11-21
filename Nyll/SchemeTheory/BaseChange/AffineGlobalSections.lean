@@ -53,12 +53,8 @@ def toSec (U : X.Opens) : CommRingCat.of k ⟶ Γ(X, U) :=
   (Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫
     fX.appLE ⊤ U ((le_top : U ≤ ⊤).trans (Scheme.Hom.preimage_top fX).ge)
 
-theorem appLE_top_top {Y : Scheme.{u}} (f : X ⟶ Y) : f.appLE ⊤ ⊤ le_top = f.appTop := by
-  rw [Scheme.Hom.appTop, Scheme.Hom.app_eq_appLE]
-  rfl
-
 theorem toSec_top : toSec fX ⊤ = (Scheme.ΓSpecIso (CommRingCat.of k)).inv ≫ fX.appTop := by
-  rw [toSec, appLE_top_top]
+  rw [toSec, Scheme.Hom.appLE_top_eq_appTop]
 @[reassoc (attr := simp)]
 theorem toSec_map {U V : X.Opens} (i : Opposite.op U ⟶ Opposite.op V) :
     toSec fX U ≫ X.presheaf.map i = toSec fX V := by
@@ -79,7 +75,7 @@ theorem toSec_app (U : X.Opens) :
       CommRingCat.ofHom (algebraMap k A) ≫ toSecA fX A U := by
   rw [toSec, toSecA, toSec, Category.assoc, Scheme.Hom.app_eq_appLE, Scheme.Hom.appLE_comp_appLE,
     appLE_congrHom pullback.condition, ← Scheme.Hom.appLE_comp_appLE _ _ ⊤ ⊤ _ le_top,
-    appLE_top_top, ← Scheme.ΓSpecIso_inv_naturality_assoc]
+    Scheme.Hom.appLE_top_eq_appTop, ← Scheme.ΓSpecIso_inv_naturality_assoc]
 
 theorem isPushout_toSec_app {U : X.Opens} (hU : IsAffineOpen U) :
     IsPushout (CommRingCat.ofHom (algebraMap k A)) (toSec fX U) (toSecA fX A U)

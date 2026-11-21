@@ -171,13 +171,13 @@ theorem
       equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
         K p ϖ hϖ n
     (LocalFieldTheory.fieldPrincipalUnits K 0).map
-        (Universe.abelianLocalArtinMonoidHom K L) = ⊤ := by
+        (abelianLocalArtinMonoidHom K L) = ⊤ := by
   intro F sharedOwner2 L sharedOwner4 sharedOwner5 sharedOwner6 sharedOwner7
   let φ : Kˣ →* Gal(L / K) :=
-    Universe.abelianLocalArtinMonoidHom K L
+    abelianLocalArtinMonoidHom K L
   have hφ : Function.Surjective φ := by
-    change Function.Surjective (Universe.abelianLocalArtinMonoidHom K L)
-    exact Universe.abelianLocalArtinMonoidHom_surjective K L
+    change Function.Surjective (abelianLocalArtinMonoidHom K L)
+    exact abelianLocalArtinMonoidHom_surjective K L
   have hNorm :
       Subgroup.zpowers ϖ ≤
         localNormSubgroup K L := by
@@ -190,9 +190,9 @@ theorem
     simp [LocalFieldTheory.uniformizerPrincipalSubgroup]
   have hφKer : φ.ker = localNormSubgroup K L := by
     change
-      (Universe.abelianLocalArtinMonoidHom K L).ker =
+      (abelianLocalArtinMonoidHom K L).ker =
         localNormSubgroup K L
-    exact Universe.abelianLocalArtinMonoidHom_ker K L
+    exact abelianLocalArtinMonoidHom_ker K L
   have hϖKer : Subgroup.zpowers ϖ ≤ φ.ker := by
     rw [hφKer]
     exact hNorm
@@ -342,7 +342,7 @@ theorem
   intro F B sharedOwner3 L sharedOwner5 sharedOwner6 sharedOwner7 sharedOwner8 sharedOwner9
   change
     (LocalFieldTheory.fieldPrincipalUnits K (n + 1)).map
-        (Universe.abelianLocalArtinMonoidHom K L) = ⊥
+        (abelianLocalArtinMonoidHom K L) = ⊥
   exact
     (equalCharTransportedLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup
       K p ϖ hϖ n (n + 1) (by omega) (by omega)).trans
@@ -585,7 +585,7 @@ theorem
               (by simpa only [k] using hkn)
       change
         (LocalFieldTheory.fieldPrincipalUnits K k).map
-            (Universe.abelianLocalArtinMonoidHom K L) =
+            (abelianLocalArtinMonoidHom K L) =
           localUpperRamificationGroup K L t
       exact
         (equalCharTransportedLubinTateArtinPrincipalUnitsImage_eq_localUpperRamificationGroup

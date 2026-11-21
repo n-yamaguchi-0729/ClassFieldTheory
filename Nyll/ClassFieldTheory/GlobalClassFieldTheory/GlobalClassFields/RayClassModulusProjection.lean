@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayClassFieldRealization
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Topology
@@ -32,10 +34,6 @@ open NumberField IsDedekindDomain
 
 variable (K : Type*) [Field K] [NumberField K]
 
-local instance ideleClassIsMulCommutative :
-    IsMulCommutative (IdeleClassGroup K) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
 local instance rayCongruenceNormal (m : RayClass.Modulus K) :
     (RayClass.Modulus.congruenceSubgroup m).Normal :=
   Subgroup.normal_of_isMulCommutative _
@@ -47,7 +45,7 @@ def originalRayClassModulusProjection
   QuotientGroup.map
     (RayClass.Modulus.congruenceSubgroup n)
     (RayClass.Modulus.congruenceSubgroup m)
-    (MonoidHom.id (IdeleClassGroup K))
+    (MonoidHom.id (NumberField.IdeleClassGroup (𝓞 K) K))
     (RayClass.Modulus.congruenceSubgroup_antitone hmn)
 
 /-- The projection of the original idèle-class ray groups is onto. -/
@@ -153,11 +151,11 @@ theorem rayClassModulusProjection_prime
 ray class fields inside the fixed separable closure. -/
 theorem chosenRayClassFieldSubfield_mono
     {m n : RayClassModulus K} (hmn : m ≤ n) :
-    GlobalClassFieldTheory.GlobalClassFields.rayClassFieldSubfield K
+    GlobalClassFieldTheory.GlobalClassFields.rayClassField K
         (GlobalClassFieldComparison.rayClassModulusToOriginal K m) ≤
-      GlobalClassFieldTheory.GlobalClassFields.rayClassFieldSubfield K
+      GlobalClassFieldTheory.GlobalClassFields.rayClassField K
         (GlobalClassFieldComparison.rayClassModulusToOriginal K n) := by
-  apply GlobalClassFieldTheory.GlobalClassFields.rayClassFieldSubfield_mono
+  apply GlobalClassFieldTheory.GlobalClassFields.rayClassField_mono
   exact hmn
 
 end ClassFieldTheory

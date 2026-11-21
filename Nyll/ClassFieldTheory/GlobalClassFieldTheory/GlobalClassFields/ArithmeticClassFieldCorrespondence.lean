@@ -4,16 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.QuotientTransport
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationCore
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Evaluation
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Evaluation
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Degree
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.QuotientTransport
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Construction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationValue
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.EvaluationCore
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Topological.Evaluation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Construction
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.Algebraic.Evaluation
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ClosedFiniteIndexClassFieldReciprocity.GlobalNormResidue
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.ArithmeticNormalization
 
 /-!
 # Arithmetic topological class-field correspondence
@@ -25,7 +28,7 @@ canonical arithmetic reciprocity homeomorphism
 are fixed rather than merely asserted to exist.
 -/
 
-
+@[expose] public section
 
 open scoped IsMulCommutative NumberField
 
@@ -41,83 +44,6 @@ universe u v
 
 variable {K : Type u} [Field K] [NumberField K]
 
-/-- Fix the commutative idèle-class instance path used by every quotient in
-this module, so the norm quotient and the literal quotient share one normality
-construction during elaboration. -/
-local instance
-    arithmeticClassFieldCorrespondenceIdeleClassGroupIsMulCommutative
-    {F : Type v} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-private noncomputable def
-    arithmeticClosedFiniteIndexClassFieldReciprocityData
-    (H : Subgroup (IdeleClassGroup K))
-    (hclosed : IsClosed (H : Set (IdeleClassGroup K)))
-    [H.FiniteIndex] :
-    {e : Gal((closedFiniteIndexClassField
-            (K := K) H hclosed) / K) ≃ₜ*
-          IdeleClassGroup K ⧸ H //
-      ∀ c : IdeleClassGroup K,
-        e (arithmeticGlobalNormResidueMonoidHom K
-            (closedFiniteIndexClassField
-              (K := K) H hclosed) c) =
-          QuotientGroup.mk' H c} := by
-  letI : DiscreteTopology
-      (IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K
-          (closedFiniteIndexClassField
-            (K := K) H hclosed)).range) :=
-    ideleClassNormQuotient_discreteTopology K
-      (closedFiniteIndexClassField
-        (K := K) H hclosed)
-  letI : DiscreteTopology
-      (IdeleClassGroup K ⧸ H) :=
-    QuotientGroup.discreteTopology
-      (Subgroup.isOpen_of_isClosed_of_finiteIndex H hclosed)
-  let quotientTransport :
-      (IdeleClassGroup K ⧸
-          (_root_.ideleClassNorm K
-            (closedFiniteIndexClassField
-              (K := K) H hclosed)).range) ≃ₜ*
-        IdeleClassGroup K ⧸ H :=
-    { QuotientGroup.quotientMulEquivOfEq
-        (closedFiniteIndexClassField_ideleClassNorm_range
-          (K := K) H hclosed) with
-      continuous_toFun := continuous_of_discreteTopology
-      continuous_invFun := continuous_of_discreteTopology }
-  refine
-    ⟨(arithmeticGlobalReciprocityContinuousMulEquiv
-        K (closedFiniteIndexClassField
-          (K := K) H hclosed)).trans quotientTransport, ?_⟩
-  intro c
-  calc
-    ((arithmeticGlobalReciprocityContinuousMulEquiv
-        K (closedFiniteIndexClassField
-          (K := K) H hclosed)).trans quotientTransport)
-          (arithmeticGlobalNormResidueMonoidHom K
-            (closedFiniteIndexClassField
-              (K := K) H hclosed) c) =
-        quotientTransport
-          (arithmeticGlobalReciprocityContinuousMulEquiv K
-            (closedFiniteIndexClassField
-              (K := K) H hclosed)
-            (arithmeticGlobalNormResidueMonoidHom K
-              (closedFiniteIndexClassField
-                (K := K) H hclosed) c)) := rfl
-    _ = quotientTransport
-          (QuotientGroup.mk'
-            (_root_.ideleClassNorm K
-              (closedFiniteIndexClassField
-                (K := K) H hclosed)).range c) :=
-      congrArg quotientTransport
-        (arithmeticGlobalReciprocityContinuousMulEquiv_globalNormResidue
-          K (closedFiniteIndexClassField
-            (K := K) H hclosed) c)
-    _ = QuotientGroup.mk' H c :=
-      QuotientGroup.quotientMulEquivOfEq_mk
-        (closedFiniteIndexClassField_ideleClassNorm_range
-          (K := K) H hclosed) c
 
 /-- Arithmetic global reciprocity for the actual class field selected
 by a closed finite-index idèle-class subgroup. -/
@@ -129,8 +55,29 @@ noncomputable def
     Gal((closedFiniteIndexClassField
           (K := K) H hclosed) / K) ≃ₜ*
       IdeleClassGroup K ⧸ H :=
-  (arithmeticClosedFiniteIndexClassFieldReciprocityData
-    (K := K) H hclosed).1
+  (arithmeticGlobalReciprocityContinuousMulEquiv K
+    (closedFiniteIndexClassField (K := K) H hclosed)).trans
+    (QuotientGroup.quotientContinuousMulEquivOfEq
+      (closedFiniteIndexClassField_ideleClassNorm_range (K := K) H hclosed))
+
+private theorem arithmeticReciprocity_trans_quotient_apply
+    {L : Type v} [Field L] [NumberField L] [Algebra K L]
+    [FiniteDimensional K L] [IsAbelianGalois K L]
+    {H : Subgroup (IdeleClassGroup K)} (hNorm : (_root_.ideleClassNorm K L).range = H)
+    (c : IdeleClassGroup K) :
+    ((arithmeticGlobalReciprocityContinuousMulEquiv K L).trans
+      (QuotientGroup.quotientContinuousMulEquivOfEq hNorm))
+        (arithmeticGlobalNormResidueMonoidHom K L c) = QuotientGroup.mk' H c := by
+  let q := QuotientGroup.quotientContinuousMulEquivOfEq hNorm
+  calc
+    _ = q (arithmeticGlobalReciprocityContinuousMulEquiv K L
+        (arithmeticGlobalNormResidueMonoidHom K L c)) := rfl
+    _ = q (QuotientGroup.mk' (_root_.ideleClassNorm K L).range c) :=
+      congrArg q (arithmeticGlobalReciprocityContinuousMulEquiv_globalNormResidue K L c)
+    _ = QuotientGroup.quotientMulEquivOfEq hNorm
+        (QuotientGroup.mk' (_root_.ideleClassNorm K L).range c) :=
+      QuotientGroup.quotientContinuousMulEquivOfEq_apply _ _
+    _ = QuotientGroup.mk' H c := QuotientGroup.quotientMulEquivOfEq_mk hNorm c
 
 /-- The arithmetic norm-residue symbol of an idèle class maps to its
 literal class modulo the defining subgroup. -/
@@ -147,9 +94,9 @@ theorem
           (closedFiniteIndexClassField
             (K := K) H hclosed) c) =
       QuotientGroup.mk' H c := by
-  exact
-    (arithmeticClosedFiniteIndexClassFieldReciprocityData
-      (K := K) H hclosed).2 c
+  exact arithmeticReciprocity_trans_quotient_apply
+    (K := K) (L := closedFiniteIndexClassField (K := K) H hclosed)
+    (closedFiniteIndexClassField_ideleClassNorm_range (K := K) H hclosed) c
 
 /-- The inverse correspondence sends a represented class modulo `H`
 to its actual arithmetic global norm-residue automorphism. -/
@@ -166,15 +113,10 @@ theorem
       arithmeticGlobalNormResidueMonoidHom K
         (closedFiniteIndexClassField
           (K := K) H hclosed) c := by
-  let d :=
-    arithmeticClosedFiniteIndexClassFieldReciprocityData
-      (K := K) H hclosed
-  change
-    d.1.symm (QuotientGroup.mk' H c) =
-      arithmeticGlobalNormResidueMonoidHom K
-        (closedFiniteIndexClassField
-          (K := K) H hclosed) c
-  exact d.1.symm_apply_eq.mpr (d.2 c).symm
+  apply (arithmeticClosedFiniteIndexClassFieldGaloisContinuousMulEquivNormQuotient
+    (K := K) H hclosed).symm_apply_eq.mpr
+  exact (arithmeticClosedFiniteIndexClassFieldGaloisContinuousMulEquivNormQuotient_globalNormResidue
+    (K := K) H hclosed c).symm
 
 end GlobalClassFields
 end GlobalClassFieldTheory

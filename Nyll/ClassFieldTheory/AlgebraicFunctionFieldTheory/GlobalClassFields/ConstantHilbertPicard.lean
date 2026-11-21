@@ -37,11 +37,7 @@ variable (k : Type u) (E : Type v) (K : Type w) [Field k] [Field E] [Field K]
   [Algebra k E] [Algebra k K] [Algebra E K] [IsScalarTower k E K]
   [Algebra.IsIntegral k E] [HasPrincipalDivisors k K] [HasPrincipalDivisors E K]
 
-local instance : CommGroup (IdeleClassGroup k K) :=
-  QuotientGroup.Quotient.commGroup (G := IdeleGroup k K) (IdeleGroup.principalSubgroup k K)
-
-local instance : IsMulCommutative (IdeleClassGroup k K) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
+attribute [local instance] IdeleClassGroup.commGroup IdeleClassGroup.isMulCommutative
 
 namespace IdeleClassGroup
 

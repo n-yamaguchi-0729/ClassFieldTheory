@@ -9,7 +9,7 @@ public import Mathlib.FieldTheory.Galois.Abelian
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.EmbeddedFixedFieldTower
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.FiniteAbelian
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.NativeFixedFieldNormCompatibility
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.SeparableUnitsNorm
 public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.ClosedFixingSubgroup
 
@@ -105,13 +105,13 @@ private theorem abelianFiniteArtin_norm_restrictScalars_fixedField
   intro aFE sFE mFE hKFE hkFE hFEfinite hFEabelian c
   have hcomm : IsMulCommutative T.extensionQuotient :=
     fixedFieldQuotient_isMulCommutative K H T
-  apply (Abelianization.equivOfComm
+  apply (Group.Abelianization.equivOfComm
     (H := Gal((abstractFixedField K (SeparableClosure K) T.field)/K))).injective
-  change Abelianization.of
+  change Group.Abelianization.of
       (abelianFiniteArtin k K (abstractFixedField K (SeparableClosure K) T.field)
         (IdeleClassGroup.norm
           (k := k) (K := K) (L := abstractFixedField K (SeparableClosure K) H.field) c)) =
-    Abelianization.of (AlgEquiv.restrictScalarsHom K
+    Group.Abelianization.of (AlgEquiv.restrictScalarsHom K
       (abelianFiniteArtin k (abstractFixedField K (SeparableClosure K) H.field)
         (abstractFixedField K (SeparableClosure K) T.field) c))
   let r : Gal((abstractFixedField K (SeparableClosure K) T.field)/
@@ -126,10 +126,10 @@ private theorem abelianFiniteArtin_norm_restrictScalars_fixedField
     (abstractFixedField K (SeparableClosure K) H.field)
     (abstractFixedField K (SeparableClosure K) T.field) c
   have hNorm := finiteArtin_norm_restrictScalars_of_fixedField k K H T c
-  have hMap := Abelianization.map_of r
+  have hMap := Group.Abelianization.map_of r
     (abelianFiniteArtin k (abstractFixedField K (SeparableClosure K) H.field)
       (abstractFixedField K (SeparableClosure K) T.field) c)
-  exact hLower.trans (hNorm.trans ((congrArg (Abelianization.map r) hUpper).symm.trans hMap))
+  exact hLower.trans (hNorm.trans ((congrArg (Group.Abelianization.map r) hUpper).symm.trans hMap))
 
 variable
     (F E : IntermediateField K (SeparableClosure K))

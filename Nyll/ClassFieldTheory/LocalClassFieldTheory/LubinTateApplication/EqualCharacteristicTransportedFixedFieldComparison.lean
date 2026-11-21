@@ -6,14 +6,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Naturality
+
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.EqualCharacteristicTransportedRealFilteredComparison
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.EqualCharacteristic
 public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Reciprocity.FiniteAbelianSubextension
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupOrderEmbedding
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseSemilinearNaturality
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.LubinTateApplication.LubinTateTransport
 public import Nyll.ClassFieldTheory.LubinTate.EqualCharacteristic.FiniteLevel.LevelField
 public import Nyll.ValuedFieldTheory.LocalField.DiscreteValuationField.Basic
@@ -50,22 +50,6 @@ open LubinTate.EqualCharacteristic
 
 variable (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
   [IsNonarchimedeanLocalField K]
-
-/-- Mapping the Artin principal-unit step group along a base-linear
-equivalence gives the corresponding group on the equivalent extension. -/
-theorem artinPrincipalUnitStepGroup_map_autCongr
-    (L : Type v) (M : Type w) [Field L] [Field M]
-    [Algebra K L] [Algebra K M]
-    [FiniteDimensional K L] [FiniteDimensional K M]
-    [IsAbelianGalois K L] [IsAbelianGalois K M]
-    (e : L ≃ₐ[K] M) (t : ℝ) :
-    Subgroup.map (AlgEquiv.autCongr e).toMonoidHom
-        (artinPrincipalUnitStepGroup K L t) =
-      artinPrincipalUnitStepGroup K M t := by
-  unfold artinPrincipalUnitStepGroup RamificationTheory.natCeilStepFiltration
-    artinPrincipalUnitGroup
-  rw [Subgroup.map_map]
-  rw [Universe.abelianLocalArtinMonoidHom_autCongr K L M e]
 
 /-- Real filtered local reciprocity for the named fixed field representing
 a transported equal-characteristic Lubin--Tate level. -/

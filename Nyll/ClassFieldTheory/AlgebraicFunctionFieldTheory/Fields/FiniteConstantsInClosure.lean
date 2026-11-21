@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.Algebra.NormalEmbeddingRange
 public import Mathlib.FieldTheory.Finite.Extension
 public import Mathlib.FieldTheory.Finite.GaloisField
 public import Mathlib.FieldTheory.Galois.GaloisClosure
@@ -37,11 +38,7 @@ ambient field, packaged with its finite Galois structure. -/
 def finiteConstantsInClosure : FiniteGaloisIntermediateField k Ω := by
   have : Fact (ringChar k).Prime := ⟨CharP.char_is_prime k (ringChar k)⟩
   let i : FiniteField.Extension k (ringChar k) n →ₐ[k] Ω := IsSepClosed.lift
-  let e : FiniteField.Extension k (ringChar k) n ≃ₐ[k] i.fieldRange := i.equivFieldRange
-  exact
-    { toIntermediateField := i.fieldRange
-      finiteDimensional := e.toLinearEquiv.finiteDimensional
-      isGalois := IsGalois.of_algEquiv e }
+  exact i.finiteGaloisFieldRange
 
 /-- The image of the chosen finite-field embedding has the requested degree. -/
 theorem finrank_finiteConstantsInClosure :

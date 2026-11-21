@@ -40,7 +40,7 @@ variable (k : Type u) (K : Type v) (L : Type w)
 relative to an explicit embedding into the separable closure. -/
 def finiteNormQuotientEquivOfEmbedding (i : L →ₐ[K] SeparableClosure K) :
     (IdeleClassGroup k K ⧸ (IdeleClassGroup.norm (k := k) (K := K) (L := L)).range) ≃*
-      Abelianization Gal(L/K) := by
+      Group.Abelianization Gal(L/K) := by
   let Ω := SeparableClosure K
   let akΩ : Algebra k Ω := ((algebraMap K Ω).comp (algebraMap k K)).toAlgebra
   let aRΩ : Algebra (RatFunc k) Ω :=
@@ -56,7 +56,7 @@ def finiteNormQuotientEquivOfEmbedding (i : L →ₐ[K] SeparableClosure K) :
 /-- Reciprocity for an arbitrary finite Galois function-field extension. -/
 def finiteNormQuotientEquiv :
     (IdeleClassGroup k K ⧸ (IdeleClassGroup.norm (k := k) (K := K) (L := L)).range) ≃*
-      Abelianization Gal(L/K) :=
+      Group.Abelianization Gal(L/K) :=
   finiteNormQuotientEquivOfEmbedding k K L
     (AlgebraicNumberTheory.separableEmbeddingIntoSeparableClosure K L)
 

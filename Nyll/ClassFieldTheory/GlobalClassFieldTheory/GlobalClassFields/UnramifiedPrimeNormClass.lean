@@ -36,13 +36,6 @@ namespace GlobalClassFields
 
 open NumberField IsDedekindDomain
 
-private theorem unramifiedPrimeNormClassGroupIsMulCommutative
-    (F : Type*) [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  IsMulCommutative.of_comm (fun a b => mul_comm a b)
-
-attribute [local instance] unramifiedPrimeNormClassGroupIsMulCommutative
-
 variable
     {K : Type u} {L : Type v}
     [Field K] [NumberField K]
@@ -73,19 +66,9 @@ theorem finitePlaceNormQuotientToGlobalClass_finitePlacePrimeNormClass
         (finitePlacePrimeNormClass
           (K := K) (L := L) v) =
       ideleClassNormFrobeniusClass
-        (K := K) (L := L) v := by
-  change
-    Reciprocity.finitePlaceNormQuotientToGlobalClass
-        (K := K) (L := L) v
-        (_root_.finitePlaceTensorNormClass
-          (K := K) (L := L) v
-          (FiniteIdeleGroup.chosenLocalOrderSection v 1)) =
-      ideleClassNormFrobeniusClass
-        (K := K) (L := L) v
-  rw [
-    Reciprocity.finitePlaceNormQuotientToGlobalClass_localClass
-      (K := K) (L := L) v]
-  rfl
+        (K := K) (L := L) v :=
+  Reciprocity.finitePlaceNormQuotientToGlobalClass_localClass
+    (K := K) (L := L) v (FiniteIdeleGroup.chosenLocalOrderSection v 1)
 
 end FiniteGalois
 

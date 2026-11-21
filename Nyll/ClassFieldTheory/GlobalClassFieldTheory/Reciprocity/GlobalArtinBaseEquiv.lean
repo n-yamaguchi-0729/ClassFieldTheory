@@ -40,30 +40,44 @@ theorem globalIdeleClassArtinMonoidHom_norm_restriction
     [Algebra L N] [IsScalarTower K L N] [IsAbelianGalois M N] :
     ((AlgEquiv.restrictNormalHom L).comp
         (AlgEquiv.restrictScalarsHom K)).comp
-        (globalIdeleClassArtinMonoidHom (K := M) (L := N)) =
-      (globalIdeleClassArtinMonoidHom (K := K) (L := L)).comp
+        (globalNormResidueMonoidHom M N) =
+      (globalNormResidueMonoidHom K L).comp
         (_root_.ideleClassNorm K M) := by
   apply MonoidHom.ext
   intro c
-  obtain ⟨a, rfl⟩ := QuotientGroup.mk'_surjective (IdeleGroup.principalSubgroup M) c
+  obtain ⟨a, rfl⟩ := IdeleGroup.toStandardClass_surjective M c
   change
     ((AlgEquiv.restrictNormalHom L).comp (AlgEquiv.restrictScalarsHom K))
-        (globalIdeleClassArtinMonoidHom (K := M) (L := N)
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup M) a)) =
-      globalIdeleClassArtinMonoidHom (K := K) (L := L)
+        (globalNormResidueMonoidHom M N
+          (IdeleGroup.toStandardClass M a)) =
+      globalNormResidueMonoidHom K L
         (_root_.ideleClassNorm K M
-          (QuotientGroup.mk' (IdeleGroup.principalSubgroup M) a))
-  rw [globalIdeleClassArtinMonoidHom_mk, ideleClassNorm_mk,
-    globalIdeleClassArtinMonoidHom_mk]
+          (IdeleGroup.toStandardClass M a))
+  rw [globalNormResidueMonoidHom_mk, ideleClassNorm_mk,
+    globalNormResidueMonoidHom_mk]
   exact DFunLike.congr_fun
     (globalArtinMonoidHom_norm_restriction (K := K) (L := L)
       (K' := M) (L' := N)) a
 
+/-- The finite Artin norm square on standard idèle classes of the original fields. -/
+theorem standardNumberFieldArtin_norm_restriction
+    {M : Type w} {N : Type x}
+    [Field M] [NumberField M] [Field N] [NumberField N]
+    [Algebra K M] [Algebra M N] [Algebra K N] [IsScalarTower K M N]
+    [Algebra L N] [IsScalarTower K L N] [IsAbelianGalois M N]
+    (c : NumberField.IdeleClassGroup (𝓞 M) M) :
+    AlgEquiv.restrictNormalHom L
+        ((standardNumberFieldArtinContinuousMonoidHom M N c).restrictScalars K) =
+      standardNumberFieldArtinContinuousMonoidHom K L (NumberField.IdeleClassGroup.norm K M c) := by
+  exact DFunLike.congr_fun
+    (globalIdeleClassArtinMonoidHom_norm_restriction
+      (K := K) (L := L) (M := M) (N := N)) c
+
 private theorem globalIdeleClassArtinMonoidHom_norm_self
     (c : IdeleClassGroup K) :
-    globalIdeleClassArtinMonoidHom (K := K) (L := L)
+    globalNormResidueMonoidHom K L
         (_root_.ideleClassNorm K K c) =
-      globalIdeleClassArtinMonoidHom (K := K) (L := L) c := by
+      globalNormResidueMonoidHom K L c := by
   have h := DFunLike.congr_fun
     (globalIdeleClassArtinMonoidHom_norm_restriction
       (K := K) (L := L) (M := K) (N := L)) c
@@ -82,8 +96,8 @@ theorem globalIdeleClassArtinMonoidHom_semilinear
     (hE : ∀ a : K, E (algebraMap K L a) = algebraMap M N (e a))
     (c : IdeleClassGroup K) :
     ClassFieldTheory.semilinearGaloisEquiv e.toRingEquiv E.toRingEquiv hE
-        (globalIdeleClassArtinMonoidHom (K := K) (L := L) c) =
-      globalIdeleClassArtinMonoidHom (K := M) (L := N) (ideleClassCongr e c) := by
+        (globalNormResidueMonoidHom K L c) =
+      globalNormResidueMonoidHom M N (ideleClassCongr e c) := by
   let : Algebra K M := e.toRingHom.toAlgebra
   let : Algebra L N := E.toRingHom.toAlgebra
   let : Algebra K N := ((algebraMap M N).comp e.toRingHom).toAlgebra
@@ -99,18 +113,18 @@ theorem globalIdeleClassArtinMonoidHom_semilinear
       (AlgEquiv.refl : K ≃ₐ[ℚ] K) e (fun _ => rfl) c
     rw [ideleClassCongr_refl] at h
     exact h.symm
-  let σ := globalIdeleClassArtinMonoidHom (K := M) (L := N) (ideleClassCongr e c)
+  let σ := globalNormResidueMonoidHom M N (ideleClassCongr e c)
   have hrestrict := DFunLike.congr_fun
     (globalIdeleClassArtinMonoidHom_norm_restriction
       (K := K) (L := L) (M := M) (N := N)) (ideleClassCongr e c)
   change AlgEquiv.restrictNormalHom L (AlgEquiv.restrictScalarsHom K σ) =
-      globalIdeleClassArtinMonoidHom (K := K) (L := L)
+      globalNormResidueMonoidHom K L
         (_root_.ideleClassNorm K M (ideleClassCongr e c)) at hrestrict
   rw [hnorm, globalIdeleClassArtinMonoidHom_norm_self] at hrestrict
   apply AlgEquiv.ext
   intro y
   obtain ⟨z, rfl⟩ := E.surjective y
-  change E ((globalIdeleClassArtinMonoidHom (K := K) (L := L) c)
+  change E ((globalNormResidueMonoidHom K L c)
       (E.symm (E z))) = σ (E z)
   rw [E.symm_apply_apply]
   have hvalue := congrArg (fun τ : Gal(L/K) => E (τ z)) hrestrict

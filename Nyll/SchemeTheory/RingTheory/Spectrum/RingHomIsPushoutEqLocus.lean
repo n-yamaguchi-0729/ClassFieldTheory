@@ -584,15 +584,15 @@ theorem ψ_ι (b y : S) : ψ 𝓔 b (𝓔.ι y) = 𝓔.ι (b * y) := by
 
 theorem ψ_pow_ι (b y : S) (k : ℕ) : (ψ 𝓔 b ^ k) (𝓔.ι y) = 𝓔.ι (b ^ k * y) := by
   induction k generalizing y with
-  | zero => simp only [pow_zero, Module.End.one_apply, one_mul]
-  | succ k ih => rw [pow_succ, Module.End.mul_apply, ψ_ι, ih, pow_succ, mul_assoc]
+  | zero => simp only [pow_zero, one_apply_eq_self, one_mul]
+  | succ k ih => rw [pow_succ, mul_apply_eq_comp, ψ_ι, ih, pow_succ, mul_assoc]
 
 theorem aeval_ψ_ι (b y : S) (p : R[X]) :
     (aeval (ψ 𝓔 b) p) (𝓔.ι y) = 𝓔.ι (aeval b p * y) := by
   induction p using Polynomial.induction_on' with
   | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq, add_mul]
   | monomial k c =>
-    simp only [aeval_monomial, Module.End.mul_apply, ψ_pow_ι]
+    simp only [aeval_monomial, mul_apply_eq_comp, ψ_pow_ι]
     rw [Module.algebraMap_end_apply, ← map_smul, Algebra.smul_def, mul_assoc]
 
 /-- The characteristic polynomial of the multiplication endomorphism on the finite free

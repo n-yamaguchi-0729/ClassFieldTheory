@@ -6,8 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusAt
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.MathlibFrobeniusHilbertComparison
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
 
 /-!
 # Arithmetic Frobenius in a finite abelian tower
@@ -24,26 +23,8 @@ universe u v w
 
 namespace ClassFieldTheory
 
-open NumberField IsDedekindDomain IdeleGroup
+open NumberField IsDedekindDomain
 open GlobalClassFieldTheory.GlobalClassFields
-
-private theorem arithmeticFinitePlacePrimeArtin_restrict_tower_of_globalArtin
-    (K : Type u) (E : Type v) (L : Type w) [Field K] [Field E] [Field L]
-    [NumberField K] [NumberField E] [NumberField L]
-    [Algebra K E] [Algebra E L] [Algebra K L] [IsScalarTower K E L]
-    [IsAbelianGalois K E] [IsAbelianGalois K L]
-    (v : HeightOneSpectrum (𝓞 K)) :
-    AlgEquiv.restrictNormalHom E
-        (arithmeticFinitePlacePrimeArtin (K := K) (L := L) v) =
-      arithmeticFinitePlacePrimeArtin (K := K) (L := E) v := by
-  rw [arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := L) v,
-    arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := E) v, map_inv]
-  simpa only [finitePlacePrimeArtin, MonoidHom.comp_apply] using
-    congrArg Inv.inv
-      (DFunLike.congr_fun
-        (GlobalClassFieldTheory.Reciprocity.globalArtinMonoidHom_restrict_tower
-          (K := K) (L := L) (E := E))
-        (IdeleGroup.finitePrimeIdele v))
 
 /-- In a finite abelian tower `K ⊆ E ⊆ L`, arithmetic Frobenius at an
 unramified prime of `L` restricts to arithmetic Frobenius at the specified
@@ -75,7 +56,7 @@ theorem arithmeticFrobeniusAt_restrict_tower
             rw [GlobalClassFieldComparison.arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
               v wL hwLv hunram]
     _ = arithmeticFinitePlacePrimeArtin (K := K) (L := E) v :=
-      arithmeticFinitePlacePrimeArtin_restrict_tower_of_globalArtin K E L v
+      arithmeticFinitePlacePrimeArtin_restrict_tower v
     _ = arithmeticFrobeniusAt (K := K) wE :=
       GlobalClassFieldComparison.arithmeticPrimeArtin_eq_arithmeticFrobeniusAt
         v wE hwE hunramE

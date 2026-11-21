@@ -4,13 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormHom
 import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormQuotient
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
 import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FiniteAbelianLocalExtension
 import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.IsFieldNorm
 import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.OpenFiniteIndexSubgroup
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.TopologicalProfiniteCompletion
 
 /-!
 # Local class-field definitions

@@ -83,7 +83,7 @@ theorem
       equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
         K p ϖ hϖ n
     (LocalFieldTheory.fieldPrincipalUnits K (m + 1)).map
-        (Universe.abelianLocalArtinMonoidHom K L) =
+        (abelianLocalArtinMonoidHom K L) =
       (equalCharacteristicTransportedLubinTateRestrictNormalHom
         K p ϖ hϖ hmn).ker := by
   intro F B sharedOwner3 E L sharedOwner6 sharedOwner7
@@ -118,21 +118,21 @@ theorem
       intro x
       apply L.val.injective
       rfl)
-  let φ := Universe.abelianLocalArtinMonoidHom K L
+  let φ := abelianLocalArtinMonoidHom K L
   let ψ :=
     equalCharacteristicTransportedLubinTateRestrictNormalHom
       K p ϖ hϖ hmn
   have hrestrict :
-      ψ.comp φ = Universe.abelianLocalArtinMonoidHom K E := by
+      ψ.comp φ = abelianLocalArtinMonoidHom K E := by
     change
       (AlgEquiv.restrictNormalHom E).comp
-          (Universe.abelianLocalArtinMonoidHom K L) =
-        Universe.abelianLocalArtinMonoidHom K E
-    exact Universe.abelianLocalArtinMonoidHom_restrict_tower K E L
+          (abelianLocalArtinMonoidHom K L) =
+        abelianLocalArtinMonoidHom K E
+    exact abelianLocalArtinMonoidHom_restrict_tower K E L
   have hker :
       (ψ.comp φ).ker =
         Subgroup.zpowers ϖ ⊔ LocalFieldTheory.fieldPrincipalUnits K (m + 1) := by
-    rw [hrestrict, Universe.abelianLocalArtinMonoidHom_ker]
+    rw [hrestrict, abelianLocalArtinMonoidHom_ker]
     change
       equalCharacteristicTransportedLubinTateNormSubgroup
           K p ϖ hϖ m =
@@ -141,7 +141,7 @@ theorem
       equalCharacteristicTransportedLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup
         K p ϖ hϖ m
   have hZ : Subgroup.zpowers ϖ ≤ φ.ker := by
-    rw [Universe.abelianLocalArtinMonoidHom_ker]
+    rw [abelianLocalArtinMonoidHom_ker]
     change
       Subgroup.zpowers ϖ ≤
         equalCharacteristicTransportedLubinTateNormSubgroup
@@ -151,7 +151,7 @@ theorem
     simp [LocalFieldTheory.uniformizerPrincipalSubgroup]
   exact Subgroup.map_eq_ker_of_comp_ker_eq_sup_of_left_le_ker
     φ ψ (Subgroup.zpowers ϖ) (LocalFieldTheory.fieldPrincipalUnits K (m + 1))
-    (Universe.abelianLocalArtinMonoidHom_surjective K L) hker hZ
+    (abelianLocalArtinMonoidHom_surjective K L) hker hZ
 
 /-- Integral filtered local reciprocity for a transported
 equal-characteristic Lubin--Tate level. -/
@@ -179,7 +179,7 @@ theorem
       equalCharacteristicTransportedLubinTateLevel_isAbelianGalois
         K p ϖ hϖ n
     (LocalFieldTheory.fieldPrincipalUnits K k).map
-        (Universe.abelianLocalArtinMonoidHom K L) =
+        (abelianLocalArtinMonoidHom K L) =
       localUpperRamificationGroup K L (k : ℝ) := by
   let m := k - 1
   have hmn : m ≤ n := by

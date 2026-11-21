@@ -42,7 +42,7 @@ variable (k : Type u) (K : Type v) (L : Type w) (M : Type x)
 /-- Compatible embeddings transport reciprocity along an arbitrary finite Galois tower. -/
 theorem finiteNormQuotientEquivOfEmbedding_restrictNormal [IsGalois K L] [IsGalois K M]
     (iM : M →ₐ[K] SeparableClosure K) (c : IdeleClassGroup k K) :
-    Abelianization.map (AlgEquiv.restrictNormalHom L)
+    Group.Abelianization.map (AlgEquiv.restrictNormalHom L)
         (finiteNormQuotientEquivOfEmbedding k K M iM (QuotientGroup.mk c)) =
       finiteNormQuotientEquivOfEmbedding k K L
         (iM.comp (IsScalarTower.toAlgHom K L M)) (QuotientGroup.mk c) := by
@@ -76,11 +76,11 @@ theorem finiteNormQuotientEquivOfEmbedding_restrictNormal [IsGalois K L] [IsGalo
 /-- The finite Artin map commutes with actual restriction in every finite Galois tower. -/
 theorem finiteArtin_restrictNormal [IsGalois K L] [IsGalois K M]
     (c : IdeleClassGroup k K) :
-    Abelianization.map (AlgEquiv.restrictNormalHom L) (finiteArtin k K M c) =
+    Group.Abelianization.map (AlgEquiv.restrictNormalHom L) (finiteArtin k K M c) =
       finiteArtin k K L c := by
   let iM := AlgebraicNumberTheory.separableEmbeddingIntoSeparableClosure K M
   let iL := iM.comp (IsScalarTower.toAlgHom K L M)
-  change Abelianization.map (AlgEquiv.restrictNormalHom L)
+  change Group.Abelianization.map (AlgEquiv.restrictNormalHom L)
       (finiteNormQuotientEquiv k K M (QuotientGroup.mk c)) =
     finiteNormQuotientEquiv k K L (QuotientGroup.mk c)
   rw [← finiteNormQuotientEquivOfEmbedding_eq_intrinsic k K M iM,
@@ -92,10 +92,10 @@ theorem abelianFiniteArtin_restrictNormal [IsAbelianGalois K L] [IsAbelianGalois
     (c : IdeleClassGroup k K) :
     AlgEquiv.restrictNormalHom L (abelianFiniteArtin k K M c) =
       abelianFiniteArtin k K L c := by
-  apply (Abelianization.equivOfComm (H := Gal(L/K))).injective
-  change Abelianization.of (AlgEquiv.restrictNormalHom L (abelianFiniteArtin k K M c)) =
-    Abelianization.of (abelianFiniteArtin k K L c)
-  rw [← Abelianization.map_of, abelianFiniteArtin_of, abelianFiniteArtin_of]
+  apply (Group.Abelianization.equivOfComm (H := Gal(L/K))).injective
+  change Group.Abelianization.of (AlgEquiv.restrictNormalHom L (abelianFiniteArtin k K M c)) =
+    Group.Abelianization.of (abelianFiniteArtin k K L c)
+  rw [← Group.Abelianization.map_of, abelianFiniteArtin_of, abelianFiniteArtin_of]
   exact finiteArtin_restrictNormal k K L M c
 
 end FunctionField

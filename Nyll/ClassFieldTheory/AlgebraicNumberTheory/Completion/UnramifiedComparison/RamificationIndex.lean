@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.UnramifiedComparison.IdealToCompletion
 public import Nyll.ValuedFieldTheory.Valuation.Henselian.AlgebraicExtensionUniqueness
 public import Nyll.ValuedFieldTheory.Valuation.LocalRingEquiv

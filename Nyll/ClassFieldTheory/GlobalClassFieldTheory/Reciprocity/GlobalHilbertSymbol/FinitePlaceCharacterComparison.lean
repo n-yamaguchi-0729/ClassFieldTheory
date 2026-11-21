@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalHilbertSymbol.FinitePlaceLocalGlobal
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.GeneralTowerNaturality
 public import Nyll.ValuedFieldTheory.Ramification.HilbertRamification.AlgebraicLocalization
@@ -316,8 +318,7 @@ private theorem finitePlaceKummerLocalArtin_eq_transported
       (AlgEquiv.autCongr e) sigmaS = sigmaE := hArtinEquiv
       _ = (AlgEquiv.autCongr e) tauS := by
         exact ((AlgEquiv.autCongr e).apply_symm_apply sigmaE).symm
-  change LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom C S aC = tauS
-  rw [LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom_eq_native]
+  change LocalClassFieldTheory.abelianLocalArtinMonoidHom C S aC = tauS
   exact hsigma
 
 private noncomputable def localizedDirectActionValue
@@ -744,6 +745,32 @@ private theorem finitePlaceKummerGlobalToLocalRingHom_root_pow
         (finitePlaceKummerGlobalToLocalRingHom_commutes
           K n hnK hmu v b w (b : K)).symm
 
+private theorem finitePlaceKummerRootCharacterOfExtension_eq_inverse
+    (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
+    (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
+    (v : HeightOneSpectrum (𝓞 K)) (a b : Kˣ)
+    (w : AbsoluteValueExtension
+      (NumberField.HeightOneSpectrum.adicAbv K v)
+      (chosenSimpleKummerExtension K n hnK b)) :
+    let L := chosenSimpleKummerExtension K n hnK b
+    finitePlaceKummerRootCharacterOfExtension K n hnK hmu v a b w =
+      (nthRootsSubgroupEquivOfPrimitiveRoots K L n hmu).symm
+        (chosenSimpleKummerRootCharacter K n hnK hmu b
+          (finitePlaceKummerGlobalArtinAutomorphism K n hnK hmu v a b w)) := by
+  intro L
+  dsimp only [finitePlaceKummerRootCharacterOfExtension, finitePlaceKummerGlobalArtinAutomorphism]
+
+private theorem map_units_of_rootCharacter_inverse
+    {B E : Type*} [Field B] [Field E] [Algebra B E] {M : Type*} [Monoid M]
+    (n : ℕ+) (hmu : (primitiveRoots (n : ℕ) B).Nonempty)
+    (f : E →* M) (x : nthRootsSubgroup B (n : ℕ)) (y : nthRootsSubgroup E (n : ℕ))
+    (z : Eˣ) (hx : x = (nthRootsSubgroupEquivOfPrimitiveRoots B E n hmu).symm y)
+    (hy : y.val = z) :
+    Units.map f (Units.map (algebraMap B E).toMonoidHom x.val) = Units.map f z := by
+  let e := nthRootsSubgroupEquivOfPrimitiveRoots B E n hmu
+  have h := (congrArg e hx).trans (e.apply_symm_apply y)
+  exact congrArg (Units.map f) ((congrArg Subtype.val h).trans hy)
+
 private theorem finitePlaceKummerMappedGlobalCharacter_units
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)
     (hmu : (primitiveRoots (n : ℕ) K).Nonempty)
@@ -764,29 +791,13 @@ private theorem finitePlaceKummerMappedGlobalCharacter_units
         (Units.map (algebraMap K L).toMonoidHom globalValue.1) =
       Units.map f.toMonoidHom
         (rootQuotient (K := K) (L := L) uL sigmaG) := by
-  intro L f
-  let uL : Lˣ := chosenSimpleKummerRootUnit K n hnK b
-  let sigmaG : Gal(L/K) :=
-    finitePlaceKummerGlobalArtinAutomorphism
-      K n hnK hmu v a b w
-  let globalValue :=
-    finitePlaceKummerRootCharacterOfExtension
-      K n hnK hmu v a b w
-  have hglobalMap :
-      nthRootsSubgroupMap K L (n : ℕ) globalValue =
-        chosenSimpleKummerRootCharacter K n hnK hmu b sigmaG := by
-    unfold globalValue sigmaG
-    unfold finitePlaceKummerRootCharacterOfExtension
-      finitePlaceKummerGlobalArtinAutomorphism
-    exact
-      (nthRootsSubgroupEquivOfPrimitiveRoots K L n hmu).apply_symm_apply _
-  have hglobalRoot :
-      Units.map (algebraMap K L).toMonoidHom globalValue.1 =
-        rootQuotient (K := K) (L := L) uL sigmaG := by
-    have h := congrArg Subtype.val hglobalMap
-    rw [chosenSimpleKummerRootCharacter_apply] at h
-    exact h
-  exact congrArg (Units.map f.toMonoidHom) hglobalRoot
+  intro L f uL sigmaG globalValue
+  have hValue := finitePlaceKummerRootCharacterOfExtension_eq_inverse K n hnK hmu v a b w
+  have hQuotient := congrArg Subtype.val
+    (chosenSimpleKummerRootCharacter_apply K n hnK hmu b sigmaG)
+  exact map_units_of_rootCharacter_inverse n hmu f.toMonoidHom globalValue
+    (chosenSimpleKummerRootCharacter K n hnK hmu b sigmaG)
+    (rootQuotient (K := K) (L := L) uL sigmaG) hValue hQuotient
 
 private theorem finitePlaceKummerRootQuotient_eq_local
     (n : ℕ+) (hnK : ((n : ℕ) : K) ≠ 0)

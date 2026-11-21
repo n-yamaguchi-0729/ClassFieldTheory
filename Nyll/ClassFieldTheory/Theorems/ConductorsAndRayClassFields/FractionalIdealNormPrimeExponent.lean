@@ -5,6 +5,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassIdealNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FinitePlaceContraction
 
 /-!
 # Prime exponents of a fractional-ideal norm
@@ -37,7 +38,7 @@ theorem fractionalIdealNorm_primeExponent
         ((fractionalIdealNorm K L I : NumberFieldFractionalIdealGroup K) :
           FractionalIdeal (nonZeroDivisors (𝓞 K)) K) =
       (NumberFieldFractionalIdealGroup.countVector I).sum fun W n =>
-        if fractionalIdealNormPrimeBelow K L W = v then
+        if _root_.finitePlaceBelow (K := K) W = v then
           (W.asIdeal.inertiaDeg (𝓞 K) : ℤ) * n
         else 0 := by
   exact fractionalIdealNorm_count K L I v

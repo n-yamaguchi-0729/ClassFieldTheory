@@ -20,7 +20,7 @@ public import Nyll.AbelianVarieties.Basic
 public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
 public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
 public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensor
-public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleTensorInverse
+public import Nyll.AlgebraicCurves.Geometry.Sheaves.Tensor.InvertibleDual
 
 /-!
 Tensor products and the commutative-group presheaf associated with a group-stable Picard

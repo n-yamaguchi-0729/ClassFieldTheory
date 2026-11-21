@@ -35,6 +35,7 @@ noncomputable section
 
 namespace IdeleGroup
 
+open ClassFieldTheory
 open NumberField IsDedekindDomain
 
 variable {K : Type*} [Field K] [NumberField K]
@@ -45,41 +46,47 @@ def finitePrimeIdele
     IdeleGroup K :=
   finitePlaceIdele v (FiniteIdeleGroup.chosenLocalOrderSection v 1)
 
+/-- A prime idèle has trivial archimedean part. -/
+@[simp]
+theorem infinitePart_finitePrimeIdele (v : HeightOneSpectrum (𝓞 K)) :
+    infinitePart (finitePrimeIdele v) = 1 :=
+  infinitePart_finitePlaceIdele v _
+
 /-- The fractional ideal of the normalized one-place prime idele is the
 corresponding prime ideal. -/
 @[simp]
 theorem fractionalIdeal_finitePrimeIdele
     (v : HeightOneSpectrum (𝓞 K)) :
     fractionalIdeal (finitePrimeIdele v) =
-      FractionalIdealGroup.prime v := by
-  apply FractionalIdealGroup.ext_count
+      finitePrimeFractionalIdeal v := by
+  apply NumberFieldFractionalIdealGroup.ext_count
   intro w
   change
     FractionalIdeal.count K w
         ((FiniteIdeleGroup.fractionalIdeal
-          (finitePrimeIdele v).2 :
-            FractionalIdealGroup K) :
+          (IdeleGroup.finiteCoordinates (finitePrimeIdele v)) :
+            NumberFieldFractionalIdealGroup K) :
           FractionalIdeal
             (nonZeroDivisors (𝓞 K)) K) =
       FractionalIdeal.count K w
-        ((FractionalIdealGroup.prime v :
-            FractionalIdealGroup K) :
+        ((finitePrimeFractionalIdeal v :
+            NumberFieldFractionalIdealGroup K) :
           FractionalIdeal
             (nonZeroDivisors (𝓞 K)) K)
-  rw [FiniteIdeleGroup.fractionalIdeal]
+  rw [FiniteIdeleGroup.fractionalIdeal_eq_factorization]
   change
     FractionalIdeal.count K w
-        (((FractionalIdealGroup.factorization
+        (((NumberFieldFractionalIdealGroup.factorization
           (FiniteIdeleGroup.valuationVector
-            (finitePrimeIdele v).2) :
-              FractionalIdealGroup K) :
+            (IdeleGroup.finiteCoordinates (finitePrimeIdele v))) :
+              NumberFieldFractionalIdealGroup K) :
             FractionalIdeal
               (nonZeroDivisors (𝓞 K)) K)) =
       FractionalIdeal.count K w
         (v.asIdeal :
           FractionalIdeal
             (nonZeroDivisors (𝓞 K)) K)
-  rw [FractionalIdealGroup.count_factorization,
+  rw [NumberFieldFractionalIdealGroup.count_factorization,
     FiniteIdeleGroup.valuationVector_apply]
   by_cases hw : w = v
   · subst w
@@ -105,10 +112,10 @@ class of the corresponding prime ideal. -/
 theorem idealClass_finitePrimeIdele
     (v : HeightOneSpectrum (𝓞 K)) :
     idealClass (finitePrimeIdele v) =
-      ClassGroup.mk K (FractionalIdealGroup.prime v) := by
+      ClassGroup.mk K (finitePrimeFractionalIdeal v) := by
   change
     ClassGroup.mk K (fractionalIdeal (finitePrimeIdele v)) =
-      ClassGroup.mk K (FractionalIdealGroup.prime v)
+      ClassGroup.mk K (finitePrimeFractionalIdeal v)
   rw [fractionalIdeal_finitePrimeIdele]
 
 end IdeleGroup

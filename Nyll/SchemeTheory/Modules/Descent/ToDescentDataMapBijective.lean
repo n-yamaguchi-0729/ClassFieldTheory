@@ -668,7 +668,7 @@ theorem locSec_compatible (W : Y.Opens) (s : Γ(L₁, W)) :
     mapEq L₂ _ (homOfLE inf_le_right).op (Ψ f L₁ L₂ ψ j _ _ _),
       Ψ_res ψ j _ _ _ hj inf_le_right, map_map,
     Ψ_compat ψ hψ i j _ hi hj]
-  try exact congrArg (fun y => Ψ f L₁ L₂ ψ j _ hj y) (mapEq L₁ _ _ s)
+  exact congrArg (fun y => Ψ f L₁ L₂ ψ j _ hj y) (mapEq L₁ _ _ s)
 
 /-- The section obtained by gluing the compatible local images. -/
 noncomputable def glue (W : Y.Opens) (s : Γ(L₁, W)) : Γ(L₂, W) :=
@@ -711,9 +711,8 @@ theorem glue_res {W W' : Y.Opens} (hle : W' ≤ W) (s : Γ(L₁, W)) :
     ← map_map, glue_spec]
   simp only [locSec]
   rw [Ψ_res ψ i _ _ _ (image_preimage_le_opensRange f i W') hle', map_map, map_map]
-  try
-    exact congrArg (fun y => Ψ f L₁ L₂ ψ i _ (image_preimage_le_opensRange f i W') y)
-      (mapEq L₁ _ _ s)
+  exact congrArg (fun y => Ψ f L₁ L₂ ψ i _ (image_preimage_le_opensRange f i W') y)
+    (mapEq L₁ _ _ s)
 
 /-- The presheaf morphism obtained by gluing local module morphisms. -/
 noncomputable def gluePresheafHom : L₁.presheaf ⟶ L₂.presheaf where

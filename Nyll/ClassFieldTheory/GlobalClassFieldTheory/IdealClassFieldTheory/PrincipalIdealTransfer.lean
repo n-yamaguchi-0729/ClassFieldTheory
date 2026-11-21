@@ -6,6 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.CyclotomicDegreeOnNumberField
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.AbstractCapitulation
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFixedFieldBaseChange
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
@@ -56,11 +60,6 @@ open Reciprocity
 
 variable (K : Type u) [Field K] [NumberField K]
 
-local instance
-    principalIdealTransferIdeleClassGroupIsMulCommutative
-    {F : Type*} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 local instance
     principalIdealTransferIdeleClassSubgroupNormal
@@ -99,8 +98,6 @@ private theorem
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hHKnormal : (CyclicCohomology.extensionSubgroup K H hHK).Normal)
-    (hLHnormal : (CyclicCohomology.extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -123,7 +120,7 @@ private theorem
       (hKfinite := hKfinite) K)
     (hmembership :
       rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
-        K H L hHK hLH hHKnormal hLHnormal c) :
+        K H L hHK hLH c) :
     let F := abstractFixedField ℚ (SeparableClosure ℚ) K
     let E := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hHK
     let U := abstractRelativeFixedField ℚ (SeparableClosure ℚ) hLH
@@ -175,14 +172,6 @@ private theorem
       change IsScalarTower ℚ
         (abstractFixedField ℚ (SeparableClosure ℚ) H) U
       exact RationalFiniteNormTransferInternal.relativeScalarTower H L hLH
-    letI : IsGalois F E :=
-      RationalFiniteNormTransferInternal.relativeIsGalois
-        K H hHK hHKnormal
-    letI : IsGalois E U := by
-      change IsGalois
-        (abstractFixedField ℚ (SeparableClosure ℚ) H) U
-      exact RationalFiniteNormTransferInternal.relativeIsGalois
-        H L hLH hLHnormal
     ideleClassExtension F E c ∈ (_root_.ideleClassNorm E U).range := by
   dsimp only
   unfold
@@ -227,29 +216,29 @@ private theorem
     M.extension_over_intermediate_finite S
   let a :
       KummerTheory.ambientFixedAddSubgroup
-        rationalIdeleClassRepresentation K₀.field :=
+        (ideleClassRepresentation ℚ) K₀.field :=
     rationalAbstractFixedFieldIdeleClassEquivFixed K₀.field
       (Additive.ofMul c)
   have hzeroMap :
       M.intermediateNormQuotientInclusion
-          rationalIdeleClassRepresentation S =
+          (ideleClassRepresentation ℚ) S =
         0 :=
     intermediateNormQuotientInclusion_commutator_eq_zero
-      rationalCyclotomicDegreeData rationalIdeleClassRepresentation
-      rationalCyclotomicIdeleClassValuationData
-      rationalIdeleClassRepresentation_satisfiesClassFieldAxiom
+      (numberFieldCyclotomicDegreeData ℚ) (ideleClassRepresentation ℚ)
+      (numberFieldCyclotomicIdeleClassValuationData ℚ)
+      (ideleClassRepresentation_satisfiesClassFieldAxiom ℚ)
       K₀ M
   have hzero :
       M.intermediateNormQuotientInclusion
-          rationalIdeleClassRepresentation S
-          (finiteNormClass rationalIdeleClassRepresentation
+          (ideleClassRepresentation ℚ) S
+          (finiteNormClass (ideleClassRepresentation ℚ)
             K₀.field M.field M.below a) =
         0 := by
     rw [hzeroMap]
     rfl
   have hincludeRaw :=
     ClassFormation.FiniteGaloisSubextension.intermediateNormQuotientInclusion_finiteNormClass
-      rationalIdeleClassRepresentation M S a
+      (ideleClassRepresentation ℚ) M S a
   have transportInclude
       (J V : ClosedSubgroup
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
@@ -260,11 +249,11 @@ private theorem
       [Finite
         (J.toSubgroup ⧸
           CyclicCohomology.extensionSubgroup J V hVJ)] :
-      (0 : FiniteNormQuotient rationalIdeleClassRepresentation
+      (0 : FiniteNormQuotient (ideleClassRepresentation ℚ)
         J V hVJ) =
-        finiteNormClass rationalIdeleClassRepresentation
+        finiteNormClass (ideleClassRepresentation ℚ)
           J V hVJ
-          (fixedFieldInclusion rationalIdeleClassRepresentation
+          (fixedFieldInclusion (ideleClassRepresentation ℚ)
             K₀.field J hJK a) := by
     subst J
     subst V
@@ -347,12 +336,6 @@ private noncomputable def
   let H := L.field
   let hMH : N.field.toSubgroup ≤ H.toSubgroup := N.below
   let hHK : H.toSubgroup ≤ K₀.field.toSubgroup := L.below
-  let hHKnormal :
-      (CyclicCohomology.extensionSubgroup K₀.field H hHK).Normal :=
-    L.normal
-  let hMHnormal :
-      (CyclicCohomology.extensionSubgroup H N.field hMH).Normal :=
-    N.normal
   letI hKHfinite : Finite
       (K₀.field.toSubgroup ⧸
         CyclicCohomology.extensionSubgroup K₀.field H hHK) :=
@@ -366,7 +349,7 @@ private noncomputable def
     rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
       (hKfinite := K₀.finite) (hKHfinite := hKHfinite)
       (hHLfinite := hHMfinite)
-      K₀.field H N.field hHK hMH hHKnormal hMHnormal c
+      K₀.field H N.field hHK hMH c
 
 private theorem
     smallHilbertClassFieldCanonicalNormMembershipStatement_proof :
@@ -410,7 +393,7 @@ private theorem
     rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
       (hKfinite := K₀.finite) (hKHfinite := hKHfinite)
       (hHLfinite := hHMfinite)
-      K₀.field H N.field hHK hMH hHKnormal hMHnormal c
+      K₀.field H N.field hHK hMH c
   exact
     rationalFiniteNormTransferCanonicalFiniteNormClassZero_implies_normMembership
       (hKfinite := K₀.finite) (hKHfinite := hKHfinite)
@@ -539,13 +522,13 @@ private noncomputable def
         rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
           (hKfinite := K₀.finite) (hKHfinite := hKHfinite)
           (hHLfinite := hHMfinite)
-          K₀.field H N.field hHK hMH hHKnormal hMHnormal c :=
+          K₀.field H N.field hHK hMH c :=
       hmembershipAll c
     exact
       rationalFiniteNormTransferCanonicalMembership_to_explicitNormMembership
         (hKfinite := K₀.finite) (hKHfinite := hKHfinite)
         (hHfinite := hHfinite) (hHLfinite := hHMfinite)
-        K₀.field H N.field hHK hMH hHKnormal hMHnormal c hmembership
+        K₀.field H N.field hHK hMH c hmembership
 
 /-- The named proposition underlying the fixed-field-base form of the
 two-stage transfer containment.  Keeping the dependent idele maps behind one

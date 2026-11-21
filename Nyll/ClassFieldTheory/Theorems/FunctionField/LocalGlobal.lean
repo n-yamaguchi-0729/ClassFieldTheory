@@ -197,7 +197,6 @@ theorem placeIdele_mem_norm_iff_inertiaDeg_dvd
     (_root_.FunctionField.IdeleClassGroup.finiteNorm (k := k) (K := K) (L := L)).range ↔
       (w.inertiaDeg K : ℤ) ∣
         (_root_.FunctionField.IdeleGroup.localOrder (w.restrict K) x).toAdd
-  rw [_root_.FunctionField.IdeleClassGroup.finiteNorm_eq_norm]
   exact _root_.FunctionField.placeIdele_mem_norm_range_iff_inertiaDeg_dvd w he x
 
 end ClassFieldTheory.FunctionField

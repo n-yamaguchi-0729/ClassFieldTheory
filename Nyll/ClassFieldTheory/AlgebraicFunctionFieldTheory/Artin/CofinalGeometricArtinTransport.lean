@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ProCGroups.GroupTheory.DirectLimitCofinalTail
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricArtinBoundaryStages
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricArtinKernel
@@ -33,7 +35,7 @@ namespace FunctionField.RayClass
 
 attribute [local instance]
   stageRatFuncAlgebra stageRatFuncTower stageFunctionField stagePrincipalDivisors
-  geometricLocalizationConstants geometricLocalizationConstantTower
+  constantAlgebra constantScalarTower
 
 variable (k₁ K₁ Ω₁ k₂ K₂ Ω₂ : Type*)
     [Field k₁] [Finite k₁] [Field K₁] [Field Ω₁]
@@ -221,9 +223,9 @@ variable (eV : Place (separableClosure k₁ Ω₁) (geometricConstantExtension k
 order, because every original function reaches one of those stages. -/
 theorem cofinalGeometricArtinFunctionEquiv_order
     (horder : ∀ (i : I₁) (hi : i₀ ≤ i) (a : A₁ i) (W : Place C₁ G₁),
-      (restrictedRayOrder (rayModulusBaseChange (geometricArtinStageField k₂ K₂ Ω₂ (q i)) m₂)
+      (restrictedRayOrder (reindexAlongPlaces (geometricArtinStageField k₂ K₂ Ω₂ (q i)) m₂)
         (geometricArtinPlaceAtStage k₂ K₂ Ω₂ (q i) (eV W)) (η i hi a).val).toAdd =
-      (restrictedRayOrder (rayModulusBaseChange (geometricArtinStageField k₁ K₁ Ω₁ i) m₁)
+      (restrictedRayOrder (reindexAlongPlaces (geometricArtinStageField k₁ K₁ Ω₁ i) m₁)
         (geometricArtinPlaceAtStage k₁ K₁ Ω₁ i W) a.val).toAdd)
     (x : G₁) (W : Place C₁ G₁) :
     (eV W).ord (cofinalGeometricArtinFunctionEquiv k₁ K₁ Ω₁ k₂ K₂ Ω₂

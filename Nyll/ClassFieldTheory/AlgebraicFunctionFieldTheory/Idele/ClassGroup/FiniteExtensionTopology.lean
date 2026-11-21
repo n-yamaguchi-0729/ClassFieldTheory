@@ -46,7 +46,7 @@ variable {k K Ω : Type*} [Field k] [PerfectField k] [Field K] [Field Ω]
 /-- A finite stage uses the canonical commutative idele-class quotient group. -/
 noncomputable local instance finiteExtensionTopologyStageCommGroup
     (E : FiniteGaloisIntermediateField K Ω) : CommGroup (stage (k := k) E) :=
-  QuotientGroup.Quotient.commGroup (G := IdeleGroup k E) (IdeleGroup.principalSubgroup k E)
+  IdeleClassGroup.commGroup k E
 
 /-- The coefficient topology for Galois cohomology is discrete. -/
 instance coefficientTopology : TopologicalSpace (Limit k K Ω) := ⊥

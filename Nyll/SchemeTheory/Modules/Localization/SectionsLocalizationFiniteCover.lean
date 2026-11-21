@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Modules.Frames.FrameBridge
 public import Mathlib.AlgebraicGeometry.Modules.Sheaf
 public import Mathlib.AlgebraicGeometry.AffineScheme
 
@@ -23,6 +24,27 @@ kernels to obtain localization on an affine open from a finite basic-open cover.
 -/
 
 @[expose] public section
+
+open _root_.AlgebraicGeometry.Scheme.Modules.LocalTrivialization (rM rO rM_rM rO_rO rM_smul)
+
+namespace AlgebraicGeometry.Scheme.Modules
+
+universe u
+
+open CategoryTheory Opposite
+
+/-- Sections on a basic open acquire numerators after multiplying by a power of its parameter.
+A section that restricts to zero is killed by some power of the same parameter. -/
+abbrev LocProp {X : Scheme.{u}} (M : X.Modules) (V : X.Opens) (g : Γ(X, V)) : Prop :=
+  (∀ x : Γ(M, X.basicOpen g), ∃ (n : ℕ) (y : Γ(M, V)),
+      M.presheaf.map (homOfLE (X.basicOpen_le g)).op y
+        = X.presheaf.map (homOfLE (X.basicOpen_le g)).op (g ^ n) • x)
+    ∧ (∀ y : Γ(M, V), M.presheaf.map (homOfLE (X.basicOpen_le g)).op y = 0 →
+        ∃ n : ℕ, (g ^ n : Γ(X, V)) • y = 0)
+
+end AlgebraicGeometry.Scheme.Modules
+
+open _root_.AlgebraicGeometry.Scheme.Modules (LocProp)
 
 section ProofImplementation
 
@@ -48,28 +70,6 @@ open _root_.AlgebraicGeometry
 namespace LocGlue
 
 variable {X : Scheme.{u}} (M : X.Modules)
-
-/-- Restrict a section of `M` along the open inclusion `h`. -/
-noncomputable abbrev rM {V W : X.Opens} (h : V ≤ W) : Γ(M, W) → Γ(M, V) := fun y => M.presheaf.map
-    (homOfLE h).op y
-
-/-- Restrict a regular function along the open inclusion `h`. -/
-noncomputable abbrev rO {V W : X.Opens} (h : V ≤ W) : Γ(X, W) → Γ(X, V) := fun g => X.presheaf.map
-    (homOfLE h).op g
-
-theorem rM_rM {V₁ V₂ V₃ : X.Opens} (h₂₁ : V₂ ≤ V₁) (h₃₂ : V₃ ≤ V₂) (y : Γ(M, V₁)) :
-    rM M h₃₂ (rM M h₂₁ y) = rM M (h₃₂.trans h₂₁) y := by
-  change (M.presheaf.map (homOfLE h₂₁).op ≫ M.presheaf.map (homOfLE h₃₂).op) y = _
-  rw [← Functor.map_comp]; rfl
-
-omit M in
-theorem rO_rO {V₁ V₂ V₃ : X.Opens} (h₂₁ : V₂ ≤ V₁) (h₃₂ : V₃ ≤ V₂) (g : Γ(X, V₁)) :
-    rO h₃₂ (rO h₂₁ g) = rO (h₃₂.trans h₂₁) g := by
-  change (X.presheaf.map (homOfLE h₂₁).op ≫ X.presheaf.map (homOfLE h₃₂).op).hom g = _
-  rw [← Functor.map_comp]; rfl
-
-theorem rM_smul {V W : X.Opens} (h : V ≤ W) (g : Γ(X, W)) (y : Γ(M, W)) :
-    rM M h (g • y) = rO h g • rM M h y := M.map_smul _ _ _
 
 theorem rM_add {V W : X.Opens} (h : V ≤ W) (y z : Γ(M, W)) : rM M h (y + z) = rM M h y + rM M h z :=
     map_add _ _ _
@@ -101,16 +101,6 @@ end LocGlue
 
 open LocGlue
 
-/-- The numerator and kernel conditions for restriction to the basic open of `g`: sections acquire
-  numerators after multiplication by a power of `g`, and a section vanishing there is killed by a
-  power of `g`. -/
-def LocProp {X : Scheme.{u}} (M : X.Modules) (V : X.Opens) (g : Γ(X, V)) : Prop :=
-  (∀ x : Γ(M, X.basicOpen g), ∃ (n : ℕ) (y : Γ(M, V)),
-      M.presheaf.map (homOfLE (X.basicOpen_le g)).op y
-        = X.presheaf.map (homOfLE (X.basicOpen_le g)).op (g ^ n) • x)
-    ∧ (∀ y : Γ(M, V), M.presheaf.map (homOfLE (X.basicOpen_le g)).op y = 0 →
-        ∃ n : ℕ, (g ^ n : Γ(X, V)) • y = 0)
-
 namespace LocGlue
 
 variable {X : Scheme.{u}} (M : X.Modules)
@@ -131,25 +121,10 @@ open LocGlue in
 theorem isLocalization_basicOpen_of_finite_basicOpen_cover'
     {X : Scheme.{u}} (M : X.Modules) (U : X.affineOpens) (s : Finset Γ(X, U.1))
     (hs : U.1 ≤ ⨆ h ∈ s, X.basicOpen h)
-    (hloc : ∀ h ∈ s, ∀ g : Γ(X, X.basicOpen h),
-      ((∀ x : Γ(M, X.basicOpen g), ∃ (n : ℕ) (y : Γ(M, X.basicOpen h)),
-          M.presheaf.map (homOfLE (X.basicOpen_le g)).op y
-            = X.presheaf.map (homOfLE (X.basicOpen_le g)).op (g ^ n) • x)
-        ∧ (∀ y : Γ(M, X.basicOpen h), M.presheaf.map (homOfLE (X.basicOpen_le g)).op y = 0 →
-            ∃ n : ℕ, (g ^ n : Γ(X, X.basicOpen h)) • y = 0)))
+    (hloc : ∀ h ∈ s, ∀ g : Γ(X, X.basicOpen h), LocProp M (X.basicOpen h) g)
     (hloc₂ : ∀ h ∈ s, ∀ h' ∈ s, ∀ g : Γ(X, X.basicOpen h ⊓ X.basicOpen h'),
-      ((∀ x : Γ(M, X.basicOpen g), ∃ (n : ℕ) (y : Γ(M, (X.basicOpen h ⊓ X.basicOpen h'))),
-          M.presheaf.map (homOfLE (X.basicOpen_le g)).op y
-            = X.presheaf.map (homOfLE (X.basicOpen_le g)).op (g ^ n) • x)
-        ∧ (∀ y : Γ(M, (X.basicOpen h ⊓ X.basicOpen h')), M.presheaf.map (homOfLE (X.basicOpen_le
-            g)).op y = 0 →
-            ∃ n : ℕ, (g ^ n : Γ(X, (X.basicOpen h ⊓ X.basicOpen h'))) • y = 0)))
-    (f : Γ(X, U.1)) :
-    ((∀ x : Γ(M, X.basicOpen f), ∃ (n : ℕ) (y : Γ(M, U.1)),
-          M.presheaf.map (homOfLE (X.basicOpen_le f)).op y
-            = X.presheaf.map (homOfLE (X.basicOpen_le f)).op (f ^ n) • x)
-        ∧ (∀ y : Γ(M, U.1), M.presheaf.map (homOfLE (X.basicOpen_le f)).op y = 0 →
-            ∃ n : ℕ, (f ^ n : Γ(X, U.1)) • y = 0)) := by
+      LocProp M (X.basicOpen h ⊓ X.basicOpen h') g)
+    (f : Γ(X, U.1)) : LocProp M U.1 f := by
   classical
   let ι : Type u := {h // h ∈ s}
   let D : ι → X.Opens := fun i => X.basicOpen i.1
@@ -254,25 +229,10 @@ end AlgebraicGeometry.Scheme.Modules
 theorem _root_.AlgebraicGeometry.Scheme.Modules.isLocalization_basicOpen_of_finite_basicOpen_cover
     {X : Scheme.{u}} (M : X.Modules) (U : X.affineOpens) (s : Finset Γ(X, U.1))
     (hs : U.1 ≤ ⨆ h ∈ s, X.basicOpen h)
-    (hloc : ∀ h ∈ s, ∀ g : Γ(X, X.basicOpen h),
-      ((∀ x : Γ(M, X.basicOpen g), ∃ (n : ℕ) (y : Γ(M, X.basicOpen h)),
-          M.presheaf.map (homOfLE (X.basicOpen_le g)).op y
-            = X.presheaf.map (homOfLE (X.basicOpen_le g)).op (g ^ n) • x)
-        ∧ (∀ y : Γ(M, X.basicOpen h), M.presheaf.map (homOfLE (X.basicOpen_le g)).op y = 0 →
-            ∃ n : ℕ, (g ^ n : Γ(X, X.basicOpen h)) • y = 0)))
+    (hloc : ∀ h ∈ s, ∀ g : Γ(X, X.basicOpen h), LocProp M (X.basicOpen h) g)
     (hloc₂ : ∀ h ∈ s, ∀ h' ∈ s, ∀ g : Γ(X, X.basicOpen h ⊓ X.basicOpen h'),
-      ((∀ x : Γ(M, X.basicOpen g), ∃ (n : ℕ) (y : Γ(M, (X.basicOpen h ⊓ X.basicOpen h'))),
-          M.presheaf.map (homOfLE (X.basicOpen_le g)).op y
-            = X.presheaf.map (homOfLE (X.basicOpen_le g)).op (g ^ n) • x)
-        ∧ (∀ y : Γ(M, (X.basicOpen h ⊓ X.basicOpen h')), M.presheaf.map (homOfLE (X.basicOpen_le
-            g)).op y = 0 →
-            ∃ n : ℕ, (g ^ n : Γ(X, (X.basicOpen h ⊓ X.basicOpen h'))) • y = 0)))
-    (f : Γ(X, U.1)) :
-    ((∀ x : Γ(M, X.basicOpen f), ∃ (n : ℕ) (y : Γ(M, U.1)),
-          M.presheaf.map (homOfLE (X.basicOpen_le f)).op y
-            = X.presheaf.map (homOfLE (X.basicOpen_le f)).op (f ^ n) • x)
-        ∧ (∀ y : Γ(M, U.1), M.presheaf.map (homOfLE (X.basicOpen_le f)).op y = 0 →
-            ∃ n : ℕ, (f ^ n : Γ(X, U.1)) • y = 0)) :=
+      LocProp M (X.basicOpen h ⊓ X.basicOpen h') g)
+    (f : Γ(X, U.1)) : LocProp M U.1 f :=
   AlgebraicGeometry.Scheme.Modules.isLocalization_basicOpen_of_finite_basicOpen_cover' M U s hs hloc
       hloc₂ f
 end Scheme_Modules_isLocalization_basicOpen_of_finite_basicOpen_cover

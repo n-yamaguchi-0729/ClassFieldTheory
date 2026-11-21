@@ -4,17 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
-import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassGroupHomExtFinitePrime
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
-import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
+public import Nyll.ClassFieldTheory.Theorems.ConductorsAndRayClassFields.RayClassGroupHomExtFinitePrime
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.PublicRayClassComparison
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.RayFrobeniusRigidity
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.FiniteAbelianClassFieldContainment
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.ArithmeticUnramifiedPrimeArtin
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.GlobalArtin
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.FinitePrime
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.UnramifiedPrimeArtin
 
 /-!
 # Antitone class fields of ray-class subgroups
@@ -23,6 +25,8 @@ For a fixed modulus, inclusion of ray-class subgroups reverses inclusion of
 their finite abelian class fields.  The embedding between arbitrary
 Frobenius-normalized realizations intertwines both Artin actions.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 open NumberField IsDedekindDomain
@@ -61,7 +65,7 @@ private theorem subgroupRealization_mem_norm_range_iff
     {K : Type u} [Field K] [NumberField K]
     {m : RayClassModulus K} {H : Subgroup (RayClassGroup m)}
     (R : RayClassSubgroupRealization K m H)
-    (x : IdeleClassGroup K) :
+    (x : NumberField.IdeleClassGroup (𝓞 K) K) :
     x ∈ (_root_.ideleClassNorm K R.extension).range ↔
       (GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele K m).symm
         (QuotientGroup.mk'
@@ -74,14 +78,14 @@ private theorem subgroupRealization_mem_norm_range_iff
   have hprime : ∀ (v : HeightOneSpectrum (𝓞 K))
       (hv : v ∉ m'.finitePart.support),
       a (QuotientGroup.mk' m'.congruenceSubgroup
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (IdeleGroup.finitePrimeIdele v))) =
         GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
           (K := K) (L := R.extension) v := by
     intro v hv
     have hvm : v ∉ m.finitePart.support := hv
     change R.artin (e.symm (QuotientGroup.mk' m'.congruenceSubgroup
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (IdeleGroup.finitePrimeIdele v)))) = _
     rw [← GlobalClassFieldComparison.rayClassGroupEquivOriginalIdele_prime
       K m v hvm]
@@ -94,30 +98,6 @@ private theorem subgroupRealization_mem_norm_range_iff
   change a (QuotientGroup.mk' m'.congruenceSubgroup x) = 1 ↔ _
   change R.artin (e.symm (QuotientGroup.mk' m'.congruenceSubgroup x)) = 1 ↔ _
   rw [← MonoidHom.mem_ker, R.artin_ker]
-
-private theorem arithmeticPrimeArtin_restrict_tower
-    {K : Type u} {E : Type v} {L : Type w}
-    [Field K] [NumberField K]
-    [Field E] [NumberField E]
-    [Field L] [NumberField L]
-    [Algebra K E] [Algebra E L] [Algebra K L] [IsScalarTower K E L]
-    [IsAbelianGalois K E] [IsAbelianGalois K L]
-    (v : HeightOneSpectrum (𝓞 K)) :
-    AlgEquiv.restrictNormalHom E
-        (GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-          (K := K) (L := L) v) =
-      GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
-        (K := K) (L := E) v := by
-  open GlobalClassFieldTheory.GlobalClassFields in
-  rw [arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := L) v,
-    arithmeticFinitePlacePrimeArtin_eq_inv (K := K) (L := E) v, map_inv]
-  simpa only [GlobalClassFieldTheory.GlobalClassFields.finitePlacePrimeArtin,
-    MonoidHom.comp_apply] using
-    congrArg Inv.inv
-      (DFunLike.congr_fun
-        (GlobalClassFieldTheory.Reciprocity.globalArtinMonoidHom_restrict_tower
-          (K := K) (L := L) (E := E))
-        (IdeleGroup.finitePrimeIdele v))
 
 /-- Every actual embedding of Frobenius-normalized subgroup class fields
 intertwines their Artin actions. -/
@@ -145,7 +125,8 @@ theorem rayClassSubgroupEmbedding_artinNaturality
         RJ.artin (rayClassOfFinitePrime m v hv)
     rw [subgroupArtin_prime_eq_arithmeticPrimeArtin RH v hv,
       subgroupArtin_prime_eq_arithmeticPrimeArtin RJ v hv]
-    exact arithmeticPrimeArtin_restrict_tower v
+    exact
+      GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin_restrict_tower v
   have hx := DFunLike.congr_fun hnat x
   change AlgEquiv.restrictNormalHom RJ.extension (RH.artin x) = RJ.artin x at hx
   have hy := congrArg (fun σ : RJ.extension ≃ₐ[K] RJ.extension => f (σ y)) hx

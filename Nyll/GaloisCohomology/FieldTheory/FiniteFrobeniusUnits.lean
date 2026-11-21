@@ -34,8 +34,8 @@ theorem frobenius_eq_self_iff_mem_range (a : Ω) :
   · intro h
     have hs : (Polynomial.X ^ Fintype.card k - Polynomial.X : Polynomial k).Splits := by
       rw [Polynomial.splits_iff_card_roots, roots_X_pow_card_sub_X, ← Finset.card_def,
-        Finset.card_univ, X_pow_card_sub_X_natDegree_eq k Fintype.one_lt_card]
-    apply hs.mem_range_of_isRoot (X_pow_card_sub_X_ne_zero k Fintype.one_lt_card)
+        Finset.card_univ, Polynomial.natDegree_X_pow_sub_X Fintype.one_lt_card]
+    apply hs.mem_range_of_isRoot (Polynomial.X_pow_sub_X_ne_zero Fintype.one_lt_card)
     change a ^ Fintype.card k = a at h
     simp only [Polynomial.map_sub, Polynomial.map_pow, Polynomial.map_X,
       Polynomial.IsRoot, Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X]

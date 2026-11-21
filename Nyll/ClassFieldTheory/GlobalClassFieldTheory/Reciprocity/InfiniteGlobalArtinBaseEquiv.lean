@@ -39,11 +39,11 @@ theorem infiniteGlobalIdeleClassArtinMonoidHom_finiteProjection
     let : NumberField E := NumberField.of_module_finite K E
     AlgEquiv.restrictNormalHom E
         (infiniteGlobalIdeleClassArtinMonoidHom (K := K) (Ω := Ω) a) =
-      globalIdeleClassArtinMonoidHom (K := K) (L := E) a := by
+      globalNormResidueMonoidHom K E a := by
   intro numberFieldE
-  obtain ⟨b, rfl⟩ := QuotientGroup.mk'_surjective (IdeleGroup.principalSubgroup K) a
+  obtain ⟨b, rfl⟩ := IdeleGroup.toStandardClass_surjective K a
   rw [infiniteGlobalIdeleClassArtinMonoidHom_mk,
-    globalIdeleClassArtinMonoidHom_mk]
+    globalNormResidueMonoidHom_mk]
   exact restrictNormalHom_infiniteGlobalArtinMonoidHom K Ω b E
 
 /-- Compatible base and ambient equivalences intertwine the actual infinite
@@ -93,9 +93,9 @@ theorem infiniteGlobalIdeleClassArtinMonoidHom_semilinear
   have hfinite := globalIdeleClassArtinMonoidHom_semilinear
     e r.toRatAlgEquiv hfiniteBase a
   have hvalue := congrArg (fun g : Gal(F/M) => (g (r zE) : Ψ)) hfinite
-  change c ((globalIdeleClassArtinMonoidHom (K := K) (L := E) a)
+  change c ((globalNormResidueMonoidHom K E a)
       (r.symm (r zE)) : Ω) =
-    (globalIdeleClassArtinMonoidHom (K := M) (L := F)
+    (globalNormResidueMonoidHom M F
       (ideleClassCongr e a) (r zE) : Ψ) at hvalue
   rw [r.symm_apply_apply] at hvalue
   rw [← infiniteGlobalIdeleClassArtinMonoidHom_finiteProjection a E,

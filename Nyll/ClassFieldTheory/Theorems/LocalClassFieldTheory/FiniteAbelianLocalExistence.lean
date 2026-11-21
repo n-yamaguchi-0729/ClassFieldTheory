@@ -31,7 +31,7 @@ theorem finiteAbelianLocalExistence
     [IsNonarchimedeanLocalField K] :
     ∀ H : OpenFiniteIndexSubgroup K,
       ∃ E : FiniteAbelianLocalExtension K,
-        E.normSubgroup = H.1 := by
+        E.normSubgroup = H.1.toSubgroup := by
   obtain ⟨e, he⟩ := finiteAbelianLocalExistence_orderIso K
   intro H
   refine ⟨e.symm (OrderDual.toDual H), ?_⟩

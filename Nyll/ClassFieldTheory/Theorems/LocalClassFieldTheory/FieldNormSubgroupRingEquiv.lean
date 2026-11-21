@@ -6,8 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.FieldNormSubgroup
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Existence.NormSubgroupRingEquiv
+public import Nyll.ValuedFieldTheory.LocalField.NormUnits
+public import Nyll.ValuedFieldTheory.LocalField.NormUnitsBaseChange
 public import Mathlib.Algebra.Group.Subgroup.Map
 
 /-!
@@ -18,6 +18,8 @@ equivalences preserves the actual field norms, not merely their index.
 -/
 
 @[expose] public section
+
+open LocalFieldTheory (localNormSubgroup)
 
 noncomputable section
 
@@ -36,9 +38,9 @@ theorem mem_fieldNormSubgroup_iff_ringEquiv
     (he : (algebraMap F' M').comp eF.toRingHom =
       eM.toRingHom.comp (algebraMap F M))
     (a : Fˣ) :
-    a ∈ fieldNormSubgroup F M ↔
-      (Units.mapEquiv eF.toMulEquiv) a ∈ fieldNormSubgroup F' M' := by
-  rw [← fieldNormSubgroup_map_ringEquiv eF eM he]
+    a ∈ localNormSubgroup F M ↔
+      (Units.mapEquiv eF.toMulEquiv) a ∈ localNormSubgroup F' M' := by
+  rw [← LocalFieldTheory.localNormSubgroup_map_ringEquiv eF eM he]
   simp only [Subgroup.mem_map_equiv, MulEquiv.symm_apply_apply]
 
 end ClassFieldTheory

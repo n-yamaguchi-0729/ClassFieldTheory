@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.GeometricConstantArtinKernels
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayTower
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.GeometricConstantTower
@@ -94,28 +96,27 @@ variable {k K E H : Type*} [Field k] [Finite k] [Field K] [Field E] [Field H]
     [Algebra (RatFunc k) H] [IsScalarTower k (RatFunc k) H] [FunctionField k H]
 
 theorem nativeTransition_principal
-    (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (hmzero : m ≠ 0) (x : Eˣ) :
-    principalArtinKernelCongr (rayModulusBaseChange_trans (L := E) (M := H) m)
-        (principalArtinKernelBaseChange (L := H) (rayModulusBaseChange E m)
-          (rayModulusBaseChange_reduced m hm)
-          (principalRestrictedArtinKernelEquiv (rayModulusBaseChange E m)
-            (rayModulusBaseChange_ne_zero m hmzero) x)) =
-      principalRestrictedArtinKernelEquiv (rayModulusBaseChange H m)
-        (rayModulusBaseChange_ne_zero m hmzero) (Units.map (algebraMap E H) x) := by
+    (m : Modulus k K) (_hm : ∀ v, m v ≤ 1) (hmzero : m ≠ 0) (x : Eˣ) :
+    principalArtinKernelCongr (reindexAlongPlaces_trans (L := E) (M := H) m)
+        (principalArtinKernelBaseChange (L := H) (reindexAlongPlaces E m)
+          (principalRestrictedArtinKernelEquiv (reindexAlongPlaces E m)
+            (reindexAlongPlaces_ne_zero m hmzero) x)) =
+      principalRestrictedArtinKernelEquiv (reindexAlongPlaces H m)
+        (reindexAlongPlaces_ne_zero m hmzero) (Units.map (algebraMap E H) x) := by
   have hbase := principalArtinKernelBaseChange_equiv (k := k) (K := E) (L := H)
-    (rayModulusBaseChange E m) (rayModulusBaseChange_reduced m hm)
-    (rayModulusBaseChange_ne_zero (L := E) m hmzero) x
+    (reindexAlongPlaces E m)
+    (reindexAlongPlaces_ne_zero (L := E) m hmzero) x
   have hcast := congrArg
     (fun a : (restrictedProductAbsoluteArtin
-        (rayModulusBaseChange H (rayModulusBaseChange E m))).ker =>
-      principalArtinKernelCongr (rayModulusBaseChange_trans (L := E) (M := H) m) a) hbase
+        (reindexAlongPlaces H (reindexAlongPlaces E m))).ker =>
+      principalArtinKernelCongr (reindexAlongPlaces_trans (L := E) (M := H) m) a) hbase
   have htarget := principalArtinKernelCongr_equiv (k := k) (L := H)
-    (m := rayModulusBaseChange H (rayModulusBaseChange E m))
-    (n := rayModulusBaseChange H m)
-    (rayModulusBaseChange_trans (L := E) (M := H) m)
-    (rayModulusBaseChange_ne_zero (L := H) (rayModulusBaseChange E m)
-      (rayModulusBaseChange_ne_zero (L := E) m hmzero))
-    (rayModulusBaseChange_ne_zero (L := H) m hmzero) (Units.map (algebraMap E H) x)
+    (m := reindexAlongPlaces H (reindexAlongPlaces E m))
+    (n := reindexAlongPlaces H m)
+    (reindexAlongPlaces_trans (L := E) (M := H) m)
+    (reindexAlongPlaces_ne_zero (L := H) (reindexAlongPlaces E m)
+      (reindexAlongPlaces_ne_zero (L := E) m hmzero))
+    (reindexAlongPlaces_ne_zero (L := H) m hmzero) (Units.map (algebraMap E H) x)
   exact hcast.trans htarget
 
 end NativeTransition
@@ -167,18 +168,16 @@ theorem geometricConstantKernelImages_eq_iff_common_stage
       let _ : IsScalarTower k F H :=
         IsScalarTower.of_algebraMap_eq fun _ => Subtype.ext rfl
       let _ : FiniteDimensional F H := FiniteDimensional.right K F H
-      let eE := principalRestrictedArtinKernelEquiv (rayModulusBaseChange E m)
-        (rayModulusBaseChange_ne_zero m hmzero)
-      let eF := principalRestrictedArtinKernelEquiv (rayModulusBaseChange F m)
-        (rayModulusBaseChange_ne_zero m hmzero)
+      let eE := principalRestrictedArtinKernelEquiv (reindexAlongPlaces E m)
+        (reindexAlongPlaces_ne_zero m hmzero)
+      let eF := principalRestrictedArtinKernelEquiv (reindexAlongPlaces F m)
+        (reindexAlongPlaces_ne_zero m hmzero)
       let tE := (principalArtinKernelCongr
-        (rayModulusBaseChange_trans (L := E) (M := H) m)).toMonoidHom.comp
-          (principalArtinKernelBaseChange (L := H) (rayModulusBaseChange E m)
-            (rayModulusBaseChange_reduced m hm))
+        (reindexAlongPlaces_trans (L := E) (M := H) m)).toMonoidHom.comp
+          (principalArtinKernelBaseChange (L := H) (reindexAlongPlaces E m))
       let tF := (principalArtinKernelCongr
-        (rayModulusBaseChange_trans (L := F) (M := H) m)).toMonoidHom.comp
-          (principalArtinKernelBaseChange (L := H) (rayModulusBaseChange F m)
-            (rayModulusBaseChange_reduced m hm))
+        (reindexAlongPlaces_trans (L := F) (M := H) m)).toMonoidHom.comp
+          (principalArtinKernelBaseChange (L := H) (reindexAlongPlaces F m))
       let iE : E →ₐ[K] geometricConstantExtension k K Ω :=
         fullConstantStageGeometricInclusion k K Ω n₁
       let iF : F →ₐ[K] geometricConstantExtension k K Ω :=
@@ -190,8 +189,8 @@ theorem geometricConstantKernelImages_eq_iff_common_stage
   refine ⟨n₃, h₁, h₂, ?_⟩
   intro E F H pE aRE hkRE hE hpE pF aRF hkRF hF hpF pH aRH hkRH hH hpH
     aEH hKEH hkEH hEH aFH hKFH hkFH hFH eE eF tE tF iE iF fE fF a b
-  let eH := principalRestrictedArtinKernelEquiv (rayModulusBaseChange H m)
-    (rayModulusBaseChange_ne_zero m hmzero)
+  let eH := principalRestrictedArtinKernelEquiv (reindexAlongPlaces H m)
+    (reindexAlongPlaces_ne_zero m hmzero)
   obtain ⟨x, rfl⟩ := eE.surjective a
   obtain ⟨y, rfl⟩ := eF.surjective b
   have htENative :=

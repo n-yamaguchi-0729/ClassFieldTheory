@@ -558,7 +558,7 @@ theorem formallyUnramified_endAeval [IsAlgClosed K] [LocallyOfFiniteType f]
   simp only [CommRingCat.hom_comp, CommRingCat.hom_ofHom, RingHom.coe_comp, Function.comp_apply]
     at hs
   rw [g₀_apply, TrivSqZeroExt.snd_inl, hηsnd, hδK_def] at hs
-  rw [Derivation.zero_apply]
+  rw [zero_apply]
   have := congrArg e hs
   rwa [map_zero, RingEquiv.apply_symm_apply, eq_comm] at this
 

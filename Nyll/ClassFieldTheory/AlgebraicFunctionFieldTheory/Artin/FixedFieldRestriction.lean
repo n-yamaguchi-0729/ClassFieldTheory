@@ -53,7 +53,7 @@ theorem fixedFieldArtin_restrictNormal
     let _ : IsGalois (abstractFixedField K Ω H.field) (abstractFixedField K Ω L.field) :=
       abstractRelativeFixedField_isGalois K Ω H.field L.field L.below L.normal
     ∀ c : IdeleClassGroup k (abstractFixedField K Ω H.field),
-      Abelianization.map
+      Group.Abelianization.map
           (AlgEquiv.restrictNormalHom (F := abstractFixedField K Ω H.field)
             (K₁ := abstractFixedField K Ω M.field) (abstractFixedField K Ω L.field))
           (fixedFieldArtin k K Ω H M c) = fixedFieldArtin k K Ω H L c := by
@@ -70,7 +70,7 @@ theorem fixedFieldArtin_restrictNormal
   have hg := abstractFixedField_restrictNormal_abelianization K Ω H.field L.field M.field
     L.below M.below hML L.normal M.normal z
   have hr := normResidueSymbol_restriction_finiteNormClass D A v hcf H L M hML a
-  change Abelianization.map
+  change Group.Abelianization.map
       (AlgEquiv.restrictNormalHom (F := abstractFixedField K Ω H.field)
         (K₁ := abstractFixedField K Ω M.field) (abstractFixedField K Ω L.field))
       ((abstractExtensionQuotientEquivGaloisGroup K Ω H.field M.field

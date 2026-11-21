@@ -106,7 +106,7 @@ theorem
     letI : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
     (LocalFieldTheory.fieldPrincipalUnits B (m + 1)).map
-        (Universe.abelianLocalArtinMonoidHom B L) =
+        (abelianLocalArtinMonoidHom B L) =
       (intermediateFieldRestrictNormalHom E L
         (equalCharacteristicLubinTateLevelField_mono F hmn)).ker := by
   intro B E L
@@ -119,21 +119,21 @@ theorem
   let : FiniteDimensional B L :=
     equalCharacteristicLubinTateLevelField_finiteDimensional F n
   let hEL : E ≤ L := equalCharacteristicLubinTateLevelField_mono F hmn
-  let φ := Universe.abelianLocalArtinMonoidHom B L
+  let φ := abelianLocalArtinMonoidHom B L
   let ψ := intermediateFieldRestrictNormalHom E L hEL
   have hker :
       (ψ.comp φ).ker =
         Subgroup.zpowers pi ⊔ LocalFieldTheory.fieldPrincipalUnits B (m + 1) := by
-    rw [show ψ.comp φ = Universe.abelianLocalArtinMonoidHom B E by
+    rw [show ψ.comp φ = abelianLocalArtinMonoidHom B E by
       exact Universe.abelianLocalArtinMonoidHom_restrict B E L hEL]
-    rw [Universe.abelianLocalArtinMonoidHom_ker]
+    rw [abelianLocalArtinMonoidHom_ker]
     change equalCharacteristicLubinTateNormSubgroup F m =
       Subgroup.zpowers pi ⊔ LocalFieldTheory.fieldPrincipalUnits B (m + 1)
     simpa [B, pi, LocalFieldTheory.uniformizerPrincipalSubgroup] using
       equalCharacteristicLubinTateNormSubgroup_eq_uniformizerPrincipalSubgroup
         F m
   have hZ : Subgroup.zpowers pi ≤ φ.ker := by
-    rw [Universe.abelianLocalArtinMonoidHom_ker]
+    rw [abelianLocalArtinMonoidHom_ker]
     change Subgroup.zpowers pi ≤
       equalCharacteristicLubinTateNormSubgroup F n
     rw [
@@ -141,7 +141,7 @@ theorem
     simp [B, pi, LocalFieldTheory.uniformizerPrincipalSubgroup]
   exact Subgroup.map_eq_ker_of_comp_ker_eq_sup_of_left_le_ker
     φ ψ (Subgroup.zpowers pi) (LocalFieldTheory.fieldPrincipalUnits B (m + 1))
-    (Universe.abelianLocalArtinMonoidHom_surjective B L) hker hZ
+    (abelianLocalArtinMonoidHom_surjective B L) hker hZ
 
 /-- The explicitly chosen complete-DVF upper group agrees with the canonical
 local upper ramification group on the same Lubin--Tate level field. -/
@@ -270,8 +270,8 @@ theorem
   have hψ_surjective : Function.Surjective ψ := by
     intro σ
     obtain ⟨a, ha⟩ :=
-      Universe.abelianLocalArtinMonoidHom_surjective B E σ
-    refine ⟨Universe.abelianLocalArtinMonoidHom B L a, ?_⟩
+      abelianLocalArtinMonoidHom_surjective B E σ
+    refine ⟨abelianLocalArtinMonoidHom B L a, ?_⟩
     exact
       (DFunLike.congr_fun
         (Universe.abelianLocalArtinMonoidHom_restrict B E L hEL) a).trans ha
@@ -332,7 +332,7 @@ theorem
       equalCharacteristicLaurentIsNonarchimedeanLocalField F
     letI : FiniteDimensional B L :=
       equalCharacteristicLubinTateLevelField_finiteDimensional F n
-    (LocalFieldTheory.fieldPrincipalUnits B k).map (Universe.abelianLocalArtinMonoidHom B L) =
+    (LocalFieldTheory.fieldPrincipalUnits B k).map (abelianLocalArtinMonoidHom B L) =
       localUpperRamificationGroup B L (k : ℝ) := by
   let m := k - 1
   have hmn : m ≤ n := by

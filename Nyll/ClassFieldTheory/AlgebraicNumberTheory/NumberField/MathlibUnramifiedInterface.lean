@@ -14,9 +14,9 @@ public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.I
 /-!
 # Finite-place unramifiedness comparison
 
-The implementation quantifies over primes of the extension, while the public
-definition quantifies over primes of the base.  These are equivalent because
-every prime above a nonzero base prime is itself nonzero.
+Finite unramifiedness uses the same integer-ring predicate in internal and public
+class-field statements. The comparison here is invariance under actual field
+equivalences, including the independent condition at infinite places.
 -/
 
 
@@ -47,44 +47,6 @@ noncomputable def ringOfIntegersEquivOfAlgEquiv
       IsScalarTower.algebraMap_apply (𝓞 K) K E x]
     exact e.commutes (algebraMap (𝓞 K) K x))
 
-/-- Unramifiedness at all nonzero primes is equivalent to formal
-unramifiedness of the entire integer-ring extension; the zero prime is
-automatically unramified in characteristic zero. -/
-theorem isUnramifiedAtFinitePlaces_iff_formallyUnramified
-    (K : Type u) (L : Type v)
-    [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L] :
-    _root_.IsUnramifiedAtFinitePlaces K L ↔
-      Algebra.FormallyUnramified (𝓞 K) (𝓞 L) := by
-  rw [Algebra.formallyUnramified_iff_forall]
-  constructor
-  · intro h q
-    by_cases hq : q.asIdeal = ⊥
-    · simpa only [hq] using
-        (Algebra.isUnramifiedAt_bot (R := 𝓞 K) (S := 𝓞 L))
-    · exact h ⟨q.asIdeal, q.isPrime, hq⟩
-  · intro h W
-    exact h ⟨W.asIdeal, W.isPrime⟩
-
-/-- The base-prime and extension-prime formulations of finite-place
-unramifiedness agree. -/
-theorem isUnramifiedAtFinitePlaces_iff_original
-    (K : Type u) (L : Type v)
-    [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L] :
-    ClassFieldTheory.IsUnramifiedAtFinitePlaces K L ↔
-      _root_.IsUnramifiedAtFinitePlaces K L := by
-  constructor
-  · intro h W
-    let v := finitePlaceBelow (K := K) W
-    exact h v W.asIdeal W.isPrime ⟨rfl⟩
-  · intro h v P hP hOver
-    let W : HeightOneSpectrum (𝓞 L) :=
-      ⟨P, hP,
-        @Ideal.ne_bot_of_liesOver_of_ne_bot
-          (𝓞 K) (𝓞 L) _ _ _ _ v.asIdeal v.ne_bot P hOver⟩
-    exact h W
-
 /-- Finite-place unramifiedness is invariant under a number-field
 equivalence over the base. -/
 theorem isUnramifiedAtFinitePlaces_iff_of_algEquiv
@@ -95,10 +57,6 @@ theorem isUnramifiedAtFinitePlaces_iff_of_algEquiv
     (e : L ≃ₐ[K] E) :
     ClassFieldTheory.IsUnramifiedAtFinitePlaces K L ↔
       ClassFieldTheory.IsUnramifiedAtFinitePlaces K E := by
-  rw [isUnramifiedAtFinitePlaces_iff_original,
-    isUnramifiedAtFinitePlaces_iff_original,
-    isUnramifiedAtFinitePlaces_iff_formallyUnramified,
-    isUnramifiedAtFinitePlaces_iff_formallyUnramified]
   exact Algebra.FormallyUnramified.iff_of_equiv
     (ringOfIntegersEquivOfAlgEquiv K L E e)
 
@@ -106,9 +64,9 @@ theorem isUnramifiedAtFinitePlaces_iff_of_algEquiv
 number-field equivalence over the base. -/
 theorem isUnramifiedAtInfinitePlaces_iff_of_algEquiv
     (K : Type u) (L : Type v) (E : Type w)
-    [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L]
-    [Field E] [NumberField E] [Algebra K E]
+    [Field K]
+    [Field L] [Algebra K L]
+    [Field E] [Algebra K E]
     (e : L ≃ₐ[K] E) :
     IsUnramifiedAtInfinitePlaces K L ↔
       IsUnramifiedAtInfinitePlaces K E := by
@@ -133,21 +91,6 @@ theorem isUnramifiedAtInfinitePlaces_iff_of_algEquiv
       exact e.symm_apply_apply x
     simpa only [← InfinitePlace.comap_comp, hcomp,
       InfinitePlace.comap_id] using hw
-
-/-- The public conjunction and the implementation's bundled predicate for
-unramifiedness at all places agree. -/
-theorem isEverywhereUnramified_iff_original
-    (K : Type u) (L : Type v)
-    [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L] :
-    ClassFieldTheory.IsEverywhereUnramified K L ↔
-      _root_.IsEverywhereUnramified K L := by
-  constructor
-  · rintro ⟨hfinite, hinfinite⟩
-    exact ⟨(isUnramifiedAtFinitePlaces_iff_original K L).mp hfinite, hinfinite⟩
-  · intro h
-    exact ⟨(isUnramifiedAtFinitePlaces_iff_original K L).mpr h.finitePlaces,
-      h.infinitePlaces⟩
 
 /-- Everywhere-unramifiedness is invariant under a number-field
 equivalence over the base. -/

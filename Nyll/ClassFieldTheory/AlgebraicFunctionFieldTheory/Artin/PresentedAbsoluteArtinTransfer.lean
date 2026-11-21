@@ -45,13 +45,8 @@ variable (K : Type u) (L : Type v) [Field K] [Field L]
 
 local notation "F" => abstractFixedField K (SeparableClosure K) H.field
 
-/-- The canonical separable-closure algebra of the actual fixed field. -/
-local instance presentedFixedFieldSeparableClosureAlgebra : Algebra F (SeparableClosure F) :=
-  (separableClosure F (AlgebraicClosure F)).toSubalgebra.algebra
-
-/-- The fixed field acts on its closure through that same canonical algebra. -/
-local instance presentedFixedFieldSeparableClosureSMul : SMul F (SeparableClosure F) :=
-  (presentedFixedFieldSeparableClosureAlgebra (K := K) (H := H)).toSMul
+attribute [local instance]
+  finiteFixedFieldSeparableClosureAlgebra finiteFixedFieldSeparableClosureSMul
 
 variable [Algebra L (abstractFixedField K (SeparableClosure K) H.field)]
   [Algebra L (SeparableClosure (abstractFixedField K (SeparableClosure K) H.field))]
@@ -103,14 +98,14 @@ theorem presentedFixedFieldAbsoluteAbelianEquiv_degreeOne
     fixedFieldAbsoluteGaloisEquivOfClosure K (SeparableClosure K) H eF
   refine QuotientGroup.induction_on a ?_
   intro σ
-  rw [degreeOneAbsoluteAbelianEquiv_mk,
-    fixedFieldAbsoluteAbelianEquivOfClosure_mk]
-  have hcancel : presentedFixedFieldAbsoluteGaloisEquiv K L H hLF eF eL (eD σ) =
-      eFix σ :=
+  let eP := presentedFixedFieldAbsoluteGaloisEquiv K L H hLF eF eL
+  let f := presentedFixedFieldAbsoluteAbelianEquiv K L H hLF eF eL
+  have hcancel : eP (eD σ) = eFix σ :=
     congrArg eFix (eD.symm_apply_apply σ)
-  exact (TopologicalAbelianization.congr_apply_mk
-    (presentedFixedFieldAbsoluteGaloisEquiv K L H hLF eF eL) (eD σ)).trans
-      (congrArg (TopologicalAbelianization.mk H.field.toSubgroup) hcancel)
+  exact (congrArg f (degreeOneAbsoluteAbelianEquiv_mk L F hLF eL σ)).trans
+    ((TopologicalAbelianization.congr_apply_mk eP (eD σ)).trans
+      ((congrArg (TopologicalAbelianization.mk H.field.toSubgroup) hcancel).trans
+        (fixedFieldAbsoluteAbelianEquivOfClosure_mk K (SeparableClosure K) H eF σ).symm))
 
 /-- Original native transfer with target the actual upper field rather
 than only the subtype used to present its fixed field. -/
@@ -151,7 +146,7 @@ variable (k : Type w) (K : Type u) (L : Type v) [Field k] [Finite k] [Field K] [
 local notation "F" => abstractFixedField K (SeparableClosure K) H.field
 
 attribute [local instance]
-  presentedFixedFieldSeparableClosureAlgebra presentedFixedFieldSeparableClosureSMul
+  finiteFixedFieldSeparableClosureAlgebra finiteFixedFieldSeparableClosureSMul
 
 variable [Algebra L (abstractFixedField K (SeparableClosure K) H.field)]
   [IsScalarTower K L (abstractFixedField K (SeparableClosure K) H.field)]
@@ -182,7 +177,7 @@ theorem absoluteArtin_baseChange_presentedTransfer (c : IdeleClassGroup k K) :
     have _ : FiniteDimensional K F :=
       abstractFixedField_finiteDimensional K (SeparableClosure K) H.field H.finite
     have _ : FunctionField k F :=
-      IdeleClassGroup.FiniteExtensionLimit.intermediateFunctionField
+      IdeleClassGroup.FiniteExtensionSystem.intermediateFunctionField
         (k := k) (K := K) (Ω := SeparableClosure K) F
     have _ : HasPrincipalDivisors k F :=
       (ClassFieldTheory.FunctionField.finiteExtension_isCurveOver k K F).toHasPrincipalDivisors
@@ -196,11 +191,15 @@ theorem absoluteArtin_baseChange_presentedTransfer (c : IdeleClassGroup k K) :
   have hkLF : IsScalarTower k L F := IsScalarTower.to₁₃₄ k K L F
   have hLFfinite : FiniteDimensional L F := FiniteDimensional.right K L F
   have hLFgalois : IsGalois L F := IsGalois.tower_top_of_isGalois K L F
-  rw [← absoluteArtin_baseChange_of_finrank_one k L F hLF eL
-    (IdeleClassGroup.baseChange (k := k) (K := K) (L := L) c),
-    IdeleClassGroup.baseChange_trans]
-  exact congrArg (degreeOneAbsoluteAbelianEquiv L F hLF eL)
-    (absoluteArtin_baseChange_nativeTransfer k K H eF c)
+  let e := degreeOneAbsoluteAbelianEquiv L F hLF eL
+  let cL := IdeleClassGroup.baseChange (k := k) (K := K) (L := L) c
+  have htrans : IdeleClassGroup.baseChange (k := k) (K := L) (L := F) cL =
+      IdeleClassGroup.baseChange (k := k) (K := K) (L := F) c :=
+    IdeleClassGroup.baseChange_trans (k := k) (K := K) (L := L) (M := F) c
+  have hArtin := absoluteArtin_baseChange_nativeTransfer k K H eF c
+  exact (absoluteArtin_baseChange_of_finrank_one k L F hLF eL cL).symm.trans
+    (congrArg (fun z : IdeleClassGroup k F => e (absoluteArtin k F z)) htrans |>.trans
+      (congrArg e hArtin))
 
 end Reciprocity
 

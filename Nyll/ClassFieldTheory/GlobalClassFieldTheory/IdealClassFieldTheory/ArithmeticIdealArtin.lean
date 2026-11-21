@@ -185,11 +185,10 @@ theorem
       Reciprocity.arithmeticGlobalArtinMonoidHom
         K L (a : IdeleGroup K) := by
   rw [arithmeticIdealArtinGaloisMap_apply]
-  rw [GlobalClassFields.idealArtinMap_primeToIdealMap]
+  rw [IdealClassFieldTheory.idealArtinMap_primeToIdealMap]
   change
     Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
+          (IdeleGroup.toStandardClass K
             (a : IdeleGroup K)) =
       Reciprocity.arithmeticGlobalArtinMonoidHom
         K L (a : IdeleGroup K)
@@ -216,9 +215,9 @@ theorem
         (K := K) (L := L) v := by
   rw [← GlobalClassFields.primeToIdealMap_finitePrimeIdele m v hv]
   rw [arithmeticIdealArtinGaloisMap_apply,
-    GlobalClassFields.idealArtinMap_primeToIdealMap]
+    IdealClassFieldTheory.idealArtinMap_primeToIdealMap]
   change Reciprocity.arithmeticGlobalNormResidueMonoidHom K L
-      (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+      (IdeleGroup.toStandardClass K
         (IdeleGroup.finitePrimeIdele v)) = _
   rw [GlobalClassFields.arithmeticFinitePlacePrimeArtin_eq_arithmeticChosenFinitePlaceArtin]
   exact DFunLike.congr_fun

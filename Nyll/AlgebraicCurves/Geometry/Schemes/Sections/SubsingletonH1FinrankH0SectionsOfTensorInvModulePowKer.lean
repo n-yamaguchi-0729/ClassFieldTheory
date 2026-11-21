@@ -386,11 +386,6 @@ namespace P2FSketch
 theorem preimage_id {X : Scheme.{u}} (U : X.Opens) : (𝟙 X) ⁻¹ᵁ U = U := by
   ext1; rfl
 
-theorem cover_ext {X : Scheme.{u}} (𝒱 𝒱' : X.TwoAffineOpenCover) (h0 : 𝒱.U0 = 𝒱'.U0) (h1 : 𝒱.U1
-    = 𝒱'.U1) :
-    𝒱 = 𝒱' := by
-  cases 𝒱; cases 𝒱'; cases h0; cases h1; rfl
-
 theorem finrank_eq_of_iso {K : Type u} [Field K] {X : Scheme.{u}} (x : X ⟶ Spec (CommRingCat.of K))
     (𝒱 : X.TwoAffineOpenCover) {M M' : X.Modules} (e : M ≅ M') :
     Module.finrank K (𝒱.sectionsOf x M).H0 = Module.finrank K (𝒱.sectionsOf x M').H0 ∧
@@ -400,7 +395,9 @@ theorem finrank_eq_of_iso {K : Type u} [Field K] {X : Scheme.{u}} (x : X ⟶ Spe
     e ≪≫ ((Scheme.Modules.pullbackId X).app M').symm
   obtain ⟨𝒱₀, h0, h1, ⟨f0⟩, ⟨f1⟩⟩ :=
     Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_of_iso x x (Iso.refl X) hφ 𝒱 M' M e'
-  have h𝒱 : 𝒱₀ = 𝒱 := cover_ext 𝒱₀ 𝒱 (h0.trans (preimage_id _)) (h1.trans (preimage_id _))
+  have h𝒱 : 𝒱₀ = 𝒱 :=
+    _root_.AlgebraicGeometry.Scheme.TwoAffineOpenCover.cover_ext (𝒱 := 𝒱₀) (𝒱' := 𝒱)
+      (h0.trans (preimage_id _)) (h1.trans (preimage_id _))
   subst h𝒱
   exact ⟨f0.finrank_eq, f1.finrank_eq⟩
 

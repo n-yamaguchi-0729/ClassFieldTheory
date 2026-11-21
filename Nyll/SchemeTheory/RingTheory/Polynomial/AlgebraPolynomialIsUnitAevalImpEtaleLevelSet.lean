@@ -375,7 +375,7 @@ theorem core (R : Type u) [CommRing R] [IsLocalRing R]
   let _ : Module.Free S TS := Module.Free.of_equiv e.toLinearEquiv
   let κ : Type u := IsLocalRing.ResidueField S
   let _ : Algebra R[X] κ := ((IsLocalRing.residue S).comp (algebraMap R[X] S)).toAlgebra
-  have hκS : IsScalarTower R[X] S κ := IsScalarTower.of_algebraMap_eq fun _ => rfl
+  let hκS : IsScalarTower R[X] S κ := IsScalarTower.of_algebraMap_eq fun _ => rfl
   let ι : k →+* κ := IsLocalRing.ResidueField.map (algebraMap R S)
   let _ : Algebra k[X] κ := (Polynomial.eval₂RingHom ι (IsLocalRing.residue S s)).toAlgebra
   have htow : ∀ p : R[X], algebraMap k[X] κ (algebraMap R[X] k[X] p) = algebraMap R[X] κ p := by
@@ -384,9 +384,9 @@ theorem core (R : Type u) [CommRing R] [IsLocalRing R]
       = IsLocalRing.residue S ((Polynomial.aeval s : R[X] →ₐ[R] S) p)
     rw [Polynomial.eval₂_map, Polynomial.aeval_def, Polynomial.hom_eval₂]
     rfl
-  have hκk : IsScalarTower R[X] k[X] κ :=
+  let hκk : IsScalarTower R[X] k[X] κ :=
     IsScalarTower.of_algebraMap_eq fun p => (htow p).symm
-  have hκself : IsScalarTower R[X] κ κ :=
+  let hκself : IsScalarTower R[X] κ κ :=
     IsScalarTower.of_algebraMap_eq fun p => by rw [Algebra.algebraMap_self, RingHom.id_apply]
   have hDκ : algebraMap k[X] κ D₁ ≠ 0 := by
     rw [← hDmap]
@@ -397,10 +397,10 @@ theorem core (R : Type u) [CommRing R] [IsLocalRing R]
   let _ : Subsingleton (κ ⊗[k[X]] Mk) := subsingleton_tensor_of_smul_eq_zero D₁ hDκ hkill₁
   let _ : Subsingleton (κ ⊗[R[X]] M) :=
     (@TensorProduct.AlgebraTensorModule.cancelBaseChange R[X] k[X] κ κ M
-      _ _ _ _ _ _ _ _ _ hκk hκself _ _ _ _ _).symm.toEquiv.subsingleton
+      _ _ _ _ _ _ _ _ _ hκk hκself _ _ _ _).symm.toEquiv.subsingleton
   have hκ : Subsingleton (κ ⊗[S] (S ⊗[R[X]] M)) :=
     (@TensorProduct.AlgebraTensorModule.cancelBaseChange R[X] S κ κ M
-      _ _ _ _ _ _ _ _ _ hκS hκself _ _ _ _ _).toEquiv.subsingleton
+      _ _ _ _ _ _ _ _ _ hκS hκself _ _ _ _).toEquiv.subsingleton
   let _ : Algebra.Etale S TS := etale_baseChange_of_subsingleton R[X] A S hκ
   exact Algebra.Etale.of_equiv e.symm
 

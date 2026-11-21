@@ -6,7 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.TopologicalAbelianizationCongr
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
 public import Mathlib.FieldTheory.AbsoluteGaloisGroup
 public import Nyll.ValuedFieldTheory.Ramification.GaloisValuation.AbsoluteGalois.InfiniteGaloisCorrespondence
 
@@ -31,7 +31,7 @@ noncomputable def absoluteGaloisGroupAbelianizationEquivSeparable
     (K : Type u) [Field K] :
     Field.absoluteGaloisGroupAbelianization K ≃ₜ*
       TopologicalAbelianization Gal(SeparableClosure K / K) :=
-  LocalClassFieldTheory.topologicalAbelianizationCongr
+  ProCGroups.Abelian.TopologicalAbelianization.congr
     (RamificationTheory.Field.absoluteGaloisGroup.separableClosureContinuousMulEquiv K)
 
 /-- The comparison sends an absolute Galois automorphism to its restriction
@@ -42,5 +42,5 @@ theorem absoluteGaloisGroupAbelianizationEquivSeparable_mk
     absoluteGaloisGroupAbelianizationEquivSeparable K
         (QuotientGroup.mk σ) =
       QuotientGroup.mk (AlgEquiv.separableClosure σ) :=
-  LocalClassFieldTheory.topologicalAbelianizationCongr_mk
+  ProCGroups.Abelian.TopologicalAbelianization.congr_apply_mk
     (RamificationTheory.Field.absoluteGaloisGroup.separableClosureContinuousMulEquiv K) σ

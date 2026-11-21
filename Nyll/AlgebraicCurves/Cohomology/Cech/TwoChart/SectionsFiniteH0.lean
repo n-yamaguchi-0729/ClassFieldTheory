@@ -105,7 +105,7 @@ theorem twistSections_cechDiff_apply (m a : ℕ) (p : (Fin m → R[X]) × (Fin m
 
 theorem toLaurent_apply_natCast (p : R[X]) (k : ℕ) :
     (Polynomial.toLaurent p : R[T;T⁻¹]).coeff (k : ℤ) = p.coeff k := by
-  rw [LaurentPolynomial.coeff_toLaurent, ← Polynomial.toFinsupp_apply]
+  rw [LaurentPolynomial.coeff_toLaurent]
   exact Finsupp.mapDomain_apply_of_injective Nat.cast_injective _ _
 
 theorem toLaurent_apply_of_neg (p : R[X]) {n : ℤ} (hn : n < 0) :
@@ -133,11 +133,13 @@ theorem eq_zero_of_toLaurent_eq_T_neg_mul_invert {a : ℕ} (ha : 1 ≤ a) {p q :
     congr 1
     omega
   constructor
-  · apply Polynomial.ext
+  · apply AddMonoidAlgebra.ext
+    apply DFunLike.ext
     intro k
     rw [Polynomial.coeff_zero, ← toLaurent_apply_natCast, hcoef]
     exact toLaurent_apply_of_neg q (by omega)
-  · apply Polynomial.ext
+  · apply AddMonoidAlgebra.ext
+    apply DFunLike.ext
     intro k
     have := hcoef (-((k : ℤ) + a))
     rw [show (-(-((k : ℤ) + a) + a)) = (k : ℤ) by omega, toLaurent_apply_natCast] at this

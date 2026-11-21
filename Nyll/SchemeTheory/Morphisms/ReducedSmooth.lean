@@ -41,11 +41,8 @@ private theorem ringHomSmooth_appTop {K : Type u} [Field K] {X : Scheme.{u}}
       ((Scheme.ΓSpecIso (CommRingCat.of K)).symm.commRingCatIsoToRingEquiv.bijective))
     (HasRingHomProperty.appTop (P := @Smooth) g ‹Smooth g›)
 
-namespace AlgebraicGeometry
-open _root_.AlgebraicGeometry
-end AlgebraicGeometry
 open scoped _root_.AlgebraicGeometry in
-theorem AlgebraicGeometry.isReduced_of_smooth_field
+theorem _root_.AlgebraicGeometry.isReduced_of_smooth_of_field
     {K : Type u} [Field K] {X : Scheme.{u}} (sX : X ⟶ Spec (.of K)) [Smooth sX] :
     IsReduced X := by
   have : ∀ i, IsReduced (X.affineCover.X i) := fun i => by
@@ -63,9 +60,5 @@ theorem AlgebraicGeometry.isReduced_of_smooth_field
 
 end SchemeLevel
 
-theorem _root_.AlgebraicGeometry.isReduced_of_smooth_of_field {K : Type u} [Field K] {X :
-  Scheme.{u}} (sX : X ⟶ Spec (.of K)) [Smooth sX] :
-    IsReduced X :=
-  AlgebraicGeometry.isReduced_of_smooth_field sX
 end AlgebraicCurves.Geometry.Schemes.Proofs.isReduced_of_smooth_of_field
 end ProofImplementation

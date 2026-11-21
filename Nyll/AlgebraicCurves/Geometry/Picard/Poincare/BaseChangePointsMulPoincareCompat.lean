@@ -20,6 +20,8 @@ public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquiv
 public import Nyll.AlgebraicCurves.Geometry.Picard.AlgebraicEquivalence.AlgEquivZeroGroupCut
 public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Group
 public import Nyll.SchemeTheory.GroupSchemes.RelativeGroupLaw.Basic
+public import Nyll.SchemeTheory.BaseChange.Points
+public import Nyll.SchemeTheory.CategoryTheory.SchemeHomOver
 public import Nyll.AlgebraicCurves.Geometry.Picard.GroupLaw.RelativeGroupLawGrpObj
 public import Nyll.SchemeTheory.Modules.Tensor.Monoidal
 public import Nyll.SchemeTheory.Modules.Tensor.PullbackMonoidal
@@ -57,57 +59,6 @@ open _root_.AlgebraicGeometry.RelPicard.BaseChange
 
 open scoped CategoryTheory.MonObj
 
-namespace GrpBCSol
-
-variable {R : Type u} [CommRing R] {C : Scheme.{u}} {c : C ⟶ Spec (CommRingCat.of R)}
-  {ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c}
-
-/-- Identify iterated pullback of a rigidified line bundle with pullback along the composite. -/
-noncomputable def pullbackAlongComp {T T' T'' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
-    {t' : T' ⟶ Spec (CommRingCat.of R)} {t'' : T'' ⟶ Spec (CommRingCat.of R)}
-    (M : RigidifiedLineBundle c ε t) (φ : SchemeHomOver t' t) (ψ : SchemeHomOver t'' t') :
-    ((M.pullbackAlong φ).pullbackAlong ψ).L ≅ (M.pullbackAlong (postComp φ ψ)).L :=
-  (Scheme.Modules.pullbackComp (baseChangeSnd c ψ) (baseChangeSnd c φ)).app M.L ≪≫
-    (Scheme.Modules.pullbackCongr (baseChangeSnd_comp c φ ψ)).app M.L
-
-/-- Identify pullbacks of a rigidified line bundle along equal morphisms. -/
-noncomputable def pullbackAlongCongr {T T' : Scheme.{u}} {t : T ⟶ Spec (CommRingCat.of R)}
-    {t' : T' ⟶ Spec (CommRingCat.of R)} (M : RigidifiedLineBundle c ε t) {φ ψ : SchemeHomOver t' t}
-    (e : φ.1 = ψ.1) : (M.pullbackAlong φ).L ≅ (M.pullbackAlong ψ).L :=
-  eqToIso (by cases φ; cases ψ; cases e; rfl)
-
-variable (D : RelativePic0Designation R c) (R' : Type u) [CommRing R'] [Algebra R R']
-
-/-- Identify points of the base-changed Picard scheme with points over the extension map. -/
-noncomputable def theta :
-    (Over.mk (𝟙 (Spec (CommRingCat.of R'))) ⟶ Over.mk (D.baseChange R').toBase) ≃
-      SchemeHomOver (specMap R R') D.toBase where
-  toFun a := ⟨a.left ≫ pullback.fst D.toBase (specMap R R'), by
-    have w : a.left ≫ pullback.snd D.toBase (specMap R R') = 𝟙 _ := Over.w a
-    calc (a.left ≫ pullback.fst D.toBase (specMap R R')) ≫ D.toBase
-        = a.left ≫ (pullback.snd D.toBase (specMap R R') ≫ specMap R R') :=
-          (Category.assoc _ _ _).trans (congrArg (fun k => a.left ≫ k)
-            (pullback.condition (f := D.toBase) (g := specMap R R')))
-      _ = (a.left ≫ pullback.snd D.toBase (specMap R R')) ≫ specMap R R'
-          := (Category.assoc _ _ _).symm
-      _ = specMap R R' := (congrArg (fun k => k ≫ specMap R R') w).trans (Category.id_comp _)⟩
-  invFun g := Over.homMk (pullback.lift g.1 (𝟙 _) (g.2.trans (Category.id_comp _).symm))
-    (pullback.lift_snd _ _ _)
-  left_inv a := by
-    have w : a.left ≫ pullback.snd D.toBase (specMap R R') = 𝟙 _ := Over.w a
-    refine Over.OverMorphism.ext ?_
-    refine pullback.hom_ext ?_ ?_
-    · exact (pullback.lift_fst _ _ _).trans rfl
-    · exact (pullback.lift_snd _ _ _).trans w.symm
-  right_inv g := Subtype.ext (pullback.lift_fst _ _ _)
-
-theorem theta_apply_coe
-    (a : Over.mk (𝟙 (Spec (CommRingCat.of R'))) ⟶ Over.mk (D.baseChange R').toBase) :
-    (theta D R' a).1 = a.left ≫ pullback.fst D.toBase (specMap R R') := rfl
-
-end GrpBCSol
-
-open GrpBCSol in
 theorem _root_.AlgebraicGeometry.RelPicard.baseChange_points_mul_poincare_compat
     (R : Type u) [CommRing R] {C : Scheme.{u}} (c : C ⟶ Spec (CommRingCat.of R))
     (ε : SchemeHomOver (𝟙 (Spec (CommRingCat.of R))) c)
@@ -146,24 +97,32 @@ theorem _root_.AlgebraicGeometry.RelPicard.baseChange_points_mul_poincare_compat
           ≅ (h.poincare.pullbackAlong (postComp ψ₀ (overR R' g'))).L :=
     fun g' => (toR_pullbackAlong_iso c ε R' g' P').symm ≪≫
       (Scheme.Modules.pullback (baseChangeSnd c (overR R' g'))).mapIso (toR_ofR_iso c ε R' _) ≪≫
-      pullbackAlongComp h.poincare ψ₀ (overR R' g')
-  let pt : (Over.mk (𝟙 (Spec (CommRingCat.of R'))) ⟶ Over.mk (D.baseChange R').toBase) →
-      SchemeHomOver (𝟙 (Spec (CommRingCat.of R'))) (D.baseChange R').toBase
-          := fun a => ⟨a.left, Over.w a⟩
+      h.poincare.pullbackAlongPullbackAlongIso ψ₀ (overR R' g')
+  let t := 𝟙 (Spec (CommRingCat.of R'))
+  let baseMap := specMap R R'
+  let pt := (schemeHomOverEquivOverHom t (D.baseChange R').toBase).symm
+  let adjustBase : SchemeHomOver (t ≫ baseMap) D.toBase ≃ SchemeHomOver baseMap D.toBase :=
+    { toFun := SchemeHomOver.castBase (Category.id_comp baseMap)
+      invFun := SchemeHomOver.castBase (Category.id_comp baseMap).symm
+      left_inv := fun _ => Subtype.ext rfl
+      right_inv := fun _ => Subtype.ext rfl }
+  let changePoint := pt.trans
+    ((GoodReductionJacobian.RelativeGroupLaw.baseChangePointEquiv baseMap (f := D.toBase) t).trans
+      adjustBase)
   have poinc : ∀ a : Over.mk (𝟙 (Spec (CommRingCat.of R'))) ⟶ Over.mk (D.baseChange R').toBase,
       (toR c ε R' (h'.poincare.pullbackAlong (pt a))).L
-          ≅ (h.poincare.pullbackAlong (theta D R' a)).L :=
+          ≅ (h.poincare.pullbackAlong (changePoint a)).L :=
     fun a =>
       (Scheme.Modules.pullback (κ c R' (𝟙 (Spec (CommRingCat.of R')))).inv).mapIso
           ((Scheme.Modules.pullback (baseChangeSnd (baseChange R c R') (pt a))).mapIso hP.some) ≪≫
         chain (pt a) ≪≫
         (Iso.refl _ : (h.poincare.pullbackAlong (postComp ψ₀ (overR R' (pt a)))).L ≅
-          (h.poincare.pullbackAlong (theta D R' a)).L)
-  refine ⟨theta D R', fun a => rfl, fun a b => ?_, fun a => ⟨(poinc a).symm⟩⟩
+          (h.poincare.pullbackAlong (changePoint a)).L)
+  refine ⟨changePoint, fun a => rfl, fun a b => ?_, fun a => ⟨(poinc a).symm⟩⟩
   obtain ⟨i₁⟩ := (show RepresentsRelSubPic c ε (algEquivZeroGroupCut c ε).toSubPicCondition D
       from h)
     |>.nonempty_poincare_pullbackAlong_mul_iso (T := Over.mk (specMap R R'))
-      (schemeHomOverToOverHom (theta D R' a)) (schemeHomOverToOverHom (theta D R' b))
+      (schemeHomOverToOverHom (changePoint a)) (schemeHomOverToOverHom (changePoint b))
   obtain ⟨i₂⟩ := (show RepresentsRelSubPic (baseChange R c R') (sectionBaseChange R' ε)
       (algEquivZeroGroupCut (baseChange R c R') (sectionBaseChange R' ε)).toSubPicCondition
         (D.baseChange R') from h')

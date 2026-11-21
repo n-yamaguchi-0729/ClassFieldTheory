@@ -10,7 +10,7 @@ module
 public import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.FrobeniusLift
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.IntrinsicFrobeniusTransport
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.AbsoluteConstantDegree
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteAbstractFixedField
+public import Nyll.ClassFieldTheory.Algebra.FiniteAbstractFixedField
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.FiniteGaloisRealization
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.IntrinsicAbsoluteData
 
@@ -71,7 +71,8 @@ theorem intrinsicFrobeniusToAmbient_surjective
   let RI := (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField DI
   let DA := fullConstantDegreeData k K (SeparableClosure K)
   let RA := H.toFiniteResidueAbstractField DA
-  have hEI_normal : (extensionSubgroup RI.field EI.field EI.below).Normal := EI.normal
+  let _ : (extensionSubgroup RI.field EI.field EI.below).Normal := EI.normal
+  let _ : (extensionSubgroup RA.field T.field T.below).Normal := T.normal
   let ξ := intrinsicConstantFrobeniusQuotientEquivAmbientFixedField k K H T e
   intro σA
   have hξ := ξ.apply_symm_apply σA.val

@@ -12,7 +12,7 @@ public import Mathlib.FieldTheory.KrullTopology
 public import Mathlib.NumberTheory.LocalField.Basic
 public import Mathlib.RingTheory.Valuation.ValuativeRel.Basic
 public import Mathlib.Topology.Algebra.Constructions
-public import Mathlib.Topology.Algebra.Group.Quotient
+public import Nyll.ProCGroups.Topologies.QuotientMaps
 
 /-!
 # The norm quotient induced by a specified finite local Artin map
@@ -23,6 +23,8 @@ This is distinct from uniqueness of the Artin map itself.
 -/
 
 @[expose] public section
+
+open LocalFieldTheory (localNormSubgroup)
 
 noncomputable section
 
@@ -41,39 +43,10 @@ theorem finiteAbelianLocalReciprocity_quotientEquiv_of_artin
     [IsNonarchimedeanLocalField K]
     (artin : Kˣ →ₜ* (L ≃ₐ[K] L))
     (hsurj : Function.Surjective artin)
-    (hker : artin.ker = fieldNormSubgroup K L) :
+    (hker : artin.ker = localNormSubgroup K L) :
     ∃! e : FieldNormQuotient K L ≃ₜ* (L ≃ₐ[K] L),
-      ∀ x : Kˣ, e (QuotientGroup.mk' (fieldNormSubgroup K L) x) = artin x := by
-  have hOpen : IsOpen (fieldNormSubgroup K L : Set Kˣ) := by
-    have hOpenKer : IsOpen (artin.ker : Set Kˣ) := by
-      change IsOpen (artin ⁻¹' {1})
-      exact (isOpen_discrete {1}).preimage artin.continuous
-    rwa [← hker]
-  have hDiscrete : DiscreteTopology (FieldNormQuotient K L) :=
-    QuotientGroup.discreteTopology hOpen
-  let e₀ : FieldNormQuotient K L ≃* (L ≃ₐ[K] L) :=
-    (QuotientGroup.quotientMulEquivOfEq hker.symm).trans
-      (QuotientGroup.quotientKerEquivOfSurjective artin.toMonoidHom hsurj)
-  let e : FieldNormQuotient K L ≃ₜ* (L ≃ₐ[K] L) :=
-    { e₀ with
-      continuous_toFun := @continuous_of_discreteTopology
-        (FieldNormQuotient K L) _ hDiscrete (L ≃ₐ[K] L) _ e₀
-      continuous_invFun := continuous_of_discreteTopology }
-  have he (x : Kˣ) :
-      e (QuotientGroup.mk' (fieldNormSubgroup K L) x) = artin x := by
-    change e₀ (QuotientGroup.mk' (fieldNormSubgroup K L) x) = artin x
-    change (QuotientGroup.quotientKerEquivOfSurjective
-      artin.toMonoidHom hsurj)
-      ((QuotientGroup.quotientMulEquivOfEq hker.symm)
-        (QuotientGroup.mk x)) = artin x
-    rw [QuotientGroup.quotientMulEquivOfEq_mk]
-    rfl
-  refine ⟨e, he, ?_⟩
-  intro e' he'
-  apply ContinuousMulEquiv.ext
-  intro y
-  obtain ⟨x, rfl⟩ :=
-    QuotientGroup.mk'_surjective (fieldNormSubgroup K L) y
-  exact (he' x).trans (he x).symm
+      ∀ x : Kˣ, e (QuotientGroup.mk' (localNormSubgroup K L) x) = artin x :=
+  ProCGroups.QuotientGroup.existsUnique_quotientContinuousMulEquiv_of_surjective
+    artin (localNormSubgroup K L) hsurj hker
 
 end ClassFieldTheory

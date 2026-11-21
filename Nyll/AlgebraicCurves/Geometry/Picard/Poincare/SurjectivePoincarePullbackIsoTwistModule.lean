@@ -291,37 +291,6 @@ namespace AJSurj
 open _root_.AlgebraicGeometry.RelPicard
 open _root_.AlgebraicGeometry
 
-/-- The compatible family of restrictions of a global section. -/
-noncomputable def sectionOfGlobal {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) : M.val.sections :=
-  ⟨fun U => (Scheme.Modules.presheaf M).map (homOfLE (le_top : U.unop ≤ ⊤)).op σ,
-   fun {U V} f => by
-     change (Scheme.Modules.presheaf M).map f ((Scheme.Modules.presheaf M).map (homOfLE (le_top :
-       U.unop ≤ ⊤)).op σ) =
-       (Scheme.Modules.presheaf M).map (homOfLE (le_top : V.unop ≤ ⊤)).op σ
-     have hg : (homOfLE (le_top : U.unop ≤ ⊤)).op ≫ f = (homOfLE (le_top : V.unop ≤ ⊤)).op :=
-       Subsingleton.elim _ _
-     rw [← CategoryTheory.ConcreteCategory.comp_apply, ← Functor.map_comp, hg]⟩
-
-theorem sectionOfGlobal_top {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) :
-    (sectionOfGlobal M σ).val (op ⊤) = σ := by
-  change (Scheme.Modules.presheaf M).map (homOfLE (le_top : (⊤ : X.Opens) ≤ ⊤)).op σ = σ
-  have h1 : (homOfLE (le_top : (⊤ : X.Opens) ≤ ⊤)).op = 𝟙 (op ⊤) := Subsingleton.elim _ _
-  rw [h1, CategoryTheory.Functor.map_id]
-  rfl
-
-theorem exists_hom_ne_zero {X : Scheme.{u}} (M : X.Modules) (σ : Γ(M, ⊤)) (hσ : σ ≠ 0) :
-    ∃ s : 𝟙_ X.Modules ⟶ M, s ≠ 0 := by
-  obtain ⟨s, hs⟩ : ∃ s : 𝟙_ X.Modules ⟶ M, (SheafOfModules.unitHomEquiv M) s = sectionOfGlobal M σ
-    :=
-    ⟨(SheafOfModules.unitHomEquiv M).symm (sectionOfGlobal M σ), Equiv.apply_symm_apply _ _⟩
-  refine ⟨s, fun h0 => hσ ?_⟩
-  have e2 : (sectionOfGlobal M σ).val (op ⊤) = σ := sectionOfGlobal_top M σ
-  have e3 : (sectionOfGlobal M σ).val (op ⊤) = (Scheme.Modules.Hom.app s ⊤) (1 : Γ(X, ⊤)) := by
-    rw [← hs]
-    rfl
-  rw [← e2, e3, h0, Scheme.Modules.Hom.zero_app]
-  rfl
-
 variable (R : Type u) [CommRing R] [IsNoetherianRing R] {C : Scheme.{u}} (c : C ⟶ Spec
   (CommRingCat.of R))
     [IsProper c] [SmoothOfRelativeDimension 1 c] [GeometricallyIntegral c]
@@ -401,7 +370,8 @@ theorem core (h𝔉 : ∀ m₀ : ℕ, ∃ 𝔉 : SmoothProperCurve.FiniteMapData
   obtain ⟨eΓ, -⟩ := Scheme.TwoAffineOpenCover.exists_linearEquiv_sectionsOf_H0 𝒱 (pullback.snd c s)
     (M.L ⊗ Eg.lineBundle)
   have hσ : eΓ.symm yv ≠ 0 := fun h => hyv (by rw [← eΓ.apply_symm_apply yv, h, map_zero])
-  obtain ⟨σ, hσ0⟩ := exists_hom_ne_zero (M.L ⊗ Eg.lineBundle) (eΓ.symm yv) hσ
+  obtain ⟨σ, hσ0⟩ := _root_.AlgebraicGeometry.Scheme.Modules.exists_hom_ne_zero
+    (M.L ⊗ Eg.lineBundle) (eΓ.symm yv) hσ
   have hχ3u : (Module.finrank k (𝒱.sectionsOf (pullback.snd c s) (M.L ⊗ Eg.lineBundle)).H0 : ℤ)
         - Module.finrank k (𝒱.sectionsOf (pullback.snd c s) (M.L ⊗ Eg.lineBundle)).H1
       = (Module.finrank k (𝒱.sectionsOf (pullback.snd c s)

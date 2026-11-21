@@ -3,6 +3,7 @@ Anthropic FLT upstream notice: Copyright 2026 Anthropic, PBC.
 Released under Apache 2.0 license as described in the file LICENSE.
 Adapted Anthropic FLT source (pinned comparison revision):
 https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/Definitions/Def_AlgebraicCurve_TateResidueCurrency.lean
+https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/P2M/Sol/S_AlgebraicCurve_tateAgreement.lean
 Upstream NOTICE: https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/NOTICE
 Upstream per-file ATTRIBUTION (earlier FLT and Mathlib notices): https://github.com/anthropics/fermats-last-theorem/blob/aa2d8b34692b16c70f699536de0d8e75b9a3e9ef/ATTRIBUTION.md
 
@@ -26,6 +27,7 @@ public import Mathlib.LinearAlgebra.Projection
 public import Mathlib.LinearAlgebra.Basis.VectorSpace
 public import Mathlib.Tactic.Abel
 public import Nyll.AlgebraicCurves.Places.Completion
+public import Nyll.AlgebraicCurves.Places.CompletionQuotientFiniteness
 
 /-!
 # Differentials, residues, and divisor correspondences
@@ -35,6 +37,8 @@ identities.
 -/
 
 @[expose] public section
+
+open AlgebraicCurve.Place.CompletionQuotients
 
 open LinearMap Submodule
 
@@ -277,24 +281,39 @@ section TateProj
 
 variable {K L : Type*} [Field K] [Field L] [Algebra K L] (u : Place K L)
 
-/-- The completion integers viewed as a submodule over the base field. -/
-def adicIntegersKSubmod : Submodule K u.adicCompletion where
-  carrier := u.adicCompletionIntegers
-  add_mem' := add_mem
-  zero_mem' := zero_mem _
-  smul_mem' c x hx := by
-    rw [Algebra.smul_def]
-    exact mul_mem (by
-      rw [IsScalarTower.algebraMap_apply K L u.adicCompletion]
-      exact (algebraMap_mem_adicCompletionIntegers_iff u _).mpr
-        (u.algebraMap_mem' c)) hx
-
 /-- A projection onto the completion integers along a chosen complementary submodule. -/
 def tateProj : u.adicCompletion →ₗ[K] u.adicCompletion :=
   letI B := Classical.choose (Submodule.exists_isCompl (adicIntegersKSubmod u))
   (adicIntegersKSubmod u).subtype ∘ₗ
     Submodule.projectionOnto (adicIntegersKSubmod u) B
       (Classical.choose_spec (Submodule.exists_isCompl (adicIntegersKSubmod u)))
+
+theorem tateProj_mem_integers (x : u.adicCompletion) :
+    tateProj u x ∈ u.adicCompletionIntegers :=
+  (mem_adicIntegersKSubmod_iff u _).mp
+    (Submodule.coe_mem
+      (Submodule.projectionOnto (adicIntegersKSubmod u) _
+        (Classical.choose_spec (Submodule.exists_isCompl (adicIntegersKSubmod u))) x))
+
+theorem tateProj_of_mem {x : u.adicCompletion} (hx : x ∈ u.adicCompletionIntegers) :
+    tateProj u x = x := by
+  have h := Submodule.projectionOnto_apply_left
+    (Classical.choose_spec (Submodule.exists_isCompl (adicIntegersKSubmod u)))
+    (⟨x, (mem_adicIntegersKSubmod_iff u x).mpr hx⟩ : adicIntegersKSubmod u)
+  have hcoe := congrArg (Subtype.val (p := fun y => y ∈ adicIntegersKSubmod u)) h
+  exact hcoe
+
+theorem tateProj_idem : tateProj u ∘ₗ tateProj u = tateProj u := by
+  refine LinearMap.ext fun x => ?_
+  rw [LinearMap.comp_apply]
+  exact tateProj_of_mem u (tateProj_mem_integers u x)
+
+theorem range_tateProj : LinearMap.range (tateProj u) = adicIntegersKSubmod u := by
+  apply le_antisymm
+  · rintro x ⟨y, rfl⟩
+    exact tateProj_mem_integers u y
+  · intro x hx
+    exact ⟨x, tateProj_of_mem u hx⟩
 
 end TateProj
 
@@ -314,6 +333,55 @@ def tateRes (fh gh : u.adicCompletion)
   tateCommTrace (tateProj u) (lmulK u fh) (lmulK u gh)
 
 end TateResDef
+
+section PoleWindowImage
+
+variable {K L : Type*} [Field K] [Field L] [Algebra K L] (u : Place K L)
+
+/-- Finite dimensionality of the principal-part image of integral completion elements after
+multiplication. -/
+def PoleWindowImageFinite : Prop :=
+  ∀ (fh : u.adicCompletion),
+    FiniteDimensional K (Submodule.map (adicIntegersKSubmod u).mkQ
+      (Submodule.map (lmulK u fh) (adicIntegersKSubmod u)))
+
+theorem lmul_adicIntegers_subset_poleWindow (fh : u.adicCompletion)
+    (πh : u.adicCompletionIntegers) (M : ℕ)
+    (hfhM : (πh : u.adicCompletion) ^ M * fh ∈ u.adicCompletionIntegers) :
+    Submodule.map (lmulK u fh) (adicIntegersKSubmod u) ≤ poleWindowKSubmod u πh M := by
+  rintro x ⟨a, ha, rfl⟩
+  rw [mem_poleWindowKSubmod_iff]
+  show (πh : u.adicCompletion)^M * (lmulK u fh) a ∈ u.adicCompletionIntegers
+  have : (lmulK u fh) a = fh * a := rfl
+  rw [this, ← mul_assoc]
+  exact mul_mem hfhM (show a ∈ u.adicCompletionIntegers from ha)
+
+variable [u.FiniteResidue]
+
+theorem poleWindowImageFinite :
+    PoleWindowImageFinite u := by
+  intro fh
+  obtain ⟨πh, hπh⟩ := IsDiscreteValuationRing.exists_irreducible u.adicCompletionIntegers
+  obtain ⟨M, hfhM⟩ := _root_.ModularCurve.KwF4gRRTate.clearPole u πh hπh fh
+  set A := adicIntegersKSubmod u
+  set P := poleWindowKSubmod u πh M
+  have hsub : Submodule.map A.mkQ (Submodule.map (lmulK u fh) A)
+      ≤ Submodule.map A.mkQ P :=
+    Submodule.map_mono (lmul_adicIntegers_subset_poleWindow u fh πh M hfhM)
+  suffices hPim : FiniteDimensional K (Submodule.map A.mkQ P : Submodule K _) by
+    exact Submodule.finiteDimensional_of_le hsub
+  have : FiniteDimensional K (P ⧸ (A.comap P.subtype)) :=
+    poleWindowFinite (K := K) (L := L) u πh hπh M
+  let r : P →ₗ[K] (u.adicCompletion ⧸ A) := A.mkQ ∘ₗ P.subtype
+  have hrange : LinearMap.range r = Submodule.map A.mkQ P := by
+    rw [LinearMap.range_comp, Submodule.range_subtype]
+  have hker : LinearMap.ker r = A.comap P.subtype := by
+    rw [LinearMap.ker_comp, Submodule.ker_mkQ]
+  have e : (P ⧸ (A.comap P.subtype)) ≃ₗ[K] LinearMap.range r := hker ▸ r.quotKerEquivRange
+  rw [← hrange]
+  exact e.finiteDimensional
+
+end PoleWindowImage
 
 section TateAtoms
 

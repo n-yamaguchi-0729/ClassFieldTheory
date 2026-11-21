@@ -83,6 +83,7 @@ theorem frobeniusFixedField_normal_of_abelian
   have hcomm : IsMulCommutative
       (H.field.toSubgroup ⧸ D.extensionInertiaWithin H.field L hLH) :=
     extensionInertiaWithin_quotient_isMulCommutative D H L hLH
+  change ((D.frobeniusFixedField H L hLH σ).toSubgroup.subgroupOf H.field.toSubgroup).Normal
   rw [D.extensionSubgroup_frobeniusFixedField H L hLH σ]
   change ((D.frobeniusClosure H L hLH σ).toSubgroup.comap
     (QuotientGroup.mk' (D.extensionInertiaWithin H.field L hLH))).Normal
@@ -102,6 +103,12 @@ variable (k : Type u) (K : Type v) (Ω : Type w) [Field k] [Finite k] [Field K] 
     [IsScalarTower k K Ω] [IsScalarTower (RatFunc k) K Ω]
     [IsScalarTower k (RatFunc k) Ω] [IsGalois K Ω] [IsSepClosed Ω]
 
+local instance fixedFieldPrimeNorm_normal
+    (H : FiniteAbstractField Gal(Ω/K)) (L : FiniteGaloisSubextension H.field) :
+    (L.field.toSubgroup.subgroupOf
+      (H.toFiniteResidueAbstractField (fullConstantDegreeData k K Ω)).field.toSubgroup).Normal :=
+  L.normal
+
 /-- The norm of a normalized-degree-one class in the actual Frobenius
 auxiliary field has the specified finite Artin value. All field, norm and
 valuation comparisons are supplied by the concrete function-field construction. -/
@@ -120,6 +127,7 @@ theorem fixedFieldArtin_frobenius_primeNorm
       change IsMulCommutative L.extensionQuotient
       infer_instance
     let HR := H.toFiniteResidueAbstractField D
+    let _ : (extensionSubgroup HR.field L.field L.below).Normal := L.normal
     let S := D.frobeniusFixedField HR L.field L.below σ
     let hSH : S.toSubgroup ≤ H.field.toSubgroup :=
       D.frobeniusFixedField_le HR L.field L.below σ
@@ -162,8 +170,8 @@ theorem fixedFieldArtin_frobenius_primeNorm
       fixedFieldArtin k K Ω H L
         (IdeleClassGroup.norm (k := k) (K := abstractFixedField K Ω H.field)
           (L := ambientFrobeniusAuxiliaryField k K Ω H L σ) c) =
-        Abelianization.of (eG (D.frobeniusRestriction HR L.field L.below σ)) := by
-  intro hkFΩ D hLrelative hLcomm HR S hSH hSfinite hSnormal hHfinite hSdimension
+        Group.Abelianization.of (eG (D.frobeniusRestriction HR L.field L.below σ)) := by
+  intro hkFΩ D hLrelative hLcomm HR hLnormal S hSH hSfinite hSnormal hHfinite hSdimension
     hKHS hkHS hHSfinite hHSgalois hkKS hSprincipal eG c hc
   have : Finite (H.field.toSubgroup ⧸ extensionSubgroup H.field S hSH) :=
     D.frobeniusFixedField_finite HR L.field L.below σ
@@ -195,7 +203,7 @@ theorem fixedFieldArtin_frobenius_primeNorm
           (D.finiteReciprocityHom A v
             (v.classFieldAxiom_implies_unramifiedUnitCohomology hcf)
             H L.field L.below (Additive.ofMul q)) =
-        Additive.ofMul (Abelianization.of q) :=
+        Additive.ofMul (Group.Abelianization.of q) :=
     D.normResidueSymbol_finiteReciprocityHom A v hcf H L q
   rw [hprime, ← hnorm] at hs
   change eG.abelianizationCongr
@@ -206,8 +214,8 @@ theorem fixedFieldArtin_frobenius_primeNorm
               (K := abstractFixedField K Ω H.field)
               (L := ambientFrobeniusAuxiliaryField k K Ω H L σ)
                 c))))).toMul =
-    Abelianization.of (eG q)
+    Group.Abelianization.of (eG q)
   exact (congrArg eG.abelianizationCongr (congrArg Additive.toMul hs)).trans
-    (abelianizationCongr_of eG q)
+    (Group.abelianizationCongr_of eG q)
 
 end FunctionField

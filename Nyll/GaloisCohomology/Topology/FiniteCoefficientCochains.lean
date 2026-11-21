@@ -126,7 +126,9 @@ theorem continuousModule_isZero_of_finite_coefficients
     (D.exactAt_iff' n (n + 1) (n + 2)
       (CochainComplex.prev_nat_succ n) (CochainComplex.next ℕ (n + 1))).mp hD
   obtain ⟨c, hc⟩ := (D.sc' n (n + 1) (n + 2)).exact_iff_of_hasForget.mp hD' b hbzero
-  let ψ := ContinuousCohomology.cochainsMap (ContinuousMonoidHom.id G) φ
+  let r : G →ₜ* G := ContinuousMonoidHom.id G
+  let φ' : TopRep.res r.toMonoidHom Y ⟶ X := φ
+  let ψ := ContinuousCohomology.cochainsMap (X := Y) (Y := X) r φ'
   refine ⟨ψ.f n c, ?_⟩
   have hcomm :
       (homogeneousCochains X).d n (n + 1) (ψ.f n c) =
@@ -134,5 +136,53 @@ theorem continuousModule_isZero_of_finite_coefficients
     ConcreteCategory.congr_hom (ψ.comm n (n + 1)) c
   exact hcomm.trans ((congrArg (fun y : (homogeneousCochains Y).X (n + 1) =>
     ψ.f (n + 1) y) hc).trans hb)
+
+/-- Vanishing for finite discrete coefficients implies vanishing for all
+discrete torsion coefficients, using a finite invariant submodule for each cocycle. -/
+theorem continuousModule_isZero_of_finite_torsion_coefficients
+    (hX : Continuous (fun gx : G × X => X.ρ gx.1 gx.2))
+    (ht : Module.IsTorsion ℤ X) (n : ℕ)
+    (hfinite : ∀ (Y : TopRep.{u} ℤ G) [Finite Y] [DiscreteTopology Y],
+      Continuous (fun gy : G × Y => Y.ρ gy.1 gy.2) →
+      Limits.IsZero (((continuousModuleComplexFunctor G).obj Y).homology (n + 1))) :
+    Limits.IsZero (((continuousModuleComplexFunctor G).obj X).homology (n + 1)) := by
+  let C := (continuousModuleComplexFunctor G).obj X
+  apply (C.exactAt_iff_isZero_homology (n + 1)).mp
+  apply (C.exactAt_iff' n (n + 1) (n + 2)
+    (CochainComplex.prev_nat_succ n) (CochainComplex.next ℕ (n + 1))).mpr
+  apply (C.sc' n (n + 1) (n + 2)).exact_iff_of_hasForget.mpr
+  intro z hz
+  let f := resolutionTupleHomeomorph G X (n + 2) z.val
+  have hf : (Set.range f).Finite :=
+    (isCompact_range f.continuous).finite (isDiscrete_iff_discreteTopology.mpr inferInstance)
+  obtain ⟨W, hfW, hfin, hW⟩ :=
+    exists_finite_invariant_submodule_of_torsion ℤ G X hX ht (Set.range f) hf
+  let Y := invariantSubmoduleTopRep ℤ G X W hW
+  let φ : Y ⟶ X := invariantSubmoduleInclusion ℤ G X W hW
+  let : Finite Y := hfin
+  let : DiscreteTopology Y := invariantSubmoduleTopRep_discrete ℤ G X W hW
+  have hY := invariantSubmoduleTopRep_action_continuous ℤ G X W hW hX
+  obtain ⟨b, hb⟩ := homogeneousCochains_map_preimage_of_tuple_preimages
+    G Y X φ hY (n + 1) z (fun a => ⟨⟨f a, hfW ⟨a, rfl⟩⟩, rfl⟩)
+  let D := (continuousModuleComplexFunctor G).obj Y
+  let r : G →ₜ* G := ContinuousMonoidHom.id G
+  let φ' : TopRep.res r.toMonoidHom Y ⟶ X := φ
+  let ψ := ContinuousCohomology.cochainsMap.{0, u, u} (X := Y) (Y := X) r φ'
+  have hb₀ : D.d (n + 1) (n + 2) b = 0 := by
+    apply homogeneousCochains_map_injective G Y X φ
+      (invariantSubmoduleInclusion_injective ℤ G X W hW) (n + 2)
+    have h := ConcreteCategory.congr_hom (ψ.comm (n + 1) (n + 2)) b
+    have hz' : (homogeneousCochains X).d (n + 1) (n + 2) z = 0 := hz
+    exact h.symm.trans ((congrArg (fun t : (homogeneousCochains X).X (n + 1) =>
+      (homogeneousCochains X).d (n + 1) (n + 2) t) hb).trans
+      (hz'.trans (map_zero (ψ.f (n + 2)).hom).symm))
+  have hD := (D.exactAt_iff_isZero_homology (n + 1)).mpr (hfinite Y hY)
+  have hD' := (D.exactAt_iff' n (n + 1) (n + 2)
+    (CochainComplex.prev_nat_succ n) (CochainComplex.next ℕ (n + 1))).mp hD
+  obtain ⟨a, ha⟩ := (D.sc' n (n + 1) (n + 2)).exact_iff_of_hasForget.mp hD' b hb₀
+  refine ⟨ψ.f n a, ?_⟩
+  have h := ConcreteCategory.congr_hom (ψ.comm n (n + 1)) a
+  exact h.trans ((congrArg (fun t : (homogeneousCochains Y).X (n + 1) =>
+    ψ.f (n + 1) t) ha).trans hb)
 
 end TopRep

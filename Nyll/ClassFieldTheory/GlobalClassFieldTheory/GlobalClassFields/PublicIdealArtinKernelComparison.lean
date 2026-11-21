@@ -72,14 +72,14 @@ private theorem finiteAbelianReciprocity_originalPrimeNormalization
     ∀ (v : HeightOneSpectrum (𝓞 K))
       (_hv : v ∉ m.finitePart.support),
       a (QuotientGroup.mk' m.congruenceSubgroup
-        (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+        (IdeleGroup.toStandardClass K
           (IdeleGroup.finitePrimeIdele v))) =
         GlobalClassFieldTheory.GlobalClassFields.arithmeticFinitePlacePrimeArtin
           (K := K) (L := L) v := by
   intro m e a v hv
   have hvm : v ∉ D.modulus.finitePart.support := hv
   change D.artin (e.symm (QuotientGroup.mk' m.congruenceSubgroup
-    (QuotientGroup.mk' (IdeleGroup.principalSubgroup K)
+    (IdeleGroup.toStandardClass K
       (IdeleGroup.finitePrimeIdele v)))) = _
   rw [← rayClassGroupEquivOriginalIdele_prime K D.modulus v hvm]
   simpa only [e, MulEquiv.symm_apply_apply] using

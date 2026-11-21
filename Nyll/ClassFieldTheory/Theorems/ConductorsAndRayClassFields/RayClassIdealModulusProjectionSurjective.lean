@@ -31,11 +31,6 @@ namespace ClassFieldTheory
 
 universe u
 
-private local instance rayClassGroupCommGroup
-    (K : Type u) [Field K] [NumberField K]
-    (m : RayClassModulus K) : CommGroup (RayClassGroup m) :=
-  { (inferInstance : Group (RayClassGroup m)) with mul_comm := mul_comm' }
-
 private theorem rayClassGroup_hom_ext_of_prime
     (K : Type u) [Field K] [NumberField K]
     (n m : RayClassModulus K)
@@ -56,7 +51,7 @@ theorem rayClassIdealModulusProjection_surjective
   let m' := GlobalClassFieldComparison.rayClassModulusToOriginal K m
   let n' := GlobalClassFieldComparison.rayClassModulusToOriginal K n
   have hmn' : m' ≤ n' := hmn
-  let : IsMulCommutative (IdeleClassGroup K) :=
+  let : IsMulCommutative (NumberField.IdeleClassGroup (𝓞 K) K) :=
     ⟨⟨fun a b => mul_comm a b⟩⟩
   let : (RayClass.Modulus.congruenceSubgroup m').Normal :=
     Subgroup.normal_of_isMulCommutative _
@@ -66,7 +61,7 @@ theorem rayClassIdealModulusProjection_surjective
     QuotientGroup.map
       (RayClass.Modulus.congruenceSubgroup n')
       (RayClass.Modulus.congruenceSubgroup m')
-      (MonoidHom.id (IdeleClassGroup K))
+      (MonoidHom.id (NumberField.IdeleClassGroup (𝓞 K) K))
       (RayClass.Modulus.congruenceSubgroup_antitone hmn')
   have hprojection : Function.Surjective projection := by
     intro q

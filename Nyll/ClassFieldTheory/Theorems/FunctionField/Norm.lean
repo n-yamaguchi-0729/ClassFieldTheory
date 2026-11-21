@@ -56,7 +56,7 @@ theorem ideleClassNorm_eq_norm [Algebra.IsSeparable K L] :
     (ideleClassNorm k K L).toMonoidHom =
       _root_.FunctionField.IdeleClassGroup.norm (k := k) (K := K) (L := L) := by
   intro hK hL
-  exact _root_.FunctionField.IdeleClassGroup.finiteNorm_eq_norm
+  rfl
 
 /-- The public norm of a one-place class is the one-place class of its local norm. -/
 theorem ideleClassNorm_placeIdele (w : AlgebraicCurve.Place k L) :

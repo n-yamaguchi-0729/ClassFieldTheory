@@ -50,7 +50,7 @@ theorem finiteArtin_fullConstant (n : ℕ) [NeZero n] (c : IdeleClassGroup k K) 
       IsScalarTower.of_algebraMap_eq (fun x => congrArg (algebraMap K (SeparableClosure K))
         (IsScalarTower.algebraMap_apply k (RatFunc k) K x))
     finiteArtin k K (fullConstantDegreeStage k K (SeparableClosure K) n) c =
-      Abelianization.of ((fullConstantDegreeFrobenius k K (SeparableClosure K) n) ^
+      Group.Abelianization.of ((fullConstantDegreeFrobenius k K (SeparableClosure K) n) ^
         (IdeleClassGroup.normalizedDegree (k := k) (K := K) c).toAdd) := by
   intro akΩ aRΩ hkKΩ hRKΩ hkRΩ
   let Ω := SeparableClosure K
@@ -63,11 +63,11 @@ theorem finiteArtin_fullConstant (n : ℕ) [NeZero n] (c : IdeleClassGroup k K) 
   have hs := normQuotientEquivOfFixedFieldPresentation_unramified
     k K E Ω H T eF eE hu c
   have hφ := fullConstant_presentedFrobenius k K n
-  have hz := congrArg (fun σ : Gal(E/K) => Abelianization.of
+  have hz := congrArg (fun σ : Gal(E/K) => Group.Abelianization.of
     (σ ^ (IdeleClassGroup.normalizedDegree (k := k) (K := K) c).toAdd)) hφ
   have he := congrArg (fun f :
       (IdeleClassGroup k K ⧸ (IdeleClassGroup.norm (k := k) (K := K) (L := E)).range) ≃*
-        Abelianization Gal(E/K) => f (QuotientGroup.mk c))
+        Group.Abelianization Gal(E/K) => f (QuotientGroup.mk c))
     (finiteNormQuotientEquivOfEmbedding_eq_intrinsic k K E E.toIntermediateField.val)
   apply he.symm.trans
   dsimp only [finiteNormQuotientEquivOfEmbedding]
@@ -95,9 +95,9 @@ theorem abelianFiniteArtin_fullConstant (n : ℕ) [NeZero n] :
   intro akΩ aRΩ hkKΩ hRKΩ hkRΩ hcyc hab
   apply MonoidHom.ext
   intro c
-  apply (Abelianization.equivOfComm
+  apply (Group.Abelianization.equivOfComm
     (H := Gal((fullConstantDegreeStage k K (SeparableClosure K) n)/K))).injective
-  change Abelianization.of (abelianFiniteArtin k K
+  change Group.Abelianization.of (abelianFiniteArtin k K
     (fullConstantDegreeStage k K (SeparableClosure K) n) c) = _
   rw [abelianFiniteArtin_of, finiteArtin_fullConstant]
   rfl

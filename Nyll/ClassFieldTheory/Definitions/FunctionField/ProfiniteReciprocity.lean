@@ -9,11 +9,11 @@ import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteRecipro
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.ProfiniteDegree
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.AbsoluteConstantDegree
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Fields.Curve
-import Nyll.ClassFieldTheory.Definitions.LocalClassFieldTheory.TopologicalProfiniteCompletion
+import Nyll.ProCGroups.Completion.TopologicalBasic
 import Nyll.AlgebraicCurves.Divisors.ClassGroup.ClassGroup
 import Nyll.ClassFieldTheory.AbstractClassFieldTheory.Degree.Fields
 import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.PrincipalCore
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Infinite.AbsoluteFiniteQuotients
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.AbsoluteFiniteQuotients
 
 /-!
 # Continuous and profinite function-field reciprocity

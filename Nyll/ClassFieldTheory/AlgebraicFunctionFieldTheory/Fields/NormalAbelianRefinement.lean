@@ -77,7 +77,6 @@ end FunctionField
 
 namespace ClassFormation
 
-open KummerTheory CyclicCohomology
 
 variable {G : Type*} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 
@@ -87,9 +86,9 @@ private theorem finiteAbstractField_ambientQuotient_finite (H : FiniteAbstractFi
   apply Nat.finite_of_card_ne_zero
   change H.field.toSubgroup.index ≠ 0
   rw [← Subgroup.relIndex_top_right]
-  change (extensionSubgroup (baseField G) H.field (le_baseField H.field)).index ≠ 0
+  change ((H.field.toSubgroup.subgroupOf (baseField G).toSubgroup)).index ≠ 0
   exact @Subgroup.index_ne_zero_of_finite (baseField G).toSubgroup _
-    (extensionSubgroup (baseField G) H.field (le_baseField H.field)) H.finite
+    ((H.field.toSubgroup.subgroupOf (baseField G).toSubgroup)) H.finite
 
 namespace FiniteGaloisSubextension
 

@@ -36,7 +36,7 @@ def IsUnramifiedOutsideModulus
   (∀ v : HeightOneSpectrum (𝓞 K), v ∉ m.finitePart.support →
       Algebra.IsUnramifiedIn (𝓞 L) v.asIdeal) ∧
     ∀ (v : InfinitePlace K) (hv : v.IsReal),
-      (⟨v, hv⟩ : RayClassRealPlace K) ∉ m.infinitePart →
+      (⟨v, hv⟩ : RayClass.RealPlace K) ∉ m.infinitePart →
         v.IsUnramifiedIn L
 
 end ClassFieldTheory

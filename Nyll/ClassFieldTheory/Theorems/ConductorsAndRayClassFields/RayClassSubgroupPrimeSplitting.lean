@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
-import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
-import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusEqOneIffSplitsCompletely
+module
+
+public import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassSubgroupRealization
+public import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
+public import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticFrobeniusEqOneIffSplitsCompletely
 
 /-!
 # Prime splitting in a ray-class subgroup class field
@@ -14,6 +16,8 @@ import Nyll.ClassFieldTheory.Theorems.FrobeniusAndHilbertClassFields.ArithmeticF
 At a prime away from the modulus, complete splitting is equivalent to
 membership of the prime's ray class in the defining subgroup.
 -/
+
+@[expose] public section
 
 open scoped NumberField
 

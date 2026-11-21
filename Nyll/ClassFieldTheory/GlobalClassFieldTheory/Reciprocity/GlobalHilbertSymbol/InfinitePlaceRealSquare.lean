@@ -44,7 +44,8 @@ theorem realInfinitePlace_globalUnit_realCoordinate
         (algebraMap K v.Completion (b : K)) =
       InfinitePlace.embedding_of_isReal hv (b : K)
   rw [InfinitePlace.Completion.ringEquivRealOfIsReal_apply]
-  rw [InfinitePlace.Completion.algebraMap_apply]
+  rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+    Algebra.algebraMap_self_apply]
   rw [InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe]
   simp only [WithAbs.equiv_apply]
 

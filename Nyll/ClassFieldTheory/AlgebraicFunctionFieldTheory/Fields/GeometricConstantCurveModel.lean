@@ -41,11 +41,7 @@ variable (k K Ω : Type*) [Field k] [Finite k] [Field K] [Field Ω]
 local notation "C" => separableClosure k Ω
 local notation "G" => geometricConstantExtension k K Ω
 
-local instance geometricModelConstantsAlgebra : Algebra C G :=
-  constantAlgebra (K := K) C
-
-local instance geometricModelConstantsTower : IsScalarTower k C G :=
-  constantScalarTower (K := K) C
+attribute [local instance] constantAlgebra constantScalarTower
 
 /-- The geometric compositum has a separating parameter coming from the
 original function field through the original inclusion. -/
@@ -81,8 +77,7 @@ theorem geometricConstantExtension_essFiniteType : Algebra.EssFiniteType C G := 
 
 variable [IsSepClosed Ω]
 
-local instance geometricModelConstantsAlgClosed : IsAlgClosed C :=
-  IsAlgClosure.isAlgClosed (R := k) (K := C)
+attribute [local instance] geometricConstantField_isAlgClosed
 
 /-- A proper smooth model of the original geometric compositum. Its
 `ffEquiv_algebraMap` and `range_stalk_eq` fields retain the specified constants

@@ -40,13 +40,11 @@ attribute [local instance]
 /-- The class of a normalized one-place prime idèle in an arbitrary
 idèle-class quotient. -/
 def subgroupQuotientPrimeClass
-    (H : Subgroup (IdeleClassGroup K))
+    (H : Subgroup (NumberField.IdeleClassGroup (𝓞 K) K))
     (v : HeightOneSpectrum (𝓞 K)) :
-    IdeleClassGroup K ⧸ H :=
+    NumberField.IdeleClassGroup (𝓞 K) K ⧸ H :=
   QuotientGroup.mk' H
-    (QuotientGroup.mk'
-      (IdeleGroup.principalSubgroup K)
-      (finitePrimeIdele v))
+    (IdeleGroup.toStandardClass K (finitePrimeIdele v))
 
 namespace ConductorialSubgroup
 
@@ -60,9 +58,7 @@ def narrowFiniteConductorRayPrimeClass
   QuotientGroup.mk'
     (RayClass.Modulus.congruenceSubgroup
       (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor))
-    (QuotientGroup.mk'
-      (IdeleGroup.principalSubgroup K)
-      (finitePrimeIdele v))
+    (IdeleGroup.toStandardClass K (finitePrimeIdele v))
 
 /-- The exact narrow finite conductor ray-class map sends the ray prime
 class to the corresponding class in `C_K / H`. -/
@@ -84,7 +80,7 @@ theorem narrowFiniteConductorRayClassGroupEquivQuotientOfCardEq_rayPrimeClass
     (hcard :
       Nat.card (RayClass.RayClassGroup
         (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor)) =
-        Nat.card (IdeleClassGroup K ⧸ H.1))
+        Nat.card (NumberField.IdeleClassGroup (𝓞 K) K ⧸ H.1))
     (v : HeightOneSpectrum (𝓞 K)) :
     H.narrowFiniteConductorRayClassGroupEquivQuotientOfCardEq
         hcard
@@ -102,48 +98,10 @@ theorem narrowFiniteConductorIdealFrobeniusClass_eq_quotientPrimeClass
         (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor) H.1
         H.narrowFiniteConductor_isDefiningModulus
         v hv =
-      subgroupQuotientPrimeClass H.1 v := by
-  let m : RayClass.Modulus K :=
-    RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor
-  let hm : RayClass.Modulus.congruenceSubgroup m ≤ H.1 :=
-    H.narrowFiniteConductor_isDefiningModulus
-  let a : RayClass.idelePrimeToModulusSubgroup m :=
-    ⟨finitePrimeIdele v,
-      finitePrimeIdele_mem_idelePrimeToModulusSubgroup
-        m v hv⟩
-  have hIdeal :
-      RayClass.primeToIdealMap m a =
-        RayClass.primeToModulusIdeal m v hv :=
-    primeToIdealMap_finitePrimeIdele m v hv
-  have hArtin :
-      IdealClassFieldTheory.idealArtinMap m H.1 hm
-          (RayClass.primeToIdealMap m a) =
-        QuotientGroup.mk' H.1
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (a : IdeleGroup K)) :=
-    idealArtinMap_primeToIdealMap m H.1 hm a
-  change
-    IdealClassFieldTheory.idealArtinMap m H.1 hm
-        (RayClass.primeToModulusIdeal m v hv) =
-      QuotientGroup.mk' H.1
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)
-          (finitePrimeIdele v))
-  calc
-    _ = IdealClassFieldTheory.idealArtinMap m H.1 hm
-          (RayClass.primeToIdealMap m a) :=
-      congrArg
-        (IdealClassFieldTheory.idealArtinMap m H.1 hm)
-        hIdeal.symm
-    _ = QuotientGroup.mk' H.1
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (a : IdeleGroup K)) := hArtin
-    _ = QuotientGroup.mk' H.1
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (finitePrimeIdele v)) := rfl
+      subgroupQuotientPrimeClass H.1 v :=
+  idealFrobeniusClass_eq_finitePrimeIdeleClass
+    (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor) H.1
+    H.narrowFiniteConductor_isDefiningModulus v hv
 
 /-- Triviality of the prime class in `C_K / H` is equivalent to
 membership of its prime ideal in the ideal Artin kernel. -/
@@ -203,7 +161,7 @@ theorem narrowFiniteConductorRayPrimeClass_eq_one_iff_quotientPrimeClass_eq_one
     (hcard :
       Nat.card (RayClass.RayClassGroup
         (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor)) =
-        Nat.card (IdeleClassGroup K ⧸ H.1))
+        Nat.card (NumberField.IdeleClassGroup (𝓞 K) K ⧸ H.1))
     (v : HeightOneSpectrum (𝓞 K)) :
     H.narrowFiniteConductorRayPrimeClass v = 1 ↔
       subgroupQuotientPrimeClass H.1 v = 1 := by
@@ -231,7 +189,7 @@ theorem orderOf_narrowFiniteConductorRayPrimeClass_eq_orderOf_quotientPrimeClass
     (hcard :
       Nat.card (RayClass.RayClassGroup
         (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor)) =
-        Nat.card (IdeleClassGroup K ⧸ H.1))
+        Nat.card (NumberField.IdeleClassGroup (𝓞 K) K ⧸ H.1))
     (v : HeightOneSpectrum (𝓞 K)) :
     orderOf (H.narrowFiniteConductorRayPrimeClass v) =
       orderOf (subgroupQuotientPrimeClass H.1 v) := by
@@ -253,7 +211,7 @@ theorem narrowFiniteConductorRayPrimeClass_eq_one_iff_primeIdeal_mem_idealArtinK
     (hcard :
       Nat.card (RayClass.RayClassGroup
         (RayClass.Modulus.narrowOfFinite H.narrowFiniteConductor)) =
-        Nat.card (IdeleClassGroup K ⧸ H.1))
+        Nat.card (NumberField.IdeleClassGroup (𝓞 K) K ⧸ H.1))
     (v : HeightOneSpectrum (𝓞 K))
     (hv : v ∉ H.narrowFiniteConductor.support) :
     H.narrowFiniteConductorRayPrimeClass v = 1 ↔

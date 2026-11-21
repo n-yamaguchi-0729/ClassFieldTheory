@@ -52,7 +52,7 @@ theorem bigHilbertClassField_artinEquiv
   refine ⟨artin, ?_⟩
   intro v w hw
   have hunram : Algebra.IsUnramifiedAt (𝓞 K) w.asIdeal :=
-    hE.1 v w.asIdeal inferInstance hw
+    IsUnramifiedAtFinitePlaces.atPrime hE.1 w
   apply g.injective
   calc
     g (artin (narrowRayClassOfFinitePrime v)) =

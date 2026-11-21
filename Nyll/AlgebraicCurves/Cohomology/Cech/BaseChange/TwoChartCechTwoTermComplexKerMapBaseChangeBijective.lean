@@ -12,15 +12,10 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
-public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
+public import Nyll.SchemeTheory.RingTheory.TwoChartCechGrothendieckComplex
 public import Mathlib.RingTheory.Flat.Basic
-public import Mathlib.RingTheory.Flat.Equalizer
-public import Nyll.SchemeTheory.RingTheory.Flat.Product
-public import Nyll.SchemeTheory.RingTheory.Flat.Kernel
-public import Mathlib.RingTheory.LocalRing.Module
 public import Mathlib.RingTheory.Noetherian.Basic
 public import Mathlib.LinearAlgebra.TensorProduct.Prod
-public import Mathlib.LinearAlgebra.TensorProduct.RightExactness
 public import Mathlib.Algebra.Module.Projective
 public import Mathlib.Algebra.Module.FinitePresentation
 public import Nyll.SchemeTheory.Cohomology.Sheaves.CoherentBaseChange
@@ -43,8 +38,11 @@ open scoped TensorProduct
 
 universe u
 
+open _root_.AlgebraicCurves.Foundations.CommutativeAlgebra.Proofs
+open _root_.TwoChartCech.Mumford
+open TwoChartCech_GrothendieckComplex_nonempty_of_isLocalRing.TwoChartCech.Truncation
+
 namespace TwoChartCech
-open _root_.TwoChartCech
 open _root_.TwoChartCech
 
 namespace Truncation
@@ -53,198 +51,6 @@ variable {R : Type u} [CommRing R]
 
 variable {C0 C1 : Type u} [AddCommGroup C0] [Module R C0] [AddCommGroup C1] [Module R C1]
 variable (d : C0 →ₗ[R] C1) [Module.Finite R (C1 ⧸ LinearMap.range d)]
-
-/-- The chosen number of free generators of the cokernel of the differential. -/
-def rank : ℕ := (Module.Finite.exists_fin' R (C1 ⧸ LinearMap.range d)).choose
-
-/-- The chosen surjection from a finite free module onto the cokernel. -/
-def quot : (Fin (rank d) → R) →ₗ[R] (C1 ⧸ LinearMap.range d) :=
-  (Module.Finite.exists_fin' R (C1 ⧸ LinearMap.range d)).choose_spec.choose
-
-theorem quot_surjective : Function.Surjective (quot d) :=
-  (Module.Finite.exists_fin' R (C1 ⧸ LinearMap.range d)).choose_spec.choose_spec
-
-/-- The chosen lift of the cokernel presentation into the target of the differential. -/
-def lift : (Fin (rank d) → R) →ₗ[R] C1 :=
-  (Module.projective_lifting_property (LinearMap.range d).mkQ (quot d)
-    (LinearMap.range d).mkQ_surjective).choose
-
-theorem mkQ_comp_lift : (LinearMap.range d).mkQ ∘ₗ lift d = quot d :=
-  (Module.projective_lifting_property (LinearMap.range d).mkQ (quot d)
-    (LinearMap.range d).mkQ_surjective).choose_spec
-
-theorem surjective_coprod : Function.Surjective (d.coprod (lift d)) := by
-  intro y
-  obtain ⟨v, hv⟩ := quot_surjective d ((LinearMap.range d).mkQ y)
-  have hy : y - lift d v ∈ LinearMap.range d := by
-    rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sub, ← hv,
-      ← LinearMap.comp_apply, mkQ_comp_lift, sub_self]
-  obtain ⟨x, hx⟩ := hy
-  exact ⟨(x, v), by simp only [LinearMap.coprod_apply, hx, sub_add_cancel]⟩
-
-/-- The kernel of the differential enlarged by the chosen cokernel lift. -/
-abbrev K0 : Submodule R (C0 × (Fin (rank d) → R)) := LinearMap.ker (d.coprod (lift d))
-
-/-- Project the enlarged kernel onto its finite free presentation factor. -/
-def dK : K0 d →ₗ[R] (Fin (rank d) → R) :=
-  (LinearMap.snd R C0 (Fin (rank d) → R)).comp (K0 d).subtype
-
-/-- Project the enlarged kernel onto the source of the original differential. -/
-def iota0 : K0 d →ₗ[R] C0 := (LinearMap.fst R C0 (Fin (rank d) → R)).comp (K0 d).subtype
-
-@[scoped simp] theorem dK_apply (z : K0 d) : dK d z = (z : C0 × (Fin (rank d) → R)).2 := rfl
-@[scoped simp] theorem iota0_apply (z : K0 d) : iota0 d z = (z : C0 × (Fin (rank d) → R)).1 := rfl
-
-theorem comm : d ∘ₗ iota0 d = (-(lift d)) ∘ₗ dK d := by
-  ext ⟨⟨x, v⟩, hxv⟩
-  have hxv' : d x + lift d v = 0 := by
-    exact (LinearMap.mem_ker).mp hxv
-  simp only [LinearMap.comp_apply, iota0_apply, dK_apply, LinearMap.neg_apply,
-    eq_neg_iff_add_eq_zero]
-  exact hxv'
-
-/-- Embed the original kernel into the enlarged kernel with zero presentation coordinate. -/
-def h0ToK0 : LinearMap.ker d →ₗ[R] K0 d :=
-  LinearMap.codRestrict (K0 d)
-    ((LinearMap.inl R C0 (Fin (rank d) → R)).comp (LinearMap.ker d).subtype)
-    (fun ⟨x, hx⟩ => by
-      simp only [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.coe_subtype,
-        LinearMap.inl_apply,
-        LinearMap.coprod_apply, map_zero, add_zero]
-      exact hx)
-
-/-- Identify the kernel of the presentation projection with the original kernel. -/
-def kerEquiv : LinearMap.ker (dK d) ≃ₗ[R] LinearMap.ker d := by
-  refine LinearEquiv.ofLinearMap
-    (LinearMap.codRestrict (LinearMap.ker d) ((iota0 d).comp (LinearMap.ker (dK d)).subtype) ?_)
-    (LinearMap.codRestrict (LinearMap.ker (dK d)) (h0ToK0 d) (fun x => by
-      simp only [LinearMap.mem_ker, dK_apply]; rfl))
-    ?_ ?_
-  · rintro ⟨⟨⟨x, v⟩, hxv⟩, hv⟩
-    have hxv' : d x + lift d v = 0 := by
-      exact (LinearMap.mem_ker).mp hxv
-    have hv' : v = 0 := (LinearMap.mem_ker).mp hv
-    simp only [LinearMap.mem_ker, LinearMap.comp_apply, Submodule.coe_subtype, iota0_apply]
-    simpa only [hv', map_zero, add_zero] using hxv'
-  · apply LinearMap.ext; rintro ⟨x, hx⟩; rfl
-  · apply LinearMap.ext; rintro ⟨⟨⟨x, v⟩, hxv⟩, hv⟩
-    have hv' : v = 0 := (LinearMap.mem_ker).mp hv
-    apply Subtype.ext; apply Subtype.ext
-    change ((x, 0) : C0 × _) = (x, v)
-    rw [hv']
-
-theorem finite_K0 [IsNoetherianRing R] [Module.Finite R (LinearMap.ker d)] : Module.Finite R (K0
-    d) := by
-  have hker : Module.Finite R (LinearMap.ker (dK d)) := Module.Finite.equiv (kerEquiv d).symm
-  have hquot : Module.Finite R (K0 d ⧸ LinearMap.ker (dK d)) := by
-    have : Module.Finite R (LinearMap.range (dK d)) := inferInstance
-    exact Module.Finite.equiv (dK d).quotKerEquivRange.symm
-  exact Module.Finite.of_submodule_quotient (LinearMap.ker (dK d))
-
-theorem flat_K0 [Module.Flat R C0] [Module.Flat R C1] : Module.Flat R (K0 d) :=
-  haveI : Module.Flat R (C0 × (Fin (rank d) → R)) :=
-    Module.Flat.prod (R := R) C0 (Fin (rank d) → R)
-  Module.Flat.ker_of_surjective_of_flat (d.coprod (lift d)) (surjective_coprod d)
-
-theorem free_K0 [IsNoetherianRing R] [IsLocalRing R] [Module.Flat R C0] [Module.Flat R C1]
-    [Module.Finite R (LinearMap.ker d)] : Module.Free R (K0 d) :=
-  haveI := finite_K0 d; haveI := flat_K0 d
-  Module.free_of_flat_of_isLocalRing
-
-section BaseChange
-
-variable (A : Type u) [CommRing A] [Algebra R A]
-
-theorem d_baseChange_comp_iota0_baseChange :
-    (d.baseChange A) ∘ₗ ((iota0 d).baseChange A)
-      = -(((lift d).baseChange A) ∘ₗ ((dK d).baseChange A)) := by
-  rw [← LinearMap.baseChange_comp, comm, LinearMap.baseChange_comp, LinearMap.baseChange_neg,
-    LinearMap.neg_comp]
-
-variable [Module.Flat R C1]
-
-theorem subtype_baseChange_injective :
-    Function.Injective ((K0 d).subtype.baseChange A) := by
-  rw [LinearMap.baseChange_eq_lTensor]
-  exact LinearMap.lTensor_injective_of_exact_of_flat (d.coprod (lift d))
-    (surjective_coprod d) _ (K0 d).subtype_injective (LinearMap.exact_subtype_ker_map _) A
-omit [Module.Flat R C1] in
-theorem mem_range_subtype_baseChange (w : A ⊗[R] (C0 × (Fin (rank d) → R))) :
-    ((d.coprod (lift d)).baseChange A) w = 0 ↔ ∃ z, ((K0 d).subtype.baseChange A) z = w := by
-  have heqι : ⇑((K0 d).subtype.baseChange A) = ⇑((K0 d).subtype.lTensor A) :=
-    LinearMap.baseChange_eq_lTensor _
-  have heqc : ⇑((d.coprod (lift d)).baseChange A) = ⇑((d.coprod (lift d)).lTensor A) :=
-    LinearMap.baseChange_eq_lTensor _
-  rw [heqc]
-  simp only [heqι]
-  exact lTensor_exact A (LinearMap.exact_subtype_ker_map _) (surjective_coprod d) w
-omit [Module.Flat R C1] in
-theorem prodRight_apply_eq_baseChange {M N : Type u} [AddCommGroup M] [Module R M]
-    [AddCommGroup N] [Module R N] (w : A ⊗[R] (M × N)) :
-    (TensorProduct.prodRight R A A M N) w
-      = (((LinearMap.fst R M N).baseChange A) w, ((LinearMap.snd R M N).baseChange A) w) := by
-  induction w using TensorProduct.inductionOn with
-  | tmul a x =>
-      simp only [TensorProduct.prodRight_tmul, LinearMap.baseChange_tmul,
-        LinearMap.fst_apply, LinearMap.snd_apply]
-  | add x y hx hy => simp only [map_add, hx, hy, Prod.mk_add_mk]
-omit [Module.Flat R C1] in
-theorem prodRight_subtype_baseChange (z : A ⊗[R] K0 d) :
-    (TensorProduct.prodRight R A A C0 (Fin (rank d) → R)) (((K0 d).subtype.baseChange A) z)
-      = (((iota0 d).baseChange A) z, ((dK d).baseChange A) z) := by
-  rw [prodRight_apply_eq_baseChange]
-  refine Prod.ext ?_ ?_
-  · change ((LinearMap.fst R C0 (Fin (rank d) → R)).baseChange A)
-      (((K0 d).subtype.baseChange A) z) = _
-    rw [← LinearMap.comp_apply, ← LinearMap.baseChange_comp]; rfl
-  · change ((LinearMap.snd R C0 (Fin (rank d) → R)).baseChange A)
-      (((K0 d).subtype.baseChange A) z) = _
-    rw [← LinearMap.comp_apply, ← LinearMap.baseChange_comp]; rfl
-omit [Module.Flat R C1] in
-theorem coprod_baseChange_apply (w : A ⊗[R] (C0 × (Fin (rank d) → R))) :
-    ((d.coprod (lift d)).baseChange A) w
-      = (d.baseChange A) ((TensorProduct.prodRight R A A C0 (Fin (rank d) → R)) w).1
-        + ((lift d).baseChange A) ((TensorProduct.prodRight R A A C0 (Fin (rank d) → R)) w).2 := by
-  induction w using TensorProduct.inductionOn with
-  | tmul a x =>
-      simp only [TensorProduct.prodRight_tmul, LinearMap.baseChange_tmul,
-        LinearMap.coprod_apply, TensorProduct.tmul_add]
-  | add x y hx hy => simp only [map_add, hx, hy, Prod.fst_add, Prod.snd_add]; abel
-
-theorem kerMap_injective' [Module.Flat R C0] :
-    Function.Injective (kerMapBaseChange (dK d) d (iota0 d) (-(lift d)) (comm d) A) := by
-  rintro ⟨z, hz⟩ ⟨z', hz'⟩ hzz'
-  apply Subtype.ext
-  apply subtype_baseChange_injective d A
-  apply (TensorProduct.prodRight R A A C0 (Fin (rank d) → R)).injective
-  rw [prodRight_subtype_baseChange d A z, prodRight_subtype_baseChange d A z']
-  have h1 : ((dK d).baseChange A) z = 0 := hz
-  have h2 : ((dK d).baseChange A) z' = 0 := hz'
-  rw [h1, h2]
-  exact congrArg (·, (0 : A ⊗[R] (Fin (rank d) → R))) (congrArg Subtype.val hzz')
-omit [Module.Flat R C1] in
-theorem kerMap_surjective' [Module.Flat R C0] :
-    Function.Surjective (kerMapBaseChange (dK d) d (iota0 d) (-(lift d)) (comm d) A) := by
-  rintro ⟨w, hw⟩
-  set w' : A ⊗[R] (C0 × (Fin (rank d) → R)) :=
-    ((LinearMap.inl R C0 (Fin (rank d) → R)).baseChange A) w with hw'def
-  have hker : ((d.coprod (lift d)).baseChange A) w' = 0 := by
-    rw [hw'def, ← LinearMap.comp_apply, ← LinearMap.baseChange_comp, LinearMap.coprod_inl]
-    exact hw
-  obtain ⟨z, hz⟩ := (mem_range_subtype_baseChange d A w').mp hker
-  have hpr : (TensorProduct.prodRight R A A C0 (Fin (rank d) → R)) w' = (w, 0) := by
-    rw [prodRight_apply_eq_baseChange, hw'def, ← LinearMap.comp_apply, ← LinearMap.comp_apply,
-      ← LinearMap.baseChange_comp, ← LinearMap.baseChange_comp,
-      LinearMap.fst_comp_inl R C0 (Fin (rank d) → R),
-      LinearMap.snd_comp_inl R C0 (Fin (rank d) → R),
-      LinearMap.baseChange_id, LinearMap.baseChange_zero, LinearMap.id_apply,
-      LinearMap.zero_apply]
-  have hpair : (((iota0 d).baseChange A) z, ((dK d).baseChange A) z) = (w, 0) := by
-    rw [← prodRight_subtype_baseChange d A z, hz, hpr]
-  refine ⟨⟨z, (Prod.ext_iff.mp hpair).2⟩, ?_⟩
-  exact Subtype.ext (Prod.ext_iff.mp hpair).1
-
-end BaseChange
 
 section Free
 
@@ -288,8 +94,9 @@ theorem snd_comp_dG : LinearMap.snd R _ _ ∘ₗ dG d = LinearMap.id - sec d ∘
 def freeModel : CoherentBaseChange.TwoTermComplex.{u, u} R :=
   { C0 := Fin (n d) → R, C1 := (Fin (rank d) → R) × (Fin (n d) → R), d := dG d }
 
-theorem comm_free : d ∘ₗ (iota0 d ∘ₗ pi d) = ((-(lift d)) ∘ₗ LinearMap.fst R _ _) ∘ₗ dG d := by
-  rw [← LinearMap.comp_assoc, comm, LinearMap.comp_assoc, LinearMap.comp_assoc, fst_comp_dG]
+theorem comm_free : d ∘ₗ (ι0 d ∘ₗ pi d) = ((-(lift d)) ∘ₗ LinearMap.fst R _ _) ∘ₗ dG d := by
+  have hd := (Mumford.comm d).trans (by rw [Mumford.ι1_eq])
+  rw [← LinearMap.comp_assoc, hd, LinearMap.comp_assoc, LinearMap.comp_assoc, fst_comp_dG]
 
 variable (A : Type u) [CommRing A] [Algebra R A]
 
@@ -347,26 +154,27 @@ theorem bijective_kerMap_free_to_K :
         LinearMap.baseChange_id, LinearMap.id_apply]
 
 theorem kerMap_free_eq_comp (z : LinearMap.ker ((dG d).baseChange A)) :
-    kerMapBaseChange (dG d) d (iota0 d ∘ₗ pi d) ((-(lift d)) ∘ₗ LinearMap.fst R _ _) (comm_free d)
+    kerMapBaseChange (dG d) d (ι0 d ∘ₗ pi d) ((-(lift d)) ∘ₗ LinearMap.fst R _ _) (comm_free d)
       A z
-      = kerMapBaseChange (dK d) d (iota0 d) (-(lift d)) (comm d) A
+      = kerMapBaseChange (dK d) d (ι0 d) (-(lift d)) (Mumford.comm d) A
           (kerMapBaseChange (dG d) (dK d) (pi d) (LinearMap.fst R _ _) (fst_comp_dG d).symm A z)
             := by
   apply Subtype.ext
-  change ((iota0 d ∘ₗ pi d).baseChange A) z.1 = ((iota0 d).baseChange A) (((pi d).baseChange A) z.1)
+  change ((ι0 d ∘ₗ pi d).baseChange A) z.1 =
+    ((ι0 d).baseChange A) (((pi d).baseChange A) z.1)
   rw [LinearMap.baseChange_comp, LinearMap.comp_apply]
 
 theorem bijective_kerMap_free :
     Function.Bijective
-      (kerMapBaseChange (dG d) d (iota0 d ∘ₗ pi d) ((-(lift d)) ∘ₗ LinearMap.fst R _ _) (comm_free
+      (kerMapBaseChange (dG d) d (ι0 d ∘ₗ pi d) ((-(lift d)) ∘ₗ LinearMap.fst R _ _) (comm_free
         d) A) := by
-  have h : (kerMapBaseChange (dG d) d (iota0 d ∘ₗ pi d) ((-(lift d)) ∘ₗ LinearMap.fst R _ _)
+  have h : (kerMapBaseChange (dG d) d (ι0 d ∘ₗ pi d) ((-(lift d)) ∘ₗ LinearMap.fst R _ _)
     (comm_free d) A : _ → _)
-      = (kerMapBaseChange (dK d) d (iota0 d) (-(lift d)) (comm d) A)
+      = (kerMapBaseChange (dK d) d (ι0 d) (-(lift d)) (Mumford.comm d) A)
         ∘ (kerMapBaseChange (dG d) (dK d) (pi d) (LinearMap.fst R _ _) (fst_comp_dG d).symm A) :=
     funext (kerMap_free_eq_comp d A)
   rw [h]
-  exact Function.Bijective.comp ⟨kerMap_injective' d A, kerMap_surjective' d A⟩
+  exact Function.Bijective.comp ⟨kerMap_injective d A, kerMap_surjective d A⟩
     (bijective_kerMap_free_to_K d A)
 
 end Free
@@ -384,9 +192,9 @@ theorem _root_.TwoChartCech.exists_twoTermComplex_kerMapBaseChange_bijective
       (comm : d ∘ₗ ι0 = ι1 ∘ₗ G.d),
       ∀ (A : Type u) [CommRing A] [Algebra R A],
         Function.Bijective (TwoChartCech.kerMapBaseChange G.d d ι0 ι1 comm A) :=
-  ⟨TwoChartCech.Truncation.freeModel d, TwoChartCech.Truncation.iota0 d ∘ₗ
+  ⟨TwoChartCech.Truncation.freeModel d, ι0 d ∘ₗ
     TwoChartCech.Truncation.pi d,
-    (-(TwoChartCech.Truncation.lift d)) ∘ₗ LinearMap.fst R _ _, TwoChartCech.Truncation.comm_free d,
+    (-(lift d)) ∘ₗ LinearMap.fst R _ _, TwoChartCech.Truncation.comm_free d,
     fun A _ _ => TwoChartCech.Truncation.bijective_kerMap_free d A⟩
 
 end

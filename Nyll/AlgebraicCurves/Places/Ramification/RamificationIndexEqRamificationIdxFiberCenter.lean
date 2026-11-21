@@ -64,16 +64,6 @@ section ValuationDictionary
 
 variable {v : Place K F} {w : Place K F'}
 
-private theorem neg_log_valuation_fiberCenter_eq_ord (hw : w.restrict F = v) {x : F'} (hx : x ≠ 0) :
-    -log ((fiberCenter F' v hw).valuation F' x) = w.ord x :=
-  _root_.AlgebraicCurve.Place.neg_log_valuation_fiberCenter_eq_ord hw hx
-
-private theorem le_ord_iff_mem_pow_fiberCenter (hw : w.restrict F = v)
-    {c : integralClosureAt F' v} (hc : c ≠ 0) (n : ℕ) :
-    (n : ℤ) ≤ w.ord (algebraMap (integralClosureAt F' v) F' c) ↔
-      c ∈ (fiberCenter F' v hw).asIdeal ^ n :=
-  _root_.AlgebraicCurve.Place.le_ord_iff_mem_pow_fiberCenter hw hc n
-
 private theorem ramificationIndex_eq_ramificationIdx_fiberCenter (hw : w.restrict F = v) :
     w.ramificationIndex F =
       (IsLocalRing.maximalIdeal v.toValuationSubring).ramificationIdx'
@@ -93,9 +83,9 @@ private theorem ramificationIndex_eq_ramificationIdx_fiberCenter (hw : w.restric
       v.ord_coe_irreducible hπ, mul_one]
   refine (Ideal.ramificationIdx'_spec ?_ ?_).symm
   · rw [hmap, Ideal.span_singleton_le_iff_mem,
-      ← le_ord_iff_mem_pow_fiberCenter hw hπC, hord]
+      ← _root_.AlgebraicCurve.Place.le_ord_iff_mem_pow_fiberCenter hw hπC, hord]
   · rw [hmap, Ideal.span_singleton_le_iff_mem,
-      ← le_ord_iff_mem_pow_fiberCenter hw hπC, hord]
+      ← _root_.AlgebraicCurve.Place.le_ord_iff_mem_pow_fiberCenter hw hπC, hord]
     have : 0 < w.ramificationIndex F := w.ramificationIndex_pos
     push_cast
     omega

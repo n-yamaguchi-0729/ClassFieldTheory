@@ -4,27 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertSymbol
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FiniteLocalFamily
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.OnePlaceNormKernel
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Extension.IdeleNorm
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.SinglePlace
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Approximation
 
 /-!
 # The local--global norm-symbol bridge
 
-This file isolates the exact quotient calculation used by the Hilbert-symbol
-product formula.  The one-place embedding sends the chosen local norm group
-directly into the ordinary idele-class norm group, so it descends without an
-intermediate raw-idele quotient.  The resulting character identity gives the
-finite-support and
-principal-idèle product identities for every character of that target.
+The standard idèle-class embedding sends the chosen local norm group into
+the determinant-norm range. The induced homomorphism on norm quotients gives
+the finite-support and principal-idèle product identities.
 -/
 
 open scoped NumberField BigOperators
 open NumberField IsDedekindDomain
-open IdeleGroup RelativeIdeleGroup
+open IdeleGroup
 
 noncomputable section
 
@@ -33,131 +30,88 @@ universe u v
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
-private theorem productFormulaIdeleClassGroupIsMulCommutative
-    {F : Type*} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-attribute [local instance] productFormulaIdeleClassGroupIsMulCommutative
-
 variable
     {K : Type u} {L : Type v}
     [Field K] [NumberField K]
     [Field L] [NumberField L] [Algebra K L]
     [FiniteDimensional K L] [IsGalois K L]
 
-/-- The one-place embedding, descended directly from the chosen local norm
-quotient to the ordinary idele-class norm quotient. -/
+local notation "NormQuotient" =>
+  NumberField.IdeleClassGroup (𝓞 K) K ⧸ MonoidHom.range (NumberField.IdeleClassGroup.norm K L)
+
+private theorem finitePlace_mem_standardNormRange
+    (v : HeightOneSpectrum (𝓞 K)) (x : (v.adicCompletion K)ˣ)
+    (hx : x ∈ chosenFinitePlaceLocalNormSubgroup (K := K) (L := L) v) :
+    NumberField.IdeleClassGroup.ofAdicCompletion (𝓞 K) K v x ∈
+      (NumberField.IdeleClassGroup.norm K L).range := by
+  have h := (finitePlaceIdele_mem_ideleNormSubgroup_iff_chosenLocalNorm
+    (K := K) (L := L) v x).2 hx
+  change finitePlaceIdele v x ∈ (IdeleGroup.norm K L).range at h
+  obtain ⟨a, ha⟩ := h
+  refine ⟨IdeleGroup.toStandardClass L a, ?_⟩
+  rw [_root_.ideleClassNorm_mk, ha, IdeleGroup.toStandardClass_finitePlaceIdele]
+
+/-- The finite-place insertion descends to the quotient by the standard
+idèle-class norm. -/
 noncomputable def finitePlaceNormQuotientToGlobalClass
     (v : HeightOneSpectrum (𝓞 K)) :
-    ChosenFinitePlaceNormQuotient
-      (K := K) (L := L) v →*
-      IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K L).range :=
-  QuotientGroup.lift
-    (chosenFinitePlaceLocalNormSubgroup
-      (K := K) (L := L) v)
-    ((globalNormClassFromIdele K L).comp
-      (finitePlaceIdele v))
-    (by
-      intro x hx
-      have hnorm :
-          finitePlaceIdele v x ∈
-            ideleNormSubgroup (K := K) (L := L) :=
-        (finitePlaceIdele_mem_ideleNormSubgroup_iff_chosenLocalNorm
-          (K := K) (L := L) v x).2 hx
-      obtain ⟨z, hz⟩ := hnorm
-      change
-        QuotientGroup.mk'
-          (_root_.ideleClassNorm K L).range
-          (QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup K)
-            (finitePlaceIdele v x)) = 1
-      apply (QuotientGroup.eq_one_iff _).2
-      refine
-        ⟨QuotientGroup.mk'
-            (IdeleGroup.principalSubgroup L)
-            (relativeIdeleBaseChangeMulEquiv
-              (K := K) (L := L) z), ?_⟩
-      rw [_root_.ideleClassNorm_mk,
-        IdeleGroup.norm_relativeIdeleBaseChangeMulEquiv,
-        hz])
+    ChosenFinitePlaceNormQuotient (K := K) (L := L) v →* NormQuotient :=
+  QuotientGroup.lift (chosenFinitePlaceLocalNormSubgroup (K := K) (L := L) v)
+    ((QuotientGroup.mk' (NumberField.IdeleClassGroup.norm K L).range).comp
+      (NumberField.IdeleClassGroup.ofAdicCompletion (𝓞 K) K v))
+    (fun x hx => (QuotientGroup.eq_one_iff _).2 (finitePlace_mem_standardNormRange v x hx))
 
 /-- Exact local--global compatibility on representatives. -/
 @[simp]
 theorem finitePlaceNormQuotientToGlobalClass_localClass
-    (v : HeightOneSpectrum (𝓞 K))
-    (a : (v.adicCompletion K)ˣ) :
-    finitePlaceNormQuotientToGlobalClass
-        (K := K) (L := L) v
-        (finitePlaceTensorNormClass
-          (K := K) (L := L) v a) =
-      globalNormClassFromIdele K L
-        (finitePlaceIdele v a) := by
+    (v : HeightOneSpectrum (𝓞 K)) (a : (v.adicCompletion K)ˣ) :
+    finitePlaceNormQuotientToGlobalClass (K := K) (L := L) v
+        (finitePlaceTensorNormClass (K := K) (L := L) v a) =
+      QuotientGroup.mk' (NumberField.IdeleClassGroup.norm K L).range
+        (NumberField.IdeleClassGroup.ofAdicCompletion (𝓞 K) K v a) :=
   rfl
 
-omit [FiniteDimensional K L] [IsGalois K L] in
-/-- A character of the global class norm quotient, restricted to the
+/-- A character of the standard class norm quotient, evaluated at the
 one-place class at `v`. -/
 noncomputable def finitePlaceGlobalSymbol
     {A : Type*} [CommGroup A]
-    (chi :
-      (IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K L).range) →* A)
-    (v : HeightOneSpectrum (𝓞 K)) :
+    (chi : NormQuotient →* A) (v : HeightOneSpectrum (𝓞 K)) :
     (v.adicCompletion K)ˣ →* A :=
   chi.comp
-    ((globalNormClassFromIdele K L).comp
-      (finitePlaceIdele v))
+    ((QuotientGroup.mk' (NumberField.IdeleClassGroup.norm K L).range).comp
+      (NumberField.IdeleClassGroup.ofAdicCompletion (𝓞 K) K v))
 
-/-- The one-place global symbol is the character of the transported local norm
-class. -/
+/-- The one-place global symbol is the character of the transported local norm class. -/
 @[simp]
 theorem finitePlaceGlobalSymbol_eq_localNormClass
     {A : Type*} [CommGroup A]
-    (chi :
-      (IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K L).range) →* A)
-    (v : HeightOneSpectrum (𝓞 K))
-    (a : (v.adicCompletion K)ˣ) :
+    (chi : NormQuotient →* A)
+    (v : HeightOneSpectrum (𝓞 K)) (a : (v.adicCompletion K)ˣ) :
     finitePlaceGlobalSymbol (K := K) (L := L) chi v a =
-      chi
-        (finitePlaceNormQuotientToGlobalClass
-          (K := K) (L := L) v
-          (finitePlaceTensorNormClass
-            (K := K) (L := L) v a)) := by
-  rw [finitePlaceGlobalSymbol, MonoidHom.comp_apply,
-    MonoidHom.comp_apply,
-    finitePlaceNormQuotientToGlobalClass_localClass]
+      chi (finitePlaceNormQuotientToGlobalClass (K := K) (L := L) v
+        (finitePlaceTensorNormClass (K := K) (L := L) v a)) :=
+  rfl
 
 omit [FiniteDimensional K L] [IsGalois K L] in
-/-- Finite-support form of the product formula for a global norm-quotient
-character. -/
+/-- Finite-support form of the product formula for a standard norm-quotient character. -/
 theorem finitePlaceGlobalSymbol_finiteLocalFamily
     {A : Type*} [CommGroup A]
-    (chi :
-      (IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K L).range) →* A)
+    (chi : NormQuotient →* A)
     (S : Finset (HeightOneSpectrum (𝓞 K)))
     (a : ∀ v : ↥S, (v.1.adicCompletion K)ˣ) :
-    ∏ v : ↥S,
-        finitePlaceGlobalSymbol (K := K) (L := L) chi v.1 (a v) =
-      chi
-        (globalNormClassFromIdele K L
-          (IdeleGroup.ideleOfFiniteLocalFamily S a)) := by
-  let : CommGroup (IdeleClassGroup K) :=
-    QuotientGroup.Quotient.commGroup (IdeleGroup.principalSubgroup K)
-  rw [globalNormClass_finiteLocalFamily]
-  rw [map_prod]
-  rfl
+    ∏ v : ↥S, finitePlaceGlobalSymbol (K := K) (L := L) chi v.1 (a v) =
+      chi (globalNormClassFromIdele K L (IdeleGroup.ideleOfFiniteLocalFamily S a)) := by
+  let : CommGroup (NumberField.IdeleClassGroup (𝓞 K) K) :=
+    QuotientGroup.Quotient.commGroup (NumberField.IdeleGroup.principalSubgroup (𝓞 K) K)
+  rw [globalNormClass_finiteLocalFamily, map_prod]
+  refine Finset.prod_congr rfl fun v _ => ?_
+  exact congrArg chi (globalNormClassFromIdele_finitePlaceIdele K L v.1 (a v)).symm
 
 omit [FiniteDimensional K L] [IsGalois K L] in
 /-- A global norm-quotient character is trivial on a principal idèle. -/
 theorem globalNormQuotientCharacter_principal
     {A : Type*} [CommGroup A]
-    (chi :
-      (IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K L).range) →* A)
+    (chi : NormQuotient →* A)
     (x : Kˣ) :
   chi
         (globalNormClassFromIdele K L
@@ -170,9 +124,7 @@ norm class to the product-one identity.  The premise is a concrete equality
 in `C_K / N C_L`, not a product-formula assumption. -/
 theorem finitePlaceGlobalSymbol_product_eq_one_of_eq_principal
     {A : Type*} [CommGroup A]
-    (chi :
-      (IdeleClassGroup K ⧸
-        (_root_.ideleClassNorm K L).range) →* A)
+    (chi : NormQuotient →* A)
     (S : Finset (HeightOneSpectrum (𝓞 K)))
     (a : ∀ v : ↥S, (v.1.adicCompletion K)ˣ)
     (x : Kˣ)

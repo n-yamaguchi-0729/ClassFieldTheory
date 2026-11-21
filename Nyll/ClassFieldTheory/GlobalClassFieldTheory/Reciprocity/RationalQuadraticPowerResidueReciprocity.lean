@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.PowerResidueReciprocity
+import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.RationalCyclotomicCompletionComparison
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.QuadraticReciprocity
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Rational
 import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.CyclotomicNorm.PrincipalUnits
@@ -28,34 +30,13 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
--- Specializing the generic completion construction to `ℚ` must keep the
--- `Algebra.id` owner fixed.  Otherwise the rational-field algebra path is
--- underdetermined during instance synthesis.
-@[reducible] noncomputable local instance
-    (v : HeightOneSpectrum (𝓞 ℚ)) :
-    Algebra ℚ (HeightOneSpectrum.adicAbv ℚ v).Completion := by
-  letI : Algebra ℚ ℚ := Algebra.id ℚ
-  let hWith : Algebra ℚ
-      (WithAbs (HeightOneSpectrum.adicAbv ℚ v)) :=
-    WithAbs.instAlgebra _
-  let hUniform : UniformContinuousConstSMul ℚ
-      (WithAbs (HeightOneSpectrum.adicAbv ℚ v)) :=
-    WithAbs.instUniformContinuousConstSMulReal _
-  exact
-    @UniformSpace.Completion.algebra
-      (WithAbs (HeightOneSpectrum.adicAbv ℚ v)) _ _ _ _
-      ℚ _ hWith hUniform
+attribute [local instance] rationalFinitePlaceCompletionRatAlgebra
 
 open KummerTheory
 open AlgebraicNumberTheory.PowerResidueSymbols
 open LocalClassFieldTheory.Kummer
 open LocalFieldTheory
 open LocalFieldTheory.IsNonarchimedeanLocalField
-
-private def rationalQuadraticRootValuePNatMonoidHom :
-    rootsOfUnity (((2 : ℕ+) : ℕ)) (𝓞 ℚ) →* ℤ := by
-  change rootsOfUnity 2 (𝓞 ℚ) →* ℤ
-  exact rationalQuadraticRootValueMonoidHom
 
 /-! ## Dyadic correction and Gauss reciprocity -/
 
@@ -1145,7 +1126,8 @@ theorem gaussReciprocity_nat_from_powerResidueReciprocity
       _ = integralRootsOfUnityToNthRoots ℚ (((2 : ℕ+) : ℕ)) negPow *
           integralRootsOfUnityToNthRoots ℚ (((2 : ℕ+) : ℕ)) symbolBA := by
         rw [hcorrection, hnegInv]
-  have hvalue := congrArg rationalQuadraticRootValuePNatMonoidHom hroot
+  have hvalue := (congrArg rationalQuadraticRootValueMonoidHom hroot).trans
+    (map_mul rationalQuadraticRootValueMonoidHom negPow symbolBA)
   have hAB : rationalQuadraticRootValue symbolAB = J((a : ℤ) | b) := by
     simpa only [symbolAB, aO, rationalNatInteger_equiv] using
       rationalIdealPowerResidueSymbol_two_eq_jacobiSym
@@ -1164,8 +1146,6 @@ theorem gaussReciprocity_nat_from_powerResidueReciprocity
   have hlinear :
       J((a : ℤ) | b) =
         (-1 : ℤ) ^ (a / 2 * (b / 2)) * J((b : ℤ) | a) := by
-    unfold rationalQuadraticRootValuePNatMonoidHom at hvalue
-    rw [map_mul] at hvalue
     change
       rationalQuadraticRootValue symbolAB =
         rationalQuadraticRootValue negPow *
@@ -1182,16 +1162,6 @@ theorem gaussReciprocity_nat_from_powerResidueReciprocity
     _ = (-1 : ℤ) ^ (a / 2 * (b / 2)) *
         J((b : ℤ) | a) ^ 2 := by ring
     _ = (-1 : ℤ) ^ (a / 2 * (b / 2)) := by rw [hsq, mul_one]
-
-/-- The CFT-derived theorem agrees propositionally with the existing library
-statement.  This comparison is the only place where the pre-existing theorem
-is mentioned. -/
-theorem gaussReciprocity_nat_from_powerResidueReciprocity_eq_mathlib
-    {a b : ℕ} (ha : Odd a) (hb : Odd b) (hab : a.Coprime b) :
-    gaussReciprocity_nat_from_powerResidueReciprocity ha hb hab =
-      AlgebraicNumberTheory.PowerResidueSymbols.gaussReciprocity_nat
-        ha hb hab := by
-  apply Subsingleton.elim
 
 end Reciprocity
 end GlobalClassFieldTheory

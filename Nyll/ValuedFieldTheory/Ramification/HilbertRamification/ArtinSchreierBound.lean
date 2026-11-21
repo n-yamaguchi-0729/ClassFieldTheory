@@ -61,7 +61,7 @@ theorem lowerRamificationGroup_artinSchreier_eq_bot
     target_valuationSubring_isIntegralClosure_of_finite_separable base target
   have hfinite : Module.Finite A B := IsIntegralClosure.finite A K L B
   have hcharL : CharP L p := (Algebra.charP_iff K L p).mp inferInstance
-  have hcharB : CharP B p := CharP.subring L p target.valuation.valuationSubring.toSubring
+  have hcharB : CharP B p := SubsemiringClass.charP_iff.2 hcharL
   let πB : B := algebraMap A B π
   have hmapπ : algebraMap B L πB = algebraMap K L (π : K) := by
     exact IsScalarTower.algebraMap_apply A B L π

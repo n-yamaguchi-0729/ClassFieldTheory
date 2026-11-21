@@ -41,7 +41,7 @@ universe u v w z
 private theorem idealStabilizer_isClosed_of_openFixedSets
     {B : Type u} {G : Type v} [CommRing B] [Group G] [MulSemiringAction G B]
     [TopologicalSpace G] [IsTopologicalGroup G] (Q : Ideal B)
-    (hopen : ∀ b : B, IsOpen (fun g : G => g • b = b)) :
+    (hopen : ∀ b : B, IsOpen {g : G | g • b = b}) :
     IsClosed (MulAction.stabilizer G Q : Set G) := by
   let : TopologicalSpace B := ⊥
   have : DiscreteTopology B := ⟨rfl⟩

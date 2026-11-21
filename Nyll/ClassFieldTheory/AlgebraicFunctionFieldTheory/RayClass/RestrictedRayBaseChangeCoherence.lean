@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayUnitSeparation
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayTransport
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.LocalRayBaseChange
@@ -54,11 +56,11 @@ variable {k₁ K₁ L₁ k₂ K₂ L₂ : Type*}
     (eL : Place k₁ L₁ ≃ Place k₂ L₂)
     (hplaces : ∀ w : Place k₁ L₁, (eL w).restrict K₂ = e (w.restrict K₁))
     (φ : ∀ v, RayLocalFactor m₁ v ≃* RayLocalFactor m₂ (e v))
-    (ψ : ∀ w, RayLocalFactor (rayModulusBaseChange L₁ m₁) w ≃*
-      RayLocalFactor (rayModulusBaseChange L₂ m₂) (eL w))
+    (ψ : ∀ w, RayLocalFactor (reindexAlongPlaces L₁ m₁) w ≃*
+      RayLocalFactor (reindexAlongPlaces L₂ m₂) (eL w))
 
-local notation "M₁" => rayModulusBaseChange L₁ m₁
-local notation "M₂" => rayModulusBaseChange L₂ m₂
+local notation "M₁" => reindexAlongPlaces L₁ m₁
+local notation "M₂" => reindexAlongPlaces L₂ m₂
 local notation "ρ" => restrictedRayEquiv e φ
 local notation "ρL" => restrictedRayEquiv eL ψ
 
@@ -72,23 +74,23 @@ theorem restrictedRayEquiv_baseChange_order
     (hindex : ∀ w : Place k₁ L₁, w.ramificationIndex K₁ = (eL w).ramificationIndex K₂)
     (a : RayRestrictedProduct m₁) (w : Place k₁ L₁) :
     localRayFactorOrder M₂ (eL w)
-        (ρL (restrictedRayBaseChange (L := L₁) m₁ hm₁ a) (eL w)) =
+        (ρL (restrictedRayBaseChange (L := L₁) m₁ a) (eL w)) =
       localRayFactorOrder M₂ (eL w)
-        (restrictedRayBaseChange (L := L₂) m₂ hm₂ (ρ a) (eL w)) := by
+        (restrictedRayBaseChange (L := L₂) m₂ (ρ a) (eL w)) := by
   apply Multiplicative.ext
   rw [restrictedRayEquiv_apply,
-    hψ w (restrictedRayBaseChange (L := L₁) m₁ hm₁ a w),
+    hψ w (restrictedRayBaseChange (L := L₁) m₁ a w),
     restrictedRayBaseChange_apply, localRayFactorOrder_baseChange,
     restrictedRayBaseChange_apply, localRayFactorOrder_baseChange,
     hplaces w, restrictedRayEquiv_apply, hφ, hindex w]
 
-include hplaces in
+include hm₁ hplaces in
 /-- Transport of the actual base-changed one-place family is supported
 over the matched original lower place. -/
 theorem restrictedRayEquiv_baseChange_single_support
     (v : Place k₁ K₁) (x : RayLocalFactor m₁ v)
     (W : Place k₂ L₂) (hW : W.restrict K₂ ≠ e v) :
-    ρL (restrictedRayBaseChange (L := L₁) m₁ hm₁
+    ρL (restrictedRayBaseChange (L := L₁) m₁
       (localRayToRestrictedProduct m₁ v x)) W = 1 := by
   obtain ⟨w, rfl⟩ := eL.surjective W
   have hw : w.restrict K₁ ≠ v := by
@@ -98,12 +100,13 @@ theorem restrictedRayEquiv_baseChange_single_support
   rw [restrictedRayEquiv_apply,
     restrictedRayBaseChange_single_of_restrict_ne m₁ hm₁ v x w hw, map_one]
 
+include hm₂ in
 /-- Base change of the transported actual one-place family has the same
 support restriction, through the literal lower local map. -/
 theorem restrictedRayEquiv_single_baseChange_support
     (v : Place k₁ K₁) (x : RayLocalFactor m₁ v)
     (W : Place k₂ L₂) (hW : W.restrict K₂ ≠ e v) :
-    restrictedRayBaseChange (L := L₂) m₂ hm₂
+    restrictedRayBaseChange (L := L₂) m₂
       (ρ (localRayToRestrictedProduct m₁ v x)) W = 1 := by
   rw [restrictedRayEquiv_local]
   exact restrictedRayBaseChange_single_of_restrict_ne m₂ hm₂ (e v) (φ v x) W hW
@@ -128,17 +131,17 @@ variable {k₁ : Type u₁} {K₁ : Type v₁} {L₁ : Type w₁}
     (eL : Place k₁ L₁ ≃ Place k₂ L₂)
     (hplaces : ∀ w : Place k₁ L₁, (eL w).restrict K₂ = e (w.restrict K₁))
     (φ : ∀ v, RayLocalFactor m₁ v ≃* RayLocalFactor m₂ (e v))
-    (ψ : ∀ w, RayLocalFactor (rayModulusBaseChange L₁ m₁) w ≃*
-      RayLocalFactor (rayModulusBaseChange L₂ m₂) (eL w))
+    (ψ : ∀ w, RayLocalFactor (reindexAlongPlaces L₁ m₁) w ≃*
+      RayLocalFactor (reindexAlongPlaces L₂ m₂) (eL w))
 
-local notation "M₁" => rayModulusBaseChange L₁ m₁
-local notation "M₂" => rayModulusBaseChange L₂ m₂
+local notation "M₁" => reindexAlongPlaces L₁ m₁
+local notation "M₂" => reindexAlongPlaces L₂ m₂
 local notation "ρ" => restrictedRayEquiv e φ
 local notation "ρL" => restrictedRayEquiv eL ψ
-local notation "b₁" => restrictedRayBaseChange (L := L₁) m₁ hm₁
-local notation "b₂" => restrictedRayBaseChange (L := L₂) m₂ hm₂
+local notation "b₁" => restrictedRayBaseChange (L := L₁) m₁
+local notation "b₂" => restrictedRayBaseChange (L := L₂) m₂
 
-include hplaces in
+include hm₁ hm₂ hplaces in
 /-- The original Artin-image square forces actual finite-extension
 coherence of the whole coordinatewise ray maps. The proof extracts each
 supported one-place family using its actual orders and another boundary. -/
@@ -161,7 +164,7 @@ theorem restrictedRayEquiv_baseChange_of_artin_square
   have horder (W : Place k₂ L₂) :
       localRayFactorOrder M₂ W (b W) = localRayFactorOrder M₂ W (c W) := by
     obtain ⟨w, rfl⟩ := eL.surjective W
-    exact restrictedRayEquiv_baseChange_order m₁ m₂ hm₁ hm₂ e eL hplaces φ ψ
+    exact restrictedRayEquiv_baseChange_order m₁ m₂ e eL hplaces φ ψ
       hφ hψ hindex a w
   have hb (W : Place k₂ L₂) (hW : W.restrict K₂ ≠ e v) : b W = 1 :=
     restrictedRayEquiv_baseChange_single_support m₁ m₂ hm₁ e eL hplaces ψ v x W hW

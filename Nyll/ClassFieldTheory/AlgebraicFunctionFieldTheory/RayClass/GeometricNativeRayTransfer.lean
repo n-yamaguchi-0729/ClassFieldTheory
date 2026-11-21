@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.RestrictedRayBaseChange
+
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Artin.EmbeddedArtinTransfer
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.RayClass.GeometricRestrictedRayTransitions
 
@@ -72,7 +74,7 @@ variable (k F G : Type*) [Field k] [Finite k] [Field F] [Field G]
   [HasPrincipalDivisors k F] [HasPrincipalDivisors k G]
   (ι : G →ₐ[F] SeparableClosure F)
   (m : Modulus k F) (hm : ∀ v, m v ≤ 1)
-  (n : Modulus k G) (h : rayModulusBaseChange G m = n)
+  (n : Modulus k G) (h : reindexAlongPlaces G m = n)
 
 /-- The embedded native transfer followed by its literal target-modulus comparison. -/
 def embeddedRayTransferModulusCongr :
@@ -94,10 +96,10 @@ theorem embeddedRayTransferModulusCongr_mk (a : localAbsoluteAbelianProfinite F)
 /-- Reciprocity and the modulus comparison compose before choosing concrete stage fields. -/
 theorem embeddedRayTransferModulusCongr_artin (a : RayRestrictedProduct m) :
     restrictedProductAbsoluteArtin n
-        (rayModulusCongr h (restrictedRayBaseChange (L := G) m hm a)) =
+        (rayModulusCongr h (restrictedRayBaseChange (L := G) m a)) =
       embeddedRayTransferModulusCongr k F G ι m hm n h
         (restrictedProductAbsoluteArtin m a) :=
-  (rayAbelianModulusCongr_artin h (restrictedRayBaseChange (L := G) m hm a)).symm.trans
+  (rayAbelianModulusCongr_artin h (restrictedRayBaseChange (L := G) m a)).symm.trans
     (congrArg (rayAbelianModulusCongr h)
       (restrictedProductAbsoluteArtin_baseChange_transferOfEmbedding F G ι k m hm a))
 
@@ -170,8 +172,8 @@ def geometricNativeAbsoluteTransition (i j : I) (hij : i ≤ j) :
 retaining the direct pullback of the original modulus. -/
 def geometricNativeRayTransition (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
     (i j : I) (hij : i ≤ j) :
-    (localAbsoluteAbelianProfinite (E i) ⧸ artinRaySubgroup (rayModulusBaseChange (E i) m)) →ₜ*
-      (localAbsoluteAbelianProfinite (E j) ⧸ artinRaySubgroup (rayModulusBaseChange (E j) m)) := by
+    (localAbsoluteAbelianProfinite (E i) ⧸ artinRaySubgroup (reindexAlongPlaces (E i) m)) →ₜ*
+      (localAbsoluteAbelianProfinite (E j) ⧸ artinRaySubgroup (reindexAlongPlaces (E j) m)) := by
   let : Algebra (E i) (E j) := stageInclusionAlgebra k K Ω i j hij
   have : IsScalarTower K (E i) (E j) :=
     IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
@@ -181,9 +183,9 @@ def geometricNativeRayTransition (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
   have : IsGalois (E i) (E j) := IsGalois.tower_top_of_isGalois K (E i) (E j)
   exact embeddedRayTransferModulusCongr k (E i) (E j)
     (geometricNativeStageEmbedding k K Ω i j hij)
-    (rayModulusBaseChange (E i) m) (rayModulusBaseChange_reduced m hm)
-    (rayModulusBaseChange (E j) m)
-    (rayModulusBaseChange_trans (L := E i) (M := E j) m)
+    (reindexAlongPlaces (E i) m) (reindexAlongPlaces_reduced m hm)
+    (reindexAlongPlaces (E j) m)
+    (reindexAlongPlaces_trans (L := E i) (M := E j) m)
 
 -- Check each concrete definition boundary separately before composing the laws.
 omit [Algebra k Ω] [IsScalarTower k K Ω] in
@@ -213,9 +215,9 @@ private theorem geometricNativeRayTransition_eq
     geometricNativeRayTransition k K Ω m hm i j hij =
       embeddedRayTransferModulusCongr k (E i) (E j)
         (geometricNativeStageEmbedding k K Ω i j hij)
-        (rayModulusBaseChange (E i) m) (rayModulusBaseChange_reduced m hm)
-        (rayModulusBaseChange (E j) m)
-        (rayModulusBaseChange_trans (L := E i) (M := E j) m) := by
+        (reindexAlongPlaces (E i) m) (reindexAlongPlaces_reduced m hm)
+        (reindexAlongPlaces (E j) m)
+        (reindexAlongPlaces_trans (L := E i) (M := E j) m) := by
   intro aij hKij hkij hfinite hgalois
   rfl
 
@@ -228,11 +230,10 @@ private theorem geometricRestrictedRayTransition_apply
     let : IsScalarTower k (E i) (E j) :=
       IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
     let : FiniteDimensional (E i) (E j) := FiniteDimensional.right K (E i) (E j)
-    ∀ a : RayRestrictedProduct (rayModulusBaseChange (E i) m),
+    ∀ a : RayRestrictedProduct (reindexAlongPlaces (E i) m),
       geometricRestrictedRayTransition k K Ω m hm i j hij a =
-        rayModulusCongr (rayModulusBaseChange_trans (L := E i) (M := E j) m)
-          (restrictedRayBaseChange (L := E j) (rayModulusBaseChange (E i) m)
-            (rayModulusBaseChange_reduced m hm) a) := by
+        rayModulusCongr (reindexAlongPlaces_trans (L := E i) (M := E j) m)
+          (restrictedRayBaseChange (L := E j) (reindexAlongPlaces (E i) m) a) := by
   intro aij hKij hkij hfinite a
   rfl
 
@@ -246,13 +247,13 @@ private theorem geometricNativeRayTransition_apply
     let : FiniteDimensional (E i) (E j) := FiniteDimensional.right K (E i) (E j)
     let : IsGalois (E i) (E j) := IsGalois.tower_top_of_isGalois K (E i) (E j)
     ∀ a : localAbsoluteAbelianProfinite (E i) ⧸
-        artinRaySubgroup (rayModulusBaseChange (E i) m),
+        artinRaySubgroup (reindexAlongPlaces (E i) m),
       geometricNativeRayTransition k K Ω m hm i j hij a =
         (embeddedRayTransferModulusCongr k (E i) (E j)
         (geometricNativeStageEmbedding k K Ω i j hij)
-        (rayModulusBaseChange (E i) m) (rayModulusBaseChange_reduced m hm)
-        (rayModulusBaseChange (E j) m)
-        (rayModulusBaseChange_trans (L := E i) (M := E j) m)) a := by
+        (reindexAlongPlaces (E i) m) (reindexAlongPlaces_reduced m hm)
+        (reindexAlongPlaces (E j) m)
+        (reindexAlongPlaces_trans (L := E i) (M := E j) m)) a := by
   intro aij hKij hkij hfinite hgalois a
   exact DFunLike.congr_fun (geometricNativeRayTransition_eq k K Ω m hm i j hij) a
 
@@ -268,19 +269,19 @@ private theorem geometricEmbeddedRayTransfer_mk
     ∀ a : localAbsoluteAbelianProfinite (E i),
       (embeddedRayTransferModulusCongr k (E i) (E j)
         (geometricNativeStageEmbedding k K Ω i j hij)
-        (rayModulusBaseChange (E i) m) (rayModulusBaseChange_reduced m hm)
-        (rayModulusBaseChange (E j) m)
-        (rayModulusBaseChange_trans (L := E i) (M := E j) m))
-          (QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange (E i) m)) a) =
-        QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange (E j) m))
+        (reindexAlongPlaces (E i) m) (reindexAlongPlaces_reduced m hm)
+        (reindexAlongPlaces (E j) m)
+        (reindexAlongPlaces_trans (L := E i) (M := E j) m))
+          (QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces (E i) m)) a) =
+        QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces (E j) m))
           (nativeAbsoluteTransferOfEmbedding (E i) (E j)
             (geometricNativeStageEmbedding k K Ω i j hij) a) := by
   intro aij hKij hkij hfinite hgalois a
   exact embeddedRayTransferModulusCongr_mk k (E i) (E j)
     (geometricNativeStageEmbedding k K Ω i j hij)
-    (rayModulusBaseChange (E i) m) (rayModulusBaseChange_reduced m hm)
-    (rayModulusBaseChange (E j) m)
-    (rayModulusBaseChange_trans (L := E i) (M := E j) m) a
+    (reindexAlongPlaces (E i) m) (reindexAlongPlaces_reduced m hm)
+    (reindexAlongPlaces (E j) m)
+    (reindexAlongPlaces_trans (L := E i) (M := E j) m) a
 
 private theorem geometricEmbeddedRayTransfer_artin
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1) (i j : I) (hij : i ≤ j) :
@@ -291,23 +292,22 @@ private theorem geometricEmbeddedRayTransfer_artin
       IsScalarTower.of_algebraMap_eq (fun _ => Subtype.ext rfl)
     let : FiniteDimensional (E i) (E j) := FiniteDimensional.right K (E i) (E j)
     let : IsGalois (E i) (E j) := IsGalois.tower_top_of_isGalois K (E i) (E j)
-    ∀ a : RayRestrictedProduct (rayModulusBaseChange (E i) m),
-      restrictedProductAbsoluteArtin (rayModulusBaseChange (E j) m)
-          (rayModulusCongr (rayModulusBaseChange_trans (L := E i) (M := E j) m)
-            (restrictedRayBaseChange (L := E j) (rayModulusBaseChange (E i) m)
-              (rayModulusBaseChange_reduced m hm) a)) =
+    ∀ a : RayRestrictedProduct (reindexAlongPlaces (E i) m),
+      restrictedProductAbsoluteArtin (reindexAlongPlaces (E j) m)
+          (rayModulusCongr (reindexAlongPlaces_trans (L := E i) (M := E j) m)
+            (restrictedRayBaseChange (L := E j) (reindexAlongPlaces (E i) m) a)) =
         (embeddedRayTransferModulusCongr k (E i) (E j)
         (geometricNativeStageEmbedding k K Ω i j hij)
-        (rayModulusBaseChange (E i) m) (rayModulusBaseChange_reduced m hm)
-        (rayModulusBaseChange (E j) m)
-        (rayModulusBaseChange_trans (L := E i) (M := E j) m))
-          (restrictedProductAbsoluteArtin (rayModulusBaseChange (E i) m) a) := by
+        (reindexAlongPlaces (E i) m) (reindexAlongPlaces_reduced m hm)
+        (reindexAlongPlaces (E j) m)
+        (reindexAlongPlaces_trans (L := E i) (M := E j) m))
+          (restrictedProductAbsoluteArtin (reindexAlongPlaces (E i) m) a) := by
   intro aij hKij hkij hfinite hgalois a
   exact embeddedRayTransferModulusCongr_artin k (E i) (E j)
     (geometricNativeStageEmbedding k K Ω i j hij)
-    (rayModulusBaseChange (E i) m) (rayModulusBaseChange_reduced m hm)
-    (rayModulusBaseChange (E j) m)
-    (rayModulusBaseChange_trans (L := E i) (M := E j) m) a
+    (reindexAlongPlaces (E i) m) (reindexAlongPlaces_reduced m hm)
+    (reindexAlongPlaces (E j) m)
+    (reindexAlongPlaces_trans (L := E i) (M := E j) m) a
 
 /-- The actual ray transition keeps every original native absolute
 transfer representative unchanged. -/
@@ -315,52 +315,52 @@ theorem geometricNativeRayTransition_mk
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
     (i j : I) (hij : i ≤ j) (a : localAbsoluteAbelianProfinite (E i)) :
     geometricNativeRayTransition k K Ω m hm i j hij
-        (QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange (E i) m)) a) =
-      QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange (E j) m))
+        (QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces (E i) m)) a) =
+      QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces (E j) m))
         (geometricNativeAbsoluteTransition k K Ω i j hij a) := by
   have hRay := geometricNativeRayTransition_apply k K Ω m hm i j hij
-    (QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange (E i) m)) a)
+    (QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces (E i) m)) a)
   have hNative := geometricEmbeddedRayTransfer_mk k K Ω m hm i j hij a
   have hAbsolute := geometricNativeAbsoluteTransition_apply k K Ω i j hij a
   exact hRay.trans (hNative.trans
-    (congrArg (QuotientGroup.mk' (artinRaySubgroup (rayModulusBaseChange (E j) m)))
+    (congrArg (QuotientGroup.mk' (artinRaySubgroup (reindexAlongPlaces (E j) m)))
       hAbsolute.symm))
 
 omit [IsSepClosure K Ω] in
 /-- The original Artin map with the geometric stage's fixed field presentation. -/
 noncomputable def geometricNativeArtin (m : Modulus k K) (i : I) :
-    RayRestrictedProduct (rayModulusBaseChange (E i) m) →*
-      (localAbsoluteAbelianProfinite (E i) ⧸ artinRaySubgroup (rayModulusBaseChange (E i) m)) :=
-  restrictedProductAbsoluteArtin (rayModulusBaseChange (E i) m)
+    RayRestrictedProduct (reindexAlongPlaces (E i) m) →*
+      (localAbsoluteAbelianProfinite (E i) ⧸ artinRaySubgroup (reindexAlongPlaces (E i) m)) :=
+  restrictedProductAbsoluteArtin (reindexAlongPlaces (E i) m)
 
 omit [IsSepClosure K Ω] in
 /-- Evaluating the shared geometric Artin map retains the original Artin value. -/
 theorem geometricNativeArtin_apply (m : Modulus k K) (i : I)
-    (a : RayRestrictedProduct (rayModulusBaseChange (E i) m)) :
+    (a : RayRestrictedProduct (reindexAlongPlaces (E i) m)) :
     geometricNativeArtin k K Ω m i a =
-      restrictedProductAbsoluteArtin (rayModulusBaseChange (E i) m) a :=
+      restrictedProductAbsoluteArtin (reindexAlongPlaces (E i) m) a :=
   rfl
 
 /-- Every actual restricted-product stage inclusion satisfies the same
 original native reciprocity square. -/
 theorem geometricNativeRayTransition_artin
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
-    (i j : I) (hij : i ≤ j) (a : RayRestrictedProduct (rayModulusBaseChange (E i) m)) :
-    restrictedProductAbsoluteArtin (rayModulusBaseChange (E j) m)
+    (i j : I) (hij : i ≤ j) (a : RayRestrictedProduct (reindexAlongPlaces (E i) m)) :
+    restrictedProductAbsoluteArtin (reindexAlongPlaces (E j) m)
         (geometricRestrictedRayTransition k K Ω m hm i j hij a) =
       geometricNativeRayTransition k K Ω m hm i j hij
-        (restrictedProductAbsoluteArtin (rayModulusBaseChange (E i) m) a) := by
+        (restrictedProductAbsoluteArtin (reindexAlongPlaces (E i) m) a) := by
   have hRestricted := geometricRestrictedRayTransition_apply k K Ω m hm i j hij a
   have hNative := geometricEmbeddedRayTransfer_artin k K Ω m hm i j hij a
   have hRay := geometricNativeRayTransition_apply k K Ω m hm i j hij
-    (restrictedProductAbsoluteArtin (rayModulusBaseChange (E i) m) a)
-  exact (congrArg (restrictedProductAbsoluteArtin (rayModulusBaseChange (E j) m))
+    (restrictedProductAbsoluteArtin (reindexAlongPlaces (E i) m) a)
+  exact (congrArg (restrictedProductAbsoluteArtin (reindexAlongPlaces (E j) m))
     hRestricted).trans (hNative.trans hRay.symm)
 
 /-- The shared original Artin maps satisfy the native transition formula. -/
 theorem geometricNativeArtin_transfer
     (m : Modulus k K) (hm : ∀ v, m v ≤ 1)
-    (i j : I) (hij : i ≤ j) (a : RayRestrictedProduct (rayModulusBaseChange (E i) m)) :
+    (i j : I) (hij : i ≤ j) (a : RayRestrictedProduct (reindexAlongPlaces (E i) m)) :
     geometricNativeArtin k K Ω m j
         (geometricRestrictedRayTransition k K Ω m hm i j hij a) =
       geometricNativeRayTransition k K Ω m hm i j hij
@@ -370,7 +370,7 @@ theorem geometricNativeArtin_transfer
       ((geometricNativeRayTransition_artin k K Ω m hm i j hij a).trans
         (congrArg
           (fun x : localAbsoluteAbelianProfinite (E i) ⧸
-              artinRaySubgroup (rayModulusBaseChange (E i) m) =>
+              artinRaySubgroup (reindexAlongPlaces (E i) m) =>
             geometricNativeRayTransition k K Ω m hm i j hij x)
           (geometricNativeArtin_apply k K Ω m i a).symm))
 

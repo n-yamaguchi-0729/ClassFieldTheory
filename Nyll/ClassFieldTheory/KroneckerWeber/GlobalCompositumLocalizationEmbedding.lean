@@ -111,6 +111,7 @@ theorem kroneckerWeberGlobalCompositumLocalizationEmbedding
       intro q
       dsimp only [g, RingHom.comp_apply]
       apply congrArg (WithAbs.equiv aT).symm
+      rw [← AbsoluteValue.toCompletion_eq_algebraMap vK q, AbsoluteValue.toCompletion_apply]
       change W.embedding (algebraMap ℚ M q) =
         algebraMap ℚ_[p.1] T
           (e (((WithAbs.equiv vK).symm q : WithAbs vK) :

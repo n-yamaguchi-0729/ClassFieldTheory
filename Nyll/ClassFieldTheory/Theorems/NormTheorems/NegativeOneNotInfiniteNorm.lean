@@ -6,7 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Mathlib.NumberTheory.NumberField.Completion.LiesOverInstances
+public import Mathlib.NumberTheory.NumberField.Completion.InfinitePlace
 public import Nyll.ClassFieldTheory.Definitions.NormTheorems.IsNormAtInfinitePlace
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.Relative.InfinitePlaceTensorNorm
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.InfinitePlaceArtin
@@ -24,7 +24,6 @@ than a single chosen completion, is the object in the public statement.
 open scoped NumberField TensorProduct
 open NumberField
 
-open scoped NumberField.LiesOver
 
 noncomputable section
 
@@ -54,6 +53,8 @@ theorem not_isNormAtInfinitePlace_neg_one_of_real_complex
     simpa only [Units.coe_neg_one, map_neg, map_one] using hy
   let : w.1.LiesOver v.1 :=
     ⟨congrArg (fun q : InfinitePlace K => q.1) hw⟩
+  let : Algebra v.Completion w.Completion :=
+    AbsoluteValue.Completion.algebraOfLiesOver v.1 w.1
   rw [infiniteTensorNormSubgroup_eq_localNormSubgroup
     (K := K) (L := L) v w hw] at hnorm
   obtain ⟨z, hz⟩ := hnorm

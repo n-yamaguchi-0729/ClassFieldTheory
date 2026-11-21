@@ -4,12 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.AbsoluteValue
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.FinitePlaceCompletion
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.IdeleSupport
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
-import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Localization
+module
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.FinitePlaceCompletion
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.IdeleSupport
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Lattice
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.LocalTensorDecomposition
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Adele.IntegralTensorSupport.Localization
 
 /-!
 # Integral support for relative adelic tensor products

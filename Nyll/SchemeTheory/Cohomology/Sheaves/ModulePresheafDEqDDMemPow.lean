@@ -29,6 +29,8 @@ replacing a zero-cochain by one with the same coboundary.
 
 section ProofImplementation
 
+open AlgebraicGeometry.Scheme.Hom (le_preimage_top)
+
 namespace AlgebraicCurves.Cohomology.Sheaves.Proofs.ReesCechApproximation
 attribute [-instance]
   AlgebraicGeometry.OModulePresheaf.Leray.relAltC_scalarTower
@@ -119,12 +121,6 @@ universe u
 noncomputable section
 
 namespace SolKS
-
-/-- Every source open lies in the inverse image of the whole target. -/
-lemma le_preimage_top {Y Z : Scheme.{u}} (f : Y ⟶ Z) (W : Y.Opens) :
-    W ≤ f ⁻¹ᵁ ⊤ := by
-  rw [Scheme.Hom.preimage_top]
-  exact le_top
 
 lemma preimage_iInf {X Y : Scheme.{u}} (f : X ⟶ Y) {ι : Type*} [Finite ι] (U : ι → Y.Opens) :
     f ⁻¹ᵁ (⨅ j, U j) = ⨅ j, f ⁻¹ᵁ (U j) := by
@@ -241,9 +237,6 @@ lemma θ_X (U : P.Opens) (W : (P₁ I q).Opens) (e : W ≤ p₁ I q ⁻¹ᵁ U) 
     θ I q U W e X = T I q W := by
   exact Polynomial.eval₂_X _ _
 
-lemma appLE_top_top {Y Z : Scheme.{u}} (f : Y ⟶ Z) : f.appLE ⊤ ⊤ (le_preimage_top f ⊤) = f.appTop :=
-  f.appLE_eq_app
-
 lemma ΓSpecIso_inv_C (a : A) :
     (Scheme.ΓSpecIso (CommRingCat.of A[X])).inv.hom (C a) =
       ((Spec.map (CommRingCat.ofHom (algebraMap A A[X]))).appTop).hom
@@ -273,7 +266,8 @@ lemma θ_map (U : P.Opens) (W : (P₁ I q).Opens) (e : W ≤ p₁ I q ⁻¹ᵁ U
           ((snd₁ I q ≫ Spec.map (CommRingCat.ofHom (algebraMap A A[X]))).appLE ⊤ W
             (le_preimage_top (snd₁ I q ≫ Spec.map (CommRingCat.ofHom (algebraMap A A[X]))) W)).hom
             ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom a) := by
-        rw [ΓSpecIso_inv_C, ← appLE_top_top, ← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]
+        rw [ΓSpecIso_inv_C, ← Scheme.Hom.appLE_top_eq_appTop,
+          ← CommRingCat.comp_apply, Scheme.Hom.appLE_comp_appLE]
       rw [lhs, rhs]
       exact congrArg (fun φ => (CommRingCat.Hom.hom φ)
           ((Scheme.ΓSpecIso (CommRingCat.of A)).inv.hom a))
@@ -314,7 +308,7 @@ lemma θ_bijective {U : P.Opens} (hU : IsAffineOpen U) {W : (P₁ I q).Opens}
     refine CommRingCat.hom_ext (RingHom.ext fun x => ?_)
     simp only [CommRingCat.hom_comp, RingHom.coe_comp, Function.comp_apply, ΦC, ΦX,
       CommRingCat.hom_ofHom, coe_mapRingHom]
-    rw [appLE_top_top]
+    rw [Scheme.Hom.appLE_top_eq_appTop]
     change C ((q.appLE ⊤ U (le_preimage_top q U)).hom x) = Polynomial.map (alg q U)
       (((Spec.map (CommRingCat.ofHom (algebraMap A A[X]))).appTop ≫
         (Scheme.ΓSpecIso (CommRingCat.of A[X])).hom).hom x)
@@ -391,7 +385,7 @@ lemma algR₁_eq_θ (U : P.Opens) (W : (P₁ I q).Opens) (e : W ≤ p₁ I q ⁻
     (le_preimage_top (snd₁ I q ≫ sX I) W),
     ← Scheme.Hom.appLE_comp_appLE (snd₁ I q) (sX I) ⊤ ⊤ W
         (le_preimage_top (sX I) ⊤) (le_preimage_top (snd₁ I q) W),
-          CommRingCat.comp_apply, appLE_top_top]
+          CommRingCat.comp_apply, Scheme.Hom.appLE_top_eq_appTop]
   congr 1
   have hn := Scheme.ΓSpecIso_inv_naturality (CommRingCat.ofHom (Rr.incl I))
   have := congrArg (fun ψ : CommRingCat.of (Rr I) ⟶ _ => ψ.hom r) hn

@@ -40,8 +40,8 @@ theorem finiteNormalizationInertia_exists_finiteNative_lift
     (τ : (commAlgIdealInertiaGroup A (finiteAbsoluteNormalizationAlgebra A K L E)
       (finiteAbsoluteNormalizationPrime A K L Q E)).carrier) :
     ∃ g : { g : (finiteGaloisGroupObject K L E).carrier //
-      ((finiteNormalizationActionDiagram A K L E).lowerInertia
-        (finiteAbsoluteNormalizationPrime A K L Q E)).carrier g },
+      g ∈ ((finiteNormalizationActionDiagram A K L E).lowerInertia
+        (finiteAbsoluteNormalizationPrime A K L Q E)).carrier },
       (finiteNormalizationGaloisGroupMap A K L E).hom'.toFun g.val = τ.val := by
   obtain ⟨g, hg, hcoeff⟩ := coefficientInertia_exists_preimage A
     (finiteAbsoluteNormalizationAlgebra A K L E) (finiteGaloisGroupObject K L E)

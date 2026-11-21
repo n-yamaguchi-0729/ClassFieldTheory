@@ -22,6 +22,8 @@ noncomputable section
 
 namespace LocalClassFieldTheory
 
+universe u
+
 open LocalFieldTheory RamificationTheory CyclicCohomology KummerTheory
 open ClassFormation
 open scoped ValuativeRel
@@ -43,7 +45,7 @@ private theorem frobeniusClosure_mk_mem_iff_singleton
 /-- Membership in the intrinsic Frobenius closure, expressed either with the
 residue datum's carrier or with the canonical fixed-field quotient. -/
 theorem intrinsicFixedFieldFrobeniusClosure_mem_iff
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -79,6 +81,7 @@ theorem intrinsicFixedFieldFrobeniusClosure_mem_iff
     let RF :=
       (intrinsicFiniteAbstractBase F).toFiniteResidueAbstractField
         (localResidueDatum F)
+    let _ : (EI.field.toSubgroup.subgroupOf RF.field.toSubgroup).Normal := EI.normal
     ∀ τ : (intrinsicAbstractBase F).toSubgroup,
       let τRF : RF.field.toSubgroup :=
         ⟨τ.1, by
@@ -94,14 +97,14 @@ theorem intrinsicFixedFieldFrobeniusClosure_mem_iff
               (intrinsicFixedFieldFrobeniusQuotient
                 K H J hJH e)) : Subgroup _) := by
   intro F reusedStructure2 E reusedStructure4 reusedStructure5 reusedStructure6 reusedStructure7
-    reusedStructure8 reusedStructure9 i EI RF τ τRF
+    reusedStructure8 reusedStructure9 i EI RF _ τ τRF
   exact frobeniusClosure_mk_mem_iff_singleton
     (localResidueDatum F) RF EI.field EI.below (hJnormal := EI.normal) σ τRF
 
 /-- Membership in the ambient Frobenius closure, expressed either with the
 residue datum's carrier or with the canonical ambient quotient. -/
 theorem ambientFixedFieldFrobeniusClosure_mem_iff
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -160,7 +163,7 @@ theorem ambientFixedFieldFrobeniusClosure_mem_iff
 /-- The canonical fixed-field quotient equivalence maps the intrinsic
 Frobenius closure into the ambient Frobenius closure. -/
 theorem intrinsicFixedFieldFrobeniusClosure_le_ambientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -235,7 +238,7 @@ theorem
 /-- The canonical fixed-field quotient equivalence pulls the ambient
 Frobenius closure back into the intrinsic Frobenius closure. -/
 theorem ambientFixedFieldFrobeniusClosure_le_intrinsicFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))
@@ -275,7 +278,7 @@ theorem ambientFixedFieldFrobeniusClosure_le_intrinsicFixedField
 /-- The canonical fixed-field quotient equivalence identifies the intrinsic
 and ambient Frobenius closures. -/
 theorem intrinsicFrobeniusClosure_iff_ambientFixedField
-    (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]
+    (K : Type u) [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K]
     (H : FiniteAbstractField
       Gal(SeparableClosure K/K))

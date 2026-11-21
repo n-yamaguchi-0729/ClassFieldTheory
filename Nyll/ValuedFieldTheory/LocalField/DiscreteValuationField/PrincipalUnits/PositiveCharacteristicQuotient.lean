@@ -62,7 +62,7 @@ theorem card_principalUnitSubquotient_eq_residue_pow
         Nat.card F.residueField ^ (j - i) := by
   obtain ⟨π, hπ⟩ := F.exists_uniformizer
   let U := toPrincipalUnitFiltration F
-  have hnormal : ∀ n : ℕ, (U.principalUnitSubgroup n).Normal := fun _ => inferInstance
+  have hnormal : ∀ n : ℕ, (U.level n).Normal := fun _ => inferInstance
   have hsum : i + (j - i) = j := Nat.add_sub_of_le hij
   calc
     Nat.card (U.principalUnitSubquotient i j) =

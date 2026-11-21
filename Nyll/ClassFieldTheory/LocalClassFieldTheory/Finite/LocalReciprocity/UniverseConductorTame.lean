@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.Filtered.Core
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseFiltered
 public import Nyll.ValuedFieldTheory.Ramification.LocalField.FirstRamificationComparison
 public import Nyll.ValuedFieldTheory.Ramification.LocalField.InertiaCard
@@ -30,14 +31,31 @@ namespace LocalClassFieldTheory.Universe
 open LocalFieldTheory RamificationTheory.LocalField
 open scoped ValuativeRel
 
-/-- The actual principal-unit image vanishes precisely from the original norm conductor onward. -/
-theorem artinPrincipalUnitGroup_eq_bot_iff
+/-- An upper group of a finite abelian extension vanishes exactly from the
+ceil step of its norm conductor. -/
+theorem localUpperRamificationGroup_eq_bot_iff_localConductorExponent_le
     (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
     [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
-    [FiniteDimensional K L] [IsAbelianGalois K L] (n : ℕ) :
-    artinPrincipalUnitGroup K L n = ⊥ ↔ localConductorExponent K L ≤ n := by
-  rw [artinPrincipalUnitGroup, Subgroup.map_eq_bot_iff,
-    abelianLocalArtinMonoidHom_ker, localConductorExponent_le_iff]
+    [FiniteDimensional K L] [IsAbelianGalois K L] (t : ℝ) (ht : 0 ≤ t) :
+    localUpperRamificationGroup K L t = ⊥ ↔ localConductorExponent K L ≤ ⌈t⌉₊ := by
+  rw [← finiteAbelian_filteredLocalReciprocity K L t ht]
+  exact artinPrincipalUnitGroup_eq_bot_iff K L ⌈t⌉₊
+
+/-- For a positive conductor, the last nontrivial integral upper group is
+at the preceding depth. -/
+theorem localUpperRamificationGroup_last_nontrivial_of_positive_conductor
+    (K : Type u) (L : Type v) [Field K] [Field L] [Algebra K L]
+    [ValuativeRel K] [TopologicalSpace K] [IsNonarchimedeanLocalField K]
+    [FiniteDimensional K L] [IsAbelianGalois K L] (h : 0 < localConductorExponent K L) :
+    localUpperRamificationGroup K L ((localConductorExponent K L - 1 : ℕ) : ℝ) ≠ ⊥ ∧
+      localUpperRamificationGroup K L (localConductorExponent K L : ℝ) = ⊥ := by
+  let c := localConductorExponent K L
+  have hstep (n : ℕ) : localUpperRamificationGroup K L (n : ℝ) = ⊥ ↔ c ≤ n := by
+    simpa only [Nat.ceil_natCast] using
+      localUpperRamificationGroup_eq_bot_iff_localConductorExponent_le K L (n : ℝ)
+        (Nat.cast_nonneg n)
+  exact ⟨fun hbot => (Nat.sub_lt h Nat.one_pos).not_ge ((hstep (c - 1)).mp hbot),
+    (hstep c).mpr le_rfl⟩
 
 /-- In a finite abelian local extension the first upper and lower groups
 coincide. The normalization matters: `φ(1)` need not equal `1`, but it lies
@@ -128,15 +146,10 @@ theorem localConductorExponent_le_one_iff_localUpperRamificationGroup_one_eq_bot
     [FiniteDimensional K L] [IsAbelianGalois K L] :
     localConductorExponent K L ≤ 1 ↔
       localUpperRamificationGroup K L 1 = ⊥ := by
-  have hstep :
-      artinPrincipalUnitStepGroup K L (1 : ℝ) =
-        artinPrincipalUnitGroup K L 1 := by
-    change artinPrincipalUnitGroup K L ⌈(1 : ℝ)⌉₊ =
-      artinPrincipalUnitGroup K L 1
-    have hone : ⌈(1 : ℝ)⌉₊ = (1 : ℕ) := by norm_num
-    rw [hone]
-  rw [← finiteAbelian_filteredLocalReciprocity K L 1 (by norm_num), hstep]
-  exact (artinPrincipalUnitGroup_eq_bot_iff K L 1).symm
+  have hone : ⌈(1 : ℝ)⌉₊ = (1 : ℕ) := by norm_num
+  simpa only [hone] using
+    (localUpperRamificationGroup_eq_bot_iff_localConductorExponent_le K L 1
+      (by norm_num)).symm
 
 /-- Conductor exponent at most one is equivalent to the absence of wild
 ramification in the chosen valuation ring. -/

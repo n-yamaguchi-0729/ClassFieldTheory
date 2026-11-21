@@ -976,7 +976,7 @@ theorem finitePlaceNormalizedValuation_nonzeroIntegralFieldUnit
     apply canonicalValuation_eq_of_valuation_eq
       (v := NormedField.valuation (K := C))
     apply NNReal.eq
-    simpa only [NormedField.valuation_apply, coe_nnnorm] using
+    simpa only [NormedField.valuation_apply, coe_nnNorm] using
       hnormX.trans hnormPiPow.symm
   have hValuationMap :
       valuationMap C (Additive.ofMul xC) =
@@ -2289,11 +2289,6 @@ theorem rationalQuadraticPrimitiveRoots_nonempty_pnat :
   change (primitiveRoots 2 ℚ).Nonempty
   exact rationalQuadraticPrimitiveRoots_nonempty
 
-private def rationalQuadraticRootValuePNatMonoidHom :
-    rootsOfUnity (((2 : ℕ+) : ℕ)) (𝓞 ℚ) →* ℤ := by
-  change rootsOfUnity 2 (𝓞 ℚ) →* ℤ
-  exact rationalQuadraticRootValueMonoidHom
-
 private noncomputable def rationalIdealQuadraticSourceFactor
     (a : 𝓞 ℚ) (b : ℕ) (hbOdd : Odd b)
     (hab : Nat.Coprime (Rat.ringOfIntegersEquiv a).natAbs b)
@@ -2367,8 +2362,8 @@ theorem rationalIdealPowerResidueSymbol_two_eq_jacobiSym
     (idealPrimeDivisors_finite ℚ (rationalPrincipalIdeal b)
       (rationalPrincipalIdeal_ne_zero b hb)).fintype
   rw [idealPowerResidueSymbol_eq_prod]
-  change rationalQuadraticRootValuePNatMonoidHom _ = _
-  rw [map_prod]
+  change rationalQuadraticRootValueMonoidHom _ = _
+  refine (map_prod rationalQuadraticRootValueMonoidHom _ Finset.univ).trans ?_
   change
     (∏ P : idealPrimeDivisors ℚ (rationalPrincipalIdeal b),
       rationalIdealQuadraticSourceFactor a b hbOdd hab P) = _

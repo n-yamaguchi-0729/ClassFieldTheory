@@ -34,7 +34,7 @@ theorem finitePrime_splitsCompletelyInBigHilbertClassField_iff_positivePrincipal
     (v : HeightOneSpectrum (𝓞 K)) :
     FinitePrimeSplitsCompletely K E v ↔
       ∃ x : Kˣ,
-        (∀ w : RayClassRealPlace K,
+        (∀ w : RayClass.RealPlace K,
           0 < w.1.embedding_of_isReal w.2 (x : K)) ∧
         toPrincipalIdeal (𝓞 K) K x = finitePrimeFractionalIdeal v := by
   rw [finitePrime_splitsCompletelyInBigHilbertClassField_iff K E hE v]

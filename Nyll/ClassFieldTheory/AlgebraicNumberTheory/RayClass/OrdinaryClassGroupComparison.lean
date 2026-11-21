@@ -34,9 +34,14 @@ variable {K : Type*} [Field K] [NumberField K]
 theorem ordinary_rayClassPrimeToIdeals_eq_top :
     rayClassPrimeToIdeals (ordinaryRayClassModulus K) = ⊤ := by
   ext I
-  simp only [rayClassPrimeToIdeals, ordinaryRayClassModulus, Finsupp.support_zero,
-    Finset.notMem_empty, IsEmpty.forall_iff, implies_true, Set.ofPred_true, Subgroup.mem_mk,
-    Submonoid.mem_mk, Subsemigroup.mem_mk, Set.mem_univ, Subgroup.mem_top]
+  constructor
+  · exact fun _ => Subgroup.mem_top _
+  · intro _
+    change I ∈ ClassFieldTheory.FractionalIdealFactorization.primeTo (F := K)
+      (↑(ordinaryRayClassModulus K).finitePart.support)
+    intro v hv
+    change v ∈ (0 : HeightOneSpectrum (𝓞 K) →₀ ℕ).support at hv
+    simp only [Finsupp.support_zero, Finset.notMem_empty] at hv
 
 private theorem ordinary_rayPrincipalIdealSubgroup_eq_range :
     rayPrincipalIdealSubgroup (ordinaryRayClassModulus K) =

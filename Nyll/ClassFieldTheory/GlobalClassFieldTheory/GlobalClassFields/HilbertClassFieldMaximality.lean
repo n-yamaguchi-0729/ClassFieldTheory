@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.HilbertNormCharacterization
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.GlobalClassFields.SmallHilbertNormCharacterization
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.Basic
@@ -36,13 +38,6 @@ namespace GlobalClassFields
 
 open NumberField
 
-/-- Canonical idele-class commutativity supplies normality for Hilbert norm quotients. -/
-theorem hilbertClassFieldMaximalityIdeleClassGroupIsMulCommutative
-    {F : Type*} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-attribute [local instance] hilbertClassFieldMaximalityIdeleClassGroupIsMulCommutative
 
 variable
     {K : Type u} {L : Type v}

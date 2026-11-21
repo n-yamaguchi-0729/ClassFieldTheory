@@ -10,8 +10,10 @@ public import Nyll.EtaleCohomology.Sites.ConstantPresentation
 public import Nyll.SchemeTheory.Etale.OverField.Decomposition
 public import Mathlib.RingTheory.Etale.Field
 public import Mathlib.CategoryTheory.Sites.EpiMono
+public import Mathlib.CategoryTheory.ConcreteCategory.EpiMono
 public import Mathlib.CategoryTheory.Sites.LocallySurjective
 public import Mathlib.Algebra.Category.Grp.AB
+public import Mathlib.Algebra.Category.Grp.EpiMono
 public import Mathlib.FieldTheory.Galois.GaloisClosure
 public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
 public import Mathlib.FieldTheory.Normal.Closure

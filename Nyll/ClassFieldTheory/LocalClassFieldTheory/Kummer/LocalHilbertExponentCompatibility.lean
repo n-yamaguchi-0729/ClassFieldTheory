@@ -8,7 +8,8 @@ module
 
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.KummerExponentTower
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Kummer.LocalHilbertPairing
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.NormResidueNaturality
+public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.UniverseArtin
 public import Nyll.GaloisCohomology.Kummer.Concrete.FiniteGeneration
 public import Nyll.GaloisCohomology.Kummer.Concrete.RootCharacters
 public import Nyll.GaloisCohomology.Kummer.Concrete.SimpleExtension
@@ -71,10 +72,10 @@ theorem localHilbertSymbol_exponentCompatibility
   have hrestrict :
       intermediateFieldRestrictNormalHom Em En hEF σn = σm := by
     change intermediateFieldRestrictNormalHom Em En hEF
-        (LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom K En a) =
-      LocalClassFieldTheory.Universe.abelianLocalArtinMonoidHom K Em a
+        (LocalClassFieldTheory.abelianLocalArtinMonoidHom K En a) =
+      LocalClassFieldTheory.abelianLocalArtinMonoidHom K Em a
     exact DFunLike.congr_fun
-      (LocalClassFieldTheory.Universe.abelianLocalArtinMap_restrict K Em En hEF) a
+      (LocalClassFieldTheory.abelianLocalArtinMonoidHom_restrict K Em En hEF) a
   have hβmN : βmN ^ (m : ℕ) =
       Units.map (algebraMap K En).toMonoidHom b := by
     change (Units.map (IntermediateField.inclusion hEF).toMonoidHom βm) ^

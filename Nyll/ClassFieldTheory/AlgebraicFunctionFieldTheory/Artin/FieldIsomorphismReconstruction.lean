@@ -96,8 +96,8 @@ variable {k₁ : Type u₁} {K₁ : Type v₁} {L₁ : Type w₁}
 
 local notation "δ₁" => fieldIsoNativeRayHom τ₁ m₁ n₁ hm₁ hn₁ a₁ ha₁
 local notation "δ₂" => fieldIsoNativeRayHom τ₂ m₂ n₂ hm₂ hn₂ a₂ ha₂
-local notation "b₁" => fieldIsoRestrictedRayHom τ₁ m₁ n₁ hm₁ hn₁
-local notation "b₂" => fieldIsoRestrictedRayHom τ₂ m₂ n₂ hm₂ hn₂
+local notation "b₁" => fieldIsoRestrictedRayHom τ₁ m₁ n₁ hn₁
+local notation "b₂" => fieldIsoRestrictedRayHom τ₂ m₂ n₂ hn₂
 local notation "ρ" => reconstructedRestrictedRayEquiv m₁ m₂ e γ hclosure hdegree hb₁ hb₂
 local notation "ρL" => reconstructedRestrictedRayEquiv n₁ n₂ eL Γ hclosureL hdegreeL hbL₁ hbL₂
 

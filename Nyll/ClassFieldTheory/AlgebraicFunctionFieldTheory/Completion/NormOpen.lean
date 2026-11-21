@@ -10,7 +10,7 @@ public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.Galo
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Completion.LocalField
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.LocalReciprocity.TopologicalReciprocity
 public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.Norm
-public import Nyll.ClassFieldTheory.LocalClassFieldTheory.Finite.Unramified.PrincipalUnits.NormSide
+public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.UnramifiedPrincipalUnits.NormSide
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.Basic
 public import Nyll.ValuedFieldTheory.LocalField.NonarchimedeanLocalField.FiniteUnramified
 public import Nyll.ValuedFieldTheory.LocalField.NormUnits

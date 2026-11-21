@@ -6,7 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.FieldSpine
+public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.IdeleClassDirectLimitExtension
 
 /-!
 # Representatives and comparison endpoints for rational finite-norm transport
@@ -32,11 +35,6 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance
-    representativesIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
 local instance
     representativesIdeleClassSubgroupNormal
@@ -60,7 +58,7 @@ noncomputable def rationalFiniteNormTransferAbstractRepresentative
     [hfinite : Finite
       (K.toSubgroup ⧸ extensionSubgroup K L hLK)]
     (a : KummerTheory.ambientFixedAddSubgroup
-      rationalIdeleClassRepresentation K) :
+      (ideleClassRepresentation ℚ) K) :
     rationalFiniteNormTransferExtensionIdeleClass
       (hKfinite := hKfinite) (hfinite := hfinite) K L hLK := by
   letI hLfinite := RationalFiniteNormTransferInternal.absoluteFinite
@@ -75,7 +73,7 @@ noncomputable def rationalFiniteNormTransferAbstractRepresentative
       K L hLK
   exact Additive.toMul
     ((rationalAbstractFixedFieldIdeleClassEquivFixed L).symm
-      (fixedFieldInclusion rationalIdeleClassRepresentation
+      (fixedFieldInclusion (ideleClassRepresentation ℚ)
         K L hLK a))
 
 
@@ -123,7 +121,7 @@ noncomputable def rationalFiniteNormTransferCanonicalFixedRepresentative
   exact Additive.toMul
     ((rationalAbstractRelativeFixedFieldIdeleClassEquivFixedOfFiniteDimensional
       K L hLK).symm
-      (fixedFieldInclusion rationalIdeleClassRepresentation K L hLK
+      (fixedFieldInclusion (ideleClassRepresentation ℚ) K L hLK
         (rationalAbstractFixedFieldIdeleClassEquivFixed K
           (Additive.ofMul c))))
 
@@ -133,7 +131,6 @@ noncomputable def rationalFiniteNormTransferOrdinaryExtensionRepresentative
     (K L : ClosedSubgroup
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hLK : L.toSubgroup ≤ K.toSubgroup)
-    (_hnormal : (extensionSubgroup K L hLK).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -164,9 +161,6 @@ noncomputable def rationalFiniteNormTransferOrdinaryExtensionRepresentative
   letI : NumberField E :=
     RationalFiniteNormTransferInternal.relativeNumberField
       K L hLK
-  letI : IsGalois F E :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      K L hLK _hnormal
   exact ideleClassExtension F E c
 
 /-- The common additive endpoint appearing in the base-change and
@@ -212,7 +206,7 @@ noncomputable def rationalFiniteNormTransferCanonicalAbstractExtensionEndpoint
   let eK := rationalAbstractFixedFieldIdeleClassEquivFixed K
   let eAmbient :=
     extensionFixedRepresentationEquiv
-      rationalIdeleClassRepresentation K L hLK _hnormal
+      (ideleClassRepresentation ℚ) K L hLK _hnormal
   exact
     (MulEquiv.toAdditive
       (_root_.relativeIdeleClassBaseChangeMulEquiv
@@ -220,7 +214,7 @@ noncomputable def rationalFiniteNormTransferCanonicalAbstractExtensionEndpoint
       (rationalAbstractExtensionIdeleClassEquiv
         K L hLK _hnormal
         (eAmbient.symm
-          (fixedFieldInclusion rationalIdeleClassRepresentation K L hLK
+          (fixedFieldInclusion (ideleClassRepresentation ℚ) K L hLK
             (eK (Additive.ofMul c)))))
 
 

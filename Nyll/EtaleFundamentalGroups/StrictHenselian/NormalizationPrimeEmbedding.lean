@@ -79,7 +79,7 @@ theorem integralClosurePrimeBaseMap_isLocalHom
     exact (Ideal.comap_comap (I := IsLocalRing.maximalIdeal T)
       (algebraMap A C) (algebraMap C T)).symm.trans
       ((congrArg (fun J : Ideal C => J.comap (algebraMap A C)) hmax).trans hQ)
-  exact ((IsLocalRing.local_hom_TFAE (integralClosurePrimeBaseMap A L Q)).out 5 1).mp hcomap
+  exact ((IsLocalRing.local_hom_tfae (integralClosurePrimeBaseMap A L Q)).out 5 1).mp hcomap
 
 /-- A maximal normalization prime lies over the closed point of the local
 base, by integrality of the actual integral closure. -/

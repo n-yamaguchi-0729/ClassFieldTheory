@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Representatives
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.RationalFiniteNormTransfer.Quotient
 
@@ -33,11 +35,6 @@ section RationalIdeleExtension
 open Reciprocity
 open LocalClassFieldTheory
 
-local instance
-    membershipTypesIdeleClassGroupIsMulCommutative
-    {F : Type} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  RationalFiniteNormTransferInternal.ideleClassGroupIsMulCommutative
 
 local instance
     membershipTypesIdeleClassSubgroupNormal
@@ -53,7 +50,6 @@ noncomputable def rationalFiniteNormTransferRelativeNormMembership
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (_hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -110,10 +106,6 @@ noncomputable def rationalFiniteNormTransferRelativeNormMembership
     change IsScalarTower ℚ F U
     exact RationalFiniteNormTransferInternal.relativeScalarTower
       H L hLH
-  letI : IsGalois E U := by
-    change IsGalois F U
-    exact RationalFiniteNormTransferInternal.relativeIsGalois
-      H L hLH _hLHnormal
   c ∈ (_root_.ideleClassNorm E U).range
 
 /-- The named relative norm-membership endpoint for the canonical ordinary
@@ -125,8 +117,6 @@ noncomputable def
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hHKnormal : (extensionSubgroup K H hHK).Normal)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -141,9 +131,9 @@ noncomputable def
     (c : rationalFiniteNormTransferBaseIdeleClass
       (hKfinite := hKfinite) K) : Prop :=
   rationalFiniteNormTransferRelativeNormMembership
-    K H L hHK hLH hLHnormal
+    K H L hHK hLH
       (rationalFiniteNormTransferOrdinaryExtensionRepresentative
-        K H hHK hHKnormal c)
+        K H hHK c)
 
 /-- The absolute-`H` norm-membership endpoint used internally by the finite
 norm quotient before transport to the relative `K/H` presentation. -/
@@ -153,8 +143,6 @@ noncomputable def
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hHKnormal : (extensionSubgroup K H hHK).Normal)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -188,11 +176,8 @@ noncomputable def
   letI : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       H L hLH
-  letI : IsGalois F U :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      H L hLH hLHnormal
   rationalFiniteNormTransferOrdinaryExtensionRepresentative
-      K H hHK hHKnormal c ∈
+      K H hHK c ∈
     (_root_.ideleClassNorm F U).range
 
 /-- Absolute norm membership of the canonical representative produced by the
@@ -203,7 +188,6 @@ noncomputable def
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -237,11 +221,8 @@ noncomputable def
   letI : NumberField U :=
     RationalFiniteNormTransferInternal.relativeNumberField
       H L hLH
-  letI : IsGalois F U :=
-    RationalFiniteNormTransferInternal.relativeIsGalois
-      H L hLH hLHnormal
   let b :=
-    fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
+    fixedFieldInclusion (ideleClassRepresentation ℚ) K H hHK
       (rationalAbstractFixedFieldIdeleClassEquivFixed K
         (Additive.ofMul c))
   Additive.toMul
@@ -254,7 +235,6 @@ structure RationalFiniteNormTransferCanonicalFiniteNormRepresentativeMembershipD
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -271,7 +251,7 @@ structure RationalFiniteNormTransferCanonicalFiniteNormRepresentativeMembershipD
   /-- The packaged finite-norm-representative membership proof. -/
   membership :
     rationalFiniteNormTransferCanonicalFiniteNormRepresentativeAbsoluteNormMembership
-      K H L hHK hLH hLHnormal c
+      K H L hHK hLH c
 
 /-- The finite-norm representative and zero have the same named ordinary
 quotient value. -/
@@ -298,7 +278,7 @@ noncomputable def
   letI hHfinite := RationalFiniteNormTransferInternal.absoluteFinite
     K H hHK (hKfinite := hKfinite) (hfinite := hKHfinite)
   let b :=
-    fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
+    fixedFieldInclusion (ideleClassRepresentation ℚ) K H hHK
       (rationalAbstractFixedFieldIdeleClassEquivFixed K
         (Additive.ofMul c))
   let finiteNormRepresentative :
@@ -308,7 +288,7 @@ noncomputable def
       ((rationalAbstractFixedFieldIdeleClassEquivFixed H).symm b)
   rationalFiniteNormTransferQuotientMap
       (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal finiteNormRepresentative =
+      H L hLH finiteNormRepresentative =
     rationalFiniteNormQuotientEquivIdeleClassNormQuotient
       (hKfinite := hHfinite) (hfinite := hHLfinite)
       H L hLH hLHnormal 0
@@ -346,7 +326,6 @@ noncomputable def
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -365,12 +344,12 @@ noncomputable def
   letI : Zero
       (rationalFiniteNormTransferQuotientTarget
         (hKfinite := hHfinite) (hfinite := hHLfinite)
-        H L hLH hLHnormal) :=
+        H L hLH) :=
     RationalFiniteNormTransferInternal.quotientTargetZero
       (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal
+      H L hLH
   let b :=
-    fixedFieldInclusion rationalIdeleClassRepresentation K H hHK
+    fixedFieldInclusion (ideleClassRepresentation ℚ) K H hHK
       (rationalAbstractFixedFieldIdeleClassEquivFixed K
         (Additive.ofMul c))
   let finiteNormRepresentative :
@@ -380,7 +359,7 @@ noncomputable def
       ((rationalAbstractFixedFieldIdeleClassEquivFixed H).symm b)
   rationalFiniteNormTransferQuotientMap
       (hKfinite := hHfinite) (hfinite := hHLfinite)
-      H L hLH hLHnormal finiteNormRepresentative = 0
+      H L hLH finiteNormRepresentative = 0
 
 /-- Packaged quotient-target zero equality for the finite-norm
 representative. -/
@@ -389,7 +368,6 @@ structure RationalFiniteNormTransferCanonicalFiniteNormRepresentativeTargetZeroD
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -406,7 +384,7 @@ structure RationalFiniteNormTransferCanonicalFiniteNormRepresentativeTargetZeroD
   /-- The packaged target-zero equality. -/
   equality :
     rationalFiniteNormTransferCanonicalFiniteNormRepresentativeTargetZero
-      K H L hHK hLH hLHnormal c
+      K H L hHK hLH c
 
 /-- Packaged absolute norm membership used to keep the provider proof's
 dependent field spine out of declaration finalization. -/
@@ -415,8 +393,6 @@ structure RationalFiniteNormTransferCanonicalAbsoluteNormMembershipData
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hHKnormal : (extensionSubgroup K H hHK).Normal)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -433,7 +409,7 @@ structure RationalFiniteNormTransferCanonicalAbsoluteNormMembershipData
   /-- The packaged absolute norm-membership proof. -/
   membership :
     rationalFiniteNormTransferCanonicalOrdinaryExtensionAbsoluteNormMembership
-      K H L hHK hLH hHKnormal hLHnormal c
+      K H L hHK hLH c
 
 /-- Packaged relative norm membership used as the final internal provider
 boundary before exposing the canonical theorem. -/
@@ -442,8 +418,6 @@ structure RationalFiniteNormTransferCanonicalNormMembershipData
       (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ))
     (hHK : H.toSubgroup ≤ K.toSubgroup)
     (hLH : L.toSubgroup ≤ H.toSubgroup)
-    (hHKnormal : (extensionSubgroup K H hHK).Normal)
-    (hLHnormal : (extensionSubgroup H L hLH).Normal)
     [hKfinite : Finite
       ((baseField
         (SeparableClosure ℚ ≃ₐ[ℚ] SeparableClosure ℚ)).toSubgroup ⧸
@@ -460,7 +434,7 @@ structure RationalFiniteNormTransferCanonicalNormMembershipData
   /-- The packaged relative norm-membership proof. -/
   membership :
     rationalFiniteNormTransferCanonicalOrdinaryExtensionNormMembership
-      K H L hHK hLH hHKnormal hLHnormal c
+      K H L hHK hLH c
 
 
 end RationalIdeleExtension

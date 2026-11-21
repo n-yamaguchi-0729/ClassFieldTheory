@@ -35,8 +35,7 @@ defined by its inertia-degree-weighted action on prime exponents. -/
 def fractionalIdealNorm
     (K : Type u) (L : Type v)
     [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L]
-    [FiniteDimensional K L] :
+    [Field L] [NumberField L] [Algebra K L] :
     NumberFieldFractionalIdealGroup L →*
       NumberFieldFractionalIdealGroup K :=
   (NumberFieldFractionalIdealGroup.factorizationEquiv

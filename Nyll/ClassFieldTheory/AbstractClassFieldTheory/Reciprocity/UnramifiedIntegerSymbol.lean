@@ -38,7 +38,7 @@ theorem normResidueSymbol_unramified_integer
     let _ := L.finite
     (D.normResidueSymbol A v hcf H L
       (finiteNormClass A H.field L.field L.below a)).toMul =
-      Abelianization.of
+      Group.Abelianization.of
         ((L.extensionQuotientMulEquiv.symm
           (D.unramifiedFrobenius (H.toFiniteResidueAbstractField D) L.field L.below)) ^ z) := by
   intro hfinite
@@ -56,7 +56,7 @@ theorem normResidueSymbol_unramified_integer
   have hs' := congrArg Additive.toMul hs
   change (D.normResidueSymbol A v hcf H L
       (finiteNormClass A H.field L.field L.below a)).toMul =
-    Abelianization.of (D.finiteUnramifiedRestriction HR L hu
+    Group.Abelianization.of (D.finiteUnramifiedRestriction HR L hu
       (ValuationData.maximalUnramifiedNormResidueSymbol v H a).toMul) at hs'
   rw [hm, map_zpow, D.finiteUnramifiedRestriction_frobenius] at hs'
   exact hs'

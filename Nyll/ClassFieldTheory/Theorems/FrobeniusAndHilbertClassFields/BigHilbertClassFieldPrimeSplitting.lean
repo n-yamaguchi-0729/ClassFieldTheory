@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FiniteUnramifiedTower
 import Nyll.ClassFieldTheory.Definitions.ConductorsAndRayClassFields.RayClassOfFinitePrime
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.FinitePrimeSplitsCompletely
 import Nyll.ClassFieldTheory.Definitions.FrobeniusAndHilbertClassFields.IsBigHilbertClassField
@@ -36,7 +37,8 @@ theorem finitePrime_splitsCompletelyInBigHilbertClassField_iff
     FinitePrimeSplitsCompletely K E v ↔
       narrowRayClassOfFinitePrime v = 1 := by
   obtain ⟨artin, hartin⟩ := bigHilbertClassField_artinEquiv K E hE
-  have hunram : Algebra.IsUnramifiedIn (𝓞 E) v.asIdeal := hE.1 v
+  have hunram : Algebra.IsUnramifiedIn (𝓞 E) v.asIdeal :=
+    IsUnramifiedAtFinitePlaces.atBasePrime hE.1 v
   obtain ⟨Q, hQmax, hQover⟩ :=
     Ideal.exists_maximal_ideal_liesOver_of_isIntegral
       (S := 𝓞 E) v.asIdeal

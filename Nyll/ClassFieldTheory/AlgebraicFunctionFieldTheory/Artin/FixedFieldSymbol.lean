@@ -41,7 +41,7 @@ def fixedFieldArtin (H : FiniteAbstractField Gal(Ω/K))
     have _ : FiniteDimensional K (abstractFixedField K Ω H.field) :=
       abstractFixedField_finiteDimensional K Ω H.field H.finite
     IdeleClassGroup k (abstractFixedField K Ω H.field) →*
-      Abelianization Gal((abstractRelativeFixedField K Ω L.below)/
+      Group.Abelianization Gal((abstractRelativeFixedField K Ω L.below)/
         (abstractFixedField K Ω H.field)) := by
   intro hFfinite
   have hrelfinite := L.finite
@@ -50,14 +50,14 @@ def fixedFieldArtin (H : FiniteAbstractField Gal(Ω/K))
   let v := ideleClassValuationData k K Ω
   let s := D.normResidueSymbol A v (ideleClassRepresentation_satisfiesClassFieldAxiom k K Ω) H L
   let f : Additive (IdeleClassGroup k (abstractFixedField K Ω H.field)) →+
-      Additive (Abelianization L.extensionQuotient) :=
+      Additive (Group.Abelianization L.extensionQuotient) :=
     s.toAddMonoidHom.comp ((finiteNormClassHom A H.field L.field L.below).comp
       (abstractFixedClassEquiv k K Ω H.field H.finite).toAddMonoidHom)
   let eG : L.extensionQuotient ≃*
       Gal((abstractRelativeFixedField K Ω L.below)/(abstractFixedField K Ω H.field)) :=
     abstractExtensionQuotientEquivGaloisGroup K Ω H.field L.field L.below L.normal
   exact eG.abelianizationCongr.toMonoidHom.comp
-    ((MulEquiv.multiplicativeAdditive (Abelianization L.extensionQuotient)).toMonoidHom.comp
+    ((MulEquiv.multiplicativeAdditive (Group.Abelianization L.extensionQuotient)).toMonoidHom.comp
       (AddMonoidHom.toMultiplicativeRight f))
 
 /-- Every element of the actual relative abelianized Galois group is an Artin value. -/

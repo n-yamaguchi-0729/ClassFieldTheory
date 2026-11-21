@@ -852,35 +852,18 @@ theorem lubinTateUniformizerDiagonalAutomorphism_unique
   let eT : T ≃ₐ[K] B := IntermediateField.restrictAlgEquiv hTC
   let : IsGalois K A := IsGalois.of_algEquiv eU
   let : IsGalois K B := IsGalois.of_algEquiv eT
-  let φA : Gal(A/K) :=
-    (eU.symm.trans
-      (arithmeticFrobeniusOfUnramifiedValuation K U)).trans eU
-  let σB : Gal(B/K) := (eT.symm.trans σT).trans eT
-  let chosen := lubinTateUniformizerDiagonalAutomorphism K hπ n u
-  have hσA : AlgEquiv.restrictNormalHom A σ = φA := by
-    change AlgEquiv.restrictNormalHom A σ = φA at hσUnramified
-    exact hσUnramified
-  have hσB : AlgEquiv.restrictNormalHom B σ = σB := by
-    change AlgEquiv.restrictNormalHom B σ = σB at hσLevel
-    exact hσLevel
-  have hchosenA : AlgEquiv.restrictNormalHom A chosen = φA := by
-    have h :=
-      lubinTateUniformizerDiagonalAutomorphism_restrict_unramified K hπ n u
-    change AlgEquiv.restrictNormalHom A chosen = φA at h
-    exact h
-  have hchosenB : AlgEquiv.restrictNormalHom B chosen = σB := by
-    have h := lubinTateUniformizerDiagonalAutomorphism_restrict_level K hπ n u
-    change AlgEquiv.restrictNormalHom B chosen = σB at h
-    exact h
+  let chosen : Gal(C/K) := lubinTateUniformizerDiagonalAutomorphism K hπ n u
   have hSup : A ⊔ B = ⊤ := by
     rw [← IntermediateField.lift_inj,
       IntermediateField.lift_top,
       IntermediateField.lift_sup,
       IntermediateField.lift_restrict hUC,
       IntermediateField.lift_restrict hTC]
-  exact explicitAlgEquiv_eq_of_restrict_eq_of_sup_eq_top
-    K C A B σ chosen (hσA.trans hchosenA.symm)
-      (hσB.trans hchosenB.symm) hSup
+  refine explicitAlgEquiv_eq_of_restrict_eq_of_sup_eq_top K C A B σ chosen ?_ ?_ hSup
+  · exact Eq.trans hσUnramified
+      (lubinTateUniformizerDiagonalAutomorphism_restrict_unramified K hπ n u).symm
+  · exact Eq.trans hσLevel
+      (lubinTateUniformizerDiagonalAutomorphism_restrict_level K hπ n u).symm
 
 private theorem lubinTateUniformizerDiagonalAutomorphism_order
     (K : Type) [Field K] [ValuativeRel K] [TopologicalSpace K]

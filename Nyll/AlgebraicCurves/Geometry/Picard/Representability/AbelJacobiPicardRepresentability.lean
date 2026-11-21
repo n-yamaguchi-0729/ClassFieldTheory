@@ -43,6 +43,7 @@ public import Nyll.AlgebraicCurves.Geometry.Schemes.BaseChange.HomPullbackKerPow
 public import Nyll.AlgebraicCurves.Geometry.Sheaves.Divisors.IdealSheafModuleMaps
 
 public import Nyll.AlgebraicCurves.Geometry.Picard.Representability.RepresentsRelSubPicPullback
+public import Nyll.AlgebraicCurves.Geometry.Picard.RelSubPic.Presheaf
 
 /-!
 # Abel-Jacobi morphisms from a relative Picard representation
@@ -336,7 +337,7 @@ theorem _root_.AlgebraicGeometry.RelPicard.exists_abelJacobi_of_representsRelSub
       Nonempty ((h.poincare.pullbackAlong
           ⟨x.1 ≫ aj.1, (Category.assoc _ _ _).trans ((congrArg (x.1 ≫ ·) aj.2).trans x.2)⟩).L ≅
         (N.pullbackAlong x).L) := fun t' x =>
-    ⟨(h.poincare.pullbackAlongPullbackAlongIso' aj x).symm ≪≫
+    ⟨(h.poincare.pullbackAlongPullbackAlongIso aj x).symm ≪≫
       (Scheme.Modules.pullback (baseChangeSnd c x)).mapIso iaj⟩
   refine ⟨aj, ?_, ?_⟩
   · have hz : (⟨ε.1 ≫ aj.1, (Category.assoc _ _ _).trans ((congrArg (ε.1 ≫ ·) aj.2).trans ε.2)⟩ :

@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.AlgebraicCurves.Places.Completion
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.NormProduct
 public import Nyll.ClassFieldTheory.AlgebraicFunctionFieldTheory.Idele.Extension.GaloisDescent
 public import Mathlib.RingTheory.Trace.Basic
@@ -93,7 +94,7 @@ variable [IsGalois K L]
 of the actual completed Galois conjugates of arbitrary fiber components. -/
 theorem completionTraceSum_eq_sum_algAut (w : Place k L)
     (x : (u : (w.restrict K).fiberOver L) → u.1.adicCompletion) :
-    completionMapOver (w.restrict K) w rfl
+    AlgebraicCurve.Place.completionMapOver (w.restrict K) w rfl
         (∑ u : (w.restrict K).fiberOver L,
           completionTraceOver (w.restrict K) u.1
             ((Place.mem_fiberOver (w.restrict K)).mp u.2) (x u)) =
@@ -102,7 +103,7 @@ theorem completionTraceSum_eq_sum_algAut (w : Place k L)
           (x (conjugateFiberPoint σ w)) := by
   classical
   have h : (fun x : (u : (w.restrict K).fiberOver L) → u.1.adicCompletion =>
-      completionMapOver (w.restrict K) w rfl
+      AlgebraicCurve.Place.completionMapOver (w.restrict K) w rfl
         (∑ u : (w.restrict K).fiberOver L,
           completionTraceOver (w.restrict K) u.1
             ((Place.mem_fiberOver (w.restrict K)).mp u.2) (x u))) =
@@ -112,7 +113,7 @@ theorem completionTraceSum_eq_sum_algAut (w : Place k L)
             (x (conjugateFiberPoint σ w))) := by
     apply (denseRange_pi_placeCompletion
       (fun u : (w.restrict K).fiberOver L => u.1) Subtype.val_injective).equalizer
-    · apply (continuous_completionMapOver (w.restrict K) w rfl).comp
+    · apply (AlgebraicCurve.Place.continuous_completionMapOver (w.restrict K) w rfl).comp
       apply continuous_finsetSum Finset.univ
       intro u _
       exact (continuous_completionTraceOver (w.restrict K) u.1
@@ -123,12 +124,12 @@ theorem completionTraceSum_eq_sum_algAut (w : Place k L)
         (SemilinearAut.ofAlgAut (σ.restrictScalars k))⁻¹ w).comp
         (continuous_apply (conjugateFiberPoint σ w))
     · funext t
-      change completionMapOver (w.restrict K) w rfl
+      change AlgebraicCurve.Place.completionMapOver (w.restrict K) w rfl
           (∑ u : (w.restrict K).fiberOver L,
             completionTraceOver (w.restrict K) u.1
               ((Place.mem_fiberOver (w.restrict K)).mp u.2)
               (algebraMap L u.1.adicCompletion t)) = _
-      rw [completionTraceOver_sum_diagonal, completionMapOver_algebraMap,
+      rw [completionTraceOver_sum_diagonal, AlgebraicCurve.Place.completionMapOver_algebraMap,
         trace_eq_sum_automorphisms, map_sum]
       apply Finset.sum_congr rfl
       intro σ _
@@ -151,7 +152,8 @@ def descentComponent (a : IdeleGroup k L) (y : L) (v : Place k K) :
 theorem completionMap_descentComponent (a : IdeleGroup k L)
     (ha : ∀ σ : L ≃ₐ[K] L, SemilinearAut.ofAlgAut (σ.restrictScalars k) • a = a)
     (y : L) (hy : Algebra.trace K L y = 1) (w : Place k L) :
-    completionMapOver (w.restrict K) w rfl (descentComponent a y (w.restrict K)) =
+    AlgebraicCurve.Place.completionMapOver (w.restrict K) w rfl
+        (descentComponent a y (w.restrict K)) =
       (a w : w.adicCompletion) := by
   classical
   rw [descentComponent, completionTraceSum_eq_sum_algAut]

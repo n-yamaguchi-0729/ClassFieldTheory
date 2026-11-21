@@ -42,7 +42,7 @@ theorem liftedPGroupUnitsH2_eq_zero_of_transcendental_of_finiteDimensional
     (c : groupCohomology (liftedGaloisUnitsRep F E) 2) : c = 0 := by
   generalize hn : Module.finrank F E = n
   induction n using Nat.strong_induction_on generalizing E with
-  | h n ih =>
+  | ind n ih =>
     rcases subsingleton_or_nontrivial Gal(E/F) with hTrivial | hNontrivial
     · have : Subsingleton (groupCohomology (liftedGaloisUnitsRep F E) 2) :=
         ModuleCat.isZero_iff_subsingleton.mp

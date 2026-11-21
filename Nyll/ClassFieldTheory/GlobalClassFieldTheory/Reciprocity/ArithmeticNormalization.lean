@@ -44,9 +44,6 @@ universe u v
 namespace GlobalClassFieldTheory
 namespace Reciprocity
 
-attribute [local instance]
-  globalNormResidueIdeleClassCommGroup
-  globalNormResidueIdeleClassIsMulCommutative
 
 /-- Inversion as a topological multiplicative automorphism of a
 commutative topological group. -/
@@ -68,7 +65,7 @@ variable
 /-- Reuse the quotient topology chosen by topological global reciprocity. -/
 local instance
     arithmeticGlobalNormResidueAbelianization_galoisAbelianizationTopology :
-    TopologicalSpace (Abelianization (Gal(L / K))) :=
+    TopologicalSpace (Group.Abelianization (Gal(L / K))) :=
   topologicalGlobalNormResidueAbelianization_galoisAbelianizationTopology
     K L
 
@@ -76,7 +73,7 @@ local instance
 structure. -/
 local instance
     arithmeticGlobalNormResidueAbelianization_galoisAbelianizationIsTopologicalGroup :
-    IsTopologicalGroup (Abelianization (Gal(L / K))) := by
+    IsTopologicalGroup (Group.Abelianization (Gal(L / K))) := by
   change
     IsTopologicalGroup
       (Gal(L / K) ⧸ commutator (Gal(L / K)))
@@ -86,9 +83,9 @@ local instance
 Frobenius normalization, for an arbitrary finite Galois extension. -/
 noncomputable def arithmeticGlobalNormResidueAbelianizationMonoidHom :
     IdeleClassGroup K →*
-      Abelianization (Gal(L / K)) :=
+      Group.Abelianization (Gal(L / K)) :=
   (MulEquiv.inv
-      (Abelianization (Gal(L / K)))).toMonoidHom.comp
+      (Group.Abelianization (Gal(L / K)))).toMonoidHom.comp
     (globalNormResidueAbelianizationMonoidHom K L)
 
 /-- Arithmetic normalization evaluates by inverting the geometric
@@ -116,7 +113,7 @@ theorem arithmeticGlobalNormResidueAbelianizationMonoidHom_surjective :
     Function.Surjective
       (arithmeticGlobalNormResidueAbelianizationMonoidHom K L) :=
   (MulEquiv.inv
-      (Abelianization (Gal(L / K)))).surjective.comp
+      (Group.Abelianization (Gal(L / K)))).surjective.comp
     (globalNormResidueAbelianizationMonoidHom_surjective K L)
 
 /-- The arithmetic finite-Galois norm-residue isomorphism, with the
@@ -126,10 +123,10 @@ noncomputable def
     arithmeticGlobalNormResidueAbelianizationContinuousMulEquiv :
     (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) ≃ₜ*
-      Abelianization (Gal(L / K)) :=
+      Group.Abelianization (Gal(L / K)) :=
   (globalNormResidueAbelianizationContinuousMulEquiv K L).trans
     (commutativeGroupInversionContinuousMulEquiv
-      (Abelianization (Gal(L / K))))
+      (Group.Abelianization (Gal(L / K))))
 
 /-- The arithmetic abelianized norm-residue equivalence is pointwise the
 inverse of the geometric equivalence. -/
@@ -144,12 +141,12 @@ theorem
   calc
     arithmeticGlobalNormResidueAbelianizationContinuousMulEquiv K L q =
         commutativeGroupInversionContinuousMulEquiv
-          (Abelianization (Gal(L / K)))
+          (Group.Abelianization (Gal(L / K)))
           (globalNormResidueAbelianizationContinuousMulEquiv K L q) :=
       ContinuousMulEquiv.trans_apply
         (globalNormResidueAbelianizationContinuousMulEquiv K L)
         (commutativeGroupInversionContinuousMulEquiv
-          (Abelianization (Gal(L / K)))) q
+          (Group.Abelianization (Gal(L / K)))) q
     _ = (globalNormResidueAbelianizationContinuousMulEquiv K L q)⁻¹ :=
       rfl
 
@@ -158,7 +155,7 @@ theorem
 global reciprocity theorem. -/
 noncomputable def
     arithmeticGlobalReciprocityAbelianizationContinuousMulEquiv :
-    Abelianization (Gal(L / K)) ≃ₜ*
+    Group.Abelianization (Gal(L / K)) ≃ₜ*
       (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) :=
   (arithmeticGlobalNormResidueAbelianizationContinuousMulEquiv
@@ -253,7 +250,7 @@ noncomputable def arithmeticGlobalNormResidueContinuousMulEquiv :
     (IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) ≃ₜ*
       Gal(L / K) :=
-  (globalNormResidueContinuousMulEquiv K L).trans
+  (standardNumberFieldNormResidueContinuousMulEquiv K L).trans
     (commutativeGroupInversionContinuousMulEquiv
       (Gal(L / K)))
 
@@ -265,7 +262,7 @@ theorem arithmeticGlobalNormResidueContinuousMulEquiv_apply
       IdeleClassGroup K ⧸
         (_root_.ideleClassNorm K L).range) :
     arithmeticGlobalNormResidueContinuousMulEquiv K L q =
-      (globalNormResidueContinuousMulEquiv K L q)⁻¹ := by
+      (standardNumberFieldNormResidueContinuousMulEquiv K L q)⁻¹ := by
   rfl
 
 /-- The canonical arithmetic reciprocity isomorphism in the direction
@@ -462,20 +459,18 @@ idèles gives the arithmetic global norm-residue homomorphism literally. -/
 theorem
     arithmeticGlobalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin :
     (arithmeticGlobalNormResidueMonoidHom K L).comp
-        (QuotientGroup.mk'
-          (IdeleGroup.principalSubgroup K)) =
+        (IdeleGroup.toStandardClass K) =
       arithmeticGlobalArtinMonoidHom K L := by
   apply MonoidHom.ext
   intro a
   change
     (globalNormResidueMonoidHom K L
-      (QuotientGroup.mk'
-        (IdeleGroup.principalSubgroup K) a))⁻¹ =
+      (IdeleGroup.toStandardClass K a))⁻¹ =
       (globalArtinMonoidHom (K := K) (L := L) a)⁻¹
   simpa only [MonoidHom.comp_apply] using
     congrArg (fun σ : Gal(L / K) => σ⁻¹)
       (DFunLike.congr_fun
-        (globalNormResidueMonoidHom_comp_ideleClassQuotient_eq_globalArtin
+        (standardNumberFieldArtin_comp_toStandardClass_eq_globalArtin
           (K := K) (L := L)) a)
 
 

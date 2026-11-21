@@ -6,6 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.FinitePlaceContraction
+
 public import Mathlib.Algebra.BigOperators.Finsupp.Basic
 public import Mathlib.NumberTheory.NumberField.Basic
 public import Mathlib.RingTheory.DedekindDomain.Factorization
@@ -33,32 +35,32 @@ namespace ClassFieldTheory
 
 universe u v
 
-/-- The finite prime below a finite prime in an extension of number fields. -/
-def fractionalIdealNormPrimeBelow
-    (K : Type u) (L : Type v)
-    [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L]
-    (W : HeightOneSpectrum (𝓞 L)) :
-    HeightOneSpectrum (𝓞 K) where
-  asIdeal := W.asIdeal.under (𝓞 K)
-  isPrime := inferInstance
-  ne_bot :=
-    Ring.ne_bot_of_isMaximal_of_not_isField
-      (M := W.asIdeal.under (𝓞 K)) inferInstance
-      (RingOfIntegers.not_isField K)
-
 /-- The relative ideal norm on formal finite-prime exponent vectors. The
 coefficient at an upstairs prime is transferred to its contracted prime and
 multiplied by the inertia degree. -/
 def fractionalIdealNormExponentMap
     (K : Type u) (L : Type v)
     [Field K] [NumberField K]
-    [Field L] [NumberField L] [Algebra K L]
-    [FiniteDimensional K L] :
+    [Field L] [NumberField L] [Algebra K L] :
     (HeightOneSpectrum (𝓞 L) →₀ ℤ) →+
       (HeightOneSpectrum (𝓞 K) →₀ ℤ) :=
   Finsupp.liftAddHom fun W =>
-    (Finsupp.singleAddHom (fractionalIdealNormPrimeBelow K L W)).comp
+    (Finsupp.singleAddHom (_root_.finitePlaceBelow (K := K) W)).comp
       (AddMonoidHom.mulLeft (W.asIdeal.inertiaDeg (𝓞 K) : ℤ))
+
+
+open scoped Classical in
+/-- The norm transfers each exponent to the prime below with inertia-degree weight. -/
+theorem fractionalIdealNormExponentMap_apply
+    (K : Type u) (L : Type v)
+    [Field K] [NumberField K]
+    [Field L] [NumberField L] [Algebra K L]
+    (e : HeightOneSpectrum (𝓞 L) →₀ ℤ) (w : HeightOneSpectrum (𝓞 K)) :
+    fractionalIdealNormExponentMap K L e w =
+      e.sum fun W n => if _root_.finitePlaceBelow (K := K) W = w then
+        (W.asIdeal.inertiaDeg (𝓞 K) : ℤ) * n else 0 := by
+  simp only [fractionalIdealNormExponentMap, Finsupp.liftAddHom_apply,
+    AddMonoidHom.coe_comp, AddMonoidHom.coe_mulLeft, Finsupp.sum_apply,
+    Function.comp_apply, Finsupp.singleAddHom_apply, Finsupp.single_apply, eq_comm]
 
 end ClassFieldTheory

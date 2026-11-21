@@ -38,12 +38,12 @@ theorem coefficientInertia_exists_preimage
         commAlgAutomorphismRingHom A B (f.hom'.toFun g)) :
     let : MulSemiringAction G.carrier B.carrier := a
     ∀ τ : (commAlgIdealInertiaGroup A B Q).carrier,
-      ∃ g : G.carrier, (Q.inertia G.carrier).carrier g ∧ f.hom'.toFun g = τ.val := by
+      ∃ g : G.carrier, g ∈ Q.inertia G.carrier ∧ f.hom'.toFun g = τ.val := by
   intro ringAction τ
   obtain ⟨g, hg⟩ := hsurj τ.val
   refine ⟨g, ?_, hg⟩
   intro b
-  change Q.carrier ((MulSemiringAction.toRingHom G.carrier B.carrier g).toFun b - b)
+  change (MulSemiringAction.toRingHom G.carrier B.carrier g).toFun b - b ∈ Q
   rw [hcompare g, hg]
   exact τ.property b
 

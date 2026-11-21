@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
 import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.NormLimitationCore
 import Nyll.ClassFieldTheory.AlgebraicNumberTheory.RayClass.FullModulus
 
@@ -26,12 +27,6 @@ universe u v
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
-private theorem normLimitationIdeleClassIsMulCommutative
-    {F : Type*} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
-
-attribute [local instance] normLimitationIdeleClassIsMulCommutative
 
 variable
     (K : Type u) (L : Type v)

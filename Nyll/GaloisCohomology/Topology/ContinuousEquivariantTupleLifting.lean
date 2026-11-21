@@ -74,18 +74,6 @@ theorem exists_equivariant_continuous_tuple_lift [DiscreteTopology B]
       exact mul_inv_cancel_left (a 0) (a i)
     exact (hf (a 0) (norm a)).symm.trans (congrArg f hnorm)
 
-/-- Tuple evaluation intertwines the actual resolution map with application
-of the coefficient morphism. -/
-theorem resolutionTupleHomeomorph_resolutionMap [LocallyCompactSpace G]
-    (φ : A ⟶ B) (n : ℕ) (f : resolutionX A n) (a : Fin n → G) :
-    resolutionTupleHomeomorph G B n
-      ((ContinuousCohomology.resolutionMap (ContinuousMonoidHom.id G) φ n).hom f) a =
-      φ (resolutionTupleHomeomorph G A n f a) := by
-  induction n with
-  | zero => rfl
-  | succ n ih =>
-    exact ih (f (a 0)) (fun i => a i.succ)
-
 /-- A homogeneous cochain lifts whenever all of its tuple values lift.
 This shares the normalized equivariant lifting step without requiring
 global surjectivity of the coefficient map. -/
@@ -107,12 +95,11 @@ theorem homogeneousCochains_map_preimage_of_tuple_preimages [LocallyCompactSpace
   apply (resolutionTupleHomeomorph G B (n + 1)).injective
   apply ContinuousMap.ext
   intro a
-  change resolutionTupleHomeomorph G B (n + 1)
-    ((ContinuousCohomology.resolutionMap (ContinuousMonoidHom.id G) φ (n + 1)).hom
-      (homogeneousCochainOfTuple G A n g hg).val) a = f a
-  rw [resolutionTupleHomeomorph_resolutionMap]
-  exact (congrArg (fun t : C(Fin (n + 1) → G, A) => φ (t a))
-    (homogeneousCochainOfTuple_apply G A n g hg)).trans (hfg a)
+  let b := homogeneousCochainOfTuple G A n g hg
+  have hmap := resolutionTupleHomeomorph_cochainsMap G A B (ContinuousMonoidHom.id G) φ n b a
+  have heval := congrArg (fun t : C(Fin (n + 1) → G, A) => φ (t a))
+    (homogeneousCochainOfTuple_apply G A n g hg)
+  exact hmap.trans (heval.trans (hfg a))
 
 /-- Surjective discrete coefficient maps are surjective on actual homogeneous
 continuous cochains when the source action is jointly continuous. -/
@@ -140,8 +127,9 @@ theorem homogeneousCochains_map_injective [LocallyCompactSpace G]
   have hh := congrArg
     (fun z : (homogeneousCochains B).X n =>
       resolutionTupleHomeomorph G B (n + 1) z.val a) h
-  exact (resolutionTupleHomeomorph_resolutionMap G A B φ (n + 1) x.val a).symm.trans
-    (hh.trans (resolutionTupleHomeomorph_resolutionMap G A B φ (n + 1) y.val a))
+  have hx := resolutionTupleHomeomorph_cochainsMap G A B (ContinuousMonoidHom.id G) φ n x a
+  have hy := resolutionTupleHomeomorph_cochainsMap G A B (ContinuousMonoidHom.id G) φ n y a
+  exact hx.symm.trans (hh.trans hy)
 
 /-- Actual homogeneous continuous cochain maps are additive in the coefficient
 morphism. -/
@@ -164,9 +152,10 @@ theorem homogeneousCochains_map_add [LocallyCompactSpace G]
     resolutionTupleHomeomorph G B (n + 1)
       (((ContinuousCohomology.resolutionMap (ContinuousMonoidHom.id G) φ (n + 1)).hom z.val) +
         ((ContinuousCohomology.resolutionMap (ContinuousMonoidHom.id G) ψ (n + 1)).hom z.val)) a
-  have htotal := resolutionTupleHomeomorph_resolutionMap G A B (φ + ψ) (n + 1) z.val a
-  have hφ := resolutionTupleHomeomorph_resolutionMap G A B φ (n + 1) z.val a
-  have hψ := resolutionTupleHomeomorph_resolutionMap G A B ψ (n + 1) z.val a
+  let r := ContinuousMonoidHom.id G
+  have htotal := resolutionTupleHomeomorph_resolutionMap G A B r (φ + ψ) (n + 1) z.val a
+  have hφ := resolutionTupleHomeomorph_resolutionMap G A B r φ (n + 1) z.val a
+  have hψ := resolutionTupleHomeomorph_resolutionMap G A B r ψ (n + 1) z.val a
   have hsum := congrArg (fun t : C(Fin (n + 1) → G, B) => t a)
     (resolutionTupleHomeomorph_add G B (n + 1)
       ((ContinuousCohomology.resolutionMap (ContinuousMonoidHom.id G) φ (n + 1)).hom z.val)
@@ -199,8 +188,8 @@ theorem homogeneousCochains_map_exact [LocallyCompactSpace G]
     have h0 : resolutionTupleHomeomorph G C (n + 1) 0 a = 0 :=
       congrArg (fun t : C(Fin (n + 1) → G, C) => t a)
         (resolutionTupleContinuousLinearEquiv G C (n + 1)).map_zero
-    exact (resolutionTupleHomeomorph_resolutionMap G B C ψ (n + 1) z.val a).symm.trans
-      (hh.trans h0)
+    have hmap := resolutionTupleHomeomorph_cochainsMap G B C (ContinuousMonoidHom.id G) ψ n z a
+    exact hmap.symm.trans (hh.trans h0)
   exact homogeneousCochains_map_preimage_of_tuple_preimages G A B φ hA n z
     (fun a => h (f a) (hzero a))
 

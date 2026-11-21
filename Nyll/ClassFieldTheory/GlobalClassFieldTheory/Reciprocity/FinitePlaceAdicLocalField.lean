@@ -6,7 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
-public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.LocallyCompact
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.FinitePlaceModel
+
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Completion.LocalField
 public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingFiniteFactor
 public import Nyll.ClassFieldTheory.Definitions.HilbertSymbols.GlobalHilbertPairingProperties
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.FinitePlaceArtin.Construction
@@ -30,44 +32,6 @@ open NumberField IsDedekindDomain
 
 noncomputable section
 
-namespace ClassFieldTheory
-
-universe u
-
-/-- The valuation relation induced by the canonical discrete valuation on
-the completion at a finite place. -/
-@[reducible]
-def finitePlaceCompletionValuativeRel
-    (F : Type u) [Field F] [NumberField F]
-    (v : HeightOneSpectrum (𝓞 F)) :
-    ValuativeRel (v.adicCompletion F) :=
-  ValuativeRel.ofValuation
-    (Valued.v : Valuation (v.adicCompletion F) (WithZero (Multiplicative ℤ)))
-
-/-- The canonical finite adic completion is a nonarchimedean local field for
-its distinguished valuation. -/
-theorem finitePlaceCompletionIsNonarchimedeanLocalField
-    (F : Type u) [Field F] [NumberField F]
-    (v : HeightOneSpectrum (𝓞 F)) :
-    @IsNonarchimedeanLocalField (v.adicCompletion F) inferInstance
-      (finitePlaceCompletionValuativeRel F v) inferInstance := by
-  let C := v.adicCompletion F
-  let ν : Valuation C (WithZero (Multiplicative ℤ)) := Valued.v
-  let _ : ν.IsNontrivial := inferInstance
-  let _ : ValuativeRel C := finitePlaceCompletionValuativeRel F v
-  let _ : ν.Compatible := Valuation.Compatible.ofValuation ν
-  let _ : ValuativeRel.IsNontrivial C :=
-    (ValuativeRel.isNontrivial_iff_isNontrivial ν).2 inferInstance
-  let _ : IsValuativeTopology C :=
-    LocalFieldTheory.isValuativeTopology_of_valued_ofValuation
-      C (WithZero (Multiplicative ℤ))
-  exact
-    { toIsValuativeTopology := inferInstance
-      toLocallyCompactSpace := inferInstance
-      toIsNontrivial := inferInstance }
-
-end ClassFieldTheory
-
 section CompletionComparison
 
 open LocalClassFieldTheory
@@ -89,10 +53,10 @@ theorem finitePlaceCompletion_semilinearValuationCompatible :
     SemilinearValuationCompatible
       (HeightOneSpectrum.adicAbv F v).Completion
       (v.adicCompletion F)
-      (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv := by
+      (finitePlaceCompletionAlgEquiv v).toRingEquiv := by
   let C := (HeightOneSpectrum.adicAbv F v).Completion
   let C' := v.adicCompletion F
-  let e := (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv
+  let e := (finitePlaceCompletionAlgEquiv v).toRingEquiv
   let _ : Algebra C C' := e.toRingHom.toAlgebra
   change (ValuativeRel.valuation C).HasExtension (ValuativeRel.valuation C')
   constructor
@@ -103,10 +67,10 @@ theorem finitePlaceCompletion_semilinearValuationCompatible :
   change ‖x‖₊ ≤ ‖y‖₊ ↔
     (Valued.v : Valuation C' (WithZero (Multiplicative ℤ))) (e x) ≤ Valued.v (e y)
   rw [← Valued.toNormedField.norm_le_iff]
-  change ‖x‖ ≤ ‖y‖ ↔ ‖relativeFinitePlaceCompletionRingEquiv v x‖ ≤
-    ‖relativeFinitePlaceCompletionRingEquiv v y‖
-  rw [relativeFinitePlaceCompletionRingEquiv_norm,
-    relativeFinitePlaceCompletionRingEquiv_norm]
+  change ‖x‖ ≤ ‖y‖ ↔ ‖finitePlaceCompletionRingEquiv v x‖ ≤
+    ‖finitePlaceCompletionRingEquiv v y‖
+  rw [finitePlaceCompletionRingEquiv_norm,
+    finitePlaceCompletionRingEquiv_norm]
 
 end CompletionComparison
 
@@ -135,7 +99,7 @@ def finitePlaceAdicHilbertPairingFamily
         (((mem_primitiveRoots n.pos).1 hζ).map_of_injective
           (algebraMap F C).injective)⟩
   exact hilbertPairingOfRingEquiv
-    (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
+    (finitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
     (localHilbertPairing C n hnC hmuC)
 
 /-- Every finite member of the transported family satisfies the local
@@ -162,10 +126,10 @@ theorem finitePlaceAdicHilbertPairingFamily_isLocallyHilbert
           (((mem_primitiveRoots n.pos).1 hζ).map_of_injective
             (algebraMap F C).injective)⟩
     show HilbertPairing.IsLocalHilbertPairing (hilbertPairingOfRingEquiv
-      (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
+      (finitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
       (localHilbertPairing C n hnC hmuC)) from
       hilbertPairingOfRingEquiv_isLocalHilbertPairing
-        (relativeFinitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
+        (finitePlaceCompletionAlgEquiv v).toRingEquiv n hmuC
         (localHilbertPairing C n hnC hmuC)
         (localHilbertPairing_isLocalHilbertPairing C n hnC hmuC)
 

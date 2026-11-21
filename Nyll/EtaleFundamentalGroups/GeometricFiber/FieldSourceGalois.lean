@@ -148,7 +148,8 @@ private theorem subfieldPointEquiv_smul (K Ω : Type u) [Field K] [Field Ω] [Al
   rw [Spec.preimage_comp, Spec.preimage_map]
   rfl
 
-private theorem subfieldAction_ker_iff (K Ω : Type u) [Field K] [Field Ω] [Algebra K Ω]
+/-- The kernel of the finite subfield action fixes every embedding into the supplied closure. -/
+theorem fieldSourceSubfieldAction_ker_iff (K Ω : Type u) [Field K] [Field Ω] [Algebra K Ω]
     [IsSepClosure K Ω] [IsSepClosed Ω]
     (L : IntermediateField K Ω) [FiniteDimensional K L]
     (g : Ω ≃ₐ[K] Ω) :
@@ -191,7 +192,7 @@ theorem fieldSourceSubfieldFiber_fixed_iff
     (L : IntermediateField K Ω) [FiniteDimensional K L] (σ : Gal(Ω/K)) :
     (∀ x : (fib K Ω).obj (fieldSourceFiniteSubfieldCover K Ω L), σ • x = x) ↔
       ∀ φ : L →ₐ[K] Ω, σ.toAlgHom.comp φ = φ := by
-  rw [← subfieldAction_ker_iff K Ω L σ]
+  rw [← fieldSourceSubfieldAction_ker_iff K Ω L σ]
   constructor
   · intro h
     apply MonoidHom.mem_ker.mpr
@@ -213,9 +214,9 @@ private theorem fieldSourceSubfieldCover_essImage_iff [IsNormalIntegral X]
   rw [← EtaleFundamentalGroups.normalSubgroup_fixes_embeddings_iff_le_fixingSubgroup]
   constructor
   · intro h g hg
-    exact (subfieldAction_ker_iff F Ω E g).mp (h hg)
+    exact (fieldSourceSubfieldAction_ker_iff F Ω E g).mp (h hg)
   · intro h g hg
-    exact (subfieldAction_ker_iff F Ω E g).mpr (h g hg)
+    exact (fieldSourceSubfieldAction_ker_iff F Ω E g).mpr (h g hg)
 
 /-- A literal finite subfield is fixed by the actual kernel exactly when
 its spectrum is the actual generic fibre of a finite étale cover of X. -/

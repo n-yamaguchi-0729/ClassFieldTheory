@@ -41,7 +41,7 @@ theorem finiteAbelianLocalExistence_orderIso
   ∃ e : FiniteAbelianLocalExtension K ≃o
         (OpenFiniteIndexSubgroup K)ᵒᵈ,
       ∀ E : FiniteAbelianLocalExtension K,
-        (OrderDual.ofDual (e E)).1 = E.normSubgroup := by
+        (OrderDual.ofDual (e E)).1.toSubgroup = E.normSubgroup := by
   exact ⟨LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso K,
     LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply K⟩
 
@@ -52,9 +52,9 @@ theorem finiteAbelianLocalExistence_orderIso_artinKernel
     [IsNonarchimedeanLocalField K] (E : FiniteAbelianLocalExtension K) :
     (OrderDual.ofDual
       (LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso K E)).1 =
-        (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1).toMonoidHom.ker :=
+        (LocalClassFieldTheory.abelianLocalArtinMap K E.1).toMonoidHom.ker :=
   (LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso_apply K E).trans
-    (LocalClassFieldTheory.Universe.abelianLocalArtinMap_ker K E.1).symm
+    (LocalClassFieldTheory.abelianLocalArtinMap_ker K E.1).symm
 
 /-- The field selected by the same order isomorphism has Artin kernel
 exactly the original open finite-index subgroup. -/
@@ -63,10 +63,10 @@ theorem finiteAbelianLocalExistence_orderIso_symm_artinKernel
     [IsNonarchimedeanLocalField K] (H : OpenFiniteIndexSubgroup K) :
     let E := (LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso K).symm
       (OrderDual.toDual H)
-    (LocalClassFieldTheory.Universe.abelianLocalArtinMap K E.1).toMonoidHom.ker = H.1 := by
+    (LocalClassFieldTheory.abelianLocalArtinMap K E.1).toMonoidHom.ker = H.1 := by
   intro E
   rw [← finiteAbelianLocalExistence_orderIso_artinKernel K E]
-  exact congrArg (fun J : (OpenFiniteIndexSubgroup K)ᵒᵈ => (OrderDual.ofDual J).1)
+  exact congrArg (fun J : (OpenFiniteIndexSubgroup K)ᵒᵈ => (OrderDual.ofDual J).1.toSubgroup)
     ((LocalFieldTheory.shrinkFiniteAbelianFieldNormSubgroupOrderIso K).apply_symm_apply
       (OrderDual.toDual H))
 

@@ -11,7 +11,6 @@ public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Galois.MathlibAbsolute
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.AlgEquivIdeleClassTopology
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.ConnectedComponentQuotientCongr
 public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.ClassGroup.MathlibTopologyComparison
-public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.NumberField.SmallModel
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.Reciprocity.MathlibTopologicalGlobalReciprocity
 public import Mathlib.FieldTheory.AbsoluteGaloisGroup
 
@@ -37,6 +36,6 @@ theorem topologicalGlobalReciprocity
     (K : Type u) [Field K] [NumberField K] :
     Nonempty (IdeleClassConnectedQuotient K ≃ₜ*
       Field.absoluteGaloisGroupAbelianization K) :=
-  ⟨mathlibIdeleClassConnectedQuotientEquivAbelianizationUniverse K⟩
+  ⟨mathlibIdeleClassConnectedQuotientEquivAbelianization K⟩
 
 end ClassFieldTheory

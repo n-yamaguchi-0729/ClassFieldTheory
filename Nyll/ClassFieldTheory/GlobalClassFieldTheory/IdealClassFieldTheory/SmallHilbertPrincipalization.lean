@@ -6,6 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ClassFieldTheory.Algebra.PrincipalFractionalIdeal
+public import Nyll.ClassFieldTheory.AlgebraicNumberTheory.Idele.PrincipalCore
+
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTheorem
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.PrincipalIdealTransfer
 public import Nyll.ClassFieldTheory.GlobalClassFieldTheory.IdealClassFieldTheory.SmallHilbertTowerUnramified
@@ -45,17 +48,13 @@ noncomputable section
 namespace GlobalClassFieldTheory
 namespace IdealClassFieldTheory
 
+open ClassFieldTheory
 open ClassFormation
 open GlobalClassFields
 open KummerTheory
 open LocalClassFieldTheory
 open Reciprocity
 
-local instance
-    smallHilbertPrincipalization_ideleClassGroupIsMulCommutative
-    {F : Type*} [Field F] [NumberField F] :
-    IsMulCommutative (IdeleClassGroup F) :=
-  ⟨⟨fun a b => mul_comm a b⟩⟩
 
 local instance
     smallHilbertPrincipalization_ideleClassSubgroupNormal
@@ -210,7 +209,7 @@ theorem allIdealsBecomePrincipalInSmallHilbertClassField :
 principal fractional ideal after extension to the selected small
 Hilbert class field. -/
 theorem allFractionalIdealsBecomePrincipalInSmallHilbertClassField :
-    ∀ I : FractionalIdealGroup K,
+    ∀ I : NumberFieldFractionalIdealGroup K,
       FractionalIdealGroup.extension
           K (smallHilbertClassField K) I ∈
         (toPrincipalIdeal
@@ -218,7 +217,7 @@ theorem allFractionalIdealsBecomePrincipalInSmallHilbertClassField :
           (smallHilbertClassField K)).range := by
   intro I
   apply
-    (IdeleGroup.classGroup_mk_eq_one_iff
+    (ClassGroup.mk_eq_one_iff_mem_principal
       (FractionalIdealGroup.extension
         K (smallHilbertClassField K) I)).1
   rw [

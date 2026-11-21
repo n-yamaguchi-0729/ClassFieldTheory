@@ -51,7 +51,7 @@ theorem finiteGaloisAbstractExtension_fullConstant_isUnramified (n : ℕ) [NeZer
   have hfix : σ ∈ E.toIntermediateField.fixingSubgroup := hle hσ.2
   let j := AlgebraicNumberTheory.separableEmbeddingIntoSeparableClosure K E
   change σ ∈ j.fieldRange.fixingSubgroup
-  rw [ClassFieldTheory.fieldRange_eq_of_normal j E.toIntermediateField.val,
+  rw [AlgHom.fieldRange_eq_of_normal j E.toIntermediateField.val,
     IntermediateField.fieldRange_val]
   exact hfix
 

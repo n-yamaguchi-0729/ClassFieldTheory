@@ -12,6 +12,7 @@ AI assistance in local adaptation and maintenance: OpenAI Codex.
 
 module
 
+public import Nyll.SchemeTheory.Modules.Frames.FrameBridge
 public import Nyll.AlgebraicCurves.Cohomology.Cech.TwoChart.SectionsOf
 public import Nyll.SchemeTheory.Cohomology.Cech.TwoChartCech
 
@@ -23,6 +24,8 @@ two-chart section complex, by restriction to the two opens.
 -/
 
 @[expose] public section
+
+open _root_.AlgebraicGeometry.Scheme.Modules.LocalTrivialization (rM rM_rM)
 
 section ProofImplementation
 
@@ -50,16 +53,6 @@ open _root_.AlgebraicGeometry
 variable {R : Type u} [CommRing R] {X : Scheme.{u}} (𝒱 : X.TwoAffineOpenCover) (c : X ⟶ Spec
     (.of R))
   (M : X.Modules)
-
-/-- Restrict a module section to a smaller open. -/
-noncomputable abbrev rM {V W : X.Opens} (h : V ≤ W) : Γ(M, W) → Γ(M, V) := fun y =>
-    M.presheaf.map (homOfLE h).op y
-
-omit [CommRing R] in
-theorem rM_rM {V₁ V₂ V₃ : X.Opens} (h₂₁ : V₂ ≤ V₁) (h₃₂ : V₃ ≤ V₂) (y : Γ(M, V₁)) :
-    rM M h₃₂ (rM M h₂₁ y) = rM M (h₃₂.trans h₂₁) y := by
-  change (M.presheaf.map (homOfLE h₂₁).op ≫ M.presheaf.map (homOfLE h₃₂).op) y = _
-  rw [← Functor.map_comp]; rfl
 
 omit [CommRing R] in
 theorem map_eq_rM {V W : X.Opens} (i : V ⟶ W) (y : Γ(M, W)) :

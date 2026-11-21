@@ -90,7 +90,7 @@ theorem equalCharacteristicCompletedPrimitiveRoot_isUniformizer
       equalCharacteristicCompletedPrimitivePowerBasis_gen,
       equalCharacteristicCompletedPrimitiveRoot_minpoly])
     (by rw [equalCharacteristicCompletedIntegralPrimitivePolynomial_coeff_zero]
-        exact PowerSeries.X_irreducible)
+        exact PowerSeries.irreducible_X)
   simpa only [equalCharacteristicCompletedPrimitivePowerBasis_gen] using h.1
 
 /-- The actual completed primitive level is totally ramified over its
@@ -109,7 +109,7 @@ theorem equalCharacteristicCompletedLevel_ramificationIndex_eq_degree
       equalCharacteristicCompletedPrimitivePowerBasis_gen,
       equalCharacteristicCompletedPrimitiveRoot_minpoly])
     (by rw [equalCharacteristicCompletedIntegralPrimitivePolynomial_coeff_zero]
-        exact PowerSeries.X_irreducible)).2
+        exact PowerSeries.irreducible_X)).2
 
 /-- The genuine direct theta value is a uniformizer for the same selected
 completed-level valuation. Its changed minimal polynomial has constant
@@ -137,7 +137,7 @@ theorem equalCharacteristicDirectThetaAtCompletedPrimitiveRoot_isUniformizer
       rw [equalCharacteristicChangedCompletedIntegralPrimitivePolynomial_coeff_zero]
       exact (irreducible_isUnit_mul
         (equalCharacteristicChangedCompletedSourceUnit F a⁻¹).isUnit).mpr
-          PowerSeries.X_irreducible)
+          PowerSeries.irreducible_X)
   rw [hgen] at h
   exact h.1
 
